@@ -31,8 +31,10 @@ package cn.stylefeng.roses.kernel.openapi.api.constants;
  * @date 2022-11-11
  */
 public interface OpenApiConstants {
+
     /**
      * OpenApi模块的名称
      */
     String OPENAPI_MODULE_NAME = "kernel-d-openapi";
+
 }

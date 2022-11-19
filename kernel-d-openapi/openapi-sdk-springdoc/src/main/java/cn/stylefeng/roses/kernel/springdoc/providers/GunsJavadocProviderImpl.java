@@ -104,4 +104,5 @@ public class GunsJavadocProviderImpl implements JavadocProvider {
     public String getFirstSentence(String text) {
         return text;
     }
+
 }

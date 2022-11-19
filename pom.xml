@@ -58,6 +58,9 @@
         <!--office模块-->
         <module>kernel-d-office</module>
 
+        <!--open api适配-->
+        <module>kernel-d-openapi</module>
+
         <!--拼音工具模块-->
         <module>kernel-d-pinyin</module>
 
@@ -114,7 +117,6 @@
 
         <!-- 数据迁移模块 -->
         <module>kernel-s-migration</module>
-        <module>kernel-d-openapi</module>
 
     </modules>
 
