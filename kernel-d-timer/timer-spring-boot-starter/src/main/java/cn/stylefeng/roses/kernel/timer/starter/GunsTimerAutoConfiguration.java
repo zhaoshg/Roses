@@ -25,13 +25,10 @@
 package cn.stylefeng.roses.kernel.timer.starter;
 
 import cn.stylefeng.roses.kernel.timer.api.TimerExeService;
-import cn.stylefeng.roses.kernel.timer.hutool.HutoolTimerExeServiceImpl;
 import cn.stylefeng.roses.kernel.timer.hutool.TimerExeServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 
 /**
  * 定时任务的自动配置
@@ -43,27 +40,14 @@ import org.springframework.core.annotation.Order;
 public class GunsTimerAutoConfiguration {
 
     /**
-     * hutool的定时任务
+     * hutool 新的定时任务，增加判断spring cloud双上下文
      *
-     * @author fengshuonan
-     * @date 2020/12/1 21:18
+     * @author xielin
+     * @date 2022/11/15 14:52
      */
     @Bean
-    @Order(value = Ordered.LOWEST_PRECEDENCE)
     @ConditionalOnMissingBean(TimerExeService.class)
     public TimerExeService timerExeService() {
-        return new HutoolTimerExeServiceImpl();
-    }
-    
-    
-    /**
-     *  hutool 新的定时任务，增加判断 增加@Order设定注入优先级别
-     *  @author  xielin
-     *  @date  2022/11/15 14:52
-     */
-    @Bean
-    @Order(value = (Ordered.LOWEST_PRECEDENCE-1))
-    public TimerExeService timerExeService2(){
         return new TimerExeServiceImpl();
     }
 
