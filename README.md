@@ -33,7 +33,7 @@
 
 ### 配套手册
 
-[https://javaguns.com/contents/guns/roses_kernel/summary/1_module.html](https://javaguns.com/contents/guns/roses_kernel/summary/1_module.html)
+[https://javaguns.com/gunsDoc?categoryId=1504358929897992193&artId=1504372009277173762](https://javaguns.com/gunsDoc?categoryId=1504358929897992193&artId=1504372009277173762)
 
 ### 使用方式
 
