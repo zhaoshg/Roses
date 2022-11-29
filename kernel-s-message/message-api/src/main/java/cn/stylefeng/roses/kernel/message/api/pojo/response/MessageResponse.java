@@ -30,6 +30,7 @@ import cn.stylefeng.roses.kernel.message.api.enums.MessageReadFlagEnum;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
 import cn.stylefeng.roses.kernel.system.api.format.UserFormatProcess;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -124,6 +125,12 @@ public class MessageResponse implements Serializable {
      */
     @ChineseDescription("阅读状态：0-未读，1-已读")
     private String readFlagValue;
+
+    /**
+     * 消息跳转的URL
+     */
+    @ChineseDescription("消息跳转的URL")
+    private String messageUrl;
 
     public String getPriorityLevelValue() {
         AtomicReference<String> value = new AtomicReference<>("");
