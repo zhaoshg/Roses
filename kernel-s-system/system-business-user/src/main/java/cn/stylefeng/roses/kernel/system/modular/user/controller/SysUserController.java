@@ -273,6 +273,21 @@ public class SysUserController {
     }
 
     /**
+     * 用户下拉列表，用户权限下用户
+     * <p>
+     * 本接口不查询超级管理员
+     *
+     * @param sysUserRequest 请求参数：name 姓名(可选)
+     * @return 返回除超级管理员外的用户列表
+     * @author yx
+     * @date 2023/02/21 09:49
+     */
+    @GetResource(name = "系统用户_选择器(权限)", path = "/sysUser/selectorByAuthority", requiredPermission = false)
+    public ResponseData<List<SimpleDict>> selectorByAuthority(SysUserRequest sysUserRequest) {
+        return new SuccessResponseData<>(sysUserService.selectorByAuthority(sysUserRequest));
+    }
+
+    /**
      * 用户下拉列表，可以根据姓名搜索
      * <p>
      * 本接口可查询到超级管理员，包含所有用户

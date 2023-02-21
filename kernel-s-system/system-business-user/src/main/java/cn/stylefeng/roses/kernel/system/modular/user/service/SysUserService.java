@@ -231,6 +231,13 @@ public interface SysUserService extends IService<SysUser>, UserServiceApi {
     List<SimpleDict> selector(SysUserRequest sysUserRequest);
 
     /**
+     * 用户下拉列表选择-根据当前用户权限获取管理的用户信息
+     * 可以获取指定用户的管理用户
+     * 支持通过用户姓名模糊查询
+     */
+    List<SimpleDict> selectorByAuthority(SysUserRequest request);
+
+    /**
      * 查询所有用户下拉列表（含管理员）
      *
      * @param sysUserRequest 查询参数
