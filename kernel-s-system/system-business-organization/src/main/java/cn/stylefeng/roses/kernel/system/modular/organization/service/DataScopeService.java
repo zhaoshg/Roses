@@ -24,12 +24,12 @@
  */
 package cn.stylefeng.roses.kernel.system.modular.organization.service;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.enums.DataScopeTypeEnum;
+import cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum;
 import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
-import cn.stylefeng.roses.kernel.system.api.DataScopeApi;
-import cn.stylefeng.roses.kernel.system.api.RoleServiceApi;
-import cn.stylefeng.roses.kernel.system.api.UserOrgServiceApi;
-import cn.stylefeng.roses.kernel.system.api.UserServiceApi;
+import cn.stylefeng.roses.kernel.system.api.*;
 import cn.stylefeng.roses.kernel.system.api.exception.SystemModularException;
 import cn.stylefeng.roses.kernel.system.api.exception.enums.organization.DataScopeExceptionEnum;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.DataScopeDTO;
@@ -63,6 +63,10 @@ public class DataScopeService implements DataScopeApi {
 
     @Resource
     private DbOperatorApi dbOperatorApi;
+
+    @Resource
+    private SysUserRoleApi sysUserRoleApi;
+
 
     @Override
     public DataScopeDTO getDataScope(Long userId, List<SysRoleDTO> sysRoles) {
@@ -125,11 +129,26 @@ public class DataScopeService implements DataScopeApi {
         List<Long> userBindDataScope = userServiceApi.getUserBindDataScope(userId);
         organizationIds.addAll(userBindDataScope);
 
-        // 3. 组装返回结果
+        // 3. 如果userIds为空 organizationIds不为空 则userIds 为organizationIds下所有用户id
+        if (CollectionUtil.isEmpty(userIds) && CollectionUtil.isNotEmpty(organizationIds)) {
+            userIds.addAll(userOrgServiceApi.getUserIdsByOrgIds(organizationIds));
+        }
+
+        // 4. 组装返回结果
         dataScopeResponse.setUserIds(userIds);
         dataScopeResponse.setOrganizationIds(organizationIds);
 
         return dataScopeResponse;
     }
 
+    @Override
+    public DataScopeDTO getDataScope(Long userId) {
+        // 2. 获取用户角色信息
+        List<Long> roleIds = sysUserRoleApi.findRoleIdsByUserId(userId);
+        if (ObjectUtil.isEmpty(roleIds)) {
+            throw new SystemModularException(AuthExceptionEnum.ROLE_IS_EMPTY);
+        }
+        List<SysRoleDTO> roleResponseList = roleServiceApi.getRolesByIds(roleIds);
+        return this.getDataScope(userId, roleResponseList);
+    }
 }

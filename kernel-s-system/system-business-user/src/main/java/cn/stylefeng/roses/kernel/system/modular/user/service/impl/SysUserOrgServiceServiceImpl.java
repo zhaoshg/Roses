@@ -41,6 +41,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**
@@ -79,6 +81,13 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
 
         return sysUserOrgDTO;
     }
+
+    @Override
+    public Set<Long> getUserIdsByOrgIds(Set<Long> organizationIds) {
+        List<SysUserOrg> userOrgs = this.lambdaQuery().in(SysUserOrg::getOrgId, organizationIds).list();
+        return userOrgs.stream().map(SysUserOrg::getUserId).collect(Collectors.toSet());
+    }
+
 
 
     @Override

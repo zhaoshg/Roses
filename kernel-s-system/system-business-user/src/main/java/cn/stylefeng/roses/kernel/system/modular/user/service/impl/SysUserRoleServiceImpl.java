@@ -101,7 +101,6 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     }
 
     @Override
-
     public List<Long> findRoleIdsByUserId(Long userId) {
 
         // 先从缓存获取用户绑定的角色
