@@ -74,7 +74,7 @@ public class DbLogManagerServiceImpl implements LogManagerApi {
             BeanUtil.copyProperties(row, logRecordDTO);
 
             // 设置请求和响应为空，减少带宽开销
-            logRecordDTO.setRequestResult(null);
+            logRecordDTO.setRequestParams(null);
             logRecordDTO.setRequestResult(null);
             newRows.add(logRecordDTO);
         }
