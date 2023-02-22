@@ -91,6 +91,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -602,6 +603,34 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
+    public List<SimpleDict> selectorByAuthority(SysUserRequest request) {
+        //获取用户数据权限
+        Long userId = ObjectUtil.isNull(request.getUserId()) ? LoginContext.me().getLoginUser().getUserId() : request.getUserId();
+        DataScopeDTO dataScope = dataScopeApi.getDataScope(userId);
+        // 塞入用户数据范围
+        request.setUserScopeIds(dataScope.getUserIds());
+        LambdaQueryWrapper<SysUser> wrapper = this.createWrapper(request);
+
+        // 排除超级管理员
+        wrapper.ne(SysUser::getSuperAdminFlag, YesOrNotEnum.Y.getCode());
+
+        // 查询id name account
+        wrapper.select(SysUser::getRealName, SysUser::getUserId, SysUser::getAccount);
+        List<SysUser> list = this.list(wrapper);
+
+        ArrayList<SimpleDict> results = new ArrayList<>();
+        for (SysUser sysUser : list) {
+            SimpleDict simpleDict = new SimpleDict();
+            simpleDict.setId(sysUser.getUserId());
+            simpleDict.setName(sysUser.getRealName());
+            simpleDict.setCode(sysUser.getAccount());
+            results.add(simpleDict);
+        }
+
+        return results;
+    }
+
+    @Override
     public List<SimpleDict> selectorWithAdmin(SysUserRequest sysUserRequest) {
         return this.selectUserList(sysUserRequest, true);
     }
@@ -1046,11 +1075,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         queryWrapper.eq(ObjectUtil.isNotEmpty(sysUserRequest.getUserId()), SysUser::getUserId, sysUserRequest.getUserId());
         queryWrapper.like(ObjectUtil.isNotEmpty(sysUserRequest.getAccount()), SysUser::getAccount, sysUserRequest.getAccount());
         queryWrapper.like(ObjectUtil.isNotEmpty(sysUserRequest.getRealName()), SysUser::getRealName, sysUserRequest.getRealName());
+        queryWrapper.in(CollectionUtils.isNotEmpty(sysUserRequest.getUserScopeIds()), SysUser::getUserId, sysUserRequest.getUserScopeIds());
 
         // 根据text查询
         if (ObjectUtil.isNotEmpty(sysUserRequest.getSearchText())) {
-            queryWrapper.like(SysUser::getAccount, sysUserRequest.getSearchText()).or().like(SysUser::getRealName, sysUserRequest.getSearchText()).or()
-                    .like(SysUser::getNickName, sysUserRequest.getSearchText());
+            queryWrapper.and(wrapper -> wrapper.like(SysUser::getAccount, sysUserRequest.getSearchText())
+                    // 姓名
+                    .or().like(SysUser::getRealName, sysUserRequest.getSearchText())
+                    // 昵称
+                    .or().like(SysUser::getNickName, sysUserRequest.getSearchText())
+                    // 手机号
+                    .or().like(SysUser::getPhone, sysUserRequest.getSearchText()));
         }
 
         return queryWrapper;

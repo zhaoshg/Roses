@@ -52,4 +52,11 @@ public interface DataScopeApi {
      */
     DataScopeDTO getDataScope(Long userId, List<SysRoleDTO> sysRoles);
 
+    /**
+     * 获取用户的数据范围
+     * @param userId 用户id
+     * @return 数据范围内容
+     */
+    DataScopeDTO getDataScope(Long userId);
+
 }

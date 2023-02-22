@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.system.modular.user.service;
 
+import cn.stylefeng.roses.kernel.system.api.SysUserRoleApi;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.request.SysUserRequest;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.request.UserRoleRequest;
 import cn.stylefeng.roses.kernel.system.modular.user.entity.SysUserRole;
@@ -37,7 +38,7 @@ import java.util.List;
  * @author chenjinlong
  * @date 2021/2/3 15:23
  */
-public interface SysUserRoleService extends IService<SysUserRole> {
+public interface SysUserRoleService extends IService<SysUserRole> , SysUserRoleApi {
 
     /**
      * 新增

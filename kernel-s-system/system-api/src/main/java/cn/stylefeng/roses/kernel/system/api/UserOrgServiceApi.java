@@ -26,6 +26,8 @@ package cn.stylefeng.roses.kernel.system.api;
 
 import cn.stylefeng.roses.kernel.system.api.pojo.user.SysUserOrgDTO;
 
+import java.util.Set;
+
 /**
  * 用户组织机构服务api
  *
@@ -51,4 +53,11 @@ public interface UserOrgServiceApi {
      */
     SysUserOrgDTO getUserOrgByUserId(Long userId);
 
+    /**
+     * 获取组织下用户id
+     *
+     * @author yx
+     * @date 2020/12/19 22:33
+     */
+    Set<Long> getUserIdsByOrgIds(Set<Long> organizationIds);
 }
