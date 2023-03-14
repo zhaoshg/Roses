@@ -63,13 +63,6 @@ public class SysMenuRequest extends BaseRequest {
      * 菜单名称
      */
     @NotBlank(message = "菜单名称不能为空", groups = {add.class, edit.class})
-    @TableUniqueValue(
-            message = "菜单名称存在重复",
-            groups = {add.class, edit.class},
-            tableName = "sys_menu",
-            columnName = "menu_name",
-            idFieldName = "menu_id",
-            excludeLogicDeleteItems = true)
     @ChineseDescription("菜单名称")
     private String menuName;
 

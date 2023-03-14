@@ -68,6 +68,8 @@ import cn.stylefeng.roses.kernel.system.modular.menu.mapper.SysMenuMapper;
 import cn.stylefeng.roses.kernel.system.modular.menu.service.SysMenuButtonService;
 import cn.stylefeng.roses.kernel.system.modular.menu.service.SysMenuResourceService;
 import cn.stylefeng.roses.kernel.system.modular.menu.service.SysMenuService;
+import cn.stylefeng.roses.kernel.validator.api.exception.ParamValidateException;
+import cn.stylefeng.roses.kernel.validator.api.exception.enums.ValidatorExceptionEnum;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -105,6 +107,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public void add(SysMenuRequest sysMenuRequest) {
+
+        // 校验菜单名称是否重复
+        validateMenu(sysMenuRequest);
 
         // 如果父节点为空，则填充为默认的父节点id
         if (sysMenuRequest.getMenuParentId() == null) {
@@ -164,6 +169,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void edit(SysMenuRequest sysMenuRequest) {
+
+        // 校验菜单名称是否重复
+        validateMenu(sysMenuRequest);
 
         // 获取库中的菜单信息
         SysMenu oldMenu = this.querySysMenu(sysMenuRequest);
@@ -927,6 +935,37 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         }
 
         return ListUtil.toList(firstLevelMenus.values());
+    }
+
+    /**
+     * 校验菜单，是否在通应用下重复
+     *
+     * @author fengshuonan
+     * @date 2023/3/14 14:37
+     */
+    private void validateMenu(SysMenuRequest request) {
+        SysMenuRequest param = new SysMenuRequest();
+        param.setAppCode(request.getAppCode());
+        param.setMenuName(request.getMenuName());
+
+        // 查询应用编码下是否存在该名称的菜单
+        List<SysMenu> list = findList(param);
+        if (ObjectUtil.isNotEmpty(list)) {
+
+            boolean haveSameFlag = true;
+
+            // 如果请求参数中有菜单id，则为编辑菜单操作，可以和本菜单重复
+            for (SysMenu sysMenu : list) {
+                if (sysMenu.getMenuId().equals(request.getMenuId())) {
+                    haveSameFlag = false;
+                    break;
+                }
+            }
+
+            if (haveSameFlag) {
+                throw new ParamValidateException(ValidatorExceptionEnum.TABLE_UNIQUE_VALIDATE_ERROR, request.getMenuName());
+            }
+        }
     }
 
 }
