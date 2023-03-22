@@ -25,6 +25,7 @@
 package cn.stylefeng.roses.kernel.dsctn.modular.factory;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.druid.DruidProperties;
+import cn.stylefeng.roses.kernel.dsctn.api.pojo.DataSourceDto;
 import cn.stylefeng.roses.kernel.dsctn.modular.entity.DatabaseInfo;
 
 /**
@@ -47,6 +48,21 @@ public class DruidPropertiesFactory {
         druidProperties.setUsername(databaseInfo.getUsername());
         druidProperties.setPassword(databaseInfo.getPassword());
         druidProperties.setUrl(databaseInfo.getJdbcUrl());
+        return druidProperties;
+    }
+
+    /**
+     * 通过DataSourceDto创建druid连接配置
+     *
+     * @author fengshuonan
+     * @date 2023/3/22 16:19
+     */
+    public static DruidProperties createDruidProperties(DataSourceDto dataSourceDto) {
+        DruidProperties druidProperties = new DruidProperties();
+        druidProperties.setDriverClassName(dataSourceDto.getJdbcDriver());
+        druidProperties.setUsername(dataSourceDto.getUsername());
+        druidProperties.setPassword(dataSourceDto.getPassword());
+        druidProperties.setUrl(dataSourceDto.getJdbcUrl());
         return druidProperties;
     }
 
