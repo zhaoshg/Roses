@@ -25,6 +25,7 @@
 package cn.stylefeng.roses.kernel.system.modular.organization.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.rule.tree.ztree.ZTreeNode;
 import cn.stylefeng.roses.kernel.system.api.OrganizationServiceApi;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationRequest;
@@ -140,4 +141,10 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
      */
     Set<Long> findAllLevelParentIdsByOrganizations(Set<Long> organizationIds);
 
+    /**
+     * 组织机构选择器
+     * @param request 请求参数
+     * @return 选择列表
+     */
+    List<SimpleDict> selector(HrOrganizationRequest request);
 }
