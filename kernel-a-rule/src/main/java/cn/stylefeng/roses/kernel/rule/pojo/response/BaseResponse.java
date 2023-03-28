@@ -80,6 +80,6 @@ public class BaseResponse implements Serializable {
      * 更新人姓名
      */
     @ChineseDescription("更新人姓名")
-    private Long updateUserName;
+    private String updateUserName;
 
 }
