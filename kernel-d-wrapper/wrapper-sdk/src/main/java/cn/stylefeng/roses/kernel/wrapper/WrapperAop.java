@@ -202,13 +202,14 @@ public class WrapperAop {
     private Map<String, Object> wrapPureObject(Object originModel, Class<? extends BaseWrapper<?>>[] baseWrapperClasses) {
 
         // 首先将原始的对象转化为map
-        Map<String, Object> originMap = BeanUtil.beanToMap(originModel);
+        Map<String, Object> originMap = null;
 
         // 经过多个包装类填充属性
         try {
             for (Class<? extends BaseWrapper<?>> baseWrapperClass : baseWrapperClasses) {
                 BaseWrapper baseWrapper = baseWrapperClass.newInstance();
                 Map<String, Object> incrementFieldsMap = baseWrapper.doWrap(originModel);
+                originMap = BeanUtil.beanToMap(originModel);
                 originMap.putAll(incrementFieldsMap);
             }
         } catch (Exception e) {

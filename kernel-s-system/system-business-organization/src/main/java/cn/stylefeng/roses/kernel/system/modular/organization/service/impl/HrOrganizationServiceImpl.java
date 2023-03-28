@@ -44,6 +44,7 @@ import cn.stylefeng.roses.kernel.rule.constants.SymbolConstant;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
+import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import cn.stylefeng.roses.kernel.rule.tree.ztree.ZTreeNode;
 import cn.stylefeng.roses.kernel.system.api.RoleDataScopeServiceApi;
@@ -311,6 +312,37 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
             }
         }
         return allLevelParentIds;
+    }
+
+    @Override
+    public List<SimpleDict> selector(HrOrganizationRequest request) {
+        LambdaQueryWrapper<HrOrganization> queryWrapper = new LambdaQueryWrapper<>();
+        String orgName = request.getOrgName();
+        String orgCode = request.getOrgCode();
+        Long orgId = request.getOrgId();
+
+        // 查询未删除状态的
+        queryWrapper.eq(HrOrganization::getDelFlag, YesOrNotEnum.N.getCode());
+        // 拼接组织机构名称条件
+        queryWrapper.like(ObjectUtil.isNotEmpty(orgName), HrOrganization::getOrgName, orgName);
+        // 拼接组织机构编码条件
+        queryWrapper.like(ObjectUtil.isNotEmpty(orgCode), HrOrganization::getOrgCode, orgCode);
+        // 拼接机构id查询条件
+        queryWrapper.eq(ObjectUtil.isNotEmpty(orgId), HrOrganization::getOrgId, orgId);
+
+        queryWrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgCode, HrOrganization::getOrgName);
+        List<HrOrganization> list = this.list(queryWrapper);
+
+        ArrayList<SimpleDict> results = new ArrayList<>();
+        for (HrOrganization org : list) {
+            SimpleDict simpleDict = new SimpleDict();
+            simpleDict.setId(org.getOrgId());
+            simpleDict.setName(org.getOrgName());
+            simpleDict.setCode(org.getOrgCode());
+            results.add(simpleDict);
+        }
+
+        return results;
     }
 
     @Override
