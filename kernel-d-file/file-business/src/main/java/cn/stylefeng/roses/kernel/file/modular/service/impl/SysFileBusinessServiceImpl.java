@@ -125,7 +125,7 @@ public class SysFileBusinessServiceImpl extends ServiceImpl<SysFileBusinessMappe
         LambdaQueryWrapper<SysFileBusiness> sysFileBusinessLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysFileBusinessLambdaQueryWrapper.eq(SysFileBusiness::getBusinessId, businessId);
         sysFileBusinessLambdaQueryWrapper.eq(SysFileBusiness::getFileId, fileId);
-        SysFileBusiness sysFileBusiness = this.getOne(sysFileBusinessLambdaQueryWrapper, true);
+        SysFileBusiness sysFileBusiness = this.getOne(sysFileBusinessLambdaQueryWrapper, false);
 
         if (sysFileBusiness != null) {
             sysFileBusiness.setDownloadCount(sysFileBusiness.getDownloadCount() + 1);
