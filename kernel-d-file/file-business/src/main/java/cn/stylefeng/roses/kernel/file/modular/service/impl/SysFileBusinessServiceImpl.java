@@ -129,9 +129,9 @@ public class SysFileBusinessServiceImpl extends ServiceImpl<SysFileBusinessMappe
 
         if (sysFileBusiness != null) {
             sysFileBusiness.setDownloadCount(sysFileBusiness.getDownloadCount() + 1);
+            this.updateById(sysFileBusiness);
         }
 
-        this.updateById(sysFileBusiness);
     }
 
     /**
