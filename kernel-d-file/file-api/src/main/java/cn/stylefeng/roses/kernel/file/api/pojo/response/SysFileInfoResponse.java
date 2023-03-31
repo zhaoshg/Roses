@@ -130,4 +130,10 @@ public class SysFileInfoResponse {
     @ChineseDescription("文件访问路径")
     private String fileUrl;
 
+    /**
+     * 下载次数
+     */
+    @ChineseDescription("下载次数")
+    private Integer downloadCount;
+
 }

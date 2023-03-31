@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.file.modular.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.file.api.FileBusinessApi;
 import cn.stylefeng.roses.kernel.file.modular.entity.SysFileBusiness;
 import cn.stylefeng.roses.kernel.file.modular.pojo.request.SysFileBusinessRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author fengshuonan
  * @date 2023/03/31 13:30
  */
-public interface SysFileBusinessService extends IService<SysFileBusiness> {
+public interface SysFileBusinessService extends IService<SysFileBusiness>, FileBusinessApi {
 
     /**
      * 新增

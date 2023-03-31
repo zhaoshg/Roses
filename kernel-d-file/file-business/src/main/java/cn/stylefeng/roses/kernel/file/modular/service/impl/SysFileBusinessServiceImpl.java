@@ -5,6 +5,8 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
+import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoResponse;
 import cn.stylefeng.roses.kernel.file.modular.entity.SysFileBusiness;
 import cn.stylefeng.roses.kernel.file.modular.enums.SysFileBusinessExceptionEnum;
 import cn.stylefeng.roses.kernel.file.modular.mapper.SysFileBusinessMapper;
@@ -16,6 +18,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +30,9 @@ import java.util.List;
  */
 @Service
 public class SysFileBusinessServiceImpl extends ServiceImpl<SysFileBusinessMapper, SysFileBusiness> implements SysFileBusinessService {
+
+    @Resource
+    private FileInfoApi fileInfoApi;
 
     @Override
     public void add(SysFileBusinessRequest sysFileBusinessRequest) {
@@ -65,6 +72,68 @@ public class SysFileBusinessServiceImpl extends ServiceImpl<SysFileBusinessMappe
         return this.list(wrapper);
     }
 
+    @Override
+    public void addFileBusinessBind(String businessCode, Long businessId, List<Long> fileIdList) {
+
+        if (ObjectUtil.isEmpty(fileIdList) || ObjectUtil.isEmpty(businessCode) || ObjectUtil.isEmpty(businessId)) {
+            return;
+        }
+
+        ArrayList<SysFileBusiness> sysFileBusinesses = new ArrayList<>();
+        for (Long fileId : fileIdList) {
+            SysFileBusiness sysFileBusiness = new SysFileBusiness();
+            sysFileBusiness.setBusinessCode(businessCode);
+            sysFileBusiness.setBusinessId(businessId);
+            sysFileBusiness.setFileId(fileId);
+            sysFileBusinesses.add(sysFileBusiness);
+        }
+
+        this.saveBatch(sysFileBusinesses);
+    }
+
+    @Override
+    public List<SysFileInfoResponse> getBusinessFileInfoList(Long businessId) {
+
+        // 获取业务下绑定的文件列表
+        LambdaQueryWrapper<SysFileBusiness> sysFileBusinessLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysFileBusinessLambdaQueryWrapper.eq(SysFileBusiness::getBusinessId, businessId);
+        List<SysFileBusiness> list = this.list(sysFileBusinessLambdaQueryWrapper);
+
+        if (ObjectUtil.isEmpty(list)) {
+            return new ArrayList<>();
+        }
+
+        // 填充文件的详细信息
+        ArrayList<SysFileInfoResponse> sysFileInfoResponses = new ArrayList<>();
+        for (SysFileBusiness sysFileBusiness : list) {
+
+            // 获取每个文件的详情
+            Long fileId = sysFileBusiness.getFileId();
+            SysFileInfoResponse fileInfoWithoutContent = fileInfoApi.getFileInfoWithoutContent(fileId);
+            if (fileInfoWithoutContent != null) {
+                fileInfoWithoutContent.setDownloadCount(sysFileBusiness.getDownloadCount());
+                sysFileInfoResponses.add(fileInfoWithoutContent);
+            }
+        }
+
+        return sysFileInfoResponses;
+    }
+
+    @Override
+    public void addFileDownloadCount(Long businessId, Long fileId) {
+
+        LambdaQueryWrapper<SysFileBusiness> sysFileBusinessLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysFileBusinessLambdaQueryWrapper.eq(SysFileBusiness::getBusinessId, businessId);
+        sysFileBusinessLambdaQueryWrapper.eq(SysFileBusiness::getFileId, fileId);
+        SysFileBusiness sysFileBusiness = this.getOne(sysFileBusinessLambdaQueryWrapper, true);
+
+        if (sysFileBusiness != null) {
+            sysFileBusiness.setDownloadCount(sysFileBusiness.getDownloadCount() + 1);
+        }
+
+        this.updateById(sysFileBusiness);
+    }
+
     /**
      * 获取信息
      *
@@ -88,17 +157,8 @@ public class SysFileBusinessServiceImpl extends ServiceImpl<SysFileBusinessMappe
     private LambdaQueryWrapper<SysFileBusiness> createWrapper(SysFileBusinessRequest sysFileBusinessRequest) {
         LambdaQueryWrapper<SysFileBusiness> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long fileBusinessId = sysFileBusinessRequest.getFileBusinessId();
         Long businessId = sysFileBusinessRequest.getBusinessId();
-        Long fileId = sysFileBusinessRequest.getFileId();
-        Integer downloadCount = sysFileBusinessRequest.getDownloadCount();
-        Long tenantId = sysFileBusinessRequest.getTenantId();
-
-        queryWrapper.eq(ObjectUtil.isNotNull(fileBusinessId), SysFileBusiness::getFileBusinessId, fileBusinessId);
         queryWrapper.eq(ObjectUtil.isNotNull(businessId), SysFileBusiness::getBusinessId, businessId);
-        queryWrapper.eq(ObjectUtil.isNotNull(fileId), SysFileBusiness::getFileId, fileId);
-        queryWrapper.eq(ObjectUtil.isNotNull(downloadCount), SysFileBusiness::getDownloadCount, downloadCount);
-        queryWrapper.eq(ObjectUtil.isNotNull(tenantId), SysFileBusiness::getTenantId, tenantId);
 
         return queryWrapper;
     }
