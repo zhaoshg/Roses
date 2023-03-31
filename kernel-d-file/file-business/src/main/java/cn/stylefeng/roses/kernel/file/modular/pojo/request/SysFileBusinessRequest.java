@@ -25,6 +25,12 @@ public class SysFileBusinessRequest extends BaseRequest {
     private Long fileBusinessId;
 
     /**
+     * 业务的编码，业务自定义
+     */
+    @ChineseDescription("业务的编码，业务自定义")
+    private String businessCode;
+
+    /**
      * 业务主键id
      */
     @ChineseDescription("业务主键id")

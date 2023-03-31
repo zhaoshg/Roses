@@ -28,6 +28,13 @@ public class SysFileBusiness extends BaseEntity {
     private Long fileBusinessId;
 
     /**
+     * 业务的编码，业务自定义
+     */
+    @TableField("business_code")
+    @ChineseDescription("业务的编码，业务自定义")
+    private String businessCode;
+
+    /**
      * 业务主键id
      */
     @TableField("business_id")
