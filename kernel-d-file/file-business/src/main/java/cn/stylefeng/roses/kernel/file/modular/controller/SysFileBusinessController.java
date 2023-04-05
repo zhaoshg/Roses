@@ -73,7 +73,7 @@ public class SysFileBusinessController {
      * @since 2023/4/5 16:00
      */
     @GetResource(name = "获取业务关联的文件信息列表", path = "/sysFileInfo/getBusinessFileList")
-    public ResponseData<List<SysFileInfoResponse>> getBusinessFileList(@RequestBody @Validated(SysFileBusinessRequest.getBusinessFileList.class) SysFileBusinessRequest sysFileBusinessRequest) {
+    public ResponseData<List<SysFileInfoResponse>> getBusinessFileList(@Validated(SysFileBusinessRequest.getBusinessFileList.class) SysFileBusinessRequest sysFileBusinessRequest) {
         List<SysFileInfoResponse> list = sysFileBusinessService.getBusinessFileInfoList(sysFileBusinessRequest.getBusinessId());
         return new SuccessResponseData<>(list);
     }
