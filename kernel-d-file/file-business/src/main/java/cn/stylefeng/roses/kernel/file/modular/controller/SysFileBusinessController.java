@@ -31,6 +31,7 @@ import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -56,7 +57,7 @@ public class SysFileBusinessController {
      * @date 2023/3/31 15:31
      */
     @PostResource(name = "增加文件下载次数", path = "/sysFileInfo/addFileDownloadCount", requiredPermission = false, requiredLogin = false)
-    public ResponseData<?> upload(@RequestBody SysFileBusinessRequest sysFileBusinessRequest) {
+    public ResponseData<?> upload(@RequestBody @Validated(SysFileBusinessRequest.addFileDownloadCount.class) SysFileBusinessRequest sysFileBusinessRequest) {
         sysFileBusinessService.addFileDownloadCount(sysFileBusinessRequest.getBusinessId(), sysFileBusinessRequest.getFileId());
         return new SuccessResponseData<>();
     }
