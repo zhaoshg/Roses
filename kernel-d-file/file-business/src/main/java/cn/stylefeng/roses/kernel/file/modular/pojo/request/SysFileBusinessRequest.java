@@ -5,6 +5,7 @@ import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -28,20 +29,21 @@ public class SysFileBusinessRequest extends BaseRequest {
      * 业务的编码，业务自定义
      */
     @ChineseDescription("业务的编码，业务自定义")
+    @NotBlank(message = "业务的编码不能为空", groups = {bindFile.class})
     private String businessCode;
 
     /**
      * 业务主键id
      */
     @ChineseDescription("业务主键id")
-    @NotNull(message = "业务主键id不能为空", groups = addFileDownloadCount.class)
+    @NotNull(message = "业务主键id不能为空", groups = {addFileDownloadCount.class, getBusinessFileList.class, bindFile.class})
     private Long businessId;
 
     /**
      * 关联文件表的id
      */
     @ChineseDescription("关联文件表的id")
-    @NotNull(message = "文件id不能为空", groups = addFileDownloadCount.class)
+    @NotNull(message = "文件id不能为空", groups = {addFileDownloadCount.class, bindFile.class})
     private Long fileId;
 
     /**
@@ -60,6 +62,20 @@ public class SysFileBusinessRequest extends BaseRequest {
      * 添加文件下载次数
      */
     public @interface addFileDownloadCount {
+
+    }
+
+    /**
+     * 获取业务关联的文件信息列表
+     */
+    public @interface getBusinessFileList {
+
+    }
+
+    /**
+     * 业务数据绑定文件
+     */
+    public @interface bindFile {
 
     }
 

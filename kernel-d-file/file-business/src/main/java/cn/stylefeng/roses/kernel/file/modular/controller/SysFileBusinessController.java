@@ -24,18 +24,22 @@
  */
 package cn.stylefeng.roses.kernel.file.modular.controller;
 
+import cn.hutool.core.collection.ListUtil;
+import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoResponse;
 import cn.stylefeng.roses.kernel.file.modular.pojo.request.SysFileBusinessRequest;
 import cn.stylefeng.roses.kernel.file.modular.service.SysFileBusinessService;
 import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
+import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 文件和业务绑定的接口
@@ -59,6 +63,33 @@ public class SysFileBusinessController {
     @PostResource(name = "增加文件下载次数", path = "/sysFileInfo/addFileDownloadCount", requiredPermission = false, requiredLogin = false)
     public ResponseData<?> upload(@RequestBody @Validated(SysFileBusinessRequest.addFileDownloadCount.class) SysFileBusinessRequest sysFileBusinessRequest) {
         sysFileBusinessService.addFileDownloadCount(sysFileBusinessRequest.getBusinessId(), sysFileBusinessRequest.getFileId());
+        return new SuccessResponseData<>();
+    }
+
+    /**
+     * 获取业务关联的文件信息列表
+     *
+     * @author fengshuonan
+     * @since 2023/4/5 16:00
+     */
+    @GetResource(name = "获取业务关联的文件信息列表", path = "/sysFileInfo/getBusinessFileList")
+    public ResponseData<List<SysFileInfoResponse>> getBusinessFileList(@RequestBody @Validated(SysFileBusinessRequest.getBusinessFileList.class) SysFileBusinessRequest sysFileBusinessRequest) {
+        List<SysFileInfoResponse> list = sysFileBusinessService.getBusinessFileInfoList(sysFileBusinessRequest.getBusinessId());
+        return new SuccessResponseData<>(list);
+    }
+
+    /**
+     * 新增绑定业务和文件
+     *
+     * @author fengshuonan
+     * @since 2023/4/4 20:56
+     */
+    @PostResource(name = "新增绑定业务和文件", path = "/sysFileInfo/bindFile")
+    public ResponseData<?> bindFile(@RequestBody @Validated(SysFileBusinessRequest.bindFile.class) SysFileBusinessRequest sysFileBusinessRequest) {
+        sysFileBusinessService.addFileBusinessBind(
+                sysFileBusinessRequest.getBusinessCode(),
+                sysFileBusinessRequest.getBusinessId(),
+                ListUtil.list(false, sysFileBusinessRequest.getFileId()));
         return new SuccessResponseData<>();
     }
 
