@@ -24,9 +24,11 @@
  */
 package cn.stylefeng.roses.kernel.file.modular.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.ListUtil;
 import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoResponse;
 import cn.stylefeng.roses.kernel.file.modular.pojo.request.SysFileBusinessRequest;
+import cn.stylefeng.roses.kernel.file.modular.pojo.vo.SysFileInfoRes;
 import cn.stylefeng.roses.kernel.file.modular.service.SysFileBusinessService;
 import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
@@ -73,9 +75,10 @@ public class SysFileBusinessController {
      * @since 2023/4/5 16:00
      */
     @GetResource(name = "获取业务关联的文件信息列表", path = "/sysFileInfo/getBusinessFileList")
-    public ResponseData<List<SysFileInfoResponse>> getBusinessFileList(@Validated(SysFileBusinessRequest.getBusinessFileList.class) SysFileBusinessRequest sysFileBusinessRequest) {
+    public ResponseData<List<SysFileInfoRes>> getBusinessFileList(@Validated(SysFileBusinessRequest.getBusinessFileList.class) SysFileBusinessRequest sysFileBusinessRequest) {
         List<SysFileInfoResponse> list = sysFileBusinessService.getBusinessFileInfoList(sysFileBusinessRequest.getBusinessId());
-        return new SuccessResponseData<>(list);
+        List<SysFileInfoRes> sysFileInfoRes = BeanUtil.copyToList(list, SysFileInfoRes.class);
+        return new SuccessResponseData<>(sysFileInfoRes);
     }
 
     /**

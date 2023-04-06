@@ -24,6 +24,13 @@
             <version>${roses.version}</version>
         </dependency>
 
+        <!--格式化用户id展示姓名使用-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>system-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!--资源api模块-->
         <!--用在资源控制器，资源扫描上-->
         <dependency>
