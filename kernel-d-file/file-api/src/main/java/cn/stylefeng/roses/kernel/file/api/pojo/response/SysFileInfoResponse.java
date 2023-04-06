@@ -27,6 +27,8 @@ package cn.stylefeng.roses.kernel.file.api.pojo.response;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * 文件信息结果集
  *
@@ -135,5 +137,17 @@ public class SysFileInfoResponse {
      */
     @ChineseDescription("下载次数")
     private Integer downloadCount;
+
+    /**
+     * 上传人id
+     */
+    @ChineseDescription("上传人id")
+    private Long uploadUserId;
+
+    /**
+     * 上传时间
+     */
+    @ChineseDescription("上传时间")
+    private Date uploadTime;
 
 }

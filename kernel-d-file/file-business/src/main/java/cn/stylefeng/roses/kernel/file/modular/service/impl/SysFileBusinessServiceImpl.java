@@ -111,7 +111,14 @@ public class SysFileBusinessServiceImpl extends ServiceImpl<SysFileBusinessMappe
             Long fileId = sysFileBusiness.getFileId();
             SysFileInfoResponse fileInfoWithoutContent = fileInfoApi.getFileInfoWithoutContent(fileId);
             if (fileInfoWithoutContent != null) {
+                // 设置下载次数
                 fileInfoWithoutContent.setDownloadCount(sysFileBusiness.getDownloadCount());
+
+                // 设置上传人id
+                fileInfoWithoutContent.setUploadUserId(sysFileBusiness.getCreateUser());
+
+                // 设置上传时间
+                fileInfoWithoutContent.setUploadTime(sysFileBusiness.getCreateTime());
                 sysFileInfoResponses.add(fileInfoWithoutContent);
             }
         }
