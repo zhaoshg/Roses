@@ -5,18 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>kernel-s-system</artifactId>
         <groupId>cn.stylefeng.roses</groupId>
+        <artifactId>kernel-s-system</artifactId>
         <version>7.4.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>system-business-theme</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
+    <packaging>jar</packaging>
 
     <dependencies>
 
