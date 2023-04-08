@@ -35,7 +35,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  * 因为ConstraintValidator的自定义校验中获取不到当前进行的group
  *
  * @author fengshuonan
- * @date 2020/8/12 20:07
+ * @since 2020/8/12 20:07
  */
 @Slf4j
 public class GunsValidator extends LocalValidatorFactoryBean {

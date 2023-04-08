@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
  * 定时控制器
  *
  * @author youyongkun
- * @date 2021/1/6 3:56 下午
+ * @since 2021/1/6 3:56 下午
  */
 @Controller
 @ApiResource(name = "定时管理相关的界面渲染", resBizType = ResBizTypeEnum.SYSTEM)
@@ -19,7 +19,7 @@ public class TimersViewController {
      * 定时管理-首页-视图
      *
      * @author youyongkun
-     * @date 2021/1/6 4:28 下午
+     * @since 2021/1/6 4:28 下午
      */
     @GetResource(name = "定时管理-首页-视图", path = "/view/sysTimers")
     public String indexView() {
@@ -30,7 +30,7 @@ public class TimersViewController {
      * 定时管理-添加-视图
      *
      * @author youyongkun
-     * @date 2021/1/6 4:28 下午
+     * @since 2021/1/6 4:28 下午
      */
     @GetResource(name = "定时管理-添加-视图", path = "/view/sysTimers/addView")
     public String addView() {
@@ -41,7 +41,7 @@ public class TimersViewController {
      * 定时管理-修改-视图
      *
      * @author youyongkun
-     * @date 2021/1/6 4:28 下午
+     * @since 2021/1/6 4:28 下午
      */
     @GetResource(name = "定时管理-修改-视图", path = "/view/sysTimers/editView")
     public String editView() {

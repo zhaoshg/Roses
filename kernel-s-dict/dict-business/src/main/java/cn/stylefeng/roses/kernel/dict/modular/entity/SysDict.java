@@ -36,7 +36,7 @@ import java.math.BigDecimal;
  * 字典实体
  *
  * @author fengshuonan
- * @date 2020/12/26 22:37
+ * @since 2020/12/26 22:37
  */
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_dict")

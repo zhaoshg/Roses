@@ -30,7 +30,7 @@ import lombok.Data;
  * 腾讯云cos文件存储配置
  *
  * @author fengshuonan
- * @date 2020/10/26 11:49
+ * @since 2020/10/26 11:49
  */
 @Data
 public class TenCosProperties {

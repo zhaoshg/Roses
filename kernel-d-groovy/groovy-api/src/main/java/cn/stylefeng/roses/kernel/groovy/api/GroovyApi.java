@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.groovy.api;
  * groovy动态脚本操作api
  *
  * @author fengshuonan
- * @date 2021/1/22 16:29
+ * @since 2021/1/22 16:29
  */
 public interface GroovyApi {
 
@@ -37,7 +37,7 @@ public interface GroovyApi {
      *
      * @param javaClassCode java类的文本信息
      * @author fengshuonan
-     * @date 2021/1/22 16:30
+     * @since 2021/1/22 16:30
      */
     Class<?> textToClass(String javaClassCode);
 
@@ -46,7 +46,7 @@ public interface GroovyApi {
      *
      * @param javaCode java语句的文本信息
      * @author fengshuonan
-     * @date 2021/1/22 16:31
+     * @since 2021/1/22 16:31
      */
     Object executeShell(String javaCode);
 
@@ -58,7 +58,7 @@ public interface GroovyApi {
      * @param parameterTypes 参数类型集合
      * @param args           参数的具体对象
      * @author fengshuonan
-     * @date 2021/1/22 16:31
+     * @since 2021/1/22 16:31
      */
     Object executeClassMethod(String javaClassCode, String method, Class<?>[] parameterTypes, Object[] args);
 

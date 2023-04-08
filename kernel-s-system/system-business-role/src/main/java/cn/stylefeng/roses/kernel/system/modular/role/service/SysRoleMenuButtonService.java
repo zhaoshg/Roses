@@ -33,7 +33,7 @@ import java.util.List;
  * 角色按钮关联 服务类
  *
  * @author fengshuonan
- * @date 2021/01/09 11:48
+ * @since 2021/01/09 11:48
  */
 public interface SysRoleMenuButtonService extends IService<SysRoleMenuButton> {
 
@@ -42,7 +42,7 @@ public interface SysRoleMenuButtonService extends IService<SysRoleMenuButton> {
      *
      * @param roleMenuButtons 角色按钮关联列表
      * @author fengshuonan
-     * @date 2022/10/14 0:56
+     * @since 2022/10/14 0:56
      */
     void batchSaveRoleMenuButton(List<SysRoleMenuButton> roleMenuButtons);
 

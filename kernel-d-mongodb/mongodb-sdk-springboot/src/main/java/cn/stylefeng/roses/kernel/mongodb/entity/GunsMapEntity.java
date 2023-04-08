@@ -37,7 +37,7 @@ import java.util.Map;
  * Mongodb 数据存储集合实体
  *
  * @author huziyang
- * @date 2021/03/20 16:24
+ * @since 2021/03/20 16:24
  */
 @Data
 @NoArgsConstructor

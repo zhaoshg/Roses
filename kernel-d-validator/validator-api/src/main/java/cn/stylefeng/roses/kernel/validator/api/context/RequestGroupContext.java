@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.validator.api.context;
  * 保存控制器的方法上的校验组，group class
  *
  * @author fengshuonan
- * @date 2020/11/4 14:31
+ * @since 2020/11/4 14:31
  */
 public class RequestGroupContext {
 
@@ -38,7 +38,7 @@ public class RequestGroupContext {
      * 设置临时的校验分组
      *
      * @author fengshuonan
-     * @date 2020/11/4 14:32
+     * @since 2020/11/4 14:32
      */
     public static void set(Class<?> groupValue) {
         GROUP_CLASS_HOLDER.set(groupValue);
@@ -48,7 +48,7 @@ public class RequestGroupContext {
      * 获取临时校验分组
      *
      * @author fengshuonan
-     * @date 2020/11/4 14:32
+     * @since 2020/11/4 14:32
      */
     public static Class<?> get() {
         return GROUP_CLASS_HOLDER.get();
@@ -58,7 +58,7 @@ public class RequestGroupContext {
      * 清除临时缓存的校验分组
      *
      * @author fengshuonan
-     * @date 2020/11/4 14:32
+     * @since 2020/11/4 14:32
      */
     public static void clear() {
         GROUP_CLASS_HOLDER.remove();

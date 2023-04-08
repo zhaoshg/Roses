@@ -31,7 +31,7 @@ import lombok.Getter;
  * 创建数据库的sql，可用在租户的创建
  *
  * @author fengshuonan
- * @date 2019-07-16-13:06
+ * @since 2019-07-16-13:06
  */
 @Getter
 public class CreateDatabaseSql extends AbstractSql {

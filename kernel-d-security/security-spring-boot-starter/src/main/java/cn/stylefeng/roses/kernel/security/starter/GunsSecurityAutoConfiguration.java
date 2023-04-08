@@ -36,7 +36,7 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
  * 安全模块自动配置
  *
  * @author fengshuonan
- * @date 2021/2/19 9:05
+ * @since 2021/2/19 9:05
  */
 @Configuration
 public class GunsSecurityAutoConfiguration {
@@ -45,7 +45,7 @@ public class GunsSecurityAutoConfiguration {
      * ThreadLocal清除器
      *
      * @author fengshuonan
-     * @date 2021/10/29 11:29
+     * @since 2021/10/29 11:29
      */
     @Bean
     public FilterRegistrationBean<ClearThreadLocalFilter> clearThreadLocalFilterFilterRegistrationBean() {

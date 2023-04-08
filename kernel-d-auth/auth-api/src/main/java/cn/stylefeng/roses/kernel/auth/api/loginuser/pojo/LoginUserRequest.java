@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
  * 获取登录用户信息的请求
  *
  * @author fengshuonan
- * @date 2021/9/29 11:25
+ * @since 2021/9/29 11:25
  */
 @Data
 @AllArgsConstructor

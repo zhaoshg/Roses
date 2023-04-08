@@ -42,7 +42,7 @@ import javax.annotation.Resource;
  * 个人信息控制器
  *
  * @author fengshuonan
- * @date 2021/3/17 22:05
+ * @since 2021/3/17 22:05
  */
 @RestController
 @ApiResource(name = "个人信息", resBizType = ResBizTypeEnum.SYSTEM)
@@ -55,7 +55,7 @@ public class PersonalInfoController {
      * 更新用户个人信息
      *
      * @author luojie
-     * @date 2020/11/6 13:50
+     * @since 2020/11/6 13:50
      */
     @PostResource(name = "个人信息_更新个人信息", path = "/sysUser/updateInfo", requiredPermission = false)
     @BusinessLog
@@ -68,7 +68,7 @@ public class PersonalInfoController {
      * 修改密码
      *
      * @author luojie
-     * @date 2020/11/6 13:50
+     * @since 2020/11/6 13:50
      */
     @PostResource(name = "个人信息_修改密码", path = "/sysUser/updatePassword", requiredPermission = false)
     @BusinessLog
@@ -81,7 +81,7 @@ public class PersonalInfoController {
      * 修改头像
      *
      * @author luojie
-     * @date 2020/11/6 13:48
+     * @since 2020/11/6 13:48
      */
     @PostResource(name = "个人信息_修改头像", path = "/sysUser/updateAvatar", requiredPermission = false)
     @BusinessLog

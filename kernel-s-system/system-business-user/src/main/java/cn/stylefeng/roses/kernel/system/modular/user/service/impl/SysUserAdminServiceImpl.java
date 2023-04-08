@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * 管理员相关的业务
  *
  * @author fengshuonan
- * @date 2022/9/30 11:07
+ * @since 2022/9/30 11:07
  */
 @Service
 public class SysUserAdminServiceImpl implements SysUserAdminService {
@@ -139,7 +139,7 @@ public class SysUserAdminServiceImpl implements SysUserAdminService {
      * 单个添加管理员用户
      *
      * @author fengshuonan
-     * @date 2022/9/30 13:29
+     * @since 2022/9/30 13:29
      */
     private void addSingleAdminUser(Long userId) {
 

@@ -33,7 +33,7 @@ import lombok.Getter;
  * Socket模块相关异常枚举
  *
  * @author majianguo
- * @date 2021/6/1 上午11:25
+ * @since 2021/6/1 上午11:25
  */
 @Getter
 public enum SocketExceptionEnum implements AbstractExceptionEnum {

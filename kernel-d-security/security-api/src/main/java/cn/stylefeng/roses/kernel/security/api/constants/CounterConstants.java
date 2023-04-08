@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.security.api.constants;
  * 黑白名单和计数器的常量
  *
  * @author fengshuonan
- * @date 2021/3/14 17:29
+ * @since 2021/3/14 17:29
  */
 public interface CounterConstants {
 

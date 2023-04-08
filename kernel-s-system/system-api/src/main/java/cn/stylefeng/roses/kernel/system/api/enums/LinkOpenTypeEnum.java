@@ -30,7 +30,7 @@ import lombok.Getter;
  * 菜单链接打开方式
  *
  * @author fengshuonan
- * @date 2020/11/23 21:30
+ * @since 2020/11/23 21:30
  */
 @Getter
 public enum LinkOpenTypeEnum {

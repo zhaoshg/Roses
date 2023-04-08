@@ -44,7 +44,7 @@ import java.io.IOException;
  * 拖拽验证码实现
  *
  * @author fengshuonan
- * @date 2021/7/5 11:34
+ * @since 2021/7/5 11:34
  */
 @Slf4j
 public class DragCaptchaService implements DragCaptchaApi {

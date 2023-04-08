@@ -12,7 +12,7 @@ import java.util.Map;
  * 构建redirect url的工具类
  *
  * @author fengshuonan
- * @date 2021/1/22 11:07
+ * @since 2021/1/22 11:07
  */
 @Slf4j
 public class RedirectUrlBuildUtil {
@@ -25,7 +25,7 @@ public class RedirectUrlBuildUtil {
      * @param originUrl 原始的url
      * @param paramsMap url上要拼接的参数信息
      * @author fengshuonan
-     * @date 2021/1/22 11:07
+     * @since 2021/1/22 11:07
      */
     public static String createRedirectUrl(String originUrl, Map<String, ?> paramsMap) {
         if (StrUtil.isBlank(originUrl)) {

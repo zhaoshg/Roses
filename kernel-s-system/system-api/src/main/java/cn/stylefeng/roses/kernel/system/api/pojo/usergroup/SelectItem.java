@@ -6,7 +6,7 @@ import lombok.Data;
  * 通用组件选择器的选择对象的封装
  *
  * @author fengshuonan
- * @date 2022/9/26 11:46
+ * @since 2022/9/26 11:46
  */
 @Data
 public class SelectItem {

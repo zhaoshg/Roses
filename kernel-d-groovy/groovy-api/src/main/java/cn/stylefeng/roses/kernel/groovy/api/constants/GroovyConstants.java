@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.groovy.api.constants;
  * groovy常量
  *
  * @author fengshuonan
- * @date 2021/1/22 16:38
+ * @since 2021/1/22 16:38
  */
 public interface GroovyConstants {
 

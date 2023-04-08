@@ -50,7 +50,7 @@ import java.util.Optional;
  * Mongodb文件管理接口控制器
  *
  * @author huziyang
- * @date 2021/03/31 17:28
+ * @since 2021/03/31 17:28
  */
 @RestController
 @ApiResource(name = "Mongodb文件接口控制器", resBizType = ResBizTypeEnum.SYSTEM)
@@ -63,7 +63,7 @@ public class MongoFileController {
      * 新增文件
      *
      * @author huziyang
-     * @date 2021/03/31 17:28
+     * @since 2021/03/31 17:28
      */
     @PostResource(name = "Mongodb文件新增", path = "/view/mongodb/file/add")
     public ResponseData<?> mongodbFileAdd(@RequestPart("file") MultipartFile file) {
@@ -74,7 +74,7 @@ public class MongoFileController {
      * 根据id删除文件
      *
      * @author huziyang
-     * @date 2021/03/31 17:28
+     * @since 2021/03/31 17:28
      */
     @PostResource(name = "Mongodb文件删除", path = "/view/mongodb/file/del")
     public ResponseData<?> mongodbFileDel(@RequestParam String id) {
@@ -86,7 +86,7 @@ public class MongoFileController {
      * 获取分页文件列表
      *
      * @author huziyang
-     * @date 2021/03/31 17:28
+     * @since 2021/03/31 17:28
      */
     @GetResource(name = "Mongodb文件列表", path = "/view/mongodb/file/list")
     public ResponseData<PageResult<?>> mongodbFileList(MongoFileEntity mongoFileEntity) {
@@ -97,7 +97,7 @@ public class MongoFileController {
      * 根据id下载文件
      *
      * @author huziyang
-     * @date 2021/03/31 17:28
+     * @since 2021/03/31 17:28
      */
     @GetResource(name = "Mongodb文件下载", path = "/view/mongodb/file/down")
     public ResponseEntity<?> mongodbFileDown(@RequestParam String id) throws UnsupportedEncodingException {

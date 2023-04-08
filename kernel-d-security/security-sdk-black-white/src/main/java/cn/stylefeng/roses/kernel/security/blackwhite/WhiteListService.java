@@ -35,7 +35,7 @@ import java.util.Collection;
  * 白名单的数据在访问资源时不受限
  *
  * @author fengshuonan
- * @date 2020/11/20 15:53
+ * @since 2020/11/20 15:53
  */
 public class WhiteListService implements WhiteListApi {
 

@@ -32,7 +32,7 @@ import java.util.List;
  * 字典模块对外提供的api，方便其他模块直接调用
  *
  * @author fengshuonan
- * @date 2020/10/29 14:45
+ * @since 2020/10/29 14:45
  */
 public interface DictApi {
 
@@ -43,7 +43,7 @@ public interface DictApi {
      * @param dictCode     字典编码
      * @return 字典名称
      * @author liuhanqing
-     * @date 2021/1/16 23:18
+     * @since 2021/1/16 23:18
      */
     String getDictName(String dictTypeCode, String dictCode);
 
@@ -53,7 +53,7 @@ public interface DictApi {
      * @param dictTypeCode 字典类型编码
      * @return 字典的集合
      * @author fengshuonan
-     * @date 2021/1/27 22:13
+     * @since 2021/1/27 22:13
      */
     List<SimpleDict> getDictDetailsByDictTypeCode(String dictTypeCode);
 
@@ -62,7 +62,7 @@ public interface DictApi {
      *
      * @param dictId 字典id
      * @author fengshuonan
-     * @date 2021/1/30 10:03
+     * @since 2021/1/30 10:03
      */
     void deleteByDictId(Long dictId);
 

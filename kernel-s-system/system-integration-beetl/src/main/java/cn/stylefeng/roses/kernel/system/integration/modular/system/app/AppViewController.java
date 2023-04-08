@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
  * 应用管理界面
  *
  * @author fengshuonan
- * @date 2021/1/6 13:32
+ * @since 2021/1/6 13:32
  */
 @Controller
 @ApiResource(name = "应用管理界面", resBizType = ResBizTypeEnum.SYSTEM)
@@ -19,7 +19,7 @@ public class AppViewController {
      * 应用管理首页
      *
      * @author fengshuonan
-     * @date 2021/1/6 13:32
+     * @since 2021/1/6 13:32
      */
     @GetResource(name = "应用管理首页", path = "/view/app")
     public String appIndex() {
@@ -30,7 +30,7 @@ public class AppViewController {
      * 新增应用界面
      *
      * @author fengshuonan
-     * @date 2021/1/6 13:37
+     * @since 2021/1/6 13:37
      */
     @GetResource(name = "新增应用界面", path = "/view/app/add")
     public String appAdd() {
@@ -41,7 +41,7 @@ public class AppViewController {
      * 编辑应用界面
      *
      * @author fengshuonan
-     * @date 2021/1/6 13:37
+     * @since 2021/1/6 13:37
      */
     @GetResource(name = "编辑应用界面", path = "/view/app/edit")
     public String appEdit() {

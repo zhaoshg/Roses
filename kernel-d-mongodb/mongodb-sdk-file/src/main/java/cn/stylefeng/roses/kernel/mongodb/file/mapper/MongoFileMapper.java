@@ -32,7 +32,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * Mongodb 文件存储Mapper
  *
  * @author huziyang
- * @date 2021/03/26 17:27
+ * @since 2021/03/26 17:27
  */
 @Configuration
 public interface MongoFileMapper extends MongoRepository<MongoFileEntity,String> {

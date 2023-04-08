@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.timer.modular.entity.SysTimers;
  * </p>
  *
  * @author stylefeng
- * @date 2020/6/30 18:26
+ * @since 2020/6/30 18:26
  */
 public interface SysTimersMapper extends BaseMapper<SysTimers> {
 

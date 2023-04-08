@@ -7,7 +7,7 @@ import lombok.Data;
  * SSO的配置
  *
  * @author fengshuonan
- * @date 2021/5/25 22:28
+ * @since 2021/5/25 22:28
  */
 @Data
 public class SsoProperties {

@@ -36,7 +36,7 @@ import java.util.List;
  * 系统用户角色service接口
  *
  * @author chenjinlong
- * @date 2021/2/3 15:23
+ * @since 2021/2/3 15:23
  */
 public interface SysUserRoleService extends IService<SysUserRole> , SysUserRoleApi {
 
@@ -45,7 +45,7 @@ public interface SysUserRoleService extends IService<SysUserRole> , SysUserRoleA
      *
      * @param userRoleRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void add(UserRoleRequest userRoleRequest);
 
@@ -54,7 +54,7 @@ public interface SysUserRoleService extends IService<SysUserRole> , SysUserRoleA
      *
      * @param userRoleRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void del(UserRoleRequest userRoleRequest);
 
@@ -63,7 +63,7 @@ public interface SysUserRoleService extends IService<SysUserRole> , SysUserRoleA
      *
      * @param userId 用户id
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void delByUserId(Long userId);
 
@@ -72,7 +72,7 @@ public interface SysUserRoleService extends IService<SysUserRole> , SysUserRoleA
      *
      * @param userRoleRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void edit(UserRoleRequest userRoleRequest);
 
@@ -81,7 +81,7 @@ public interface SysUserRoleService extends IService<SysUserRole> , SysUserRoleA
      *
      * @param userRoleRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     SysUserRole detail(UserRoleRequest userRoleRequest);
 
@@ -90,7 +90,7 @@ public interface SysUserRoleService extends IService<SysUserRole> , SysUserRoleA
      *
      * @param userRoleRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     List<SysUserRole> findList(UserRoleRequest userRoleRequest);
 
@@ -99,7 +99,7 @@ public interface SysUserRoleService extends IService<SysUserRole> , SysUserRoleA
      *
      * @param userId 用户id
      * @author chenjinlong
-     * @date 2021/2/3 15:06
+     * @since 2021/2/3 15:06
      */
     List<SysUserRole> findListByUserId(Long userId);
 
@@ -109,7 +109,7 @@ public interface SysUserRoleService extends IService<SysUserRole> , SysUserRoleA
      * @param userId 用户id
      * @return 用户角色集合
      * @author chenjinlong
-     * @date 2021/2/3 15:09
+     * @since 2021/2/3 15:09
      */
     List<Long> findRoleIdsByUserId(Long userId);
 
@@ -118,7 +118,7 @@ public interface SysUserRoleService extends IService<SysUserRole> , SysUserRoleA
      *
      * @param sysUserRequest 请求参数
      * @author chenjinlong
-     * @date 2021/2/3 15:16
+     * @since 2021/2/3 15:16
      */
     void assignRoles(SysUserRequest sysUserRequest);
 

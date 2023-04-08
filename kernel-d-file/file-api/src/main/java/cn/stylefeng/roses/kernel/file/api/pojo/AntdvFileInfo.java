@@ -6,7 +6,7 @@ import lombok.Data;
  * 前端antdv组件需要的文件信息封装
  *
  * @author fengshuonan
- * @date 2022/1/1 22:14
+ * @since 2022/1/1 22:14
  */
 @Data
 public class AntdvFileInfo {

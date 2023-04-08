@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * 获取当前登录用户的租户code
  *
  * @author fengshuonan
- * @date 2022/11/7 21:01
+ * @since 2022/11/7 21:01
  */
 @Service
 public class TenantPrefixService implements TenantPrefixApi {

@@ -30,7 +30,7 @@ package cn.stylefeng.roses.kernel.scanner.api.holder;
  * 获取ip地址的方法较慢，并且每个资源装配需要装填ip地址，所以用ThreadLocal临时缓存
  *
  * @author fengshuonan
- * @date 2020/10/19 21:15
+ * @since 2020/10/19 21:15
  */
 public class IpAddrHolder {
 

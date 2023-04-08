@@ -62,7 +62,7 @@ import java.util.List;
  * 基础字典 服务实现类
  *
  * @author fengshuonan
- * @date 2020/12/26 22:36
+ * @since 2020/12/26 22:36
  */
 @Service
 @Slf4j
@@ -228,7 +228,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
      * 获取详细信息
      *
      * @author chenjinlong
-     * @date 2021/1/13 10:50
+     * @since 2021/1/13 10:50
      */
     private SysDict querySysDict(DictRequest dictRequest) {
         SysDict sysDict = this.getById(dictRequest.getDictId());
@@ -242,7 +242,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
      * 构建wrapper
      *
      * @author chenjinlong
-     * @date 2021/1/13 10:50
+     * @since 2021/1/13 10:50
      */
     private LambdaQueryWrapper<SysDict> createWrapper(DictRequest dictRequest) {
         LambdaQueryWrapper<SysDict> queryWrapper = new LambdaQueryWrapper<>();
@@ -269,7 +269,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
      * 检查添加和编辑字典是否有重复的编码和名称
      *
      * @author fengshuonan
-     * @date 2021/5/12 16:58
+     * @since 2021/5/12 16:58
      */
     private void validateRepeat(DictRequest dictRequest, boolean editFlag) {
 

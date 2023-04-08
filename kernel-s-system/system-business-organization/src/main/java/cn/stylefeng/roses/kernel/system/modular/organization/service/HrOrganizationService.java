@@ -40,7 +40,7 @@ import java.util.Set;
  * 系统组织机构服务
  *
  * @author fengshuonan
- * @date 2020/11/04 11:05
+ * @since 2020/11/04 11:05
  */
 public interface HrOrganizationService extends IService<HrOrganization>, OrganizationServiceApi {
 
@@ -49,7 +49,7 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
      *
      * @param hrOrganizationRequest 组织机构请求参数
      * @author fengshuonan
-     * @date 2020/11/04 11:05
+     * @since 2020/11/04 11:05
      */
     void add(HrOrganizationRequest hrOrganizationRequest);
 
@@ -58,7 +58,7 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
      *
      * @param hrOrganizationRequest 组织机构请求参数
      * @author fengshuonan
-     * @date 2020/11/04 11:05
+     * @since 2020/11/04 11:05
      */
     void del(HrOrganizationRequest hrOrganizationRequest);
 
@@ -67,7 +67,7 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
      *
      * @param hrOrganizationRequest 组织机构请求参数
      * @author fengshuonan
-     * @date 2020/11/04 11:05
+     * @since 2020/11/04 11:05
      */
     void edit(HrOrganizationRequest hrOrganizationRequest);
 
@@ -76,7 +76,7 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
      *
      * @param hrOrganizationRequest 请求参数
      * @author fengshuonan
-     * @date 2020/11/18 22:38
+     * @since 2020/11/18 22:38
      */
     void updateStatus(HrOrganizationRequest hrOrganizationRequest);
 
@@ -86,7 +86,7 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
      * @param hrOrganizationRequest 组织机构请求参数
      * @return 组织机构详情
      * @author fengshuonan
-     * @date 2020/11/04 11:05
+     * @since 2020/11/04 11:05
      */
     HrOrganization detail(HrOrganizationRequest hrOrganizationRequest);
 
@@ -96,7 +96,7 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
      * @param hrOrganizationRequest 组织机构请求参数
      * @return 组织机构详情分页列表
      * @author fengshuonan
-     * @date 2020/11/04 11:05
+     * @since 2020/11/04 11:05
      */
     PageResult<HrOrganization> findPage(HrOrganizationRequest hrOrganizationRequest);
 
@@ -106,7 +106,7 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
      * @param hrOrganizationRequest 组织机构请求参数
      * @return 组织机构详情列表
      * @author fengshuonan
-     * @date 2020/11/04 11:05
+     * @since 2020/11/04 11:05
      */
     List<HrOrganization> findList(HrOrganizationRequest hrOrganizationRequest);
 
@@ -116,7 +116,7 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
      * @param hrOrganizationRequest 查询参数
      * @return 系统组织机构树
      * @author chenjinlong
-     * @date 2020/11/6 13:41
+     * @since 2020/11/6 13:41
      */
     List<OrganizationTreeNode> organizationTree(HrOrganizationRequest hrOrganizationRequest);
 
@@ -127,7 +127,7 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
      * @param buildTree             是否构建成树结构的节点，true-带树结构，false-不带
      * @return ztree形式的组织机构树
      * @author fengshuonan
-     * @date 2021/1/9 18:40
+     * @since 2021/1/9 18:40
      */
     List<ZTreeNode> orgZTree(HrOrganizationRequest hrOrganizationRequest, boolean buildTree);
 
@@ -137,7 +137,7 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
      * @param organizationIds 组织架构id集合
      * @return 被查询参数id集合的所有层级父级id，包含他们本身
      * @author fengshuonan
-     * @date 2020/11/6 14:24
+     * @since 2020/11/6 14:24
      */
     Set<Long> findAllLevelParentIdsByOrganizations(Set<Long> organizationIds);
 

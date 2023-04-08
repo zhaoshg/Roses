@@ -41,7 +41,7 @@ import java.util.List;
  * 系统角色参数
  *
  * @author majianguo
- * @date 2020/11/5 下午4:32
+ * @since 2020/11/5 下午4:32
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

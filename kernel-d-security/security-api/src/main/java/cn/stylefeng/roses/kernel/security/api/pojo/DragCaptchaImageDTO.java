@@ -8,7 +8,7 @@ import lombok.Data;
  * 剪裁图片dto传输实体
  *
  * @author fengshuonan
- * @date 2021/7/5 14:10
+ * @since 2021/7/5 14:10
  */
 @Data
 @AllArgsConstructor

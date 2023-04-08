@@ -33,7 +33,7 @@ import lombok.Getter;
  * 拓展字段的异常枚举
  *
  * @author fengshuonan
- * @date 2022-03-29 23:14:31
+ * @since 2022-03-29 23:14:31
  */
 @Getter
 public enum ExpandExceptionEnum implements AbstractExceptionEnum {

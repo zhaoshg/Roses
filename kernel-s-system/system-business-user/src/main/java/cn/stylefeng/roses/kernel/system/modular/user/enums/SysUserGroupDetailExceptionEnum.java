@@ -8,7 +8,7 @@ import lombok.Getter;
  * 用户组详情异常相关枚举
  *
  * @author fengshuonan
- * @date 2022/09/26 10:12
+ * @since 2022/09/26 10:12
  */
 @Getter
 public enum SysUserGroupDetailExceptionEnum implements AbstractExceptionEnum {

@@ -33,7 +33,7 @@ import lombok.Getter;
  * 计数器校验
  *
  * @author fengshuonan
- * @date 2020/11/14 17:54
+ * @since 2020/11/14 17:54
  */
 @Getter
 public enum CountValidateExceptionEnum implements AbstractExceptionEnum {

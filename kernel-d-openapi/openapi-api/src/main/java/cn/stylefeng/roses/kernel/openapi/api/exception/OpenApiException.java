@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  * OpenApi模块的异常
  *
  * @author caiti
- * @date 2022-11-11
+ * @since 2022-11-11
  */
 public class OpenApiException extends ServiceException {
 

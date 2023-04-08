@@ -20,7 +20,7 @@ import java.util.Map;
  * beetl字典标签基类
  *
  * @author liuhanqing
- * @date 2021/1/16 18:45
+ * @since 2021/1/16 18:45
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -99,7 +99,7 @@ public class SysDictBaseTag extends GeneralVarTagBinding {
      * 初始化绑定属性
      *
      * @author liuhanqing
-     * @date 2021/1/16 23:49
+     * @since 2021/1/16 23:49
      */
     public void initAttr() {
         Map<String, Object> attrs = this.getAttributes();
@@ -156,7 +156,7 @@ public class SysDictBaseTag extends GeneralVarTagBinding {
      *
      * @return 字典类型
      * @author liuhanqing
-     * @date 2021/1/16 23:46
+     * @since 2021/1/16 23:46
      */
     public SysDictType getDictType() {
         // 根据字典类型编码去查询字典类型
@@ -169,7 +169,7 @@ public class SysDictBaseTag extends GeneralVarTagBinding {
     /**
      * @return 根据字典类型返回字典集合
      * @author liuhanqing
-     * @date 2021/1/16 23:46
+     * @since 2021/1/16 23:46
      */
     public List<SysDict> getDictList() {
         // 查询字典列表

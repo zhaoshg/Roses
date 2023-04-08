@@ -8,7 +8,7 @@ import lombok.Getter;
  * 常用功能列表异常相关枚举
  *
  * @author fengshuonan
- * @date 2022/02/10 21:17
+ * @since 2022/02/10 21:17
  */
 @Getter
 public enum SysStatisticsUrlExceptionEnum implements AbstractExceptionEnum {

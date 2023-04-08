@@ -57,7 +57,7 @@ import java.util.Date;
  * 系统应用service接口实现类
  *
  * @author fengshuonan
- * @date 2020/3/13 16:15
+ * @since 2020/3/13 16:15
  */
 @Service
 public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLoginLog> implements SysLoginLogService, LoginLogServiceApi {
@@ -158,7 +158,7 @@ public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLo
      * 获取详细信息
      *
      * @author chenjinlong
-     * @date 2021/1/13 10:50
+     * @since 2021/1/13 10:50
      */
     private SysLoginLog querySysLoginLogById(SysLoginLogRequest sysLoginLogRequest) {
         SysLoginLog sysLoginLog = this.getById(sysLoginLogRequest.getLlgId());
@@ -172,7 +172,7 @@ public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLo
      * 构建wrapper
      *
      * @author chenjinlong
-     * @date 2021/1/13 10:50
+     * @since 2021/1/13 10:50
      */
     private LambdaQueryWrapper<SysLoginLog> createWrapper(SysLoginLogRequest sysLoginLogRequest) {
         LambdaQueryWrapper<SysLoginLog> queryWrapper = new LambdaQueryWrapper<>();

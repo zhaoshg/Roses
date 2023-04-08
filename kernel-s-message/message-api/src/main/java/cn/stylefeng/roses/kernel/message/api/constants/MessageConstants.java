@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.message.api.constants;
  * message模块的常量
  *
  * @author liuhanqing
- * @date 2021/1/1 20:58
+ * @since 2021/1/1 20:58
  */
 public interface MessageConstants {
 

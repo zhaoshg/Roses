@@ -34,7 +34,7 @@ import lombok.Getter;
  * 拼音异常
  *
  * @author fengshuonan
- * @date 2020/12/3 18:10
+ * @since 2020/12/3 18:10
  */
 @Getter
 public class PinyinException extends ServiceException {

@@ -34,7 +34,7 @@ import java.util.List;
  * 角色绑定的数据范围
  *
  * @author fengshuonan
- * @date 2021/7/31 17:54
+ * @since 2021/7/31 17:54
  */
 public class RoleDataScopeRedisCache extends AbstractRedisCacheOperator<List<Long>> {
 

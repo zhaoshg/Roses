@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  * 系统配置表的异常
  *
  * @author fengshuonan
- * @date 2020/10/15 15:59
+ * @since 2020/10/15 15:59
  */
 public class ConfigException extends ServiceException {
 

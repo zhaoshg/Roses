@@ -26,7 +26,7 @@ import static cn.stylefeng.roses.kernel.scanner.api.constants.ScannerConstants.*
  * 运维平台资源汇报过程
  *
  * @author fengshuonan
- * @date 2022/4/2 14:38
+ * @since 2022/4/2 14:38
  */
 public class DefaultDevOpsReportImpl implements DevOpsReportApi {
 

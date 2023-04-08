@@ -8,7 +8,7 @@ import lombok.Getter;
  * 用于标识mapping.xml中不同数据库的标识
  *
  * @author stylefeng
- * @date 2020/6/20 21:08
+ * @since 2020/6/20 21:08
  */
 @Getter
 public enum DbTypeEnum {
@@ -63,7 +63,7 @@ public enum DbTypeEnum {
      * 通过url判断是哪种数据库
      *
      * @author fengshuonan
-     * @date 2022/8/23 14:22
+     * @since 2022/8/23 14:22
      */
     public static String getTypeByUrl(String url) {
         if (url == null) {

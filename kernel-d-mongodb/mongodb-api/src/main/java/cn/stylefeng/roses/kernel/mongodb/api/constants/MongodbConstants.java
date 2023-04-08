@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.mongodb.api.constants;
  * Mongodb模块的常量
  *
  * @author huziyang
- * @date 2021/03/20 16:24
+ * @since 2021/03/20 16:24
  */
 public interface MongodbConstants {
 

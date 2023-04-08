@@ -34,7 +34,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  * 基于redis的资源缓存
  *
  * @author fengshuonan
- * @date 2021/5/17 16:05
+ * @since 2021/5/17 16:05
  */
 public class RedisResourceCache extends AbstractRedisHashCacheOperator<ResourceDefinition> {
 
@@ -42,7 +42,7 @@ public class RedisResourceCache extends AbstractRedisHashCacheOperator<ResourceD
      * RedisTemplate的key是资源url，value是ResourceDefinition
      *
      * @author fengshuonan
-     * @date 2021/5/17 16:06
+     * @since 2021/5/17 16:06
      */
     public RedisResourceCache(RedisTemplate<String, ResourceDefinition> redisTemplate) {
         super(redisTemplate);
@@ -52,7 +52,7 @@ public class RedisResourceCache extends AbstractRedisHashCacheOperator<ResourceD
      * hash结构的key
      *
      * @author fengshuonan
-     * @date 2021/5/17 17:34
+     * @since 2021/5/17 17:34
      */
     @Override
     public String getCommonKeyPrefix() {

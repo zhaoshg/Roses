@@ -37,7 +37,7 @@ import java.util.List;
  * 一般由mybatis-plus的Page对象转为PageResult
  *
  * @author fengshuonan
- * @date 2020/10/15 16:57
+ * @since 2020/10/15 16:57
  */
 public class PageResultFactory {
 
@@ -45,7 +45,7 @@ public class PageResultFactory {
      * 将mybatis-plus的page转成自定义的PageResult，扩展了totalPage总页数
      *
      * @author fengshuonan
-     * @date 2020/10/15 15:53
+     * @since 2020/10/15 15:53
      */
     public static <T> PageResult<T> createPageResult(Page<T> page) {
         PageResult<T> pageResult = new PageResult<>();
@@ -62,7 +62,7 @@ public class PageResultFactory {
      * 将mybatis-plus的page转成自定义的PageResult，扩展了totalPage总页数
      *
      * @author fengshuonan
-     * @date 2020/10/15 15:53
+     * @since 2020/10/15 15:53
      */
     public static <T> PageResult<T> createPageResult(List<T> rows, Long count, Integer pageSize, Integer pageNo) {
         PageResult<T> pageResult = new PageResult<>();

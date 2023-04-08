@@ -35,7 +35,7 @@ import java.util.List;
  * 默认递归工具类，用于遍历有父子关系的节点，例如菜单树，字典树等等
  *
  * @author fengshuonan
- * @date 2018/7/25 下午5:59
+ * @since 2018/7/25 下午5:59
  */
 @Data
 public class DefaultTreeBuildFactory<T extends AbstractTreeNode> implements AbstractTreeBuildFactory<T> {

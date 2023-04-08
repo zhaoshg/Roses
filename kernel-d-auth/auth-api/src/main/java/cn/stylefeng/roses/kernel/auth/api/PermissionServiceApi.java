@@ -30,7 +30,7 @@ import cn.stylefeng.roses.kernel.auth.api.exception.AuthException;
  * 权限相关的服务接口
  *
  * @author fengshuonan
- * @date 2020/10/19 14:24
+ * @since 2020/10/19 14:24
  */
 public interface PermissionServiceApi {
 
@@ -43,7 +43,7 @@ public interface PermissionServiceApi {
      * @param requestUrl 被校验的url
      * @throws AuthException 认证失败的异常信息
      * @author fengshuonan
-     * @date 2020/10/19 14:50
+     * @since 2020/10/19 14:50
      */
     void checkPermission(String token, String requestUrl) throws AuthException;
 

@@ -35,7 +35,7 @@ import java.util.Map;
  * 系统用户的拓展
  *
  * @author fengshuonan
- * @date 2022/4/1 11:30
+ * @since 2022/4/1 11:30
  */
 public class UserExpandWrapper implements BaseWrapper<SysUserDTO> {
 

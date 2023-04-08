@@ -33,7 +33,7 @@ import lombok.Getter;
  * 职务异常
  *
  * @author fengshuonan
- * @date 2020/11/6 18:08
+ * @since 2020/11/6 18:08
  */
 @Getter
 public enum PositionExceptionEnum implements AbstractExceptionEnum {

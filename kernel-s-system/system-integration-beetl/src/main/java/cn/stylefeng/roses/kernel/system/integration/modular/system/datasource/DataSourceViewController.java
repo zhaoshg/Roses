@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
  * 多数据源界面
  *
  * @author fengshuonan
- * @date 2021/1/23 21:45
+ * @since 2021/1/23 21:45
  */
 @Controller
 @ApiResource(name = "多数据源界面", resBizType = ResBizTypeEnum.SYSTEM)
@@ -19,7 +19,7 @@ public class DataSourceViewController {
      * 多数据源列表界面
      *
      * @author fengshuonan
-     * @date 2021/1/23 21:45
+     * @since 2021/1/23 21:45
      */
     @GetResource(name = "多数据源列表界面", path = "/view/datasource")
     public String indexView() {
@@ -30,7 +30,7 @@ public class DataSourceViewController {
      * 多数据源新增界面
      *
      * @author fengshuonan
-     * @date 2021/1/23 21:59
+     * @since 2021/1/23 21:59
      */
     @GetResource(name = "多数据源新增界面", path = "/view/datasource/add")
     public String addView() {

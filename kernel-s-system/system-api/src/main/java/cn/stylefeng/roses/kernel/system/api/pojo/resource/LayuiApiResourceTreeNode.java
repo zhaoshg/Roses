@@ -34,7 +34,7 @@ import java.util.List;
  * 用于渲染api资源树（layui插件）
  *
  * @author fengshuonan
- * @date 2021/1/14 21:51
+ * @since 2021/1/14 21:51
  */
 @Data
 public class LayuiApiResourceTreeNode implements AbstractTreeNode<LayuiApiResourceTreeNode> {

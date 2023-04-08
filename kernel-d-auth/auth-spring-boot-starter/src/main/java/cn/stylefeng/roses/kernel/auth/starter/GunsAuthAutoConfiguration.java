@@ -52,7 +52,7 @@ import java.util.Set;
  * 认证和鉴权模块的自动配置
  *
  * @author fengshuonan
- * @date 2020/11/30 22:16
+ * @since 2020/11/30 22:16
  */
 @Configuration
 public class GunsAuthAutoConfiguration {
@@ -64,7 +64,7 @@ public class GunsAuthAutoConfiguration {
      * jwt操作工具类的配置
      *
      * @author fengshuonan
-     * @date 2020/12/1 14:40
+     * @since 2020/12/1 14:40
      */
     @Bean
     @ConditionalOnMissingBean(JwtApi.class)
@@ -83,7 +83,7 @@ public class GunsAuthAutoConfiguration {
      * Bcrypt方式的密码加密
      *
      * @author fengshuonan
-     * @date 2020/12/21 17:45
+     * @since 2020/12/21 17:45
      */
     @Bean
     @ConditionalOnMissingBean(PasswordStoredEncryptApi.class)
@@ -95,7 +95,7 @@ public class GunsAuthAutoConfiguration {
      * RSA方式密码加密传输
      *
      * @author fengshuonan
-     * @date 2020/12/21 17:45
+     * @since 2020/12/21 17:45
      */
     @Bean
     @ConditionalOnMissingBean(PasswordTransferEncryptApi.class)
@@ -107,7 +107,7 @@ public class GunsAuthAutoConfiguration {
      * session cookie的创建
      *
      * @author fengshuonan
-     * @date 2020/12/27 15:48
+     * @since 2020/12/27 15:48
      */
     @Bean
     @ConditionalOnMissingBean(SessionCookieCreator.class)
@@ -121,7 +121,7 @@ public class GunsAuthAutoConfiguration {
      * 如需替换请在项目中增加一个SessionManagerApi Bean即可
      *
      * @author fengshuonan
-     * @date 2020/11/30 22:17
+     * @since 2020/11/30 22:17
      */
     @Bean
     @ConditionalOnMissingBean(SessionManagerApi.class)
@@ -134,7 +134,7 @@ public class GunsAuthAutoConfiguration {
      * 清空无用登录用户缓存的定时任务
      *
      * @author fengshuonan
-     * @date 2021/3/30 11:32
+     * @since 2021/3/30 11:32
      */
     @Bean
     @ConditionalOnMissingBean(ClearInvalidLoginUserCacheTimer.class)

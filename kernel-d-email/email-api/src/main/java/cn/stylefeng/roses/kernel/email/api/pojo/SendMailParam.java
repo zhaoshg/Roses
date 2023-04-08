@@ -35,7 +35,7 @@ import java.util.Map;
  * 发送邮件的请求参数
  *
  * @author fengshuonan
- * @date 2018-07-05 21:19
+ * @since 2018-07-05 21:19
  */
 @Data
 public class SendMailParam {

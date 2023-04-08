@@ -35,7 +35,7 @@ import java.util.List;
  * 菜单资源信息
  *
  * @author fengshuonan
- * @date 2021/8/8 21:38
+ * @since 2021/8/8 21:38
  */
 public interface SysMenuResourceService extends IService<SysMenuResource> {
 
@@ -45,7 +45,7 @@ public interface SysMenuResourceService extends IService<SysMenuResource> {
      * @param businessId 业务id，菜单或按钮id
      * @return 资源树列表
      * @author fengshuonan
-     * @date 2021/8/8 21:56
+     * @since 2021/8/8 21:56
      */
     List<ResourceTreeNode> getMenuResourceTree(Long businessId);
 
@@ -53,7 +53,7 @@ public interface SysMenuResourceService extends IService<SysMenuResource> {
      * 添加菜单和资源的绑定
      *
      * @author fengshuonan
-     * @date 2021/8/10 13:58
+     * @since 2021/8/10 13:58
      */
     void addMenuResourceBind(SysMenuResourceRequest sysMenuResourceRequest);
 
@@ -63,7 +63,7 @@ public interface SysMenuResourceService extends IService<SysMenuResource> {
      * @param decisionFirstStart 判断是否是第一次启动，参数传true，则判断必须是第一次启动才执行update操作
      * @param newAppCode         新应用编码
      * @author fengshuonan
-     * @date 2022/11/16 23:13
+     * @since 2022/11/16 23:13
      */
     void updateNewAppCode(Boolean decisionFirstStart, String newAppCode);
 

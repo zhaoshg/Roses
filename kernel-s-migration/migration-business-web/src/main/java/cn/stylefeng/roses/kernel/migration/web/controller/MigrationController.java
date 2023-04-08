@@ -24,7 +24,7 @@ import java.util.List;
  * 数据迁移控制器
  *
  * @author majianguo
- * @date 2021/7/6 17:35
+ * @since 2021/7/6 17:35
  */
 @RestController
 @ApiResource(name = "数据迁移控制器", resBizType = ResBizTypeEnum.SYSTEM)
@@ -38,7 +38,7 @@ public class MigrationController {
      *
      * @return {@link ResponseData}
      * @author majianguo
-     * @date 2021/7/6 17:37
+     * @since 2021/7/6 17:37
      **/
     @GetResource(name = "获取所有可备份数据列表", path = "/dataMigration/getAllMigrationList")
     public ResponseData<List<MigrationRequest>> getAllMigrationList() {
@@ -51,7 +51,7 @@ public class MigrationController {
      *
      * @return {@link cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData}
      * @author majianguo
-     * @date 2021/7/7 11:11
+     * @since 2021/7/7 11:11
      **/
     @GetResource(name = "备份指定数据列表", path = "/dataMigration/migrationSelectData")
     public ResponseData<String> migrationSelectData(@Validated(MigrationAggregationPOJO.export.class) MigrationAggregationPOJO migrationAggregationPOJO) {
@@ -74,7 +74,7 @@ public class MigrationController {
      *
      * @return {@link ResponseData}
      * @author majianguo
-     * @date 2021/7/7 11:11
+     * @since 2021/7/7 11:11
      **/
     @PostResource(name = "恢复备份数据", path = "/dataMigration/restoreData")
     public ResponseData<?> restoreData(@RequestPart("file") MultipartFile file, String type) {

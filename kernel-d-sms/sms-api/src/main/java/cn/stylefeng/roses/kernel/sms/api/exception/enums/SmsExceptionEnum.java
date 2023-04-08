@@ -33,7 +33,7 @@ import lombok.Getter;
  * 短信发送的异常枚举
  *
  * @author fengshuonan
- * @date 2020/10/26 17:19
+ * @since 2020/10/26 17:19
  */
 @Getter
 public enum SmsExceptionEnum implements AbstractExceptionEnum {

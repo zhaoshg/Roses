@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.pinyin.api;
  * 拼音转化接口
  *
  * @author fengshuonan
- * @date 2020/12/4 9:30
+ * @since 2020/12/4 9:30
  */
 public interface PinYinApi {
 
@@ -43,7 +43,7 @@ public interface PinYinApi {
      * @param lastnameChines 中文姓氏
      * @return 姓氏的首字母大写
      * @author fengshuonan
-     * @date 2020/12/4 10:34
+     * @since 2020/12/4 10:34
      */
     String getLastnameFirstLetterUpper(String lastnameChines);
 
@@ -55,7 +55,7 @@ public interface PinYinApi {
      * @param chineseString 中文字符串
      * @return 中文字符串每个字的第一个字母大写
      * @author fengshuonan
-     * @date 2020/12/4 13:41
+     * @since 2020/12/4 13:41
      */
     String getChineseStringFirstLetterUpper(String chineseString);
 
@@ -67,7 +67,7 @@ public interface PinYinApi {
      * @param chineseString 中文字符串
      * @return 拼音形式的字符串
      * @author fengshuonan
-     * @date 2020/12/4 14:55
+     * @since 2020/12/4 14:55
      */
     String parsePinyinString(String chineseString);
 
@@ -79,7 +79,7 @@ public interface PinYinApi {
      * @param chinesString 中文字符串
      * @return 每个字的拼音首字母组合
      * @author fengshuonan
-     * @date 2020/12/4 15:18
+     * @since 2020/12/4 15:18
      */
     String parseEveryPinyinFirstLetter(String chinesString);
 
@@ -89,7 +89,7 @@ public interface PinYinApi {
      * @param chineseString 中文字符串
      * @return ASCII码
      * @author fengshuonan
-     * @date 2020/12/4 15:21
+     * @since 2020/12/4 15:21
      */
     String getChineseAscii(String chineseString);
 

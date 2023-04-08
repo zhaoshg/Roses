@@ -34,7 +34,7 @@ import java.util.Date;
  * 附件列表返回类
  *
  * @author fengshuonan
- * @date 2020/12/30 21:24
+ * @since 2020/12/30 21:24
  */
 @Data
 public class SysFileInfoListResponse implements Serializable {

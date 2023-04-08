@@ -35,7 +35,7 @@ import java.util.Date;
  * Mongodb 文件存储集合实体
  *
  * @author huziyang
- * @date 2021/03/26 17:23
+ * @since 2021/03/26 17:23
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

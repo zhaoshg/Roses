@@ -33,7 +33,7 @@ import java.util.Map;
  * jwt相关的操作api
  *
  * @author fengshuonan
- * @date 2020/10/21 11:31
+ * @since 2020/10/21 11:31
  */
 public interface JwtApi {
 
@@ -43,7 +43,7 @@ public interface JwtApi {
      * @param payload jwt的载体信息
      * @return jwt token
      * @author fengshuonan
-     * @date 2020/10/21 11:38
+     * @since 2020/10/21 11:38
      */
     String generateToken(Map<String, Object> payload);
 
@@ -53,7 +53,7 @@ public interface JwtApi {
      * @param defaultJwtPayload jwt的载体信息
      * @return jwt token
      * @author fengshuonan
-     * @date 2020/10/21 11:38
+     * @since 2020/10/21 11:38
      */
     String generateTokenDefaultPayload(DefaultJwtPayload defaultJwtPayload);
 
@@ -63,7 +63,7 @@ public interface JwtApi {
      * @param token jwt的token
      * @return jwt的payload
      * @author fengshuonan
-     * @date 2020/10/21 11:52
+     * @since 2020/10/21 11:52
      */
     Map<String, Object> getJwtPayloadClaims(String token);
 
@@ -73,7 +73,7 @@ public interface JwtApi {
      * @param token jwt的token
      * @return 返回默认格式的payload
      * @author fengshuonan
-     * @date 2020/10/21 11:51
+     * @since 2020/10/21 11:51
      */
     DefaultJwtPayload getDefaultPayload(String token);
 
@@ -90,7 +90,7 @@ public interface JwtApi {
      * @param token jwt的token
      * @return true-token正确，false-token错误或失效
      * @author fengshuonan
-     * @date 2020/10/21 11:43
+     * @since 2020/10/21 11:43
      */
     boolean validateToken(String token);
 
@@ -105,7 +105,7 @@ public interface JwtApi {
      * @param token jwt的token
      * @throws JwtException Jwt相关的业务异常
      * @author fengshuonan
-     * @date 2020/10/21 11:43
+     * @since 2020/10/21 11:43
      */
     void validateTokenWithException(String token) throws JwtException;
 
@@ -115,7 +115,7 @@ public interface JwtApi {
      * @param token jwt token
      * @return true-token失效，false-token没失效
      * @author fengshuonan
-     * @date 2020/10/21 11:56
+     * @since 2020/10/21 11:56
      */
     boolean validateTokenIsExpired(String token);
 

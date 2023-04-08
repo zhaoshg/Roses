@@ -35,7 +35,7 @@ import cn.stylefeng.roses.kernel.jwt.api.pojo.payload.DefaultJwtPayload;
  * 认证服务的接口，包括基本的登录退出操作和校验token等操作
  *
  * @author fengshuonan
- * @date 2020/10/26 14:41
+ * @since 2020/10/26 14:41
  */
 public interface AuthServiceApi {
 
@@ -45,7 +45,7 @@ public interface AuthServiceApi {
      * @param loginRequest 登录的请求
      * @return token 一般为jwt token
      * @author fengshuonan
-     * @date 2020/10/26 14:41
+     * @since 2020/10/26 14:41
      */
     LoginResponse login(LoginRequest loginRequest);
 
@@ -54,7 +54,7 @@ public interface AuthServiceApi {
      *
      * @param username 账号
      * @author fengshuonan
-     * @date 2020/10/26 14:40
+     * @since 2020/10/26 14:40
      */
     LoginResponse loginWithUserName(String username);
 
@@ -64,7 +64,7 @@ public interface AuthServiceApi {
      * @param username 账号
      * @param caToken  sso登录成功后的会话
      * @author fengshuonan
-     * @date 2021/5/25 22:44
+     * @since 2021/5/25 22:44
      */
     LoginResponse loginWithUserNameAndCaToken(String username, String caToken);
 
@@ -73,7 +73,7 @@ public interface AuthServiceApi {
      *
      * @param loginWithTokenRequest 请求
      * @author fengshuonan
-     * @date 2021/5/25 22:44
+     * @since 2021/5/25 22:44
      */
     LoginResponse LoginWithToken(LoginWithTokenRequest loginWithTokenRequest);
 
@@ -81,7 +81,7 @@ public interface AuthServiceApi {
      * 当前登录人退出登录
      *
      * @author fengshuonan
-     * @date 2020/10/19 14:16
+     * @since 2020/10/19 14:16
      */
     void logout();
 
@@ -90,7 +90,7 @@ public interface AuthServiceApi {
      *
      * @param token 某个用户的登录token
      * @author fengshuonan
-     * @date 2020/10/19 14:16
+     * @since 2020/10/19 14:16
      */
     void logoutWithToken(String token);
 
@@ -103,7 +103,7 @@ public interface AuthServiceApi {
      * @return token解析出的用户基本信息
      * @throws AuthException 认证异常，如果token错误或过期，会有相关的异常抛出
      * @author fengshuonan
-     * @date 2020/10/19 14:16
+     * @since 2020/10/19 14:16
      */
     DefaultJwtPayload validateToken(String token) throws AuthException;
 
@@ -113,7 +113,7 @@ public interface AuthServiceApi {
      * @param token      用户登陆的token
      * @param requestUrl 被校验的url
      * @author fengshuonan
-     * @date 2020/10/22 16:03
+     * @since 2020/10/22 16:03
      */
     void checkAuth(String token, String requestUrl);
 
@@ -121,7 +121,7 @@ public interface AuthServiceApi {
      * 取消冻结帐号
      *
      * @author xixiaowei
-     * @date 2022/1/22 16:37
+     * @since 2022/1/22 16:37
      */
     void cancelFreeze(LoginRequest loginRequest);
 
@@ -132,7 +132,7 @@ public interface AuthServiceApi {
      * @param defaultJwtPayload jwt的payload信息
      * @return 新的当前登录用户
      * @author fengshuonan
-     * @date 2022/10/17 0:04
+     * @since 2022/10/17 0:04
      */
     LoginUser createNewLoginInfo(String token, DefaultJwtPayload defaultJwtPayload);
 

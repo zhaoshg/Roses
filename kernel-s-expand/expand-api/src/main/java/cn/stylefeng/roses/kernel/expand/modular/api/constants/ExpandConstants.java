@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.expand.modular.api.constants;
  * 拓展字段业务
  *
  * @author fengshuonan
- * @date 2022-03-29 23:14:31
+ * @since 2022-03-29 23:14:31
  */
 public interface ExpandConstants {
 

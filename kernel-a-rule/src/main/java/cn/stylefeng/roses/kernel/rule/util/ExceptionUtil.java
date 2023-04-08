@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.rule.pojo.response.ErrorResponseData;
  * 异常处理类
  *
  * @author fengshuonan
- * @date 2020/12/16 16:03
+ * @since 2020/12/16 16:03
  */
 public class ExceptionUtil {
 
@@ -43,7 +43,7 @@ public class ExceptionUtil {
      * @param packageName 指定包名
      * @return 某行堆栈信息
      * @author fengshuonan
-     * @date 2020/12/16 16:04
+     * @since 2020/12/16 16:04
      */
     public static String getFirstStackTraceByPackageName(Throwable throwable, String packageName) {
 
@@ -77,7 +77,7 @@ public class ExceptionUtil {
      * 将异常信息填充到ErrorResponseData中
      *
      * @author fengshuonan
-     * @date 2020/12/16 16:09
+     * @since 2020/12/16 16:09
      */
     public static void fillErrorResponseData(ErrorResponseData errorResponseData, Throwable throwable, String projectPackage) {
         if (errorResponseData == null || throwable == null) {

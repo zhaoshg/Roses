@@ -55,7 +55,7 @@ import static cn.stylefeng.roses.kernel.log.api.exception.enums.LogExceptionEnum
  * 文件日志读取管理实现类
  *
  * @author majianguo
- * @date 2020/11/3 上午10:56
+ * @since 2020/11/3 上午10:56
  */
 @Slf4j
 public class FileLogManagerServiceImpl implements LogManagerApi {
@@ -181,7 +181,7 @@ public class FileLogManagerServiceImpl implements LogManagerApi {
      * @param date    那一天的日志
      * @return 文件全路径名称
      * @author majianguo
-     * @date 2020/11/3 下午4:29
+     * @since 2020/11/3 下午4:29
      */
     private String getLogPath(String appName, String date) {
 
@@ -197,7 +197,7 @@ public class FileLogManagerServiceImpl implements LogManagerApi {
      * 根据id获取日志记录
      *
      * @author chenjinlong
-     * @date 2021/2/1 19:54
+     * @since 2021/2/1 19:54
      */
     private LogRecordDTO readLog(String path, Long logId) {
 
@@ -241,7 +241,7 @@ public class FileLogManagerServiceImpl implements LogManagerApi {
      * @param filePointer 开始读取文件指针位置
      * @param lineNum     读取行数
      * @author majianguo
-     * @date 2020/11/3 下午1:36
+     * @since 2020/11/3 下午1:36
      */
     private List<LogRecordDTO> readLog(String path, long filePointer, int lineNum) {
         // 判断文件是否存在,不存在直接返回Null
@@ -297,7 +297,7 @@ public class FileLogManagerServiceImpl implements LogManagerApi {
      * @param jsonStr json字符串
      * @return 返回格式化后的Java对象 如果格式错误,则返回Null
      * @author majianguo
-     * @date 2020/11/3 下午2:16
+     * @since 2020/11/3 下午2:16
      */
     private LogRecordDTO parseObject(String jsonStr) {
         LogRecordDTO logRecordDTO = null;
@@ -319,7 +319,7 @@ public class FileLogManagerServiceImpl implements LogManagerApi {
      *
      * @param chars 乱码的字符串转数组
      * @author majianguo
-     * @date 2020/11/3 下午4:03
+     * @since 2020/11/3 下午4:03
      */
     public static byte[] getBytes(char[] chars) {
         byte[] result = new byte[chars.length];
@@ -335,7 +335,7 @@ public class FileLogManagerServiceImpl implements LogManagerApi {
      * @param start 开始日期 间隔
      * @param end   结束日期
      * @author majianguo
-     * @date 2020/11/3 下午4:23
+     * @since 2020/11/3 下午4:23
      */
     public static List<String> getIntervalDate(String start, String end) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -374,7 +374,7 @@ public class FileLogManagerServiceImpl implements LogManagerApi {
      * @param file 日志文件路径
      * @return 日志总行数
      * @author chenjinlong
-     * @date 2021/2/1 19:45
+     * @since 2021/2/1 19:45
      */
     public int getTotalLines(File file) throws IOException {
         FileReader in = new FileReader(file);

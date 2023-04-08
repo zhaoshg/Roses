@@ -30,7 +30,7 @@ import lombok.Data;
  * 扫描的常量
  *
  * @author fengshuonan
- * @date 2018-01-03 21:39
+ * @since 2018-01-03 21:39
  */
 @Data
 public class ScannerProperties {

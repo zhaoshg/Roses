@@ -30,7 +30,7 @@ import lombok.Data;
  * 用户基本信息
  *
  * @author fengshuonan
- * @date 2020/12/26 18:14
+ * @since 2020/12/26 18:14
  */
 @Data
 public class SimpleRoleInfo {

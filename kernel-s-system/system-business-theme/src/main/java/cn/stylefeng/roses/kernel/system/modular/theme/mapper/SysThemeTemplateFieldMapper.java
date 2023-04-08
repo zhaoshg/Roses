@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 系统主题模板属性mapper接口
  *
  * @author xixiaowei
- * @date 2021/12/17 10:14
+ * @since 2021/12/17 10:14
  */
 public interface SysThemeTemplateFieldMapper extends BaseMapper<SysThemeTemplateField> {
 

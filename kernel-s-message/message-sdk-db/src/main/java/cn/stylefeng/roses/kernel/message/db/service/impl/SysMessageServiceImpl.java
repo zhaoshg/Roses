@@ -48,7 +48,7 @@ import java.util.List;
  * 系统消息 service接口实现类
  *
  * @author liuhanqing
- * @date 2020/12/31 20:09
+ * @since 2020/12/31 20:09
  */
 @Service
 public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMessage> implements SysMessageService {
@@ -105,7 +105,7 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
      * 根据主键id获取对象
      *
      * @author liuhanqing
-     * @date 2021/2/2 20:57
+     * @since 2021/2/2 20:57
      */
     private SysMessage querySysMessageById(MessageRequest messageRequest) {
         SysMessage sysMessage = this.getById(messageRequest.getMessageId());
@@ -119,7 +119,7 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
      * 创建wrapper
      *
      * @author liuhanqing
-     * @date 2021/1/8 14:16
+     * @since 2021/1/8 14:16
      */
     private LambdaQueryWrapper<SysMessage> createWrapper(MessageRequest messageRequest, boolean needOrderBy) {
         LambdaQueryWrapper<SysMessage> queryWrapper = new LambdaQueryWrapper<>();

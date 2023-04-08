@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.auth.api.password.PasswordStoredEncryptApi;
  * 基于BCrypt算法实现的密码加密解密器
  *
  * @author fengshuonan
- * @date 2020/12/21 17:02
+ * @since 2020/12/21 17:02
  */
 public class BcryptPasswordStoredEncrypt implements PasswordStoredEncryptApi {
 

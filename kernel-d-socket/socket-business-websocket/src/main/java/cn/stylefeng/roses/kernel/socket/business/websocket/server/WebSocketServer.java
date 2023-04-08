@@ -25,7 +25,7 @@ import java.io.IOException;
  * 消息监听处理器
  *
  * @author majianguo
- * @date 2021/6/1 下午2:35
+ * @since 2021/6/1 下午2:35
  */
 @Slf4j
 @ServerEndpoint(value = "/webSocket/{token}")
@@ -39,7 +39,7 @@ public class WebSocketServer {
      *
      * @param session 会话信息
      * @author majianguo
-     * @date 2021/6/21 下午5:14
+     * @since 2021/6/21 下午5:14
      **/
     @OnOpen
     public void onOpen(Session session, @PathParam("token") String token) {
@@ -96,7 +96,7 @@ public class WebSocketServer {
      *
      * @param session 会话信息
      * @author majianguo
-     * @date 2021/6/21 下午5:14
+     * @since 2021/6/21 下午5:14
      **/
     @OnClose
     public void onClose(Session session) {
@@ -119,7 +119,7 @@ public class WebSocketServer {
      * @param message       　接收到的消息
      * @param socketChannel 会话信息
      * @author majianguo
-     * @date 2021/6/21 下午5:14
+     * @since 2021/6/21 下午5:14
      **/
     @OnMessage
     public void onMessage(String message, Session socketChannel) {
@@ -167,7 +167,7 @@ public class WebSocketServer {
      * @param session 会话信息
      * @param error   　错误信息
      * @author majianguo
-     * @date 2021/6/21 下午5:14
+     * @since 2021/6/21 下午5:14
      **/
     @OnError
     public void onError(Session session, Throwable error) {

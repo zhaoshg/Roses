@@ -23,7 +23,7 @@ import java.util.List;
  * 常用功能的统计次数业务实现层
  *
  * @author fengshuonan
- * @date 2022/02/10 21:17
+ * @since 2022/02/10 21:17
  */
 @Service
 public class SysStatisticsCountServiceImpl extends ServiceImpl<SysStatisticsCountMapper, SysStatisticsCount> implements SysStatisticsCountService {
@@ -86,7 +86,7 @@ public class SysStatisticsCountServiceImpl extends ServiceImpl<SysStatisticsCoun
      * 获取信息
      *
      * @author fengshuonan
-     * @date 2022/02/10 21:17
+     * @since 2022/02/10 21:17
      */
     private SysStatisticsCount querySysStatisticsCount(SysStatisticsCountRequest sysStatisticsCountRequest) {
         SysStatisticsCount sysStatisticsCount = this.getById(sysStatisticsCountRequest.getStatCountId());
@@ -100,7 +100,7 @@ public class SysStatisticsCountServiceImpl extends ServiceImpl<SysStatisticsCoun
      * 创建查询wrapper
      *
      * @author fengshuonan
-     * @date 2022/02/10 21:17
+     * @since 2022/02/10 21:17
      */
     private LambdaQueryWrapper<SysStatisticsCount> createWrapper(SysStatisticsCountRequest sysStatisticsCountRequest) {
         LambdaQueryWrapper<SysStatisticsCount> queryWrapper = new LambdaQueryWrapper<>();

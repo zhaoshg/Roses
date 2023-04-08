@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
  * 通用的格式化方法
  *
  * @author fengshuonan
- * @date 2022/9/6 17:14
+ * @since 2022/9/6 17:14
  */
 @Slf4j
 public class CommonFormatUtil {
@@ -26,7 +26,7 @@ public class CommonFormatUtil {
      * @param formattedValue 新产生的字段值
      * @param jsonGenerator  jackson的写入json字段数据的工具类
      * @author fengshuonan
-     * @date 2022/9/6 17:16
+     * @since 2022/9/6 17:16
      */
     public static void writeField(FormatTypeEnum formatTypeEnum, Object originValue, Object formattedValue, JsonGenerator jsonGenerator) throws IOException {
         // 如果原始值和转化值一样，则直接返回

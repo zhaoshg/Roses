@@ -34,7 +34,7 @@ import javax.validation.ConstraintValidatorContext;
  * 校验标识，只有Y和N两种状态的标识
  *
  * @author fengshuonan
- * @date 2020/10/31 14:53
+ * @since 2020/10/31 14:53
  */
 public class FlagValueValidator implements ConstraintValidator<FlagValue, String> {
 

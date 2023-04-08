@@ -58,7 +58,7 @@ import javax.validation.Valid;
  * 登录登出控制器
  *
  * @author fengshuonan
- * @date 2021/3/17 17:23
+ * @since 2021/3/17 17:23
  */
 @RestController
 @Slf4j
@@ -81,7 +81,7 @@ public class LoginController {
      * 用户登陆
      *
      * @author fengshuonan
-     * @date 2021/3/17 17:23
+     * @since 2021/3/17 17:23
      */
     @PostResource(name = "登陆", path = "/login", requiredLogin = false, requiredPermission = false)
     public ResponseData<String> login(@RequestBody @Validated LoginRequest loginRequest) {
@@ -94,7 +94,7 @@ public class LoginController {
      * 用户登陆(提供给分离版用的接口，不会写cookie)
      *
      * @author fengshuonan
-     * @date 2021/3/17 17:23
+     * @since 2021/3/17 17:23
      */
     @PostResource(name = "登陆（分离版）", path = "/loginApi", requiredLogin = false, requiredPermission = false)
     public ResponseData<LoginResponse> loginApi(@RequestBody @Validated LoginRequest loginRequest) {
@@ -107,7 +107,7 @@ public class LoginController {
      * 基于token登录，适用于单点登录，将caToken请求过来，进行解析，并创建本系统可以识别的token
      *
      * @author fengshuonan
-     * @date 2021/5/25 22:36
+     * @since 2021/5/25 22:36
      */
     @PostResource(name = "适用于单点登录", path = "/loginWithToken", requiredLogin = false, requiredPermission = false)
     public ResponseData<String> loginWithToken(@RequestBody @Validated LoginWithTokenRequest loginWithTokenRequest) {
@@ -120,7 +120,7 @@ public class LoginController {
      *
      * @param caClientToken token是单点登录回调本系统时候的token
      * @author fengshuonan
-     * @date 2021/3/17 17:24
+     * @since 2021/3/17 17:24
      */
     @ApiResource(name = "单点退出", path = "/logoutByCaClientToken", resBizType = ResBizTypeEnum.SYSTEM,
             requiredLogin = false, requiredPermission = false, method = {RequestMethod.GET, RequestMethod.POST})
@@ -142,7 +142,7 @@ public class LoginController {
      * 用户登出
      *
      * @author fengshuonan
-     * @date 2021/3/17 17:24
+     * @since 2021/3/17 17:24
      */
     @ApiResource(name = "登出", path = "/logoutAction", resBizType = ResBizTypeEnum.SYSTEM,
             requiredPermission = false, method = {RequestMethod.GET, RequestMethod.POST})
@@ -155,7 +155,7 @@ public class LoginController {
      * 获取当前用户的用户信息
      *
      * @author fengshuonan
-     * @date 2021/3/17 17:37
+     * @since 2021/3/17 17:37
      */
     @GetResource(name = "获取当前用户的用户信息", path = "/getCurrentLoginUserInfo", requiredPermission = false)
     public ResponseData<CurrentUserInfoResponse> getCurrentLoginUserInfo() {
@@ -171,7 +171,7 @@ public class LoginController {
      * 校验token是否正确
      *
      * @author fengshuonan
-     * @date 2021/6/18 15:26
+     * @since 2021/6/18 15:26
      */
     @PostResource(name = "校验token是否正确", path = "/validateToken", requiredPermission = false, requiredLogin = false)
     public ResponseData<Boolean> validateToken(@RequestBody @Valid ValidateTokenRequest validateTokenRequest) {
@@ -183,7 +183,7 @@ public class LoginController {
      * 取消帐号冻结
      *
      * @author xixiaowei
-     * @date 2022/1/22 16:40
+     * @since 2022/1/22 16:40
      */
     @PostResource(name = "取消帐号冻结", path = "/cancelFreeze")
     public ResponseData<?> cancelFreeze(@RequestBody @Validated(LoginRequest.cancelFreeze.class) LoginRequest loginRequest) {
@@ -195,7 +195,7 @@ public class LoginController {
      * 新版Antdv3版本的用户信息获取
      *
      * @author fengshuonan
-     * @date 2022/4/8 15:31
+     * @since 2022/4/8 15:31
      */
     @GetResource(name = "新版Antdv3版本的用户信息获取", path = "/v3/userInfo", requiredPermission = false)
     public ResponseData<IndexUserInfoV3> userInfoV3(@RequestParam(value = "menuFrontType", required = false) Integer menuFrontType,

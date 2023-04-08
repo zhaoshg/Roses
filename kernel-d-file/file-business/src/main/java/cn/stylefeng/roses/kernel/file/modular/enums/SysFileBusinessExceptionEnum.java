@@ -8,7 +8,7 @@ import lombok.Getter;
  * 业务关联的文件异常相关枚举
  *
  * @author fengshuonan
- * @date 2023/03/31 13:30
+ * @since 2023/03/31 13:30
  */
 @Getter
 public enum SysFileBusinessExceptionEnum implements AbstractExceptionEnum {

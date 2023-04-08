@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * 定时任务迁移接入实现
  *
  * @author majianguo
- * @date 2021/7/8 9:24
+ * @since 2021/7/8 9:24
  */
 @Component
 public class TimerMigrationImpl implements AccessMigrationApi {

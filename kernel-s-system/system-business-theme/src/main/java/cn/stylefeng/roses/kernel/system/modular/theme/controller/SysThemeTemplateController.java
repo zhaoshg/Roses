@@ -23,7 +23,7 @@ import java.util.List;
  * 系统主题模板控制器
  *
  * @author xixiaowei
- * @date 2021/12/17 13:53
+ * @since 2021/12/17 13:53
  */
 @RestController
 @ApiResource(name = "系统主题模板管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -36,7 +36,7 @@ public class SysThemeTemplateController {
      * 增加系统主题模板
      *
      * @author xixiaowei
-     * @date 2021/12/17 14:16
+     * @since 2021/12/17 14:16
      */
     @PostResource(name = "增加系统主题模板", path = "/sysThemeTemplate/add")
     @BusinessLog
@@ -49,7 +49,7 @@ public class SysThemeTemplateController {
      * 编辑系统主题模板
      *
      * @author xixiaowei
-     * @date 2021/12/17 14:36
+     * @since 2021/12/17 14:36
      */
     @PostResource(name = "编辑系统主题模板", path = "/sysThemeTemplate/edit")
     @BusinessLog
@@ -62,7 +62,7 @@ public class SysThemeTemplateController {
      * 删除系统主题模板
      *
      * @author xixiaowei
-     * @date 2021/12/17 14:47
+     * @since 2021/12/17 14:47
      */
     @PostResource(name = "删除系统主题模板", path = "/sysThemeTemplate/del")
     @BusinessLog
@@ -75,7 +75,7 @@ public class SysThemeTemplateController {
      * 查询系统主题模板
      *
      * @author xixiaowei
-     * @date 2021/12/17 15:00
+     * @since 2021/12/17 15:00
      */
     @GetResource(name = "查询系统主题模板", path = "/sysThemeTemplate/findPage")
     public ResponseData<PageResult<SysThemeTemplate>> findPage(SysThemeTemplateRequest sysThemeTemplateParam) {
@@ -86,7 +86,7 @@ public class SysThemeTemplateController {
      * 查询系统主题模板列表
      *
      * @author xixiaowei
-     * @date 2021/12/29 9:12
+     * @since 2021/12/29 9:12
      */
     @GetResource(name = "查询系统主题模板列表", path = "/sysThemeTemplate/findList")
     public ResponseData<List<SysThemeTemplate>> findList(SysThemeTemplateRequest sysThemeTemplateParam) {
@@ -97,7 +97,7 @@ public class SysThemeTemplateController {
      * 修改系统主题模板状态
      *
      * @author xixiaowei
-     * @date 2021/12/17 15:09
+     * @since 2021/12/17 15:09
      */
     @PostResource(name = "修改系统主题模板状态", path = "/sysThemeTemplate/updateStatus")
     @BusinessLog
@@ -110,7 +110,7 @@ public class SysThemeTemplateController {
      * 查询系统主题模板详情
      *
      * @author xixiaowei
-     * @date 2021/12/17 16:09
+     * @since 2021/12/17 16:09
      */
     @GetResource(name = "查询系统主题模板详情", path = "/sysThemeTemplate/detail")
     public ResponseData<List<SysThemeTemplateDataDTO>> detail(SysThemeTemplateRequest sysThemeTemplateParam) {

@@ -38,7 +38,7 @@ import java.util.List;
  * 系统参数配置service接口
  *
  * @author fengshuonan
- * @date 2020/4/14 11:14
+ * @since 2020/4/14 11:14
  */
 public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
 
@@ -47,7 +47,7 @@ public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
      *
      * @param sysConfigParam 添加参数
      * @author fengshuonan
-     * @date 2020/4/14 11:14
+     * @since 2020/4/14 11:14
      */
     void add(SysConfigParam sysConfigParam);
 
@@ -56,7 +56,7 @@ public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
      *
      * @param sysConfigParam 删除参数
      * @author fengshuonan
-     * @date 2020/4/14 11:15
+     * @since 2020/4/14 11:15
      */
     void del(SysConfigParam sysConfigParam);
 
@@ -65,7 +65,7 @@ public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
      *
      * @param sysConfigParam 编辑参数
      * @author fengshuonan
-     * @date 2020/4/14 11:15
+     * @since 2020/4/14 11:15
      */
     void edit(SysConfigParam sysConfigParam);
 
@@ -75,7 +75,7 @@ public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
      * @param sysConfigParam 查看参数
      * @return 系统参数配置
      * @author fengshuonan
-     * @date 2020/4/14 11:15
+     * @since 2020/4/14 11:15
      */
     SysConfig detail(SysConfigParam sysConfigParam);
 
@@ -85,7 +85,7 @@ public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
      * @param sysConfigParam 查询参数
      * @return 查询分页结果
      * @author fengshuonan
-     * @date 2020/4/14 11:14
+     * @since 2020/4/14 11:14
      */
     PageResult<SysConfig> findPage(SysConfigParam sysConfigParam);
 
@@ -95,7 +95,7 @@ public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
      * @param sysConfigParam 查询参数
      * @return 系统参数配置列表
      * @author fengshuonan
-     * @date 2020/4/14 11:14
+     * @since 2020/4/14 11:14
      */
     List<SysConfig> findList(SysConfigParam sysConfigParam);
 
@@ -103,7 +103,7 @@ public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
      * 初始化配置参数
      *
      * @author fengshuonan
-     * @date 2021/7/8 16:48
+     * @since 2021/7/8 16:48
      */
     void initConfig(ConfigInitRequest configInitRequest);
 
@@ -111,7 +111,7 @@ public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
      * 获取初始化的配置列表
      *
      * @author fengshuonan
-     * @date 2021/7/8 17:49
+     * @since 2021/7/8 17:49
      */
     InitConfigResponse getInitConfigs();
 
@@ -119,7 +119,7 @@ public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
      * 获取后端部署的地址
      *
      * @author fengshuonan
-     * @date 2022/3/3 14:23
+     * @since 2022/3/3 14:23
      */
     String getServerDeployHost();
 }

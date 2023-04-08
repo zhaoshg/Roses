@@ -10,7 +10,7 @@ import cn.stylefeng.roses.kernel.cache.memory.AbstractMemoryCacheOperator;
  * key是用户账号，value是登录失败错误次数
  *
  * @author fengshuonan
- * @date 2022/3/15 17:09
+ * @since 2022/3/15 17:09
  */
 public class LoginErrorCountMemoryCache extends AbstractMemoryCacheOperator<Integer> {
 

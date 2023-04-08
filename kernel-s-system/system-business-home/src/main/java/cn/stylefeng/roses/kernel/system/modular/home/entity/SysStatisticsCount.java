@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  * 常用功能的统计次数实例类
  *
  * @author fengshuonan
- * @date 2022/02/10 21:17
+ * @since 2022/02/10 21:17
  */
 @TableName("sys_statistics_count")
 @Data

@@ -54,7 +54,7 @@ import java.util.stream.Collectors;
  * 系统主题service接口实现类
  *
  * @author xixiaowei
- * @date 2021/12/17 16:17
+ * @since 2021/12/17 16:17
  */
 @Service
 @Slf4j
@@ -265,7 +265,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
      * 查询单个系统主题
      *
      * @author xixiaowei
-     * @date 2021/12/17 16:30
+     * @since 2021/12/17 16:30
      */
     private SysTheme querySysThemeById(SysThemeRequest sysThemeRequest) {
         SysTheme sysTheme = this.getById(sysThemeRequest.getThemeId());
@@ -279,7 +279,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
      * 查找系统中默认的主题
      *
      * @author fengshuonan
-     * @date 2022/1/11 9:44
+     * @since 2022/1/11 9:44
      */
     private DefaultTheme querySystemTheme() {
         // 查询编码为GUNS_PLATFORM的主题模板id
@@ -313,7 +313,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
      * 将属性中所有是文件类型的文件id转化为文件url
      *
      * @author fengshuonan
-     * @date 2022/1/11 11:12
+     * @since 2022/1/11 11:12
      */
     private DefaultTheme parseFileUrls(DefaultTheme theme) {
         // 查询编码为GUNS_PLATFORM的主题模板id
@@ -385,7 +385,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
      * 获取默认系统的模板id
      *
      * @author fengshuonan
-     * @date 2022/1/11 11:35
+     * @since 2022/1/11 11:35
      */
     private Long getDefaultTemplateId() {
         // 查询编码为GUNS_PLATFORM的主题模板id
@@ -403,7 +403,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
      * 清除主题缓存
      *
      * @author fengshuonan
-     * @date 2022/1/12 12:49
+     * @since 2022/1/12 12:49
      */
     private void clearThemeCache() {
         themeCacheApi.remove(SystemConstants.THEME_GUNS_PLATFORM);

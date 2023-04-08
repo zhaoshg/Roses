@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
  * 单点获取到的token
  *
  * @author fengshuonan
- * @date 2021/5/25 22:43
+ * @since 2021/5/25 22:43
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

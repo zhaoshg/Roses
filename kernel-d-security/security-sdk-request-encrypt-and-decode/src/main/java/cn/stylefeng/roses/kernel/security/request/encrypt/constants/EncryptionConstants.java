@@ -4,7 +4,7 @@ package cn.stylefeng.roses.kernel.security.request.encrypt.constants;
  * 请求解密，响应加密 常量
  *
  * @author luojie
- * @date 2021/3/23 12:54
+ * @since 2021/3/23 12:54
  */
 public interface EncryptionConstants {
 

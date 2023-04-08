@@ -9,7 +9,7 @@ import javax.annotation.Resource;
  * 定时刷新接口访问次数统计
  *
  * @author xixiaowei
- * @date 2022/2/9 16:08
+ * @since 2022/2/9 16:08
  */
 public class InterfaceStatisticsTimer implements TimerAction {
 

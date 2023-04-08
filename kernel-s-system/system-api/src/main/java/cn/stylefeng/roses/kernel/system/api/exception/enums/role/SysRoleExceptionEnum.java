@@ -33,7 +33,7 @@ import lombok.Getter;
  * 系统角色相关异常枚举
  *
  * @author majianguo
- * @date 2020/11/5 上午11:06
+ * @since 2020/11/5 上午11:06
  */
 @Getter
 public enum SysRoleExceptionEnum implements AbstractExceptionEnum {

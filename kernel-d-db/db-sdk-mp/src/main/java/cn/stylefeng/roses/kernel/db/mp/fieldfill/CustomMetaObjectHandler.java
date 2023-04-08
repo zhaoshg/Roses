@@ -43,7 +43,7 @@ import static cn.stylefeng.roses.kernel.db.api.constants.DbFieldConstants.*;
  * 字段自动填充工具，在mybatis-plus执行更新和新增操作时候，会对指定字段进行自动填充，例如 create_time 等字段
  *
  * @author fengshuonan
- * @date 2020/10/16 17:14
+ * @since 2020/10/16 17:14
  */
 @Slf4j
 public class CustomMetaObjectHandler implements MetaObjectHandler {
@@ -95,7 +95,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
      * 获取用户唯一id
      *
      * @author fengshuonan
-     * @date 2021/10/29 10:01
+     * @since 2021/10/29 10:01
      */
     private Long getUserUniqueId() {
 
@@ -112,7 +112,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
      * 设置属性
      *
      * @author fengshuonan
-     * @date 2021/10/29 10:01
+     * @since 2021/10/29 10:01
      */
     private void setValue(MetaObject metaObject, String fieldName, Object value) {
         Object originalAttr = getFieldValByName(fieldName, metaObject);
@@ -125,7 +125,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
      * 获取用户唯一id
      *
      * @author yxx
-     * @date 2022/09/01 10:14
+     * @since 2022/09/01 10:14
      */
     private Long getUserOrgId() {
 
@@ -142,7 +142,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
      * 设置属性，针对逻辑删除字段
      *
      * @author fengshuonan
-     * @date 2022/9/7 17:23
+     * @since 2022/9/7 17:23
      */
     private void setDelFlagDefaultValue(MetaObject metaObject) {
         Object originalAttr = getFieldValByName(DEL_FLAG, metaObject);
@@ -167,7 +167,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
      * 设置属性，针对状态字段
      *
      * @author fengshuonan
-     * @date 2022/9/7 17:23
+     * @since 2022/9/7 17:23
      */
     private void setStatusDefaultValue(MetaObject metaObject) {
         Object originalAttr = getFieldValByName(STATUS_FLAG, metaObject);

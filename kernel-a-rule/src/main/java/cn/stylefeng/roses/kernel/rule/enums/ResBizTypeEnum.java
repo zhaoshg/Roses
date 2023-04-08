@@ -37,7 +37,7 @@ import lombok.Getter;
  * 系统类就是用户管理，角色管理，日志管理这些
  *
  * @author fengshuonan
- * @date 2022/9/28 11:15
+ * @since 2022/9/28 11:15
  */
 @Getter
 public enum ResBizTypeEnum implements ReadableEnum<ResBizTypeEnum> {

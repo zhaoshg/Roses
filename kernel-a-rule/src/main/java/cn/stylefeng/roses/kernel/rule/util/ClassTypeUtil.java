@@ -17,7 +17,7 @@ import java.util.Map;
  * 获取类类型的工具
  *
  * @author fengshuonan
- * @date 2022/1/14 16:42
+ * @since 2022/1/14 16:42
  */
 @Slf4j
 public class ClassTypeUtil {
@@ -31,7 +31,7 @@ public class ClassTypeUtil {
      * 判断类类型是否是扫描的包范围之内
      *
      * @author fengshuonan
-     * @date 2022/1/13 17:49
+     * @since 2022/1/13 17:49
      */
     public static boolean ensureEntityFlag(Class<?> clazz) {
         for (String packageName : entityScanPackage) {
@@ -46,7 +46,7 @@ public class ClassTypeUtil {
      * 获取类类型的类别
      *
      * @author fengshuonan
-     * @date 2022/1/14 0:25
+     * @since 2022/1/14 0:25
      */
     public static FieldTypeEnum getClassFieldType(Type type) {
 

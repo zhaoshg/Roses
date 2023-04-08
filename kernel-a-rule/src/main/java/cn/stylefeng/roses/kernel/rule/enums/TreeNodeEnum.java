@@ -30,7 +30,7 @@ import lombok.Getter;
  * 树节点类型的枚举
  *
  * @author liuhanqing
- * @date 2021/1/15 13:36
+ * @since 2021/1/15 13:36
  */
 @Getter
 public enum TreeNodeEnum {
@@ -58,7 +58,7 @@ public enum TreeNodeEnum {
      * 根据code获取枚举
      *
      * @author liuhanqing
-     * @date 2021/1/15 13:36
+     * @since 2021/1/15 13:36
      */
     public static TreeNodeEnum codeToEnum(String code) {
         if (null != code) {
@@ -75,7 +75,7 @@ public enum TreeNodeEnum {
      * 编码转化成中文含义
      *
      * @author liuhanqing
-     * @date 2021/1/15 13:36
+     * @since 2021/1/15 13:36
      */
     public static String codeToName(String code) {
         if (null != code) {

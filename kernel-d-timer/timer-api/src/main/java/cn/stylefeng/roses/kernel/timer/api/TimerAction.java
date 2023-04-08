@@ -30,7 +30,7 @@ package cn.stylefeng.roses.kernel.timer.api;
  * Guns中定时器都要实现本接口，并需要把实现类加入到spring容器中
  *
  * @author fengshuonan
- * @date 2020/10/27 11:53
+ * @since 2020/10/27 11:53
  */
 public interface TimerAction {
 
@@ -39,7 +39,7 @@ public interface TimerAction {
      *
      * @param params 任务参数
      * @author stylefeng
-     * @date 2020/6/28 21:29
+     * @since 2020/6/28 21:29
      */
     void action(String params);
 

@@ -36,7 +36,7 @@ import java.math.BigDecimal;
  * 系统角色表
  *
  * @author majianguo
- * @date 2020/11/5 下午4:32
+ * @since 2020/11/5 下午4:32
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

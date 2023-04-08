@@ -54,7 +54,7 @@ import java.util.List;
  * 通知表 服务实现类
  *
  * @author liuhanqing
- * @date 2021/1/8 22:45
+ * @since 2021/1/8 22:45
  */
 @Service
 public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice> implements SysNoticeService {
@@ -137,7 +137,7 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
      * 获取通知管理
      *
      * @author liuhanqing
-     * @date 2021/1/9 16:56
+     * @since 2021/1/9 16:56
      */
     private SysNotice querySysNoticeById(SysNoticeRequest sysNoticeRequest) {
         SysNotice sysNotice = this.getById(sysNoticeRequest.getNoticeId());
@@ -151,7 +151,7 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
      * 创建wrapper
      *
      * @author liuhanqing
-     * @date 2020/1/9 16:16
+     * @since 2020/1/9 16:16
      */
     private LambdaQueryWrapper<SysNotice> createWrapper(SysNoticeRequest sysNoticeRequest) {
         LambdaQueryWrapper<SysNotice> queryWrapper = new LambdaQueryWrapper<>();
@@ -183,7 +183,7 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
      * 发送消息
      *
      * @author fengshuonan
-     * @date 2021/2/8 19:30
+     * @since 2021/2/8 19:30
      */
     private void sendMessage(SysNotice sysNotice) {
         MessageSendRequest message = new MessageSendRequest();

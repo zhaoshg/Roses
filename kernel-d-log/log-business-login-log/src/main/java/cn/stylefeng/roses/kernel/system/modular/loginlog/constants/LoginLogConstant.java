@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.system.modular.loginlog.constants;
  * 登录日志常量
  *
  * @author chenjinlong
- * @date 2021/2/24 14:07
+ * @since 2021/2/24 14:07
  */
 public interface LoginLogConstant {
 

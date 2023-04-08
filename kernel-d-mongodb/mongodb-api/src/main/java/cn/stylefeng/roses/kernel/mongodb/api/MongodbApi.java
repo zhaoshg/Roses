@@ -31,7 +31,7 @@ import java.util.Optional;
  * Mongodb数据存储的api，适用于存map类型数据，存储在guns_map集合中
  *
  * @author huziyang
- * @date 2021/03/20 16:24
+ * @since 2021/03/20 16:24
  */
 public interface MongodbApi<T, ID> {
 
@@ -41,7 +41,7 @@ public interface MongodbApi<T, ID> {
      * @param gunsMapEntity 数据存储的参数
      * @return 返回数据结果
      * @author huziyang
-     * @date 2020/10/27 17:38
+     * @since 2020/10/27 17:38
      */
     T insert(T gunsMapEntity);
 
@@ -51,7 +51,7 @@ public interface MongodbApi<T, ID> {
      * @param gunsMapEntity 数据存储的参数
      * @return 返回数据结果
      * @author huziyang
-     * @date 2020/10/27 17:38
+     * @since 2020/10/27 17:38
      */
     T update(T gunsMapEntity);
 
@@ -60,7 +60,7 @@ public interface MongodbApi<T, ID> {
      *
      * @param id 集合id
      * @author huziyang
-     * @date 2020/10/27 17:38
+     * @since 2020/10/27 17:38
      */
     void deleteById(ID id);
 
@@ -70,7 +70,7 @@ public interface MongodbApi<T, ID> {
      * @param id 集合id
      * @return 返回查询到数据的Optional
      * @author huziyang
-     * @date 2020/10/27 17:38
+     * @since 2020/10/27 17:38
      */
     Optional<T> findById(ID id);
 
@@ -79,7 +79,7 @@ public interface MongodbApi<T, ID> {
      *
      * @return 返回所有数据列表
      * @author huziyang
-     * @date 2020/10/27 17:38
+     * @since 2020/10/27 17:38
      */
     List<T> findAll();
 }

@@ -34,7 +34,7 @@ import static cn.stylefeng.roses.kernel.rule.constants.RuleConstants.USER_OPERAT
  * 源于用户操作的异常枚举，比如参数错误，用户安装版本过低，用户支付超时等问题
  *
  * @author fengshuonan
- * @date 2020/10/15 17:31
+ * @since 2020/10/15 17:31
  */
 @Getter
 public enum DefaultUserExceptionEnum implements AbstractExceptionEnum {

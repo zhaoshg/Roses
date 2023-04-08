@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.system.modular.menu.constants;
  * 系统菜单按钮常量
  *
  * @author chenjinlong
- * @date 2021/1/27 15:08
+ * @since 2021/1/27 15:08
  */
 public interface MenuButtonConstant {
 

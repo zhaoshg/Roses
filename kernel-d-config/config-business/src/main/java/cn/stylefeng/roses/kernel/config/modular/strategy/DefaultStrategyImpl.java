@@ -14,7 +14,7 @@ import java.util.List;
  * 默认的初始化配置策略，初始化系统一些必要的参数
  *
  * @author fengshuonan
- * @date 2021/7/8 17:47
+ * @since 2021/7/8 17:47
  */
 @Component
 public class DefaultStrategyImpl implements ConfigInitStrategyApi {

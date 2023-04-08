@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
  * 组装当前登录用户的信息
  *
  * @author fengshuonan
- * @date 2020/11/26 22:25
+ * @since 2020/11/26 22:25
  */
 public class UserLoginInfoFactory {
 
@@ -62,7 +62,7 @@ public class UserLoginInfoFactory {
      * @param roleButtonCodes         用户的所拥有的按钮编码
      * @param userMenuType            用户的菜单类型
      * @author fengshuonan
-     * @date 2020/12/26 17:53
+     * @since 2020/12/26 17:53
      */
     public static UserLoginInfoDTO userLoginInfoDTO(SysUser sysUser,
                                                     List<SysRoleDTO> roleResponseList,
@@ -144,7 +144,7 @@ public class UserLoginInfoFactory {
      * 转化为当前登陆用户信息的详情
      *
      * @author fengshuonan
-     * @date 2021/3/25 10:06
+     * @since 2021/3/25 10:06
      */
     public static CurrentUserInfoResponse parseUserInfo(LoginUser loginUser) {
 

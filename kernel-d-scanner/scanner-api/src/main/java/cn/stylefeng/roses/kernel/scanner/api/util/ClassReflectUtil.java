@@ -41,7 +41,7 @@ import java.util.*;
  * 类的反射工具
  *
  * @author fengshuonan
- * @date 2020/12/8 18:23
+ * @since 2020/12/8 18:23
  */
 public class ClassReflectUtil {
 
@@ -56,7 +56,7 @@ public class ClassReflectUtil {
      * @param clazz 类的class类型
      * @return 该类下所有字段的描述信息
      * @author fengshuonan
-     * @date 2020/12/8 18:27
+     * @since 2020/12/8 18:27
      */
     public static Set<FieldMetadata> getClassFieldDescription(Class<?> clazz) {
         HashSet<FieldMetadata> fieldDescriptions = new LinkedHashSet<>();
@@ -98,7 +98,7 @@ public class ClassReflectUtil {
      * @param declaredField 字段
      * @return {@link cn.stylefeng.roses.kernel.scanner.api.pojo.resource.FieldMetadata}
      * @author majianguo
-     * @date 2021/6/23 上午10:03
+     * @since 2021/6/23 上午10:03
      **/
     private static FieldMetadata getFieldMetadata(Field declaredField) {
         // 获取字段的类型
@@ -119,7 +119,7 @@ public class ClassReflectUtil {
      * 字段class类解析
      *
      * @author majianguo
-     * @date 2022/1/6 16:09
+     * @since 2022/1/6 16:09
      **/
     private static void fieldClassParsing(Field declaredField, FieldMetadata fieldDescription, Class<?> declaredFieldType) {
 
@@ -216,7 +216,7 @@ public class ClassReflectUtil {
      * @param declaredFieldType       类本身
      * @param fieldMetadataSet        类的泛型已解析的信息
      * @author majianguo
-     * @date 2022/1/10 9:46
+     * @since 2022/1/10 9:46
      **/
     private static void fieldMetadataGenericFill(Set<FieldMetadata> genericFieldMetadataSet, Class<?> declaredFieldType, Set<FieldMetadata> fieldMetadataSet) {
 
@@ -273,7 +273,7 @@ public class ClassReflectUtil {
      * 解析所有注解
      *
      * @author majianguo
-     * @date 2022/1/7 18:26
+     * @since 2022/1/7 18:26
      **/
     private static void parsingAnnotation(Field declaredField, FieldMetadata fieldDescription) {
         Annotation[] annotations = declaredField.getAnnotations();
@@ -307,7 +307,7 @@ public class ClassReflectUtil {
      * 基础类型解析
      *
      * @author majianguo
-     * @date 2022/1/6 16:09
+     * @since 2022/1/6 16:09
      **/
     private static FieldMetadata baseTypeParsing(Field declaredField, Class<?> actualTypeArgument) {
         FieldMetadata item = createFieldMetadata(actualTypeArgument);
@@ -325,7 +325,7 @@ public class ClassReflectUtil {
      * 调用注解上的某个方法，并获取结果，忽略异常
      *
      * @author fengshuonan
-     * @date 2020/12/8 17:13
+     * @since 2020/12/8 17:13
      */
     public static <T> T invokeAnnotationMethodIgnoreError(Annotation apiResource, String methodName, Class<T> resultType) {
         try {
@@ -345,7 +345,7 @@ public class ClassReflectUtil {
      * @param validateGroupsClass 校验分组
      * @param groupAnnotations    分组注解集合
      * @author fengshuonan
-     * @date 2020/12/8 19:12
+     * @since 2020/12/8 19:12
      */
     public static void addGroupValidateAnnotation(Annotation fieldAnnotation, Class<?> validateGroupsClass, Map<String, Set<String>> groupAnnotations) {
         Set<String> annotations = groupAnnotations.get(validateGroupsClass.getSimpleName());
@@ -364,7 +364,7 @@ public class ClassReflectUtil {
      * NotBlack注解 > NotBlack
      *
      * @author fengshuonan
-     * @date 2020/12/9 13:39
+     * @since 2020/12/9 13:39
      */
     public static Set<String> annotationsToStrings(Annotation[] annotations) {
         Set<String> strings = new HashSet<>();
@@ -385,7 +385,7 @@ public class ClassReflectUtil {
      *
      * @return {@link boolean}
      * @author majianguo
-     * @date 2022/1/7 10:42
+     * @since 2022/1/7 10:42
      **/
     private static boolean isPrimitive(Class<?> clazz) {
         boolean isPrimitive;
@@ -416,7 +416,7 @@ public class ClassReflectUtil {
      *
      * @return {@link FieldMetadata}
      * @author majianguo
-     * @date 2022/1/10 16:11
+     * @since 2022/1/10 16:11
      **/
     private static FieldMetadata createFieldMetadata(Class<?> typeArgumentItem) {
         FieldMetadata fieldMetadataItem = new FieldMetadata();

@@ -30,7 +30,7 @@ import lombok.Getter;
  * 运维平台检测状态
  *
  * @author fengshuonan
- * @date 2020/11/23 21:30
+ * @since 2020/11/23 21:30
  */
 @Getter
 public enum DevopsCheckStatusEnum {

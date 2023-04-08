@@ -36,7 +36,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author stylefeng
- * @date 2020/6/7 22:15
+ * @since 2020/6/7 22:15
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

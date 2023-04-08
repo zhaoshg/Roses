@@ -8,7 +8,7 @@ import java.lang.annotation.*;
  * 该注解作用范围在类上面
  *
  * @author majianguo
- * @date 2021/7/3 10:54
+ * @since 2021/7/3 10:54
  */
 @Inherited
 @Target({ElementType.TYPE})

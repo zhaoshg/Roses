@@ -32,7 +32,7 @@ import java.util.List;
  * 资源扫描模块的常量
  *
  * @author fengshuonan
- * @date 2020/11/3 13:50
+ * @since 2020/11/3 13:50
  */
 public interface ScannerConstants {
 

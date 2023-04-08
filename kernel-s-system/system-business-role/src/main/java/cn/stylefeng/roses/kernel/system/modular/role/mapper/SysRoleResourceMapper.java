@@ -31,7 +31,7 @@ import cn.stylefeng.roses.kernel.system.modular.role.entity.SysRoleResource;
  * 系统角色资源mapper接口
  *
  * @author majianguo
- * @date 2020/11/5 下午4:15
+ * @since 2020/11/5 下午4:15
  */
 public interface SysRoleResourceMapper extends CustomBaseMapper<SysRoleResource> {
 }

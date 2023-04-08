@@ -63,7 +63,7 @@ import static cn.stylefeng.roses.kernel.scanner.api.exception.enums.ScannerExcep
  * 资源扫描器，扫描控制器上的@ApiResource，@GetResource，@PostResource
  *
  * @author fengshuonan
- * @date 2020/10/19 22:31
+ * @since 2020/10/19 22:31
  */
 @Slf4j
 public class ApiResourceScanner implements BeanPostProcessor {
@@ -119,7 +119,7 @@ public class ApiResourceScanner implements BeanPostProcessor {
      * 判断一个类是否是控制器
      *
      * @author fengshuonan
-     * @date 2020/12/9 11:21
+     * @since 2020/12/9 11:21
      */
     private boolean getControllerFlag(Class<?> clazz) {
         Annotation[] annotations = clazz.getAnnotations();
@@ -135,7 +135,7 @@ public class ApiResourceScanner implements BeanPostProcessor {
      * 扫描整个类中包含的所有@ApiResource资源
      *
      * @author fengshuonan
-     * @date 2020/12/9 11:21
+     * @since 2020/12/9 11:21
      */
     private List<ResourceDefinition> doScan(Class<?> clazz) {
         // 绑定类的code-中文名称映射
@@ -189,7 +189,7 @@ public class ApiResourceScanner implements BeanPostProcessor {
      * 缓存扫描到的api资源
      *
      * @author fengshuonan
-     * @date 2020/12/9 11:22
+     * @since 2020/12/9 11:22
      */
     private void persistApiResources(List<ResourceDefinition> apiResources) {
         resourceCollectorApi.collectResources(apiResources);
@@ -199,7 +199,7 @@ public class ApiResourceScanner implements BeanPostProcessor {
      * 根据类信息，方法信息，注解信息创建ResourceDefinition对象
      *
      * @author fengshuonan
-     * @date 2020/12/9 11:22
+     * @since 2020/12/9 11:22
      */
     private ResourceDefinition createDefinition(Class<?> controllerClass, Method method, Annotation apiResource) {
         ResourceDefinition resourceDefinition = new ResourceDefinition();
@@ -335,7 +335,7 @@ public class ApiResourceScanner implements BeanPostProcessor {
      * @param clazz 控制器的类
      * @param path  控制器方法注解上的路径
      * @author fengshuonan
-     * @date 2021/1/5 14:43
+     * @since 2021/1/5 14:43
      */
     private String createControllerPath(Class<?> clazz, String path) {
         String controllerPath;
@@ -366,7 +366,7 @@ public class ApiResourceScanner implements BeanPostProcessor {
      *
      * @param controllerMethodPath 控制器和控制器方法的path的组合
      * @author fengshuonan
-     * @date 2020/12/14 22:17
+     * @since 2020/12/14 22:17
      */
     private String createFinalUrl(String controllerMethodPath) {
 
@@ -396,7 +396,7 @@ public class ApiResourceScanner implements BeanPostProcessor {
      * 调用注解上的某个方法，并获取结果
      *
      * @author fengshuonan
-     * @date 2020/12/8 17:13
+     * @since 2020/12/8 17:13
      */
     private <T> T invokeAnnotationMethod(Annotation apiResource, String methodName, Class<T> resultType) {
         try {

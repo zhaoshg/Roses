@@ -18,7 +18,7 @@ import java.sql.DriverManager;
  * sql文件执行
  *
  * @author fengshuonan
- * @date 2019-06-18-17:10
+ * @since 2019-06-18-17:10
  */
 @Slf4j
 public class SqlRunUtil {
@@ -27,7 +27,7 @@ public class SqlRunUtil {
      * 执行sql脚本文件，使用Spring工具类
      *
      * @author fengshuonan
-     * @date 2021/5/19 10:52
+     * @since 2021/5/19 10:52
      */
     public static void runClassPathSql(String classpathFileName, String driverClassName, String url, String username, String password) {
         Connection conn = null;
@@ -50,7 +50,7 @@ public class SqlRunUtil {
      * 执行系统路径sql的文件
      *
      * @author fengshuonan
-     * @date 2021/5/19 10:52
+     * @since 2021/5/19 10:52
      */
     public static void runFileSystemSql(SqlSessionFactory sqlSessionFactory, String sqlPath) {
         Connection conn = null;

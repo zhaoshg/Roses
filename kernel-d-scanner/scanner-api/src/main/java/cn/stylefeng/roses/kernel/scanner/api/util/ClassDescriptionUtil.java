@@ -14,7 +14,7 @@ import java.lang.reflect.ParameterizedType;
  * 类的元数据描述
  *
  * @author fengshuonan
- * @date 2022/1/14 10:59
+ * @since 2022/1/14 10:59
  */
 public class ClassDescriptionUtil {
 
@@ -22,7 +22,7 @@ public class ClassDescriptionUtil {
      * 创建针对类的基础描述
      *
      * @author fengshuonan
-     * @date 2022/1/13 18:06
+     * @since 2022/1/13 18:06
      */
     public static FieldMetadata createClassMetadata(Class<?> clazz, FieldTypeEnum fieldTypeEnum, String uuid) {
         FieldMetadata fieldMetadataItem = new FieldMetadata();
@@ -56,7 +56,7 @@ public class ClassDescriptionUtil {
      * 创建针对类的基础描述
      *
      * @author fengshuonan
-     * @date 2022/1/13 18:06
+     * @since 2022/1/13 18:06
      */
     public static FieldMetadata createParameterizedMetadata(ParameterizedType parameterizedType, FieldTypeEnum fieldTypeEnum, String uuid) {
         Class<?> rawType = (Class<?>) parameterizedType.getRawType();

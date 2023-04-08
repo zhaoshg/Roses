@@ -30,7 +30,7 @@ import lombok.Data;
  * jwt相关的配置封装
  *
  * @author fengshuonan
- * @date 2020/10/21 11:37
+ * @since 2020/10/21 11:37
  */
 @Data
 public class JwtConfig {

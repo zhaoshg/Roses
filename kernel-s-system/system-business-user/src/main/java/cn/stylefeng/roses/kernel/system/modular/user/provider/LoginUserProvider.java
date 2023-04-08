@@ -43,7 +43,7 @@ import javax.annotation.Resource;
  * 图形验证码
  *
  * @author chenjinlong
- * @date 2021/1/15 15:11
+ * @since 2021/1/15 15:11
  */
 @RestController
 public class LoginUserProvider implements LoginUserRemoteApi {

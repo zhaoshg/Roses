@@ -78,7 +78,7 @@ import java.util.stream.Collectors;
  * 组织架构管理
  *
  * @author fengshuonan
- * @date 2020/11/04 11:05
+ * @since 2020/11/04 11:05
  */
 @Service
 public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper, HrOrganization> implements HrOrganizationService {
@@ -468,7 +468,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
      * 创建组织架构的通用条件查询wrapper
      *
      * @author fengshuonan
-     * @date 2020/11/6 10:16
+     * @since 2020/11/6 10:16
      */
     private LambdaQueryWrapper<HrOrganization> createWrapper(HrOrganizationRequest hrOrganizationRequest) {
         LambdaQueryWrapper<HrOrganization> queryWrapper = new LambdaQueryWrapper<>();
@@ -530,7 +530,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
      * 获取系统组织机构
      *
      * @author fengshuonan
-     * @date 2020/11/04 11:05
+     * @since 2020/11/04 11:05
      */
     private HrOrganization queryOrganization(HrOrganizationRequest hrOrganizationRequest) {
         HrOrganization hrOrganization = this.getById(hrOrganizationRequest.getOrgId());
@@ -548,7 +548,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
      * 如果pid不是顶级节点，pids就是父节点的pids + [pid] + ,
      *
      * @author fengshuonan
-     * @date 2020/11/5 13:45
+     * @since 2020/11/5 13:45
      */
     private void fillParentIds(HrOrganization hrOrganization) {
         if (TreeConstants.DEFAULT_PARENT_ID.equals(hrOrganization.getOrgParentId())) {
@@ -568,7 +568,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
      * 根据数据范围获取组织机构列表
      *
      * @author fengshuonan
-     * @date 2021/2/8 20:22
+     * @since 2021/2/8 20:22
      */
     private List<HrOrganization> findListByDataScope(HrOrganizationRequest hrOrganizationRequest) {
 
@@ -608,7 +608,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
      * @param parentLevelNum 上级机构的层级数，从0开始，0代表不计算直接返回本身
      * @param reverse        是否反转，true-代表自下而上计算，false-代表自上而下计算
      * @author fengshuonan
-     * @date 2022/10/1 11:45
+     * @since 2022/10/1 11:45
      */
     private Long calcParentOrgId(Long orgId, Integer parentLevelNum, boolean reverse) {
 

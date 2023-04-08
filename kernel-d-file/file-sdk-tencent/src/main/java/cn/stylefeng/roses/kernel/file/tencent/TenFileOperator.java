@@ -56,7 +56,7 @@ import java.util.concurrent.ExecutorService;
  * 腾讯云内网文件操作
  *
  * @author fengshuonan
- * @date 2020-05-22-6:51 下午
+ * @since 2020-05-22-6:51 下午
  */
 public class TenFileOperator implements FileOperatorApi {
 

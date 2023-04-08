@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
  * <p>说明:类中属性包含默认值的不要在这里修改,应该在"application.yml"中配置</p>
  *
  * @author stylefeng
- * @date 2017/5/21 11:18
+ * @since 2017/5/21 11:18
  */
 @Data
 @Slf4j

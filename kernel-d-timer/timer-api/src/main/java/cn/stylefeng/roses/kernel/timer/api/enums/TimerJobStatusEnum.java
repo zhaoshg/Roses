@@ -30,7 +30,7 @@ import lombok.Getter;
  * 定时任务的状态
  *
  * @author stylefeng
- * @date 2020/6/30 20:44
+ * @since 2020/6/30 20:44
  */
 @Getter
 public enum TimerJobStatusEnum {

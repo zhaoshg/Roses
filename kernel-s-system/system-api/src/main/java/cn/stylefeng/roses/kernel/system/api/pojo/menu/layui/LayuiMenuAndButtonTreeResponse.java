@@ -34,7 +34,7 @@ import java.util.List;
  * 角色分配资源和菜单的树
  *
  * @author majianguo
- * @date 2021/1/9 16:59
+ * @since 2021/1/9 16:59
  */
 @Data
 public class LayuiMenuAndButtonTreeResponse implements AbstractTreeNode<LayuiMenuAndButtonTreeResponse> {

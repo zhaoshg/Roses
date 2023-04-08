@@ -33,7 +33,7 @@ import lombok.Getter;
  * 系统用户相关异常枚举
  *
  * @author luojie
- * @date 2020/11/6 10:09
+ * @since 2020/11/6 10:09
  */
 @Getter
 public enum SysUserExceptionEnum implements AbstractExceptionEnum {

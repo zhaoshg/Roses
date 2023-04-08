@@ -111,7 +111,7 @@ import static cn.stylefeng.roses.kernel.system.api.constants.SystemConstants.OAU
  * 用户服务实现类
  *
  * @author fengshuonan
- * @date 2020/11/21 15:04
+ * @since 2020/11/21 15:04
  */
 @Slf4j
 @Service
@@ -1041,7 +1041,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * 获取系统用户
      *
      * @author fengshuonan
-     * @date 2020/3/26 9:54
+     * @since 2020/3/26 9:54
      */
     private SysUser querySysUser(SysUserRequest sysUserRequest) {
 
@@ -1059,7 +1059,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * 创建查询用户的wrapper
      *
      * @author fengshuonan
-     * @date 2020/11/6 10:16
+     * @since 2020/11/6 10:16
      */
     private LambdaQueryWrapper<SysUser> createWrapper(SysUserRequest sysUserRequest) {
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
@@ -1097,7 +1097,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * @param sysUserRequest 请求查询条件
      * @param withAdminFlag  是否携带admin用户，true-携带
      * @author fengshuonan
-     * @date 2022/9/19 20:55
+     * @since 2022/9/19 20:55
      */
     private List<SimpleDict> selectUserList(SysUserRequest sysUserRequest, boolean withAdminFlag) {
 

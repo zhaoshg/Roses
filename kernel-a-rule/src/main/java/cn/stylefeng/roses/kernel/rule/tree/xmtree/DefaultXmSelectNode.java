@@ -33,7 +33,7 @@ import java.util.List;
  * 默认的xm-select的节点结构
  *
  * @author fengshuonan
- * @date 2021/1/31 19:02
+ * @since 2021/1/31 19:02
  */
 @Data
 public class DefaultXmSelectNode implements AbstractXmSelectNode {

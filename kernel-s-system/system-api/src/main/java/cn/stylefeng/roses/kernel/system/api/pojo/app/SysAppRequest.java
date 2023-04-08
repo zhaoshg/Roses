@@ -38,7 +38,7 @@ import javax.validation.constraints.NotNull;
  * 系统应用参数
  *
  * @author fengshuonan
- * @date 2020/3/24 20:53
+ * @since 2020/3/24 20:53
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

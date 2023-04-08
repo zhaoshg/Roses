@@ -36,7 +36,7 @@ import java.sql.SQLException;
  * druid连接池创建工厂
  *
  * @author fengshuonan
- * @date 2020/10/16 15:59
+ * @since 2020/10/16 15:59
  */
 @Slf4j
 public class DruidDatasourceFactory {
@@ -45,7 +45,7 @@ public class DruidDatasourceFactory {
      * 创建druid连接池
      *
      * @author fengshuonan
-     * @date 2020/10/16 16:00
+     * @since 2020/10/16 16:00
      */
     public static DruidDataSource createDruidDataSource(DruidProperties druidProperties) {
         DruidDataSource dataSource = new DruidDataSource();
@@ -114,7 +114,7 @@ public class DruidDatasourceFactory {
      *
      * @param url 数据库配置的url
      * @author fengshuonan
-     * @date 2020/10/16 16:12
+     * @since 2020/10/16 16:12
      */
     private static String getValidateQueryByUrl(String url) {
         for (DbTypeEnum value : DbTypeEnum.values()) {

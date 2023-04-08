@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
  * 针对于layui前端的菜单的组装
  *
  * @author fengshuonan
- * @date 2020/12/27 18:53
+ * @since 2020/12/27 18:53
  */
 public class LayuiMenusFactory {
 
@@ -54,7 +54,7 @@ public class LayuiMenusFactory {
      * 创建layui前端首页需要的菜单列表
      *
      * @author fengshuonan
-     * @date 2020/12/27 19:07
+     * @since 2020/12/27 19:07
      */
     public static List<LayuiAppIndexMenusVO> createLayuiAppIndexMenus(List<SysMenu> sysMenuList) {
 
@@ -119,7 +119,7 @@ public class LayuiMenusFactory {
      * 获取应用名称通过应用编码
      *
      * @author fengshuonan
-     * @date 2021/1/1 18:09
+     * @since 2021/1/1 18:09
      */
     private static SysAppResult getAppNameByAppCode(String appCode) {
         AppServiceApi appServiceApi = SpringUtil.getBean(AppServiceApi.class);

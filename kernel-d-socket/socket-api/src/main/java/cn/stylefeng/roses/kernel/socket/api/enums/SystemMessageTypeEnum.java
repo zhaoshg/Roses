@@ -8,7 +8,7 @@ import lombok.Getter;
  * 说明：该枚举适用于服务端监听首次连接和断开连接
  *
  * @author majianguo
- * @date 2021/6/3 上午9:14
+ * @since 2021/6/3 上午9:14
  */
 @Getter
 public enum SystemMessageTypeEnum {

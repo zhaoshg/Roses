@@ -39,7 +39,7 @@ import java.util.Date;
  * <p>
  *
  * @author yxx
- * @date 2023/03/28 18:08
+ * @since 2023/03/28 18:08
  */
 @Data
 public class BaseResponse implements Serializable {

@@ -38,7 +38,7 @@ import java.util.Optional;
  * Mongodb 数据存储实现类
  *
  * @author huziyang
- * @date 2021/03/20 16:24
+ * @since 2021/03/20 16:24
  */
 @Service
 public class GunsMapServiceImpl implements GunsMapService, MongodbApi<GunsMapEntity, String> {

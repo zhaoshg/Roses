@@ -42,7 +42,7 @@ import java.util.Map;
  * sql操作工具
  *
  * @author fengshuonan
- * @date 2019/12/29 16:37
+ * @since 2019/12/29 16:37
  */
 @Slf4j
 public class SqlExe {
@@ -53,7 +53,7 @@ public class SqlExe {
      * @param sql        被执行的sql(sql中有参数用?代替)
      * @param params     sql执行时候的参数
      * @author fengshuonan
-     * @date 2019/12/29 16:37
+     * @since 2019/12/29 16:37
      */
     public static Map<String, Object> selectOne(DataSource dataSource, String sql, Object... params) {
 
@@ -77,7 +77,7 @@ public class SqlExe {
      * @param sql    被执行的sql(sql中有参数用?代替)
      * @param params sql执行时候的参数
      * @author fengshuonan
-     * @date 2019/12/29 16:37
+     * @since 2019/12/29 16:37
      */
     public static Map<String, Object> selectOne(String sql, Object... params) {
         DataSource dataSource = SpringUtil.getBean(DataSource.class);
@@ -91,7 +91,7 @@ public class SqlExe {
      * @param sql        被执行的sql(sql中有参数用?代替)
      * @param params     sql执行时候的参数
      * @author fengshuonan
-     * @date 2019/12/29 16:37
+     * @since 2019/12/29 16:37
      */
     public static List<Map<String, Object>> selectList(DataSource dataSource, String sql, Object... params) {
 
@@ -115,7 +115,7 @@ public class SqlExe {
      * @param sql    被执行的sql(sql中有参数用?代替)
      * @param params sql执行时候的参数
      * @author fengshuonan
-     * @date 2019/12/29 16:37
+     * @since 2019/12/29 16:37
      */
     public static List<Map<String, Object>> selectList(String sql, Object... params) {
         DataSource dataSource = SpringUtil.getBean(DataSource.class);
@@ -129,7 +129,7 @@ public class SqlExe {
      * @param sql        被执行的sql(sql中有参数用?代替)
      * @param params     sql执行时候的参数
      * @author fengshuonan
-     * @date 2019/12/29 16:37
+     * @since 2019/12/29 16:37
      */
     public static int update(DataSource dataSource, String sql, Object... params) {
         Connection conn = null;
@@ -150,7 +150,7 @@ public class SqlExe {
      * @param sql    被执行的sql(sql中有参数用?代替)
      * @param params sql执行时候的参数
      * @author fengshuonan
-     * @date 2019/12/29 16:37
+     * @since 2019/12/29 16:37
      */
     public static int update(String sql, Object... params) {
         DataSource dataSource = SpringUtil.getBean(DataSource.class);
@@ -164,7 +164,7 @@ public class SqlExe {
      * @param sql        被执行的sql(sql中有参数用?代替)
      * @param params     sql执行时候的参数
      * @author fengshuonan
-     * @date 2019/12/29 16:37
+     * @since 2019/12/29 16:37
      */
     public static int insert(DataSource dataSource, String sql, Object... params) {
         return update(dataSource, sql, params);
@@ -176,7 +176,7 @@ public class SqlExe {
      * @param sql    被执行的sql(sql中有参数用?代替)
      * @param params sql执行时候的参数
      * @author fengshuonan
-     * @date 2019/12/29 16:37
+     * @since 2019/12/29 16:37
      */
     public static int insert(String sql, Object... params) {
         DataSource dataSource = SpringUtil.getBean(DataSource.class);
@@ -190,7 +190,7 @@ public class SqlExe {
      * @param sql        被执行的sql(sql中有参数用?代替)
      * @param params     sql执行时候的参数
      * @author fengshuonan
-     * @date 2019/12/29 16:37
+     * @since 2019/12/29 16:37
      */
     public static int delete(DataSource dataSource, String sql, Object... params) {
         return update(dataSource, sql, params);
@@ -202,7 +202,7 @@ public class SqlExe {
      * @param sql    被执行的sql(sql中有参数用?代替)
      * @param params sql执行时候的参数
      * @author fengshuonan
-     * @date 2019/12/29 16:37
+     * @since 2019/12/29 16:37
      */
     public static int delete(String sql, Object... params) {
         DataSource dataSource = SpringUtil.getBean(DataSource.class);

@@ -9,7 +9,7 @@ import cn.stylefeng.roses.kernel.migration.api.pojo.MigrationInfo;
  * 1.所有需要接入迁移模块的业务，只需要实现本类即可
  *
  * @author majianguo
- * @date 2021/7/6 15:17
+ * @since 2021/7/6 15:17
  */
 public interface AccessMigrationApi {
 
@@ -18,7 +18,7 @@ public interface AccessMigrationApi {
      *
      * @return {@link java.lang.String}
      * @author majianguo
-     * @date 2021/7/6 17:15
+     * @since 2021/7/6 17:15
      **/
     String getAppName();
 
@@ -27,7 +27,7 @@ public interface AccessMigrationApi {
      *
      * @return {@link java.lang.String}
      * @author majianguo
-     * @date 2021/7/6 17:15
+     * @since 2021/7/6 17:15
      **/
     String getModuleName();
 
@@ -36,7 +36,7 @@ public interface AccessMigrationApi {
      *
      * @return {@link MigrationInfo}
      * @author majianguo
-     * @date 2021/7/6 15:20
+     * @since 2021/7/6 15:20
      **/
     MigrationInfo exportData();
 
@@ -47,7 +47,7 @@ public interface AccessMigrationApi {
      * @param data 导出的数据
      * @return {@link boolean}
      * @author majianguo
-     * @date 2021/7/6 15:23
+     * @since 2021/7/6 15:23
      **/
     boolean importData(String type, MigrationInfo data);
 

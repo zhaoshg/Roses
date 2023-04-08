@@ -33,7 +33,7 @@ import lombok.Data;
  * 登录操作的响应结果
  *
  * @author fengshuonan
- * @date 2020/10/19 14:17
+ * @since 2020/10/19 14:17
  */
 @Data
 public class LoginResponse {
@@ -72,7 +72,7 @@ public class LoginResponse {
      * 用于普通登录的组装
      *
      * @author fengshuonan
-     * @date 2021/5/25 22:31
+     * @since 2021/5/25 22:31
      */
     public LoginResponse(LoginUser loginUser, String token, Long expireAt) {
         this.loginUser = uselessFilter(loginUser);
@@ -84,7 +84,7 @@ public class LoginResponse {
      * 用于单点登录，返回用户loginCode
      *
      * @author fengshuonan
-     * @date 2021/5/25 22:31
+     * @since 2021/5/25 22:31
      */
     public LoginResponse(String loginCode) {
         this.ssoLogin = true;
@@ -95,7 +95,7 @@ public class LoginResponse {
      * 过滤无用的用户信息返回给登录用户
      *
      * @author fengshuonan
-     * @date 2021/7/13 11:23
+     * @since 2021/7/13 11:23
      */
     private LoginUser uselessFilter(LoginUser loginUser) {
         LoginUser tempUser = new LoginUser();

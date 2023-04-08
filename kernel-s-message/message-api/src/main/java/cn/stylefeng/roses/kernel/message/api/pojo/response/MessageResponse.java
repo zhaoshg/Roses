@@ -42,7 +42,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * 系统消息的查询参数
  *
  * @author liuhanqing
- * @date 2021/1/2 21:23
+ * @since 2021/1/2 21:23
  */
 @Data
 public class MessageResponse implements Serializable {

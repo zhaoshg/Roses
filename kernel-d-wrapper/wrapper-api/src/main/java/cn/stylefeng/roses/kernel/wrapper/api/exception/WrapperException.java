@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.wrapper.api.constants.WrapperConstants;
  * Wrapper异常
  *
  * @author fengshuonan
- * @date 2021/1/19 22:24
+ * @since 2021/1/19 22:24
  */
 public class WrapperException extends ServiceException {
 

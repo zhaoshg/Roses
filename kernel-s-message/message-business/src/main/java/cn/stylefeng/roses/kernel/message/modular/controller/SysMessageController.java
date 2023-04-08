@@ -50,7 +50,7 @@ import java.util.List;
  * 系统消息控制器
  *
  * @author liuhanqing
- * @date 2021/1/1 22:30
+ * @since 2021/1/1 22:30
  */
 @RestController
 @ApiResource(name = "系统消息控制器", resBizType = ResBizTypeEnum.SYSTEM)
@@ -66,7 +66,7 @@ public class SysMessageController {
      * 发送系统消息
      *
      * @author liuhanqing
-     * @date 2021/1/8 13:50
+     * @since 2021/1/8 13:50
      */
     @PostResource(name = "发送系统消息", path = "/sysMessage/sendMessage")
     @BusinessLog
@@ -80,7 +80,7 @@ public class SysMessageController {
      * 批量更新系统消息状态
      *
      * @author liuhanqing
-     * @date 2021/1/8 13:50
+     * @since 2021/1/8 13:50
      */
     @PostResource(name = "批量更新系统消息状态", path = "/sysMessage/batchUpdateReadFlag")
     @BusinessLog
@@ -94,7 +94,7 @@ public class SysMessageController {
      * 系统消息全部修改已读
      *
      * @author liuhanqing
-     * @date 2021/1/8 13:50
+     * @since 2021/1/8 13:50
      */
     @GetResource(name = "系统消息全部修改已读", path = "/sysMessage/allMessageReadFlag")
     public ResponseData<?> allMessageReadFlag() {
@@ -106,7 +106,7 @@ public class SysMessageController {
      * 删除系统消息
      *
      * @author liuhanqing
-     * @date 2021/1/8 13:50
+     * @since 2021/1/8 13:50
      */
     @PostResource(name = "删除系统消息", path = "/sysMessage/delete")
     @BusinessLog
@@ -119,7 +119,7 @@ public class SysMessageController {
      * 查看系统消息
      *
      * @author liuhanqing
-     * @date 2021/1/8 13:50
+     * @since 2021/1/8 13:50
      */
     @GetResource(name = "查看系统消息", path = "/sysMessage/detail")
     public ResponseData<MessageResponse> detail(@Validated(MessageRequest.detail.class) MessageRequest messageRequest) {
@@ -130,7 +130,7 @@ public class SysMessageController {
      * 分页查询系统消息列表
      *
      * @author liuhanqing
-     * @date 2021/1/8 13:50
+     * @since 2021/1/8 13:50
      */
     @GetResource(name = "分页查询系统消息列表", path = "/sysMessage/page")
     public ResponseData<PageResult<MessageResponse>> page(MessageRequest messageRequest) {
@@ -141,7 +141,7 @@ public class SysMessageController {
      * 系统消息列表
      *
      * @author liuhanqing
-     * @date 2021/1/8 13:50
+     * @since 2021/1/8 13:50
      */
     @GetResource(name = "系统消息列表", path = "/sysMessage/list")
     public ResponseData<List<MessageResponse>> list(MessageRequest messageRequest) {
@@ -152,7 +152,7 @@ public class SysMessageController {
      * 查询所有未读系统消息列表
      *
      * @author fengshuonan
-     * @date 2021/6/12 17:42
+     * @since 2021/6/12 17:42
      */
     @GetResource(name = "查询所有未读系统消息列表", path = "/sysMessage/unReadMessageList", requiredPermission = false)
     public ResponseData<List<MessageResponse>> unReadMessageList(MessageRequest messageRequest) {

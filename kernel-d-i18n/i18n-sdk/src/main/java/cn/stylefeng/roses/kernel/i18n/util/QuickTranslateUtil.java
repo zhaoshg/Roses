@@ -34,7 +34,7 @@ import java.util.Map;
  * 针对某个翻译项快速得出翻译结果
  *
  * @author fengshuonan
- * @date 2021/1/27 22:36
+ * @since 2021/1/27 22:36
  */
 public class QuickTranslateUtil {
 
@@ -44,7 +44,7 @@ public class QuickTranslateUtil {
      * 若查找不到code对应的值，则以第二个参数为准
      *
      * @author fengshuonan
-     * @date 2021/1/27 22:41
+     * @since 2021/1/27 22:41
      */
     public static String get(String tranCode, String defaultName) {
         String tranLanguageCode = LoginContext.me().getLoginUser().getTranLanguageCode();

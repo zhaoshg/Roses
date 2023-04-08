@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 第三方OAuth2用户信息
  *
  * @author fengshuonan
- * @date 2022/7/1 18:05
+ * @since 2022/7/1 18:05
  */
 @Data
 public class OAuth2AuthUserDTO implements Serializable {

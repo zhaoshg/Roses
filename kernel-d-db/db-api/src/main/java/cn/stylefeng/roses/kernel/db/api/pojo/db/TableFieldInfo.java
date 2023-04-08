@@ -6,7 +6,7 @@ import lombok.Data;
  * 字段详情
  *
  * @author fengshuonan
- * @date 2020-01-19-5:40 下午
+ * @since 2020-01-19-5:40 下午
  */
 @Data
 public class TableFieldInfo {

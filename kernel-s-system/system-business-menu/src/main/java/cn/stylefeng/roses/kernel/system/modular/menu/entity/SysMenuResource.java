@@ -38,7 +38,7 @@ import java.io.Serializable;
  * 菜单资源的关联
  *
  * @author fengshuonan
- * @date 2021/8/8 21:35
+ * @since 2021/8/8 21:35
  */
 @Data
 @TableName("sys_menu_resource")

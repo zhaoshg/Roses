@@ -22,7 +22,7 @@ import java.util.Date;
  * C端用户实体组装
  *
  * @author fengshuonan
- * @date 2021/6/7 15:10
+ * @since 2021/6/7 15:10
  */
 public class CustomerFactory {
 
@@ -30,7 +30,7 @@ public class CustomerFactory {
      * 创建注册用户实体
      *
      * @author fengshuonan
-     * @date 2021/6/7 15:10
+     * @since 2021/6/7 15:10
      */
     public static Customer createRegCustomer(CustomerRequest customerRequest) {
 
@@ -76,7 +76,7 @@ public class CustomerFactory {
      * 创建发送注册激活邮件的参数
      *
      * @author fengshuonan
-     * @date 2021/6/7 15:27
+     * @since 2021/6/7 15:27
      */
     public static SendMailParam createRegEmailParam(String mail, String verifyCode) {
         String title = CustomerConfigExpander.getRegMailTitle();
@@ -93,7 +93,7 @@ public class CustomerFactory {
      * 创建loginUser对象
      *
      * @author fengshuonan
-     * @date 2021/6/7 17:06
+     * @since 2021/6/7 17:06
      */
     public static LoginUser createLoginUser(Customer customer, FileOperatorApi fileOperatorApi) {
         LoginUser loginUser = new LoginUser();
@@ -122,7 +122,7 @@ public class CustomerFactory {
      * 创建发送注册激活邮件的参数
      *
      * @author fengshuonan
-     * @date 2021/6/7 15:27
+     * @since 2021/6/7 15:27
      */
     public static SendMailParam createResetPwdEmail(String mail, String randomCode) {
         String title = CustomerConfigExpander.getResetPwdMailTitle();

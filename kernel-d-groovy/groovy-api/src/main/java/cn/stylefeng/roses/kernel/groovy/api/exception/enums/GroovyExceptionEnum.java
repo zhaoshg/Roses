@@ -33,7 +33,7 @@ import lombok.Getter;
  * groovy脚本执行异常的枚举
  *
  * @author fengshuonan
- * @date 2021/1/22 16:36
+ * @since 2021/1/22 16:36
  */
 @Getter
 public enum GroovyExceptionEnum implements AbstractExceptionEnum {

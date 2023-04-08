@@ -6,7 +6,7 @@ import lombok.Data;
  * 表的基本信息
  *
  * @author fengshuonan
- * @date 2021/5/19 10:47
+ * @since 2021/5/19 10:47
  */
 @Data
 public class TableInfo {

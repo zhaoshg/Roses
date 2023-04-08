@@ -47,7 +47,7 @@ import static cn.stylefeng.roses.kernel.message.api.constants.MessageConstants.W
  * 基于redis的会话管理
  *
  * @author fengshuonan
- * @date 2019-09-28-14:43
+ * @since 2019-09-28-14:43
  */
 public class DefaultSessionManager implements SessionManagerApi, ConfigUpdateCallback {
 

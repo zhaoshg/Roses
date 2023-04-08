@@ -33,7 +33,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  * 角色信息的缓存
  *
  * @author fengshuonan
- * @date 2021/7/29 23:29
+ * @since 2021/7/29 23:29
  */
 public class RoleRedisCache extends AbstractRedisCacheOperator<SysRole> {
 

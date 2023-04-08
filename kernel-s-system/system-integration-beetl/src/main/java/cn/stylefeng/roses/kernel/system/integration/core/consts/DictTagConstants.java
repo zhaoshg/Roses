@@ -4,7 +4,7 @@ package cn.stylefeng.roses.kernel.system.integration.core.consts;
  * 字典html属性常量
  *
  * @author liuhanqing
- * @date 2021/1/16 21:06
+ * @since 2021/1/16 21:06
  */
 
 public interface DictTagConstants {

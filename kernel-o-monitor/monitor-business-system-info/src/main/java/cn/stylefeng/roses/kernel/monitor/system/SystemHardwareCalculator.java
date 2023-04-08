@@ -48,7 +48,7 @@ import java.util.Properties;
  * 服务器相关信息
  *
  * @author fengshuonan
- * @date 2019-07-13 13:42
+ * @since 2019-07-13 13:42
  */
 @Data
 public class SystemHardwareCalculator {
@@ -89,7 +89,7 @@ public class SystemHardwareCalculator {
      * 计算整理各个信息指标
      *
      * @author fengshuonan
-     * @date 2021/2/1 20:39
+     * @since 2021/2/1 20:39
      */
     public void calc() {
         SystemInfo si = new SystemInfo();
@@ -105,7 +105,7 @@ public class SystemHardwareCalculator {
      * 获取CPU信息
      *
      * @author fengshuonan
-     * @date 2021/2/1 20:39
+     * @since 2021/2/1 20:39
      */
     private void setCpuInfo(CentralProcessor processor) {
         // CPU信息
@@ -133,7 +133,7 @@ public class SystemHardwareCalculator {
      * 获取内存信息
      *
      * @author fengshuonan
-     * @date 2021/2/1 20:39
+     * @since 2021/2/1 20:39
      */
     private void setMemInfo(GlobalMemory memory) {
         mem.setTotal(memory.getTotal());
@@ -145,7 +145,7 @@ public class SystemHardwareCalculator {
      * 获取服务器信息
      *
      * @author fengshuonan
-     * @date 2021/2/1 20:39
+     * @since 2021/2/1 20:39
      */
     private void setSysInfo() {
         Properties props = System.getProperties();
@@ -160,7 +160,7 @@ public class SystemHardwareCalculator {
      * 设置Java虚拟机
      *
      * @author fengshuonan
-     * @date 2021/2/1 20:40
+     * @since 2021/2/1 20:40
      */
     private void setJvmInfo() {
         Properties props = System.getProperties();
@@ -175,7 +175,7 @@ public class SystemHardwareCalculator {
      * 设置磁盘信息
      *
      * @author fengshuonan
-     * @date 2021/2/1 20:40
+     * @since 2021/2/1 20:40
      */
     private void setSysFiles(OperatingSystem os) {
         FileSystem fileSystem = os.getFileSystem();
@@ -208,7 +208,7 @@ public class SystemHardwareCalculator {
      * @param size 字节大小
      * @return 转换后值
      * @author fengshuonan
-     * @date 2021/2/1 20:40
+     * @since 2021/2/1 20:40
      */
     public String convertFileSize(long size) {
         long kb = 1024;

@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  * 业务分组实例类
  *
  * @author fengshuonan
- * @date 2022/05/11 12:54
+ * @since 2022/05/11 12:54
  */
 @TableName("sys_group")
 @Data

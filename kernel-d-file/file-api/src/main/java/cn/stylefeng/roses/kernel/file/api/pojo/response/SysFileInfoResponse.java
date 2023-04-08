@@ -33,7 +33,7 @@ import java.util.Date;
  * 文件信息结果集
  *
  * @author stylefeng
- * @date 2020/6/7 22:15
+ * @since 2020/6/7 22:15
  */
 @Data
 public class SysFileInfoResponse {

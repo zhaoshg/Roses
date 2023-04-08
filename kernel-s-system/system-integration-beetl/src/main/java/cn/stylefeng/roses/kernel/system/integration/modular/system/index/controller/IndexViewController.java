@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * 首页相关的界面渲染
  *
  * @author fengshuonan
- * @date 2020/12/27 16:23
+ * @since 2020/12/27 16:23
  */
 @Controller
 @ApiResource(name = "首页相关的界面渲染", resBizType = ResBizTypeEnum.SYSTEM)
@@ -27,7 +27,7 @@ public class IndexViewController {
      * 首页界面
      *
      * @author fengshuonan
-     * @date 2020/12/13 17:19
+     * @since 2020/12/13 17:19
      */
     @GetResource(name = "首页界面", path = "/", requiredLogin = false, requiredPermission = false, viewFlag = true)
     public String indexView(Model model) {
@@ -46,7 +46,7 @@ public class IndexViewController {
      * 个人中心界面
      *
      * @author fengshuonan
-     * @date 2020/12/29 21:53
+     * @since 2020/12/29 21:53
      */
     @GetResource(name = "个人中心界面", path = "/view/personal", requiredPermission = false)
     public String personal(Model model) {
@@ -58,7 +58,7 @@ public class IndexViewController {
      * 锁屏界面
      *
      * @author fengshuonan
-     * @date 2020/12/29 21:34
+     * @since 2020/12/29 21:34
      */
     @GetResource(name = "锁屏界面", path = "/view/lock", requiredPermission = false)
     public String lock() {
@@ -69,7 +69,7 @@ public class IndexViewController {
      * 主题切换界面
      *
      * @author fengshuonan
-     * @date 2020/12/29 21:42
+     * @since 2020/12/29 21:42
      */
     @GetResource(name = "主题切换界面", path = "/view/theme", requiredPermission = false)
     public String theme() {
@@ -80,7 +80,7 @@ public class IndexViewController {
      * 修改密码界面
      *
      * @author fengshuonan
-     * @date 2020/12/29 21:42
+     * @since 2020/12/29 21:42
      */
     @GetResource(name = "修改密码界面", path = "/view/changePassword", requiredPermission = false)
     public String changePassword() {

@@ -35,7 +35,7 @@ import java.util.Date;
  * 日志记录需要的参数
  *
  * @author fengshuonan
- * @date 2020/10/27 16:31
+ * @since 2020/10/27 16:31
  */
 @Data
 public class LogRecordDTO {

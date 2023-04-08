@@ -41,7 +41,7 @@ import cn.stylefeng.roses.kernel.system.modular.user.entity.SysUser;
  * 用户信息填充，用于创建和修改用户时，添加一些基础信息
  *
  * @author fengshuonan
- * @date 2020/11/21 12:55
+ * @since 2020/11/21 12:55
  */
 public class SysUserCreateFactory {
 
@@ -49,7 +49,7 @@ public class SysUserCreateFactory {
      * 新增用户时候的用户信息填充
      *
      * @author fengshuonan
-     * @date 2020/11/21 12:56
+     * @since 2020/11/21 12:56
      */
     public static void fillAddSysUser(SysUser sysUser) {
 
@@ -84,7 +84,7 @@ public class SysUserCreateFactory {
      * 编辑用户时候的用户信息填充
      *
      * @author fengshuonan
-     * @date 2020/11/21 12:56
+     * @since 2020/11/21 12:56
      */
     public static void fillEditSysUser(SysUser sysUser) {
 
@@ -100,7 +100,7 @@ public class SysUserCreateFactory {
      * 编辑用户时候的用户信息填充
      *
      * @author fengshuonan
-     * @date 2020/11/21 12:56
+     * @since 2020/11/21 12:56
      */
     public static void fillUpdateInfo(SysUserRequest sysUserRequest, SysUser sysUser) {
 
@@ -124,7 +124,7 @@ public class SysUserCreateFactory {
      * 创建第三方应用在本应用的用户
      *
      * @author fengshuonan
-     * @Date 2019/6/9 19:11
+     * @since 2019/6/9 19:11
      */
     public static SysUser createOAuth2User(OAuth2AuthUserDTO oAuth2AuthUserDTO) {
 

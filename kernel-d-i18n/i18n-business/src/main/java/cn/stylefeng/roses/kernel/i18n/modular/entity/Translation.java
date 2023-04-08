@@ -37,7 +37,7 @@ import lombok.EqualsAndHashCode;
  * 多语言表
  *
  * @author fengshuonan
- * @date 2021/1/24 19:12
+ * @since 2021/1/24 19:12
  */
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_translation")

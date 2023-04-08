@@ -6,7 +6,7 @@ package cn.stylefeng.roses.kernel.rule.tenant;
  * 一次性使用，使用完就立即释放
  *
  * @author fengshuonan
- * @date 2022/11/8 0:58
+ * @since 2022/11/8 0:58
  */
 public class OnceTenantCodeHolder {
 
@@ -16,7 +16,7 @@ public class OnceTenantCodeHolder {
      * 设置租户编码
      *
      * @author fengshuonan
-     * @date 2022/11/8 0:59
+     * @since 2022/11/8 0:59
      */
     public static void setTenantCode(String aesKey) {
         CONTEXT_HOLDER.set(aesKey);
@@ -26,7 +26,7 @@ public class OnceTenantCodeHolder {
      * 获取租户编码
      *
      * @author fengshuonan
-     * @date 2022/11/8 0:59
+     * @since 2022/11/8 0:59
      */
     public static String getTenantCode() {
         return CONTEXT_HOLDER.get();
@@ -36,7 +36,7 @@ public class OnceTenantCodeHolder {
      * 清除租户编码
      *
      * @author fengshuonan
-     * @date 2022/11/8 0:59
+     * @since 2022/11/8 0:59
      */
     public static void clearTenantCode() {
         CONTEXT_HOLDER.remove();

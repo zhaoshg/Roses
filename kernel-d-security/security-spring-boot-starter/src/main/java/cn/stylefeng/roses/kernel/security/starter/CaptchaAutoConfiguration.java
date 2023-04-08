@@ -42,7 +42,7 @@ import javax.annotation.Resource;
  * 图形验证码自动配置
  *
  * @author fengshuonan
- * @date 2020/12/1 21:44
+ * @since 2020/12/1 21:44
  */
 @Configuration
 @AutoConfigureAfter({SecurityMemoryCacheAutoConfiguration.class, SecurityRedisCacheAutoConfiguration.class})
@@ -55,7 +55,7 @@ public class CaptchaAutoConfiguration {
      * 图形验证码
      *
      * @author chenjinlong
-     * @date 2021/1/15 11:25
+     * @since 2021/1/15 11:25
      */
     @Bean
     @ConditionalOnMissingBean(ImageCaptchaApi.class)
@@ -68,7 +68,7 @@ public class CaptchaAutoConfiguration {
      * 拖拽验证码工具
      *
      * @author fengshuonan
-     * @date 2021/7/5 11:57
+     * @since 2021/7/5 11:57
      */
     @Bean
     @ConditionalOnMissingBean(DragCaptchaApi.class)

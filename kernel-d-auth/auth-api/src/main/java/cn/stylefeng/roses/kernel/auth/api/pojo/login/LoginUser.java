@@ -42,7 +42,7 @@ import java.util.*;
  * 登录用户信息
  *
  * @author fengshuonan
- * @date 2020/10/17 9:58
+ * @since 2020/10/17 9:58
  */
 @Data
 public class LoginUser implements Serializable {

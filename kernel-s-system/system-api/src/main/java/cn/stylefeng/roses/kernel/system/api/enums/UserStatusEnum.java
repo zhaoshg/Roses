@@ -32,7 +32,7 @@ import lombok.Getter;
  * 用户状态的枚举
  *
  * @author fengshuonan
- * @date 2020/10/20 18:19
+ * @since 2020/10/20 18:19
  */
 @Getter
 public enum UserStatusEnum {
@@ -65,7 +65,7 @@ public enum UserStatusEnum {
      * code转化为enum
      *
      * @author fengshuonan
-     * @date 2020/10/21 9:29
+     * @since 2020/10/21 9:29
      */
     public static UserStatusEnum toEnum(Integer code) {
         for (UserStatusEnum userStatusEnum : UserStatusEnum.values()) {
@@ -80,7 +80,7 @@ public enum UserStatusEnum {
      * 获取code对应的message
      *
      * @author fengshuonan
-     * @date 2020/10/21 9:29
+     * @since 2020/10/21 9:29
      */
     public static String getCodeMessage(Integer code) {
         UserStatusEnum userStatusEnum = toEnum(code);
@@ -95,7 +95,7 @@ public enum UserStatusEnum {
      * 检查请求参数的状态是否正确
      *
      * @author stylefeng
-     * @date 2020/4/30 22:43
+     * @since 2020/4/30 22:43
      */
     public static void validateUserStatus(Integer code) {
         if (code == null) {

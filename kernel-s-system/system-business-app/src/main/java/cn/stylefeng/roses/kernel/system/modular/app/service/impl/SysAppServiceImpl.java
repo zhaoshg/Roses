@@ -58,7 +58,7 @@ import java.util.stream.Collectors;
  * 系统应用service接口实现类
  *
  * @author fengshuonan
- * @date 2020/3/13 16:15
+ * @since 2020/3/13 16:15
  */
 @Service
 public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> implements SysAppService, AppServiceApi {
@@ -296,7 +296,7 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
      * 获取系统应用
      *
      * @author fengshuonan
-     * @date 2020/3/26 9:56
+     * @since 2020/3/26 9:56
      */
     private SysApp querySysApp(SysAppRequest sysAppRequest) {
         SysApp sysApp = this.getById(sysAppRequest.getAppId());
@@ -310,7 +310,7 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
      * 创建wrapper
      *
      * @author fengshuonan
-     * @date 2020/11/6 10:16
+     * @since 2020/11/6 10:16
      */
     private LambdaQueryWrapper<SysApp> createWrapper(SysAppRequest sysAppRequest) {
         LambdaQueryWrapper<SysApp> queryWrapper = new LambdaQueryWrapper<>();

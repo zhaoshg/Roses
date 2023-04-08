@@ -31,7 +31,7 @@ import lombok.Data;
  * 管理员用户的响应
  *
  * @author fengshuonan
- * @date 2022/9/30 11:25
+ * @since 2022/9/30 11:25
  */
 @Data
 public class SysUserAdminDTO {

@@ -34,7 +34,7 @@ import static cn.stylefeng.roses.kernel.rule.constants.RuleConstants.THIRD_ERROR
  * 表示错误来源于第三方服务，比如 CDN 服务出错，消息投递超时等问题
  *
  * @author fengshuonan
- * @date 2020/10/15 17:31
+ * @since 2020/10/15 17:31
  */
 @Getter
 public enum DefaultThirdExceptionEnum implements AbstractExceptionEnum {

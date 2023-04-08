@@ -34,7 +34,7 @@ import java.util.Set;
  * 字典描述类
  *
  * @author fengshuonan
- * @date 2020/12/8 18:25
+ * @since 2020/12/8 18:25
  */
 @Data
 public class FieldMetadata {

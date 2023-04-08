@@ -21,7 +21,7 @@ import java.util.List;
  * 组织机构审批人控制器
  *
  * @author fengshuonan
- * @date 2022/09/13 23:15
+ * @since 2022/09/13 23:15
  */
 @RestController
 @ApiResource(name = "组织机构审批人", resBizType = ResBizTypeEnum.SYSTEM)
@@ -34,7 +34,7 @@ public class HrOrgApproverController {
      * 获取组织机构审批人绑定列表
      *
      * @author fengshuonan
-     * @date 2022/09/13 23:15
+     * @since 2022/09/13 23:15
      */
     @GetResource(name = "获取组织机构审批人绑定列表", path = "/hrOrgApprover/getBindingList")
     public ResponseData<List<HrOrgApprover>> getBindingList(@Validated(HrOrgApproverRequest.list.class) HrOrgApproverRequest hrOrgApproverRequest) {
@@ -45,7 +45,7 @@ public class HrOrgApproverController {
      * 更新组织机构绑定审批人
      *
      * @author fengshuonan
-     * @date 2022/09/13 23:15
+     * @since 2022/09/13 23:15
      */
     @PostResource(name = "更新组织机构绑定审批人", path = "/hrOrgApprover/bindUserList")
     public ResponseData<HrOrgApprover> bindUserList(@RequestBody @Validated(HrOrgApproverRequest.add.class) HrOrgApproverRequest hrOrgApproverRequest) {
@@ -57,7 +57,7 @@ public class HrOrgApproverController {
      * 删除绑定审批人
      *
      * @author fengshuonan
-     * @date 2022/09/13 23:15
+     * @since 2022/09/13 23:15
      */
     @PostResource(name = "删除绑定审批人", path = "/hrOrgApprover/delete")
     public ResponseData<?> delete(@RequestBody @Validated(HrOrgApproverRequest.delete.class) HrOrgApproverRequest hrOrgApproverRequest) {
@@ -69,7 +69,7 @@ public class HrOrgApproverController {
      * 获取组织机构审批人类型列表
      *
      * @author fengshuonan
-     * @date 2022/9/26 10:44
+     * @since 2022/9/26 10:44
      */
     @GetResource(name = "获取组织机构审批人类型列表", path = "/hrOrgApprover/getApproverTypeList")
     public ResponseData<List<SimpleDict>> getApproverTypeList() {

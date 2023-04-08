@@ -56,7 +56,7 @@ import java.util.List;
  * 用户管理控制器
  *
  * @author luojie
- * @date 2020/11/6 09:47
+ * @since 2020/11/6 09:47
  */
 @RestController
 @ApiResource(name = "用户管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -72,7 +72,7 @@ public class SysUserController {
      * 增加用户
      *
      * @author luojie
-     * @date 2020/11/6 13:50
+     * @since 2020/11/6 13:50
      */
     @PostResource(name = "系统用户_增加", path = "/sysUser/add")
     @BusinessLog
@@ -85,7 +85,7 @@ public class SysUserController {
      * 删除系统用户
      *
      * @author luojie
-     * @date 2020/11/6 13:50
+     * @since 2020/11/6 13:50
      */
     @PostResource(name = "系统用户_删除", path = "/sysUser/delete")
     @BusinessLog
@@ -98,7 +98,7 @@ public class SysUserController {
      * 批量删除系统用户
      *
      * @author fengshuonan
-     * @date 2021/4/7 16:12
+     * @since 2021/4/7 16:12
      */
     @PostResource(name = "系统用户_批量删除系统用户", path = "/sysUser/batchDelete")
     @BusinessLog
@@ -111,7 +111,7 @@ public class SysUserController {
      * 编辑系统用户
      *
      * @author luojie
-     * @date 2020/11/6 13:50
+     * @since 2020/11/6 13:50
      */
     @PostResource(name = "系统用户_编辑", path = "/sysUser/edit")
     @BusinessLog
@@ -124,7 +124,7 @@ public class SysUserController {
      * 修改状态
      *
      * @author luojie
-     * @date 2020/11/6 13:50
+     * @since 2020/11/6 13:50
      */
     @PostResource(name = "系统用户_修改状态", path = "/sysUser/changeStatus")
     @BusinessLog
@@ -137,7 +137,7 @@ public class SysUserController {
      * 重置密码
      *
      * @author luojie
-     * @date 2020/11/6 13:48
+     * @since 2020/11/6 13:48
      */
     @PostResource(name = "系统用户_重置密码", path = "/sysUser/resetPwd")
     @BusinessLog
@@ -150,7 +150,7 @@ public class SysUserController {
      * 授权角色
      *
      * @author luojie
-     * @date 2020/11/6 13:50
+     * @since 2020/11/6 13:50
      */
     @PostResource(name = "系统用户_授权角色", path = "/sysUser/grantRole")
     @BusinessLog
@@ -163,7 +163,7 @@ public class SysUserController {
      * 授权数据
      *
      * @author luojie
-     * @date 2020/11/6 13:50
+     * @since 2020/11/6 13:50
      */
     @PostResource(name = "系统用户_授权数据", path = "/sysUser/grantData")
     @BusinessLog
@@ -176,7 +176,7 @@ public class SysUserController {
      * 查看系统用户
      *
      * @author luojie
-     * @date 2020/11/6 13:50
+     * @since 2020/11/6 13:50
      */
     @GetResource(name = "系统用户_查看", path = "/sysUser/detail")
     public ResponseData<SysUserDTO> detail(@Validated(SysUserRequest.detail.class) SysUserRequest sysUserRequest) {
@@ -187,7 +187,7 @@ public class SysUserController {
      * 获取当前登录用户的信息
      *
      * @author fengshuonan
-     * @date 2021/1/1 19:01
+     * @since 2021/1/1 19:01
      */
     @GetResource(name = "获取当前登录用户的信息", path = "/sysUser/currentUserInfo", requiredPermission = false)
     public ResponseData<SysUserDTO> currentUserInfo() {
@@ -202,7 +202,7 @@ public class SysUserController {
      * 查询系统用户
      *
      * @author luojie
-     * @date 2020/11/6 13:49
+     * @since 2020/11/6 13:49
      */
     @GetResource(name = "系统用户_查询", path = "/sysUser/page")
     @Wrapper(UserExpandWrapper.class)
@@ -214,7 +214,7 @@ public class SysUserController {
      * 导出用户
      *
      * @author luojie
-     * @date 2020/11/6 13:57
+     * @since 2020/11/6 13:57
      */
     @GetResource(name = "系统用户_导出", path = "/sysUser/export")
     @BusinessLog
@@ -226,7 +226,7 @@ public class SysUserController {
      * 获取用户选择树数据（用在系统通知，选择发送人的时候）
      *
      * @author liuhanqing
-     * @date 2021/1/15 8:28
+     * @since 2021/1/15 8:28
      */
     @GetResource(name = "获取用户选择树数据（用在系统通知，选择发送人的时候）", path = "/sysUser/getUserSelectTree")
     public ResponseData<List<UserSelectTreeNode>> getUserTree() {
@@ -237,7 +237,7 @@ public class SysUserController {
      * 获取用户数据范围列表
      *
      * @author luojie
-     * @date 2020/11/6 13:51
+     * @since 2020/11/6 13:51
      */
     @GetResource(name = "系统用户_获取用户数据范围列表", path = "/sysUser/getUserDataScope")
     public ResponseData<List<Long>> ownData(@Validated(SysUserRequest.detail.class) SysUserRequest sysUserRequest) {
@@ -249,7 +249,7 @@ public class SysUserController {
      * 获取用户的角色列表
      *
      * @author luojie
-     * @date 2020/11/6 13:50
+     * @since 2020/11/6 13:50
      */
     @GetResource(name = "系统用户_获取用户的角色列表", path = "/sysUser/getUserRoles")
     public ResponseData<List<SysUserRole>> ownRole(@Validated(SysUserRequest.detail.class) SysUserRequest sysUserRequest) {
@@ -265,7 +265,7 @@ public class SysUserController {
      * @param sysUserRequest 请求参数：name 姓名(可选)
      * @return 返回除超级管理员外的用户列表
      * @author luojie
-     * @date 2020/11/6 09:49
+     * @since 2020/11/6 09:49
      */
     @GetResource(name = "系统用户_选择器", path = "/sysUser/selector")
     public ResponseData<List<SimpleDict>> selector(SysUserRequest sysUserRequest) {
@@ -280,7 +280,7 @@ public class SysUserController {
      * @param sysUserRequest 请求参数：name 姓名(可选)
      * @return 返回除超级管理员外的用户列表
      * @author yx
-     * @date 2023/02/21 09:49
+     * @since 2023/02/21 09:49
      */
     @GetResource(name = "系统用户_选择器(权限)", path = "/sysUser/selectorByAuthority", requiredPermission = false)
     public ResponseData<List<SimpleDict>> selectorByAuthority(SysUserRequest sysUserRequest) {
@@ -295,7 +295,7 @@ public class SysUserController {
      * @param sysUserRequest 请求参数：name 姓名(可选)
      * @return 返回除超级管理员外的用户列表
      * @author luojie
-     * @date 2020/11/6 09:49
+     * @since 2020/11/6 09:49
      */
     @GetResource(name = "系统用户_选择器", path = "/sysUser/selectorAll")
     public ResponseData<List<SimpleDict>> selectorAll(SysUserRequest sysUserRequest) {
@@ -306,7 +306,7 @@ public class SysUserController {
      * 获取所有用户ID和名称列表
      *
      * @author majianguo
-     * @date 2022/1/17 14:24
+     * @since 2022/1/17 14:24
      **/
     @GetResource(name = "获取所有用户ID和名称列表", path = "/sysUser/getAllUserIdList")
     public ResponseData<List<SysUserRequest>> getAllUserIdList() {
@@ -317,7 +317,7 @@ public class SysUserController {
      * 运维平台接口检测
      *
      * @author majianguo
-     * @date 2022/1/27 14:29
+     * @since 2022/1/27 14:29
      **/
     @GetResource(name = "运维平台接口检测", path = "/sysUser/devopsApiCheck", requiredLogin = false, requiredPermission = false)
     public ResponseData<Integer> devopsApiCheck(SysUserRequest sysUserRequest) {
@@ -328,7 +328,7 @@ public class SysUserController {
      * 根据用户主键获取用户对应的token
      *
      * @author majianguo
-     * @date 2022/1/17 14:24
+     * @since 2022/1/17 14:24
      **/
     @GetResource(name = "根据用户主键获取用户对应的token", path = "/sysUser/getTokenByUserId")
     public ResponseData<String> getTokenByUserId(Long userId) {
@@ -339,7 +339,7 @@ public class SysUserController {
      * 根据条件筛选用户
      *
      * @author fengshuonan
-     * @date 2022/6/17 14:46
+     * @since 2022/6/17 14:46
      */
     @GetResource(name = "根据条件筛选用户", path = "/sysUser/getUserListByConditions")
     public ResponseData<List<SimpleDict>> getUserListByConditions(SysUserRequest sysUserRequest) {
@@ -350,7 +350,7 @@ public class SysUserController {
      * 获取用户列表，通过用户id集合
      *
      * @author fengshuonan
-     * @date 2022/9/25 10:27
+     * @since 2022/9/25 10:27
      */
     @PostResource(name = "获取用户列表，通过用户id集合", path = "/sysUser/getUsersByUserIds")
     public ResponseData<List<SysUserDTO>> getUsersByUserIds(@RequestBody @Validated(SysUserRequest.getUserList.class) SysUserRequest sysUserRequest) {

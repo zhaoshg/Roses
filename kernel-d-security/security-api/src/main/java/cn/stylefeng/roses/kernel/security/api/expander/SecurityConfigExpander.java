@@ -36,7 +36,7 @@ import java.util.List;
  * 安全模块的配置
  *
  * @author fengshuonan
- * @date 2021/2/19 8:49
+ * @since 2021/2/19 8:49
  */
 public class SecurityConfigExpander {
 
@@ -44,7 +44,7 @@ public class SecurityConfigExpander {
      * 获取XSS过滤的url范围
      *
      * @author fengshuonan
-     * @date 2021/1/13 23:21
+     * @since 2021/1/13 23:21
      */
     public static String[] getUrlPatterns() {
         String xssUrlIncludes = ConfigContext.me().getSysConfigValueWithDefault("SYS_XSS_URL_INCLUDES", String.class, SecurityConstants.DEFAULT_XSS_PATTERN);
@@ -56,7 +56,7 @@ public class SecurityConfigExpander {
      * 获取XSS排除过滤的url范围
      *
      * @author fengshuonan
-     * @date 2021/1/13 23:21
+     * @since 2021/1/13 23:21
      */
     public static List<String> getUrlExclusion() {
         String noneSecurityUrls = ConfigContext.me().getSysConfigValueWithDefault("SYS_XSS_URL_EXCLUSIONS", String.class, "");
@@ -72,7 +72,7 @@ public class SecurityConfigExpander {
      *
      * @return {@link String}
      * @author majianguo
-     * @date 2021/7/5 10:15
+     * @since 2021/7/5 10:15
      **/
     public static String getEncryptSecretKey() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_ENCRYPT_SECRET_KEY", String.class, "Ux1dqQ22KxVjSYootgzMe776em8vWEGE");
@@ -82,7 +82,7 @@ public class SecurityConfigExpander {
      * 获取验证码的开关
      *
      * @author fengshuonan
-     * @date 2020/12/27 17:22
+     * @since 2020/12/27 17:22
      */
     public static Boolean getCaptchaOpen() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_CAPTCHA_OPEN", Boolean.class, SecurityConstants.DEFAULT_CAPTCHA_OPEN);
@@ -92,7 +92,7 @@ public class SecurityConfigExpander {
      * 获取拖拽验证码的开关
      *
      * @author fengshuonan
-     * @date 2020/12/27 17:22
+     * @since 2020/12/27 17:22
      */
     public static Boolean getDragCaptchaOpen() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_DRAG_CAPTCHA_OPEN", Boolean.class, SecurityConstants.DEFAULT_CAPTCHA_OPEN);

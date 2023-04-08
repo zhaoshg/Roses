@@ -12,7 +12,7 @@ import cn.stylefeng.roses.kernel.jwt.api.pojo.config.JwtConfig;
  * jwt token操作工具的生产工厂
  *
  * @author fengshuonan
- * @date 2021/1/21 18:15
+ * @since 2021/1/21 18:15
  */
 public class JwtTokenApiFactory {
 
@@ -20,7 +20,7 @@ public class JwtTokenApiFactory {
      * 根据jwt秘钥和过期时间，获取jwt操作的工具
      *
      * @author fengshuonan
-     * @date 2021/1/21 18:16
+     * @since 2021/1/21 18:16
      */
     public static JwtApi createJwtApi(String jwtSecret, Integer expiredSeconds) {
 

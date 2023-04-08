@@ -36,7 +36,7 @@ import cn.stylefeng.roses.kernel.sms.modular.param.SysSmsVerifyParam;
  * 系统短信service接口
  *
  * @author fengshuonan
- * @date 2020/10/26 22:16
+ * @since 2020/10/26 22:16
  */
 public interface SysSmsInfoService extends IService<SysSms> {
 
@@ -46,7 +46,7 @@ public interface SysSmsInfoService extends IService<SysSms> {
      * @param sysSmsSendParam 短信发送参数
      * @return true-成功，false-失败
      * @author fengshuonan
-     * @date 2020/10/26 22:16
+     * @since 2020/10/26 22:16
      */
     boolean sendShortMessage(SysSmsSendParam sysSmsSendParam);
 
@@ -57,7 +57,7 @@ public interface SysSmsInfoService extends IService<SysSms> {
      * @param validateCode    验证码
      * @return 短信记录id
      * @author fengshuonan
-     * @date 2020/10/26 22:16
+     * @since 2020/10/26 22:16
      */
     Long saveSmsInfo(SysSmsSendParam sysSmsSendParam, String validateCode);
 
@@ -67,7 +67,7 @@ public interface SysSmsInfoService extends IService<SysSms> {
      * @param smsId             短信记录id
      * @param smsSendStatusEnum 发送状态枚举
      * @author fengshuonan
-     * @date 2020/10/26 22:16
+     * @since 2020/10/26 22:16
      */
     void updateSmsInfo(Long smsId, SmsSendStatusEnum smsSendStatusEnum);
 
@@ -78,7 +78,7 @@ public interface SysSmsInfoService extends IService<SysSms> {
      *
      * @param sysSmsVerifyParam 短信校验参数
      * @author fengshuonan
-     * @date 2020/10/26 22:16
+     * @since 2020/10/26 22:16
      */
     void validateSmsInfo(SysSmsVerifyParam sysSmsVerifyParam);
 
@@ -88,7 +88,7 @@ public interface SysSmsInfoService extends IService<SysSms> {
      * @param sysSmsInfoParam 查询参数
      * @return 查询分页结果
      * @author fengshuonan
-     * @date 2020/10/26 22:17
+     * @since 2020/10/26 22:17
      */
     PageResult<SysSms> page(SysSmsInfoParam sysSmsInfoParam);
 

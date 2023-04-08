@@ -37,7 +37,7 @@ import lombok.EqualsAndHashCode;
  * 系统应用表
  *
  * @author fengshuonan
- * @date 2020/11/24 21:05
+ * @since 2020/11/24 21:05
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

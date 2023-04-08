@@ -35,7 +35,7 @@ import java.util.List;
  * 系统用户结果
  *
  * @author fengshuonan
- * @date 2020/4/2 9:19
+ * @since 2020/4/2 9:19
  */
 @Data
 public class SysUserDTO {

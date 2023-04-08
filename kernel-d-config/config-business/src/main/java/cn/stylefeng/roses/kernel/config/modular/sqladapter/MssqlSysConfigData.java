@@ -16,7 +16,7 @@ import java.util.List;
  * Mssql数据库的系统配置表获取
  *
  * @author AndrewFeng
- * @date 2021/5/14 21:18
+ * @since 2021/5/14 21:18
  */
 @Slf4j
 public class MssqlSysConfigData implements SysConfigDataApi {

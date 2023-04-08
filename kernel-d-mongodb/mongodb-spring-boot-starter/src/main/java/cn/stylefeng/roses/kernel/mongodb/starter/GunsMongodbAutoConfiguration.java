@@ -37,7 +37,7 @@ import org.springframework.context.annotation.Configuration;
  * Mongodb模块自动配置
  *
  * @author huziyang
- * @date 2021/03/20 16:24
+ * @since 2021/03/20 16:24
  */
 @Configuration
 public class GunsMongodbAutoConfiguration {
@@ -46,7 +46,7 @@ public class GunsMongodbAutoConfiguration {
      * Mongodb 数据存储
      *
      * @author huziyang
-     * @date 2021/03/20 16:24
+     * @since 2021/03/20 16:24
      */
     @Bean
     public MongodbApi<GunsMapEntity, String> mongodbApi() {
@@ -57,7 +57,7 @@ public class GunsMongodbAutoConfiguration {
      * Mongodb 文件管理
      *
      * @author huziyang
-     * @date 2021/03/20 16:24
+     * @since 2021/03/20 16:24
      */
     @Bean
     public MongoFileApi<MongoFileEntity, String> mongoFileApi() {

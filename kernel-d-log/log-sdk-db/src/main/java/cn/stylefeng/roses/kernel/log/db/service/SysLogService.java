@@ -35,7 +35,7 @@ import java.util.List;
  * 日志记录 service接口
  *
  * @author luojie
- * @date 2020/11/2 17:44
+ * @since 2020/11/2 17:44
  */
 public interface SysLogService extends IService<SysLog> {
 
@@ -44,7 +44,7 @@ public interface SysLogService extends IService<SysLog> {
      *
      * @param logManagerRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void add(LogManagerRequest logManagerRequest);
 
@@ -53,7 +53,7 @@ public interface SysLogService extends IService<SysLog> {
      *
      * @param logManagerRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void del(LogManagerRequest logManagerRequest);
 
@@ -62,7 +62,7 @@ public interface SysLogService extends IService<SysLog> {
      *
      * @param logManagerRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void delAll(LogManagerRequest logManagerRequest);
 
@@ -70,7 +70,7 @@ public interface SysLogService extends IService<SysLog> {
      * 查看日志详情
      *
      * @author TSQ
-     * @date 2021/1/11 17:51
+     * @since 2021/1/11 17:51
      */
     SysLog detail(LogManagerRequest logManagerParam);
 
@@ -79,7 +79,7 @@ public interface SysLogService extends IService<SysLog> {
      *
      * @param logManagerParam 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     List<SysLog> findList(LogManagerRequest logManagerParam);
 
@@ -88,7 +88,7 @@ public interface SysLogService extends IService<SysLog> {
      *
      * @param logManagerParam 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     PageResult<SysLog> findPage(LogManagerRequest logManagerParam);
 

@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.auth.api.enums;
  * 单点登录客户端
  *
  * @author fengshuonan
- * @date 2022/5/16 16:48
+ * @since 2022/5/16 16:48
  */
 public enum SsoClientTypeEnum {
 

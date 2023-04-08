@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.system.api.pojo.user.OnlineUserDTO;
  * 当前在线用户的创建工厂
  *
  * @author fengshuonan
- * @date 2021/1/11 22:31
+ * @since 2021/1/11 22:31
  */
 public class OnlineUserCreateFactory {
 
@@ -40,7 +40,7 @@ public class OnlineUserCreateFactory {
      * 登录用户转化为在线用户
      *
      * @author fengshuonan
-     * @date 2021/1/11 22:31
+     * @since 2021/1/11 22:31
      */
     public static OnlineUserDTO createOnlineUser(LoginUser loginUser) {
 

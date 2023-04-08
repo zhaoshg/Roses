@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
  * 对原有HttpServletRequest包装，在执行获取参数等操作时候，进行xss过滤
  *
  * @author fengshuonan
- * @date 2021/1/13 22:50
+ * @since 2021/1/13 22:50
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
@@ -47,7 +47,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
      * 获取所有param方式传参的属性的值
      *
      * @author fengshuonan
-     * @date 2021/1/13 22:52
+     * @since 2021/1/13 22:52
      */
     @Override
     public String[] getParameterValues(String parameter) {
@@ -71,7 +71,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
      * 获取单个param方式传参的属性的值
      *
      * @author fengshuonan
-     * @date 2021/1/13 22:52
+     * @since 2021/1/13 22:52
      */
     @Override
     public String getParameter(String parameter) {
@@ -86,7 +86,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
      * 获取header的值
      *
      * @author fengshuonan
-     * @date 2021/1/13 22:53
+     * @since 2021/1/13 22:53
      */
     @Override
     public String getHeader(String name) {

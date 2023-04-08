@@ -42,7 +42,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
  * 当spring装配好配置后开始初始化
  *
  * @author liuhanqing
- * @date 2021/1/17 21:14
+ * @since 2021/1/17 21:14
  */
 @Slf4j
 public class FlywayInitListener extends ContextInitializedListener implements Ordered {

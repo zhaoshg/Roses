@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
  * 日期正则工具
  *
  * @author fengshuonan
- * @date 2022/8/2 15:04
+ * @since 2022/8/2 15:04
  */
 public class DateRegexUtil {
 
@@ -15,7 +15,7 @@ public class DateRegexUtil {
      * 从指定字符串中提取日期的字符
      *
      * @author fengshuonan
-     * @date 2022/8/2 15:04
+     * @since 2022/8/2 15:04
      */
     public static String extractDate(String originStr) {
 

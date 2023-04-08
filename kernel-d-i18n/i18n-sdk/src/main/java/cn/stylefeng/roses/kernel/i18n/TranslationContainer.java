@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 翻译字典的容器
  *
  * @author fengshuonan
- * @date 2021/1/24 19:08
+ * @since 2021/1/24 19:08
  */
 public class TranslationContainer implements TranslationApi {
 

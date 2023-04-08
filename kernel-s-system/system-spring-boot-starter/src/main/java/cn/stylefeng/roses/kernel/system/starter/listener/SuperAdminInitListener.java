@@ -38,7 +38,7 @@ import javax.annotation.Resource;
  * 项目启动后初始化超级管理员
  *
  * @author fengshuonan
- * @date 2020/12/17 21:44
+ * @since 2020/12/17 21:44
  */
 @Component
 @Slf4j

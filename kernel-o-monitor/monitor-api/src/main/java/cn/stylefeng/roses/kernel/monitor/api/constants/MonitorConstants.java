@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.monitor.api.constants;
  * 监控模块常量
  *
  * @author fengshuonan
- * @date 2021/1/31 22:33
+ * @since 2021/1/31 22:33
  */
 public interface MonitorConstants {
 

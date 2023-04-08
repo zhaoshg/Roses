@@ -39,7 +39,7 @@ import java.util.Date;
  * 公司dao框架规定使用mybatis-plus
  *
  * @author fengshuonan
- * @date 2020/10/14 18:08
+ * @since 2020/10/14 18:08
  */
 @Data
 public class BaseEntity implements Serializable {

@@ -34,7 +34,7 @@ import java.util.List;
  * 分页结果封装
  *
  * @author fengshuonan
- * @date 2020/10/15 15:53
+ * @since 2020/10/15 15:53
  */
 @Data
 public class PageResult<T> implements Serializable {

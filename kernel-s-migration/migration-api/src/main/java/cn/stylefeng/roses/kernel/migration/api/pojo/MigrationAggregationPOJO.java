@@ -12,7 +12,7 @@ import java.util.Map;
  * 数据迁移聚合类
  *
  * @author majianguo
- * @date 2021/7/6 16:10
+ * @since 2021/7/6 16:10
  */
 @Data
 public class MigrationAggregationPOJO extends BaseRequest {

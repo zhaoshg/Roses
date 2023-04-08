@@ -36,7 +36,7 @@ import java.util.List;
  * 字典类型管理
  *
  * @author fengshuonan
- * @date 2020/10/29 18:54
+ * @since 2020/10/29 18:54
  */
 public interface DictTypeService extends IService<SysDictType> {
 
@@ -45,7 +45,7 @@ public interface DictTypeService extends IService<SysDictType> {
      *
      * @param dictTypeRequest 字典类型请求
      * @author fengshuonan
-     * @date 2020/10/29 18:55
+     * @since 2020/10/29 18:55
      */
     void add(DictTypeRequest dictTypeRequest);
 
@@ -54,7 +54,7 @@ public interface DictTypeService extends IService<SysDictType> {
      *
      * @param dictTypeRequest 字典类型请求
      * @author fengshuonan
-     * @date 2020/10/29 18:55
+     * @since 2020/10/29 18:55
      */
     void del(DictTypeRequest dictTypeRequest);
 
@@ -63,7 +63,7 @@ public interface DictTypeService extends IService<SysDictType> {
      *
      * @param dictTypeRequest 字典类型请求
      * @author fengshuonan
-     * @date 2020/10/29 18:55
+     * @since 2020/10/29 18:55
      */
     void edit(DictTypeRequest dictTypeRequest);
 
@@ -72,7 +72,7 @@ public interface DictTypeService extends IService<SysDictType> {
      *
      * @param dictTypeRequest 字典类型请求
      * @author fengshuonan
-     * @date 2020/10/29 18:56
+     * @since 2020/10/29 18:56
      */
     void editStatus(DictTypeRequest dictTypeRequest);
 
@@ -81,7 +81,7 @@ public interface DictTypeService extends IService<SysDictType> {
      *
      * @param dictTypeRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     SysDictType detail(DictTypeRequest dictTypeRequest);
 
@@ -91,7 +91,7 @@ public interface DictTypeService extends IService<SysDictType> {
      * @param dictTypeRequest 字典类型请求
      * @return 字典类型列表
      * @author fengshuonan
-     * @date 2020/10/29 18:55
+     * @since 2020/10/29 18:55
      */
     List<SysDictType> findList(DictTypeRequest dictTypeRequest);
 
@@ -101,7 +101,7 @@ public interface DictTypeService extends IService<SysDictType> {
      * @param dictTypeRequest 字典类型请求
      * @return 字典类型列表
      * @author fengshuonan
-     * @date 2020/10/29 18:55
+     * @since 2020/10/29 18:55
      */
     PageResult<SysDictType> findPage(DictTypeRequest dictTypeRequest);
 

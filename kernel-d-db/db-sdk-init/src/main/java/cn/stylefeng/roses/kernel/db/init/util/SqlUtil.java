@@ -38,7 +38,7 @@ import java.util.Map;
  * sql语句工具类
  *
  * @author fengshuonan
- * @date 2016年12月6日 下午1:01:54
+ * @since 2016年12月6日 下午1:01:54
  */
 @Slf4j
 public class SqlUtil {
@@ -63,7 +63,7 @@ public class SqlUtil {
      * 结果集转化为map
      *
      * @author fengshuonan
-     * @date 2020/1/29 6:12 下午
+     * @since 2020/1/29 6:12 下午
      */
     public static Map<String, Object> resultSet2Map(ResultSet resultSet) {
         try {
@@ -88,7 +88,7 @@ public class SqlUtil {
      * 结果集转化为map
      *
      * @author fengshuonan
-     * @date 2020/1/29 6:12 下午
+     * @since 2020/1/29 6:12 下午
      */
     public static List<Map<String, Object>> resultSet2ListMap(ResultSet resultSet) {
 

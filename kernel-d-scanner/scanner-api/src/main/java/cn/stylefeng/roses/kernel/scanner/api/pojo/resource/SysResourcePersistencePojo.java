@@ -31,7 +31,7 @@ import lombok.Data;
  * 资源表
  *
  * @author fengshuonan
- * @date 2020/11/23 22:45
+ * @since 2020/11/23 22:45
  */
 @Data
 public class SysResourcePersistencePojo {

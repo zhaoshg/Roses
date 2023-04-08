@@ -48,7 +48,7 @@ import java.lang.reflect.Type;
  * 2.pojo字段的返回值为："字典类型编码|字典的编码"
  *
  * @author liuhanqing
- * @date 2021/1/16 22:21
+ * @since 2021/1/16 22:21
  */
 @JacksonStdImpl
 public final class DictValueSerializer extends StdScalarSerializer<Object> {

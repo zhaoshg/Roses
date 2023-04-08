@@ -34,7 +34,7 @@ import javax.validation.constraints.NotBlank;
  * 验证短信的参数
  *
  * @author fengshuonan
- * @date 2020/10/26 21:32
+ * @since 2020/10/26 21:32
  */
 @Data
 public class SysSmsVerifyParam {

@@ -32,7 +32,7 @@ import java.util.Set;
  * 数据库操作的api，用于快速进行sql操作并获取结果
  *
  * @author fengshuonan
- * @date 2020/11/4 14:43
+ * @since 2020/11/4 14:43
  */
 public interface DbOperatorApi {
 
@@ -40,7 +40,7 @@ public interface DbOperatorApi {
      * 获取当前数据库连接的数据库类型
      *
      * @author fengshuonan
-     * @date 2022/9/17 15:27
+     * @since 2022/9/17 15:27
      */
     DbTypeEnum getCurrentDbType();
 
@@ -51,7 +51,7 @@ public interface DbOperatorApi {
      * @param args sql中的参数
      * @return sql执行的结果，取第一行第一个数字
      * @author fengshuonan
-     * @date 2020/11/4 14:43
+     * @since 2020/11/4 14:43
      */
     int selectCount(String sql, Object... args);
 
@@ -70,7 +70,7 @@ public interface DbOperatorApi {
      * @param keyFieldValue      主键id的值
      * @return keyFieldValue的值
      * @author fengshuonan
-     * @date 2020/11/5 17:32
+     * @since 2020/11/5 17:32
      */
     Set<Long> findSubListByParentId(String tableName, String parentIdsFieldName, String keyFieldName, Long keyFieldValue);
 

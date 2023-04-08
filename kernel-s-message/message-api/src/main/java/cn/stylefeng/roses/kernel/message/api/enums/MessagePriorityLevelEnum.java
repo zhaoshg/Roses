@@ -30,7 +30,7 @@ import lombok.Getter;
  * 消息优先级
  *
  * @author liuhanqing
- * @date 2021/1/8 13:26
+ * @since 2021/1/8 13:26
  */
 @Getter
 public enum MessagePriorityLevelEnum {

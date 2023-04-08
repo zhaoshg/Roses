@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.cache.api.constants;
  * 缓存模块的常量
  *
  * @author fengshuonan
- * @date 2020/10/22 16:55
+ * @since 2020/10/22 16:55
  */
 public interface CacheConstants {
 

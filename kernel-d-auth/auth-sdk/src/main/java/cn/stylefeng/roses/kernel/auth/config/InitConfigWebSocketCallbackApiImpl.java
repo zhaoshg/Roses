@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * 项目初始化完成以后，修改用户websocket地址的配置
  *
  * @author majianguo
- * @date 2021/10/19 17:07
+ * @since 2021/10/19 17:07
  */
 @Component
 public class InitConfigWebSocketCallbackApiImpl implements ConfigInitCallbackApi {

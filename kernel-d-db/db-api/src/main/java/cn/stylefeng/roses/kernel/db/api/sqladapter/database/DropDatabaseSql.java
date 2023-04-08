@@ -31,7 +31,7 @@ import lombok.Getter;
  * 数据库删除，可用在租户的删除
  *
  * @author fengshuonan
- * @date 2020/9/4
+ * @since 2020/9/4
  */
 @Getter
 public class DropDatabaseSql extends AbstractSql {

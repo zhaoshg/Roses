@@ -33,7 +33,7 @@ import static cn.stylefeng.roses.kernel.jwt.api.constants.JwtConstants.DEFAULT_J
  * jwt工具类的配置获取
  *
  * @author fengshuonan
- * @date 2020/12/1 15:05
+ * @since 2020/12/1 15:05
  */
 public class JwtConfigExpander {
 
@@ -41,7 +41,7 @@ public class JwtConfigExpander {
      * 获取jwt的密钥
      *
      * @author fengshuonan
-     * @date 2020/12/1 15:07
+     * @since 2020/12/1 15:07
      */
     public static String getJwtSecret() {
         String sysJwtSecret = ConfigContext.me().getConfigValueNullable("SYS_JWT_SECRET", String.class);
@@ -58,7 +58,7 @@ public class JwtConfigExpander {
      * jwt失效时间，默认1天
      *
      * @author fengshuonan
-     * @date 2020/12/1 15:08
+     * @since 2020/12/1 15:08
      */
     public static Long getJwtTimeoutSeconds() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_JWT_TIMEOUT_SECONDS", Long.class, DEFAULT_JWT_TIMEOUT_SECONDS);

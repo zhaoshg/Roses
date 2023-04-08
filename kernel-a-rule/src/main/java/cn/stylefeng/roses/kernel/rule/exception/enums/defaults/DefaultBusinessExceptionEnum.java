@@ -34,7 +34,7 @@ import static cn.stylefeng.roses.kernel.rule.constants.RuleConstants.FIRST_LEVEL
  * 系统执行出错，业务本身逻辑问题导致的错误（一级宏观码）
  *
  * @author fengshuonan
- * @date 2020/10/15 17:18
+ * @since 2020/10/15 17:18
  */
 @Getter
 public enum DefaultBusinessExceptionEnum implements AbstractExceptionEnum {

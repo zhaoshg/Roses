@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.file.api.constants;
  * 文件模块的常量
  *
  * @author fengshuonan
- * @date 2020/10/26 10:28
+ * @since 2020/10/26 10:28
  */
 public interface FileConstants {
 

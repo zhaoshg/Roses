@@ -35,7 +35,7 @@ import java.util.Map;
  * 请求基类，所有接口请求可继承此类
  *
  * @author fengshuonan
- * @date 2020/10/14 18:12
+ * @since 2020/10/14 18:12
  */
 @Data
 public class BaseRequest implements Serializable {

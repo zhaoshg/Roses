@@ -33,7 +33,7 @@ import lombok.Getter;
  * jwt异常的状态码
  *
  * @author fengshuonan
- * @date 2020/10/16 10:53
+ * @since 2020/10/16 10:53
  */
 @Getter
 public enum JwtExceptionEnum implements AbstractExceptionEnum {

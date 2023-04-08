@@ -9,7 +9,7 @@ import java.util.List;
  * 迁移数据请求对象
  *
  * @author majianguo
- * @date 2021/7/7 9:15
+ * @since 2021/7/7 9:15
  */
 @Data
 public class MigrationRequest {

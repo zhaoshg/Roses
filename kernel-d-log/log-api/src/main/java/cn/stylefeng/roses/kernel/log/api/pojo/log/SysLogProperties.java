@@ -30,7 +30,7 @@ import lombok.Data;
  * 日志配置信息
  *
  * @author liuhanqing
- * @date 2020-12-20 13:53
+ * @since 2020-12-20 13:53
  **/
 @Data
 public class SysLogProperties {

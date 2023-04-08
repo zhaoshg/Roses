@@ -31,7 +31,7 @@ import lombok.Data;
  * 角色数据范围
  *
  * @author chenjinlong
- * @date 2021/2/4 15:17
+ * @since 2021/2/4 15:17
  */
 @Data
 public class SysRoleDataScopeRequest {

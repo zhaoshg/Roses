@@ -37,7 +37,7 @@ import java.util.Set;
  * 菜单api
  *
  * @author fengshuonan
- * @date 2020/11/24 21:37
+ * @since 2020/11/24 21:37
  */
 public interface MenuServiceApi {
 
@@ -47,7 +47,7 @@ public interface MenuServiceApi {
      * @param appCode 应用编码
      * @return 该应用下是否有正常菜单，true是，false否
      * @author fengshuonan
-     * @date 2020/11/24 21:37
+     * @since 2020/11/24 21:37
      */
     boolean hasMenu(String appCode);
 
@@ -55,7 +55,7 @@ public interface MenuServiceApi {
      * 获取当前用户所拥有菜单对应的appCode列表
      *
      * @author fengshuonan
-     * @date 2021/4/21 15:40
+     * @since 2021/4/21 15:40
      */
     List<String> getUserAppCodeList();
 
@@ -65,7 +65,7 @@ public interface MenuServiceApi {
      * @param menuIds 菜单列表
      * @return {@link java.util.Set<java.lang.Long>}
      * @author majianguo
-     * @date 2021/6/22 上午10:11
+     * @since 2021/6/22 上午10:11
      **/
     Set<Long> getMenuAllParentMenuId(Set<Long> menuIds);
 
@@ -73,7 +73,7 @@ public interface MenuServiceApi {
      * 通过按钮id获取按钮code
      *
      * @author fengshuonan
-     * @date 2021/8/11 10:40
+     * @since 2021/8/11 10:40
      */
     String getMenuButtonCodeByButtonId(Long buttonId);
 
@@ -81,7 +81,7 @@ public interface MenuServiceApi {
      * 通过菜单或按钮id的集合，获取拥有资源编码的集合
      *
      * @author fengshuonan
-     * @date 2021/8/11 14:25
+     * @since 2021/8/11 14:25
      */
     List<String> getResourceCodesByBusinessId(List<Long> businessIds);
 
@@ -90,7 +90,7 @@ public interface MenuServiceApi {
      *
      * @param menuFrontType 菜单的前后台类型，如果没传递，默认查前台菜单
      * @author fengshuonan
-     * @date 2022/4/8 15:59
+     * @since 2022/4/8 15:59
      */
     List<IndexMenuInfo> buildAuthorities(Integer menuFrontType, Boolean devopsFlag);
 
@@ -98,7 +98,7 @@ public interface MenuServiceApi {
      * 获取角色绑定菜单和按钮权限的树
      *
      * @author fengshuonan
-     * @date 2021/8/10 22:23
+     * @since 2021/8/10 22:23
      */
     List<MenuAndButtonTreeResponse> getRoleMenuAndButtons(SysRoleRequest sysRoleRequest);
 
@@ -106,7 +106,7 @@ public interface MenuServiceApi {
      * 获取角色绑定的菜单列表
      *
      * @author fengshuonan
-     * @date 2022/9/28 16:06
+     * @since 2022/9/28 16:06
      */
     List<MenuAndButtonTreeResponse> getRoleBindMenuList(SysRoleRequest sysRoleRequest);
 
@@ -114,7 +114,7 @@ public interface MenuServiceApi {
      * 获取角色绑定的操作权限列表
      *
      * @author fengshuonan
-     * @date 2022/9/28 17:26
+     * @since 2022/9/28 17:26
      */
     List<MenuAndButtonTreeResponse> getRoleBindOperateList(SysRoleRequest sysRoleRequest);
 
@@ -123,7 +123,7 @@ public interface MenuServiceApi {
      *
      * @param antdvFrontTypeEnum 前台还是后台菜单
      * @author fengshuonan
-     * @date 2022/9/29 9:56
+     * @since 2022/9/29 9:56
      */
     List<Long> getTotalMenuIdList(AntdvFrontTypeEnum antdvFrontTypeEnum);
 
@@ -132,7 +132,7 @@ public interface MenuServiceApi {
      *
      * @param antdvFrontTypeEnum 前台还是后台菜单
      * @author fengshuonan
-     * @date 2022/9/29 9:56
+     * @since 2022/9/29 9:56
      */
     List<SysMenuButtonDTO> getTotalMenuButtonIdList(AntdvFrontTypeEnum antdvFrontTypeEnum);
 
@@ -143,7 +143,7 @@ public interface MenuServiceApi {
      *
      * @param menuIds 用户所拥有的的所有菜单集合
      * @author fengshuonan
-     * @date 2022/10/13 21:38
+     * @since 2022/10/13 21:38
      */
     AntdvFrontTypeEnum getUserMenuType(List<Long> menuIds);
 

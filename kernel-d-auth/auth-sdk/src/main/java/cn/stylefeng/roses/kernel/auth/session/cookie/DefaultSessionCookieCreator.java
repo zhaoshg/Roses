@@ -34,7 +34,7 @@ import javax.servlet.http.Cookie;
  * 这里预留了expandCookieProp的接口可以拓展cookie的属性
  *
  * @author fengshuonan
- * @date 2020/12/27 13:29
+ * @since 2020/12/27 13:29
  */
 public class DefaultSessionCookieCreator extends SessionCookieCreator {
 

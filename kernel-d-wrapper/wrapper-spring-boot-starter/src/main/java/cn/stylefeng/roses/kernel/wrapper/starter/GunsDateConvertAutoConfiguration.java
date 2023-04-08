@@ -40,7 +40,7 @@ import java.util.Date;
  * Java8 string参数转日期类
  *
  * @author luopeng
- * @date 2022/9/24 21:15
+ * @since 2022/9/24 21:15
  */
 @Configuration
 public class GunsDateConvertAutoConfiguration {
@@ -49,7 +49,7 @@ public class GunsDateConvertAutoConfiguration {
      * LocalDate转换器，用于转换RequestParam和PathVariable参数
      *
      * @author luopeng
-     * @date 2022/9/24 21:16
+     * @since 2022/9/24 21:16
      */
     @Bean
     public Converter<String, LocalDate> localDateConverter() {
@@ -65,7 +65,7 @@ public class GunsDateConvertAutoConfiguration {
      * LocalDateTime转换器，用于转换RequestParam和PathVariable参数
      *
      * @author luopeng
-     * @date 2022/9/24 21:16
+     * @since 2022/9/24 21:16
      */
     @Bean
     public Converter<String, LocalDateTime> localDateTimeConverter() {
@@ -81,7 +81,7 @@ public class GunsDateConvertAutoConfiguration {
      * LocalTime转换器，用于转换RequestParam和PathVariable参数
      *
      * @author luopeng
-     * @date 2022/9/24 21:18
+     * @since 2022/9/24 21:18
      */
     @Bean
     public Converter<String, LocalTime> localTimeConverter() {
@@ -97,7 +97,7 @@ public class GunsDateConvertAutoConfiguration {
      * Date转换器，用于转换RequestParam和PathVariable参数
      *
      * @author luopeng
-     * @date 2022/9/24 21:40
+     * @since 2022/9/24 21:40
      */
     @Bean
     public Converter<String, Date> dateConverter() {

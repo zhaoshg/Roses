@@ -61,7 +61,7 @@ import java.util.stream.Collectors;
  * 定时任务 服务实现类
  *
  * @author stylefeng
- * @date 2020/6/30 18:26
+ * @since 2020/6/30 18:26
  */
 @Service
 public class SysTimersServiceImpl extends ServiceImpl<SysTimersMapper, SysTimers> implements SysTimersService {
@@ -185,7 +185,7 @@ public class SysTimersServiceImpl extends ServiceImpl<SysTimersMapper, SysTimers
      * 获取定时任务详情
      *
      * @author stylefeng
-     * @date 2020/6/30 18:26
+     * @since 2020/6/30 18:26
      */
     private SysTimers querySysTimers(SysTimersParam sysTimersParam) {
         SysTimers sysTimers = this.getById(sysTimersParam.getTimerId());
@@ -199,7 +199,7 @@ public class SysTimersServiceImpl extends ServiceImpl<SysTimersMapper, SysTimers
      * 创建wrapper
      *
      * @author fengshuonan
-     * @date 2020/12/19 17:02
+     * @since 2020/12/19 17:02
      */
     private LambdaQueryWrapper<SysTimers> createWrapper(SysTimersParam sysTimersParam) {
 
@@ -236,7 +236,7 @@ public class SysTimersServiceImpl extends ServiceImpl<SysTimersMapper, SysTimers
      *
      * @param sysTimersParam 定时任务参数
      * @author luojie
-     * @date 2021/04/09 21:40
+     * @since 2021/04/09 21:40
      */
     private void unescapeHtml(SysTimersParam sysTimersParam) {
         String params = sysTimersParam.getParams();

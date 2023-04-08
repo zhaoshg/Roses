@@ -36,7 +36,7 @@ import java.util.Date;
  * JVM相关信息
  *
  * @author fengshuonan
- * @date 2019-07-13 13:42
+ * @since 2019-07-13 13:42
  */
 @Setter
 public class JvmInfo {

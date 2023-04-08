@@ -40,7 +40,7 @@ import java.util.List;
  * 系统菜单service接口
  *
  * @author fengshuonan
- * @date 2020/3/13 16:05
+ * @since 2020/3/13 16:05
  */
 public interface SysMenuService extends IService<SysMenu> {
 
@@ -49,7 +49,7 @@ public interface SysMenuService extends IService<SysMenu> {
      *
      * @param sysMenuRequest 添加参数
      * @author fengshuonan
-     * @date 2020/3/27 9:03
+     * @since 2020/3/27 9:03
      */
     void add(SysMenuRequest sysMenuRequest);
 
@@ -58,7 +58,7 @@ public interface SysMenuService extends IService<SysMenu> {
      *
      * @param sysMenuRequest 删除参数
      * @author fengshuonan
-     * @date 2020/3/27 9:03
+     * @since 2020/3/27 9:03
      */
     void del(SysMenuRequest sysMenuRequest);
 
@@ -67,7 +67,7 @@ public interface SysMenuService extends IService<SysMenu> {
      *
      * @param sysMenuRequest 编辑参数
      * @author fengshuonan
-     * @date 2020/3/27 9:03
+     * @since 2020/3/27 9:03
      */
     void edit(SysMenuRequest sysMenuRequest);
 
@@ -77,7 +77,7 @@ public interface SysMenuService extends IService<SysMenu> {
      * @param sysMenuRequest 查看参数
      * @return 系统菜单
      * @author fengshuonan
-     * @date 2020/3/27 9:03
+     * @since 2020/3/27 9:03
      */
     SysMenu detail(SysMenuRequest sysMenuRequest);
 
@@ -87,7 +87,7 @@ public interface SysMenuService extends IService<SysMenu> {
      * @param sysMenuRequest 查询参数
      * @return 菜单树表列表
      * @author fengshuonan
-     * @date 2020/3/26 10:19
+     * @since 2020/3/26 10:19
      */
     List<SysMenu> findList(SysMenuRequest sysMenuRequest);
 
@@ -95,7 +95,7 @@ public interface SysMenuService extends IService<SysMenu> {
      * 获取菜单列表（layui版本）
      *
      * @author fengshuonan
-     * @date 2021/1/6 17:10
+     * @since 2021/1/6 17:10
      */
     List<SysMenu> findListWithTreeStructure(SysMenuRequest sysMenuRequest);
 
@@ -104,7 +104,7 @@ public interface SysMenuService extends IService<SysMenu> {
      *
      * @return 菜单树
      * @author fengshuonan
-     * @date 2021/1/6 21:47
+     * @since 2021/1/6 21:47
      */
     List<ZTreeNode> layuiSelectParentMenuTreeList();
 
@@ -114,7 +114,7 @@ public interface SysMenuService extends IService<SysMenu> {
      * @param sysMenuRequest 查询参数
      * @return 菜单树列表
      * @author fengshuonan
-     * @date 2020/3/27 15:56
+     * @since 2020/3/27 15:56
      */
     List<AntdMenuSelectTreeNode> tree(SysMenuRequest sysMenuRequest);
 
@@ -122,7 +122,7 @@ public interface SysMenuService extends IService<SysMenu> {
      * 获取当前用户首页所有菜单（对应Layui前端的）
      *
      * @author fengshuonan
-     * @date 2020/12/27 18:48
+     * @since 2020/12/27 18:48
      */
     List<LayuiAppIndexMenusVO> getLayuiIndexMenus();
 
@@ -131,7 +131,7 @@ public interface SysMenuService extends IService<SysMenu> {
      *
      * @return 系统所有菜单信息
      * @author majianguo
-     * @date 2021/1/7 15:24
+     * @since 2021/1/7 15:24
      */
     List<AntdSysMenuDTO> getLeftMenusAntdv(SysMenuRequest sysMenuRequest);
 
@@ -141,7 +141,7 @@ public interface SysMenuService extends IService<SysMenu> {
      * @param sysRoleRequest 请求参数
      * @param lateralFlag    true-不带树形结构，false-返回带树形结构的
      * @author majianguo
-     * @date 2021/1/9 17:11
+     * @since 2021/1/9 17:11
      */
     List<LayuiMenuAndButtonTreeResponse> getMenuAndButtonTree(SysRoleRequest sysRoleRequest, Boolean lateralFlag);
 
@@ -152,7 +152,7 @@ public interface SysMenuService extends IService<SysMenu> {
      * @param layuiVisibleFlag layui版本查询查询条件，如果穿true，则会带上layui_visible为Y的查询条件
      * @param antdvFrontType   前台菜单或者后台菜单的类型
      * @author fengshuonan
-     * @date 2020/12/27 18:11
+     * @since 2020/12/27 18:11
      */
     List<SysMenu> getCurrentUserMenus(List<String> appCodeList, Boolean layuiVisibleFlag, Integer antdvFrontType);
 

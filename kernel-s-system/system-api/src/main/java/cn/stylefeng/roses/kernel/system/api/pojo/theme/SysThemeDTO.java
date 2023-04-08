@@ -9,7 +9,7 @@ import java.util.Date;
  * 用于前端数据渲染
  *
  * @author xixiaowei
- * @date 2021/12/31 10:01
+ * @since 2021/12/31 10:01
  */
 @Data
 public class SysThemeDTO {

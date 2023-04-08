@@ -36,7 +36,7 @@ import lombok.Data;
  * 系统用户角色表
  *
  * @author luojie
- * @date 2020/11/6 09:46
+ * @since 2020/11/6 09:46
  */
 @Data
 @TableName("sys_user_role")

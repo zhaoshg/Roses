@@ -35,7 +35,7 @@ import javax.validation.constraints.NotBlank;
  * 登录的请求参数
  *
  * @author fengshuonan
- * @date 2020/10/19 14:02
+ * @since 2020/10/19 14:02
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

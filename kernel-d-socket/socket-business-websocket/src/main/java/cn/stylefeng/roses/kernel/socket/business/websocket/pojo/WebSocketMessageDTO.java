@@ -15,7 +15,7 @@ import lombok.Data;
  * 那么收到消息服务端会把消息推送给对应的监听器，接口见{@link SocketOperatorApi#msgTypeCallback}
  *
  * @author majianguo
- * @date 2021/6/1 下午2:56
+ * @since 2021/6/1 下午2:56
  */
 @Data
 public class WebSocketMessageDTO {

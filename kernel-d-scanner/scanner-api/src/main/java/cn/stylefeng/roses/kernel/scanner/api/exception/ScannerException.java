@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.scanner.api.constants.ScannerConstants;
  * 资源模块的异常
  *
  * @author fengshuonan
- * @date 2020/11/3 13:54
+ * @since 2020/11/3 13:54
  */
 public class ScannerException extends ServiceException {
 

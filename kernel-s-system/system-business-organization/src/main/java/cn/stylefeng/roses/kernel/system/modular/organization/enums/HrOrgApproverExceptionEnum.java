@@ -8,7 +8,7 @@ import lombok.Getter;
  * 组织机构审批人异常相关枚举
  *
  * @author fengshuonan
- * @date 2022/09/13 23:15
+ * @since 2022/09/13 23:15
  */
 @Getter
 public enum HrOrgApproverExceptionEnum implements AbstractExceptionEnum {

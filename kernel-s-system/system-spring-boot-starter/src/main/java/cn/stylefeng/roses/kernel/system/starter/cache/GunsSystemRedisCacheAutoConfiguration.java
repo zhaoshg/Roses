@@ -51,7 +51,7 @@ import java.util.Map;
  * 系统管理缓存的自动配置，Redis配置
  *
  * @author fengshuonan
- * @date 2022/11/8 23:26
+ * @since 2022/11/8 23:26
  */
 @Configuration
 @ConditionalOnClass(name = "org.springframework.data.redis.connection.RedisConnectionFactory")
@@ -61,7 +61,7 @@ public class GunsSystemRedisCacheAutoConfiguration {
      * 用户的缓存，非在线用户缓存，此缓存为了加快查看用户相关操作
      *
      * @author fengshuonan
-     * @date 2022/11/8 23:32
+     * @since 2022/11/8 23:32
      */
     @Bean
     public CacheOperatorApi<SysUserDTO> sysUserCacheOperatorApi(RedisConnectionFactory redisConnectionFactory) {
@@ -73,7 +73,7 @@ public class GunsSystemRedisCacheAutoConfiguration {
      * 用户角色对应的缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 23:32
+     * @since 2022/11/8 23:32
      */
     @Bean
     public CacheOperatorApi<List<Long>> userRoleCacheApi(RedisConnectionFactory redisConnectionFactory) {
@@ -85,7 +85,7 @@ public class GunsSystemRedisCacheAutoConfiguration {
      * 角色信息对应的缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 23:32
+     * @since 2022/11/8 23:32
      */
     @Bean
     public CacheOperatorApi<SysRole> roleInfoCacheApi(RedisConnectionFactory redisConnectionFactory) {
@@ -97,7 +97,7 @@ public class GunsSystemRedisCacheAutoConfiguration {
      * 用户组织机构的缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 23:32
+     * @since 2022/11/8 23:32
      */
     @Bean
     public CacheOperatorApi<SysUserOrgDTO> userOrgCacheApi(RedisConnectionFactory redisConnectionFactory) {
@@ -109,7 +109,7 @@ public class GunsSystemRedisCacheAutoConfiguration {
      * 用户资源绑定的缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 23:32
+     * @since 2022/11/8 23:32
      */
     @Bean
     public CacheOperatorApi<List<String>> roleResourceCacheApi(RedisConnectionFactory redisConnectionFactory) {
@@ -121,7 +121,7 @@ public class GunsSystemRedisCacheAutoConfiguration {
      * 角色绑定的数据范围的缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 23:32
+     * @since 2022/11/8 23:32
      */
     @Bean
     public CacheOperatorApi<List<Long>> roleDataScopeCacheApi(RedisConnectionFactory redisConnectionFactory) {
@@ -133,7 +133,7 @@ public class GunsSystemRedisCacheAutoConfiguration {
      * 主题的缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 23:32
+     * @since 2022/11/8 23:32
      */
     @Bean
     public CacheOperatorApi<DefaultTheme> themeCacheApi(RedisConnectionFactory redisConnectionFactory) {
@@ -145,7 +145,7 @@ public class GunsSystemRedisCacheAutoConfiguration {
      * 接口统计的缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 23:32
+     * @since 2022/11/8 23:32
      */
     @Bean
     public CacheOperatorApi<Map<Long, Integer>> requestCountCacheApi(RedisConnectionFactory redisConnectionFactory) {

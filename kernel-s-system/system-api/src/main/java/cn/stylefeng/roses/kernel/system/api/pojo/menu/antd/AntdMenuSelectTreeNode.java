@@ -35,7 +35,7 @@ import java.util.List;
  * 菜单树节点，用在新增和修改菜单，下拉选父级时候
  *
  * @author fengshuonan
- * @date 2020/4/5 12:03
+ * @since 2020/4/5 12:03
  */
 @Data
 public class AntdMenuSelectTreeNode implements AbstractTreeNode<AntdMenuSelectTreeNode> {

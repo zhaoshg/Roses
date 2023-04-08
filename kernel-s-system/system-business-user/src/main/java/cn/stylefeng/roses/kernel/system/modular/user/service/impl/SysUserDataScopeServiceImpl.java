@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
  * 系统用户数据范围service接口实现类
  *
  * @author luojie
- * @date 2020/11/6 10:28
+ * @since 2020/11/6 10:28
  */
 @Service
 public class SysUserDataScopeServiceImpl extends ServiceImpl<SysUserDataScopeMapper, SysUserDataScope> implements SysUserDataScopeService {
@@ -134,7 +134,7 @@ public class SysUserDataScopeServiceImpl extends ServiceImpl<SysUserDataScopeMap
      *
      * @param userDataScopeRequest dto实体
      * @author chenjinlong
-     * @date 2021/2/3 15:02
+     * @since 2021/2/3 15:02
      */
     private SysUserDataScope querySysUserRoleById(UserDataScopeRequest userDataScopeRequest) {
         SysUserDataScope sysUserDataScope = this.getById(userDataScopeRequest.getUserDataScopeId());
@@ -149,7 +149,7 @@ public class SysUserDataScopeServiceImpl extends ServiceImpl<SysUserDataScopeMap
      *
      * @param userDataScopeRequest dto实体
      * @author chenjinlong
-     * @date 2021/2/3 14:54
+     * @since 2021/2/3 14:54
      */
     private LambdaQueryWrapper<SysUserDataScope> createQueryWrapper(UserDataScopeRequest userDataScopeRequest) {
         LambdaQueryWrapper<SysUserDataScope> queryWrapper = new LambdaQueryWrapper<>();

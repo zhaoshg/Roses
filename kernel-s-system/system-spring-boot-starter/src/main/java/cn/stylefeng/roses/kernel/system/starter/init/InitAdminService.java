@@ -44,7 +44,7 @@ import java.util.List;
  * 初始化admin管理员的服务
  *
  * @author fengshuonan
- * @date 2020/12/17 21:56
+ * @since 2020/12/17 21:56
  */
 @Service
 public class InitAdminService {
@@ -62,7 +62,7 @@ public class InitAdminService {
      * 初始化超级管理员，超级管理员拥有最高权限
      *
      * @author fengshuonan
-     * @date 2020/12/17 21:57
+     * @since 2020/12/17 21:57
      */
     @Transactional(rollbackFor = Exception.class)
     public void initSuperAdmin() {

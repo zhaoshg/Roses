@@ -36,7 +36,7 @@ import java.util.List;
  * 资源持久化服务api，将扫描的资源汇报给系统管理用
  *
  * @author fengshuonan
- * @date 2018-02-06 14:30
+ * @since 2018-02-06 14:30
  */
 public interface ResourceReportApi {
 
@@ -49,7 +49,7 @@ public interface ResourceReportApi {
      *
      * @param reportResourceReq 资源汇报接口
      * @author fengshuonan
-     * @date 2020/10/19 22:02
+     * @since 2020/10/19 22:02
      */
     @RequestMapping(value = "/resourceService/reportResources", method = RequestMethod.POST)
     void reportResources(@RequestBody ReportResourceParam reportResourceReq);
@@ -63,7 +63,7 @@ public interface ResourceReportApi {
      *
      * @param reportResourceReq 资源汇报接口
      * @author fengshuonan
-     * @date 2020/10/19 22:02
+     * @since 2020/10/19 22:02
      */
     @RequestMapping(value = "/resourceService/reportResourcesAndGetResult", method = RequestMethod.POST)
     List<SysResourcePersistencePojo> reportResourcesAndGetResult(@RequestBody ReportResourceParam reportResourceReq);

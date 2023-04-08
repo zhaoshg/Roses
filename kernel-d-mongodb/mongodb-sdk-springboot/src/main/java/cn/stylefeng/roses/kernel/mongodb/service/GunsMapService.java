@@ -33,7 +33,7 @@ import java.util.Optional;
  * Mongodb 数据存储接口
  *
  * @author huziyang
- * @date 2021/03/20 16:24
+ * @since 2021/03/20 16:24
  */
 public interface GunsMapService {
 
@@ -43,7 +43,7 @@ public interface GunsMapService {
      * @param gunsMapEntity 数据参数
      * @return 返回新增数据结果
      * @author huziyang
-     * @date 2021/03/20 16:24
+     * @since 2021/03/20 16:24
      */
     GunsMapEntity insert(GunsMapEntity gunsMapEntity);
 
@@ -53,7 +53,7 @@ public interface GunsMapService {
      * @param gunsMapEntity 数据参数
      * @return 返回修改数据结果
      * @author huziyang
-     * @date 2021/03/20 16:24
+     * @since 2021/03/20 16:24
      */
     GunsMapEntity update(GunsMapEntity gunsMapEntity);
 
@@ -62,7 +62,7 @@ public interface GunsMapService {
      *
      * @param id 集合id
      * @author huziyang
-     * @date 2021/03/20 16:24
+     * @since 2021/03/20 16:24
      */
     void deleteById(String id);
 
@@ -72,7 +72,7 @@ public interface GunsMapService {
      * @param id 集合id
      * @return 返回查询到数据的Optional
      * @author huziyang
-     * @date 2021/03/20 16:24
+     * @since 2021/03/20 16:24
      */
     Optional<GunsMapEntity> findById(String id);
 
@@ -81,7 +81,7 @@ public interface GunsMapService {
      *
      * @return 返回所有数据集合
      * @author huziyang
-     * @date 2021/03/20 16:24
+     * @since 2021/03/20 16:24
      */
     List<GunsMapEntity> findAll();
 

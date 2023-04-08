@@ -22,7 +22,7 @@ import java.util.List;
  * 用户组详情业务实现层
  *
  * @author fengshuonan
- * @date 2022/09/26 10:12
+ * @since 2022/09/26 10:12
  */
 @Service
 public class SysUserGroupDetailServiceImpl extends ServiceImpl<SysUserGroupDetailMapper, SysUserGroupDetail> implements SysUserGroupDetailService {
@@ -69,7 +69,7 @@ public class SysUserGroupDetailServiceImpl extends ServiceImpl<SysUserGroupDetai
      * 获取信息
      *
      * @author fengshuonan
-     * @date 2022/09/26 10:12
+     * @since 2022/09/26 10:12
      */
     private SysUserGroupDetail querySysUserGroupDetail(SysUserGroupDetailRequest sysUserGroupDetailRequest) {
         SysUserGroupDetail sysUserGroupDetail = this.getById(sysUserGroupDetailRequest.getDetailId());
@@ -83,7 +83,7 @@ public class SysUserGroupDetailServiceImpl extends ServiceImpl<SysUserGroupDetai
      * 创建查询wrapper
      *
      * @author fengshuonan
-     * @date 2022/09/26 10:12
+     * @since 2022/09/26 10:12
      */
     private LambdaQueryWrapper<SysUserGroupDetail> createWrapper(SysUserGroupDetailRequest sysUserGroupDetailRequest) {
         LambdaQueryWrapper<SysUserGroupDetail> queryWrapper = new LambdaQueryWrapper<>();

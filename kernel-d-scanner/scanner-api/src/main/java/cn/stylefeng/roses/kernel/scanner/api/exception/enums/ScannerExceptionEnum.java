@@ -33,7 +33,7 @@ import lombok.Getter;
  * 资源相关的异常枚举
  *
  * @author fengshuonan
- * @date 2020/11/3 13:55
+ * @since 2020/11/3 13:55
  */
 @Getter
 public enum ScannerExceptionEnum implements AbstractExceptionEnum {

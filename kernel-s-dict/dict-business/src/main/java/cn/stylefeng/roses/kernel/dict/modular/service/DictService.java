@@ -37,7 +37,7 @@ import java.util.List;
  * 字典详情管理
  *
  * @author fengshuonan
- * @date 2020/10/29 17:43
+ * @since 2020/10/29 17:43
  */
 public interface DictService extends IService<SysDict>, DictApi {
 
@@ -46,7 +46,7 @@ public interface DictService extends IService<SysDict>, DictApi {
      *
      * @param dictRequest 字典对象
      * @author fengshuonan
-     * @date 2020/10/29 17:43
+     * @since 2020/10/29 17:43
      */
     void add(DictRequest dictRequest);
 
@@ -55,7 +55,7 @@ public interface DictService extends IService<SysDict>, DictApi {
      *
      * @param dictRequest 字典对象
      * @author fengshuonan
-     * @date 2020/10/29 17:43
+     * @since 2020/10/29 17:43
      */
     void del(DictRequest dictRequest);
 
@@ -64,7 +64,7 @@ public interface DictService extends IService<SysDict>, DictApi {
      *
      * @param dictRequest 字典对象
      * @author fengshuonan
-     * @date 2020/10/29 17:43
+     * @since 2020/10/29 17:43
      */
     void edit(DictRequest dictRequest);
 
@@ -74,7 +74,7 @@ public interface DictService extends IService<SysDict>, DictApi {
      * @param dictRequest 字典id
      * @return 字典的详情
      * @author fengshuonan
-     * @date 2020/10/30 16:15
+     * @since 2020/10/30 16:15
      */
     SysDict detail(DictRequest dictRequest);
 
@@ -84,7 +84,7 @@ public interface DictService extends IService<SysDict>, DictApi {
      * @param dictRequest 字典对象
      * @return 字典列表
      * @author fengshuonan
-     * @date 2020/10/29 18:48
+     * @since 2020/10/29 18:48
      */
     List<SysDict> findList(DictRequest dictRequest);
 
@@ -94,7 +94,7 @@ public interface DictService extends IService<SysDict>, DictApi {
      * @param dictRequest 查询条件
      * @return 带分页的列表
      * @author fengshuonan
-     * @date 2020/10/29 18:48
+     * @since 2020/10/29 18:48
      */
     PageResult<SysDict> findPage(DictRequest dictRequest);
 
@@ -104,7 +104,7 @@ public interface DictService extends IService<SysDict>, DictApi {
      * @param dictRequest 查询条件
      * @return 字典信息列表
      * @author fengshuonan
-     * @date 2020/10/29 18:50
+     * @since 2020/10/29 18:50
      */
     List<TreeDictInfo> getTreeDictList(DictRequest dictRequest);
 

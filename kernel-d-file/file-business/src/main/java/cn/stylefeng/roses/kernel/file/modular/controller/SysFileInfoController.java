@@ -68,7 +68,7 @@ import java.util.Map;
  * 2.UI文件场景：文件升级后业务所有关联的文件全部升级，业务需要关联文件CODE<br>
  *
  * @author majianguo
- * @date 2020/12/27 13:39
+ * @since 2020/12/27 13:39
  */
 @RestController
 @ApiResource(name = "文件信息相关接口", resBizType = ResBizTypeEnum.SYSTEM)
@@ -88,7 +88,7 @@ public class SysFileInfoController {
      * fileLocation传递其他值或不传值，不能决定文件上传到本地还是阿里云或其他地方
      *
      * @author majianguo
-     * @date 2020/12/27 13:17
+     * @since 2020/12/27 13:17
      */
     @PostResource(name = "上传文件", path = "/sysFileInfo/upload", requiredPermission = false)
     public ResponseData<SysFileInfoResponse> upload(@RequestPart("file") MultipartFile file, @Validated(SysFileInfoRequest.add.class) SysFileInfoRequest sysFileInfoRequest) {
@@ -103,7 +103,7 @@ public class SysFileInfoController {
      * { "location": "folder/sub-folder/new-location.png" }
      *
      * @author liuhanqing
-     * @date 2021/1/17 11:17
+     * @since 2021/1/17 11:17
      */
     @PostResource(name = "上传文件", path = "/sysFileInfo/tinymceUpload", requiredPermission = false)
     public Map<String, String> tinymceUpload(@RequestPart("file") MultipartFile file, SysFileInfoRequest sysFileInfoRequest) {
@@ -118,7 +118,7 @@ public class SysFileInfoController {
      * 私有文件预览
      *
      * @author fengshuonan
-     * @date 2020/11/29 11:29
+     * @since 2020/11/29 11:29
      */
     @GetResource(name = "私有文件预览", path = FileConstants.FILE_PRIVATE_PREVIEW_URL, requiredPermission = false)
     public void privatePreview(@Validated(SysFileInfoRequest.detail.class) SysFileInfoRequest sysFileInfoRequest) {
@@ -131,7 +131,7 @@ public class SysFileInfoController {
      * 公有文件预览
      *
      * @author majianguo
-     * @date 2020/12/27 13:17
+     * @since 2020/12/27 13:17
      */
     @GetResource(name = "公有文件预览", path = FileConstants.FILE_PUBLIC_PREVIEW_URL, requiredPermission = false, requiredLogin = false)
     public void publicPreview(@Validated(SysFileInfoRequest.detail.class) SysFileInfoRequest sysFileInfoRequest) {
@@ -144,7 +144,7 @@ public class SysFileInfoController {
      * 通用文件预览，通过传bucket名称和object名称
      *
      * @author fengshuonan
-     * @date 2020/11/29 11:29
+     * @since 2020/11/29 11:29
      */
     @GetResource(name = "文件预览，通过bucketName和objectName", path = FileConstants.FILE_PREVIEW_BY_OBJECT_NAME, requiredPermission = false, requiredLogin = false)
     public void previewByBucketNameObjectName(@Validated(SysFileInfoRequest.previewByObjectName.class) SysFileInfoRequest sysFileInfoRequest) {
@@ -156,7 +156,7 @@ public class SysFileInfoController {
      * 私有文件下载
      *
      * @author majianguo
-     * @date 2020/12/27 13:17
+     * @since 2020/12/27 13:17
      */
     @GetResource(name = "私有文件下载", path = "/sysFileInfo/privateDownload", requiredPermission = false)
     public void privateDownload(@Validated(SysFileInfoRequest.detail.class) SysFileInfoRequest sysFileInfoRequest) {
@@ -169,7 +169,7 @@ public class SysFileInfoController {
      * 公有文件下载
      *
      * @author majianguo
-     * @date 2020/12/27 13:17
+     * @since 2020/12/27 13:17
      */
     @GetResource(name = "公有文件下载", path = "/sysFileInfo/publicDownload", requiredLogin = false, requiredPermission = false)
     public void publicDownload(@Validated(SysFileInfoRequest.detail.class) SysFileInfoRequest sysFileInfoRequest) {
@@ -184,7 +184,7 @@ public class SysFileInfoController {
      * 注意：调用本接口之后还需要调用确认接口，本次替换操作才会生效
      *
      * @author majianguo
-     * @date 2020/12/16 15:34
+     * @since 2020/12/16 15:34
      */
     @PostResource(name = "替换文件", path = "/sysFileInfo/update", requiredPermission = false)
     public ResponseData<SysFileInfoResponse> update(@RequestPart("file") MultipartFile file, @Validated(SysFileInfoRequest.edit.class) SysFileInfoRequest sysFileInfoRequest) {
@@ -196,7 +196,7 @@ public class SysFileInfoController {
      * 版本回退
      *
      * @author majianguo
-     * @date 2020/12/16 15:34
+     * @since 2020/12/16 15:34
      */
     @PostResource(name = "版本回退", path = "/sysFileInfo/versionBack", requiredPermission = false)
     public ResponseData<SysFileInfoResponse> versionBack(@Validated(SysFileInfoRequest.versionBack.class) SysFileInfoRequest sysFileInfoRequest) {
@@ -210,7 +210,7 @@ public class SysFileInfoController {
      * @param fileIds 附件IDS
      * @return 附件返回类
      * @author majianguo
-     * @date 2020/12/27 13:17
+     * @since 2020/12/27 13:17
      */
     @GetResource(name = "根据附件IDS查询附件信息", path = "/sysFileInfo/getFileInfoListByFileIds", requiredPermission = false)
     public ResponseData<List<SysFileInfoResponse>> getFileInfoListByFileIds(@RequestParam(value = "fileIds") String fileIds) {
@@ -222,7 +222,7 @@ public class SysFileInfoController {
      * 公有打包下载文件
      *
      * @author majianguo
-     * @date 2020/12/27 13:17
+     * @since 2020/12/27 13:17
      */
     @GetResource(name = "公有打包下载文件", path = "/sysFileInfo/publicPackagingDownload", requiredPermission = false, requiredLogin = false)
     public void publicPackagingDownload(@RequestParam(value = "fileIds") String fileIds) {
@@ -234,7 +234,7 @@ public class SysFileInfoController {
      * 私有打包下载文件
      *
      * @author majianguo
-     * @date 2020/12/27 13:18
+     * @since 2020/12/27 13:18
      */
     @GetResource(name = "私有打包下载文件", path = "/sysFileInfo/privatePackagingDownload", requiredPermission = false)
     public void privatePackagingDownload(@RequestParam(value = "fileIds") String fileIds) {
@@ -246,7 +246,7 @@ public class SysFileInfoController {
      * 删除文件信息（真删除文件信息）
      *
      * @author fengshuonan
-     * @date 2020/11/29 11:19
+     * @since 2020/11/29 11:19
      */
     @PostResource(name = "删除文件信息（真删除文件信息）", path = "/sysFileInfo/deleteReally", requiredPermission = false)
     @BusinessLog
@@ -259,7 +259,7 @@ public class SysFileInfoController {
      * 分页查询文件信息表
      *
      * @author fengshuonan
-     * @date 2020/11/29 11:29
+     * @since 2020/11/29 11:29
      */
     @GetResource(name = "分页查询文件信息表", path = "/sysFileInfo/fileInfoListPage", requiredPermission = false)
     public ResponseData<PageResult<SysFileInfoListResponse>> fileInfoListPage(SysFileInfoRequest sysFileInfoRequest) {
@@ -270,7 +270,7 @@ public class SysFileInfoController {
      * 查看详情文件信息表
      *
      * @author fengshuonan
-     * @date 2020/11/29 11:29
+     * @since 2020/11/29 11:29
      */
     @GetResource(name = "查看详情文件信息表", path = "/sysFileInfo/detail", requiredPermission = false)
     public ResponseData<SysFileInfo> detail(@Validated(SysFileInfoRequest.detail.class) SysFileInfoRequest sysFileInfoRequest) {
@@ -281,7 +281,7 @@ public class SysFileInfoController {
      * 获取antdv类型的文件详情信息
      *
      * @author fengshuonan
-     * @date 2022/3/28 14:37
+     * @since 2022/3/28 14:37
      */
     @GetResource(name = "获取antdv类型的文件详情信息", path = "/sysFileInfo/getAntdVInfo")
     public ResponseData<AntdvFileInfo> getAntdVInfo(@Validated(SysFileInfoRequest.detail.class) SysFileInfoRequest sysFileInfoRequest) {

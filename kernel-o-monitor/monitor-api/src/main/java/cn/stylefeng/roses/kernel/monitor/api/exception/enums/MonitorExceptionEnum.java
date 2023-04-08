@@ -32,7 +32,7 @@ import lombok.Getter;
  * 监控模块异常枚举
  *
  * @author fengshuonan
- * @date 2021/1/31 22:35
+ * @since 2021/1/31 22:35
  */
 @Getter
 public enum MonitorExceptionEnum implements AbstractExceptionEnum {

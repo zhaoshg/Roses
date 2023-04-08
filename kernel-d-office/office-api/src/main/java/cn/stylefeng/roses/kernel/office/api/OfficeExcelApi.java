@@ -33,7 +33,7 @@ import java.util.List;
  * Excel 常用操作接口
  *
  * @author luojie
- * @date 2020/11/3 16:42
+ * @since 2020/11/3 16:42
  */
 public interface OfficeExcelApi {
 
@@ -42,7 +42,7 @@ public interface OfficeExcelApi {
      *
      * @param excelExportParam Excel导出参数
      * @author luojie
-     * @date 2020/11/4 10:11
+     * @since 2020/11/4 10:11
      */
     void easyExportDownload(ExcelExportParam excelExportParam);
 
@@ -51,7 +51,7 @@ public interface OfficeExcelApi {
      *
      * @param excelExportParam Excel导出参数
      * @author luojie
-     * @date 2020/11/4 11:31
+     * @since 2020/11/4 11:31
      */
     void easyWriteToFile(ExcelExportParam excelExportParam);
 
@@ -62,7 +62,7 @@ public interface OfficeExcelApi {
      * @param clazz       每行数据转换成的对象类
      * @return 对象类List集合
      * @author luojie
-     * @date 2020/11/4 13:54
+     * @since 2020/11/4 13:54
      */
     <T> List<T> easyReadToList(InputStream inputStream, Class<T> clazz);
 
@@ -74,7 +74,7 @@ public interface OfficeExcelApi {
      * @param rowNum      表头所占行数
      * @return 对象类List集合
      * @author yxx
-     * @date 2022/8/11 10:37
+     * @since 2022/8/11 10:37
      */
     <T> List<T> easyReadToList(InputStream inputStream, Integer rowNum, Class<T> clazz);
 

@@ -37,7 +37,7 @@ import java.util.List;
  * 系统用户mapper接口
  *
  * @author luojie
- * @date 2020/11/6 14:50
+ * @since 2020/11/6 14:50
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
@@ -47,7 +47,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param page           分页参数
      * @param sysUserRequest 查询条件信息
      * @author fengshuonan
-     * @date 2020/11/21 15:16
+     * @since 2020/11/21 15:16
      */
     Page<SysUserDTO> findUserPage(@Param("page") Page<SysUser> page, @Param("sysUserRequest") SysUserRequest sysUserRequest);
 
@@ -56,7 +56,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      *
      * @param sysUserRequest 查询条件信息
      * @author liuhanqing
-     * @date 2021/1/15 11:04
+     * @since 2021/1/15 11:04
      */
     List<SysUserDTO> findUserList(@Param("sysUserRequest") SysUserRequest sysUserRequest);
 

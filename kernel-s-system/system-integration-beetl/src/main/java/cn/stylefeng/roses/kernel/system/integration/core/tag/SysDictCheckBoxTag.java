@@ -12,7 +12,7 @@ import java.util.List;
  * checkbox字典组件
  *
  * @author liuhanqing
- * @date 2021/1/16 19:06
+ * @since 2021/1/16 19:06
  */
 @Slf4j
 public class SysDictCheckBoxTag extends SysDictBaseTag {

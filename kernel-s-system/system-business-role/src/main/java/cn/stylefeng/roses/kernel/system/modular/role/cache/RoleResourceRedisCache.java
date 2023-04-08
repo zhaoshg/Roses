@@ -34,7 +34,7 @@ import java.util.List;
  * 角色绑定资源的缓存
  *
  * @author fengshuonan
- * @date 2021/7/29 23:29
+ * @since 2021/7/29 23:29
  */
 public class RoleResourceRedisCache extends AbstractRedisCacheOperator<List<String>> {
 

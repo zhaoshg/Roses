@@ -6,7 +6,7 @@ import cn.stylefeng.roses.kernel.socket.api.session.pojo.SocketSession;
  * Socket消息接收回调接口
  *
  * @author majianguo
- * @date 2021/6/2 上午9:53
+ * @since 2021/6/2 上午9:53
  */
 @FunctionalInterface
 public interface SocketMsgCallbackInterface {
@@ -18,7 +18,7 @@ public interface SocketMsgCallbackInterface {
      * @param msg           消息体
      * @param socketSession 本次通信的会话
      * @author majianguo
-     * @date 2021/6/2 上午9:51
+     * @since 2021/6/2 上午9:51
      **/
     void callback(String msgType, Object msg, SocketSession socketSession);
 }

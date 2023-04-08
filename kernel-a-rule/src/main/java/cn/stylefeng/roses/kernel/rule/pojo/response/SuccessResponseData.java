@@ -30,7 +30,7 @@ import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
  * 响应成功的封装类
  *
  * @author fengshuonan
- * @date 2020/10/16 16:23
+ * @since 2020/10/16 16:23
  */
 public class SuccessResponseData<T> extends ResponseData<T> {
 

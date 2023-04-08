@@ -38,7 +38,7 @@ import java.util.List;
  * jquery zTree 插件的节点封装
  *
  * @author fengshuonan
- * @date 2021/1/6 21:47
+ * @since 2021/1/6 21:47
  */
 @ToString
 @EqualsAndHashCode
@@ -102,7 +102,7 @@ public class ZTreeNode implements AbstractTreeNode<ZTreeNode> {
      * 创建ztree的父级节点
      *
      * @author fengshuonan
-     * @date 2021/1/6 21:47
+     * @since 2021/1/6 21:47
      */
     public static ZTreeNode createParent() {
         ZTreeNode zTreeNode = new ZTreeNode();

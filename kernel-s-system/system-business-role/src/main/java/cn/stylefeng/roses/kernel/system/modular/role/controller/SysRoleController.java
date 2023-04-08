@@ -51,7 +51,7 @@ import java.util.List;
  * 系统角色控制器
  *
  * @author majianguo
- * @date 2020/11/5 上午10:19
+ * @since 2020/11/5 上午10:19
  */
 @RestController
 @ApiResource(name = "系统角色管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -67,7 +67,7 @@ public class SysRoleController {
      * 添加系统角色
      *
      * @author majianguo
-     * @date 2020/11/5 上午10:38
+     * @since 2020/11/5 上午10:38
      */
     @PostResource(name = "添加角色", path = "/sysRole/add")
     @BusinessLog
@@ -80,7 +80,7 @@ public class SysRoleController {
      * 删除系统角色
      *
      * @author majianguo
-     * @date 2020/11/5 上午10:48
+     * @since 2020/11/5 上午10:48
      */
     @PostResource(name = "角色删除", path = "/sysRole/delete")
     @BusinessLog
@@ -93,7 +93,7 @@ public class SysRoleController {
      * 编辑系统角色
      *
      * @author majianguo
-     * @date 2020/11/5 上午10:49
+     * @since 2020/11/5 上午10:49
      */
     @PostResource(name = "角色编辑", path = "/sysRole/edit")
     @BusinessLog
@@ -106,7 +106,7 @@ public class SysRoleController {
      * 查看系统角色
      *
      * @author majianguo
-     * @date 2020/11/5 上午10:50
+     * @since 2020/11/5 上午10:50
      */
     @GetResource(name = "角色查看", path = "/sysRole/detail")
     public ResponseData<SysRoleDTO> detail(@Validated(SysRoleRequest.detail.class) SysRoleRequest sysRoleRequest) {
@@ -117,7 +117,7 @@ public class SysRoleController {
      * 查询系统角色
      *
      * @author majianguo
-     * @date 2020/11/5 上午10:19
+     * @since 2020/11/5 上午10:19
      */
     @GetResource(name = "查询角色", path = "/sysRole/page")
     public ResponseData<PageResult<SysRole>> page(SysRoleRequest sysRoleRequest) {
@@ -128,7 +128,7 @@ public class SysRoleController {
      * 角色授权资源
      *
      * @author fengshuonan
-     * @date 2020/11/22 19:51
+     * @since 2020/11/22 19:51
      */
     @PostResource(name = "角色授权资源", path = "/sysRole/grantResource")
     public ResponseData<?> grantResource(@RequestBody @Validated(SysRoleRequest.grantResource.class) SysRoleRequest sysRoleParam) {
@@ -140,7 +140,7 @@ public class SysRoleController {
      * 角色授权菜单和按钮
      *
      * @author majianguo
-     * @date 2021/1/9 18:04
+     * @since 2021/1/9 18:04
      */
     @PostResource(name = "角色授权菜单和按钮", path = "/sysRole/grantMenuAndButton")
     public ResponseData<?> grantMenuAndButton(@RequestBody @Validated(SysRoleRequest.grantMenuButton.class) SysRoleRequest sysRoleRequest) {
@@ -152,7 +152,7 @@ public class SysRoleController {
      * 角色授权菜单，新版界面用
      *
      * @author fengshuonan
-     * @date 2021/8/11 9:58
+     * @since 2021/8/11 9:58
      */
     @PostResource(name = "角色授权菜单", path = "/sysRole/grantMenu")
     public ResponseData<?> grantMenu(@RequestBody @Validated(SysRoleRequest.grantMenu.class) SysRoleRequest sysRoleRequest) {
@@ -164,7 +164,7 @@ public class SysRoleController {
      * 角色绑定或取消绑定菜单和按钮
      *
      * @author fengshuonan
-     * @date 2021/8/11 9:58
+     * @since 2021/8/11 9:58
      */
     @PostResource(name = "角色绑定或取消绑定菜单和按钮", path = "/sysRole/grantMenusAndButtons")
     public ResponseData<List<MenuAndButtonTreeResponse>> grantMenusAndButtons(@RequestBody @Validated(SysRoleRequest.grantMenusAndButtons.class) SysRoleRequest sysRoleRequest) {
@@ -175,7 +175,7 @@ public class SysRoleController {
      * 设置角色绑定的数据范围类型和数据范围
      *
      * @author fengshuonan
-     * @date 2020/3/28 16:05
+     * @since 2020/3/28 16:05
      */
     @PostResource(name = "设置角色绑定的数据范围类型和数据范围", path = "/sysRole/grantDataScope")
     public ResponseData<?> grantData(@RequestBody @Validated(SysRoleRequest.grantDataScope.class) SysRoleRequest sysRoleParam) {
@@ -187,7 +187,7 @@ public class SysRoleController {
      * 系统角色下拉（用于用户授权角色时选择）
      *
      * @author majianguo
-     * @date 2020/11/6 13:49
+     * @since 2020/11/6 13:49
      */
     @GetResource(name = "角色下拉", path = "/sysRole/dropDown")
     public ResponseData<List<SimpleDict>> dropDown() {
@@ -198,7 +198,7 @@ public class SysRoleController {
      * 拥有菜单
      *
      * @author majianguo
-     * @date 2020/11/5 上午10:58
+     * @since 2020/11/5 上午10:58
      */
     @GetResource(name = "角色拥有菜单", path = "/sysRole/getRoleMenus")
     public ResponseData<List<Long>> getRoleMenus(@Validated(SysRoleRequest.detail.class) SysRoleRequest sysRoleRequest) {
@@ -210,7 +210,7 @@ public class SysRoleController {
      * 拥有数据
      *
      * @author majianguo
-     * @date 2020/11/5 上午10:59
+     * @since 2020/11/5 上午10:59
      */
     @GetResource(name = "角色拥有数据", path = "/sysRole/getRoleDataScope")
     public ResponseData<List<Long>> getRoleDataScope(@Validated(SysRoleRequest.detail.class) SysRoleRequest sysRoleRequest) {
@@ -221,7 +221,7 @@ public class SysRoleController {
      * 获取角色下拉列表
      *
      * @author fengshuonan
-     * @date 2022/6/8 14:57
+     * @since 2022/6/8 14:57
      */
     @GetResource(name = "获取角色下拉列表", path = "/sysRole/getRoleSelectList")
     public ResponseData<List<SysRoleDTO>> getRoleSelectList(SysRoleRequest sysRoleRequest) {
@@ -232,7 +232,7 @@ public class SysRoleController {
      * 获取角色信息集合
      *
      * @author fengshuonan
-     * @date 2022/11/2 14:08
+     * @since 2022/11/2 14:08
      */
     @PostResource(name = "获取角色信息集合", path = "/sysRole/getRoleInfoListByIds")
     public ResponseData<List<SysRoleDTO>> getRoleInfoListByIds(@RequestBody @Validated(SysRoleRequest.batchQuery.class) SysRoleRequest sysRoleRequest) {

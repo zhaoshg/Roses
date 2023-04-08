@@ -31,7 +31,7 @@ import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
  * 异构sql获取基类，通过继承此类，编写使用不同数据库的sql
  *
  * @author fengshuonan
- * @date 2020/10/31 23:44
+ * @since 2020/10/31 23:44
  */
 public abstract class AbstractSql {
 
@@ -41,7 +41,7 @@ public abstract class AbstractSql {
      * @param jdbcUrl 数据连接的url
      * @return 具体的sql
      * @author fengshuonan
-     * @date 2020/10/31 23:44
+     * @since 2020/10/31 23:44
      */
     public String getSql(String jdbcUrl) {
         if (jdbcUrl.contains(DbTypeEnum.ORACLE.getUrlWords())) {
@@ -64,7 +64,7 @@ public abstract class AbstractSql {
      *
      * @return 具体的sql
      * @author fengshuonan
-     * @date 2020/10/31 23:45
+     * @since 2020/10/31 23:45
      */
     protected abstract String mysql();
 
@@ -73,7 +73,7 @@ public abstract class AbstractSql {
      *
      * @return 具体的sql
      * @author fengshuonan
-     * @date 2020/10/31 23:45
+     * @since 2020/10/31 23:45
      */
     protected abstract String sqlServer();
 
@@ -82,7 +82,7 @@ public abstract class AbstractSql {
      *
      * @return 具体的sql
      * @author fengshuonan
-     * @date 2020/10/31 23:45
+     * @since 2020/10/31 23:45
      */
     protected abstract String pgSql();
 
@@ -91,7 +91,7 @@ public abstract class AbstractSql {
      *
      * @return 具体的sql
      * @author fengshuonan
-     * @date 2020/10/31 23:45
+     * @since 2020/10/31 23:45
      */
     protected abstract String oracle();
 

@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.timer.api.constants.TimerConstants;
  * 定时器任务的异常
  *
  * @author fengshuonan
- * @date 2020/10/15 15:59
+ * @since 2020/10/15 15:59
  */
 public class TimerException extends ServiceException {
 

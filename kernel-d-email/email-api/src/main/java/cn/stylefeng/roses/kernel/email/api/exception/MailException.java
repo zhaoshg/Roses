@@ -33,7 +33,7 @@ import lombok.Getter;
  * 邮件发送异常
  *
  * @author fengshuonan
- * @date 2018-07-06-下午3:00
+ * @since 2018-07-06-下午3:00
  */
 @Getter
 public class MailException extends ServiceException {

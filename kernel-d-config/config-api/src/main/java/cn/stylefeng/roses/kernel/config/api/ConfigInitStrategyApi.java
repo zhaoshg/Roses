@@ -32,7 +32,7 @@ import java.util.List;
  * 配置初始化的策略
  *
  * @author fengshuonan
- * @date 2021/7/8 17:33
+ * @since 2021/7/8 17:33
  */
 public interface ConfigInitStrategyApi {
 
@@ -40,7 +40,7 @@ public interface ConfigInitStrategyApi {
      * 获取这个配置组下的标题
      *
      * @author fengshuonan
-     * @date 2022/10/24 15:03
+     * @since 2022/10/24 15:03
      */
     String getTitle();
 
@@ -48,7 +48,7 @@ public interface ConfigInitStrategyApi {
      * 获取这个配置组的详细说明
      *
      * @author fengshuonan
-     * @date 2022/10/24 15:03
+     * @since 2022/10/24 15:03
      */
     String getDescription();
 
@@ -57,7 +57,7 @@ public interface ConfigInitStrategyApi {
      *
      * @return 需要被初始化的配置集合
      * @author fengshuonan
-     * @date 2021/7/8 17:40
+     * @since 2021/7/8 17:40
      */
     List<ConfigInitItem> getInitConfigs();
 

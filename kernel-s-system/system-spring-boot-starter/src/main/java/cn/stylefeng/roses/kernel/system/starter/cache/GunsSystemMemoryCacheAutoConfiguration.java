@@ -52,7 +52,7 @@ import java.util.Map;
  * 系统管理缓存的自动配置（默认内存缓存）
  *
  * @author fengshuonan
- * @date 2021/2/28 10:29
+ * @since 2021/2/28 10:29
  */
 @Configuration
 @ConditionalOnMissingClass("org.springframework.data.redis.connection.RedisConnectionFactory")
@@ -62,7 +62,7 @@ public class GunsSystemMemoryCacheAutoConfiguration {
      * 用户的缓存，非在线用户缓存，此缓存为了加快查看用户相关操作
      *
      * @author fengshuonan
-     * @date 2021/2/28 10:30
+     * @since 2021/2/28 10:30
      */
     @Bean
     public CacheOperatorApi<SysUserDTO> sysUserCacheOperatorApi() {
@@ -74,7 +74,7 @@ public class GunsSystemMemoryCacheAutoConfiguration {
      * 用户角色对应的缓存
      *
      * @author fengshuonan
-     * @date 2021/7/29 23:00
+     * @since 2021/7/29 23:00
      */
     @Bean
     public CacheOperatorApi<List<Long>> userRoleCacheApi() {
@@ -86,7 +86,7 @@ public class GunsSystemMemoryCacheAutoConfiguration {
      * 角色信息对应的缓存
      *
      * @author fengshuonan
-     * @date 2021/7/29 23:00
+     * @since 2021/7/29 23:00
      */
     @Bean
     public CacheOperatorApi<SysRole> roleInfoCacheApi() {
@@ -98,7 +98,7 @@ public class GunsSystemMemoryCacheAutoConfiguration {
      * 用户组织机构的缓存
      *
      * @author fengshuonan
-     * @date 2021/7/30 23:09
+     * @since 2021/7/30 23:09
      */
     @Bean
     public CacheOperatorApi<SysUserOrgDTO> userOrgCacheApi() {
@@ -110,7 +110,7 @@ public class GunsSystemMemoryCacheAutoConfiguration {
      * 用户资源绑定的缓存
      *
      * @author fengshuonan
-     * @date 2021/7/30 23:29
+     * @since 2021/7/30 23:29
      */
     @Bean
     public CacheOperatorApi<List<String>> roleResourceCacheApi() {
@@ -122,7 +122,7 @@ public class GunsSystemMemoryCacheAutoConfiguration {
      * 角色绑定的数据范围的缓存
      *
      * @author fengshuonan
-     * @date 2021/7/31 17:59
+     * @since 2021/7/31 17:59
      */
     @Bean
     public CacheOperatorApi<List<Long>> roleDataScopeCacheApi() {
@@ -134,7 +134,7 @@ public class GunsSystemMemoryCacheAutoConfiguration {
      * 主题的缓存
      *
      * @author fengshuonan
-     * @date 2021/7/31 17:59
+     * @since 2021/7/31 17:59
      */
     @Bean
     public CacheOperatorApi<DefaultTheme> themeCacheApi() {
@@ -146,7 +146,7 @@ public class GunsSystemMemoryCacheAutoConfiguration {
      * 接口统计的缓存
      *
      * @author xixiaowei
-     * @date 2022/2/9 16:53
+     * @since 2022/2/9 16:53
      */
     @Bean
     public CacheOperatorApi<Map<Long, Integer>> requestCountCacheApi() {

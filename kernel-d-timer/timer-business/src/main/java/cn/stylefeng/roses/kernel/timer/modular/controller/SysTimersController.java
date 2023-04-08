@@ -47,7 +47,7 @@ import java.util.List;
  * 定时任务控制器
  *
  * @author fengshuonan
- * @date 2020/10/27 14:30
+ * @since 2020/10/27 14:30
  */
 @RestController
 @ApiResource(name = "定时任务管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -60,7 +60,7 @@ public class SysTimersController {
      * 添加定时任务
      *
      * @author stylefeng
-     * @date 2020/6/30 18:26
+     * @since 2020/6/30 18:26
      */
     @PostResource(name = "添加定时任务", path = "/sysTimers/add")
     @BusinessLog
@@ -73,7 +73,7 @@ public class SysTimersController {
      * 删除定时任务
      *
      * @author stylefeng
-     * @date 2020/6/30 18:26
+     * @since 2020/6/30 18:26
      */
     @PostResource(name = "删除定时任务", path = "/sysTimers/delete")
     @BusinessLog
@@ -86,7 +86,7 @@ public class SysTimersController {
      * 编辑定时任务
      *
      * @author stylefeng
-     * @date 2020/6/30 18:26
+     * @since 2020/6/30 18:26
      */
     @PostResource(name = "编辑定时任务", path = "/sysTimers/edit")
     @BusinessLog
@@ -99,7 +99,7 @@ public class SysTimersController {
      * 启动定时任务
      *
      * @author stylefeng
-     * @date 2020/7/1 14:34
+     * @since 2020/7/1 14:34
      */
     @PostResource(name = "启动定时任务", path = "/sysTimers/start")
     @BusinessLog
@@ -112,7 +112,7 @@ public class SysTimersController {
      * 停止定时任务
      *
      * @author stylefeng
-     * @date 2020/7/1 14:34
+     * @since 2020/7/1 14:34
      */
     @PostResource(name = "停止定时任务", path = "/sysTimers/stop")
     @BusinessLog
@@ -125,7 +125,7 @@ public class SysTimersController {
      * 查看详情定时任务
      *
      * @author stylefeng
-     * @date 2020/6/30 18:26
+     * @since 2020/6/30 18:26
      */
     @GetResource(name = "查看详情定时任务", path = "/sysTimers/detail")
     public ResponseData<SysTimers> detail(@Validated(SysTimersParam.detail.class) SysTimersParam sysTimersParam) {
@@ -136,7 +136,7 @@ public class SysTimersController {
      * 分页查询定时任务
      *
      * @author stylefeng
-     * @date 2020/6/30 18:26
+     * @since 2020/6/30 18:26
      */
     @GetResource(name = "分页查询定时任务", path = "/sysTimers/page")
     public ResponseData<PageResult<SysTimers>> page(SysTimersParam sysTimersParam) {
@@ -147,7 +147,7 @@ public class SysTimersController {
      * 获取全部定时任务
      *
      * @author stylefeng
-     * @date 2020/6/30 18:26
+     * @since 2020/6/30 18:26
      */
     @GetResource(name = "获取全部定时任务", path = "/sysTimers/list")
     public ResponseData<List<SysTimers>> list(SysTimersParam sysTimersParam) {
@@ -158,7 +158,7 @@ public class SysTimersController {
      * 获取系统的所有任务列表
      *
      * @author stylefeng
-     * @date 2020/7/1 14:34
+     * @since 2020/7/1 14:34
      */
     @PostResource(name = "获取系统的所有任务列表", path = "/sysTimers/getActionClasses")
     public ResponseData<List<String>> getActionClasses() {

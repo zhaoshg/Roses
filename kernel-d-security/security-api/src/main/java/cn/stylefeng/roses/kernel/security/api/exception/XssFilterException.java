@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.security.api.constants.SecurityConstants;
  * XSS过滤异常
  *
  * @author fengshuonan
- * @date 2021/1/13 23:22
+ * @since 2021/1/13 23:22
  */
 public class XssFilterException extends ServiceException {
 

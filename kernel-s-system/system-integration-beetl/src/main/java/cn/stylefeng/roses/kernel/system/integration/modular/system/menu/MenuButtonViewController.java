@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
  * 菜单按钮管理界面
  *
  * @author luojie
- * @date 2021/1/9 16:11
+ * @since 2021/1/9 16:11
  */
 @Controller
 @ApiResource(name = "菜单按钮管理界面", resBizType = ResBizTypeEnum.SYSTEM)
@@ -19,7 +19,7 @@ public class MenuButtonViewController {
      * 菜单按钮管理首页
      *
      * @author luojie
-     * @date 2021/1/9 16:13
+     * @since 2021/1/9 16:13
      */
     @GetResource(name = "菜单管理首页", path = "/view/menuButton")
     public String menuIndex() {
@@ -30,7 +30,7 @@ public class MenuButtonViewController {
      * 新增菜单按钮界面
      *
      * @author luojie
-     * @date 2021/1/9 13:56
+     * @since 2021/1/9 13:56
      */
     @GetResource(name = "新增菜单按钮界面", path = "/view/menuButton/add")
     public String menuAdd() {
@@ -41,7 +41,7 @@ public class MenuButtonViewController {
      * 修改菜单按钮界面
      *
      * @author luojie
-     * @date 2021/1/9 14:14
+     * @since 2021/1/9 14:14
      */
     @GetResource(name = "修改菜单按钮界面", path = "/view/menuButton/edit")
     public String menuEdit() {

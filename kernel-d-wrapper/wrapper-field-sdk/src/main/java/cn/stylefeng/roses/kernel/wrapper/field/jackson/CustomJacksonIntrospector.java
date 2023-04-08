@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
  * Json序列化，注解拦截器，针对自定义注解进行拓展性序列化
  *
  * @author fengshuonan
- * @date 2022/9/6 13:56
+ * @since 2022/9/6 13:56
  */
 public class CustomJacksonIntrospector extends JacksonAnnotationIntrospector {
 

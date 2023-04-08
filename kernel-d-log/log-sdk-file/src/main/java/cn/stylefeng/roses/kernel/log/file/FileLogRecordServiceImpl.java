@@ -52,7 +52,7 @@ import static cn.stylefeng.roses.kernel.log.api.constants.LogFileConstants.FILE_
  * 文件存储方式的日志记录器
  *
  * @author fengshuonan
- * @date 2020/10/28 14:52
+ * @since 2020/10/28 14:52
  */
 public class FileLogRecordServiceImpl implements LogRecordApi {
 
@@ -80,7 +80,7 @@ public class FileLogRecordServiceImpl implements LogRecordApi {
      * 日志文件的组成形式应为appName-年-月-日.log
      *
      * @author fengshuonan
-     * @date 2020/10/28 15:53
+     * @since 2020/10/28 15:53
      */
     @Override
     public void add(LogRecordDTO logRecordDTO) {
@@ -98,7 +98,7 @@ public class FileLogRecordServiceImpl implements LogRecordApi {
      *
      * @param list 待输出日志列表
      * @author majianguo
-     * @date 2020/11/2 下午2:59
+     * @since 2020/11/2 下午2:59
      */
     @Override
     public void addBatch(List<LogRecordDTO> list) {
@@ -160,7 +160,7 @@ public class FileLogRecordServiceImpl implements LogRecordApi {
      * 该类维护一个最大日志数和一个刷新日志间隔，满足任意一个条件即可触发从内存写出日志到磁盘的操作
      *
      * @author majianguo
-     * @date 2020/10/31 15:05
+     * @since 2020/10/31 15:05
      */
     class LogRefreshManager extends Thread {
 
@@ -219,7 +219,7 @@ public class FileLogRecordServiceImpl implements LogRecordApi {
          *
          * @param logRecordDTO 日志对象
          * @author majianguo
-         * @date 2020/10/31 14:59
+         * @since 2020/10/31 14:59
          */
         public void putLog(LogRecordDTO logRecordDTO) {
 
@@ -243,7 +243,7 @@ public class FileLogRecordServiceImpl implements LogRecordApi {
          * 刷新日志到磁盘的操作
          *
          * @author majianguo
-         * @date 2020/10/31 15:48
+         * @since 2020/10/31 15:48
          */
         private void refresh() {
             // 让睡眠线程本次不要再调本方法，睡眠至下次看refreshMark的值再决定要不要调用本方法
@@ -290,7 +290,7 @@ public class FileLogRecordServiceImpl implements LogRecordApi {
          * 用于定时检测日志数据是否可以写入数据
          *
          * @author majianguo
-         * @date 2020/10/31 15:57
+         * @since 2020/10/31 15:57
          */
         private void timing() {
             try {
@@ -312,7 +312,7 @@ public class FileLogRecordServiceImpl implements LogRecordApi {
          * 用于监听日志消息队列，达到设定的数就开始执行刷入硬盘的操作
          *
          * @author majianguo
-         * @date 2020/11/2 9:32
+         * @since 2020/11/2 9:32
          */
         private void listener() {
             try {

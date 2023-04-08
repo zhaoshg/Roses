@@ -43,7 +43,7 @@ import static cn.stylefeng.roses.kernel.pinyin.api.exception.enums.PinyinExcepti
  * 拼音工具类的实现
  *
  * @author fengshuonan
- * @date 2020/12/4 9:40
+ * @since 2020/12/4 9:40
  */
 public class PinyinServiceImpl implements PinYinApi {
 
@@ -57,7 +57,7 @@ public class PinyinServiceImpl implements PinYinApi {
      * 初始化多音字中文字和拼音首字母大写的映射
      *
      * @author fengshuonan
-     * @date 2020/12/4 14:09
+     * @since 2020/12/4 14:09
      */
     public void init() {
         // 百家姓多音字的汉语-首字母大写的映射
@@ -166,7 +166,7 @@ public class PinyinServiceImpl implements PinYinApi {
      * @param caseType      大小写类型
      * @return 首字母大小写
      * @author fengshuonan
-     * @date 2020/12/4 14:14
+     * @since 2020/12/4 14:14
      */
     private static String getFirstLetters(String chineseString, HanyuPinyinCaseType caseType) {
 

@@ -39,7 +39,7 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
  * XSS安全过滤器相关配置
  *
  * @author fengshuonan
- * @date 2021/1/13 23:05
+ * @since 2021/1/13 23:05
  */
 @Configuration
 public class GunsXssAutoConfiguration {
@@ -48,7 +48,7 @@ public class GunsXssAutoConfiguration {
      * XSS Filter过滤器，用来过滤param之类的传参
      *
      * @author fengshuonan
-     * @date 2021/1/13 23:09
+     * @since 2021/1/13 23:09
      */
     @Bean
     public FilterRegistrationBean<XssFilter> xssFilterFilterRegistrationBean() {
@@ -66,7 +66,7 @@ public class GunsXssAutoConfiguration {
      * XSS的json反序列化器，针对json的传参
      *
      * @author fengshuonan
-     * @date 2021/1/13 23:09
+     * @since 2021/1/13 23:09
      */
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer xssJackson2ObjectMapperBuilderCustomizer() {
@@ -78,7 +78,7 @@ public class GunsXssAutoConfiguration {
      * 组装xss的配置
      *
      * @author fengshuonan
-     * @date 2021/1/13 23:13
+     * @since 2021/1/13 23:13
      */
     private XssProperties createProperties() {
         XssProperties xssProperties = new XssProperties();

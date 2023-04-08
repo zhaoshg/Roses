@@ -33,7 +33,7 @@ import lombok.Getter;
  * 认证相关异常
  *
  * @author fengshuonan
- * @date 2020/10/16 10:53
+ * @since 2020/10/16 10:53
  */
 @Getter
 public enum AuthExceptionEnum implements AbstractExceptionEnum {

@@ -34,7 +34,7 @@ import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceDefinition;
  * 基于内存的资源缓存
  *
  * @author fengshuonan
- * @date 2021/5/17 16:05
+ * @since 2021/5/17 16:05
  */
 public class MemoryResourceCache extends AbstractMemoryCacheOperator<ResourceDefinition> {
 
@@ -42,7 +42,7 @@ public class MemoryResourceCache extends AbstractMemoryCacheOperator<ResourceDef
      * TimedCache的key是资源url，value是ResourceDefinition
      *
      * @author fengshuonan
-     * @date 2021/5/17 16:06
+     * @since 2021/5/17 16:06
      */
     public MemoryResourceCache(TimedCache<String, ResourceDefinition> timedCache) {
         super(timedCache);

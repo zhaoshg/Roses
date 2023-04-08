@@ -21,7 +21,7 @@ import java.util.List;
  * 业务拓展-字段信息控制器
  *
  * @author fengshuonan
- * @date 2022/03/29 23:47
+ * @since 2022/03/29 23:47
  */
 @RestController
 @ApiResource(name = "业务拓展-字段信息", resBizType = ResBizTypeEnum.SYSTEM)
@@ -34,7 +34,7 @@ public class SysExpandFieldController {
      * 添加
      *
      * @author fengshuonan
-     * @date 2022/03/29 23:47
+     * @since 2022/03/29 23:47
      */
     @PostResource(name = "添加", path = "/sysExpandField/add")
     public ResponseData<SysExpandField> add(@RequestBody @Validated(SysExpandFieldRequest.add.class) SysExpandFieldRequest sysExpandFieldRequest) {
@@ -46,7 +46,7 @@ public class SysExpandFieldController {
      * 删除
      *
      * @author fengshuonan
-     * @date 2022/03/29 23:47
+     * @since 2022/03/29 23:47
      */
     @PostResource(name = "删除", path = "/sysExpandField/delete")
     public ResponseData<?> delete(@RequestBody @Validated(SysExpandFieldRequest.delete.class) SysExpandFieldRequest sysExpandFieldRequest) {
@@ -58,7 +58,7 @@ public class SysExpandFieldController {
      * 编辑
      *
      * @author fengshuonan
-     * @date 2022/03/29 23:47
+     * @since 2022/03/29 23:47
      */
     @PostResource(name = "编辑", path = "/sysExpandField/edit")
     public ResponseData<?> edit(@RequestBody @Validated(SysExpandFieldRequest.edit.class) SysExpandFieldRequest sysExpandFieldRequest) {
@@ -70,7 +70,7 @@ public class SysExpandFieldController {
      * 查看详情
      *
      * @author fengshuonan
-     * @date 2022/03/29 23:47
+     * @since 2022/03/29 23:47
      */
     @GetResource(name = "查看详情", path = "/sysExpandField/detail")
     public ResponseData<SysExpandField> detail(@Validated(SysExpandFieldRequest.detail.class) SysExpandFieldRequest sysExpandFieldRequest) {
@@ -81,7 +81,7 @@ public class SysExpandFieldController {
      * 获取列表
      *
      * @author fengshuonan
-     * @date 2022/03/29 23:47
+     * @since 2022/03/29 23:47
      */
     @GetResource(name = "获取列表", path = "/sysExpandField/list")
     public ResponseData<List<SysExpandField>> list(SysExpandFieldRequest sysExpandFieldRequest) {
@@ -92,7 +92,7 @@ public class SysExpandFieldController {
      * 获取列表（带分页）
      *
      * @author fengshuonan
-     * @date 2022/03/29 23:47
+     * @since 2022/03/29 23:47
      */
     @GetResource(name = "分页查询", path = "/sysExpandField/page")
     public ResponseData<PageResult<SysExpandField>> page(SysExpandFieldRequest sysExpandFieldRequest) {

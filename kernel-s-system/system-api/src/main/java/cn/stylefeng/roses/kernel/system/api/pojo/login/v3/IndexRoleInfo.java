@@ -7,7 +7,7 @@ import lombok.Data;
  * 角色信息
  *
  * @author fengshuonan
- * @date 2022/4/8 15:06
+ * @since 2022/4/8 15:06
  */
 @Data
 public class IndexRoleInfo {

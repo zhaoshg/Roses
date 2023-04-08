@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * 业务分组业务实现层
  *
  * @author fengshuonan
- * @date 2022/05/11 12:54
+ * @since 2022/05/11 12:54
  */
 @Service
 public class SysGroupServiceImpl extends ServiceImpl<SysGroupMapper, SysGroup> implements SysGroupService {
@@ -125,7 +125,7 @@ public class SysGroupServiceImpl extends ServiceImpl<SysGroupMapper, SysGroup> i
      * 返回结果增加通用的两个分组名称
      *
      * @author fengshuonan
-     * @date 2022/6/28 10:50
+     * @since 2022/6/28 10:50
      */
     private void addCommonGroup(String groupBizCode, List<SysGroupDTO> result) {
 
@@ -147,7 +147,7 @@ public class SysGroupServiceImpl extends ServiceImpl<SysGroupMapper, SysGroup> i
      * 返回所有分组和未分组的查询
      *
      * @author fengshuonan
-     * @date 2022/6/28 10:50
+     * @since 2022/6/28 10:50
      */
     private void addAllGroup(String groupBizCode, List<SysGroupDTO> result) {
 

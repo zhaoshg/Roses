@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.rule.constants;
  * 规则模块的常量
  *
  * @author fengshuonan
- * @date 2020/10/16 11:25
+ * @since 2020/10/16 11:25
  */
 public interface RuleConstants {
 

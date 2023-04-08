@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.auth.api.constants;
  * auth，鉴权模块的常量
  *
  * @author fengshuonan
- * @date 2020/10/16 11:05
+ * @since 2020/10/16 11:05
  */
 public interface AuthConstants {
 

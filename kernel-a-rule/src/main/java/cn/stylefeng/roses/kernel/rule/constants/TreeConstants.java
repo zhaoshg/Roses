@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.rule.constants;
  * 构建树有关的常量
  *
  * @author fengshuonan
- * @date 2020/10/15 15:50
+ * @since 2020/10/15 15:50
  */
 public interface TreeConstants {
 

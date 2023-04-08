@@ -34,7 +34,7 @@ import java.lang.reflect.Type;
  * 方法请求参数的详细信息
  *
  * @author fengshuonan
- * @date 2022/1/20 11:46
+ * @since 2022/1/20 11:46
  */
 @Data
 public class ParameterMetadata {

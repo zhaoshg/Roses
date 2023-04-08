@@ -32,7 +32,7 @@ import cn.hutool.core.util.StrUtil;
  * 临时缓存服务器信息
  *
  * @author fengshuonan
- * @date 2020/10/27 17:53
+ * @since 2020/10/27 17:53
  */
 public class ServerInfoContext {
 
@@ -51,7 +51,7 @@ public class ServerInfoContext {
      * 获取server的ip
      *
      * @author fengshuonan
-     * @date 2020/10/27 17:56
+     * @since 2020/10/27 17:56
      */
     public static String getServerIp() {
         if (StrUtil.isEmpty(serverIp)) {

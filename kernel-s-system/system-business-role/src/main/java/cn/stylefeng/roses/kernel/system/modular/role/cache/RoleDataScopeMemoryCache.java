@@ -34,7 +34,7 @@ import java.util.List;
  * 角色绑定的数据范围
  *
  * @author fengshuonan
- * @date 2021/7/31 17:53
+ * @since 2021/7/31 17:53
  */
 public class RoleDataScopeMemoryCache extends AbstractMemoryCacheOperator<List<Long>> {
 

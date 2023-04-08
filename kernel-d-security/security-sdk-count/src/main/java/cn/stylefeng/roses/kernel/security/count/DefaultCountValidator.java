@@ -36,7 +36,7 @@ import cn.stylefeng.roses.kernel.security.api.exception.enums.CountValidateExcep
  * 默认的计数校验器
  *
  * @author fengshuonan
- * @date 2020/11/15 12:14
+ * @since 2020/11/15 12:14
  */
 public class DefaultCountValidator implements CountValidatorApi {
 

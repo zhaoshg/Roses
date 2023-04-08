@@ -31,7 +31,7 @@ import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
  * 当前登陆用户相关的一系列方法
  *
  * @author fengshuonan
- * @date 2020/10/17 10:27
+ * @since 2020/10/17 10:27
  */
 public interface LoginUserApi {
 
@@ -42,7 +42,7 @@ public interface LoginUserApi {
      *
      * @return 当前用户的token或null
      * @author fengshuonan
-     * @date 2020/10/17 11:05
+     * @since 2020/10/17 11:05
      */
     String getToken();
 
@@ -54,7 +54,7 @@ public interface LoginUserApi {
      * @return 当前登陆用户信息
      * @throws AuthException 权限异常
      * @author fengshuonan
-     * @date 2020/10/17 10:27
+     * @since 2020/10/17 10:27
      */
     LoginUser getLoginUser() throws AuthException;
 
@@ -65,7 +65,7 @@ public interface LoginUserApi {
      *
      * @return 当前登录用户信息
      * @author fengshuonan
-     * @date 2020/10/17 11:00
+     * @since 2020/10/17 11:00
      */
     LoginUser getLoginUserNullable();
 
@@ -74,7 +74,7 @@ public interface LoginUserApi {
      *
      * @return true-是超级管理员，false-不是超级管理员
      * @author fengshuonan
-     * @date 2020/11/4 15:45
+     * @since 2020/11/4 15:45
      */
     boolean getSuperAdminFlag();
 
@@ -83,7 +83,7 @@ public interface LoginUserApi {
      *
      * @return 是否登录，true是，false否
      * @author fengshuonan
-     * @date 2020/10/17 11:02
+     * @since 2020/10/17 11:02
      */
     boolean hasLogin();
 
@@ -93,7 +93,7 @@ public interface LoginUserApi {
      * @param buttonCode 按钮的编码
      * @return true-有权限，false-没有权限
      * @author fengshuonan
-     * @date 2021/1/9 11:32
+     * @since 2021/1/9 11:32
      */
     boolean haveButton(String buttonCode);
 

@@ -32,7 +32,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * Mongodb 数据存储mapper
  *
  * @author huziyang
- * @date 2021/03/20 16:24
+ * @since 2021/03/20 16:24
  */
 @Configuration
 public interface GunsMapRepository extends MongoRepository<GunsMapEntity,String> {

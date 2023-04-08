@@ -10,7 +10,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * 校验手机号码格式
  *
  * @author fengshuonan
- * @date 2020/10/31 14:53
+ * @since 2020/10/31 14:53
  */
 @Documented
 @Constraint(validatedBy = PhoneValueValidator.class)

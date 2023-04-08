@@ -20,7 +20,7 @@ import javax.annotation.Resource;
  * C端用户表控制器
  *
  * @author fengshuonan
- * @date 2021/06/07 11:40
+ * @since 2021/06/07 11:40
  */
 @RestController
 @ApiResource(name = "C端用户表", resBizType = ResBizTypeEnum.SYSTEM)
@@ -33,7 +33,7 @@ public class CustomerController {
      * 注册C端用户
      *
      * @author fengshuonan
-     * @date 2021/06/07 11:40
+     * @since 2021/06/07 11:40
      */
     @PostResource(name = "注册", path = "/customer/reg", requiredPermission = false, requiredLogin = false)
     public ResponseData<?> reg(@RequestBody @Validated(CustomerRequest.reg.class) CustomerRequest customerRequest) {
@@ -45,7 +45,7 @@ public class CustomerController {
      * 激活C端用户
      *
      * @author fengshuonan
-     * @date 2021/6/7 16:03
+     * @since 2021/6/7 16:03
      */
     @GetResource(name = "激活用户", path = "/customer/active", requiredPermission = false, requiredLogin = false)
     public ResponseData<?> active(@Validated(CustomerRequest.active.class) CustomerRequest customerRequest) {
@@ -57,7 +57,7 @@ public class CustomerController {
      * C端用户登录
      *
      * @author fengshuonan
-     * @date 2021/06/07 11:40
+     * @since 2021/06/07 11:40
      */
     @PostResource(name = "登录", path = "/customer/login", requiredPermission = false, requiredLogin = false)
     public ResponseData<LoginResponse> login(@RequestBody @Validated LoginRequest loginRequest) {
@@ -69,7 +69,7 @@ public class CustomerController {
      * 找回密码-发送邮件
      *
      * @author fengshuonan
-     * @date 2021/06/07 11:40
+     * @since 2021/06/07 11:40
      */
     @PostResource(name = "找回密码-发送邮件", path = "/customer/sendResetPwdEmail", requiredPermission = false, requiredLogin = false)
     public ResponseData<?> sendResetPwdEmail(@RequestBody @Validated(CustomerRequest.sendResetPwdEmail.class) CustomerRequest customerRequest) {
@@ -81,7 +81,7 @@ public class CustomerController {
      * 重置密码
      *
      * @author fengshuonan
-     * @date 2021/06/07 11:40
+     * @since 2021/06/07 11:40
      */
     @PostResource(name = "重置密码", path = "/customer/resetPassword", requiredPermission = false, requiredLogin = false)
     public ResponseData<?> resetPassword(@RequestBody @Validated(CustomerRequest.resetPassword.class) CustomerRequest customerRequest) {

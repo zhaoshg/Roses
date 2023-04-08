@@ -33,7 +33,7 @@ import javax.validation.ConstraintValidatorContext;
  * 校验状态，判断是否为 StatusEnum 中的值
  *
  * @author fengshuonan
- * @date 2020/10/31 14:52
+ * @since 2020/10/31 14:52
  */
 public class StatusValueValidator implements ConstraintValidator<StatusValue, Integer> {
 

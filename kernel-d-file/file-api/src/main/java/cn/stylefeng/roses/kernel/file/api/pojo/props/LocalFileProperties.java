@@ -30,7 +30,7 @@ import lombok.Data;
  * 本地文件存储配置
  *
  * @author fengshuonan
- * @date 2020/6/7 22:30
+ * @since 2020/6/7 22:30
  */
 @Data
 public class LocalFileProperties {

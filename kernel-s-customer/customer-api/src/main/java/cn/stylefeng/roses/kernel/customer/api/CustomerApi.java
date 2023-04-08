@@ -32,7 +32,7 @@ import java.util.Date;
  * C端用户api
  *
  * @author fengshuonan
- * @date 2021/6/7 11:31
+ * @since 2021/6/7 11:31
  */
 public interface CustomerApi {
 
@@ -40,7 +40,7 @@ public interface CustomerApi {
      * 获取C端用户的详细信息
      *
      * @author fengshuonan
-     * @date 2021/6/8 21:25
+     * @since 2021/6/8 21:25
      */
     CustomerInfo getCustomerInfoById(Long customerId);
 
@@ -48,7 +48,7 @@ public interface CustomerApi {
      * 获取用户信息，通过用户的secretKey字段
      *
      * @author fengshuonan
-     * @date 2021/7/20 10:51
+     * @since 2021/7/20 10:51
      */
     CustomerInfo getCustomerInfoBySecretKey(String secretKey);
 
@@ -56,7 +56,7 @@ public interface CustomerApi {
      * 更新用户会员时间
      *
      * @author fengshuonan
-     * @date 2021/7/18 22:16
+     * @since 2021/7/18 22:16
      */
     void updateMemberExpiryDate(Long customerId, Date expiryDate);
 
@@ -66,7 +66,7 @@ public interface CustomerApi {
      * @param customerId 用户id
      * @return 用户秘钥
      * @author fengshuonan
-     * @date 2021/7/20 10:44
+     * @since 2021/7/20 10:44
      */
     String createOrUpdateCustomerSecret(Long customerId);
 
@@ -75,7 +75,7 @@ public interface CustomerApi {
      *
      * @param keyWords 用户账号，邮箱，或用户id
      * @author fengshuonan
-     * @date 2021/7/20 10:44
+     * @since 2021/7/20 10:44
      */
     CustomerInfo getCustomerInfoByKeyWords(String keyWords);
 

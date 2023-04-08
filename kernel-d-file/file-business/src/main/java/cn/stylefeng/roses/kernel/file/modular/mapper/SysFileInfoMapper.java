@@ -39,7 +39,7 @@ import java.util.List;
  * </p>
  *
  * @author stylefeng
- * @date 2020/6/7 22:15
+ * @since 2020/6/7 22:15
  */
 public interface SysFileInfoMapper extends BaseMapper<SysFileInfo> {
 
@@ -47,7 +47,7 @@ public interface SysFileInfoMapper extends BaseMapper<SysFileInfo> {
      * 附件列表（有分页）
      *
      * @author majianguo
-     * @date 2020/12/27 12:57
+     * @since 2020/12/27 12:57
      */
     List<SysFileInfoListResponse> fileInfoList(@Param("page") Page<SysFileInfoListResponse> page, @Param("sysFileInfoRequest") SysFileInfoRequest sysFileInfoRequest);
 

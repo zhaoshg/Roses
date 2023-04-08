@@ -33,7 +33,7 @@ import java.util.List;
  * 文件类型识别工具
  *
  * @author fengshuonan
- * @date 2020/11/29 14:00
+ * @since 2020/11/29 14:00
  */
 public class PicFileTypeUtil {
 
@@ -55,7 +55,7 @@ public class PicFileTypeUtil {
      * @param fileName 文件名称
      * @return boolean true-是图片类型，false-不是图片类型
      * @author fengshuonan
-     * @date 2020/11/29 14:04
+     * @since 2020/11/29 14:04
      */
     public static boolean getFileImgTypeFlag(String fileName) {
         if (StrUtil.isEmpty(fileName)) {

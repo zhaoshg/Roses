@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
  * 系统角色数据范围service接口实现类
  *
  * @author majianguo
- * @date 2020/11/5 下午4:32
+ * @since 2020/11/5 下午4:32
  */
 @Service
 public class SysRoleDataScopeServiceImpl extends ServiceImpl<SysRoleDataScopeMapper, SysRoleDataScope> implements SysRoleDataScopeService, RoleDataScopeServiceApi {
@@ -128,7 +128,7 @@ public class SysRoleDataScopeServiceImpl extends ServiceImpl<SysRoleDataScopeMap
      *
      * @param sysRoleDataScopeRequest dto实体
      * @author chenjinlong
-     * @date 2021/2/3 15:02
+     * @since 2021/2/3 15:02
      */
     private SysRoleDataScope querySysRoleDataScopeById(SysRoleDataScopeRequest sysRoleDataScopeRequest) {
         return this.getById(sysRoleDataScopeRequest.getRoleDataScopeId());
@@ -139,7 +139,7 @@ public class SysRoleDataScopeServiceImpl extends ServiceImpl<SysRoleDataScopeMap
      *
      * @param sysRoleDataScopeRequest dto实体
      * @author chenjinlong
-     * @date 2021/2/3 14:54
+     * @since 2021/2/3 14:54
      */
     private LambdaQueryWrapper<SysRoleDataScope> createQueryWrapper(SysRoleDataScopeRequest sysRoleDataScopeRequest) {
         LambdaQueryWrapper<SysRoleDataScope> queryWrapper = new LambdaQueryWrapper<>();

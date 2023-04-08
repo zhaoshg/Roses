@@ -43,7 +43,7 @@ import static cn.stylefeng.roses.kernel.rule.constants.RuleConstants.BASE64_IMG_
  * 图形验证码
  *
  * @author chenjinlong
- * @date 2021/1/15 15:11
+ * @since 2021/1/15 15:11
  */
 @RestController
 @ApiResource(name = "用户登录图形验证码", resBizType = ResBizTypeEnum.SYSTEM)
@@ -59,7 +59,7 @@ public class KaptchaController {
      * 获取图形验证码
      *
      * @author fengshuonan
-     * @date 2021/7/5 12:00
+     * @since 2021/7/5 12:00
      */
     @GetResource(name = "获取图形验证码", path = "/captcha", requiredPermission = false, requiredLogin = false)
     public ResponseData<ImageCaptcha> captcha() {
@@ -70,7 +70,7 @@ public class KaptchaController {
      * 获取拖拽验证码
      *
      * @author fengshuonan
-     * @date 2021/7/5 12:00
+     * @since 2021/7/5 12:00
      */
     @GetResource(name = "获取图形验证码", path = "/dragCaptcha", requiredPermission = false, requiredLogin = false)
     public ResponseData<DragCaptchaImageDTO> dragCaptcha() {

@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 系统主题service接口
  *
  * @author xixiaowei
- * @date 2021/12/17 16:15
+ * @since 2021/12/17 16:15
  */
 public interface SysThemeService extends IService<SysTheme> {
 
@@ -19,7 +19,7 @@ public interface SysThemeService extends IService<SysTheme> {
      * 增加系统主题
      *
      * @author xixiaowei
-     * @date 2021/12/17 16:26
+     * @since 2021/12/17 16:26
      */
     void add(SysThemeRequest sysThemeRequest);
 
@@ -27,7 +27,7 @@ public interface SysThemeService extends IService<SysTheme> {
      * 删除系统主题
      *
      * @author xixiaowei
-     * @date 2021/12/17 16:29
+     * @since 2021/12/17 16:29
      */
     void del(SysThemeRequest sysThemeRequest);
 
@@ -35,7 +35,7 @@ public interface SysThemeService extends IService<SysTheme> {
      * 修改系统主题
      *
      * @author xixiaowei
-     * @date 2021/12/17 16:47
+     * @since 2021/12/17 16:47
      */
     void edit(SysThemeRequest sysThemeRequest);
 
@@ -44,7 +44,7 @@ public interface SysThemeService extends IService<SysTheme> {
      *
      * @return 分页结果
      * @author xixiaowei
-     * @date 2021/12/17 16:52
+     * @since 2021/12/17 16:52
      */
     PageResult<SysThemeDTO> findPage(SysThemeRequest sysThemeRequest);
 
@@ -53,7 +53,7 @@ public interface SysThemeService extends IService<SysTheme> {
      *
      * @return 系统主题
      * @author xixiaowei
-     * @date 2021/12/17 17:01
+     * @since 2021/12/17 17:01
      */
     SysTheme detail(SysThemeRequest sysThemeRequest);
 
@@ -61,7 +61,7 @@ public interface SysThemeService extends IService<SysTheme> {
      * 修改系统主题启用状态
      *
      * @author xixiaowei
-     * @date 2021/12/17 17:06
+     * @since 2021/12/17 17:06
      */
     void updateThemeStatus(SysThemeRequest sysThemeRequest);
 
@@ -69,7 +69,7 @@ public interface SysThemeService extends IService<SysTheme> {
      * 当前系统主题数据
      *
      * @author fengshuonan
-     * @date 2022/1/10 18:30
+     * @since 2022/1/10 18:30
      */
     DefaultTheme currentThemeInfo(SysThemeRequest sysThemeParam);
 

@@ -42,7 +42,7 @@ import javax.sql.DataSource;
  * 如果系统中没有配DataSource，则系统默认加载Druid连接池，并开启Druid的监控
  *
  * @author fengshuonan
- * @date 2020/11/30 22:24
+ * @since 2020/11/30 22:24
  */
 @Configuration
 @Import(GunsDruidPropertiesAutoConfiguration.class)
@@ -54,7 +54,7 @@ public class GunsDataSourceAutoConfiguration {
      * druid数据库连接池
      *
      * @author fengshuonan
-     * @date 2020/11/30 22:37
+     * @since 2020/11/30 22:37
      */
     @Bean(initMethod = "init")
     public DruidDataSource druidDataSource(DruidProperties druidProperties) {

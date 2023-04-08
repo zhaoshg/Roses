@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  * C端用户的异常
  *
  * @author fengshuonan
- * @date 2021/6/7 11:29
+ * @since 2021/6/7 11:29
  */
 public class CustomerException extends ServiceException {
 

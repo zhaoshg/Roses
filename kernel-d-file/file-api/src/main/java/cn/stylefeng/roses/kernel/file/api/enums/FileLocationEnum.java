@@ -30,7 +30,7 @@ import lombok.Getter;
  * 文件存储位置
  *
  * @author stylefeng
- * @date 2020/6/7 22:24
+ * @since 2020/6/7 22:24
  */
 @Getter
 public enum FileLocationEnum {

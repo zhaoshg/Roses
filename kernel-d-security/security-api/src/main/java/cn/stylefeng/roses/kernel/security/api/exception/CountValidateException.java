@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.security.api.constants.SecurityConstants;
  * 计数器校验异常
  *
  * @author fengshuonan
- * @date 2020/11/14 17:53
+ * @since 2020/11/14 17:53
  */
 public class CountValidateException extends ServiceException {
 

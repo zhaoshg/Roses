@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.sms.api.constants.SmsConstants;
  * 短信发送的异常
  *
  * @author fengshuonan
- * @date 2020/10/26 16:53
+ * @since 2020/10/26 16:53
  */
 public class SmsException extends ServiceException {
 

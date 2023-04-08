@@ -35,7 +35,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * application ready状态的监听器
  *
  * @author fengshuonan
- * @date 2021/5/14 20:28
+ * @since 2021/5/14 20:28
  */
 @Slf4j
 public abstract class ApplicationReadyListener implements ApplicationListener<ApplicationReadyEvent> {
@@ -57,7 +57,7 @@ public abstract class ApplicationReadyListener implements ApplicationListener<Ap
      * 监听器具体的业务逻辑
      *
      * @author fengshuonan
-     * @date 2021/5/14 20:17
+     * @since 2021/5/14 20:17
      */
     public abstract void eventCallback(ApplicationReadyEvent event);
 

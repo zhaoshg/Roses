@@ -31,7 +31,7 @@ import lombok.Data;
  * 用在系统登录，密码加密的RSA非对称加密秘钥对
  *
  * @author fengshuonan
- * @date 2022/10/16 15:28
+ * @since 2022/10/16 15:28
  */
 @Data
 public class PwdRsaSecretProperties {

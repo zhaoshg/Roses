@@ -33,7 +33,7 @@ import java.util.List;
  * 数据范围的获取接口
  *
  * @author fengshuonan
- * @date 2020/11/6 11:54
+ * @since 2020/11/6 11:54
  */
 public interface DataScopeApi {
 
@@ -48,7 +48,7 @@ public interface DataScopeApi {
      * @param sysRoles 角色信息
      * @return 数据范围内容
      * @author majianguo
-     * @date 2020/11/5 上午11:44
+     * @since 2020/11/5 上午11:44
      */
     DataScopeDTO getDataScope(Long userId, List<SysRoleDTO> sysRoles);
 

@@ -33,7 +33,7 @@ import java.util.List;
  * 向DevOps一体化平台汇报资源的api
  *
  * @author fengshuonan
- * @date 2022/1/11 14:57
+ * @since 2022/1/11 14:57
  */
 public interface DevOpsReportApi {
 
@@ -43,7 +43,7 @@ public interface DevOpsReportApi {
      * @param devOpsReportProperties         DevOps平台的系统配置
      * @param sysResourcePersistencePojoList 资源汇报具体数据
      * @author fengshuonan
-     * @date 2022/1/11 15:02
+     * @since 2022/1/11 15:02
      */
     void reportResources(DevOpsReportProperties devOpsReportProperties, List<SysResourcePersistencePojo> sysResourcePersistencePojoList);
 

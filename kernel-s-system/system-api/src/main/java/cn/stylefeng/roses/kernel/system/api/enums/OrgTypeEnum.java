@@ -30,7 +30,7 @@ import lombok.Getter;
  * 组织机构类型
  *
  * @author fengshuonan
- * @date 2022/5/21 11:26
+ * @since 2022/5/21 11:26
  */
 @Getter
 public enum OrgTypeEnum {

@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  * 系统主题模板属性service接口实现类
  *
  * @author xixiaowei
- * @date 2021/12/17 10:34
+ * @since 2021/12/17 10:34
  */
 @Service
 public class SysThemeTemplateFieldServiceImpl extends ServiceImpl<SysThemeTemplateFieldMapper, SysThemeTemplateField> implements SysThemeTemplateFieldService {
@@ -73,7 +73,7 @@ public class SysThemeTemplateFieldServiceImpl extends ServiceImpl<SysThemeTempla
      * 校验系统主题模板属性使用
      *
      * @author xixiaowei
-     * @date 2021/12/24 9:16
+     * @since 2021/12/24 9:16
      */
     private void verificationAttributeUsage(SysThemeTemplateField sysThemeTemplateField) {
         // 查询当前属性是否被使用
@@ -138,7 +138,7 @@ public class SysThemeTemplateFieldServiceImpl extends ServiceImpl<SysThemeTempla
      * 查询所有关联的属性编码
      *
      * @author xixiaowei
-     * @date 2021/12/24 14:38
+     * @since 2021/12/24 14:38
      */
     private List<String> getFieldCodes(SysThemeTemplateFieldRequest sysThemeTemplateFieldRequest, SysThemeTemplateRelService sysThemeTemplateRelService) {
         // 查询有关联的属性
@@ -192,7 +192,7 @@ public class SysThemeTemplateFieldServiceImpl extends ServiceImpl<SysThemeTempla
      * @param sysThemeTemplateFieldRequest 请求参数
      * @return 主题模板属性
      * @author xixiaowei
-     * @date 2021/12/17 11:03
+     * @since 2021/12/17 11:03
      */
     private SysThemeTemplateField queryThemeTemplateFieldById(SysThemeTemplateFieldRequest sysThemeTemplateFieldRequest) {
         SysThemeTemplateField sysThemeTemplateField = this.getById(sysThemeTemplateFieldRequest.getFieldId());

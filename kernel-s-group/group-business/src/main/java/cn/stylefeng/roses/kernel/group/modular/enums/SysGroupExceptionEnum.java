@@ -8,7 +8,7 @@ import lombok.Getter;
  * 业务分组异常相关枚举
  *
  * @author fengshuonan
- * @date 2022/05/11 12:54
+ * @since 2022/05/11 12:54
  */
 @Getter
 public enum SysGroupExceptionEnum implements AbstractExceptionEnum {

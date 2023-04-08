@@ -44,7 +44,7 @@ import javax.annotation.Resource;
  * 登陆日志控制器
  *
  * @author chenjinlong
- * @date 2021/1/13 17:51
+ * @since 2021/1/13 17:51
  */
 @RestController
 @ApiResource(name = "登录日志", resBizType = ResBizTypeEnum.SYSTEM)
@@ -57,7 +57,7 @@ public class SysLoginLogController {
      * 清空登录日志
      *
      * @author chenjinlong
-     * @date 2021/1/13 17:51
+     * @since 2021/1/13 17:51
      */
     @GetResource(name = "清空登录日志", path = "/loginLog/deleteAll")
     @BusinessLog
@@ -70,7 +70,7 @@ public class SysLoginLogController {
      * 查询登录日志详情
      *
      * @author chenjinlong
-     * @date 2021/1/13 17:51
+     * @since 2021/1/13 17:51
      */
     @GetResource(name = "查看详情登录日志", path = "/loginLog/detail")
     public ResponseData<SysLoginLog> detail(@Validated(SysLoginLogRequest.detail.class) SysLoginLogRequest sysLoginLogRequest) {
@@ -81,7 +81,7 @@ public class SysLoginLogController {
      * 分页查询登录日志
      *
      * @author chenjinlong
-     * @date 2021/1/13 17:51
+     * @since 2021/1/13 17:51
      */
     @GetResource(name = "分页查询登录日志", path = "/loginLog/page")
     public ResponseData<PageResult<SysLoginLogDto>> page(SysLoginLogRequest sysLoginLogRequest) {

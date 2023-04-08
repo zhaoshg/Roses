@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.security.api.constants;
  * 安全模块常量
  *
  * @author fengshuonan
- * @date 2021/2/19 8:45
+ * @since 2021/2/19 8:45
  */
 public interface SecurityConstants {
 

@@ -32,7 +32,7 @@ import java.util.List;
  * Layui用于beetl渲染首页菜单的实体
  *
  * @author fengshuonan
- * @date 2020/12/27 18:39
+ * @since 2020/12/27 18:39
  */
 @Data
 public class LayuiAppIndexMenusVO {

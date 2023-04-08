@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  * 字典模块的异常
  *
  * @author fengshuonan
- * @date 2020/10/29 11:57
+ * @since 2020/10/29 11:57
  */
 public class DictException extends ServiceException {
 

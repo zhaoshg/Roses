@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.system.api.pojo.user.SysUserOrgDTO;
  * 用户组织机构缓存
  *
  * @author fengshuonan
- * @date 2021/7/30 23:07
+ * @since 2021/7/30 23:07
  */
 public class UserOrgMemoryCache extends AbstractMemoryCacheOperator<SysUserOrgDTO> {
 

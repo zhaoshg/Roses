@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
  * 基于redis的缓存封装，hash结构
  *
  * @author stylefeng
- * @date 2020/7/9 10:09
+ * @since 2020/7/9 10:09
  */
 @SuppressWarnings("all")
 public abstract class AbstractRedisHashCacheOperator<T> implements CacheOperatorApi<T> {
@@ -116,7 +116,7 @@ public abstract class AbstractRedisHashCacheOperator<T> implements CacheOperator
      * 获取RedisTemplate
      *
      * @author fengshuonan
-     * @date 2021/2/8 9:40
+     * @since 2021/2/8 9:40
      */
     public RedisTemplate<String, T> getRedisTemplate() {
         return this.redisTemplate;

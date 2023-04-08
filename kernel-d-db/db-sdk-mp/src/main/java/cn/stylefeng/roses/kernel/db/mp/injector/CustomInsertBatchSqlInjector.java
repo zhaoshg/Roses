@@ -12,7 +12,7 @@ import java.util.List;
  * 自定义，针对saveBatch的优化，改为一次拼接多个values插入到库
  *
  * @author fengshuonan
- * @date 2022/9/17 14:23
+ * @since 2022/9/17 14:23
  */
 public class CustomInsertBatchSqlInjector extends DefaultSqlInjector {
 

@@ -42,7 +42,7 @@ import java.util.List;
  * 日志管理，数据库实现
  *
  * @author luojie
- * @date 2020/11/2 17:40
+ * @since 2020/11/2 17:40
  */
 @Slf4j
 public class DbLogManagerServiceImpl implements LogManagerApi {

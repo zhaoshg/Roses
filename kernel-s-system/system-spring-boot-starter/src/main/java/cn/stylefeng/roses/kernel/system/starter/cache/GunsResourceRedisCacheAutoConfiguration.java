@@ -38,7 +38,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  * 资源缓存自动配置，Redis配置
  *
  * @author fengshuonan
- * @date 2022/11/8 23:26
+ * @since 2022/11/8 23:26
  */
 @Configuration
 @ConditionalOnClass(name = "org.springframework.data.redis.connection.RedisConnectionFactory")
@@ -48,7 +48,7 @@ public class GunsResourceRedisCacheAutoConfiguration {
      * 资源缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 23:27
+     * @since 2022/11/8 23:27
      */
     @Bean
     public CacheOperatorApi<ResourceDefinition> resourceCache(RedisConnectionFactory redisConnectionFactory) {

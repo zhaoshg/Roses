@@ -45,7 +45,7 @@ import static cn.stylefeng.roses.kernel.dsctn.api.constants.DatasourceContainerC
  * 多数据源切换的AOP，切的是 DataSource 注解
  *
  * @author fengshuonan
- * @date 2020/10/31 22:55
+ * @since 2020/10/31 22:55
  */
 @Aspect
 @Slf4j
@@ -93,7 +93,7 @@ public class MultiSourceExchangeAop implements Ordered {
      * aop的顺序要早于spring的事务
      *
      * @author fengshuonan
-     * @date 2020/10/31 22:55
+     * @since 2020/10/31 22:55
      */
     @Override
     public int getOrder() {

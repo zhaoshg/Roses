@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.security.api.exception.CountValidateException;
  * 检验一个key（用户或某个IP等）在一个时间段内的操作次数是否超标
  *
  * @author fengshuonan
- * @date 2020/11/14 17:18
+ * @since 2020/11/14 17:18
  */
 public interface CountValidatorApi {
 
@@ -44,7 +44,7 @@ public interface CountValidatorApi {
      * @param timeWindowMaxCount 一个时间窗内操作的次数限制
      * @throws CountValidateException 如果校验失败，会抛出本异常
      * @author fengshuonan
-     * @date 2020/11/14 17:27
+     * @since 2020/11/14 17:27
      */
     void countAndValidate(String key, Long timeWindowSeconds, Long timeWindowMaxCount) throws CountValidateException;
 

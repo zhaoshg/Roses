@@ -31,7 +31,7 @@ package cn.stylefeng.roses.kernel.rule.base;
  * value一般是String类型，是一串文字
  *
  * @author fengshuonan
- * @date 2022/9/6 11:27
+ * @since 2022/9/6 11:27
  */
 public interface ReadableEnum<T> {
 
@@ -42,7 +42,7 @@ public interface ReadableEnum<T> {
      *
      * @return 返回枚举具有标示性的key或id
      * @author fengshuonan
-     * @date 2022/9/6 11:29
+     * @since 2022/9/6 11:29
      */
     Object getKey();
 
@@ -53,7 +53,7 @@ public interface ReadableEnum<T> {
      *
      * @return 返回枚举具有可读性的value值
      * @author fengshuonan
-     * @date 2022/9/6 11:30
+     * @since 2022/9/6 11:30
      */
     Object getName();
 
@@ -63,7 +63,7 @@ public interface ReadableEnum<T> {
      * @param originValue 原始值
      * @return T 具体枚举
      * @author fengshuonan
-     * @date 2022/9/24 15:17
+     * @since 2022/9/24 15:17
      */
     T parseToEnum(String originValue);
 

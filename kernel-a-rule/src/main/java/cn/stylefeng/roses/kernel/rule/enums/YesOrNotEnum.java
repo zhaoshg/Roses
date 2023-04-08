@@ -36,7 +36,7 @@ import lombok.Getter;
  * 是或否的枚举，一般用在数据库字段，例如del_flag字段，char(1)，填写Y或N
  *
  * @author fengshuonan
- * @date 2020/4/13 22:59
+ * @since 2020/4/13 22:59
  */
 @Getter
 public enum YesOrNotEnum implements ReadableEnum<YesOrNotEnum> {
@@ -75,7 +75,7 @@ public enum YesOrNotEnum implements ReadableEnum<YesOrNotEnum> {
      * 根据code获取枚举，用在接收前段传参
      *
      * @author fengshuonan
-     * @date 2022/9/7 17:58
+     * @since 2022/9/7 17:58
      */
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static YesOrNotEnum codeToEnum(Boolean boolFlag) {

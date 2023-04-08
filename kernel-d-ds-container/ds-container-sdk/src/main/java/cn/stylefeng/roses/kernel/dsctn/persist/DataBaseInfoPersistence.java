@@ -48,7 +48,7 @@ import static cn.stylefeng.roses.kernel.dsctn.api.exception.enums.DatasourceCont
  * 数据源信息相关操作的dao
  *
  * @author fengshuonan
- * @date 2020/10/31 23:47
+ * @since 2020/10/31 23:47
  */
 @Slf4j
 public class DataBaseInfoPersistence {
@@ -63,7 +63,7 @@ public class DataBaseInfoPersistence {
      * 查询所有数据源列表
      *
      * @author fengshuonan
-     * @date 2020/10/31 23:55
+     * @since 2020/10/31 23:55
      */
     public Map<String, DruidProperties> getAllDataBaseInfo() {
         Map<String, DruidProperties> dataSourceList = new HashMap<>(16);
@@ -97,7 +97,7 @@ public class DataBaseInfoPersistence {
      * 初始化master的数据源，要和properties配置的数据源一致
      *
      * @author fengshuonan
-     * @date 2020/10/31 23:55
+     * @since 2020/10/31 23:55
      */
     public void createMasterDatabaseInfo() {
         Connection conn = null;
@@ -133,7 +133,7 @@ public class DataBaseInfoPersistence {
      * 删除master的数据源信息
      *
      * @author fengshuonan
-     * @date 2020/10/31 23:55
+     * @since 2020/10/31 23:55
      */
     public void deleteMasterDatabaseInfo() {
         Connection conn = null;
@@ -159,7 +159,7 @@ public class DataBaseInfoPersistence {
      * 通过查询结果组装druidProperties
      *
      * @author fengshuonan
-     * @date 2020/10/31 23:55
+     * @since 2020/10/31 23:55
      */
     private DruidProperties createDruidProperties(ResultSet resultSet) {
 

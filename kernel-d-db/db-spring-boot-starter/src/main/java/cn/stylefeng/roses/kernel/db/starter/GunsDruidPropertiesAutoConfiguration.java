@@ -36,7 +36,7 @@ import org.springframework.context.annotation.Configuration;
  * 数据库连接和DAO框架的配置
  *
  * @author fengshuonan
- * @date 2020/11/30 22:24
+ * @since 2020/11/30 22:24
  */
 @Configuration
 @AutoConfigureBefore(DataSourceAutoConfiguration.class)
@@ -46,7 +46,7 @@ public class GunsDruidPropertiesAutoConfiguration {
      * druid属性配置
      *
      * @author fengshuonan
-     * @date 2020/11/30 22:36
+     * @since 2020/11/30 22:36
      */
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")

@@ -40,7 +40,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * yyyy-MM-dd HH:mm:ss
  *
  * @author fengshuonan
- * @date 2020/11/18 21:27
+ * @since 2020/11/18 21:27
  */
 @Documented
 @Constraint(validatedBy = DateValueValidator.class)

@@ -33,7 +33,7 @@ import lombok.Getter;
  * 邮件相关的异常
  *
  * @author fengshuonan
- * @date 2020/10/23 17:36
+ * @since 2020/10/23 17:36
  */
 @Getter
 public enum EmailExceptionEnum implements AbstractExceptionEnum {

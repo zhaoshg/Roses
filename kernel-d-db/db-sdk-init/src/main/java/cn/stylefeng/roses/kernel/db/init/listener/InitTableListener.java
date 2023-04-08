@@ -36,7 +36,7 @@ import java.util.Map;
  * 初始化 创建字典表
  *
  * @author wangzhongqiang
- * @date 2018/4/23 9:57
+ * @since 2018/4/23 9:57
  */
 @Slf4j
 public class InitTableListener extends ApplicationReadyListener implements Ordered {

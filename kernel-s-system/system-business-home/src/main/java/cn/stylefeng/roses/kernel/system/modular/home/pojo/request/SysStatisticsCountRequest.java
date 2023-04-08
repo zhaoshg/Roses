@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  * 常用功能的统计次数封装类
  *
  * @author fengshuonan
- * @date 2022/02/10 21:17
+ * @since 2022/02/10 21:17
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

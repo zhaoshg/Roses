@@ -45,7 +45,7 @@ import javax.annotation.Resource;
  * 系统菜单按钮控制器
  *
  * @author luojie
- * @date 2021/1/9 16:08
+ * @since 2021/1/9 16:08
  */
 @RestController
 @ApiResource(name = "菜单按钮管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -59,7 +59,7 @@ public class SysMenuButtonController {
      *
      * @param sysMenuButtonRequest 菜单按钮请求参数
      * @author luojie
-     * @date 2021/1/9 11:28
+     * @since 2021/1/9 11:28
      */
     @PostResource(name = "添加系统菜单按钮", path = "/sysMenuButton/add")
     @BusinessLog
@@ -72,7 +72,7 @@ public class SysMenuButtonController {
      * 添加系统菜单按钮-默认按钮
      *
      * @author chenjinlong
-     * @date 2021/1/9 11:28
+     * @since 2021/1/9 11:28
      */
     @PostResource(name = "添加系统默认菜单按钮", path = "/sysMenuButton/addSystemDefaultButton")
     @BusinessLog
@@ -86,7 +86,7 @@ public class SysMenuButtonController {
      *
      * @param sysMenuButtonRequest 菜单按钮id
      * @author luojie
-     * @date 2021/1/9 12:14
+     * @since 2021/1/9 12:14
      */
     @PostResource(name = "删除单个系统菜单按钮", path = "/sysMenuButton/delete")
     @BusinessLog
@@ -100,7 +100,7 @@ public class SysMenuButtonController {
      *
      * @param sysMenuButtonRequest 菜单按钮id集合
      * @author luojie
-     * @date 2021/1/9 12:27
+     * @since 2021/1/9 12:27
      */
     @PostResource(name = "批量删除多个系统菜单按钮", path = "/sysMenuButton/batchDelete")
     @BusinessLog
@@ -114,7 +114,7 @@ public class SysMenuButtonController {
      *
      * @param sysMenuButtonRequest 菜单按钮请求参数
      * @author luojie
-     * @date 2021/1/9 12:00
+     * @since 2021/1/9 12:00
      */
     @PostResource(name = "编辑系统菜单按钮", path = "/sysMenuButton/edit")
     @BusinessLog
@@ -128,7 +128,7 @@ public class SysMenuButtonController {
      *
      * @param sysMenuButtonRequest 菜单按钮id
      * @author luojie
-     * @date 2021/1/9 11:53
+     * @since 2021/1/9 11:53
      */
     @GetResource(name = "获取菜单按钮详情", path = "/sysMenuButton/detail")
     public ResponseData<SysMenuButton> detail(@Validated(SysMenuButtonRequest.detail.class) SysMenuButtonRequest sysMenuButtonRequest) {
@@ -141,7 +141,7 @@ public class SysMenuButtonController {
      *
      * @param sysMenuButtonRequest 菜单id
      * @author luojie
-     * @date 2021/1/9 12:33
+     * @since 2021/1/9 12:33
      */
     @GetResource(name = "获取菜单按钮列表", path = "/sysMenuButton/pageList")
     public ResponseData<PageResult<SysMenuButton>> pageList(@Validated(SysMenuButtonRequest.list.class) SysMenuButtonRequest sysMenuButtonRequest) {

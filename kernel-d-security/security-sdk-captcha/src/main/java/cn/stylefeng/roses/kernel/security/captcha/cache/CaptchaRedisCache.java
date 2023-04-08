@@ -32,7 +32,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  * 图形验证码缓存
  *
  * @author chenjinlong
- * @date 2021/1/15 13:44
+ * @since 2021/1/15 13:44
  */
 public class CaptchaRedisCache extends AbstractRedisCacheOperator<String> {
 

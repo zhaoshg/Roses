@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.config.api;
  * 配置初始化回调
  *
  * @author majianguo
- * @date 2021/7/17 11:52
+ * @since 2021/7/17 11:52
  */
 public interface ConfigInitCallbackApi {
 
@@ -38,7 +38,7 @@ public interface ConfigInitCallbackApi {
      * 其他组件可以在配置初始化之前干一些事情，如生成配置文件等操作
      *
      * @author majianguo
-     * @date 2021/7/17 11:54
+     * @since 2021/7/17 11:54
      **/
     void initBefore();
 
@@ -48,7 +48,7 @@ public interface ConfigInitCallbackApi {
      * 其他组件可以在配置初始化之前干一些事情,如重新配置等操作
      *
      * @author majianguo
-     * @date 2021/7/17 11:55
+     * @since 2021/7/17 11:55
      **/
     void initAfter();
 }

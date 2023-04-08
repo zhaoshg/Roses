@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.socket.api.constants.SocketConstants;
  * Socket模块异常
  *
  * @author majianguo
- * @date 2021/6/1 上午11:23
+ * @since 2021/6/1 上午11:23
  */
 public class SocketException extends ServiceException {
 

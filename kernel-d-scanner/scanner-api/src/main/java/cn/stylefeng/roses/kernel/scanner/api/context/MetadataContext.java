@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 记录每次的解析类的元数据时，处理过哪些实体类型，防止解析字段过程中的无限递归解析实体
  *
  * @author fengshuonan
- * @date 2022/1/15 10:36
+ * @since 2022/1/15 10:36
  */
 public class MetadataContext {
 
@@ -40,7 +40,7 @@ public class MetadataContext {
      * 添加对某次解析的类记录
      *
      * @author fengshuonan
-     * @date 2022/1/15 10:47
+     * @since 2022/1/15 10:47
      */
     public static void addClassRecord(String uuid, String classPathName) {
         Set<String> classRecords = META_DATA_CLASS_COUNT_CONTEXT.get(uuid);
@@ -55,7 +55,7 @@ public class MetadataContext {
      * 判断某个类是否已经被解析过
      *
      * @author fengshuonan
-     * @date 2022/1/15 10:50
+     * @since 2022/1/15 10:50
      */
     public static boolean ensureFieldClassHaveParse(String uuid, String classPathName) {
         Set<String> classRecords = META_DATA_CLASS_COUNT_CONTEXT.get(uuid);
@@ -69,7 +69,7 @@ public class MetadataContext {
      * 判断某个类是否已经被解析过
      *
      * @author fengshuonan
-     * @date 2022/1/15 10:50
+     * @since 2022/1/15 10:50
      */
     public static boolean ensureFieldClassHaveParse(String uuid, Type genericType) {
         Set<String> classRecords = META_DATA_CLASS_COUNT_CONTEXT.get(uuid);
@@ -103,7 +103,7 @@ public class MetadataContext {
      * 添加本次解析的参数类型
      *
      * @author fengshuonan
-     * @date 2022/1/20 13:50
+     * @since 2022/1/20 13:50
      */
     public static void addParamTypeMetadata(String uuid, ParamTypeEnum paramTypeEnum) {
         META_DATA_PARAM_TYPE_CONTEXT.put(uuid, paramTypeEnum);
@@ -113,7 +113,7 @@ public class MetadataContext {
      * 获取本次解析的参数类型
      *
      * @author fengshuonan
-     * @date 2022/1/20 13:50
+     * @since 2022/1/20 13:50
      */
     public static ParamTypeEnum getParamTypeMetadata(String uuid) {
         return META_DATA_PARAM_TYPE_CONTEXT.get(uuid);
@@ -123,7 +123,7 @@ public class MetadataContext {
      * 设置本次解析的参数名称
      *
      * @author fengshuonan
-     * @date 2022/1/24 15:09
+     * @since 2022/1/24 15:09
      */
     public static void addParameterName(String uuid, String paramName) {
         META_DATA_PARAM_NAME_CONTEXT.put(uuid, paramName);
@@ -133,7 +133,7 @@ public class MetadataContext {
      * 获取本次解析的参数名称
      *
      * @author fengshuonan
-     * @date 2022/1/24 15:09
+     * @since 2022/1/24 15:09
      */
     public static String getParamName(String uuid) {
         return META_DATA_PARAM_NAME_CONTEXT.get(uuid);
@@ -144,7 +144,7 @@ public class MetadataContext {
      * 清空当前解析的记录
      *
      * @author fengshuonan
-     * @date 2022/1/15 10:49
+     * @since 2022/1/15 10:49
      */
     public static void cleanContext() {
         META_DATA_CLASS_COUNT_CONTEXT.clear();
@@ -156,7 +156,7 @@ public class MetadataContext {
      * 清空指定过程的缓存
      *
      * @author fengshuonan
-     * @date 2022/1/15 10:49
+     * @since 2022/1/15 10:49
      */
     public static void cleanContext(String uuid) {
         if (StrUtil.isEmpty(uuid)) {

@@ -33,7 +33,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 系统菜单按钮service接口
  *
  * @author luojie
- * @date 2021/1/9 11:04
+ * @since 2021/1/9 11:04
  */
 public interface SysMenuButtonService extends IService<SysMenuButton> {
 
@@ -42,7 +42,7 @@ public interface SysMenuButtonService extends IService<SysMenuButton> {
      *
      * @param sysMenuButtonRequest 菜单按钮请求参数
      * @author luojie
-     * @date 2021/1/9 11:28
+     * @since 2021/1/9 11:28
      */
     void add(SysMenuButtonRequest sysMenuButtonRequest);
 
@@ -51,7 +51,7 @@ public interface SysMenuButtonService extends IService<SysMenuButton> {
      *
      * @param sysMenuButtonRequest 菜单按钮请求参数
      * @author chenjinlong
-     * @date 2021/1/9 11:28
+     * @since 2021/1/9 11:28
      */
     void addDefaultButtons(SysMenuButtonRequest sysMenuButtonRequest);
 
@@ -60,7 +60,7 @@ public interface SysMenuButtonService extends IService<SysMenuButton> {
      *
      * @param sysMenuButtonRequest 菜单按钮id
      * @author luojie
-     * @date 2021/1/9 12:14
+     * @since 2021/1/9 12:14
      */
     void del(SysMenuButtonRequest sysMenuButtonRequest);
 
@@ -69,7 +69,7 @@ public interface SysMenuButtonService extends IService<SysMenuButton> {
      *
      * @param sysMenuButtonRequest 菜单按钮id集合
      * @author luojie
-     * @date 2021/1/9 12:27
+     * @since 2021/1/9 12:27
      */
     void delBatch(SysMenuButtonRequest sysMenuButtonRequest);
 
@@ -78,7 +78,7 @@ public interface SysMenuButtonService extends IService<SysMenuButton> {
      *
      * @param sysMenuButtonRequest 菜单按钮请求参数
      * @author luojie
-     * @date 2021/1/9 12:00
+     * @since 2021/1/9 12:00
      */
     void edit(SysMenuButtonRequest sysMenuButtonRequest);
 
@@ -88,7 +88,7 @@ public interface SysMenuButtonService extends IService<SysMenuButton> {
      * @param sysMenuButtonRequest 菜单按钮id
      * @return 菜单按钮详情
      * @author luojie
-     * @date 2021/1/9 11:53
+     * @since 2021/1/9 11:53
      */
     SysMenuButton detail(SysMenuButtonRequest sysMenuButtonRequest);
 
@@ -98,7 +98,7 @@ public interface SysMenuButtonService extends IService<SysMenuButton> {
      * @param sysMenuButtonRequest 菜单id
      * @return 菜单按钮列表
      * @author luojie
-     * @date 2021/1/9 12:53
+     * @since 2021/1/9 12:53
      */
     PageResult<SysMenuButton> findPage(SysMenuButtonRequest sysMenuButtonRequest);
 
@@ -107,7 +107,7 @@ public interface SysMenuButtonService extends IService<SysMenuButton> {
      *
      * @param menuId 菜单id
      * @author luojie
-     * @date 2021/1/9 14:45
+     * @since 2021/1/9 14:45
      */
     void deleteMenuButtonByMenuId(Long menuId);
 

@@ -38,7 +38,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
  * 基于redis缓存的默认配置，默认提供两个RedisTemplate工具类，其他的各个模块自行配置
  *
  * @author fengshuonan
- * @date 2021/1/31 20:33
+ * @since 2021/1/31 20:33
  */
 @Configuration
 public class GunsRedisCacheAutoConfiguration {
@@ -47,7 +47,7 @@ public class GunsRedisCacheAutoConfiguration {
      * Redis的value序列化器
      *
      * @author fengshuonan
-     * @date 2021/1/31 20:44
+     * @since 2021/1/31 20:44
      */
     @Bean
     public RedisSerializer<?> fastJson2JsonRedisSerializer() {
@@ -58,7 +58,7 @@ public class GunsRedisCacheAutoConfiguration {
      * value是object类型的redis操作类
      *
      * @author fengshuonan
-     * @date 2021/1/31 20:45
+     * @since 2021/1/31 20:45
      */
     @Bean
     public RedisTemplate<String, Object> objectRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
@@ -69,7 +69,7 @@ public class GunsRedisCacheAutoConfiguration {
      * value是string类型的redis操作类
      *
      * @author fengshuonan
-     * @date 2021/1/31 20:45
+     * @since 2021/1/31 20:45
      */
     @Bean
     public RedisTemplate<String, String> gunsStringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
@@ -81,7 +81,7 @@ public class GunsRedisCacheAutoConfiguration {
      * 创建默认的value是string类型的redis缓存
      *
      * @author fengshuonan
-     * @date 2021/1/31 20:39
+     * @since 2021/1/31 20:39
      */
     @Bean
     public DefaultStringRedisCacheOperator defaultStringCacheOperator(RedisTemplate<String, String> stringRedisTemplate) {
@@ -92,7 +92,7 @@ public class GunsRedisCacheAutoConfiguration {
      * 创建默认的value是object类型的redis缓存
      *
      * @author fengshuonan
-     * @date 2021/1/31 20:39
+     * @since 2021/1/31 20:39
      */
     @Bean
     public DefaultRedisCacheOperator defaultRedisCacheOperator(RedisTemplate<String, Object> objectRedisTemplate) {

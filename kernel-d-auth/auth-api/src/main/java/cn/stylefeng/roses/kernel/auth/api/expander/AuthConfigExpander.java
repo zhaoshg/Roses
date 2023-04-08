@@ -37,7 +37,7 @@ import static cn.stylefeng.roses.kernel.auth.api.constants.AuthConstants.*;
  * 权限相关配置快速获取
  *
  * @author fengshuonan
- * @date 2020/10/17 16:10
+ * @since 2020/10/17 16:10
  */
 public class AuthConfigExpander {
 
@@ -45,7 +45,7 @@ public class AuthConfigExpander {
      * 获取不被权限控制的url
      *
      * @author fengshuonan
-     * @date 2020/10/17 16:12
+     * @since 2020/10/17 16:12
      */
     public static List<String> getNoneSecurityConfig() {
         String noneSecurityUrls = ConfigContext.me().getSysConfigValueWithDefault("SYS_NONE_SECURITY_URLS", String.class, "");
@@ -60,7 +60,7 @@ public class AuthConfigExpander {
      * 用于auth校验的jwt的秘钥
      *
      * @author fengshuonan
-     * @date 2021/1/2 18:52
+     * @since 2021/1/2 18:52
      */
     public static String getAuthJwtSecret() {
         String sysJwtSecret = ConfigContext.me().getConfigValueNullable("SYS_AUTH_JWT_SECRET", String.class);
@@ -81,7 +81,7 @@ public class AuthConfigExpander {
      * 如果登录的时候开启了“记住我”，则用户7天内免登录
      *
      * @author fengshuonan
-     * @date 2021/1/2 18:53
+     * @since 2021/1/2 18:53
      */
     public static Long getAuthJwtTimeoutSeconds() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_JWT_TIMEOUT_SECONDS", Long.class, DEFAULT_AUTH_JWT_TIMEOUT_SECONDS);
@@ -95,7 +95,7 @@ public class AuthConfigExpander {
      * 如果开启了记住我功能，在session过期后会从新创建session
      *
      * @author fengshuonan
-     * @date 2020/10/20 9:32
+     * @since 2020/10/20 9:32
      */
     public static Long getSessionExpiredSeconds() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_SESSION_EXPIRED_SECONDS", Long.class, 3600L);
@@ -108,7 +108,7 @@ public class AuthConfigExpander {
      *
      * @return true-开启单端限制，false-关闭单端限制
      * @author fengshuonan
-     * @date 2020/10/21 14:31
+     * @since 2020/10/21 14:31
      */
     public static boolean getSingleAccountLoginFlag() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_SINGLE_ACCOUNT_LOGIN_FLAG", Boolean.class, false);
@@ -118,7 +118,7 @@ public class AuthConfigExpander {
      * 获取携带token的header头的名称
      *
      * @author fengshuonan
-     * @date 2020/10/22 14:11
+     * @since 2020/10/22 14:11
      */
     public static String getAuthTokenHeaderName() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_HEADER_NAME", String.class, DEFAULT_AUTH_HEADER_NAME);
@@ -128,7 +128,7 @@ public class AuthConfigExpander {
      * 获取携带token的param传参的名称
      *
      * @author fengshuonan
-     * @date 2020/10/22 14:11
+     * @since 2020/10/22 14:11
      */
     public static String getAuthTokenParamName() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_PARAM_NAME", String.class, DEFAULT_AUTH_PARAM_NAME);
@@ -138,7 +138,7 @@ public class AuthConfigExpander {
      * 会话保存在cookie中时，cooke的name
      *
      * @author fengshuonan
-     * @date 2020/12/27 13:18
+     * @since 2020/12/27 13:18
      */
     public static String getSessionCookieName() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_SESSION_COOKIE_NAME", String.class, DEFAULT_AUTH_HEADER_NAME);
@@ -148,7 +148,7 @@ public class AuthConfigExpander {
      * 默认解析jwt的秘钥（用于解析sso传过来的token）
      *
      * @author fengshuonan
-     * @date 2021/5/25 22:39
+     * @since 2021/5/25 22:39
      */
     public static String getSsoJwtSecret() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_SSO_JWT_SECRET", String.class, SYS_AUTH_SSO_JWT_SECRET);
@@ -158,7 +158,7 @@ public class AuthConfigExpander {
      * 默认解析sso加密的数据的秘钥
      *
      * @author fengshuonan
-     * @date 2021/5/25 22:39
+     * @since 2021/5/25 22:39
      */
     public static String getSsoDataDecryptSecret() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_SSO_DECRYPT_DATA_SECRET", String.class, SYS_AUTH_SSO_DECRYPT_DATA_SECRET);
@@ -169,7 +169,7 @@ public class AuthConfigExpander {
      *
      * @return true-开启远程校验，false-关闭远程校验
      * @author fengshuonan
-     * @date 2021/5/25 22:39
+     * @since 2021/5/25 22:39
      */
     public static Boolean getSsoSessionValidateSwitch() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_SSO_SESSION_VALIDATE_SWITCH", Boolean.class, SYS_AUTH_SSO_SESSION_VALIDATE_SWITCH);
@@ -179,7 +179,7 @@ public class AuthConfigExpander {
      * sso会话远程校验，redis的host
      *
      * @author fengshuonan
-     * @date 2021/5/25 22:39
+     * @since 2021/5/25 22:39
      */
     public static String getSsoSessionValidateRedisHost() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_SSO_SESSION_VALIDATE_REDIS_HOST", String.class, SYS_AUTH_SSO_SESSION_VALIDATE_REDIS_HOST);
@@ -189,7 +189,7 @@ public class AuthConfigExpander {
      * sso会话远程校验，redis的端口
      *
      * @author fengshuonan
-     * @date 2021/5/25 22:39
+     * @since 2021/5/25 22:39
      */
     public static Integer getSsoSessionValidateRedisPort() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_SSO_SESSION_VALIDATE_REDIS_PORT", Integer.class, SYS_AUTH_SSO_SESSION_VALIDATE_REDIS_PORT);
@@ -199,7 +199,7 @@ public class AuthConfigExpander {
      * sso会话远程校验，redis的密码
      *
      * @author fengshuonan
-     * @date 2021/5/25 22:39
+     * @since 2021/5/25 22:39
      */
     public static String getSsoSessionValidateRedisPassword() {
         return ConfigContext.me().getConfigValueNullable("SYS_AUTH_SSO_SESSION_VALIDATE_REDIS_PASSWORD", String.class);
@@ -209,7 +209,7 @@ public class AuthConfigExpander {
      * sso会话远程校验，redis的db
      *
      * @author fengshuonan
-     * @date 2021/5/25 22:39
+     * @since 2021/5/25 22:39
      */
     public static Integer getSsoSessionValidateRedisDbIndex() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_SSO_SESSION_VALIDATE_REDIS_DB_INDEX", Integer.class, SYS_AUTH_SSO_SESSION_VALIDATE_REDIS_DB_INDEX);
@@ -219,7 +219,7 @@ public class AuthConfigExpander {
      * sso会话远程校验，redis的缓存前缀
      *
      * @author fengshuonan
-     * @date 2021/5/25 22:39
+     * @since 2021/5/25 22:39
      */
     public static String getSsoSessionValidateRedisCachePrefix() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_SSO_SESSION_VALIDATE_REDIS_CACHE_PREFIX", String.class, SYS_AUTH_SSO_SESSION_VALIDATE_REDIS_CACHE_PREFIX);
@@ -229,7 +229,7 @@ public class AuthConfigExpander {
      * 获取SSO服务器的地址
      *
      * @author fengshuonan
-     * @date 2021/5/25 22:39
+     * @since 2021/5/25 22:39
      */
     public static String getSsoUrl() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_SSO_HOST", String.class, SYS_AUTH_SSO_HOST);
@@ -241,7 +241,7 @@ public class AuthConfigExpander {
      * 需要前端配合加密后再打开开关
      *
      * @author fengshuonan
-     * @date 2022/10/16 23:28
+     * @since 2022/10/16 23:28
      */
     public static Boolean getPasswordRsaValidateFlag() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_PASSWORD_RSA_VALIDATE", Boolean.class, false);

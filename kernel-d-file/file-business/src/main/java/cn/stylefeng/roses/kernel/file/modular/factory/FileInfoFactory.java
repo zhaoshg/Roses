@@ -48,7 +48,7 @@ import static cn.stylefeng.roses.kernel.file.api.constants.FileConstants.FILE_PO
  * 文件信息组装工厂
  *
  * @author fengshuonan
- * @date 2020/12/30 22:16
+ * @since 2020/12/30 22:16
  */
 public class FileInfoFactory {
 
@@ -56,7 +56,7 @@ public class FileInfoFactory {
      * 创建文件信息
      *
      * @author fengshuonan
-     * @date 2022/10/19 20:19
+     * @since 2022/10/19 20:19
      */
     public static SysFileInfo createSysFileInfo(MultipartFile file, SysFileInfoRequest sysFileInfoRequest) {
 
@@ -124,7 +124,7 @@ public class FileInfoFactory {
      * 创建文件存储的基础信息
      *
      * @author fengshuonan
-     * @date 2022/10/19 18:37
+     * @since 2022/10/19 18:37
      */
     public static SysFileInfo createSysFileInfo(File file, SysFileInfoRequest sysFileInfoRequest) {
 

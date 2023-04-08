@@ -55,7 +55,7 @@ import java.util.List;
  * 系统职位表 服务实现类
  *
  * @author fengshuonan
- * @date 2020/11/04 11:07
+ * @since 2020/11/04 11:07
  */
 @Service
 public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosition> implements HrPositionService {
@@ -163,7 +163,7 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
      *
      * @return 实体对象
      * @author chenjinlong
-     * @date 2021/2/2 10:16
+     * @since 2021/2/2 10:16
      */
     private HrPosition querySysPositionById(HrPositionRequest hrPositionRequest) {
         HrPosition hrPosition = this.getById(hrPositionRequest.getPositionId());
@@ -178,7 +178,7 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
      * 实体构建 QueryWrapper
      *
      * @author chenjinlong
-     * @date 2021/2/2 10:17
+     * @since 2021/2/2 10:17
      */
     private LambdaQueryWrapper<HrPosition> createWrapper(HrPositionRequest hrPositionRequest) {
         LambdaQueryWrapper<HrPosition> queryWrapper = new LambdaQueryWrapper<>();

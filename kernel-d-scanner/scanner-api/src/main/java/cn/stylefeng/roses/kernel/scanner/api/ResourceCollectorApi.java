@@ -33,7 +33,7 @@ import java.util.Map;
  * 权限资源收集器，搜集本项目中的资源，仅搜集并缓存起来，不持久化
  *
  * @author fengshuonan
- * @date 2018-01-03-下午3:00
+ * @since 2018-01-03-下午3:00
  */
 public interface ResourceCollectorApi {
 
@@ -42,7 +42,7 @@ public interface ResourceCollectorApi {
      *
      * @param apiResource 被存储的资源集合
      * @author fengshuonan
-     * @date 2020/10/19 15:26
+     * @since 2020/10/19 15:26
      */
     void collectResources(List<ResourceDefinition> apiResource);
 
@@ -52,7 +52,7 @@ public interface ResourceCollectorApi {
      * @param resourceCode 资源编码，形如 this-system$user_manager$get_users
      * @return 资源对象的详细信息
      * @author fengshuonan
-     * @date 2020/10/19 15:32
+     * @since 2020/10/19 15:32
      */
     ResourceDefinition getResource(String resourceCode);
 
@@ -61,7 +61,7 @@ public interface ResourceCollectorApi {
      *
      * @return 资源集合
      * @author fengshuonan
-     * @date 2020/10/19 15:53
+     * @since 2020/10/19 15:53
      */
     List<ResourceDefinition> getAllResources();
 
@@ -71,7 +71,7 @@ public interface ResourceCollectorApi {
      * @param code 模块编码，一般为下划线分割的控制器前缀，不带Controller
      * @return 资源集合
      * @author fengshuonan
-     * @date 2020/10/19 15:53
+     * @since 2020/10/19 15:53
      */
     List<ResourceDefinition> getResourcesByModularCode(String code);
 
@@ -81,7 +81,7 @@ public interface ResourceCollectorApi {
      * @param code 资源编码
      * @return 资源中文名称
      * @author fengshuonan
-     * @date 2020/10/19 15:56
+     * @since 2020/10/19 15:56
      */
     String getResourceName(String code);
 
@@ -91,7 +91,7 @@ public interface ResourceCollectorApi {
      * @param code 资源编码
      * @param name 资源名称
      * @author fengshuonan
-     * @date 2020/10/19 16:02
+     * @since 2020/10/19 16:02
      */
     void bindResourceName(String code, String name);
 
@@ -104,7 +104,7 @@ public interface ResourceCollectorApi {
      *
      * @return 当前项目所有模块的资源集合
      * @author fengshuonan
-     * @date 2020/10/19 16:03
+     * @since 2020/10/19 16:03
      */
     Map<String, Map<String, ResourceDefinition>> getModularResources();
 
@@ -114,7 +114,7 @@ public interface ResourceCollectorApi {
      * @param code 资源编码
      * @return 资源的url
      * @author fengshuonan
-     * @date 2020/10/19 16:17
+     * @since 2020/10/19 16:17
      */
     String getResourceUrl(String code);
 
@@ -124,7 +124,7 @@ public interface ResourceCollectorApi {
      * @param url 资源的url
      * @return 资源详情
      * @author fengshuonan
-     * @date 2020/10/19 16:17
+     * @since 2020/10/19 16:17
      */
     ResourceDefinition getResourceByUrl(String url);
 
@@ -132,7 +132,7 @@ public interface ResourceCollectorApi {
      * 获取所有资源的数量
      *
      * @author fengshuonan
-     * @date 2020/10/19 16:17
+     * @since 2020/10/19 16:17
      */
     Integer getAllResourceCount();
 

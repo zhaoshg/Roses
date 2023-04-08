@@ -95,7 +95,7 @@ import static cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEn
  * 认证服务的实现
  *
  * @author fengshuonan
- * @date 2020/10/20 10:25
+ * @since 2020/10/20 10:25
  */
 @Service
 public class AuthServiceImpl implements AuthServiceApi {
@@ -319,7 +319,7 @@ public class AuthServiceImpl implements AuthServiceApi {
      * @param validatePassword 是否校验密码，true-校验密码，false-不会校验密码
      * @param caToken          单点登录后服务端的token，一般为32位uuid
      * @author fengshuonan
-     * @date 2020/10/21 16:59
+     * @since 2020/10/21 16:59
      */
     private LoginResponse loginAction(LoginRequest loginRequest, Boolean validatePassword, String caToken) {
         // 1.参数为空校验
@@ -453,7 +453,7 @@ public class AuthServiceImpl implements AuthServiceApi {
      * 调用远程接口获取loginCode
      *
      * @author fengshuonan
-     * @date 2021/2/26 15:15
+     * @since 2021/2/26 15:15
      */
     private String getRemoteLoginCode(LoginRequest loginRequest) {
 
@@ -493,7 +493,7 @@ public class AuthServiceImpl implements AuthServiceApi {
      * 用户密码校验，校验失败会报异常
      *
      * @author fengshuonan
-     * @date 2022/3/26 14:16
+     * @since 2022/3/26 14:16
      */
     private void validateUserPassword(Boolean validatePassword, Integer loginErrorCount, LoginRequest loginRequest, UserLoginInfoDTO userValidateInfo) {
 

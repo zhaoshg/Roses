@@ -32,7 +32,7 @@ import java.lang.annotation.*;
  * 用来解决资源扫描时候，扫描的类的字段上的中文注释获取的问题
  *
  * @author fengshuonan
- * @date 2020/12/9 15:59
+ * @since 2020/12/9 15:59
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)

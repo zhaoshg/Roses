@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
  * 通知管理界面
  *
  * @author liuhanqing
- * @date 2021/1/8 20:55
+ * @since 2021/1/8 20:55
  */
 @Controller
 @ApiResource(name = "通知管理界面", resBizType = ResBizTypeEnum.SYSTEM)
@@ -19,7 +19,7 @@ public class NoticeViewController {
      * 通知管理首页
      *
      * @author liuhanqing
-     * @date 2021/1/8 20:55
+     * @since 2021/1/8 20:55
      */
     @GetResource(name = "通知管理列表", path = "/view/notice")
     public String roleIndex() {
@@ -30,7 +30,7 @@ public class NoticeViewController {
      * 新增通知界面
      *
      * @author liuhanqing
-     * @date 2021/1/8 20:57
+     * @since 2021/1/8 20:57
      */
     @GetResource(name = "新增通知界面", path = "/view/notice/add")
     public String roleAdd() {
@@ -41,7 +41,7 @@ public class NoticeViewController {
      * 编辑通知界面
      *
      * @author liuhanqing
-     * @date 2021/1/8 20:57
+     * @since 2021/1/8 20:57
      */
     @GetResource(name = "编辑通知界面", path = "/view/notice/edit")
     public String roleEdit() {

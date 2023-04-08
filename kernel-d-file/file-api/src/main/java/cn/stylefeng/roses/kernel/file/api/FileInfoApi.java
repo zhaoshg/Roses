@@ -34,7 +34,7 @@ import java.io.File;
  * 获取文件信息的api
  *
  * @author fengshuonan
- * @date 2020/11/29 16:21
+ * @since 2020/11/29 16:21
  */
 public interface FileInfoApi {
 
@@ -44,7 +44,7 @@ public interface FileInfoApi {
      * @param fileId 文件id，在文件信息表的id
      * @return 文件的信息，不包含文件本身的字节信息
      * @author fengshuonan
-     * @date 2020/11/29 16:26
+     * @since 2020/11/29 16:26
      */
     SysFileInfoResponse getFileInfoWithoutContent(Long fileId);
 
@@ -54,7 +54,7 @@ public interface FileInfoApi {
      * @param fileId 文件id
      * @return 外部系统可以直接访问的url
      * @author fengshuonan
-     * @date 2020/10/26 10:40
+     * @since 2020/10/26 10:40
      */
     String getFileAuthUrl(Long fileId);
 
@@ -65,7 +65,7 @@ public interface FileInfoApi {
      * @param token  用户的token
      * @return 外部系统可以直接访问的url
      * @author fengshuonan
-     * @date 2020/10/26 10:40
+     * @since 2020/10/26 10:40
      */
     String getFileAuthUrl(Long fileId, String token);
 
@@ -75,7 +75,7 @@ public interface FileInfoApi {
      * @param fileId 文件id
      * @return 外部系统可以直接访问的url
      * @author fengshuonan
-     * @date 2020/10/26 10:40
+     * @since 2020/10/26 10:40
      */
     String getFileUnAuthUrl(Long fileId);
 
@@ -83,7 +83,7 @@ public interface FileInfoApi {
      * 获取AntdV组件格式对应的文件信息封装
      *
      * @author fengshuonan
-     * @date 2022/3/28 14:32
+     * @since 2022/3/28 14:32
      */
     AntdvFileInfo buildAntdvFileInfo(Long fileId);
 
@@ -91,7 +91,7 @@ public interface FileInfoApi {
      * 真实删除文件
      *
      * @author fengshuonan
-     * @date 2022/7/22 23:19
+     * @since 2022/7/22 23:19
      */
     void removeFile(Long fileId);
 
@@ -102,7 +102,7 @@ public interface FileInfoApi {
      * @param sysFileInfoRequest 文件附属信息（需要2个参数：是否是机密文件、bucket信息）
      * @return 返回文件id等信息
      * @author fengshuonan
-     * @date 2022/10/19 18:24
+     * @since 2022/10/19 18:24
      */
     SysFileInfoResponse uploadFileAndSave(File file, SysFileInfoRequest sysFileInfoRequest);
 

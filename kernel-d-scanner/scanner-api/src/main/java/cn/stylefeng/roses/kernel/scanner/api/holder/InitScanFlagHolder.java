@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.scanner.api.holder;
  * 初始化标记，防止初始化多次
  *
  * @author fengshuonan
- * @date 2019-09-27-17:23
+ * @since 2019-09-27-17:23
  */
 public class InitScanFlagHolder {
 

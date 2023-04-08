@@ -34,7 +34,7 @@ import org.springframework.context.annotation.Configuration;
  * 密码认证配置
  *
  * @author fengshuonan
- * @date 2022/10/16 15:33
+ * @since 2022/10/16 15:33
  */
 @Configuration
 public class GunsPasswordRsaPropAutoConfiguration {
@@ -43,7 +43,7 @@ public class GunsPasswordRsaPropAutoConfiguration {
      * 密码加密传输的配置，RSA加密密钥对
      *
      * @author fengshuonan
-     * @date 2022/10/16 15:34
+     * @since 2022/10/16 15:34
      */
     @Bean
     @ConfigurationProperties(prefix = "guns.password.rsa")

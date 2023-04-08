@@ -30,7 +30,7 @@ import cn.stylefeng.roses.kernel.email.api.pojo.SendMailParam;
  * 邮件收发统一接口
  *
  * @author fengshuonan
- * @date 2020/10/23 17:30
+ * @since 2020/10/23 17:30
  */
 public interface MailSenderApi {
 
@@ -39,7 +39,7 @@ public interface MailSenderApi {
      *
      * @param sendMailParam 发送邮件的参数
      * @author fengshuonan
-     * @date 2020/10/23 17:30
+     * @since 2020/10/23 17:30
      */
     void sendMail(SendMailParam sendMailParam);
 
@@ -48,7 +48,7 @@ public interface MailSenderApi {
      *
      * @param sendMailParam 发送邮件的参数
      * @author fengshuonan
-     * @date 2020/10/23 17:30
+     * @since 2020/10/23 17:30
      */
     void sendMailHtml(SendMailParam sendMailParam);
 

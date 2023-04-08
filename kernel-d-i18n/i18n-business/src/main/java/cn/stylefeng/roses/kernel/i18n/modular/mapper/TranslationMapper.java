@@ -31,7 +31,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 多语言表 Mapper 接口
  *
  * @author fengshuonan
- * @date 2021/1/24 19:22
+ * @since 2021/1/24 19:22
  */
 public interface TranslationMapper extends BaseMapper<Translation> {
 

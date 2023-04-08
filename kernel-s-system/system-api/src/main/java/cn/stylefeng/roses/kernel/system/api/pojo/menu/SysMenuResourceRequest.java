@@ -36,7 +36,7 @@ import java.util.List;
  * 菜单资源的请求
  *
  * @author fengshuonan
- * @date 2021/8/8 22:40
+ * @since 2021/8/8 22:40
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

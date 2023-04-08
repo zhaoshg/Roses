@@ -39,7 +39,7 @@ import javax.annotation.Resource;
  * 系统监控控制器
  *
  * @author fengshuonan
- * @date 2021/4/14 18:44
+ * @since 2021/4/14 18:44
  */
 @RestController
 @ApiResource(name = "监控的控制器", resBizType = ResBizTypeEnum.SYSTEM)
@@ -52,7 +52,7 @@ public class MonitorStatusController {
      * 将应用设为默认应用，用户进入系统会默认进这个应用的菜单
      *
      * @author fengshuonan
-     * @date 2020/6/29 16:49
+     * @since 2020/6/29 16:49
      */
     @GetResource(name = "获取系统信息", path = "/getSystemInfo")
     public ResponseData<SystemHardwareCalculator> getSystemInfo() {

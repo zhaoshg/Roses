@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  * 项目相关的工具类
  *
  * @author fengshuonan
- * @date 2021/5/18 10:41
+ * @since 2021/5/18 10:41
  */
 @Slf4j
 public class ProjectUtil {
@@ -47,7 +47,7 @@ public class ProjectUtil {
      *
      * @return true-分离版，false-不分离版
      * @author fengshuonan
-     * @date 2021/5/18 10:42
+     * @since 2021/5/18 10:42
      */
     public static Boolean getSeparationFlag() {
         if (SEPARATION_FLAG != null) {

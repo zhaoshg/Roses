@@ -47,7 +47,7 @@ import java.util.List;
  * 文件和业务绑定的接口
  *
  * @author fengshuonan
- * @date 2023/3/31 15:31
+ * @since 2023/3/31 15:31
  */
 @RestController
 @ApiResource(name = "文件和业务绑定的接口", resBizType = ResBizTypeEnum.SYSTEM)
@@ -60,7 +60,7 @@ public class SysFileBusinessController {
      * 增加文件下载次数
      *
      * @author fengshuonan
-     * @date 2023/3/31 15:31
+     * @since 2023/3/31 15:31
      */
     @PostResource(name = "增加文件下载次数", path = "/sysFileInfo/addFileDownloadCount", requiredPermission = false, requiredLogin = false)
     public ResponseData<?> upload(@RequestBody @Validated(SysFileBusinessRequest.addFileDownloadCount.class) SysFileBusinessRequest sysFileBusinessRequest) {

@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * 安全模块，缓存的依赖
  *
  * @author fengshuonan
- * @date 2022/11/8 9:57
+ * @since 2022/11/8 9:57
  */
 @Configuration
 @ConditionalOnMissingClass("org.springframework.data.redis.connection.RedisConnectionFactory")
@@ -27,7 +27,7 @@ public class SecurityMemoryCacheAutoConfiguration {
      * 验证码相关的缓存，内存缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 20:44
+     * @since 2022/11/8 20:44
      */
     @Bean("captchaCache")
     public CacheOperatorApi<String> captchaMemoryCache() {
@@ -40,7 +40,7 @@ public class SecurityMemoryCacheAutoConfiguration {
      * 黑名单的缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 21:24
+     * @since 2022/11/8 21:24
      */
     @Bean("blackListCache")
     public CacheOperatorApi<String> blackListMemoryCache() {
@@ -52,7 +52,7 @@ public class SecurityMemoryCacheAutoConfiguration {
      * 白名单的缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 21:24
+     * @since 2022/11/8 21:24
      */
     @Bean("whiteListCache")
     public CacheOperatorApi<String> whiteListMemoryCache() {
@@ -64,7 +64,7 @@ public class SecurityMemoryCacheAutoConfiguration {
      * 计数缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 21:24
+     * @since 2022/11/8 21:24
      */
     @Bean("countValidateCache")
     public CacheOperatorApi<Long> countValidateMemoryCache() {

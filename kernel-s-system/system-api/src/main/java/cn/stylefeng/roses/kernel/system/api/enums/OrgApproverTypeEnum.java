@@ -33,7 +33,7 @@ import lombok.Getter;
  * 组织机构审批人类型
  *
  * @author fengshuonan
- * @date 2022/9/13 23:16
+ * @since 2022/9/13 23:16
  */
 @Getter
 public enum OrgApproverTypeEnum implements ReadableEnum<OrgApproverTypeEnum> {

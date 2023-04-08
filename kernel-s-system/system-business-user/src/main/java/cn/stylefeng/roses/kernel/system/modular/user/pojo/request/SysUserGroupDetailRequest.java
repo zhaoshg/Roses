@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  * 用户组详情封装类
  *
  * @author fengshuonan
- * @date 2022/09/26 10:12
+ * @since 2022/09/26 10:12
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

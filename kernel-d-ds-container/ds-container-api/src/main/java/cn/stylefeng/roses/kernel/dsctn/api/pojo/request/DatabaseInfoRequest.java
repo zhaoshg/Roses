@@ -37,7 +37,7 @@ import javax.validation.constraints.NotNull;
  * 数据库信息表
  *
  * @author fengshuonan
- * @date 2020/11/1 21:45
+ * @since 2020/11/1 21:45
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

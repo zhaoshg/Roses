@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.auth.api.password;
  * 密码存储时，将密码进行加密的api
  *
  * @author fengshuonan
- * @date 2020/12/21 16:50
+ * @since 2020/12/21 16:50
  */
 public interface PasswordStoredEncryptApi {
 
@@ -38,7 +38,7 @@ public interface PasswordStoredEncryptApi {
      * @param originPassword 密码明文，待加密的密码
      * @return 加密后的密码密文
      * @author fengshuonan
-     * @date 2020/12/21 16:52
+     * @since 2020/12/21 16:52
      */
     String encrypt(String originPassword);
 
@@ -48,7 +48,7 @@ public interface PasswordStoredEncryptApi {
      * @param encryptBefore 密码明文
      * @return true-密码正确，false-密码错误
      * @author fengshuonan
-     * @date 2020/12/21 17:09
+     * @since 2020/12/21 17:09
      */
     Boolean checkPassword(String encryptBefore, String encryptAfter);
 

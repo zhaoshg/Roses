@@ -9,7 +9,7 @@ import java.util.Date;
  * 开始时间的计时工具
  *
  * @author fengshuonan
- * @date 2021/7/13 17:34
+ * @since 2021/7/13 17:34
  */
 public class StartCalcUtil {
 
@@ -22,7 +22,7 @@ public class StartCalcUtil {
      * 初始化项目开始时间
      *
      * @author fengshuonan
-     * @date 2021/7/13 17:42
+     * @since 2021/7/13 17:42
      */
     public static void init(Date date) {
         startDate = date;
@@ -32,7 +32,7 @@ public class StartCalcUtil {
      * 计算是否项目已经启动
      *
      * @author fengshuonan
-     * @date 2021/7/13 17:43
+     * @since 2021/7/13 17:43
      */
     public static boolean calcEnable(Date date, long startInterValSeconds) {
         return DateUtil.between(startDate, date, DateUnit.SECOND) > startInterValSeconds;

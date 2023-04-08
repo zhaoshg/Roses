@@ -31,7 +31,7 @@ import lombok.Getter;
  * 获取某个表的所有字段的sql
  *
  * @author fengshuonan
- * @date 2019-07-16-13:06
+ * @since 2019-07-16-13:06
  */
 @Getter
 public class TableFieldListSql extends AbstractSql {

@@ -11,7 +11,7 @@ import java.util.List;
  * 一键添加开源协议头
  *
  * @author fengshuonan
- * @date 2021/3/21 20:24
+ * @since 2021/3/21 20:24
  */
 public class LicenseTitleAppenderUtil {
 
@@ -19,7 +19,7 @@ public class LicenseTitleAppenderUtil {
      * 添加开源协议
      *
      * @author fengshuonan
-     * @date 2021/3/21 20:25
+     * @since 2021/3/21 20:25
      */
     public static void append(String codeDirectory, String licenseHeader) {
         List<File> files = FileUtil.loopFiles(codeDirectory);

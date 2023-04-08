@@ -44,7 +44,7 @@ import javax.annotation.Resource;
  * 计数器和黑白名单自动配置
  *
  * @author fengshuonan
- * @date 2020/12/1 21:44
+ * @since 2020/12/1 21:44
  */
 @Configuration
 @AutoConfigureAfter({SecurityMemoryCacheAutoConfiguration.class, SecurityRedisCacheAutoConfiguration.class})
@@ -63,7 +63,7 @@ public class CounterAutoConfiguration {
      * 黑名单校验
      *
      * @author fengshuonan
-     * @date 2020/12/1 21:18
+     * @since 2020/12/1 21:18
      */
     @Bean
     public BlackListApi blackListApi() {
@@ -74,7 +74,7 @@ public class CounterAutoConfiguration {
      * 白名单校验
      *
      * @author fengshuonan
-     * @date 2020/12/1 21:18
+     * @since 2020/12/1 21:18
      */
     @Bean
     public WhiteListApi whiteListApi() {
@@ -85,7 +85,7 @@ public class CounterAutoConfiguration {
      * 计数校验器
      *
      * @author fengshuonan
-     * @date 2020/12/1 21:18
+     * @since 2020/12/1 21:18
      */
     @Bean
     public CountValidatorApi countValidatorApi() {

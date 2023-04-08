@@ -55,7 +55,7 @@ import static cn.stylefeng.roses.kernel.config.api.exception.enums.ConfigExcepti
  * <p>
  *
  * @author stylefeng
- * @date 2020/6/6 23:39
+ * @since 2020/6/6 23:39
  */
 @Slf4j
 public class ConfigInitListener extends ContextInitializedListener implements Ordered {

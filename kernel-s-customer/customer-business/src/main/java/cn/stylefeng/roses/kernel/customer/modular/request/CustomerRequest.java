@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * C端用户表封装类
  *
  * @author fengshuonan
- * @date 2021/06/07 11:40
+ * @since 2021/06/07 11:40
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

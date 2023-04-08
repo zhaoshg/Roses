@@ -48,7 +48,7 @@ import java.util.List;
  * 系统职位控制器
  *
  * @author chenjinlong
- * @date 2020/11/18 21:56
+ * @since 2020/11/18 21:56
  */
 @RestController
 @ApiResource(name = "系统职位管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -61,7 +61,7 @@ public class HrPositionController {
      * 添加系统职位
      *
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     @PostResource(name = "添加系统职位", path = "/hrPosition/add")
     @BusinessLog
@@ -74,7 +74,7 @@ public class HrPositionController {
      * 删除系统职位
      *
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     @PostResource(name = "删除系统职位", path = "/hrPosition/delete")
     @BusinessLog
@@ -87,7 +87,7 @@ public class HrPositionController {
      * 批量删除系统职位
      *
      * @author fengshuonan
-     * @date 2021/4/8 13:50
+     * @since 2021/4/8 13:50
      */
     @PostResource(name = "批量删除系统职位", path = "/hrPosition/batchDelete")
     @BusinessLog
@@ -100,7 +100,7 @@ public class HrPositionController {
      * 编辑系统职位
      *
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     @PostResource(name = "编辑系统职位", path = "/hrPosition/edit")
     @BusinessLog
@@ -113,7 +113,7 @@ public class HrPositionController {
      * 更新职位状态
      *
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     @PostResource(name = "更新职位状态", path = "/hrPosition/updateStatus")
     @BusinessLog
@@ -126,7 +126,7 @@ public class HrPositionController {
      * 查看详情系统职位
      *
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     @GetResource(name = "查看详情系统职位", path = "/hrPosition/detail")
     public ResponseData<HrPosition> detail(@Validated(HrPositionRequest.detail.class) HrPositionRequest hrPositionRequest) {
@@ -137,7 +137,7 @@ public class HrPositionController {
      * 分页查询系统职位
      *
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     @GetResource(name = "分页查询系统职位", path = "/hrPosition/page")
     public ResponseData<PageResult<HrPosition>> page(HrPositionRequest hrPositionRequest) {
@@ -148,7 +148,7 @@ public class HrPositionController {
      * 获取全部系统职位
      *
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     @GetResource(name = "获取全部系统职位", path = "/hrPosition/list")
     public ResponseData<List<HrPosition>> list(HrPositionRequest hrPositionRequest) {
@@ -159,7 +159,7 @@ public class HrPositionController {
      * 获取岗位集合列表，通过岗位id集合
      *
      * @author fengshuonan
-     * @date 2022/11/5 15:27
+     * @since 2022/11/5 15:27
      */
     @PostResource(name = "获取岗位集合列表，通过岗位id集合", path = "/hrPosition/getPositionListByIds")
     public ResponseData<List<HrPositionDTO>> getPositionListByIds(@RequestBody @Validated(HrPositionRequest.batchQuery.class) HrPositionRequest hrPositionRequest) {

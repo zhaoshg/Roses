@@ -9,7 +9,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
  * 此类的使用必须激活 ConfigInitListener
  *
  * @author fengshuonan
- * @date 2021/2/26 18:27
+ * @since 2021/2/26 18:27
  */
 @Getter
 public class ApplicationPropertiesContext {

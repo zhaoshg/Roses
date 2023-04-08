@@ -36,7 +36,7 @@ import java.util.List;
  * 职位信息服务
  *
  * @author chenjinlong
- * @date 2020/11/04 11:07
+ * @since 2020/11/04 11:07
  */
 public interface HrPositionService extends IService<HrPosition>, PositionServiceApi {
 
@@ -45,7 +45,7 @@ public interface HrPositionService extends IService<HrPosition>, PositionService
      *
      * @param hrPositionRequest 请求参数
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     void add(HrPositionRequest hrPositionRequest);
 
@@ -54,7 +54,7 @@ public interface HrPositionService extends IService<HrPosition>, PositionService
      *
      * @param hrPositionRequest 请求参数
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     void del(HrPositionRequest hrPositionRequest);
 
@@ -63,7 +63,7 @@ public interface HrPositionService extends IService<HrPosition>, PositionService
      *
      * @param hrPositionRequest 请求参数
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     void edit(HrPositionRequest hrPositionRequest);
 
@@ -72,7 +72,7 @@ public interface HrPositionService extends IService<HrPosition>, PositionService
      *
      * @param hrPositionRequest 请求参数
      * @author chenjinlong
-     * @date 2020/11/18 23:00
+     * @since 2020/11/18 23:00
      */
     void changeStatus(HrPositionRequest hrPositionRequest);
 
@@ -82,7 +82,7 @@ public interface HrPositionService extends IService<HrPosition>, PositionService
      * @param hrPositionRequest 请求参数
      * @return 职位详情
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     HrPosition detail(HrPositionRequest hrPositionRequest);
 
@@ -92,7 +92,7 @@ public interface HrPositionService extends IService<HrPosition>, PositionService
      * @param hrPositionRequest 请求参数
      * @return 职位详情列表
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     List<HrPosition> findList(HrPositionRequest hrPositionRequest);
 
@@ -102,7 +102,7 @@ public interface HrPositionService extends IService<HrPosition>, PositionService
      * @param hrPositionRequest 请求参数
      * @return 职位详情分页列表
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     PageResult<HrPosition> findPage(HrPositionRequest hrPositionRequest);
 
@@ -111,7 +111,7 @@ public interface HrPositionService extends IService<HrPosition>, PositionService
      *
      * @param hrPositionRequest 请求参数
      * @author fengshuonan
-     * @date 2021/4/8 13:51
+     * @since 2021/4/8 13:51
      */
     void batchDel(HrPositionRequest hrPositionRequest);
 

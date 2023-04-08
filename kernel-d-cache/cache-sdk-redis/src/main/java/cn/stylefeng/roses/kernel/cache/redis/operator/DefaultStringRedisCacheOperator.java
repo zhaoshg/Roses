@@ -32,7 +32,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  * 默认redis缓存的实现，value存放String类型
  *
  * @author fengshuonan
- * @date 2021/2/24 22:16
+ * @since 2021/2/24 22:16
  */
 public class DefaultStringRedisCacheOperator extends AbstractRedisCacheOperator<String> {
 

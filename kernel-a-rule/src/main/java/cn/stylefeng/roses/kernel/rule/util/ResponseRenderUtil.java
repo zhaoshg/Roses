@@ -41,7 +41,7 @@ import java.nio.charset.Charset;
  * http响应信息的直接渲染工具
  *
  * @author fengshuonan
- * @date 2020/12/15 21:39
+ * @since 2020/12/15 21:39
  */
 @Slf4j
 public class ResponseRenderUtil {
@@ -50,7 +50,7 @@ public class ResponseRenderUtil {
      * 渲染接口json信息
      *
      * @author fengshuonan
-     * @date 2020/12/15 21:40
+     * @since 2020/12/15 21:40
      */
     public static void renderJsonResponse(HttpServletResponse response, Object responseData) {
         response.setCharacterEncoding(CharsetUtil.UTF_8);
@@ -67,7 +67,7 @@ public class ResponseRenderUtil {
      * 渲染接口json信息
      *
      * @author fengshuonan
-     * @date 2020/12/15 21:40
+     * @since 2020/12/15 21:40
      */
     public static void renderErrorResponse(HttpServletResponse response,
                                            String code, String message, String exceptionClazz) {
@@ -87,7 +87,7 @@ public class ResponseRenderUtil {
      * 设置渲染文件的头
      *
      * @author fengshuonan
-     * @date 2021/7/1 15:01
+     * @since 2021/7/1 15:01
      */
     public static void setRenderFileHeader(HttpServletResponse response, String fileName) {
         final String charset = ObjectUtil.defaultIfNull(response.getCharacterEncoding(), CharsetUtil.UTF_8);
@@ -99,7 +99,7 @@ public class ResponseRenderUtil {
      * 设置图片的渲染文件头
      *
      * @author fengshuonan
-     * @date 2021/7/1 15:01
+     * @since 2021/7/1 15:01
      */
     public static void setRenderImageHeader(HttpServletResponse response) {
         response.setContentType("image/png");

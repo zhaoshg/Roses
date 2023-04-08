@@ -62,7 +62,7 @@ import java.util.Map;
  * 将控制器controller包下的所有控制器类，执行的时候对url，参数，结果等进行记录
  *
  * @author fengshuonan
- * @date 2020/10/28 17:06
+ * @since 2020/10/28 17:06
  */
 @Aspect
 @Slf4j
@@ -121,7 +121,7 @@ public class RequestApiLogRecordAop implements Ordered {
      * @param joinPoint joinPoint对象
      * @return 返回K, V格式的参数，key是参数名称，v是参数值
      * @author liuhanqing
-     * @date 2020/12/22 21:18
+     * @since 2020/12/22 21:18
      */
     private Map<String, Object> getAnnotationProp(ProceedingJoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -162,7 +162,7 @@ public class RequestApiLogRecordAop implements Ordered {
      * @param result         AOP拦截方法的返回值
      * @param annotationProp AOP拦截注解属性
      * @author fengshuonan
-     * @date 2020/10/28 17:38
+     * @since 2020/10/28 17:38
      */
     private void recordLog(Map<String, Object> params, Object result, Map<String, Object> annotationProp) {
 
@@ -195,7 +195,7 @@ public class RequestApiLogRecordAop implements Ordered {
      * @param joinPoint joinPoint对象
      * @return 返回K, V格式的参数，key是参数名称，v是参数值
      * @author majianguo
-     * @date 2020/11/2 10:40
+     * @since 2020/11/2 10:40
      */
     private Map<String, Object> getFieldsName(ProceedingJoinPoint joinPoint) {
 
@@ -272,7 +272,7 @@ public class RequestApiLogRecordAop implements Ordered {
      * 确定当前接口是否需要记录日志
      *
      * @author fengshuonan
-     * @date 2022/1/12 20:44
+     * @since 2022/1/12 20:44
      */
     private boolean ensureMakeLog(ProceedingJoinPoint point) {
         // 判断是否需要记录日志，如果不需要直接返回

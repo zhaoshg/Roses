@@ -12,7 +12,7 @@ import java.util.Date;
  * 登录日志的dto
  *
  * @author fengshuonan
- * @date 2021/3/30 20:51
+ * @since 2021/3/30 20:51
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

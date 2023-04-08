@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.pinyin.api.constants;
  * 拼音模块常量
  *
  * @author fengshuonan
- * @date 2020/12/3 19:24
+ * @since 2020/12/3 19:24
  */
 public interface PinyinConstants {
 

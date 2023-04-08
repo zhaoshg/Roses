@@ -37,7 +37,7 @@ import org.springframework.context.annotation.Configuration;
  * 基于内存缓存的默认配置
  *
  * @author fengshuonan
- * @date 2021/1/31 20:32
+ * @since 2021/1/31 20:32
  */
 @Configuration
 public class GunsMemoryCacheAutoConfiguration {
@@ -46,7 +46,7 @@ public class GunsMemoryCacheAutoConfiguration {
      * 创建默认的value是string类型的内存缓存
      *
      * @author fengshuonan
-     * @date 2021/1/31 20:39
+     * @since 2021/1/31 20:39
      */
     @Bean
     @ConditionalOnMissingBean(name = "defaultStringCacheOperator")
@@ -59,7 +59,7 @@ public class GunsMemoryCacheAutoConfiguration {
      * 创建默认的value是object类型的内存缓存
      *
      * @author fengshuonan
-     * @date 2021/1/31 20:39
+     * @since 2021/1/31 20:39
      */
     @Bean
     @ConditionalOnMissingBean(name = "defaultMemoryCacheOperator")

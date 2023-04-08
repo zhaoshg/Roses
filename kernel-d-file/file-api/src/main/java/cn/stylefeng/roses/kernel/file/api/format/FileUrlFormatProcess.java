@@ -9,7 +9,7 @@ import cn.stylefeng.roses.kernel.rule.format.BaseSimpleFieldFormatProcess;
  * Json响应，针对返回的文件信息，响应一个文件的具体url
  *
  * @author fengshuonan
- * @date 2023/3/28 9:30
+ * @since 2023/3/28 9:30
  */
 public class FileUrlFormatProcess extends BaseSimpleFieldFormatProcess {
 

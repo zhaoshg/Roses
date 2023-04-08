@@ -45,7 +45,7 @@ import java.util.List;
  * 菜单资源控制器
  *
  * @author fengshuonan
- * @date 2021/8/8 22:38
+ * @since 2021/8/8 22:38
  */
 @RestController
 @ApiResource(name = "菜单资源控制器", resBizType = ResBizTypeEnum.SYSTEM)
@@ -58,7 +58,7 @@ public class SysMenuResourceController {
      * 获取菜单的资源分配列表
      *
      * @author fengshuonan
-     * @date 2021/8/8 22:38
+     * @since 2021/8/8 22:38
      */
     @GetResource(name = "获取菜单的资源分配列表", path = "/sysMenuResource/getMenuResourceList")
     public ResponseData<List<ResourceTreeNode>> getMenuResourceList(@Validated(value = SysMenuResourceRequest.list.class) SysMenuResourceRequest sysMenuResourceRequest) {
@@ -70,7 +70,7 @@ public class SysMenuResourceController {
      * 设置菜单资源绑定
      *
      * @author fengshuonan
-     * @date 2021/8/10 11:55
+     * @since 2021/8/10 11:55
      */
     @PostResource(name = "设置菜单资源绑定", path = "/sysMenuResource/addMenuResourceBind")
     @BusinessLog

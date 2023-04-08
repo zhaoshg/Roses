@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  * C端用户个人信息修改
  *
  * @author fengshuonan
- * @date 2021/6/18 16:28
+ * @since 2021/6/18 16:28
  */
 @RestController
 @ApiResource(name = "C端用户个人信息修改", resBizType = ResBizTypeEnum.SYSTEM)
@@ -34,7 +34,7 @@ public class CustomerInfoController {
      * 获取个人信息
      *
      * @author fengshuonan
-     * @date 2021/6/18 16:29
+     * @since 2021/6/18 16:29
      */
     @GetResource(name = "获取个人信息", path = "/customerInfo/getPersonInfo", requiredPermission = false)
     public ResponseData<CustomerInfo> getPersonInfo(@Validated(CustomerInfoRequest.detail.class) CustomerRequest customerRequest) {
@@ -46,7 +46,7 @@ public class CustomerInfoController {
      * 修改个人密码
      *
      * @author fengshuonan
-     * @date 2021/6/18 16:29
+     * @since 2021/6/18 16:29
      */
     @PostResource(name = "修改个人密码", path = "/customerInfo/updatePassword", requiredPermission = false)
     @BusinessLog
@@ -59,7 +59,7 @@ public class CustomerInfoController {
      * 修改个人头像
      *
      * @author fengshuonan
-     * @date 2021/6/18 16:29
+     * @since 2021/6/18 16:29
      */
     @PostResource(name = "修改个人头像", path = "/customerInfo/updateAvatar", requiredPermission = false)
     @BusinessLog
@@ -72,7 +72,7 @@ public class CustomerInfoController {
      * 重置个人秘钥
      *
      * @author fengshuonan
-     * @date 2021/7/20 10:44
+     * @since 2021/7/20 10:44
      */
     @PostResource(name = "重置个人秘钥", path = "/customerInfo/resetPersonalSecret", requiredPermission = false)
     @BusinessLog

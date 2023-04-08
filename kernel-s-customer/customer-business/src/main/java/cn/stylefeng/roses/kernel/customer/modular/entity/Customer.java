@@ -15,7 +15,7 @@ import java.util.Date;
  * C端用户表实例类
  *
  * @author fengshuonan
- * @date 2021/06/07 11:40
+ * @since 2021/06/07 11:40
  */
 @TableName("toc_customer")
 @Data

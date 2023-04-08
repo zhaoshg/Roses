@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * 主题开放接口的API
  *
  * @author fengshuonan
- * @date 2022/1/10 18:27
+ * @since 2022/1/10 18:27
  */
 @RestController
 @ApiResource(name = "主题开放接口的API", resBizType = ResBizTypeEnum.SYSTEM)
@@ -29,7 +29,7 @@ public class SysThemeApiController {
      * 获取当前Guns管理系统的主题数据
      *
      * @author fengshuonan
-     * @date 2022/1/10 18:29
+     * @since 2022/1/10 18:29
      */
     @GetResource(name = "获取当前Guns管理系统的主题数据", path = "/theme/currentThemeInfo", requiredPermission = false, requiredLogin = false)
     public ResponseData<DefaultTheme> currentThemeInfo(SysThemeRequest sysThemeParam) {

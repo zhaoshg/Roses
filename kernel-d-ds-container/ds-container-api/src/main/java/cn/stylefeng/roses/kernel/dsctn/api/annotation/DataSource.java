@@ -30,7 +30,7 @@ import java.lang.annotation.*;
  * 多数据源标识的注解
  *
  * @author fengshuonan
- * @date 2020/10/31 22:50
+ * @since 2020/10/31 22:50
  */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)

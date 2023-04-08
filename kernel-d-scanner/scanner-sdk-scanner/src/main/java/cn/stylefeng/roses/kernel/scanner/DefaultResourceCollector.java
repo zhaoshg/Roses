@@ -35,7 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 默认的资源收集器，默认搜集到内存Map中
  *
  * @author fengshuonan
- * @date 2020/10/19 20:33
+ * @since 2020/10/19 20:33
  */
 public class DefaultResourceCollector implements ResourceCollectorApi {
 

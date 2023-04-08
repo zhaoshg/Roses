@@ -4,7 +4,7 @@ package cn.stylefeng.roses.kernel.rule.constants;
  * 租户数据常量，如果租户业务变了这里也需要修改
  *
  * @author fengshuonan
- * @date 2021/9/24 17:20
+ * @since 2021/9/24 17:20
  */
 public interface TenantConstants {
 

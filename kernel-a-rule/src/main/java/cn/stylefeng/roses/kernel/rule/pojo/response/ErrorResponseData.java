@@ -31,7 +31,7 @@ import lombok.EqualsAndHashCode;
  * 请求失败的结果包装类
  *
  * @author fengshuonan
- * @date 2020/10/16 16:26
+ * @since 2020/10/16 16:26
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

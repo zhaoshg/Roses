@@ -30,7 +30,7 @@ import lombok.Getter;
  * 文件状态
  *
  * @author majianguo
- * @date 2020/12/16 12:00
+ * @since 2020/12/16 12:00
  */
 @Getter
 public enum FileStatusEnum {

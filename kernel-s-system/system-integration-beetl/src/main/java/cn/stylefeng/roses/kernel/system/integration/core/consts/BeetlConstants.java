@@ -4,7 +4,7 @@ package cn.stylefeng.roses.kernel.system.integration.core.consts;
  * beetl模板引擎的常量
  *
  * @author fengshuonan
- * @date 2020/12/27 12:20
+ * @since 2020/12/27 12:20
  */
 public interface BeetlConstants {
 

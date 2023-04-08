@@ -43,7 +43,7 @@ import java.util.Date;
  * 通知表
  *
  * @author liuhanqing
- * @date 2021/1/8 22:45
+ * @since 2021/1/8 22:45
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

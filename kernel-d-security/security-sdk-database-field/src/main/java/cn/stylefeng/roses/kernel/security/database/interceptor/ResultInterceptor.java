@@ -21,7 +21,7 @@ import java.util.Properties;
  * Mybatis拦截器，拦截返回参数
  *
  * @author majianguo
- * @date 2021/7/3 11:58
+ * @since 2021/7/3 11:58
  */
 @Slf4j
 @Component
@@ -64,7 +64,7 @@ public class ResultInterceptor implements Interceptor {
      *
      * @return
      * @author majianguo
-     * @date 2021/7/5 9:52
+     * @since 2021/7/5 9:52
      **/
     private void objectProcessing(Object result) throws IllegalAccessException {
 
@@ -91,7 +91,7 @@ public class ResultInterceptor implements Interceptor {
      * @param field
      * @return
      * @author majianguo
-     * @date 2021/7/5 9:52
+     * @since 2021/7/5 9:52
      **/
     private void fieldProcessing(Object result, Field field) throws IllegalAccessException {
         if (this.isTag(field)) {
@@ -117,7 +117,7 @@ public class ResultInterceptor implements Interceptor {
      * @param field 被判断字段
      * @return {@link boolean}
      * @author majianguo
-     * @date 2021/7/5 9:35
+     * @since 2021/7/5 9:35
      **/
     private boolean isTag(Field field) {
         // 包含其中任意一个即可

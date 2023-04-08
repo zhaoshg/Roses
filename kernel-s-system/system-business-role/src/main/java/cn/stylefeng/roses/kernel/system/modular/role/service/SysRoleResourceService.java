@@ -35,7 +35,7 @@ import java.util.List;
  * 系统角色菜单service接口
  *
  * @author majianguo
- * @date 2020/11/5 上午11:17
+ * @since 2020/11/5 上午11:17
  */
 public interface SysRoleResourceService extends IService<SysRoleResource> {
 
@@ -44,7 +44,7 @@ public interface SysRoleResourceService extends IService<SysRoleResource> {
      *
      * @param sysRoleRequest 授权参数
      * @author majianguo
-     * @date 2020/11/5 上午11:17
+     * @since 2020/11/5 上午11:17
      */
     void grantResource(SysRoleRequest sysRoleRequest);
 
@@ -52,7 +52,7 @@ public interface SysRoleResourceService extends IService<SysRoleResource> {
      * 角色授权接口资源
      *
      * @author fengshuonan
-     * @date 2021/8/10 18:28
+     * @since 2021/8/10 18:28
      */
     void grantResourceV2(SysRoleRequest sysRoleRequest);
 
@@ -61,7 +61,7 @@ public interface SysRoleResourceService extends IService<SysRoleResource> {
      *
      * @param resourceIds 资源id集合
      * @author majianguo
-     * @date 2020/11/5 上午11:17
+     * @since 2020/11/5 上午11:17
      */
     void deleteRoleResourceListByResourceIds(List<Long> resourceIds);
 
@@ -71,7 +71,7 @@ public interface SysRoleResourceService extends IService<SysRoleResource> {
      * @param roleId          角色id
      * @param resourceBizType 指定的资源类型，如果为空，则删除所有类型的
      * @author majianguo
-     * @date 2020/11/5 上午11:18
+     * @since 2020/11/5 上午11:18
      */
     void deleteRoleResourceListByRoleId(Long roleId, Integer resourceBizType);
 
@@ -79,7 +79,7 @@ public interface SysRoleResourceService extends IService<SysRoleResource> {
      * 保存所有的角色资源
      *
      * @author fengshuonan
-     * @date 2022/9/17 14:33
+     * @since 2022/9/17 14:33
      */
     void quickSaveAll(List<SysRoleResource> sysRoleResourceList);
 
@@ -87,7 +87,7 @@ public interface SysRoleResourceService extends IService<SysRoleResource> {
      * 批量保存角色和资源的绑定
      *
      * @author fengshuonan
-     * @date 2022/9/29 14:34
+     * @since 2022/9/29 14:34
      */
     void batchSaveResCodes(Long roleId, List<SysRoleResourceDTO> totalResourceCode);
 
@@ -97,7 +97,7 @@ public interface SysRoleResourceService extends IService<SysRoleResource> {
      * @param decisionFirstStart 判断是否是第一次启动，参数传true，则判断必须是第一次启动才执行update操作
      * @param newAppCode         新应用编码
      * @author fengshuonan
-     * @date 2022/11/16 23:37
+     * @since 2022/11/16 23:37
      */
     void updateNewAppCode(Boolean decisionFirstStart, String newAppCode);
 

@@ -38,7 +38,7 @@ import org.springframework.context.annotation.Configuration;
  * C端自动装配
  *
  * @author fengshuonan
- * @date 2021/6/7 11:32
+ * @since 2021/6/7 11:32
  */
 @Configuration
 @ConditionalOnMissingClass("org.springframework.data.redis.connection.RedisConnectionFactory")
@@ -48,7 +48,7 @@ public class GunsCustomerMemoryAutoConfiguration {
      * C端用户的缓存
      *
      * @author fengshuonan
-     * @date 2021/6/8 22:41
+     * @since 2021/6/8 22:41
      */
     @Bean
     public CacheOperatorApi<CustomerInfo> customerInfoCacheOperatorApi() {

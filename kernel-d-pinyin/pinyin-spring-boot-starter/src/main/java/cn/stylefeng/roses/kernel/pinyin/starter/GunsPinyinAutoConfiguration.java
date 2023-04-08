@@ -34,7 +34,7 @@ import org.springframework.context.annotation.Configuration;
  * 拼音的自动配置
  *
  * @author fengshuonan
- * @date 2020/12/4 15:28
+ * @since 2020/12/4 15:28
  */
 @Configuration
 public class GunsPinyinAutoConfiguration {
@@ -43,7 +43,7 @@ public class GunsPinyinAutoConfiguration {
      * 拼音工具接口的封装
      *
      * @author fengshuonan
-     * @date 2020/12/4 15:29
+     * @since 2020/12/4 15:29
      */
     @Bean
     @ConditionalOnMissingBean(PinYinApi.class)

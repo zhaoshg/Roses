@@ -34,7 +34,7 @@ import java.util.Optional;
  * Mongodb 文件存储接口
  *
  * @author huziyang
- * @date 2021/03/26 17:28
+ * @since 2021/03/26 17:28
  */
 public interface MongoFileService {
 
@@ -44,7 +44,7 @@ public interface MongoFileService {
      * @param file 上传的文件对象
      * @return 返回数据结果
      * @author huziyang
-     * @date 2021/03/30 11:06
+     * @since 2021/03/30 11:06
      */
     MongoFileEntity saveFile(MultipartFile file);
 
@@ -53,7 +53,7 @@ public interface MongoFileService {
      *
      * @param id 集合id
      * @author huziyang
-     * @date 2021/03/30 11:06
+     * @since 2021/03/30 11:06
      */
     void removeFile(String id);
 
@@ -63,7 +63,7 @@ public interface MongoFileService {
      * @param id 集合id
      * @return 返回查询到数据的Optional
      * @author huziyang
-     * @date 2021/03/30 11:06
+     * @since 2021/03/30 11:06
      */
     Optional<MongoFileEntity> getFileById(String id);
 
@@ -73,7 +73,7 @@ public interface MongoFileService {
      * @param fileDocument 查询条件
      * @return 返回查询文件的分页结果
      * @author huziyang
-     * @date 2021/03/30 11:06
+     * @since 2021/03/30 11:06
      */
     PageResult<MongoFileEntity> getFilesByPage(MongoFileEntity fileDocument);
 

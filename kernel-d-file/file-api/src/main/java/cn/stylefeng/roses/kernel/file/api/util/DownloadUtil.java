@@ -43,7 +43,7 @@ import java.net.URLEncoder;
  * web文件下载工具封装
  *
  * @author fengshuonan
- * @date 2020/11/29 11:36
+ * @since 2020/11/29 11:36
  */
 @Slf4j
 public class DownloadUtil {
@@ -55,7 +55,7 @@ public class DownloadUtil {
      * @param fileBytes 文件的真实字节数组
      * @param response  servlet response对象
      * @author fengshuonan
-     * @date 2020/11/29 13:52
+     * @since 2020/11/29 13:52
      */
     public static void download(String fileName, byte[] fileBytes, HttpServletResponse response) {
         try {
@@ -76,7 +76,7 @@ public class DownloadUtil {
      * @param file     要下载的文件
      * @param response 响应
      * @author fengshuonan
-     * @date 2020/11/29 13:53
+     * @since 2020/11/29 13:53
      */
     public static void download(File file, HttpServletResponse response) {
 
@@ -99,7 +99,7 @@ public class DownloadUtil {
      * 渲染被预览的文件到servlet的response流中
      *
      * @author fengshuonan
-     * @date 2020/11/29 17:13
+     * @since 2020/11/29 17:13
      */
     public static void renderPreviewFile(HttpServletResponse response, byte[] fileBytes) {
         try {

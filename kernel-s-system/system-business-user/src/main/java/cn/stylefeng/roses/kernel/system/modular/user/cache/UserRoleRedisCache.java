@@ -36,7 +36,7 @@ import java.util.List;
  * key为userId，value是Long类型集合，为角色的集合
  *
  * @author fengshuonan
- * @date 2021/7/29 22:54
+ * @since 2021/7/29 22:54
  */
 public class UserRoleRedisCache extends AbstractRedisCacheOperator<List<Long>> {
 

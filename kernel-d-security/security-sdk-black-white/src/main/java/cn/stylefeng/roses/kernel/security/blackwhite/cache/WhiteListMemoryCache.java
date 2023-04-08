@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.security.api.constants.CounterConstants;
  * 白名单的缓存
  *
  * @author fengshuonan
- * @date 2020/11/15 15:26
+ * @since 2020/11/15 15:26
  */
 public class WhiteListMemoryCache extends AbstractMemoryCacheOperator<String> {
 

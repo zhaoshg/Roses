@@ -52,7 +52,7 @@ import java.util.List;
  * 系统菜单控制器
  *
  * @author fengshuonan
- * @date 2020/3/20 18:54
+ * @since 2020/3/20 18:54
  */
 @RestController
 @ApiResource(name = "菜单管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -68,7 +68,7 @@ public class SysMenuController {
      * 添加系统菜单
      *
      * @author fengshuonan
-     * @date 2020/3/27 8:57
+     * @since 2020/3/27 8:57
      */
     @PostResource(name = "添加系统菜单", path = "/sysMenu/add")
     @BusinessLog
@@ -81,7 +81,7 @@ public class SysMenuController {
      * 删除系统菜单
      *
      * @author fengshuonan
-     * @date 2020/3/27 8:58
+     * @since 2020/3/27 8:58
      */
     @PostResource(name = "删除系统菜单", path = "/sysMenu/delete")
     @BusinessLog
@@ -94,7 +94,7 @@ public class SysMenuController {
      * 编辑系统菜单
      *
      * @author fengshuonan
-     * @date 2020/3/27 8:59
+     * @since 2020/3/27 8:59
      */
     @PostResource(name = "编辑系统菜单", path = "/sysMenu/edit")
     @BusinessLog
@@ -107,7 +107,7 @@ public class SysMenuController {
      * 查看系统菜单
      *
      * @author fengshuonan
-     * @date 2020/3/27 9:01
+     * @since 2020/3/27 9:01
      */
     @GetResource(name = "查看系统菜单", path = "/sysMenu/detail")
     public ResponseData<SysMenu> detail(@Validated(SysMenuRequest.detail.class) SysMenuRequest sysMenuRequest) {
@@ -118,7 +118,7 @@ public class SysMenuController {
      * Layui版本--菜单列表，不带树形结构（菜单管理界面的列表用）
      *
      * @author fengshuonan
-     * @date 2021/1/6 17:09
+     * @since 2021/1/6 17:09
      */
     @GetResource(name = "获取菜单列表（layui版本）", path = "/sysMenu/layuiList")
     public ResponseData<List<SysMenu>> layuiList(SysMenuRequest sysMenuRequest) {
@@ -129,7 +129,7 @@ public class SysMenuController {
      * Layui版本--获取系统菜单和按钮的树，用于角色分配菜单按钮
      *
      * @author majianguo
-     * @date 2021/1/9 17:10
+     * @since 2021/1/9 17:10
      */
     @GetResource(name = "获取系统菜单和按钮的树，用于角色分配菜单按钮（layui版本使用）", path = "/sysMenu/menuAndButtonTree")
     public List<LayuiMenuAndButtonTreeResponse> menuAndButtonTree(SysRoleRequest sysRoleRequest) {
@@ -140,7 +140,7 @@ public class SysMenuController {
      * Layui版本--获取系统菜单树，用于新增，编辑时选择上级节点（用在新增和编辑菜单选择上级菜单）
      *
      * @author fengshuonan
-     * @date 2021/1/6 17:09
+     * @since 2021/1/6 17:09
      */
     @GetResource(name = "获取菜单的树形列表（用于选择上级菜单）（layui版本）", path = "/sysMenu/layuiSelectParentMenuTreeList")
     public List<ZTreeNode> layuiSelectParentMenuTreeList() {
@@ -151,7 +151,7 @@ public class SysMenuController {
      * AntdVue版本--获取系统左侧菜单（适用于登录后获取左侧菜单）
      *
      * @author majianguo
-     * @date 2021/1/7 15:17
+     * @since 2021/1/7 15:17
      */
     @GetResource(name = "获取系统所有菜单（适用于登录后获取左侧菜单）（适配antd vue版本）", path = "/sysMenu/getLeftMenusAntdv", requiredPermission = false)
     public ResponseData<List<AntdSysMenuDTO>> getLeftMenusAntdv(SysMenuRequest sysMenuRequest) {
@@ -163,7 +163,7 @@ public class SysMenuController {
      * AntdVue版本--菜单列表，带树形结构（菜单管理界面的列表用）
      *
      * @author fengshuonan
-     * @date 2020/3/20 21:23
+     * @since 2020/3/20 21:23
      */
     @GetResource(name = "系统菜单列表（树）", path = "/sysMenu/list")
     public ResponseData<List<SysMenu>> list(SysMenuRequest sysMenuRequest) {
@@ -174,7 +174,7 @@ public class SysMenuController {
      * AntdVue版本--获取系统菜单树，用于新增，编辑时选择上级节点（用在新增和编辑菜单选择上级菜单）
      *
      * @author fengshuonan
-     * @date 2020/3/27 15:55
+     * @since 2020/3/27 15:55
      */
     @GetResource(name = "获取系统菜单树，用于新增，编辑时选择上级节点", path = "/sysMenu/tree")
     public ResponseData<List<AntdMenuSelectTreeNode>> tree(SysMenuRequest sysMenuRequest) {
@@ -185,7 +185,7 @@ public class SysMenuController {
      * AntdVue版本--获取系统菜单和按钮的树，用于角色分配菜单按钮
      *
      * @author majianguo
-     * @date 2021/1/9 17:10
+     * @since 2021/1/9 17:10
      */
     @GetResource(name = "获取系统菜单和按钮的树，用于角色分配菜单按钮（antd vue版本使用）", path = "/sysMenu/menuAndButtonTreeChildren")
     public ResponseData<List<LayuiMenuAndButtonTreeResponse>> menuAndButtonTreeChildren(SysRoleRequest sysRoleRequest) {
@@ -197,7 +197,7 @@ public class SysMenuController {
      * 新版角色分配菜单和按钮界面使用的接口
      *
      * @author fengshuonan
-     * @date 2021/8/10 22:21
+     * @since 2021/8/10 22:21
      */
     @GetResource(name = "新版角色分配菜单和按钮界面使用的接口（v2）", path = "/sysMenu/menuAndButtonTreeChildrenV2")
     public ResponseData<List<MenuAndButtonTreeResponse>> menuAndButtonTreeChildrenV2(SysRoleRequest sysRoleRequest) {

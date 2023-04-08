@@ -48,7 +48,7 @@ import java.util.List;
  * 数据库信息表控制器
  *
  * @author fengshuonan
- * @date 2020/11/1 22:15
+ * @since 2020/11/1 22:15
  */
 @RestController
 @ApiResource(name = "数据源信息管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -61,7 +61,7 @@ public class DatabaseInfoController {
      * 新增数据源
      *
      * @author fengshuonan
-     * @date 2020/11/1 22:16
+     * @since 2020/11/1 22:16
      */
     @PostResource(name = "新增数据源", path = "/databaseInfo/add")
     @BusinessLog
@@ -74,7 +74,7 @@ public class DatabaseInfoController {
      * 删除数据源
      *
      * @author fengshuonan
-     * @date 2020/11/1 22:18
+     * @since 2020/11/1 22:18
      */
     @PostResource(name = "删除数据源", path = "/databaseInfo/delete")
     @BusinessLog
@@ -87,7 +87,7 @@ public class DatabaseInfoController {
      * 编辑数据源
      *
      * @author fengshuonan
-     * @date 2020/11/1 22:16
+     * @since 2020/11/1 22:16
      */
     @PostResource(name = "编辑数据源", path = "/databaseInfo/edit")
     @BusinessLog
@@ -100,7 +100,7 @@ public class DatabaseInfoController {
      * 查询数据源列表（带分页）
      *
      * @author fengshuonan
-     * @date 2020/11/1 22:18
+     * @since 2020/11/1 22:18
      */
     @GetResource(name = "查询数据源列表（带分页）", path = "/databaseInfo/page")
     public ResponseData<PageResult<DatabaseInfo>> findPage(DatabaseInfoRequest databaseInfoRequest) {
@@ -112,7 +112,7 @@ public class DatabaseInfoController {
      * 查询所有数据源列表
      *
      * @author fengshuonan
-     * @date 2020/11/1 22:18
+     * @since 2020/11/1 22:18
      */
     @GetResource(name = "查询所有数据源列表", path = "/databaseInfo/list")
     public ResponseData<List<DatabaseInfo>> findList(DatabaseInfoRequest databaseInfoRequest) {
@@ -124,7 +124,7 @@ public class DatabaseInfoController {
      * 查询数据源详情
      *
      * @author fengshuonan
-     * @date 2021/1/23 20:29
+     * @since 2021/1/23 20:29
      */
     @GetResource(name = "查询数据源详情", path = "/databaseInfo/detail")
     public ResponseData<DatabaseInfo> detail(@Validated(BaseRequest.detail.class) DatabaseInfoRequest databaseInfoRequest) {

@@ -13,7 +13,7 @@ public interface SysUserRoleApi {
      * @param userId 用户id
      * @return 用户角色集合
      * @author chenjinlong
-     * @date 2021/2/3 15:09
+     * @since 2021/2/3 15:09
      */
     List<Long> findRoleIdsByUserId(Long userId);
 }

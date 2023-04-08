@@ -30,7 +30,7 @@ import lombok.Getter;
  * 数据库连接的状态枚举
  *
  * @author fengshuonan
- * @date 2021/4/22 11:02
+ * @since 2021/4/22 11:02
  */
 @Getter
 public enum DataSourceStatusEnum {

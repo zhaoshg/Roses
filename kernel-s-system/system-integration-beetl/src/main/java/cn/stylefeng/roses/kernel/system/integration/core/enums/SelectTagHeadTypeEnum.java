@@ -6,7 +6,7 @@ import lombok.Getter;
  * 字典下拉选头类型
  *
  * @author liuhanqing
- * @date 2021/1/16 20:36
+ * @since 2021/1/16 20:36
  */
 @Getter
 public enum SelectTagHeadTypeEnum {
@@ -34,7 +34,7 @@ public enum SelectTagHeadTypeEnum {
      * 根据code获取枚举
      *
      * @author liuhanqing
-     * @date 2021/1/16 20:36
+     * @since 2021/1/16 20:36
      */
     public static SelectTagHeadTypeEnum codeToEnum(String code) {
         if (null != code) {
@@ -51,7 +51,7 @@ public enum SelectTagHeadTypeEnum {
      * 编码转化成中文含义
      *
      * @author liuhanqing
-     * @date 2021/1/16 20:36
+     * @since 2021/1/16 20:36
      */
     public static String codeToName(String code) {
         if (null != code) {

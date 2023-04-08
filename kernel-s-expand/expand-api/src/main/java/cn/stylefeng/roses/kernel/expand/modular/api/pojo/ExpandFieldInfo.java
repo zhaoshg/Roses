@@ -6,7 +6,7 @@ import lombok.Data;
  * 拓展字段信息
  *
  * @author fengshuonan
- * @date 2022/4/1 9:46
+ * @since 2022/4/1 9:46
  */
 @Data
 public class ExpandFieldInfo {

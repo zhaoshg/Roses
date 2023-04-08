@@ -47,7 +47,7 @@ import static cn.stylefeng.roses.kernel.cache.api.constants.CacheConstants.NONE_
  * 认证和鉴权模块的自动配置
  *
  * @author fengshuonan
- * @date 2020/11/30 22:16
+ * @since 2020/11/30 22:16
  */
 @Configuration
 @ConditionalOnMissingClass("org.springframework.data.redis.connection.RedisConnectionFactory")
@@ -59,7 +59,7 @@ public class GunsAuthTokenMemoryCacheAutoConfiguration {
      * 如需redis，可在项目创建一个名为 loginUserCache 的bean替代即可
      *
      * @author fengshuonan
-     * @date 2021/1/31 21:04
+     * @since 2021/1/31 21:04
      */
     @Bean
     public CacheOperatorApi<LoginUser> loginUserCache() {
@@ -74,7 +74,7 @@ public class GunsAuthTokenMemoryCacheAutoConfiguration {
      * 如需redis，可在项目创建一个名为 allPlaceLoginTokenCache 的bean替代即可
      *
      * @author fengshuonan
-     * @date 2021/1/31 21:04
+     * @since 2021/1/31 21:04
      */
     @Bean
     public CacheOperatorApi<Set<String>> allPlaceLoginTokenCache() {
@@ -86,7 +86,7 @@ public class GunsAuthTokenMemoryCacheAutoConfiguration {
      * 登录错误次数的缓存
      *
      * @author fengshuonan
-     * @date 2022/3/15 17:25
+     * @since 2022/3/15 17:25
      */
     @Bean
     public CacheOperatorApi<Integer> loginErrorCountCacheApi() {
@@ -98,7 +98,7 @@ public class GunsAuthTokenMemoryCacheAutoConfiguration {
      * CaClient单点登录token的缓存
      *
      * @author fengshuonan
-     * @date 2022/5/20 11:52
+     * @since 2022/5/20 11:52
      */
     @Bean
     public CacheOperatorApi<String> caClientTokenCacheApi() {

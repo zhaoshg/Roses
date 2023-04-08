@@ -39,7 +39,7 @@ import cn.stylefeng.roses.kernel.validator.api.pojo.UniqueValidateParam;
  * 判断表中字段是否是唯一值的业务封装
  *
  * @author fengshuonan
- * @date 2020/11/4 15:06
+ * @since 2020/11/4 15:06
  */
 public class TableUniqueValueService {
 
@@ -47,7 +47,7 @@ public class TableUniqueValueService {
      * 判断表中某个字段是否已经存在该值
      *
      * @author fengshuonan
-     * @date 2020/11/4 15:08
+     * @since 2020/11/4 15:08
      */
     public static boolean getFiledUniqueFlag(UniqueValidateParam uniqueValidateParam) {
         try {
@@ -125,7 +125,7 @@ public class TableUniqueValueService {
      * 几个参数的为空校验
      *
      * @author fengshuonan
-     * @date 2020/11/4 15:11
+     * @since 2020/11/4 15:11
      */
     private static void paramValidate(UniqueValidateParam uniqueValidateParam) {
         if (StrUtil.isBlank(uniqueValidateParam.getTableName())) {
@@ -143,7 +143,7 @@ public class TableUniqueValueService {
      * id参数的为空校验
      *
      * @author fengshuonan
-     * @date 2020/11/4 15:16
+     * @since 2020/11/4 15:16
      */
     private static void paramIdValidate(UniqueValidateParam uniqueValidateParam) {
         if (uniqueValidateParam.getId() == null) {
@@ -155,7 +155,7 @@ public class TableUniqueValueService {
      * 计算携带租户code情况下的表名称
      *
      * @author fengshuonan
-     * @date 2021/9/24 17:01
+     * @since 2021/9/24 17:01
      */
     private static String calcTenantTableName(String originTableName) {
 

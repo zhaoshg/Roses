@@ -34,7 +34,7 @@ import org.springframework.context.annotation.Configuration;
  * 邮件发送的自动配置类
  *
  * @author fengshuonan
- * @date 2020/12/1 11:25
+ * @since 2020/12/1 11:25
  */
 @Configuration
 public class GunsEmailAutoConfiguration {
@@ -43,7 +43,7 @@ public class GunsEmailAutoConfiguration {
      * java mail方式发送邮件的接口
      *
      * @author fengshuonan
-     * @date 2020/12/1 11:32
+     * @since 2020/12/1 11:32
      */
     @Bean
     @ConditionalOnMissingBean(MailSenderApi.class)

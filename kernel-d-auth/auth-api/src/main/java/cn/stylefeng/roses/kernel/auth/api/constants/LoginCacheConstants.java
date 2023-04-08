@@ -4,7 +4,7 @@ package cn.stylefeng.roses.kernel.auth.api.constants;
  * 登录前缀相关的常量
  *
  * @author xixiaowei
- * @date 2022/1/22 17:37
+ * @since 2022/1/22 17:37
  */
 public interface LoginCacheConstants {
 

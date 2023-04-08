@@ -33,7 +33,7 @@ import lombok.Getter;
  * 定时任务的异常枚举
  *
  * @author fengshuonan
- * @date 2020/10/27 13:55
+ * @since 2020/10/27 13:55
  */
 @Getter
 public enum TimerExceptionEnum implements AbstractExceptionEnum {

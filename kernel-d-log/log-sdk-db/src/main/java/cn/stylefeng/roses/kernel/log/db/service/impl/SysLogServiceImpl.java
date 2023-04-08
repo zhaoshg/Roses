@@ -51,7 +51,7 @@ import java.util.List;
  * 日志记录 service接口实现类
  *
  * @author luojie
- * @date 2020/11/2 17:45
+ * @since 2020/11/2 17:45
  */
 @Service
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements SysLogService {
@@ -103,7 +103,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
      * 根据主键id获取对象
      *
      * @author chenjinlong
-     * @date 2021/1/26 13:28
+     * @since 2021/1/26 13:28
      */
     private SysLog querySysLogById(LogManagerRequest logManagerRequest) {
         SysLog sysLog = this.getById(logManagerRequest.getLogId());
@@ -117,7 +117,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
      * 实体构建queryWrapper
      *
      * @author chenjinlong
-     * @date 2021/1/24 22:03
+     * @since 2021/1/24 22:03
      */
     private LambdaQueryWrapper<SysLog> createWrapper(LogManagerRequest logManagerRequest) {
         LambdaQueryWrapper<SysLog> queryWrapper = new LambdaQueryWrapper<>();

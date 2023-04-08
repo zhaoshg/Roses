@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.i18n.api.constants;
  * 多语言模块的常量
  *
  * @author fengshuonan
- * @date 2021/1/24 16:36
+ * @since 2021/1/24 16:36
  */
 public interface TranslationConstants {
 

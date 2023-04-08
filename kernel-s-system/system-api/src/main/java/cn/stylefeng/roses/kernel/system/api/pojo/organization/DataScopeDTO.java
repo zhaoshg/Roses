@@ -33,7 +33,7 @@ import java.util.Set;
  * 查询用户的数据范围时候的返回结果封装
  *
  * @author fengshuonan
- * @date 2020/11/6 11:30
+ * @since 2020/11/6 11:30
  */
 @Data
 public class DataScopeDTO {

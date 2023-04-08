@@ -34,7 +34,7 @@ import static cn.stylefeng.roses.kernel.auth.api.constants.AuthConstants.LOGGED_
  * 基于内存的登录用户缓存
  *
  * @author fengshuonan
- * @date 2020/12/24 19:16
+ * @since 2020/12/24 19:16
  */
 public class MemoryLoginUserCache extends AbstractMemoryCacheOperator<LoginUser> {
 

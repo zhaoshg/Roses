@@ -35,7 +35,7 @@ import com.wf.captcha.SpecCaptcha;
  * 图形验证码实现
  *
  * @author chenjinlong
- * @date 2021/1/15 13:44
+ * @since 2021/1/15 13:44
  */
 public class ImageCaptchaService implements ImageCaptchaApi {
 

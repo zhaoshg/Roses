@@ -35,7 +35,7 @@ import lombok.EqualsAndHashCode;
  * 角色按钮关联
  *
  * @author fengshuonan
- * @date 2021/01/09 11:48
+ * @since 2021/01/09 11:48
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

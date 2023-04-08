@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  * 监控模块异常
  *
  * @author fengshuonan
- * @date 2021/1/31 22:35
+ * @since 2021/1/31 22:35
  */
 public class MonitorException extends ServiceException {
 

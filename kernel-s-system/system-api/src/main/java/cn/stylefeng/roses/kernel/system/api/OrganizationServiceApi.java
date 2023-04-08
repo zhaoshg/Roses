@@ -35,7 +35,7 @@ import java.util.List;
  * 组织机构api
  *
  * @author liuhanqing
- * @date 2021/1/15 10:40
+ * @since 2021/1/15 10:40
  */
 public interface OrganizationServiceApi {
 
@@ -44,7 +44,7 @@ public interface OrganizationServiceApi {
      *
      * @return 组织机构列表
      * @author liuhanqing
-     * @date 2021/1/15 10:41
+     * @since 2021/1/15 10:41
      */
     List<HrOrganizationDTO> orgList();
 
@@ -52,7 +52,7 @@ public interface OrganizationServiceApi {
      * 获取组织机构详情
      *
      * @author yexing
-     * @date 2022/3/8 23:32
+     * @since 2022/3/8 23:32
      */
     HrOrganizationDTO getOrgDetail(Long orgId);
 
@@ -60,7 +60,7 @@ public interface OrganizationServiceApi {
      * 批量获取组织机构信息详情
      *
      * @author fengshuonan
-     * @date 2022/10/31 20:02
+     * @since 2022/10/31 20:02
      */
     List<HrOrganizationDTO> getOrgDetailList(List<Long> orgIdList);
 
@@ -68,7 +68,7 @@ public interface OrganizationServiceApi {
      * 获取组织机构下拉选择树
      *
      * @author fengshuonan
-     * @date 2022/6/8 14:40
+     * @since 2022/6/8 14:40
      */
     List<OrganizationTreeNode> getOrgTreeList(HrOrganizationRequest hrOrganizationRequest);
 
@@ -76,7 +76,7 @@ public interface OrganizationServiceApi {
      * 获取某个公司下，所有部门树的集合
      *
      * @author fengshuonan
-     * @date 2022/6/16 18:26
+     * @since 2022/6/16 18:26
      */
     List<OrganizationTreeNode> getDeptOrgTree(Long orgId);
 
@@ -91,7 +91,7 @@ public interface OrganizationServiceApi {
      * @param detectModeEnum 自上而下还是自下而上
      * @return 上级机构的id
      * @author fengshuonan
-     * @date 2022/9/18 15:02
+     * @since 2022/9/18 15:02
      */
     Long getParentLevelOrgId(Long orgId, Integer parentLevelNum, DetectModeEnum detectModeEnum);
 

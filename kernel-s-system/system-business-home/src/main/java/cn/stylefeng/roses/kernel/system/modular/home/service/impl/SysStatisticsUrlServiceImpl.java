@@ -22,7 +22,7 @@ import java.util.List;
  * 常用功能列表业务实现层
  *
  * @author fengshuonan
- * @date 2022/02/10 21:17
+ * @since 2022/02/10 21:17
  */
 @Service
 public class SysStatisticsUrlServiceImpl extends ServiceImpl<SysStatisticsUrlMapper, SysStatisticsUrl> implements SysStatisticsUrlService {
@@ -69,7 +69,7 @@ public class SysStatisticsUrlServiceImpl extends ServiceImpl<SysStatisticsUrlMap
      * 获取信息
      *
      * @author fengshuonan
-     * @date 2022/02/10 21:17
+     * @since 2022/02/10 21:17
      */
     private SysStatisticsUrl querySysStatisticsUrl(SysStatisticsUrlRequest sysStatisticsUrlRequest) {
         SysStatisticsUrl sysStatisticsUrl = this.getById(sysStatisticsUrlRequest.getStatUrlId());
@@ -83,7 +83,7 @@ public class SysStatisticsUrlServiceImpl extends ServiceImpl<SysStatisticsUrlMap
      * 创建查询wrapper
      *
      * @author fengshuonan
-     * @date 2022/02/10 21:17
+     * @since 2022/02/10 21:17
      */
     private LambdaQueryWrapper<SysStatisticsUrl> createWrapper(SysStatisticsUrlRequest sysStatisticsUrlRequest) {
         LambdaQueryWrapper<SysStatisticsUrl> queryWrapper = new LambdaQueryWrapper<>();

@@ -16,7 +16,7 @@ import java.util.HashMap;
  * 如果当前激活的系统主题没有，或者获取不到，则使用本类创建的默认系统主题
  *
  * @author fengshuonan
- * @date 2022/1/11 9:30
+ * @since 2022/1/11 9:30
  */
 @Data
 public class DefaultThemeFactory {
@@ -25,7 +25,7 @@ public class DefaultThemeFactory {
      * 获取系统默认主题
      *
      * @author fengshuonan
-     * @date 2022/1/11 9:31
+     * @since 2022/1/11 9:31
      */
     public static DefaultTheme getSystemDefaultTheme() {
         DefaultTheme defaultTheme = new DefaultTheme();
@@ -43,7 +43,7 @@ public class DefaultThemeFactory {
      * 通过jsonObject解析默认主题数据
      *
      * @author fengshuonan
-     * @date 2022/1/11 9:31
+     * @since 2022/1/11 9:31
      */
     public static DefaultTheme parseDefaultTheme(JSONObject jsonObject) {
 

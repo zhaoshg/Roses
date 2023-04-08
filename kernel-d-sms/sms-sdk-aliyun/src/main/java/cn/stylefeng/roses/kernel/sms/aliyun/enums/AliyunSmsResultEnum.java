@@ -31,7 +31,7 @@ import lombok.Getter;
  * 短信发送异常相关枚举
  *
  * @author stylefeng
- * @date 2018/1/4 22:40
+ * @since 2018/1/4 22:40
  */
 @Getter
 public enum AliyunSmsResultEnum {

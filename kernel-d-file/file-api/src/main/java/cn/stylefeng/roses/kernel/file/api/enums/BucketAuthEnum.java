@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.file.api.enums;
  * 桶的权限策略枚举
  *
  * @author fengshuonan
- * @date 2020-05-23-3:03 下午
+ * @since 2020-05-23-3:03 下午
  */
 public enum BucketAuthEnum {
 

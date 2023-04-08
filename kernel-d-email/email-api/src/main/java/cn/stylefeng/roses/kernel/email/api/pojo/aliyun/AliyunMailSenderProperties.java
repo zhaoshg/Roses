@@ -30,7 +30,7 @@ import lombok.Data;
  * 阿里云邮件发送的配置
  *
  * @author fengshuonan
- * @date 2020/10/30 22:35
+ * @since 2020/10/30 22:35
  */
 @Data
 public class AliyunMailSenderProperties {

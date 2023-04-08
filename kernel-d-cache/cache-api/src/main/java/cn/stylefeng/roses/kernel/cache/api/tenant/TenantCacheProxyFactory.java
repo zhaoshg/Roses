@@ -9,7 +9,7 @@ import java.util.Map;
  * 租户缓存动态代理
  *
  * @author fengshuonan
- * @date 2022/11/8 0:45
+ * @since 2022/11/8 0:45
  */
 @SuppressWarnings("all")
 public class TenantCacheProxyFactory {
@@ -23,7 +23,7 @@ public class TenantCacheProxyFactory {
      * 创建带租户控制的缓存代理
      *
      * @author fengshuonan
-     * @date 2022/11/8 1:18
+     * @since 2022/11/8 1:18
      */
     public static <T> CacheOperatorApi<T> createTenantCacheProxy(String tenantCode, CacheOperatorApi<?> cacheOperatorApi) {
 

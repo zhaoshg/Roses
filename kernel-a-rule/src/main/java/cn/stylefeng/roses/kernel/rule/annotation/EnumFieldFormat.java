@@ -33,7 +33,7 @@ import java.lang.annotation.*;
  * json字段的格式化，可以将枚举转化为可读性的值，例如：SexEnum.M -> "男"，例如："M" -> "男“
  *
  * @author fengshuonan
- * @date 2022/9/6 11:34
+ * @since 2022/9/6 11:34
  */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)

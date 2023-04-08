@@ -15,7 +15,7 @@ import java.util.Map;
  * 需要被首页常用功能统计的url集合
  *
  * @author fengshuonan
- * @date 2022/2/10 21:35
+ * @since 2022/2/10 21:35
  */
 @Component
 public class StatisticsUrlContext implements CommandLineRunner {
@@ -37,7 +37,7 @@ public class StatisticsUrlContext implements CommandLineRunner {
      * 获取需要统计的url集合
      *
      * @author fengshuonan
-     * @date 2022/2/10 21:37
+     * @since 2022/2/10 21:37
      */
     public static List<SysStatisticsUrl> getUrls() {
         return STATISTICS_URLS;
@@ -47,7 +47,7 @@ public class StatisticsUrlContext implements CommandLineRunner {
      * 获取url对应的stat_url_id
      *
      * @author fengshuonan
-     * @date 2022/2/10 21:37
+     * @since 2022/2/10 21:37
      */
     public static Long getStatUrlId(String url) {
         return STATISTICS_KEY_VALUES.get(url);
@@ -57,7 +57,7 @@ public class StatisticsUrlContext implements CommandLineRunner {
      * 初始化被统计的url集合
      *
      * @author fengshuonan
-     * @date 2022/2/10 21:37
+     * @since 2022/2/10 21:37
      */
     @Override
     public void run(String... args) throws Exception {

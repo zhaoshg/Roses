@@ -65,7 +65,7 @@ import java.util.Map;
  * 系统参数配置service接口实现类
  *
  * @author fengshuonan
- * @date 2020/4/14 11:16
+ * @since 2020/4/14 11:16
  */
 @Service
 public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig> implements SysConfigService {
@@ -275,7 +275,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
      * 获取系统参数配置
      *
      * @author fengshuonan
-     * @date 2020/4/14 11:19
+     * @since 2020/4/14 11:19
      */
     public SysConfig querySysConfig(SysConfigParam sysConfigParam) {
         SysConfig sysConfig = this.getById(sysConfigParam.getConfigId());
@@ -290,7 +290,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
      * 创建wrapper
      *
      * @author fengshuonan
-     * @date 2020/11/6 10:16
+     * @since 2020/11/6 10:16
      */
     private LambdaQueryWrapper<SysConfig> createWrapper(SysConfigParam sysConfigParam) {
         LambdaQueryWrapper<SysConfig> queryWrapper = new LambdaQueryWrapper<>();

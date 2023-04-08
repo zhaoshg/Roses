@@ -32,7 +32,7 @@ import java.util.List;
  * 日志记录的api，只用于记录日志
  *
  * @author fengshuonan
- * @date 2020/10/27 16:19
+ * @since 2020/10/27 16:19
  */
 public interface LogRecordApi {
 
@@ -41,7 +41,7 @@ public interface LogRecordApi {
      *
      * @param logRecordDTO 日志记录的参数
      * @author fengshuonan
-     * @date 2020/10/27 17:38
+     * @since 2020/10/27 17:38
      */
     void add(LogRecordDTO logRecordDTO);
 
@@ -51,7 +51,7 @@ public interface LogRecordApi {
      *
      * @param logRecordDTO 日志记录的参数
      * @author fengshuonan
-     * @date 2020/10/27 17:38
+     * @since 2020/10/27 17:38
      */
     void addAsync(LogRecordDTO logRecordDTO);
 
@@ -60,7 +60,7 @@ public interface LogRecordApi {
      *
      * @param logRecords 待输出日志列表
      * @author majianguo
-     * @date 2020/11/2 下午2:59
+     * @since 2020/11/2 下午2:59
      */
     void addBatch(List<LogRecordDTO> logRecords);
 

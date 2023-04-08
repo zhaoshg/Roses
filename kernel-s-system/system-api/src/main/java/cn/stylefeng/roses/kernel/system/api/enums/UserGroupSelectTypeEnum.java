@@ -32,7 +32,7 @@ import lombok.Getter;
  * 授权对象类型：1-用户，2-部门，3-角色，4-职位，5-关系，6-部门审批人
  *
  * @author fengshuonan
- * @date 2022/9/26 14:31
+ * @since 2022/9/26 14:31
  */
 @Getter
 public enum UserGroupSelectTypeEnum {

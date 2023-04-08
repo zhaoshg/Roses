@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  * Office模块异常
  *
  * @author luojie
- * @date 2020/11/4 10:15
+ * @since 2020/11/4 10:15
  */
 public class OfficeException extends ServiceException {
 

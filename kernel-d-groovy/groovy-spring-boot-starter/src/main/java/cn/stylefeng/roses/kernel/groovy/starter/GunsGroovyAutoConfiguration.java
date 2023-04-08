@@ -34,7 +34,7 @@ import org.springframework.context.annotation.Configuration;
  * Groovy的自动配置
  *
  * @author fengshuonan
- * @date 2021/1/29 11:23
+ * @since 2021/1/29 11:23
  */
 @Configuration
 public class GunsGroovyAutoConfiguration {
@@ -43,7 +43,7 @@ public class GunsGroovyAutoConfiguration {
      * Groovy的操作类
      *
      * @author fengshuonan
-     * @date 2021/1/29 11:23
+     * @since 2021/1/29 11:23
      */
     @Bean
     @ConditionalOnMissingBean(GroovyApi.class)

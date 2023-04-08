@@ -31,7 +31,7 @@ import lombok.Data;
  * 用户角色
  *
  * @author chenjinlong
- * @date 2021/2/3 14:53
+ * @since 2021/2/3 14:53
  */
 @Data
 public class UserRoleRequest {

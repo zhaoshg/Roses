@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.system.api.constants;
  * 缓存前缀相关的常量
  *
  * @author fengshuonan
- * @date 2021/7/29 22:55
+ * @since 2021/7/29 22:55
  */
 public interface SystemCachesConstants {
 

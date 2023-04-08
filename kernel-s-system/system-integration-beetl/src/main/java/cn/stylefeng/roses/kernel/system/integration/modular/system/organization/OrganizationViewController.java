@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
  * 组织机构管理控制器界面
  *
  * @author chenjinlong
- * @date 2020/12/28 9:28
+ * @since 2020/12/28 9:28
  */
 @Controller
 @ApiResource(name = "组织机构管理控制器界面", resBizType = ResBizTypeEnum.SYSTEM)
@@ -19,7 +19,7 @@ public class OrganizationViewController {
      * 机构管理-首页-视图
      *
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     @GetResource(name = "机构管理-首页-视图", path = "/view/organization")
     public String indexView() {
@@ -30,7 +30,7 @@ public class OrganizationViewController {
      * 机构管理—新增-视图
      *
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     @GetResource(name = "机构管理—新增-视图", path = "/view/organization/addView")
     public String addView() {
@@ -41,7 +41,7 @@ public class OrganizationViewController {
      * 机构管理_修改_视图
      *
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     @GetResource(name = "机构管理-修改-视图", path = "/view/organization/editView")
     public String editView() {

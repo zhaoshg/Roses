@@ -31,7 +31,7 @@ import lombok.Data;
  * http响应结果封装
  *
  * @author fengshuonan
- * @date 2020/10/17 17:33
+ * @since 2020/10/17 17:33
  */
 @Data
 public class ResponseData<T> {

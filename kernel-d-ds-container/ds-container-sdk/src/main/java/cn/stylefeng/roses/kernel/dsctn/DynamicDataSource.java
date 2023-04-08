@@ -37,7 +37,7 @@ import static cn.stylefeng.roses.kernel.dsctn.api.constants.DatasourceContainerC
  * 动态数据源的实现，带切换功能的
  *
  * @author fengshuonan
- * @date 2020/11/1 0:08
+ * @since 2020/11/1 0:08
  */
 public class DynamicDataSource extends AbstractRoutingDataSource {
 
@@ -45,7 +45,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
      * 决断当前正在进行的service或者mapper用哪个数据源
      *
      * @author fengshuonan
-     * @date 2020/11/1 0:08
+     * @since 2020/11/1 0:08
      */
     @Override
     protected DataSource determineDataSource() {

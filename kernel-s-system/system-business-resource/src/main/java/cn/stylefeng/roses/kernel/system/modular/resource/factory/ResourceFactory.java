@@ -45,7 +45,7 @@ import java.util.Set;
  * ResourceDefinition和SysResource实体互转
  *
  * @author fengshuonan
- * @date 2019-05-29-14:37
+ * @since 2019-05-29-14:37
  */
 public class ResourceFactory {
 
@@ -53,7 +53,7 @@ public class ResourceFactory {
      * ResourceDefinition转化为SysResource实体
      *
      * @author fengshuonan
-     * @date 2020/12/9 14:14
+     * @since 2020/12/9 14:14
      */
     public static SysResource createResource(ResourceDefinition resourceDefinition) {
         SysResource resource = new SysResource();
@@ -100,7 +100,7 @@ public class ResourceFactory {
      * SysResource实体转化为ResourceDefinition对象
      *
      * @author fengshuonan
-     * @date 2020/12/9 14:15
+     * @since 2020/12/9 14:15
      */
     public static ResourceDefinition createResourceDefinition(SysResource sysResource) {
 
@@ -140,7 +140,7 @@ public class ResourceFactory {
      * ResourceDefinition转化为api界面的详情信息
      *
      * @author fengshuonan
-     * @date 2021/1/16 16:09
+     * @since 2021/1/16 16:09
      */
     public static ResourceDefinition fillResourceDetail(ResourceDefinition resourceDefinition) {
 
@@ -166,7 +166,7 @@ public class ResourceFactory {
      * 填充字段里详细的提示信息
      *
      * @author fengshuonan
-     * @date 2021/1/16 18:00
+     * @since 2021/1/16 18:00
      */
     public static void fillDetailMessage(Set<String> validateGroups, FieldMetadata fieldMetadata) {
         if (validateGroups == null || validateGroups.isEmpty()) {
@@ -200,7 +200,7 @@ public class ResourceFactory {
      * 将资源的集合整理成一个map，key是url，value是ResourceDefinition
      *
      * @author fengshuonan
-     * @date 2021/5/17 16:21
+     * @since 2021/5/17 16:21
      */
     public static Map<String, ResourceDefinition> orderedResourceDefinition(List<ResourceDefinition> sysResourceList) {
 

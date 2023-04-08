@@ -31,7 +31,7 @@ import lombok.Getter;
  * 前台还是后台菜单：1-前台，2-后台，3-前后台都显示
  *
  * @author fengshuonan
- * @date 2022/9/28 16:54
+ * @since 2022/9/28 16:54
  */
 @Getter
 public enum AntdvFrontTypeEnum {
@@ -64,7 +64,7 @@ public enum AntdvFrontTypeEnum {
      * 转化int为枚举类型
      *
      * @author fengshuonan
-     * @date 2022/9/29 15:50
+     * @since 2022/9/29 15:50
      */
     public static AntdvFrontTypeEnum parseToEnum(Integer originValue) {
         if (ObjectUtil.isEmpty(originValue)) {

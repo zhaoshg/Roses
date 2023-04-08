@@ -33,7 +33,7 @@ import org.springframework.stereotype.Controller;
  * MongoDB文件管理界面渲染控制器
  *
  * @author huziyang
- * @date 2021/03/30 15:21
+ * @since 2021/03/30 15:21
  */
 @Controller
 @ApiResource(name = "MongoDB文件管理界面渲染控制器", resBizType = ResBizTypeEnum.SYSTEM)
@@ -43,7 +43,7 @@ public class ModelViewController {
      * 文件管理视图
      *
      * @author huziyang
-     * @date 2021/03/30 15:21
+     * @since 2021/03/30 15:21
      */
     @GetResource(name = "Mongodb文件列表视图", path = "/view/mongodb/file")
     public String mongodbFile() {

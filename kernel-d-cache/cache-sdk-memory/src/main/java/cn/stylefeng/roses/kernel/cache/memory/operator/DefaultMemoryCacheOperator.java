@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.cache.memory.AbstractMemoryCacheOperator;
  * 默认内存缓存的实现，value存放Object类型
  *
  * @author fengshuonan
- * @date 2021/2/24 22:16
+ * @since 2021/2/24 22:16
  */
 public class DefaultMemoryCacheOperator extends AbstractMemoryCacheOperator<Object> {
 

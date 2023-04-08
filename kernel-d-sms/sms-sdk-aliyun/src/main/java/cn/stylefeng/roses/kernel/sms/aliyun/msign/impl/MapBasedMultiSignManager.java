@@ -34,7 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 获取缓存的map中的签名
  *
  * @author fengshuonan
- * @date 2018-09-21-上午10:49
+ * @since 2018-09-21-上午10:49
  */
 public class MapBasedMultiSignManager implements MultiSignManager {
 
@@ -77,7 +77,7 @@ public class MapBasedMultiSignManager implements MultiSignManager {
      * 每隔一段时间清除下map
      *
      * @author fengshuonan
-     * @date 2018/9/21 上午10:57
+     * @since 2018/9/21 上午10:57
      */
     private void clearMap() {
         if (cacheMap.size() >= CLEAR_COUNT) {

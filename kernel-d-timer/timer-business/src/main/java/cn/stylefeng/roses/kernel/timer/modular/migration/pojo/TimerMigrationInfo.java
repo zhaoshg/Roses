@@ -9,7 +9,7 @@ import java.util.List;
  * 定时任务迁移信息
  *
  * @author majianguo
- * @date 2021/7/8 9:13
+ * @since 2021/7/8 9:13
  */
 @Data
 public class TimerMigrationInfo {

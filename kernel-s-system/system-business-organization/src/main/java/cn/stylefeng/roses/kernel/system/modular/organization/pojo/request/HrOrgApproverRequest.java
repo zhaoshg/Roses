@@ -13,7 +13,7 @@ import java.util.List;
  * 组织机构审批人封装类
  *
  * @author fengshuonan
- * @date 2022/09/13 23:15
+ * @since 2022/09/13 23:15
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

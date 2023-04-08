@@ -36,7 +36,7 @@ import java.util.List;
  * 字典表的实现可以用内存，数据库或redis(具体实现可以根据业务需求自定义)
  *
  * @author fengshuonan
- * @date 2020/10/30 11:05
+ * @since 2020/10/30 11:05
  */
 @Data
 public class TreeDictInfo implements AbstractTreeNode<TreeDictInfo> {

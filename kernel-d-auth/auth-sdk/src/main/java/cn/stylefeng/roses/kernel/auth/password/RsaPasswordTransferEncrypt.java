@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.auth.api.password.PasswordTransferEncryptApi;
  * 基于RSA加密算法的，用于密码传输用的，密码加密解密器
  *
  * @author fengshuonan
- * @date 2020/12/21 17:02
+ * @since 2020/12/21 17:02
  */
 public class RsaPasswordTransferEncrypt implements PasswordTransferEncryptApi {
 

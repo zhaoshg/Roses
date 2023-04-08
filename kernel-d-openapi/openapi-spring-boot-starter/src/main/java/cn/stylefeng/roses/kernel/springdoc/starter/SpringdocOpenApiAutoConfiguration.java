@@ -37,7 +37,7 @@ import org.springframework.core.annotation.Order;
  * openapi的自动装配
  *
  * @author caiti
- * @date 2022-11-11
+ * @since 2022-11-11
  */
 @Configuration
 public class SpringdocOpenApiAutoConfiguration {

@@ -36,7 +36,7 @@ import java.util.Set;
  * 资源服务相关接口
  *
  * @author fengshuonan
- * @date 2020/12/3 15:45
+ * @since 2020/12/3 15:45
  */
 public interface ResourceServiceApi {
 
@@ -46,7 +46,7 @@ public interface ResourceServiceApi {
      * @param resourceUrlReq 资源url的封装
      * @return 资源详情
      * @author fengshuonan
-     * @date 2020/10/19 22:06
+     * @since 2020/10/19 22:06
      */
     ResourceDefinition getResourceByUrl(ResourceUrlParam resourceUrlReq);
 
@@ -56,7 +56,7 @@ public interface ResourceServiceApi {
      * @param resourceCodes 资源编码集合
      * @return 资源url列表
      * @author fengshuonan
-     * @date 2020/11/29 19:49
+     * @since 2020/11/29 19:49
      */
     Set<String> getResourceUrlsListByCodes(Set<String> resourceCodes);
 
@@ -64,7 +64,7 @@ public interface ResourceServiceApi {
      * 获取当前资源url的数量
      *
      * @author fengshuonan
-     * @date 2021/11/3 15:11
+     * @since 2021/11/3 15:11
      */
     Integer getResourceCount();
 
@@ -74,7 +74,7 @@ public interface ResourceServiceApi {
      * @param resBizTypeEnum 资源类型
      * @return 所有资源的编码集合
      * @author fengshuonan
-     * @date 2022/9/29 14:27
+     * @since 2022/9/29 14:27
      */
     List<SysRoleResourceDTO> getTotalResourceCode(ResBizTypeEnum resBizTypeEnum);
 
@@ -82,7 +82,7 @@ public interface ResourceServiceApi {
      * 获取资源编码对应的资源类型
      *
      * @author fengshuonan
-     * @date 2022/10/1 14:29
+     * @since 2022/10/1 14:29
      */
     Integer getResourceBizTypeByCode(String resCode);
 

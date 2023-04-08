@@ -37,7 +37,7 @@ import java.lang.annotation.*;
  * 目的是为了在使用Spring Mvc的基础之上，增加对接口权限的控制功能
  *
  * @author fengshuonan
- * @date 2018-01-03-下午2:56
+ * @since 2018-01-03-下午2:56
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

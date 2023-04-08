@@ -41,7 +41,7 @@ import java.util.List;
  * 系统职位表
  *
  * @author fengshuonan
- * @date 2020/11/04 11:07
+ * @since 2020/11/04 11:07
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

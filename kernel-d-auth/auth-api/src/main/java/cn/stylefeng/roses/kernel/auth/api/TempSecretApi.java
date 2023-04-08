@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.auth.api;
  * 临时用户秘钥获取
  *
  * @author fengshuonan
- * @date 2022/3/26 14:05
+ * @since 2022/3/26 14:05
  */
 public interface TempSecretApi {
 
@@ -36,7 +36,7 @@ public interface TempSecretApi {
      * 获取用户临时秘钥
      *
      * @author fengshuonan
-     * @date 2022/3/26 14:07
+     * @since 2022/3/26 14:07
      */
     String getUserTempSecretKey(Long userId);
 

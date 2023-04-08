@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.email.api.constants;
  * 邮件发送模块的常量
  *
  * @author fengshuonan
- * @date 2020/10/23 17:33
+ * @since 2020/10/23 17:33
  */
 public interface MailConstants {
 

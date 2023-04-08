@@ -20,7 +20,7 @@ import java.util.List;
  * 首页控制器
  *
  * @author xixiaowei
- * @date 2022/1/25 9:44
+ * @since 2022/1/25 9:44
  */
 @RestController
 @ApiResource(name = "首页", resBizType = ResBizTypeEnum.SYSTEM)
@@ -33,7 +33,7 @@ public class HomePageController {
      * 查询动态列表
      *
      * @author xixiaowei
-     * @date 2022/1/25 14:52
+     * @since 2022/1/25 14:52
      */
     @GetResource(name = "查询动态列表", path = "/homePage/getRecentLogs", requiredPermission = false)
     public ResponseData<List<LogRecordDTO>> getRecentLogs() {
@@ -44,7 +44,7 @@ public class HomePageController {
      * 查询在线用户列表
      *
      * @author xixiaowei
-     * @date 2022/1/25 14:11
+     * @since 2022/1/25 14:11
      */
     @GetResource(name = "查询在线用户列表", path = "/homePage/getOnlineUserList", requiredPermission = false)
     public ResponseData<OnlineUserStat> getOnlineUserList(OnlineUserRequest onlineUserRequest) {
@@ -55,7 +55,7 @@ public class HomePageController {
      * 获取首页企业和公司信息
      *
      * @author xixiaowei
-     * @date 2022/2/9 10:12
+     * @since 2022/2/9 10:12
      */
     @GetResource(name = "获取首页企业和公司信息", path = "/homePage/getHomeCompanyInfo", requiredPermission = false)
     public ResponseData<HomeCompanyInfo> getHomeCompanyInfo() {
@@ -66,7 +66,7 @@ public class HomePageController {
      * 获取常用功能接口
      *
      * @author xixiaowei
-     * @date 2022/2/10 11:34
+     * @since 2022/2/10 11:34
      */
     @GetResource(name = "获取常用功能接口", path = "/homePage/getCommonFunctions", requiredPermission = false)
     public ResponseData<List<SysMenu>> getCommonFunctions() {

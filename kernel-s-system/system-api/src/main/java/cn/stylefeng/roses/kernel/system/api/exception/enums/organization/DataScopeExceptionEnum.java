@@ -33,7 +33,7 @@ import lombok.Getter;
  * 数据范围异常枚举
  *
  * @author fengshuonan
- * @date 2020/11/5 16:04
+ * @since 2020/11/5 16:04
  */
 @Getter
 public enum DataScopeExceptionEnum implements AbstractExceptionEnum {

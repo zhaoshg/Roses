@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * 业务关联的文件封装类
  *
  * @author fengshuonan
- * @date 2023/03/31 13:30
+ * @since 2023/03/31 13:30
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

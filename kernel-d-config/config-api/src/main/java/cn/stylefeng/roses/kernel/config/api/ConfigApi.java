@@ -35,7 +35,7 @@ import java.util.Set;
  * 系统配置表的实现可以用内存，数据库或redis
  *
  * @author fengshuonan
- * @date 2020/10/17 10:27
+ * @since 2020/10/17 10:27
  */
 public interface ConfigApi {
 
@@ -44,7 +44,7 @@ public interface ConfigApi {
      *
      * @param configs 配置表的所有配置
      * @author fengshuonan
-     * @date 2020/10/17 14:11
+     * @since 2020/10/17 14:11
      */
     void initConfig(Map<String, Object> configs);
 
@@ -53,7 +53,7 @@ public interface ConfigApi {
      *
      * @return 系统配置表中所有的配置
      * @author fengshuonan
-     * @date 2020/10/17 14:07
+     * @since 2020/10/17 14:07
      */
     Map<String, Object> getAllConfigs();
 
@@ -62,7 +62,7 @@ public interface ConfigApi {
      *
      * @return 所有配置的名称
      * @author fengshuonan
-     * @date 2020/10/17 14:31
+     * @since 2020/10/17 14:31
      */
     Set<String> getAllConfigKeys();
 
@@ -74,7 +74,7 @@ public interface ConfigApi {
      * @param key   配置标识
      * @param value 配置具体值
      * @author fengshuonan
-     * @date 2020/10/17 14:14
+     * @since 2020/10/17 14:14
      */
     void putConfig(String key, Object value);
 
@@ -83,7 +83,7 @@ public interface ConfigApi {
      *
      * @param key 配置名称
      * @author fengshuonan
-     * @date 2020/10/17 18:45
+     * @since 2020/10/17 18:45
      */
     void deleteConfig(String key);
 
@@ -95,7 +95,7 @@ public interface ConfigApi {
      * @return 配置的值
      * @throws ConfigException 如果值为空抛出异常会
      * @author stylefeng
-     * @date 2020/6/20 22:03
+     * @since 2020/6/20 22:03
      */
     <T> T getConfigValue(String configCode, Class<T> clazz) throws ConfigException;
 
@@ -106,7 +106,7 @@ public interface ConfigApi {
      * @param clazz      返回变量值的类型
      * @return 配置的值
      * @author stylefeng
-     * @date 2020/6/20 22:03
+     * @since 2020/6/20 22:03
      */
     <T> T getConfigValueNullable(String configCode, Class<T> clazz);
 
@@ -118,7 +118,7 @@ public interface ConfigApi {
      * @param defaultValue 如果结果为空返回此默认值
      * @return 配置的值
      * @author stylefeng
-     * @date 2020/6/20 22:03
+     * @since 2020/6/20 22:03
      */
     <T> T getSysConfigValueWithDefault(String configCode, Class<T> clazz, T defaultValue);
 

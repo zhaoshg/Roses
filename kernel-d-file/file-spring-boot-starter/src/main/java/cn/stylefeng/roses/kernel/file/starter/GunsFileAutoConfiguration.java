@@ -36,7 +36,7 @@ import org.springframework.context.annotation.Configuration;
  * 文件的自动配置
  *
  * @author fengshuonan
- * @date 2020/12/1 14:34
+ * @since 2020/12/1 14:34
  */
 @Configuration
 public class GunsFileAutoConfiguration {
@@ -45,7 +45,7 @@ public class GunsFileAutoConfiguration {
      * 本地文件操作
      *
      * @author fengshuonan
-     * @date 2020/12/1 14:40
+     * @since 2020/12/1 14:40
      */
     @Bean
     @ConditionalOnMissingBean(FileOperatorApi.class)

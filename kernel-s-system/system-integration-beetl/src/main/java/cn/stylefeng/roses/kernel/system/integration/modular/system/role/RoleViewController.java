@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
  * 角色管理界面
  *
  * @author fengshuonan
- * @date 2021/1/8 20:55
+ * @since 2021/1/8 20:55
  */
 @Controller
 @ApiResource(name = "角色管理界面", resBizType = ResBizTypeEnum.SYSTEM)
@@ -19,7 +19,7 @@ public class RoleViewController {
      * 角色管理首页
      *
      * @author fengshuonan
-     * @date 2021/1/8 20:55
+     * @since 2021/1/8 20:55
      */
     @GetResource(name = "应用管理首页", path = "/view/role")
     public String roleIndex() {
@@ -30,7 +30,7 @@ public class RoleViewController {
      * 新增角色界面
      *
      * @author fengshuonan
-     * @date 2021/1/8 20:57
+     * @since 2021/1/8 20:57
      */
     @GetResource(name = "新增角色界面", path = "/view/role/add")
     public String roleAdd() {
@@ -41,7 +41,7 @@ public class RoleViewController {
      * 编辑角色界面
      *
      * @author fengshuonan
-     * @date 2021/1/8 20:57
+     * @since 2021/1/8 20:57
      */
     @GetResource(name = "编辑角色界面", path = "/view/role/edit")
     public String roleEdit() {
@@ -52,7 +52,7 @@ public class RoleViewController {
      * 修改数据范围界面
      *
      * @author fengshuonan
-     * @date 2021/1/8 20:57
+     * @since 2021/1/8 20:57
      */
     @GetResource(name = "修改数据范围界面", path = "/view/role/editDataScope")
     public String roleEditDataScope() {
@@ -63,7 +63,7 @@ public class RoleViewController {
      * 分配接口界面
      *
      * @author majianguo
-     * @date 2021/1/9 11:43
+     * @since 2021/1/9 11:43
      */
     @GetResource(name = "分配接口界面", path = "/view/role/assignApi")
     public String roleAssignApi() {
@@ -74,7 +74,7 @@ public class RoleViewController {
      * 分配菜单和按钮界面
      *
      * @author majianguo
-     * @date 2021/1/9 11:45
+     * @since 2021/1/9 11:45
      */
     @GetResource(name = "分配菜单界面", path = "/view/role/assignMenuAndButtons")
     public String roleAssignMenuButton() {

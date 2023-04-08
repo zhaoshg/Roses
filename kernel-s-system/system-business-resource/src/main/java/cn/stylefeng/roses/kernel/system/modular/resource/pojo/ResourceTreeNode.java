@@ -34,7 +34,7 @@ import java.util.List;
  * 资源树节点的描述
  *
  * @author fengshuonan
- * @date 2020/3/26 14:29
+ * @since 2020/3/26 14:29
  */
 @Data
 public class ResourceTreeNode implements AbstractTreeNode<ResourceTreeNode> {

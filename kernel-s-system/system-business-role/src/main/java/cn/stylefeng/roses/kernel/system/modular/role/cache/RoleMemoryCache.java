@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.system.modular.role.entity.SysRole;
  * 角色信息的缓存
  *
  * @author fengshuonan
- * @date 2021/7/29 23:28
+ * @since 2021/7/29 23:28
  */
 public class RoleMemoryCache extends AbstractMemoryCacheOperator<SysRole> {
 

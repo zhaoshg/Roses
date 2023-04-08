@@ -12,7 +12,7 @@ import javax.annotation.Resource;
  * 系统初始化之后的主题资源刷新
  *
  * @author fengshuonan
- * @date 2022/2/26 12:55
+ * @since 2022/2/26 12:55
  */
 @Component
 public class ThemeConfigRefresh implements ConfigInitCallbackApi {

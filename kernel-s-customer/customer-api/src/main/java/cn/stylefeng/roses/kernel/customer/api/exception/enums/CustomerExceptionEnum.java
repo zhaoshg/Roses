@@ -33,7 +33,7 @@ import lombok.Getter;
  * C端用户异常枚举
  *
  * @author fengshuonan
- * @date 2021/6/7 11:30
+ * @since 2021/6/7 11:30
  */
 @Getter
 public enum CustomerExceptionEnum implements AbstractExceptionEnum {

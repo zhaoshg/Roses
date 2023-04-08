@@ -37,7 +37,7 @@ import lombok.Data;
  * 例如，返回角色下拉列表，只需返回角色id和角色名称
  *
  * @author fengshuonan
- * @date 2020/11/21 16:53
+ * @since 2020/11/21 16:53
  */
 @Data
 public class SimpleDict {

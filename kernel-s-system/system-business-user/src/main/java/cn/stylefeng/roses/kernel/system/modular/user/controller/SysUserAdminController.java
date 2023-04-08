@@ -47,7 +47,7 @@ import java.util.List;
  * 管理员角色只能维护后台相关菜单
  *
  * @author fengshuonan
- * @date 2022/9/30 10:44
+ * @since 2022/9/30 10:44
  */
 @RestController
 @ApiResource(name = "管理员相关接口", resBizType = ResBizTypeEnum.SYSTEM)
@@ -60,7 +60,7 @@ public class SysUserAdminController {
      * 获取后台管理员列表
      *
      * @author fengshuonan
-     * @date 2022/9/30 10:44
+     * @since 2022/9/30 10:44
      */
     @GetResource(name = "获取后台管理员列表", path = "/sysUser/backAuth/getAdminList")
     public ResponseData<List<SysUserAdminDTO>> getAdminList() {
@@ -72,7 +72,7 @@ public class SysUserAdminController {
      * 添加后台管理员
      *
      * @author fengshuonan
-     * @date 2022/9/28 20:28
+     * @since 2022/9/28 20:28
      */
     @PostResource(name = "添加后台管理员", path = "/sysUser/backAuth/addAdmin")
     public ResponseData<?> addAdmin(@RequestBody @Validated(BaseRequest.add.class) SysAdminRequest sysAdminRequest) {
@@ -84,7 +84,7 @@ public class SysUserAdminController {
      * 删除后台管理员
      *
      * @author fengshuonan
-     * @date 2022/9/28 20:28
+     * @since 2022/9/28 20:28
      */
     @PostResource(name = "删除后台管理员", path = "/sysUser/backAuth/delAdmin")
     public ResponseData<?> delAdmin(@RequestBody @Validated(BaseRequest.delete.class) SysAdminRequest sysAdminRequest) {

@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.validator.api.constants;
  * 校验器模块的常量
  *
  * @author fengshuonan
- * @date 2020/10/31 14:24
+ * @since 2020/10/31 14:24
  */
 public interface ValidatorConstants {
 

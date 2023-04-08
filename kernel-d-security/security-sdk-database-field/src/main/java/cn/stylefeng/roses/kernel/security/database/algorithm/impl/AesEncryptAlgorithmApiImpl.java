@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
  * AES 加密解密实现
  *
  * @author majianguo
- * @date 2021/7/3 11:43
+ * @since 2021/7/3 11:43
  */
 public class AesEncryptAlgorithmApiImpl implements EncryptAlgorithmApi {
 

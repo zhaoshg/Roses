@@ -39,7 +39,7 @@ import java.io.IOException;
  * 针对于jackson反序列化时，xss危险字符串的过滤
  *
  * @author fengshuonan
- * @date 2021/1/13 22:56
+ * @since 2021/1/13 22:56
  */
 public class XssJacksonDeserializer extends JsonDeserializer<String> {
 

@@ -40,7 +40,7 @@ import org.springframework.context.annotation.Configuration;
  * mybatis-plus的插件配置
  *
  * @author fengshuonan
- * @date 2020/11/30 22:40
+ * @since 2020/11/30 22:40
  */
 @Configuration
 @AutoConfigureBefore(MybatisPlusAutoConfiguration.class)
@@ -50,7 +50,7 @@ public class GunsMyBatisPlusAutoConfiguration {
      * 新的分页插件
      *
      * @author fengshuonan
-     * @date 2020/12/24 13:13
+     * @since 2020/12/24 13:13
      */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
@@ -69,7 +69,7 @@ public class GunsMyBatisPlusAutoConfiguration {
      * 分页插件
      *
      * @author fengshuonan
-     * @date 2020/11/30 22:41
+     * @since 2020/11/30 22:41
      */
     @Bean
     public PaginationInnerInterceptor paginationInterceptor() {
@@ -80,7 +80,7 @@ public class GunsMyBatisPlusAutoConfiguration {
      * 乐观锁插件
      *
      * @author fengshuonan
-     * @date 2021/10/28 17:52
+     * @since 2021/10/28 17:52
      */
     @Bean
     public OptimisticLockerInnerInterceptor optimisticLockerInnerInterceptor() {
@@ -91,7 +91,7 @@ public class GunsMyBatisPlusAutoConfiguration {
      * 公共字段填充插件
      *
      * @author fengshuonan
-     * @date 2020/11/30 22:41
+     * @since 2020/11/30 22:41
      */
     @Bean
     public MetaObjectHandler metaObjectHandler() {
@@ -102,7 +102,7 @@ public class GunsMyBatisPlusAutoConfiguration {
      * 数据库id选择器，兼容多个数据库sql脚本
      *
      * @author fengshuonan
-     * @date 2020/11/30 22:42
+     * @since 2020/11/30 22:42
      */
     @Bean
     public CustomDatabaseIdProvider customDatabaseIdProvider() {
@@ -113,7 +113,7 @@ public class GunsMyBatisPlusAutoConfiguration {
      * 自定义sqlInjector
      *
      * @author fengshuonan
-     * @date 2022/9/17 14:28
+     * @since 2022/9/17 14:28
      */
     @Bean
     public CustomInsertBatchSqlInjector customInsertBatchSqlInjector() {

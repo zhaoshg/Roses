@@ -30,7 +30,7 @@ import lombok.Data;
  * 腾讯云短信配置
  *
  * @author fengshuonan
- * @date 2020/5/24 18:01
+ * @since 2020/5/24 18:01
  */
 @Data
 public class TencentSmsProperties {

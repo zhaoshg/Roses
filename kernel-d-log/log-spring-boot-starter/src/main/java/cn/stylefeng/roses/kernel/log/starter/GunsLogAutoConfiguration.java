@@ -49,7 +49,7 @@ import org.springframework.context.annotation.Configuration;
  * 系统日志的自动配置
  *
  * @author fengshuonan
- * @date 2020/12/1 17:12
+ * @since 2020/12/1 17:12
  */
 @Configuration
 public class GunsLogAutoConfiguration {
@@ -65,7 +65,7 @@ public class GunsLogAutoConfiguration {
      *
      * @return sysLogService
      * @author liuhanqing
-     * @date 2020/12/28 22:09
+     * @since 2020/12/28 22:09
      */
     @Bean
     @ConditionalOnMissingBean(SysLogService.class)
@@ -78,7 +78,7 @@ public class GunsLogAutoConfiguration {
      * 系统日志的配置
      *
      * @author liuhanqing
-     * @date 2020/12/20 14:17
+     * @since 2020/12/20 14:17
      */
     @Bean
     @ConfigurationProperties(prefix = SYS_LOG_PREFIX)
@@ -94,7 +94,7 @@ public class GunsLogAutoConfiguration {
      * @param sysLogProperties 系统日志配置文件
      * @param sysLogService    系统日志service
      * @author liuhanqing
-     * @date 2020/12/20 13:02
+     * @since 2020/12/20 13:02
      */
     @Bean
     public RequestApiLogRecordAop requestApiLogRecordAop(SysLogProperties sysLogProperties, SysLogServiceImpl sysLogService) {
@@ -123,7 +123,7 @@ public class GunsLogAutoConfiguration {
      *
      * @param sysLogProperties 系统日志配置文件
      * @author liuhanqing
-     * @date 2020/12/20 18:53
+     * @since 2020/12/20 18:53
      */
     @Bean
     public LogManagerApi logManagerApi(SysLogProperties sysLogProperties) {
@@ -151,7 +151,7 @@ public class GunsLogAutoConfiguration {
      * 日志记录的api
      *
      * @author fengshuonan
-     * @date 2021/3/4 22:16
+     * @since 2021/3/4 22:16
      */
     @Bean
     public LogRecordApi logRecordApi(SysLogServiceImpl sysLogService) {

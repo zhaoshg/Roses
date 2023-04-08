@@ -49,7 +49,7 @@ import java.util.HashMap;
  * 短信发送控制器
  *
  * @author fengshuonan
- * @date 2020/10/26 18:34
+ * @since 2020/10/26 18:34
  */
 @RestController
 @ApiResource(name = "短信发送控制器", resBizType = ResBizTypeEnum.SYSTEM)
@@ -62,7 +62,7 @@ public class SmsSenderController {
      * 发送记录查询
      *
      * @author fengshuonan
-     * @date 2020/10/26 18:34
+     * @since 2020/10/26 18:34
      */
     @GetResource(name = "发送记录查询", path = "/sms/page")
     public ResponseData<PageResult<SysSms>> page(SysSmsInfoParam sysSmsInfoParam) {
@@ -73,7 +73,7 @@ public class SmsSenderController {
      * 发送验证码短信
      *
      * @author fengshuonan
-     * @date 2020/10/26 18:34
+     * @since 2020/10/26 18:34
      */
     @PostResource(name = "发送验证码短信", path = "/sms/sendLoginMessage", requiredLogin = false, requiredPermission = false)
     public ResponseData<Boolean> sendMessage(@RequestBody @Validated SysSmsSendParam sysSmsSendParam) {
@@ -93,7 +93,7 @@ public class SmsSenderController {
      * 验证短信验证码
      *
      * @author fengshuonan
-     * @date 2020/10/26 18:35
+     * @since 2020/10/26 18:35
      */
     @PostResource(name = "验证短信验证码", path = "/sms/validateMessage", requiredLogin = false, requiredPermission = false)
     public ResponseData<?> validateMessage(@RequestBody @Validated SysSmsVerifyParam sysSmsVerifyParam) {

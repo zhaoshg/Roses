@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.group.api.constants;
  * 业务分组业务
  *
  * @author fengshuonan
- * @date 2022-06-24 17:15:41
+ * @since 2022-06-24 17:15:41
  */
 public interface GroupConstants {
 

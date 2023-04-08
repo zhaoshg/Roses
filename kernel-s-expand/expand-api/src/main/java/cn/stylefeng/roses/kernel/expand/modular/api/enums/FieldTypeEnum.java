@@ -6,7 +6,7 @@ import lombok.Getter;
  * 字段类型枚举
  *
  * @author fengshuonan
- * @date 2022/4/1 10:34
+ * @since 2022/4/1 10:34
  */
 @Getter
 public enum FieldTypeEnum {

@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
  * 分页参数快速获取
  *
  * @author fengshuonan
- * @date 2020/10/17 17:33
+ * @since 2020/10/17 17:33
  */
 public class PageFactory {
 
@@ -53,7 +53,7 @@ public class PageFactory {
      * 默认分页，在使用时PageFactory.defaultPage会自动获取pageSize和pageNo参数
      *
      * @author fengshuonan
-     * @date 2020/3/30 16:42
+     * @since 2020/3/30 16:42
      */
     public static <T> Page<T> defaultPage() {
 
@@ -81,7 +81,7 @@ public class PageFactory {
      * 从baseRequest中获取分页参数
      *
      * @author fengshuonan
-     * @date 2021/10/19 16:05
+     * @since 2021/10/19 16:05
      */
     public static <T> Page<T> defaultPage(BaseRequest baseRequest) {
         int pageSize = 20;

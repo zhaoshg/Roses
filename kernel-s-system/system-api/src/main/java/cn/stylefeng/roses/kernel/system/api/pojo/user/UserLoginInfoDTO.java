@@ -31,7 +31,7 @@ import lombok.Data;
  * 用户登录需要用到的用户详细信息封装
  *
  * @author fengshuonan
- * @date 2020/10/21 9:15
+ * @since 2020/10/21 9:15
  */
 @Data
 public class UserLoginInfoDTO {

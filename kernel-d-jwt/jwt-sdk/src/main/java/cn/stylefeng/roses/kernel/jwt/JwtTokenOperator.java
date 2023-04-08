@@ -47,7 +47,7 @@ import static cn.stylefeng.roses.kernel.jwt.api.exception.enums.JwtExceptionEnum
  * jwt token的操作对象
  *
  * @author fengshuonan
- * @date 2020/10/31 15:33
+ * @since 2020/10/31 15:33
  */
 public class JwtTokenOperator implements JwtApi {
 

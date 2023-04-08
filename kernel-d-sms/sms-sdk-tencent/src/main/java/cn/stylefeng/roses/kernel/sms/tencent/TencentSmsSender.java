@@ -47,7 +47,7 @@ import static cn.stylefeng.roses.kernel.sms.api.exception.enums.SmsExceptionEnum
  * 腾讯云短信发送
  *
  * @author fengshuonan
- * @date 2020/5/24 17:58
+ * @since 2020/5/24 17:58
  */
 public class TencentSmsSender implements SmsSenderApi {
 

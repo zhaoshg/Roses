@@ -39,7 +39,7 @@ import java.io.IOException;
  * 用于进行param传参方式的参数过滤掉危险标志
  *
  * @author fengshuonan
- * @date 2021/1/13 22:45
+ * @since 2021/1/13 22:45
  */
 public class XssFilter implements Filter {
 

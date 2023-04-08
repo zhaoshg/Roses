@@ -12,7 +12,7 @@ import java.util.List;
  * 业务关联的文件 服务类
  *
  * @author fengshuonan
- * @date 2023/03/31 13:30
+ * @since 2023/03/31 13:30
  */
 public interface SysFileBusinessService extends IService<SysFileBusiness>, FileBusinessApi {
 
@@ -21,7 +21,7 @@ public interface SysFileBusinessService extends IService<SysFileBusiness>, FileB
      *
      * @param sysFileBusinessRequest 请求参数
      * @author fengshuonan
-     * @date 2023/03/31 13:30
+     * @since 2023/03/31 13:30
      */
     void add(SysFileBusinessRequest sysFileBusinessRequest);
 
@@ -30,7 +30,7 @@ public interface SysFileBusinessService extends IService<SysFileBusiness>, FileB
      *
      * @param sysFileBusinessRequest 请求参数
      * @author fengshuonan
-     * @date 2023/03/31 13:30
+     * @since 2023/03/31 13:30
      */
     void del(SysFileBusinessRequest sysFileBusinessRequest);
 
@@ -39,7 +39,7 @@ public interface SysFileBusinessService extends IService<SysFileBusiness>, FileB
      *
      * @param sysFileBusinessRequest 请求参数
      * @author fengshuonan
-     * @date 2023/03/31 13:30
+     * @since 2023/03/31 13:30
      */
     void edit(SysFileBusinessRequest sysFileBusinessRequest);
 
@@ -48,7 +48,7 @@ public interface SysFileBusinessService extends IService<SysFileBusiness>, FileB
      *
      * @param sysFileBusinessRequest 请求参数
      * @author fengshuonan
-     * @date 2023/03/31 13:30
+     * @since 2023/03/31 13:30
      */
     SysFileBusiness detail(SysFileBusinessRequest sysFileBusinessRequest);
 
@@ -58,7 +58,7 @@ public interface SysFileBusinessService extends IService<SysFileBusiness>, FileB
      * @param sysFileBusinessRequest 请求参数
      * @return List<SysFileBusiness>   返回结果
      * @author fengshuonan
-     * @date 2023/03/31 13:30
+     * @since 2023/03/31 13:30
      */
     List<SysFileBusiness> findList(SysFileBusinessRequest sysFileBusinessRequest);
 
@@ -68,7 +68,7 @@ public interface SysFileBusinessService extends IService<SysFileBusiness>, FileB
      * @param sysFileBusinessRequest 请求参数
      * @return PageResult<SysFileBusiness>   返回结果
      * @author fengshuonan
-     * @date 2023/03/31 13:30
+     * @since 2023/03/31 13:30
      */
     PageResult<SysFileBusiness> findPage(SysFileBusinessRequest sysFileBusinessRequest);
 

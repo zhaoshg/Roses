@@ -26,7 +26,7 @@ import java.util.List;
  * 业务关联的文件业务实现层
  *
  * @author fengshuonan
- * @date 2023/03/31 13:30
+ * @since 2023/03/31 13:30
  */
 @Service
 public class SysFileBusinessServiceImpl extends ServiceImpl<SysFileBusinessMapper, SysFileBusiness> implements SysFileBusinessService {
@@ -145,7 +145,7 @@ public class SysFileBusinessServiceImpl extends ServiceImpl<SysFileBusinessMappe
      * 获取信息
      *
      * @author fengshuonan
-     * @date 2023/03/31 13:30
+     * @since 2023/03/31 13:30
      */
     private SysFileBusiness querySysFileBusiness(SysFileBusinessRequest sysFileBusinessRequest) {
         SysFileBusiness sysFileBusiness = this.getById(sysFileBusinessRequest.getFileBusinessId());
@@ -159,7 +159,7 @@ public class SysFileBusinessServiceImpl extends ServiceImpl<SysFileBusinessMappe
      * 创建查询wrapper
      *
      * @author fengshuonan
-     * @date 2023/03/31 13:30
+     * @since 2023/03/31 13:30
      */
     private LambdaQueryWrapper<SysFileBusiness> createWrapper(SysFileBusinessRequest sysFileBusinessRequest) {
         LambdaQueryWrapper<SysFileBusiness> queryWrapper = new LambdaQueryWrapper<>();

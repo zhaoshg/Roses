@@ -9,7 +9,7 @@ import cn.stylefeng.roses.kernel.security.request.encrypt.constants.EncryptionCo
  * 请求解密，响应加密 异常
  *
  * @author luojie
- * @date 2021/3/23 12:54
+ * @since 2021/3/23 12:54
  */
 public class EncryptionException extends ServiceException {
 

@@ -33,7 +33,7 @@ import java.util.List;
  * Layui首页菜单的节点详情
  *
  * @author fengshuonan
- * @date 2020/12/27 18:36
+ * @since 2020/12/27 18:36
  */
 @Data
 public class LayuiIndexMenuTreeNode implements AbstractTreeNode<LayuiIndexMenuTreeNode> {

@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.validator.api.constants.ValidatorConstants;
  * 参数校验异常
  *
  * @author fengshuonan
- * @date 2020/10/15 15:59
+ * @since 2020/10/15 15:59
  */
 public class ParamValidateException extends ServiceException {
 

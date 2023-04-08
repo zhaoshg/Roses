@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.dsctn.modular.entity.DatabaseInfo;
  * Druid数据源创建
  *
  * @author fengshuonan
- * @date 2020/11/1 21:44
+ * @since 2020/11/1 21:44
  */
 public class DruidPropertiesFactory {
 
@@ -40,7 +40,7 @@ public class DruidPropertiesFactory {
      * 创建druid配置
      *
      * @author fengshuonan
-     * @date 2019-06-15 20:05
+     * @since 2019-06-15 20:05
      */
     public static DruidProperties createDruidProperties(DatabaseInfo databaseInfo) {
         DruidProperties druidProperties = new DruidProperties();
@@ -55,7 +55,7 @@ public class DruidPropertiesFactory {
      * 通过DataSourceDto创建druid连接配置
      *
      * @author fengshuonan
-     * @date 2023/3/22 16:19
+     * @since 2023/3/22 16:19
      */
     public static DruidProperties createDruidProperties(DataSourceDto dataSourceDto) {
         DruidProperties druidProperties = new DruidProperties();

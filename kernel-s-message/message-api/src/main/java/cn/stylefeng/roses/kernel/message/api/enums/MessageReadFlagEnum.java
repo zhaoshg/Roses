@@ -30,7 +30,7 @@ import lombok.Getter;
  * 消息阅读状态
  *
  * @author liuhanqing
- * @date 2021/1/4 22:26
+ * @since 2021/1/4 22:26
  */
 @Getter
 public enum MessageReadFlagEnum {

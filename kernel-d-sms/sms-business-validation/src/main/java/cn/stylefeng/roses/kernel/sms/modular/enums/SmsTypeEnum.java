@@ -30,7 +30,7 @@ import lombok.Getter;
  * 短信类型枚举
  *
  * @author fengshuonan
- * @date 2020/10/26 21:30
+ * @since 2020/10/26 21:30
  */
 @Getter
 public enum SmsTypeEnum {

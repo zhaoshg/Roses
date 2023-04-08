@@ -31,7 +31,7 @@ import cn.stylefeng.roses.kernel.log.api.constants.LogFileConstants;
  * 日志记录相关的配置
  *
  * @author fengshuonan
- * @date 2020/10/28 16:11
+ * @since 2020/10/28 16:11
  */
 public class LogConfigExpander {
 
@@ -41,7 +41,7 @@ public class LogConfigExpander {
      * 末尾不带斜杠
      *
      * @author fengshuonan
-     * @date 2020/10/28 16:14
+     * @since 2020/10/28 16:14
      */
     public static String getLogFileSavePathWindows() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_LOG_FILE_SAVE_PATH_WINDOWS", String.class, LogFileConstants.DEFAULT_FILE_SAVE_PATH_WINDOWS);
@@ -53,7 +53,7 @@ public class LogConfigExpander {
      * 末尾不带斜杠
      *
      * @author fengshuonan
-     * @date 2020/10/28 16:14
+     * @since 2020/10/28 16:14
      */
     public static String getLogFileSavePathLinux() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_LOG_FILE_SAVE_PATH_LINUX", String.class, LogFileConstants.DEFAULT_FILE_SAVE_PATH_LINUX);
@@ -63,7 +63,7 @@ public class LogConfigExpander {
      * 全局日志记录，如果开启则所有请求都将记录日志
      *
      * @author fengshuonan
-     * @date 2022/1/12 20:32
+     * @since 2022/1/12 20:32
      */
     public static Boolean getGlobalControllerOpenFlag() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_LOG_GLOBAL_FLAG", Boolean.class, LogFileConstants.DEFAULT_GLOBAL_LOG_FLAG);

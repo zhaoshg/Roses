@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.system.api.constants.SystemConstants;
  * 系统菜单相关异常枚举
  *
  * @author fengshuonan
- * @date 2020/3/26 10:12
+ * @since 2020/3/26 10:12
  */
 public enum SysMenuExceptionEnum implements AbstractExceptionEnum {
 

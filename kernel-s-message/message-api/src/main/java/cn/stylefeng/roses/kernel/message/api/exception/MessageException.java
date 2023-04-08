@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  * 消息异常枚举
  *
  * @author liuhanqing
- * @date 2021/1/1 20:55
+ * @since 2021/1/1 20:55
  */
 public class MessageException extends ServiceException {
 

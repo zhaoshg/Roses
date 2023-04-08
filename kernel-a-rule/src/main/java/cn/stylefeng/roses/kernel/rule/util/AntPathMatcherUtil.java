@@ -33,7 +33,7 @@ import java.util.List;
  * ant风格资源过滤工具
  *
  * @author fengshuonan
- * @date 2020/12/15 22:31
+ * @since 2020/12/15 22:31
  */
 @Slf4j
 public class AntPathMatcherUtil {
@@ -44,7 +44,7 @@ public class AntPathMatcherUtil {
      * @param requestURI  请求的url
      * @param antPatterns ant风格资源表达式
      * @author fengshuonan
-     * @date 2020/12/15 22:31
+     * @since 2020/12/15 22:31
      */
     public static Boolean getAntMatchFLag(String requestURI, String contextPath, List<String> antPatterns) {
         AntPathMatcher antPathMatcher = new AntPathMatcher();

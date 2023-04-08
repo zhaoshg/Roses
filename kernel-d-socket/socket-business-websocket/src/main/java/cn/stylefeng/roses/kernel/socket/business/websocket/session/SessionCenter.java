@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentMap;
  * 维护所有的会话
  *
  * @author majianguo
- * @date 2021/6/1 下午1:43
+ * @since 2021/6/1 下午1:43
  */
 public class SessionCenter {
 
@@ -28,7 +28,7 @@ public class SessionCenter {
      *
      * @return {@link ConcurrentMap< String, SocketSession<GunsSocketOperator>>}
      * @author majianguo
-     * @date 2021/6/1 下午2:13
+     * @since 2021/6/1 下午2:13
      **/
     public static ConcurrentMap<String, List<SocketSession<GunsSocketOperator>>> getSocketSessionMap() {
         return socketSessionMap;
@@ -40,7 +40,7 @@ public class SessionCenter {
      * @param userId 用户ID
      * @return {@link SocketSession <GunsSocketOperator>}
      * @author majianguo
-     * @date 2021/6/1 下午1:48
+     * @since 2021/6/1 下午1:48
      **/
     public static List<SocketSession<GunsSocketOperator>> getSessionByUserId(String userId) {
         return socketSessionMap.get(userId);
@@ -52,7 +52,7 @@ public class SessionCenter {
      * @param userId 用户ID
      * @return {@link SocketSession <GunsSocketOperator>}
      * @author majianguo
-     * @date 2021/6/1 下午1:48
+     * @since 2021/6/1 下午1:48
      **/
     public static List<SocketSession<GunsSocketOperator>> getSessionByUserIdAndMsgType(String userId) {
         return socketSessionMap.get(userId);
@@ -64,7 +64,7 @@ public class SessionCenter {
      * @param sessionId 会话ID
      * @return {@link SocketSession <GunsSocketOperator>}
      * @author majianguo
-     * @date 2021/6/1 下午1:48
+     * @since 2021/6/1 下午1:48
      **/
     public static SocketSession<GunsSocketOperator> getSessionBySessionId(String sessionId) {
         Set<Map.Entry<String, List<SocketSession<GunsSocketOperator>>>> entrySet = socketSessionMap.entrySet();
@@ -84,7 +84,7 @@ public class SessionCenter {
      *
      * @param socketSession 会话详情
      * @author majianguo
-     * @date 2021/6/1 下午1:49
+     * @since 2021/6/1 下午1:49
      **/
     public static void addSocketSession(SocketSession<GunsSocketOperator> socketSession) {
         List<SocketSession<GunsSocketOperator>> socketSessions = socketSessionMap.get(socketSession.getUserId());
@@ -100,7 +100,7 @@ public class SessionCenter {
      *
      * @param sessionId 会话ID
      * @author majianguo
-     * @date 2021/6/1 下午3:25
+     * @since 2021/6/1 下午3:25
      **/
     public static void closed(String sessionId) {
         // 删除维护关系
@@ -116,7 +116,7 @@ public class SessionCenter {
      * @param sessionId 会话ID
      * @return {@link cn.stylefeng.roses.kernel.socket.api.session.pojo.SocketSession<cn.stylefeng.roses.kernel.socket.business.websocket.operator.channel.GunsSocketOperator>}
      * @author majianguo
-     * @date 2021/8/30 9:20
+     * @since 2021/8/30 9:20
      **/
     public static SocketSession<GunsSocketOperator> deleteById(String sessionId) {
         // 获取所有人员的连接会话信息

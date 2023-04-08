@@ -33,7 +33,7 @@ import lombok.Getter;
  * Flyway相关异常枚举
  *
  * @author fengshuonan
- * @date 2021/1/18 22:59
+ * @since 2021/1/18 22:59
  */
 @Getter
 public enum FlywayExceptionEnum implements AbstractExceptionEnum {

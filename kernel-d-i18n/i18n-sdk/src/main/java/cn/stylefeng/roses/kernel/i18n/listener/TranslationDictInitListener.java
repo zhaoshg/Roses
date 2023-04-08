@@ -38,7 +38,7 @@ import java.util.List;
  * 初始化多语言翻译详
  *
  * @author fengshuonan
- * @date 2021/1/24 19:36
+ * @since 2021/1/24 19:36
  */
 @Slf4j
 public class TranslationDictInitListener extends ApplicationStartedListener {

@@ -34,7 +34,7 @@ import java.util.List;
  * 简单的数据监听器
  *
  * @author luojie
- * @date 2020/11/4 13:55
+ * @since 2020/11/4 13:55
  */
 public class SimpleDataListener<T> extends AnalysisEventListener<T> {
 
@@ -48,7 +48,7 @@ public class SimpleDataListener<T> extends AnalysisEventListener<T> {
      *
      * @return 实体类List集合
      * @author luojie
-     * @date 2020/11/4 16:49
+     * @since 2020/11/4 16:49
      */
     public List<T> getDataList() {
         return dataList;
@@ -60,7 +60,7 @@ public class SimpleDataListener<T> extends AnalysisEventListener<T> {
      * @param data    Excel每行数据转换成的对象类
      * @param context EasyExcel分析上下文
      * @author luojie
-     * @date 2020/11/4 16:49
+     * @since 2020/11/4 16:49
      */
     @Override
     public void invoke(T data, AnalysisContext context) {
@@ -73,7 +73,7 @@ public class SimpleDataListener<T> extends AnalysisEventListener<T> {
      *
      * @param context EasyExcel分析上下文
      * @author luojie
-     * @date 2020/11/4 16:49
+     * @since 2020/11/4 16:49
      */
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {

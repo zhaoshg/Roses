@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * 错误界面自动配置，一般用于404响应
  *
  * @author fengshuonan
- * @date 2021/5/17 11:16
+ * @since 2021/5/17 11:16
  */
 @Configuration
 @AutoConfigureBefore(ErrorMvcAutoConfiguration.class)
@@ -21,7 +21,7 @@ public class RestErrorViewAutoConfiguration {
      * 默认错误页面，返回json
      *
      * @author fengshuonan
-     * @date 2020/12/16 15:47
+     * @since 2020/12/16 15:47
      */
     @Bean("error")
     @ConditionalOnMissingBean(name = "error")

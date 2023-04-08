@@ -16,7 +16,7 @@ import java.util.List;
  * 用户组实例类
  *
  * @author fengshuonan
- * @date 2022/09/26 10:12
+ * @since 2022/09/26 10:12
  */
 @TableName("sys_user_group")
 @Data

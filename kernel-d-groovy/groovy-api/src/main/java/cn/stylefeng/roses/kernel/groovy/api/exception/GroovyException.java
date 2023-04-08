@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  * groovy脚本执行异常
  *
  * @author fengshuonan
- * @date 2021/1/22 16:36
+ * @since 2021/1/22 16:36
  */
 public class GroovyException extends ServiceException {
 

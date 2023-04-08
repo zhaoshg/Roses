@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
  * 登陆日志管理控制器界面渲染
  *
  * @author TSQ
- * @date 2021/1/5 14:42
+ * @since 2021/1/5 14:42
  */
 @Controller
 @ApiResource(name = "登陆日志管理相关的界面渲染", resBizType = ResBizTypeEnum.SYSTEM)
@@ -19,7 +19,7 @@ public class LoginLogViewController {
      * 登陆日志管理列表
      *
      * @author TSQ
-     * @date 2021/1/5 15:17
+     * @since 2021/1/5 15:17
      */
     @GetResource(name = "登陆日志管理列表", path = "/view/loginLog")
     public String indexView() {

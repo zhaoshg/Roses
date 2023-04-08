@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * 订单接口
  *
  * @author wangyl
- * @date 2021/04/10 16:42
+ * @since 2021/04/10 16:42
  */
 @ApiResource(name = "订单接口（测试seata）", resBizType = ResBizTypeEnum.SYSTEM)
 public class OrderController {
@@ -25,7 +25,7 @@ public class OrderController {
      * 创建订单
      *
      * @author wangyl
-     * @date 2021/4/20 20:11
+     * @since 2021/4/20 20:11
      */
     @GetResource(name = "创建订单", path = "/order/create", requiredPermission = false, requiredLogin = false)
     public Order create(@RequestParam("userId") String userId, @RequestParam("commodityCode") String commodityCode, @RequestParam("orderCount") Integer orderCount) {

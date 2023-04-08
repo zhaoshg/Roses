@@ -8,7 +8,7 @@ import cn.hutool.crypto.symmetric.SymmetricCrypto;
  * 可根据自身需要自定义实现，默认实现为AES
  *
  * @author majianguo
- * @date 2021/7/3 11:02
+ * @since 2021/7/3 11:02
  */
 public interface EncryptAlgorithmApi {
 
@@ -18,7 +18,7 @@ public interface EncryptAlgorithmApi {
      * @param encryptedData 加密数据
      * @return {@link java.lang.String}
      * @author majianguo
-     * @date 2021/7/3 11:07
+     * @since 2021/7/3 11:07
      **/
     String encrypt(String encryptedData);
 
@@ -28,7 +28,7 @@ public interface EncryptAlgorithmApi {
      * @param cipher 待解密密文
      * @return {@link java.lang.String}
      * @author majianguo
-     * @date 2021/7/3 11:33
+     * @since 2021/7/3 11:33
      **/
     String decrypt(String cipher);
 }

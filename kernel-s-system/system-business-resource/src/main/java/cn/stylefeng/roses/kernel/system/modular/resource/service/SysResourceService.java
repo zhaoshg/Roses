@@ -38,7 +38,7 @@ import java.util.List;
  * 资源服务类
  *
  * @author fengshuonan
- * @date 2020/11/24 19:56
+ * @since 2020/11/24 19:56
  */
 public interface SysResourceService extends IService<SysResource> {
 
@@ -48,7 +48,7 @@ public interface SysResourceService extends IService<SysResource> {
      * @param resourceRequest 请求参数
      * @return 返回结果
      * @author fengshuonan
-     * @date 2020/11/24 20:45
+     * @since 2020/11/24 20:45
      */
     PageResult<SysResource> findPage(ResourceRequest resourceRequest);
 
@@ -60,7 +60,7 @@ public interface SysResourceService extends IService<SysResource> {
      * @param resourceRequest 请求参数
      * @return 响应下拉结果
      * @author fengshuonan
-     * @date 2020/11/24 20:45
+     * @since 2020/11/24 20:45
      */
     List<SysResource> findList(ResourceRequest resourceRequest);
 
@@ -71,7 +71,7 @@ public interface SysResourceService extends IService<SysResource> {
      * @param treeBuildFlag   true-带树形结构，false-不组装树形结构的
      * @param resourceBizType 资源的类型，1-业务类，2-系统类
      * @author fengshuonan
-     * @date 2022/9/28 23:46
+     * @since 2022/9/28 23:46
      */
     List<ResourceTreeNode> getRoleResourceTree(Long roleId, Boolean treeBuildFlag, Integer resourceBizType);
 
@@ -82,7 +82,7 @@ public interface SysResourceService extends IService<SysResource> {
      * @param treeBuildFlag   是否要构建成树
      * @param resourceBizType 资源的类型，1-业务类，2-系统类
      * @author fengshuonan
-     * @date 2021/8/8 22:24
+     * @since 2021/8/8 22:24
      */
     List<ResourceTreeNode> getResourceList(List<String> resourceCodes, Boolean treeBuildFlag, Integer resourceBizType);
 
@@ -91,7 +91,7 @@ public interface SysResourceService extends IService<SysResource> {
      *
      * @return 资源树列表
      * @author fengshuonan
-     * @date 2020/12/18 15:06
+     * @since 2020/12/18 15:06
      */
     List<LayuiApiResourceTreeNode> getApiResourceTree(ResourceRequest resourceRequest);
 
@@ -101,7 +101,7 @@ public interface SysResourceService extends IService<SysResource> {
      * @param resourceRequest 请求参数
      * @return 资源详情
      * @author fengshuonan
-     * @date 2020/12/18 16:04
+     * @since 2020/12/18 16:04
      */
     ResourceDefinition getApiResourceDetail(ResourceRequest resourceRequest);
 
@@ -110,7 +110,7 @@ public interface SysResourceService extends IService<SysResource> {
      *
      * @param projectCode 项目编码，一般为spring application name
      * @author fengshuonan
-     * @date 2020/11/24 20:46
+     * @since 2020/11/24 20:46
      */
     void deleteResourceByProjectCode(String projectCode);
 
@@ -118,7 +118,7 @@ public interface SysResourceService extends IService<SysResource> {
      * 更新资源编码前缀，将guns$前缀改为新的
      *
      * @author fengshuonan
-     * @date 2022/11/17 0:17
+     * @since 2022/11/17 0:17
      */
     void updateResourceAppCode(String newAppCode);
 

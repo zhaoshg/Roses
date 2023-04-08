@@ -45,7 +45,7 @@ import java.util.Set;
  * 系统用户参数
  *
  * @author luojie
- * @date 2020/11/6 15:00
+ * @since 2020/11/6 15:00
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

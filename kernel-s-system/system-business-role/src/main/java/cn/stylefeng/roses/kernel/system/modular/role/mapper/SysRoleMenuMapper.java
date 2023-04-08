@@ -31,7 +31,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 角色菜单关联表
  *
  * @author fengshuonan
- * @date 2020/12/19 18:20
+ * @since 2020/12/19 18:20
  */
 public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
 }

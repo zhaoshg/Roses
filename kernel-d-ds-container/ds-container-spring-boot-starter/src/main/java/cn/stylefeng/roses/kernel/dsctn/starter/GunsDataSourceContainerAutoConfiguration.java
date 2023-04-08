@@ -40,7 +40,7 @@ import javax.sql.DataSource;
  * 如果开启此连接池，注意排除 GunsDataSourceAutoConfiguration
  *
  * @author fengshuonan
- * @date 2020/11/30 22:24
+ * @since 2020/11/30 22:24
  */
 @Configuration
 @AutoConfigureBefore(DataSourceAutoConfiguration.class)
@@ -51,7 +51,7 @@ public class GunsDataSourceContainerAutoConfiguration {
      * 多数据源连接池，如果开启此连接池，注意排除 GunsDataSourceAutoConfiguration
      *
      * @author fengshuonan
-     * @date 2020/11/30 22:49
+     * @since 2020/11/30 22:49
      */
     @Bean
     public DynamicDataSource dataSource() {
@@ -62,7 +62,7 @@ public class GunsDataSourceContainerAutoConfiguration {
      * 数据源切换的AOP
      *
      * @author fengshuonan
-     * @date 2020/11/30 22:49
+     * @since 2020/11/30 22:49
      */
     @Bean
     public MultiSourceExchangeAop multiSourceExchangeAop() {

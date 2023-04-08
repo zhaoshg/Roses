@@ -36,7 +36,7 @@ import java.util.List;
  * 默认的根节点id是-1，名称是根节点
  *
  * @author fengshuonan
- * @date 2020/10/15 14:39
+ * @since 2020/10/15 14:39
  */
 @Data
 public class DefaultTreeNode implements AbstractTreeNode<DefaultTreeNode> {

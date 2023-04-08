@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * 清除ip地址相关的ThreadLocalHolder
  *
  * @author fengshuonan
- * @date 2021/10/29 11:42
+ * @since 2021/10/29 11:42
  */
 @Component
 public class IpAddrRemoveThreadLocalHolder implements RemoveThreadLocalApi {

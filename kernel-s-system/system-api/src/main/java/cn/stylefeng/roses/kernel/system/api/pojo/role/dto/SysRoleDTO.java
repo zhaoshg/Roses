@@ -32,7 +32,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @author majianguo
- * @date 2020/11/5 下午3:33
+ * @since 2020/11/5 下午3:33
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

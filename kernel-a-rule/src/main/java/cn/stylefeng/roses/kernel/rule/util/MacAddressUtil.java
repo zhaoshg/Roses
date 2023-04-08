@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * 获取mac地址的工具类
  *
  * @author fengshuonan
- * @date 2020/11/13 12:59
+ * @since 2020/11/13 12:59
  */
 public class MacAddressUtil {
 
@@ -21,7 +21,7 @@ public class MacAddressUtil {
      * 一台机器不一定有多个网卡，所以返回的是数组
      *
      * @author fengshuonan
-     * @date 2020/11/13 13:00
+     * @since 2020/11/13 13:00
      */
     public static List<String> getMacList() throws Exception {
         java.util.Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();

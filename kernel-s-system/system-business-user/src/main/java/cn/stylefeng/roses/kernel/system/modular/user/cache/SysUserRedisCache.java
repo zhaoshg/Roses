@@ -33,7 +33,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  * 用户的缓存
  *
  * @author fengshuonan
- * @date 2021/2/28 10:23
+ * @since 2021/2/28 10:23
  */
 public class SysUserRedisCache extends AbstractRedisCacheOperator<SysUserDTO> {
 

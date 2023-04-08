@@ -6,7 +6,7 @@ import lombok.Data;
  * 数据库连接信息传输DTO
  *
  * @author fengshuonan
- * @date 2021/4/22 14:20
+ * @since 2021/4/22 14:20
  */
 @Data
 public class DataSourceDto {

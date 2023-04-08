@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  * 业务关联的文件实例类
  *
  * @author fengshuonan
- * @date 2023/03/31 13:30
+ * @since 2023/03/31 13:30
  */
 @TableName("sys_file_business")
 @Data

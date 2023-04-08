@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  * 演示环境操作异常
  *
  * @author fengshuonan
- * @date 2020/10/15 15:59
+ * @since 2020/10/15 15:59
  */
 public class DemoException extends ServiceException {
 

@@ -33,7 +33,7 @@ import java.util.Collection;
  * 在白名单的用户不会进行被访问受限
  *
  * @author fengshuonan
- * @date 2020/11/15 16:31
+ * @since 2020/11/15 16:31
  */
 public interface WhiteListApi {
 
@@ -42,7 +42,7 @@ public interface WhiteListApi {
      *
      * @param content 白名单的一条内容，可以是ip，用户id之类的
      * @author fengshuonan
-     * @date 2020/11/15 16:32
+     * @since 2020/11/15 16:32
      */
     void addWhiteItem(String content);
 
@@ -51,7 +51,7 @@ public interface WhiteListApi {
      *
      * @param content 白名单的一条内容，可以是ip，用户id之类的
      * @author fengshuonan
-     * @date 2020/11/15 16:32
+     * @since 2020/11/15 16:32
      */
     void removeWhiteItem(String content);
 
@@ -60,7 +60,7 @@ public interface WhiteListApi {
      *
      * @return 白名单内容的列表
      * @author fengshuonan
-     * @date 2020/11/15 16:33
+     * @since 2020/11/15 16:33
      */
     Collection<String> getWhiteList();
 
@@ -70,7 +70,7 @@ public interface WhiteListApi {
      * @param content 白名单的一条内容，可以是ip，用户id之类的
      * @return true-包含值，false-不包含值
      * @author fengshuonan
-     * @date 2020/11/20 16:55
+     * @since 2020/11/20 16:55
      */
     boolean contains(String content);
 

@@ -33,7 +33,7 @@ import java.util.List;
  * 后台管理员用户业务
  *
  * @author fengshuonan
- * @date 2022/9/30 11:05
+ * @since 2022/9/30 11:05
  */
 public interface SysUserAdminService {
 
@@ -42,7 +42,7 @@ public interface SysUserAdminService {
      *
      * @return 返回的包装类中，id是角色id
      * @author fengshuonan
-     * @date 2022/9/30 11:06
+     * @since 2022/9/30 11:06
      */
     List<SysUserAdminDTO> getAdminUserList();
 
@@ -50,7 +50,7 @@ public interface SysUserAdminService {
      * 添加管理员
      *
      * @author fengshuonan
-     * @date 2022/9/30 13:12
+     * @since 2022/9/30 13:12
      */
     void addAdminUser(SysAdminRequest sysAdminRequest);
 
@@ -58,7 +58,7 @@ public interface SysUserAdminService {
      * 删除管理员
      *
      * @author fengshuonan
-     * @date 2022/9/30 13:52
+     * @since 2022/9/30 13:52
      */
     void deleteAdminUser(SysAdminRequest sysAdminRequest);
 

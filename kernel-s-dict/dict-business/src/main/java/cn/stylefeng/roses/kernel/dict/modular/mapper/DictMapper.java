@@ -37,7 +37,7 @@ import java.util.List;
  * 字典详情的管理
  *
  * @author fengshuonan
- * @date 2020/10/29 17:20
+ * @since 2020/10/29 17:20
  */
 public interface DictMapper extends BaseMapper<SysDict> {
 

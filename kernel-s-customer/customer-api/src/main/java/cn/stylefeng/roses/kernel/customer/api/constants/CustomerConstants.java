@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.customer.api.constants;
  * C端业务的常量
  *
  * @author fengshuonan
- * @date 2021/6/7 11:28
+ * @since 2021/6/7 11:28
  */
 public interface CustomerConstants {
 

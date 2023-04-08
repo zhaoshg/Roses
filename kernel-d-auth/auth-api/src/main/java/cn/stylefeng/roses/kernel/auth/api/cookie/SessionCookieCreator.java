@@ -32,7 +32,7 @@ import javax.servlet.http.Cookie;
  * 每个公司情况不一样，所以预留拓展接口
  *
  * @author fengshuonan
- * @date 2020/12/27 13:28
+ * @since 2020/12/27 13:28
  */
 public abstract class SessionCookieCreator {
 
@@ -45,7 +45,7 @@ public abstract class SessionCookieCreator {
      * @param cookieValue           cookie的值
      * @param sessionExpiredSeconds cookie过期时间
      * @author fengshuonan
-     * @date 2020/12/27 13:29
+     * @since 2020/12/27 13:29
      */
     public Cookie createCookie(String cookieName, String cookieValue, Integer sessionExpiredSeconds) {
         Cookie cookie = new Cookie(cookieName, cookieValue);
@@ -58,7 +58,7 @@ public abstract class SessionCookieCreator {
      * 拓展cookie的配置
      *
      * @author fengshuonan
-     * @date 2020/12/27 13:41
+     * @since 2020/12/27 13:41
      */
     public abstract void expandCookieProp(Cookie cookie);
 

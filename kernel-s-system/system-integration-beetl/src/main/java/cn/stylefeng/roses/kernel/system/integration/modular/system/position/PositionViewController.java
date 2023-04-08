@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
  * 职位管理控制器
  *
  * @author chenjinlong
- * @date 2020/12/28 9:28
+ * @since 2020/12/28 9:28
  */
 @Controller
 @ApiResource(name = "职位管理相关的界面渲染", resBizType = ResBizTypeEnum.SYSTEM)
@@ -19,7 +19,7 @@ public class PositionViewController {
      * 职位管理-首页-视图
      *
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     @GetResource(name = "职位管理-首页-视图", path = "/view/position")
     public String indexView() {
@@ -30,7 +30,7 @@ public class PositionViewController {
      * 职位管理-添加-视图
      *
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     @GetResource(name = "职位管理-添加-视图", path = "/view/position/addView")
     public String addView() {
@@ -41,7 +41,7 @@ public class PositionViewController {
      * 职位管理-修改-视图
      *
      * @author chenjinlong
-     * @date 2020/11/04 11:07
+     * @since 2020/11/04 11:07
      */
     @GetResource(name = "职位管理-修改-视图", path = "/view/position/editView")
     public String editView() {

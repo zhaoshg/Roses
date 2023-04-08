@@ -35,7 +35,7 @@ import java.util.Date;
  * 系统短信表
  *
  * @author fengshuonan
- * @date 2020/10/26 22:16
+ * @since 2020/10/26 22:16
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

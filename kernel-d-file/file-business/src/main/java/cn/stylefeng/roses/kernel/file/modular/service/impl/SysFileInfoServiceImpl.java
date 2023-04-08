@@ -85,7 +85,7 @@ import static cn.stylefeng.roses.kernel.file.api.exception.enums.FileExceptionEn
  * 文件信息表 服务实现类
  *
  * @author stylefeng
- * @date 2020/6/7 22:15
+ * @since 2020/6/7 22:15
  */
 @Service
 @Slf4j
@@ -540,7 +540,7 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
      * 渲染被预览的文件到servlet的response流中
      *
      * @author fengshuonan
-     * @date 2020/11/29 17:13
+     * @since 2020/11/29 17:13
      */
     private void renderPreviewFile(HttpServletResponse response, String fileSuffix, byte[] fileBytes) {
 
@@ -572,7 +572,7 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
      * 获取文件信息表
      *
      * @author fengshuonan
-     * @date 2020/11/29 13:40
+     * @since 2020/11/29 13:40
      */
     private SysFileInfo querySysFileInfo(SysFileInfoRequest sysFileInfoRequest) {
         SysFileInfo sysFileInfo = this.getById(sysFileInfoRequest.getFileId());

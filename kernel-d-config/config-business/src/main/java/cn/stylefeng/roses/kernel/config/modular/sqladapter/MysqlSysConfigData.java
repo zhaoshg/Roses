@@ -16,7 +16,7 @@ import java.util.List;
  * Mysql数据库的系统配置表获取
  *
  * @author fengshuonan
- * @date 2021/3/27 21:18
+ * @since 2021/3/27 21:18
  */
 @Slf4j
 public class MysqlSysConfigData implements SysConfigDataApi {

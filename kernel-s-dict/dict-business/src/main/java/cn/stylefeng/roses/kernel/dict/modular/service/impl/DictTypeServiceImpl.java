@@ -56,7 +56,7 @@ import java.util.List;
  * 字典类型表 服务实现类
  *
  * @author fengshuonan
- * @date 2020/12/26 22:36
+ * @since 2020/12/26 22:36
  */
 @Service
 public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, SysDictType> implements DictTypeService {
@@ -139,7 +139,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, SysDictType
      * 校验dictTypeClass是否是系统字典，如果是系统字典只能超级管理员操作
      *
      * @author fengshuonan
-     * @date 2020/12/25 15:57
+     * @since 2020/12/25 15:57
      */
     private void validateSystemTypeClassOperate(DictTypeRequest dictTypeRequest) {
         if (DictTypeClassEnum.SYSTEM_TYPE.getCode().equals(dictTypeRequest.getDictTypeClass())) {
@@ -153,7 +153,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, SysDictType
      * 根据主键id获取对象
      *
      * @author chenjinlong
-     * @date 2021/1/26 13:28
+     * @since 2021/1/26 13:28
      */
     private SysDictType querySysDictType(DictTypeRequest dictTypeRequest) {
         SysDictType sysDictType = this.getById(dictTypeRequest.getDictTypeId());
@@ -167,7 +167,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, SysDictType
      * 实体构建queryWrapper
      *
      * @author fengshuonan
-     * @date 2021/1/24 22:03
+     * @since 2021/1/24 22:03
      */
     private LambdaQueryWrapper<SysDictType> createWrapper(DictTypeRequest dictTypeRequest) {
         LambdaQueryWrapper<SysDictType> queryWrapper = new LambdaQueryWrapper<>();

@@ -36,7 +36,7 @@ import java.util.Date;
  * 系统用户表
  *
  * @author luojie
- * @date 2020/11/6 09:36
+ * @since 2020/11/6 09:36
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

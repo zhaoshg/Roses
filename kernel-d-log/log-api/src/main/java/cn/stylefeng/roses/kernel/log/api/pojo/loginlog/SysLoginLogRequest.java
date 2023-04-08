@@ -36,7 +36,7 @@ import java.util.Date;
  * 登录日志表
  *
  * @author chenjinlong
- * @date 2021/1/13 11:06
+ * @since 2021/1/13 11:06
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

@@ -38,7 +38,7 @@ import cn.stylefeng.roses.kernel.email.api.pojo.SendMailParam;
  * 邮件发送器
  *
  * @author fengshuonan
- * @date 2020/6/9 22:54
+ * @since 2020/6/9 22:54
  */
 public class JavaMailSender implements MailSenderApi {
 
@@ -67,7 +67,7 @@ public class JavaMailSender implements MailSenderApi {
      *
      * @return {@link MailAccount}
      * @author majianguo
-     * @date 2021/8/16 13:57
+     * @since 2021/8/16 13:57
      **/
     private MailAccount getConfigAccountInfo() {
         MailAccount mailAccount = new MailAccount();
@@ -90,7 +90,7 @@ public class JavaMailSender implements MailSenderApi {
      * 校验发送邮件的请求参数
      *
      * @author fengshuonan
-     * @date 2018/7/8 下午6:41
+     * @since 2018/7/8 下午6:41
      */
     private void assertSendMailParams(SendMailParam sendMailParam) {
         if (sendMailParam == null) {

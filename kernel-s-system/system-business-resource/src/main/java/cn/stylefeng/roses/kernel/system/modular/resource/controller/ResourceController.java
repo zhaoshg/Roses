@@ -44,7 +44,7 @@ import java.util.List;
  * 资源管理控制器
  *
  * @author fengshuonan
- * @date 2020/11/24 19:47
+ * @since 2020/11/24 19:47
  */
 @RestController
 @ApiResource(name = "资源管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -57,7 +57,7 @@ public class ResourceController {
      * 获取资源列表
      *
      * @author fengshuonan
-     * @date 2020/11/24 19:47
+     * @since 2020/11/24 19:47
      */
     @GetResource(name = "获取资源列表", path = "/resource/pageList")
     public ResponseData<PageResult<SysResource>> pageList(ResourceRequest resourceRequest) {
@@ -69,7 +69,7 @@ public class ResourceController {
      * 获取资源下拉列表（获取菜单资源）
      *
      * @author fengshuonan
-     * @date 2020/11/24 19:51
+     * @since 2020/11/24 19:51
      */
     @GetResource(name = "获取资源下拉列表", path = "/resource/getMenuResourceList")
     public ResponseData<List<SysResource>> getMenuResourceList(ResourceRequest resourceRequest) {
@@ -81,7 +81,7 @@ public class ResourceController {
      * Layui版本--获取资源树列表，用于角色分配接口权限
      *
      * @author majianguo
-     * @date 2021/1/9 15:07
+     * @since 2021/1/9 15:07
      */
     @GetResource(name = "Layui版本--获取资源树列表，用于角色分配接口权限", path = "/resource/getRoleResourceTree")
     public List<ResourceTreeNode> getLateralTree(SysRoleRequest sysRoleRequest) {
@@ -92,7 +92,7 @@ public class ResourceController {
      * AntdVue版本--获取资源树列表，用于角色分配接口权限
      *
      * @author majianguo
-     * @date 2021/1/9 15:07
+     * @since 2021/1/9 15:07
      */
     @GetResource(name = "AntdVue版本--获取资源树列表，用于角色分配接口权限", path = "/resource/getRoleResourceTreeAntdv")
     public ResponseData<List<ResourceTreeNode>> getLateralTreeChildren(SysRoleRequest sysRoleRequest) {

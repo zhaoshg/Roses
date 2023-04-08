@@ -73,7 +73,7 @@ import static cn.stylefeng.roses.kernel.dsctn.api.exception.enums.DatasourceCont
  * 数据库信息表 服务实现类
  *
  * @author fengshuonan
- * @date 2020/11/1 21:45
+ * @since 2020/11/1 21:45
  */
 @Service
 public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, DatabaseInfo> implements DatabaseInfoService {
@@ -264,7 +264,7 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
      *
      * @param databaseInfo 数据库信息实体
      * @author fengshuonan
-     * @date 2020/12/19 16:16
+     * @since 2020/12/19 16:16
      */
     private void addDataSourceToContext(DatabaseInfo databaseInfo, Boolean removeOldDatasource) {
 
@@ -299,7 +299,7 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
      * 查询数据库信息通过id
      *
      * @author fengshuonan
-     * @date 2021/2/8 9:53
+     * @since 2021/2/8 9:53
      */
     private DatabaseInfo queryDatabaseInfoById(DatabaseInfoRequest databaseInfoRequest) {
         DatabaseInfo databaseInfo = this.getById(databaseInfoRequest.getDbId());
@@ -313,7 +313,7 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
      * 创建wrapper
      *
      * @author liuhanqing
-     * @date 2021/1/8 14:16
+     * @since 2021/1/8 14:16
      */
     private LambdaQueryWrapper<DatabaseInfo> createWrapper(DatabaseInfoRequest databaseInfoRequest) {
         LambdaQueryWrapper<DatabaseInfo> queryWrapper = new LambdaQueryWrapper<>();

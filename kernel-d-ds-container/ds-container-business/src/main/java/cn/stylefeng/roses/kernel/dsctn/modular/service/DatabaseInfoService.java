@@ -36,7 +36,7 @@ import java.util.List;
  * 数据库信息表 服务类
  *
  * @author fengshuonan
- * @date 2020/11/1 21:46
+ * @since 2020/11/1 21:46
  */
 public interface DatabaseInfoService extends IService<DatabaseInfo>, DataSourceApi {
 
@@ -45,7 +45,7 @@ public interface DatabaseInfoService extends IService<DatabaseInfo>, DataSourceA
      *
      * @param databaseInfoRequest 删除参数
      * @author fengshuonan
-     * @date 2020/11/1 21:47
+     * @since 2020/11/1 21:47
      */
     void del(DatabaseInfoRequest databaseInfoRequest);
 
@@ -54,7 +54,7 @@ public interface DatabaseInfoService extends IService<DatabaseInfo>, DataSourceA
      *
      * @param databaseInfoRequest 编辑参数
      * @author fengshuonan
-     * @date 2020/11/1 21:47
+     * @since 2020/11/1 21:47
      */
     void edit(DatabaseInfoRequest databaseInfoRequest);
 
@@ -63,7 +63,7 @@ public interface DatabaseInfoService extends IService<DatabaseInfo>, DataSourceA
      *
      * @param databaseInfoRequest 查询参数
      * @author fengshuonan
-     * @date 2021/1/23 20:30
+     * @since 2021/1/23 20:30
      */
     DatabaseInfo detail(DatabaseInfoRequest databaseInfoRequest);
 
@@ -73,7 +73,7 @@ public interface DatabaseInfoService extends IService<DatabaseInfo>, DataSourceA
      * @param databaseInfoRequest 查询参数
      * @return 查询分页结果
      * @author fengshuonan
-     * @date 2020/11/1 21:47
+     * @since 2020/11/1 21:47
      */
     PageResult<DatabaseInfo> findPage(DatabaseInfoRequest databaseInfoRequest);
 
@@ -82,7 +82,7 @@ public interface DatabaseInfoService extends IService<DatabaseInfo>, DataSourceA
      *
      * @param databaseInfoRequest 参数
      * @author liuhanqing
-     * @date 2021/2/2 21:21
+     * @since 2021/2/2 21:21
      */
     List<DatabaseInfo> findList(DatabaseInfoRequest databaseInfoRequest);
 
@@ -91,7 +91,7 @@ public interface DatabaseInfoService extends IService<DatabaseInfo>, DataSourceA
      *
      * @param param 参数
      * @author fengshuonan
-     * @date 2021/4/22 10:46
+     * @since 2021/4/22 10:46
      */
     void validateConnection(DatabaseInfoRequest param);
 

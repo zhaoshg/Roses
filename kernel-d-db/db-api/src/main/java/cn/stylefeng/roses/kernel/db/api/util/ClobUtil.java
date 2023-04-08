@@ -8,7 +8,7 @@ import java.sql.Clob;
  * oracle数据库转化工具
  *
  * @author fengshuonan
- * @date 2021/5/19 10:33
+ * @since 2021/5/19 10:33
  */
 public class ClobUtil {
 
@@ -16,7 +16,7 @@ public class ClobUtil {
      * Clob类型转换成String类型
      *
      * @author fengshuonan
-     * @date 2021/5/19 10:33
+     * @since 2021/5/19 10:33
      */
     public static String clobToString(final Clob clob) {
 

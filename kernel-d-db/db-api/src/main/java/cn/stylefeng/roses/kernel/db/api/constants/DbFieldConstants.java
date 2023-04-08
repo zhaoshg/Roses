@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.db.api.constants;
  * 数据库常用字段的枚举
  *
  * @author fengshuonan
- * @date 2020/10/16 17:07
+ * @since 2020/10/16 17:07
  */
 public interface DbFieldConstants {
 

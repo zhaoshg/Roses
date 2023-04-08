@@ -34,7 +34,7 @@ import java.util.Map;
  * 拓展字段Api
  *
  * @author fengshuonan
- * @date 2022-03-29 23:14:31
+ * @since 2022-03-29 23:14:31
  */
 public interface ExpandApi {
 
@@ -42,7 +42,7 @@ public interface ExpandApi {
      * 保存或更新动态数据
      *
      * @author fengshuonan
-     * @date 2022/3/31 21:20
+     * @since 2022/3/31 21:20
      */
     void saveOrUpdateExpandData(ExpandDataInfo expandDataInfo);
 
@@ -50,7 +50,7 @@ public interface ExpandApi {
      * 获取列表需要的拓展字段信息
      *
      * @author fengshuonan
-     * @date 2022/4/1 9:48
+     * @since 2022/4/1 9:48
      */
     List<ExpandFieldInfo> getPageListExpandFieldList(String expandCode);
 
@@ -58,7 +58,7 @@ public interface ExpandApi {
      * 获取某一条拓展数据
      *
      * @author fengshuonan
-     * @date 2022/4/1 9:55
+     * @since 2022/4/1 9:55
      */
     Map<String, Object> getExpandDataInfo(String expandCode, Long primaryFieldValue);
 

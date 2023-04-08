@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.system.modular.menu.entity.SysMenu;
  * 设置菜单的类型
  *
  * @author fengshuonan
- * @date 2021/7/21 14:36
+ * @since 2021/7/21 14:36
  */
 public class MenuTypeFactory {
 
@@ -41,7 +41,7 @@ public class MenuTypeFactory {
      * 根据sysMenu的参数，进行menu类型的判断
      *
      * @author fengshuonan
-     * @date 2021/7/21 14:44
+     * @since 2021/7/21 14:44
      */
     public static void processMenuType(SysMenu sysMenu, String visible) {
 

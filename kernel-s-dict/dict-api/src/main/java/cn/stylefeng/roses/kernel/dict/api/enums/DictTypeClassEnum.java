@@ -30,7 +30,7 @@ import lombok.Getter;
  * 字典类型的分类枚举
  *
  * @author fengshuonan
- * @date 2020/10/30 10:19
+ * @since 2020/10/30 10:19
  */
 @Getter
 public enum DictTypeClassEnum {

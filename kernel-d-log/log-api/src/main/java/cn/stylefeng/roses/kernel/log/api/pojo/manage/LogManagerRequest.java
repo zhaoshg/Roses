@@ -36,7 +36,7 @@ import javax.validation.constraints.NotNull;
  * 日志管理的查询参数
  *
  * @author fengshuonan
- * @date 2020/10/28 11:26
+ * @since 2020/10/28 11:26
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

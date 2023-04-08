@@ -31,7 +31,7 @@ import cn.stylefeng.roses.kernel.log.api.pojo.loginlog.SysLoginLogRequest;
  * 登录日志api接口
  *
  * @author chenjinlong
- * @date 2021/1/13 11:12
+ * @since 2021/1/13 11:12
  */
 public interface LoginLogServiceApi {
 
@@ -40,7 +40,7 @@ public interface LoginLogServiceApi {
      *
      * @param sysLoginLogRequest 参数
      * @author chenjinlong
-     * @date 2021/1/13 10:56
+     * @since 2021/1/13 10:56
      */
     void add(SysLoginLogRequest sysLoginLogRequest);
 
@@ -49,7 +49,7 @@ public interface LoginLogServiceApi {
      *
      * @param userId 用户id
      * @author chenjinlong
-     * @date 2021/1/13 11:36
+     * @since 2021/1/13 11:36
      */
     void loginSuccess(Long userId);
 
@@ -59,7 +59,7 @@ public interface LoginLogServiceApi {
      * @param userId     用户id
      * @param llgMessage 错误信息
      * @author chenjinlong
-     * @date 2021/1/13 11:36
+     * @since 2021/1/13 11:36
      */
     void loginFail(Long userId, String llgMessage);
 
@@ -68,7 +68,7 @@ public interface LoginLogServiceApi {
      *
      * @param userId 用户id
      * @author chenjinlong
-     * @date 2021/1/13 11:36
+     * @since 2021/1/13 11:36
      */
     void loginOutSuccess(Long userId);
 
@@ -77,7 +77,7 @@ public interface LoginLogServiceApi {
      *
      * @param userId 用户id
      * @author chenjinlong
-     * @date 2021/1/13 11:36
+     * @since 2021/1/13 11:36
      */
     void loginOutFail(Long userId);
 

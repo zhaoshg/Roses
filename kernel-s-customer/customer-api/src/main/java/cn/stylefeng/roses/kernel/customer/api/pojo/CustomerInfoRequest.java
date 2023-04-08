@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * 用户信息修改的请求bean
  *
  * @author fengshuonan
- * @date 2021/6/18 16:37
+ * @since 2021/6/18 16:37
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

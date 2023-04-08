@@ -49,7 +49,7 @@ import java.util.List;
  * 字典详情管理，具体管理某个字典类型下的条目
  *
  * @author fengshuonan
- * @date 2020/10/29 14:45
+ * @since 2020/10/29 14:45
  */
 @RestController
 @ApiResource(name = "字典详情管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -62,7 +62,7 @@ public class DictController {
      * 添加字典条目
      *
      * @author fengshuonan
-     * @date 2020/10/29 16:35
+     * @since 2020/10/29 16:35
      */
     @PostResource(name = "添加字典", path = "/dict/add")
     @BusinessLog
@@ -75,7 +75,7 @@ public class DictController {
      * 删除字典条目
      *
      * @author fengshuonan
-     * @date 2020/10/29 16:35
+     * @since 2020/10/29 16:35
      */
     @PostResource(name = "删除字典", path = "/dict/delete")
     @BusinessLog
@@ -88,7 +88,7 @@ public class DictController {
      * 修改字典条目
      *
      * @author fengshuonan
-     * @date 2020/10/29 16:35
+     * @since 2020/10/29 16:35
      */
     @PostResource(name = "修改字典", path = "/dict/edit")
     @BusinessLog
@@ -101,7 +101,7 @@ public class DictController {
      * 获取字典详情
      *
      * @author fengshuonan
-     * @date 2020/10/29 16:35
+     * @since 2020/10/29 16:35
      */
     @GetResource(name = "获取字典详情", path = "/dict/detail", requiredPermission = false)
     public ResponseData<SysDict> detail(@Validated(BaseRequest.detail.class) DictRequest dictRequest) {
@@ -113,7 +113,7 @@ public class DictController {
      * 获取字典列表
      *
      * @author fengshuonan
-     * @date 2020/10/29 16:35
+     * @since 2020/10/29 16:35
      */
     @GetResource(name = "获取字典列表", path = "/dict/list", requiredPermission = false)
     public ResponseData<List<SysDict>> list(DictRequest dictRequest) {
@@ -124,7 +124,7 @@ public class DictController {
      * 获取字典列表(分页)
      *
      * @author fengshuonan
-     * @date 2020/10/29 16:35
+     * @since 2020/10/29 16:35
      */
     @GetResource(name = "获取字典列表", path = "/dict/page", requiredPermission = false)
     public ResponseData<PageResult<SysDict>> page(DictRequest dictRequest) {
@@ -136,7 +136,7 @@ public class DictController {
      * 获取树形字典列表（antdv在用）
      *
      * @author fengshuonan
-     * @date 2020/10/29 16:36
+     * @since 2020/10/29 16:36
      */
     @GetResource(name = "获取树形字典列表", path = "/dict/getDictTreeList", requiredPermission = false)
     public ResponseData<List<TreeDictInfo>> getDictTreeList(@Validated(DictRequest.treeList.class) DictRequest dictRequest) {
@@ -148,7 +148,7 @@ public class DictController {
      * 获取系统配置分组字典列表(分页)（给系统配置界面，左侧获取配置的分类用）
      *
      * @author chenjinlong
-     * @date 2021/1/25 11:47
+     * @since 2021/1/25 11:47
      */
     @GetResource(name = "获取系统配置分组字典列表", path = "/dict/getConfigGroupPage", requiredPermission = false)
     public ResponseData<PageResult<SysDict>> getConfigGroupPage(DictRequest dictRequest) {
@@ -161,7 +161,7 @@ public class DictController {
      * 获取多语言字典列表(分页)（给多语言界面，左侧获取多语言的分类用）
      *
      * @author chenjinlong
-     * @date 2021/1/25 11:47
+     * @since 2021/1/25 11:47
      */
     @GetResource(name = "获取多语言字典列表", path = "/dict/getLanguagesPage", requiredPermission = false)
     public ResponseData<PageResult<SysDict>> getLanguagesPage(DictRequest dictRequest) {

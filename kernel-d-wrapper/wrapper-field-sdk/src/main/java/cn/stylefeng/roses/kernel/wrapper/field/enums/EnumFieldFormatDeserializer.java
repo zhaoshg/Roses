@@ -12,7 +12,7 @@ import java.io.IOException;
  * 针对@EnumFieldFormat注解的具体反序列化过程
  *
  * @author fengshuonan
- * @date 2022/9/24 15:04
+ * @since 2022/9/24 15:04
  */
 @Slf4j
 public class EnumFieldFormatDeserializer extends JsonDeserializer<Object> {

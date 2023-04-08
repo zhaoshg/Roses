@@ -10,7 +10,7 @@ import java.io.IOException;
  * 简单封装Spring Boot的默认WebSocket
  *
  * @author majianguo
- * @date 2021/6/1 下午3:41
+ * @since 2021/6/1 下午3:41
  */
 public class GunsSocketOperator implements SocketChannelExpandInterFace {
 

@@ -33,7 +33,7 @@ import lombok.Getter;
  * Wrapper异常的状态码
  *
  * @author fengshuonan
- * @date 2021/1/19 22:24
+ * @since 2021/1/19 22:24
  */
 @Getter
 public enum WrapperExceptionEnum implements AbstractExceptionEnum {

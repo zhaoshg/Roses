@@ -33,7 +33,7 @@ import static cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEn
  * 数据范围类型枚举，数据范围的值越小，数据权限越小
  *
  * @author fengshuonan
- * @date 2020/11/5 15:22
+ * @since 2020/11/5 15:22
  */
 @Getter
 public enum DataScopeTypeEnum {
@@ -76,7 +76,7 @@ public enum DataScopeTypeEnum {
      * 根据code获取枚举
      *
      * @author fengshuonan
-     * @date 2020/10/29 18:59
+     * @since 2020/10/29 18:59
      */
     public static DataScopeTypeEnum codeToEnum(Integer code) {
         if (null != code) {

@@ -38,7 +38,7 @@ import java.util.List;
  * 系统消息的查询参数
  *
  * @author liuhanqing
- * @date 2021/1/1 20:23
+ * @since 2021/1/1 20:23
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

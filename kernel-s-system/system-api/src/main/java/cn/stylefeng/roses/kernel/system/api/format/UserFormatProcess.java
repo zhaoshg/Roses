@@ -17,7 +17,7 @@ import static cn.stylefeng.roses.kernel.rule.constants.RuleConstants.TENANT_DB_P
  * Json响应的针对用户的处理
  *
  * @author fengshuonan
- * @date 2022/9/7 10:09
+ * @since 2022/9/7 10:09
  */
 public class UserFormatProcess extends BaseSimpleFieldFormatProcess {
 
@@ -56,7 +56,7 @@ public class UserFormatProcess extends BaseSimpleFieldFormatProcess {
      * 业务逻辑执行
      *
      * @author fengshuonan
-     * @date 2022/11/10 1:29
+     * @since 2022/11/10 1:29
      */
     private Object execute(Object businessId) {
         Long userId = Convert.toLong(businessId);

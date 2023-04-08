@@ -32,7 +32,7 @@ import lombok.Data;
  * EasyCaptcha 图形验证码参数
  *
  * @author fengshuonan
- * @date 2020/8/17 21:43
+ * @since 2020/8/17 21:43
  */
 @Data
 @Builder

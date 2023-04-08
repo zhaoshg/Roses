@@ -35,7 +35,7 @@ import java.util.List;
  * 系统消息 service接口
  *
  * @author liuhanqing
- * @date 2020/12/31 20:09
+ * @since 2020/12/31 20:09
  */
 public interface SysMessageService extends IService<SysMessage> {
 
@@ -44,7 +44,7 @@ public interface SysMessageService extends IService<SysMessage> {
      *
      * @param messageRequest 参数对象
      * @author liuhanqing
-     * @date 2021/2/2 20:48
+     * @since 2021/2/2 20:48
      */
     void add(MessageRequest messageRequest);
 
@@ -53,7 +53,7 @@ public interface SysMessageService extends IService<SysMessage> {
      *
      * @param messageRequest 参数对象
      * @author liuhanqing
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void del(MessageRequest messageRequest);
 
@@ -62,7 +62,7 @@ public interface SysMessageService extends IService<SysMessage> {
      *
      * @param messageRequest 参数对象
      * @author liuhanqing
-     * @date 2021/2/2 20:48
+     * @since 2021/2/2 20:48
      */
     void edit(MessageRequest messageRequest);
 
@@ -71,7 +71,7 @@ public interface SysMessageService extends IService<SysMessage> {
      *
      * @param messageRequest 参数对象
      * @author liuhanqing
-     * @date 2021/2/2 20:48
+     * @since 2021/2/2 20:48
      */
     SysMessage detail(MessageRequest messageRequest);
 
@@ -80,7 +80,7 @@ public interface SysMessageService extends IService<SysMessage> {
      *
      * @param messageRequest 参数
      * @author liuhanqing
-     * @date 2021/2/2 20:48
+     * @since 2021/2/2 20:48
      */
     PageResult<SysMessage> findPage(MessageRequest messageRequest);
 
@@ -89,7 +89,7 @@ public interface SysMessageService extends IService<SysMessage> {
      *
      * @param messageRequest 参数
      * @author liuhanqing
-     * @date 2021/1/8 15:21
+     * @since 2021/1/8 15:21
      */
     List<SysMessage> findList(MessageRequest messageRequest);
 
@@ -98,7 +98,7 @@ public interface SysMessageService extends IService<SysMessage> {
      *
      * @param messageRequest 参数
      * @author liuhanqing
-     * @date 2021/1/11 19:21
+     * @since 2021/1/11 19:21
      */
     Integer findCount(MessageRequest messageRequest);
 

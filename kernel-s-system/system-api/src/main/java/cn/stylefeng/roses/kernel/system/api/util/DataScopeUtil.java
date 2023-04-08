@@ -38,7 +38,7 @@ import java.util.Set;
  * 数据范围相关的工具类，快捷方法
  *
  * @author fengshuonan
- * @date 2020/11/5 15:31
+ * @since 2020/11/5 15:31
  */
 public class DataScopeUtil {
 
@@ -46,7 +46,7 @@ public class DataScopeUtil {
      * 一句话获取当前登录用户的数据范围信息
      *
      * @author fengshuonan
-     * @date 2020/11/5 16:07
+     * @since 2020/11/5 16:07
      */
     public static String getDataScopeTip() {
 
@@ -96,7 +96,7 @@ public class DataScopeUtil {
      *
      * @param organizationId 被校验的组织机构id
      * @author fengshuonan
-     * @date 2020/11/5 15:31
+     * @since 2020/11/5 15:31
      */
     public static boolean validateDataScopeByOrganizationId(Long organizationId) {
 
@@ -149,7 +149,7 @@ public class DataScopeUtil {
      *
      * @param organizationId 被校验的组织机构id
      * @author fengshuonan
-     * @date 2020/11/5 15:31
+     * @since 2020/11/5 15:31
      */
     public static void quickValidateDataScope(Long organizationId) {
         boolean validateResult = validateDataScopeByOrganizationId(organizationId);

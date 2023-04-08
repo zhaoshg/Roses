@@ -39,7 +39,7 @@ import java.util.List;
  * 系统角色service接口
  *
  * @author majianguo
- * @date 2020/11/5 上午11:12
+ * @since 2020/11/5 上午11:12
  */
 public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
 
@@ -48,7 +48,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      *
      * @param sysRoleRequest 添加参数
      * @author majianguo
-     * @date 2020/11/5 上午11:13
+     * @since 2020/11/5 上午11:13
      */
     void add(SysRoleRequest sysRoleRequest);
 
@@ -57,7 +57,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      *
      * @param sysRoleRequest 编辑参数
      * @author majianguo
-     * @date 2020/11/5 上午11:14
+     * @since 2020/11/5 上午11:14
      */
     void edit(SysRoleRequest sysRoleRequest);
 
@@ -67,7 +67,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      * @param sysRoleRequest 查看参数
      * @return 系统角色
      * @author majianguo
-     * @date 2020/11/5 上午11:14
+     * @since 2020/11/5 上午11:14
      */
     SysRoleDTO detail(SysRoleRequest sysRoleRequest);
 
@@ -77,7 +77,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      * @param sysRoleRequest 查询参数
      * @return 查询分页结果
      * @author majianguo
-     * @date 2020/11/5 上午11:13
+     * @since 2020/11/5 上午11:13
      */
     PageResult<SysRole> findPage(SysRoleRequest sysRoleRequest);
 
@@ -87,7 +87,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      * @param sysRoleRequest 查询参数
      * @return 增强版hashMap，格式：[{"id":456, "name":"总经理(zjl)"}]
      * @author majianguo
-     * @date 2020/11/5 上午11:13
+     * @since 2020/11/5 上午11:13
      */
     List<SimpleDict> findList(SysRoleRequest sysRoleRequest);
 
@@ -95,7 +95,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      * 授权菜单和按钮
      *
      * @author majianguo
-     * @date 2021/1/9 18:13
+     * @since 2021/1/9 18:13
      */
     void grantMenuAndButton(SysRoleRequest sysRoleMenuButtonRequest);
 
@@ -103,7 +103,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      * 角色绑定菜单，新界面用
      *
      * @author fengshuonan
-     * @date 2021/8/11 10:02
+     * @since 2021/8/11 10:02
      */
     void grantMenu(SysRoleRequest sysRoleMenuButtonRequest);
 
@@ -111,7 +111,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      * 角色绑定按钮，新界面用
      *
      * @author fengshuonan
-     * @date 2021/8/11 10:02
+     * @since 2021/8/11 10:02
      */
     List<MenuAndButtonTreeResponse> grantButton(SysRoleRequest sysRoleMenuButtonRequest);
 
@@ -120,7 +120,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      *
      * @param sysRoleRequest 授权参数
      * @author majianguo
-     * @date 2020/11/5 上午11:14
+     * @since 2020/11/5 上午11:14
      */
     void grantDataScope(SysRoleRequest sysRoleRequest);
 
@@ -129,7 +129,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      *
      * @return 增强版hashMap，格式：[{"id":456, "code":"zjl", "name":"总经理"}]
      * @author majianguo
-     * @date 2020/11/5 上午11:13
+     * @since 2020/11/5 上午11:13
      */
     List<SimpleDict> dropDown();
 
@@ -139,7 +139,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      * @param sysRoleRequest 查询参数
      * @return 数据范围id集合
      * @author majianguo
-     * @date 2020/11/5 上午11:15
+     * @since 2020/11/5 上午11:15
      */
     List<Long> getRoleDataScope(SysRoleRequest sysRoleRequest);
 
@@ -147,7 +147,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      * 授权菜单和按钮集合
      *
      * @author fengshuonan
-     * @date 2022/6/21 9:55
+     * @since 2022/6/21 9:55
      */
     void grantMenusAndButtons(SysRoleRequest sysRoleRequest);
 
@@ -155,7 +155,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      * 授权菜单和按钮集合，并获取结果
      *
      * @author fengshuonan
-     * @date 2022/6/27 17:08
+     * @since 2022/6/27 17:08
      */
     List<MenuAndButtonTreeResponse> grantMenusAndButtonsAndGetResult(SysRoleRequest sysRoleRequest);
 
@@ -163,7 +163,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      * 角色权限界面，绑定角色的菜单权限
      *
      * @author fengshuonan
-     * @date 2022/9/28 20:29
+     * @since 2022/9/28 20:29
      */
     List<MenuAndButtonTreeResponse> grantRoleMenus(SysRoleRequest sysRoleRequest);
 
@@ -171,7 +171,7 @@ public interface SysRoleService extends IService<SysRole>, RoleServiceApi {
      * 角色权限界面，绑定角色的菜单权限，全选操作
      *
      * @author fengshuonan
-     * @date 2022/9/29 9:43
+     * @since 2022/9/29 9:43
      */
     List<MenuAndButtonTreeResponse> grantRoleMenusGrantAll(SysRoleRequest sysRoleRequest);
 

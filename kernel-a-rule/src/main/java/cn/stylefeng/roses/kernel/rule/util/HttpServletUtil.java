@@ -46,7 +46,7 @@ import java.util.List;
  * 保存Http请求的上下文，在任何地方快速获取HttpServletRequest和HttpServletResponse
  *
  * @author fengshuonan
- * @date 2020/10/15 17:38
+ * @since 2020/10/15 17:38
  */
 @Slf4j
 public class HttpServletUtil {
@@ -75,7 +75,7 @@ public class HttpServletUtil {
      * 获取当前请求的request对象
      *
      * @author fengshuonan
-     * @date 2020/10/15 17:48
+     * @since 2020/10/15 17:48
      */
     public static HttpServletRequest getRequest() {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
@@ -90,7 +90,7 @@ public class HttpServletUtil {
      * 获取当前请求的response对象
      *
      * @author fengshuonan
-     * @date 2020/10/15 17:48
+     * @since 2020/10/15 17:48
      */
     public static HttpServletResponse getResponse() {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
@@ -107,7 +107,7 @@ public class HttpServletUtil {
      * 如果获取不到或者获取到的是ipv6地址，都返回127.0.0.1
      *
      * @author fengshuonan
-     * @date 2020/10/26 14:09
+     * @since 2020/10/26 14:09
      */
     public static String getRequestClientIp(HttpServletRequest request) {
         if (ObjectUtil.isEmpty(request)) {
@@ -125,7 +125,7 @@ public class HttpServletUtil {
      * @param ipGeoApi     阿里云ip定位api接口
      * @param ipGeoAppCode 阿里云ip定位appCode
      * @author fengshuonan
-     * @date 2020/10/26 14:10
+     * @since 2020/10/26 14:10
      */
     @SuppressWarnings("unchecked")
     public static String calcClientIpAddress(HttpServletRequest request, String ipGeoApi, String ipGeoAppCode) {
@@ -172,7 +172,7 @@ public class HttpServletUtil {
      * 没有相关header被解析，则返回null
      *
      * @author fengshuonan
-     * @date 2020/10/28 9:14
+     * @since 2020/10/28 9:14
      */
     public static UserAgent getUserAgent(HttpServletRequest request) {
 
@@ -194,7 +194,7 @@ public class HttpServletUtil {
      *
      * @return ture-是普通请求
      * @author fengshuonan
-     * @date 2021/2/22 22:37
+     * @since 2021/2/22 22:37
      */
     public static Boolean getNormalRequestFlag(HttpServletRequest request) {
         return request.getHeader("Accept") == null || request.getHeader("Accept").toLowerCase().contains("text/html");
@@ -207,7 +207,7 @@ public class HttpServletUtil {
      *
      * @return ture-是json请求
      * @author fengshuonan
-     * @date 2021/2/22 22:37
+     * @since 2021/2/22 22:37
      */
     public static Boolean getJsonRequestFlag(HttpServletRequest request) {
         return request.getHeader("Accept") == null || request.getHeader("Accept").toLowerCase().contains("application/json");

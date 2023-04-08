@@ -30,7 +30,7 @@ import lombok.Data;
  * 角色菜单关联返回数据
  *
  * @author majianguo
- * @date 2021/1/9 18:07
+ * @since 2021/1/9 18:07
  */
 @Data
 public class SysRoleMenuDTO {

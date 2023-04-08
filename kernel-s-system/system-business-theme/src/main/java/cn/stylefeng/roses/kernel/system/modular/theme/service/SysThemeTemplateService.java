@@ -12,7 +12,7 @@ import java.util.List;
  * 系统主题模板service接口
  *
  * @author xixiaowei
- * @date 2021/12/17 13:55
+ * @since 2021/12/17 13:55
  */
 public interface SysThemeTemplateService extends IService<SysThemeTemplate> {
 
@@ -20,7 +20,7 @@ public interface SysThemeTemplateService extends IService<SysThemeTemplate> {
      * 增加系统主题模板
      *
      * @author xixiaowei
-     * @date 2021/12/17 14:04
+     * @since 2021/12/17 14:04
      */
     void add(SysThemeTemplateRequest sysThemeTemplateRequest);
 
@@ -28,7 +28,7 @@ public interface SysThemeTemplateService extends IService<SysThemeTemplate> {
      * 编辑系统主题模板
      *
      * @author xixiaowei
-     * @date 2021/12/17 14:21
+     * @since 2021/12/17 14:21
      */
     void edit(SysThemeTemplateRequest sysThemeTemplateRequest);
 
@@ -36,7 +36,7 @@ public interface SysThemeTemplateService extends IService<SysThemeTemplate> {
      * 删除系统主题模板
      *
      * @author xixiaowei
-     * @date 2021/12/17 14:38
+     * @since 2021/12/17 14:38
      */
     void del(SysThemeTemplateRequest sysThemeTemplateRequest);
 
@@ -45,7 +45,7 @@ public interface SysThemeTemplateService extends IService<SysThemeTemplate> {
      *
      * @return 分页结果
      * @author xixiaowei
-     * @date 2021/12/17 14:52
+     * @since 2021/12/17 14:52
      */
     PageResult<SysThemeTemplate> findPage(SysThemeTemplateRequest sysThemeTemplateRequest);
 
@@ -53,7 +53,7 @@ public interface SysThemeTemplateService extends IService<SysThemeTemplate> {
      * 查询系统诸如提模板列表
      *
      * @author xixiaowei
-     * @date 2021/12/29 9:10
+     * @since 2021/12/29 9:10
      */
     List<SysThemeTemplate> findList(SysThemeTemplateRequest sysThemeTemplateRequest);
 
@@ -61,7 +61,7 @@ public interface SysThemeTemplateService extends IService<SysThemeTemplate> {
      * 修改系统主题模板状态
      *
      * @author xixiaowei
-     * @date 2021/12/17 15:03
+     * @since 2021/12/17 15:03
      */
     void updateTemplateStatus(SysThemeTemplateRequest sysThemeTemplateRequest);
 
@@ -69,7 +69,7 @@ public interface SysThemeTemplateService extends IService<SysThemeTemplate> {
      * 查询系统主题模板详情
      *
      * @author xixiaowei
-     * @date 2021/12/17 16:00
+     * @since 2021/12/17 16:00
      */
     List<SysThemeTemplateDataDTO> detail(SysThemeTemplateRequest sysThemeTemplateRequest);
 }

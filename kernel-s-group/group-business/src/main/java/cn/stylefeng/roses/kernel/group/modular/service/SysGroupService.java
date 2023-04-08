@@ -12,7 +12,7 @@ import java.util.List;
  * 业务分组 服务类
  *
  * @author fengshuonan
- * @date 2022/05/11 12:54
+ * @since 2022/05/11 12:54
  */
 public interface SysGroupService extends IService<SysGroup>, GroupApi {
 
@@ -20,7 +20,7 @@ public interface SysGroupService extends IService<SysGroup>, GroupApi {
      * 添加时候的选择分组列表
      *
      * @author fengshuonan
-     * @date 2022/5/11 17:00
+     * @since 2022/5/11 17:00
      */
     List<SysGroupDTO> addSelect(SysGroupRequest sysGroupRequest);
 
@@ -29,7 +29,7 @@ public interface SysGroupService extends IService<SysGroup>, GroupApi {
      *
      * @param sysGroupRequest 请求参数
      * @author fengshuonan
-     * @date 2022/05/11 12:54
+     * @since 2022/05/11 12:54
      */
     void add(SysGroupRequest sysGroupRequest);
 
@@ -38,7 +38,7 @@ public interface SysGroupService extends IService<SysGroup>, GroupApi {
      *
      * @param sysGroupRequest 请求参数
      * @author fengshuonan
-     * @date 2022/05/11 12:54
+     * @since 2022/05/11 12:54
      */
     void del(SysGroupRequest sysGroupRequest);
 

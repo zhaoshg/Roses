@@ -8,7 +8,7 @@ import cn.stylefeng.roses.kernel.socket.api.session.SocketSessionOperatorApi;
  * 暂时只写接口，SocketOperatorApi方法不够用时再对此类进行扩展
  *
  * @author majianguo
- * @date 2021/6/1 下午3:44
+ * @since 2021/6/1 下午3:44
  */
 public interface SocketChannelExpandInterFace extends SocketSessionOperatorApi {
 

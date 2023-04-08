@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  * 日志异常枚举
  *
  * @author fengshuonan
- * @date 2020/10/15 15:59
+ * @since 2020/10/15 15:59
  */
 public class LogException extends ServiceException {
 

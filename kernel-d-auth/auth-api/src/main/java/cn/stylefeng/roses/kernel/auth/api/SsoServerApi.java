@@ -30,7 +30,7 @@ import cn.stylefeng.roses.kernel.auth.api.pojo.sso.SsoLoginCodeRequest;
  * 单点服务端相关api
  *
  * @author fengshuonan
- * @date 2022/5/16 16:53
+ * @since 2022/5/16 16:53
  */
 public interface SsoServerApi {
 
@@ -40,7 +40,7 @@ public interface SsoServerApi {
      * @param ssoLoginCodeRequest 账号和密码
      * @return ssoLoginCode，用在单点登录
      * @author fengshuonan
-     * @date 2021/1/27 17:26
+     * @since 2021/1/27 17:26
      */
     String createSsoLoginCode(SsoLoginCodeRequest ssoLoginCodeRequest);
 

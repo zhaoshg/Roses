@@ -8,7 +8,7 @@ import java.util.Collection;
  * 字段类型判断
  *
  * @author fengshuonan
- * @date 2022/9/7 10:24
+ * @since 2022/9/7 10:24
  */
 public class MixFieldTypeUtil {
 
@@ -16,7 +16,7 @@ public class MixFieldTypeUtil {
      * 判断fieldValue是否是Long、List<Long>、Long[]类型，如果是其中任何一种，则都返回true
      *
      * @author fengshuonan
-     * @date 2022/9/7 10:24
+     * @since 2022/9/7 10:24
      */
     public static boolean whetherAssignClass(Object fieldValue, Class<?> clazz) {
 

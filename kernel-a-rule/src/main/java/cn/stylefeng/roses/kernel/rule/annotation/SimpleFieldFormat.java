@@ -33,7 +33,7 @@ import java.lang.annotation.*;
  * json字段的格式化，可以将类似id值，转化为具体的具有可读性的名称，例如：用户id -> 用户姓名
  *
  * @author fengshuonan
- * @date 2022/9/6 11:34
+ * @since 2022/9/6 11:34
  */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)

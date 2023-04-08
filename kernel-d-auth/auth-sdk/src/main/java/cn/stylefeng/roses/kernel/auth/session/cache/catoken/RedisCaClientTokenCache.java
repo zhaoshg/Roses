@@ -37,7 +37,7 @@ import static cn.stylefeng.roses.kernel.auth.api.constants.AuthConstants.CA_CLIE
  * value：  本系统的token
  *
  * @author fengshuonan
- * @date 2022/5/20 11:37
+ * @since 2022/5/20 11:37
  */
 public class RedisCaClientTokenCache extends AbstractRedisCacheOperator<String> {
 

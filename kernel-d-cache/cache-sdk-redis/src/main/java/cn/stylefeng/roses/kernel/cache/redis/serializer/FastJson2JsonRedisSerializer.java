@@ -37,7 +37,7 @@ import java.nio.charset.StandardCharsets;
  * fastjson redis序列化器
  *
  * @author fengshuonan
- * @date 2017/11/7 上午9:20
+ * @since 2017/11/7 上午9:20
  */
 public class FastJson2JsonRedisSerializer<T> implements RedisSerializer<T> {
 

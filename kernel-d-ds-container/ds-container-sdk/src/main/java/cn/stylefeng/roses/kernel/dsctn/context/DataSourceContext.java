@@ -41,7 +41,7 @@ import static cn.stylefeng.roses.kernel.dsctn.api.constants.DatasourceContainerC
  * 存放数据源容和数据源配置的容器
  *
  * @author fengshuonan
- * @date 2020/10/31 23:40
+ * @since 2020/10/31 23:40
  */
 public class DataSourceContext {
 
@@ -63,7 +63,7 @@ public class DataSourceContext {
      * 初始化所有dataSource
      *
      * @author fengshuonan
-     * @date 2020/10/31 23:40
+     * @since 2020/10/31 23:40
      */
     public static void initDataSource(DruidProperties masterDataSourceProperties, DataSource dataSourcePrimary) {
 
@@ -101,7 +101,7 @@ public class DataSourceContext {
      * 新增数据源到容器中
      *
      * @author fengshuonan
-     * @date 2020/10/31 23:40
+     * @since 2020/10/31 23:40
      */
     public static void addDataSource(String dbName, DataSource dataSource, DruidProperties druidProperties) {
         DATA_SOURCES.put(dbName, dataSource);
@@ -112,7 +112,7 @@ public class DataSourceContext {
      * 获取所有数据源
      *
      * @author fengshuonan
-     * @date 2020/10/31 23:42
+     * @since 2020/10/31 23:42
      */
     public static Map<String, DataSource> getDataSources() {
         return DATA_SOURCES;
@@ -122,7 +122,7 @@ public class DataSourceContext {
      * 获取数据源的配置
      *
      * @author fengshuonan
-     * @date 2020/10/31 23:42
+     * @since 2020/10/31 23:42
      */
     public static Map<String, DruidProperties> getDataSourcesConfs() {
         return DATA_SOURCES_CONF;
@@ -132,7 +132,7 @@ public class DataSourceContext {
      * 删除容器中的数据源
      *
      * @author fengshuonan
-     * @date 2020/10/31 23:44
+     * @since 2020/10/31 23:44
      */
     public static void removeDataSource(String dataSourceName) {
 
@@ -153,7 +153,7 @@ public class DataSourceContext {
      * 创建数据源，但是不添加到容器中
      *
      * @author fengshuonan
-     * @date 2020/10/31 23:43
+     * @since 2020/10/31 23:43
      */
     private static DataSource createDataSource(String dataSourceName, DruidProperties druidProperties) {
 

@@ -47,7 +47,7 @@ import static cn.stylefeng.roses.kernel.email.api.exception.enums.EmailException
  * 阿里云邮件发送的实现
  *
  * @author fengshuonan
- * @date 2020/10/30 22:26
+ * @since 2020/10/30 22:26
  */
 public class AliyunMailSender implements MailSenderApi {
 
@@ -71,7 +71,7 @@ public class AliyunMailSender implements MailSenderApi {
      * 发送单个阿里云邮件
      *
      * @author fengshuonan
-     * @date 2020/10/30 23:39
+     * @since 2020/10/30 23:39
      */
     public void sendAliyunMail(AliyunSendMailParam aliyunSendMailParam) {
 
@@ -97,7 +97,7 @@ public class AliyunMailSender implements MailSenderApi {
      * 批量发送阿里云邮件
      *
      * @author fengshuonan
-     * @date 2020/10/30 23:39
+     * @since 2020/10/30 23:39
      */
     public void sendBatchAliyunMail(AliyunSendMailParam aliyunSendMailParam) {
 
@@ -123,7 +123,7 @@ public class AliyunMailSender implements MailSenderApi {
      * 阿里云邮箱推送方式发送邮件
      *
      * @author fengshuonan
-     * @date 2020/10/30 22:28
+     * @since 2020/10/30 22:28
      */
     private IAcsClient initClient() {
         if (acsClient != null) {
@@ -144,7 +144,7 @@ public class AliyunMailSender implements MailSenderApi {
      * 创建发送一个邮件的请求
      *
      * @author fengshuonan
-     * @date 2020/10/30 22:39
+     * @since 2020/10/30 22:39
      */
     private SingleSendMailRequest createSingleSendRequest(AliyunSendMailParam aliyunSendMailParam) {
         SingleSendMailRequest request = new SingleSendMailRequest();
@@ -187,7 +187,7 @@ public class AliyunMailSender implements MailSenderApi {
      * 创建发送批量邮件的请求
      *
      * @author fengshuonan
-     * @date 2020/10/30 22:39
+     * @since 2020/10/30 22:39
      */
     private BatchSendMailRequest createBatchSendRequest(AliyunSendMailParam aliyunSendMailParam) {
         BatchSendMailRequest request = new BatchSendMailRequest();
@@ -221,7 +221,7 @@ public class AliyunMailSender implements MailSenderApi {
      * 校验发送邮件的请求参数
      *
      * @author fengshuonan
-     * @date 2018/7/8 下午6:41
+     * @since 2018/7/8 下午6:41
      */
     private void assertSendMailParams(AliyunSendMailParam aliyunSendMailParam) {
         if (aliyunSendMailParam == null) {

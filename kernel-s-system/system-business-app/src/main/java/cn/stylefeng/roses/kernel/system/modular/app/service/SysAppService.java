@@ -35,7 +35,7 @@ import java.util.List;
  * 系统应用service接口
  *
  * @author fengshuonan
- * @date 2020/3/13 16:14
+ * @since 2020/3/13 16:14
  */
 public interface SysAppService extends IService<SysApp> {
 
@@ -44,7 +44,7 @@ public interface SysAppService extends IService<SysApp> {
      *
      * @param sysAppParam 添加参数
      * @author fengshuonan
-     * @date 2020/3/25 14:57
+     * @since 2020/3/25 14:57
      */
     void add(SysAppRequest sysAppParam);
 
@@ -53,7 +53,7 @@ public interface SysAppService extends IService<SysApp> {
      *
      * @param sysAppParam 删除参数
      * @author fengshuonan
-     * @date 2020/3/25 14:57
+     * @since 2020/3/25 14:57
      */
     void del(SysAppRequest sysAppParam);
 
@@ -62,7 +62,7 @@ public interface SysAppService extends IService<SysApp> {
      *
      * @param sysAppParam 编辑参数
      * @author fengshuonan
-     * @date 2020/3/25 14:58
+     * @since 2020/3/25 14:58
      */
     void edit(SysAppRequest sysAppParam);
 
@@ -71,7 +71,7 @@ public interface SysAppService extends IService<SysApp> {
      *
      * @param sysAppParam 请求参数
      * @author fengshuonan
-     * @date 2021/1/6 14:30
+     * @since 2021/1/6 14:30
      */
     void editStatus(SysAppRequest sysAppParam);
 
@@ -81,7 +81,7 @@ public interface SysAppService extends IService<SysApp> {
      * @param sysAppParam 查看参数
      * @return 系统应用
      * @author fengshuonan
-     * @date 2020/3/26 9:50
+     * @since 2020/3/26 9:50
      */
     SysApp detail(SysAppRequest sysAppParam);
 
@@ -91,7 +91,7 @@ public interface SysAppService extends IService<SysApp> {
      * @param sysAppParam 查询参数
      * @return 系统应用列表
      * @author fengshuonan
-     * @date 2020/4/19 14:56
+     * @since 2020/4/19 14:56
      */
     List<SysApp> findList(SysAppRequest sysAppParam);
 
@@ -101,7 +101,7 @@ public interface SysAppService extends IService<SysApp> {
      * @param sysAppParam 查询参数
      * @return 查询分页结果
      * @author fengshuonan
-     * @date 2020/3/24 20:55
+     * @since 2020/3/24 20:55
      */
     PageResult<SysApp> findPage(SysAppRequest sysAppParam);
 
@@ -110,7 +110,7 @@ public interface SysAppService extends IService<SysApp> {
      *
      * @param sysAppParam 设为默认应用参数
      * @author fengshuonan
-     * @date 2020/6/29 16:49
+     * @since 2020/6/29 16:49
      */
     void updateActiveFlag(SysAppRequest sysAppParam);
 
@@ -118,7 +118,7 @@ public interface SysAppService extends IService<SysApp> {
      * 获取用户的顶部app导航列表
      *
      * @author fengshuonan
-     * @date 2021/4/21 15:34
+     * @since 2021/4/21 15:34
      */
     List<SysApp> getUserTopAppList();
 

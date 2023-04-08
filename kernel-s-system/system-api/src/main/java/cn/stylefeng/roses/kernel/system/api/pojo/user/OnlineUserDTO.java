@@ -34,7 +34,7 @@ import java.util.Date;
  * 当前的在线用户的信息封装
  *
  * @author fengshuonan
- * @date 2021/1/11 22:30
+ * @since 2021/1/11 22:30
  */
 @Data
 public class OnlineUserDTO {

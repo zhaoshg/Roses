@@ -25,7 +25,7 @@ import java.util.Map;
  * 首页相关数据组装服务
  *
  * @author fengshuonan
- * @date 2020/12/27 18:25
+ * @since 2020/12/27 18:25
  */
 @Service
 public class IndexService {
@@ -46,7 +46,7 @@ public class IndexService {
      * 获取首页需要渲染的参数
      *
      * @author fengshuonan
-     * @date 2021/1/1 18:27
+     * @since 2021/1/1 18:27
      */
     public Map<String, Object> createIndexRenderAttributes() {
 
@@ -83,7 +83,7 @@ public class IndexService {
      * 创建个人中心页面需要渲染的值
      *
      * @author fengshuonan
-     * @date 2021/1/1 18:38
+     * @since 2021/1/1 18:38
      */
     public Map<String, Object> createPersonInfoRenderAttributes() {
 

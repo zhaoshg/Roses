@@ -48,7 +48,7 @@ import java.util.List;
  * 字典类型管理
  *
  * @author fengshuonan
- * @date 2020/10/30 21:46
+ * @since 2020/10/30 21:46
  */
 @RestController
 @ApiResource(name = "字典类型管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -61,7 +61,7 @@ public class DictTypeController {
      * 添加字典类型
      *
      * @author fengshuonan
-     * @date 2018/7/25 下午12:36
+     * @since 2018/7/25 下午12:36
      */
     @PostResource(name = "添加字典类型", path = "/dictType/add")
     @BusinessLog
@@ -74,7 +74,7 @@ public class DictTypeController {
      * 删除字典类型
      *
      * @author fengshuonan
-     * @date 2018/7/25 下午12:36
+     * @since 2018/7/25 下午12:36
      */
     @PostResource(name = "删除字典类型", path = "/dictType/delete")
     @BusinessLog
@@ -87,7 +87,7 @@ public class DictTypeController {
      * 修改字典类型
      *
      * @author fengshuonan
-     * @date 2018/7/25 下午12:36
+     * @since 2018/7/25 下午12:36
      */
     @PostResource(name = "修改字典类型", path = "/dictType/edit")
     @BusinessLog
@@ -100,7 +100,7 @@ public class DictTypeController {
      * 修改字典类型状态
      *
      * @author fengshuonan
-     * @date 2018/7/25 下午12:36
+     * @since 2018/7/25 下午12:36
      */
     @PostResource(name = "修改字典类型状态", path = "/dictType/updateStatus")
     @BusinessLog
@@ -113,7 +113,7 @@ public class DictTypeController {
      * 获取字典类型详情
      *
      * @author fengshuonan
-     * @date 2021/1/13 11:25
+     * @since 2021/1/13 11:25
      */
     @GetResource(name = "获取字典类型详情", path = "/dictType/detail", requiredPermission = false)
     public ResponseData<SysDictType> detail(@Validated(BaseRequest.detail.class) DictTypeRequest dictTypeRequest) {
@@ -125,7 +125,7 @@ public class DictTypeController {
      * 获取字典类型列表
      *
      * @author fengshuonan
-     * @date 2020/10/30 21:46
+     * @since 2020/10/30 21:46
      */
     @GetResource(name = "获取字典类型列表", path = "/dictType/list", requiredPermission = false)
     public ResponseData<List<SysDictType>> list(DictTypeRequest dictTypeRequest) {
@@ -136,7 +136,7 @@ public class DictTypeController {
      * 获取字典类型列表(分页)
      *
      * @author fengshuonan
-     * @date 2020/10/30 21:46
+     * @since 2020/10/30 21:46
      */
     @GetResource(name = "获取字典类型列表(分页)", path = "/dictType/page", requiredPermission = false)
     public ResponseData<PageResult<SysDictType>> page(DictTypeRequest dictTypeRequest) {
@@ -147,7 +147,7 @@ public class DictTypeController {
      * 获取字典类型详情
      *
      * @author fengshuonan
-     * @date 2021/1/13 11:25
+     * @since 2021/1/13 11:25
      */
     @GetResource(name = "获取系统配置字典类型详情", path = "/dictType/getConfigDictTypeDetail", requiredPermission = false)
     public ResponseData<SysDictType> getConfigDictTypeDetail(DictTypeRequest dictTypeRequest) {
@@ -160,7 +160,7 @@ public class DictTypeController {
      * 获取字典类型详情
      *
      * @author fengshuonan
-     * @date 2021/1/13 11:25
+     * @since 2021/1/13 11:25
      */
     @GetResource(name = "获取语种字典类型型详情", path = "/dictType/getTranslationDetail", requiredPermission = false)
     public ResponseData<SysDictType> getTranslationDetail(DictTypeRequest dictTypeRequest) {

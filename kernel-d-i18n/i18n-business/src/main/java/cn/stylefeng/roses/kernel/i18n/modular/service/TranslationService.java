@@ -36,7 +36,7 @@ import java.util.List;
  * 多语言表 服务类
  *
  * @author fengshuonan
- * @date 2021/1/24 19:21
+ * @since 2021/1/24 19:21
  */
 public interface TranslationService extends IService<Translation>, TranslationPersistenceApi {
 
@@ -45,7 +45,7 @@ public interface TranslationService extends IService<Translation>, TranslationPe
      *
      * @param translationRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void add(TranslationRequest translationRequest);
 
@@ -54,7 +54,7 @@ public interface TranslationService extends IService<Translation>, TranslationPe
      *
      * @param translationRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void del(TranslationRequest translationRequest);
 
@@ -63,7 +63,7 @@ public interface TranslationService extends IService<Translation>, TranslationPe
      *
      * @param translationRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void edit(TranslationRequest translationRequest);
 
@@ -72,7 +72,7 @@ public interface TranslationService extends IService<Translation>, TranslationPe
      *
      * @param translationRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     Translation detail(TranslationRequest translationRequest);
 
@@ -81,7 +81,7 @@ public interface TranslationService extends IService<Translation>, TranslationPe
      *
      * @param translationRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     List<Translation> findList(TranslationRequest translationRequest);
 
@@ -90,7 +90,7 @@ public interface TranslationService extends IService<Translation>, TranslationPe
      *
      * @param translationRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     PageResult<Translation> findPage(TranslationRequest translationRequest);
 
@@ -99,7 +99,7 @@ public interface TranslationService extends IService<Translation>, TranslationPe
      *
      * @param translationRequest 参数对象
      * @author fengshuonan
-     * @date 2021/1/30 10:00
+     * @since 2021/1/30 10:00
      */
     void deleteTranLanguage(TranslationRequest translationRequest);
 

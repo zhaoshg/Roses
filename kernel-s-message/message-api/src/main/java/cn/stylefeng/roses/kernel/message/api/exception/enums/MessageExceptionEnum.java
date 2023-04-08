@@ -33,7 +33,7 @@ import lombok.Getter;
  * 消息异常枚举
  *
  * @author liuhanqing
- * @date 2021/1/1 21:14
+ * @since 2021/1/1 21:14
  */
 @Getter
 public enum MessageExceptionEnum implements AbstractExceptionEnum {

@@ -6,7 +6,7 @@ import cn.stylefeng.roses.kernel.seata.order.entity.Order;
  * 订单 业务层
  *
  * @author wangyl
- * @date 2021/04/21 08:33
+ * @since 2021/04/21 08:33
  */
 public interface OrderService {
 
@@ -17,7 +17,7 @@ public interface OrderService {
      * @param commodityCode 商品编码
      * @param orderCount    购买数量
      * @author wangyl
-     * @date 2021/4/21 9:43
+     * @since 2021/4/21 9:43
      */
     Order create(String userId, String commodityCode, int orderCount);
 

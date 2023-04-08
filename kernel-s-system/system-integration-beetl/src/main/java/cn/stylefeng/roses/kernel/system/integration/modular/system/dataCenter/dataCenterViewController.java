@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
  * 数据中心视图控制器
  *
  * @author linjinfeng
- * @date 2021/3/29 10:00
+ * @since 2021/3/29 10:00
  */
 @Controller
 @ApiResource(name = "数据中心导入导出相关的界面渲染", resBizType = ResBizTypeEnum.SYSTEM)
@@ -19,7 +19,7 @@ public class dataCenterViewController {
      * 基础数据-导出中心-视图
      *
      * @author linjinfeng
-     * @date 2021/3/29 10:00
+     * @since 2021/3/29 10:00
      */
     @GetResource(name = "基础数据-导出中心-视图", path = "/view/export")
     public String exportView() {
@@ -30,7 +30,7 @@ public class dataCenterViewController {
      * 基础数据-导入中心-视图
      *
      * @author linjinfeng
-     * @date 2021/3/29 10:00
+     * @since 2021/3/29 10:00
      */
     @GetResource(name = "基础数据-导出中心-视图", path = "/view/import")
     public String importView() {

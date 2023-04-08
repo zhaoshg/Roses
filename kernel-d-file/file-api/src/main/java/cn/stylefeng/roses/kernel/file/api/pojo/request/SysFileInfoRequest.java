@@ -39,7 +39,7 @@ import javax.validation.constraints.NotNull;
  * 2、如果业务场景类似合同这类，文件升级不影响已签发的文件，则业务关联fileId，每次版本升级都会生成新的fileId
  *
  * @author majianguo
- * @date 2020/12/27 12:35
+ * @since 2020/12/27 12:35
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

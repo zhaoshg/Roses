@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
  * 初始化系统配置参数
  *
  * @author fengshuonan
- * @date 2021/7/8 16:38
+ * @since 2021/7/8 16:38
  */
 @Data
 @AllArgsConstructor

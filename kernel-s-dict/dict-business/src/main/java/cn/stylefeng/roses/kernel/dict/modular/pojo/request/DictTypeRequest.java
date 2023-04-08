@@ -39,7 +39,7 @@ import java.math.BigDecimal;
  * 字典类型，请求参数封装
  *
  * @author fengshuonan
- * @date 2020/10/30 11:05
+ * @since 2020/10/30 11:05
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

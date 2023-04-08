@@ -14,7 +14,7 @@ import java.util.List;
  * 针对一般业务型的主键id的转化
  *
  * @author fengshuonan
- * @date 2022/9/7 11:50
+ * @since 2022/9/7 11:50
  */
 public abstract class BaseSimpleFieldFormatProcess implements SimpleFieldFormatProcess {
 
@@ -61,7 +61,7 @@ public abstract class BaseSimpleFieldFormatProcess implements SimpleFieldFormatP
      * 原始值得类型
      *
      * @author fengshuonan
-     * @date 2022/9/7 11:52
+     * @since 2022/9/7 11:52
      */
     public abstract Class<?> getItemClass();
 
@@ -73,7 +73,7 @@ public abstract class BaseSimpleFieldFormatProcess implements SimpleFieldFormatP
      * @param businessId 业务id
      * @return 转化之后的值
      * @author fengshuonan
-     * @date 2022/9/7 12:58
+     * @since 2022/9/7 12:58
      */
     public abstract Object simpleItemFormat(Object businessId);
 

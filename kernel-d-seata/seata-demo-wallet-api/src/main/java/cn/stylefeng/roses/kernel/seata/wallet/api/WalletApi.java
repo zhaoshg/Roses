@@ -4,7 +4,7 @@ package cn.stylefeng.roses.kernel.seata.wallet.api;
  * 用户钱包 api
  *
  * @author wangyl
- * @date 2021/04/10 16:42
+ * @since 2021/04/10 16:42
  */
 public interface WalletApi {
 
@@ -14,7 +14,7 @@ public interface WalletApi {
      * @param userId 用户ID
      * @param money  消费金额
      * @author wangyl
-     * @date 2021/4/21 9:44
+     * @since 2021/4/21 9:44
      */
     void debit(String userId, Integer money);
 

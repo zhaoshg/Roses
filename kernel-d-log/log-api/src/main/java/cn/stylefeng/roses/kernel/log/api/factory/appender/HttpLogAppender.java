@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
  * 日志信息追加，用来追加http接口请求信息
  *
  * @author fengshuonan
- * @date 2020/10/27 17:45
+ * @since 2020/10/27 17:45
  */
 public class HttpLogAppender {
 
@@ -43,7 +43,7 @@ public class HttpLogAppender {
      * 追加请求信息到logRecordDTO
      *
      * @author fengshuonan
-     * @date 2020/10/27 18:22
+     * @since 2020/10/27 18:22
      */
     public static void appendHttpLog(LogRecordDTO logRecordDTO) {
 

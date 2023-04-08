@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
  * 异步记录日志用的线程池
  *
  * @author fengshuonan
- * @date 2020/10/28 15:24
+ * @since 2020/10/28 15:24
  */
 public class LogManagerThreadPool {
 
@@ -56,7 +56,7 @@ public class LogManagerThreadPool {
      * 异步执行日志的方法
      *
      * @author fengshuonan
-     * @date 2020/10/28 15:27
+     * @since 2020/10/28 15:27
      */
     public void executeLog(TimerTask task) {
         int operateDelayTime = 10;

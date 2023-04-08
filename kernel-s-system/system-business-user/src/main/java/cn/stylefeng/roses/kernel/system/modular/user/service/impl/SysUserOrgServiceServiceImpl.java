@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
  * 用户组织机构关联信息
  *
  * @author fengshuonan
- * @date 2020/12/19 22:17
+ * @since 2020/12/19 22:17
  */
 @Service
 public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUserOrg> implements SysUserOrgService {
@@ -197,7 +197,7 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
      * 根据主键id获取对象
      *
      * @author chenjinlong
-     * @date 2021/1/26 13:28
+     * @since 2021/1/26 13:28
      */
     private SysUserOrg querySysUserOrgById(UserOrgRequest userOrgResponse) {
         SysUserOrg sysUserOrg = this.getById(userOrgResponse.getUserOrgId());
@@ -211,7 +211,7 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
      * 实体构建queryWrapper
      *
      * @author fengshuonan
-     * @date 2021/1/24 22:03
+     * @since 2021/1/24 22:03
      */
     private LambdaQueryWrapper<SysUserOrg> createWrapper(UserOrgRequest userOrgResponse) {
         LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();

@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
  * 单点登录，获取ssoLoginCode的请求参数封装
  *
  * @author fengshuonan
- * @date 2021/1/27 16:55
+ * @since 2021/1/27 16:55
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

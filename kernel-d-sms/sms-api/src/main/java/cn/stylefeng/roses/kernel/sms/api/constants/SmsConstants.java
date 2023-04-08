@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.sms.api.constants;
  * 短信模块的常量
  *
  * @author fengshuonan
- * @date 2020/10/26 15:42
+ * @since 2020/10/26 15:42
  */
 public interface SmsConstants {
 

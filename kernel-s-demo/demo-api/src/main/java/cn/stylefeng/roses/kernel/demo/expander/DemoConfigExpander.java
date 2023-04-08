@@ -30,7 +30,7 @@ import cn.stylefeng.roses.kernel.config.api.context.ConfigContext;
  * 演示环境相关的配置拓展
  *
  * @author fengshuonan
- * @date 2020/10/17 16:10
+ * @since 2020/10/17 16:10
  */
 public class DemoConfigExpander {
 
@@ -39,7 +39,7 @@ public class DemoConfigExpander {
      *
      * @return true-开启，false-关闭
      * @author fengshuonan
-     * @date 2020/10/17 16:12
+     * @since 2020/10/17 16:12
      */
     public static Boolean getDemoEnvFlag() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_DEMO_ENV_FLAG", Boolean.class, false);

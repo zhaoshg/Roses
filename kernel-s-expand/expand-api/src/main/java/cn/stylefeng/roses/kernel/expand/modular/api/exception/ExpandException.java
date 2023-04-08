@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  * 拓展字段异常
  *
  * @author fengshuonan
- * @date 2022-03-29 23:14:31
+ * @since 2022-03-29 23:14:31
  */
 public class ExpandException extends ServiceException {
 

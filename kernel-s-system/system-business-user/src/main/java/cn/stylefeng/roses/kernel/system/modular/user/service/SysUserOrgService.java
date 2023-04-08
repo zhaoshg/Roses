@@ -35,7 +35,7 @@ import java.util.List;
  * 用户组织机构关联信息
  *
  * @author fengshuonan
- * @date 2020/12/19 22:17
+ * @since 2020/12/19 22:17
  */
 public interface SysUserOrgService extends IService<SysUserOrg>, UserOrgServiceApi {
 
@@ -44,7 +44,7 @@ public interface SysUserOrgService extends IService<SysUserOrg>, UserOrgServiceA
      *
      * @param userOrgResponse 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void add(UserOrgRequest userOrgResponse);
 
@@ -54,7 +54,7 @@ public interface SysUserOrgService extends IService<SysUserOrg>, UserOrgServiceA
      * @param userId     用户id
      * @param orgId      机构id
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void add(Long userId, Long orgId);
 
@@ -65,7 +65,7 @@ public interface SysUserOrgService extends IService<SysUserOrg>, UserOrgServiceA
      * @param orgId      机构id
      * @param positionId 职位id
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void add(Long userId, Long orgId, Long positionId);
 
@@ -74,7 +74,7 @@ public interface SysUserOrgService extends IService<SysUserOrg>, UserOrgServiceA
      *
      * @param userOrgResponse 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void del(UserOrgRequest userOrgResponse);
 
@@ -83,7 +83,7 @@ public interface SysUserOrgService extends IService<SysUserOrg>, UserOrgServiceA
      *
      * @param userId 用户id
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void delByUserId(Long userId);
 
@@ -92,7 +92,7 @@ public interface SysUserOrgService extends IService<SysUserOrg>, UserOrgServiceA
      *
      * @param userOrgResponse 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void edit(UserOrgRequest userOrgResponse);
 
@@ -102,7 +102,7 @@ public interface SysUserOrgService extends IService<SysUserOrg>, UserOrgServiceA
      * @param userId     用户id
      * @param orgId      机构id
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void edit(Long userId, Long orgId);
 
@@ -113,7 +113,7 @@ public interface SysUserOrgService extends IService<SysUserOrg>, UserOrgServiceA
      * @param orgId      机构id
      * @param positionId 职位id
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void edit(Long userId, Long orgId, Long positionId);
 
@@ -122,7 +122,7 @@ public interface SysUserOrgService extends IService<SysUserOrg>, UserOrgServiceA
      *
      * @param userOrgResponse 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     SysUserOrg detail(UserOrgRequest userOrgResponse);
 
@@ -131,7 +131,7 @@ public interface SysUserOrgService extends IService<SysUserOrg>, UserOrgServiceA
      *
      * @param userOrgResponse 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     List<SysUserOrg> findList(UserOrgRequest userOrgResponse);
 

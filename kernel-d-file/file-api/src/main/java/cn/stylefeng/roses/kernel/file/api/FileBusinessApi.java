@@ -32,7 +32,7 @@ import java.util.List;
  * 文件业务信息绑定的API
  *
  * @author fengshuonan
- * @date 2023/3/31 13:38
+ * @since 2023/3/31 13:38
  */
 public interface FileBusinessApi {
 
@@ -43,7 +43,7 @@ public interface FileBusinessApi {
      * @param businessId   业务id
      * @param fileIdList   文件id集合
      * @author fengshuonan
-     * @date 2023/3/31 13:43
+     * @since 2023/3/31 13:43
      */
     void addFileBusinessBind(String businessCode, Long businessId, List<Long> fileIdList);
 
@@ -53,7 +53,7 @@ public interface FileBusinessApi {
      * @param businessId 业务id
      * @return 文件的信息，不包含文件本身的字节信息
      * @author fengshuonan
-     * @date 2020/11/29 16:26
+     * @since 2020/11/29 16:26
      */
     List<SysFileInfoResponse> getBusinessFileInfoList(Long businessId);
 
@@ -61,7 +61,7 @@ public interface FileBusinessApi {
      * 新增文件下载次数
      *
      * @author fengshuonan
-     * @date 2023/3/31 14:23
+     * @since 2023/3/31 14:23
      */
     void addFileDownloadCount(Long businessId, Long fileId);
 

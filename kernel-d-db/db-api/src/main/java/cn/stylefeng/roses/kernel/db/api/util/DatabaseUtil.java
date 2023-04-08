@@ -25,7 +25,7 @@ import java.util.List;
  * 数据库操作工具类，可用来获取一些元数据
  *
  * @author fengshuonan
- * @date 2021/5/19 10:35
+ * @since 2021/5/19 10:35
  */
 @Slf4j
 public class DatabaseUtil {
@@ -34,7 +34,7 @@ public class DatabaseUtil {
      * 获取数据库中的所有数据库列表
      *
      * @author fengshuonan
-     * @date 2021/5/26 20:42
+     * @since 2021/5/26 20:42
      */
     public static List<String> getDatabases(DruidProperties druidProperties) {
         Connection conn = null;
@@ -67,7 +67,7 @@ public class DatabaseUtil {
      * 查询某个数据库连接的所有表
      *
      * @author fengshuonan
-     * @date 2021/5/19 10:35
+     * @since 2021/5/19 10:35
      */
     public static List<TableInfo> selectTables(DruidProperties druidProperties) {
         List<TableInfo> tables = new ArrayList<>();
@@ -111,7 +111,7 @@ public class DatabaseUtil {
      * 查询某个表的所有字段
      *
      * @author fengshuonan
-     * @date 2021/5/19 11:01
+     * @since 2021/5/19 11:01
      */
     public static List<TableFieldInfo> getTableFields(DruidProperties druidProperties, String tableName) {
         ArrayList<TableFieldInfo> fieldList = new ArrayList<>();
@@ -160,7 +160,7 @@ public class DatabaseUtil {
      * 创建数据库
      *
      * @author fengshuonan
-     * @date 2021/5/19 10:39
+     * @since 2021/5/19 10:39
      */
     public static void createDatabase(DruidProperties druidProperties, String databaseName) {
         Connection conn = null;
@@ -191,7 +191,7 @@ public class DatabaseUtil {
      * oracle的数据库会直接返回username作为数据库名称，这里需要注意一下，如果用户名不是数据库名则返回不准确
      *
      * @author fengshuonan
-     * @date 2021/5/19 10:39
+     * @since 2021/5/19 10:39
      */
     private static String getDbName(DruidProperties druidProperties) {
 

@@ -15,7 +15,7 @@ import java.util.Random;
  * 生成拖拽验证码的工具
  *
  * @author fengshuonan
- * @date 2021/7/5 14:06
+ * @since 2021/7/5 14:06
  */
 public class DragCaptchaImageUtil {
 
@@ -63,7 +63,7 @@ public class DragCaptchaImageUtil {
      * 根据传入的路径生成指定验证码图片
      *
      * @author fengshuonan
-     * @date 2021/7/5 14:08
+     * @since 2021/7/5 14:08
      */
     public static DragCaptchaImageDTO getVerifyImage(InputStream inputStream) throws IOException {
         BufferedImage srcImage = ImageIO.read(inputStream);
@@ -209,7 +209,7 @@ public class DragCaptchaImageUtil {
      * 随机获取一张图片对象
      *
      * @author fengshuonan
-     * @date 2021/7/5 14:07
+     * @since 2021/7/5 14:07
      */
     public static BufferedImage getRandomImage(String path) throws IOException {
         File files = new File(path);
@@ -231,7 +231,7 @@ public class DragCaptchaImageUtil {
      * 将IMG输出为文件
      *
      * @author fengshuonan
-     * @date 2021/7/5 14:07
+     * @since 2021/7/5 14:07
      */
     public static void writeImg(BufferedImage image, String file) throws Exception {
         byte[] imagedata = null;
@@ -247,7 +247,7 @@ public class DragCaptchaImageUtil {
      * 将图片转换为BASE64
      *
      * @author fengshuonan
-     * @date 2021/7/5 14:07
+     * @since 2021/7/5 14:07
      */
     public static String getImageBASE64(BufferedImage image) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();

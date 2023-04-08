@@ -50,7 +50,7 @@ import java.util.Map;
  * 用户多语言信息控制器
  *
  * @author fengshuonan
- * @date 2021/1/27 21:59
+ * @since 2021/1/27 21:59
  */
 @RestController
 @ApiResource(name = "用户多语言信息控制器", resBizType = ResBizTypeEnum.SYSTEM)
@@ -66,7 +66,7 @@ public class UserTranslationController {
      * 获取所有的多语言类型编码
      *
      * @author fengshuonan
-     * @date 2021/1/24 19:20
+     * @since 2021/1/24 19:20
      */
     @GetResource(name = "获取所有的多语言类型编码", path = "/i18n/getAllLanguages", requiredPermission = false)
     public ResponseData<List<SimpleDict>> getAllLanguages() {
@@ -78,7 +78,7 @@ public class UserTranslationController {
      * 获取当前用户的多语言字典
      *
      * @author fengshuonan
-     * @date 2021/1/27 22:00
+     * @since 2021/1/27 22:00
      */
     @GetResource(name = "获取当前用户的多语言字典", path = "/i18n/getUserTranslation", requiredPermission = false)
     public ResponseData<Map<String, String>> getUserTranslation() {
@@ -91,7 +91,7 @@ public class UserTranslationController {
      * 修改当前用户的多语言配置
      *
      * @author fengshuonan
-     * @date 2021/1/27 22:04
+     * @since 2021/1/27 22:04
      */
     @PostResource(name = "修改当前用户的多语言配置", path = "/i18n/changeUserTranslation", requiredPermission = false)
     public ResponseData<?> changeUserTranslation(@RequestBody @Validated(TranslationRequest.changeUserLanguage.class) TranslationRequest translationRequest) {

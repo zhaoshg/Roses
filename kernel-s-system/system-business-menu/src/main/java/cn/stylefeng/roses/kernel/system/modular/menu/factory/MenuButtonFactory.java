@@ -37,7 +37,7 @@ import java.util.Locale;
  * 组装菜单按钮
  *
  * @author chenjinlong
- * @date 2021/1/27 16:22
+ * @since 2021/1/27 16:22
  */
 public class MenuButtonFactory {
 
@@ -47,7 +47,7 @@ public class MenuButtonFactory {
      * @param menuId 菜单id
      * @return 系统默认菜单按钮集合
      * @author chenjinlong
-     * @date 2021/1/27 15:36
+     * @since 2021/1/27 15:36
      */
     public static List<SysMenuButton> createSystemDefaultButton(Long menuId, String menuName, String menuCode) {
 

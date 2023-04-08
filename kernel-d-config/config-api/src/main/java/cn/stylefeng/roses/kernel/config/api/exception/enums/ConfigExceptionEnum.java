@@ -33,7 +33,7 @@ import lombok.Getter;
  * 系统配置表相关的异常枚举
  *
  * @author fengshuonan
- * @date 2020/10/16 10:53
+ * @since 2020/10/16 10:53
  */
 @Getter
 public enum ConfigExceptionEnum implements AbstractExceptionEnum {

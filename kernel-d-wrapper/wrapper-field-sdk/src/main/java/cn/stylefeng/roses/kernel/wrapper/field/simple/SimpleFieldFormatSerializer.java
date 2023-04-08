@@ -14,7 +14,7 @@ import java.io.IOException;
  * 针对@SimpleFieldFormat注解的具体序列化过程
  *
  * @author fengshuonan
- * @date 2022/9/6 14:09
+ * @since 2022/9/6 14:09
  */
 @Slf4j
 public class SimpleFieldFormatSerializer extends JsonSerializer<Object> {
@@ -49,7 +49,7 @@ public class SimpleFieldFormatSerializer extends JsonSerializer<Object> {
      * 真正处理序列化的逻辑
      *
      * @author fengshuonan
-     * @date 2022/9/7 11:11
+     * @since 2022/9/7 11:11
      */
     private void action(Object originValue, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws InstantiationException, IllegalAccessException, IOException {
 

@@ -9,7 +9,7 @@ import java.util.Date;
  * 用户信息封装
  *
  * @author fengshuonan
- * @date 2021/6/8 21:23
+ * @since 2021/6/8 21:23
  */
 @Data
 public class CustomerInfo {

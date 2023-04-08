@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  * 业务分组异常
  *
  * @author fengshuonan
- * @date 2022-06-24 17:15:41
+ * @since 2022-06-24 17:15:41
  */
 public class GroupException extends ServiceException {
 

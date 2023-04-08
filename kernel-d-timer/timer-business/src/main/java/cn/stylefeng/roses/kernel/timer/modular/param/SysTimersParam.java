@@ -36,7 +36,7 @@ import javax.validation.constraints.NotNull;
  * 定时任务
  *
  * @author stylefeng
- * @date 2020/6/30 18:26
+ * @since 2020/6/30 18:26
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

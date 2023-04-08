@@ -36,7 +36,7 @@ import java.util.Date;
  * 演示环境的自动配置
  *
  * @author fengshuonan
- * @date 2020/12/1 21:51
+ * @since 2020/12/1 21:51
  */
 @Configuration
 public class GunsDemoAutoConfiguration {
@@ -48,7 +48,7 @@ public class GunsDemoAutoConfiguration {
      * 演示环境的sql拦截器
      *
      * @author fengshuonan
-     * @date 2020/12/1 21:18
+     * @since 2020/12/1 21:18
      */
     @Bean
     public DemoProfileSqlInterceptor demoProfileSqlInterceptor() {

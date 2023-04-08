@@ -34,7 +34,7 @@ import javax.validation.ConstraintValidatorContext;
  * 日期校验格式，通过format的参数来校验格式
  *
  * @author fengshuonan
- * @date 2020/11/18 21:30
+ * @since 2020/11/18 21:30
  */
 public class DateValueValidator implements ConstraintValidator<DateValue, String> {
 

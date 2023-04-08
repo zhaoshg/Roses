@@ -33,7 +33,7 @@ import java.util.List;
  * 封装antd vue需要的dto
  *
  * @author fengshuonan
- * @date 2021/3/23 21:26
+ * @since 2021/3/23 21:26
  */
 @Data
 public class AntdSysMenuDTO {

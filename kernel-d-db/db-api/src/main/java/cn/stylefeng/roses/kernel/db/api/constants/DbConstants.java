@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.db.api.constants;
  * 数据库模块的常量
  *
  * @author fengshuonan
- * @date 2020/10/16 11:05
+ * @since 2020/10/16 11:05
  */
 public interface DbConstants {
 

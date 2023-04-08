@@ -54,7 +54,7 @@ import java.util.List;
  * 系统组织机构控制器
  *
  * @author fengshuonan
- * @date 2020/11/18 21:55
+ * @since 2020/11/18 21:55
  */
 @RestController
 @ApiResource(name = "系统组织机构管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -67,7 +67,7 @@ public class HrOrganizationController {
      * 添加系统组织机构
      *
      * @author fengshuonan
-     * @date 2020/11/04 11:05
+     * @since 2020/11/04 11:05
      */
     @PostResource(name = "添加系统组织机构", path = "/hrOrganization/add")
     @BusinessLog
@@ -80,7 +80,7 @@ public class HrOrganizationController {
      * 删除系统组织机构
      *
      * @author fengshuonan
-     * @date 2020/11/04 11:05
+     * @since 2020/11/04 11:05
      */
     @PostResource(name = "删除系统组织机构", path = "/hrOrganization/delete")
     @BusinessLog
@@ -93,7 +93,7 @@ public class HrOrganizationController {
      * 编辑系统组织机构
      *
      * @author fengshuonan
-     * @date 2020/11/04 11:05
+     * @since 2020/11/04 11:05
      */
     @PostResource(name = "编辑系统组织机构", path = "/hrOrganization/edit")
     @BusinessLog
@@ -106,7 +106,7 @@ public class HrOrganizationController {
      * 修改组织机构状态
      *
      * @author fengshuonan
-     * @date 2020/11/04 11:05
+     * @since 2020/11/04 11:05
      */
     @PostResource(name = "修改组织机构状态", path = "/hrOrganization/updateStatus")
     @BusinessLog
@@ -119,7 +119,7 @@ public class HrOrganizationController {
      * 查看详情系统组织机构
      *
      * @author fengshuonan
-     * @date 2020/11/04 11:05
+     * @since 2020/11/04 11:05
      */
     @GetResource(name = "查看详情系统组织机构", path = "/hrOrganization/detail")
     public ResponseData<HrOrganization> detail(@Validated(HrOrganizationRequest.detail.class) HrOrganizationRequest hrOrganizationRequest) {
@@ -130,7 +130,7 @@ public class HrOrganizationController {
      * 分页查询系统组织机构
      *
      * @author fengshuonan
-     * @date 2020/11/04 11:05
+     * @since 2020/11/04 11:05
      */
     @Wrapper(OrgExpandWrapper.class)
     @GetResource(name = "分页查询系统组织机构", path = "/hrOrganization/page")
@@ -142,7 +142,7 @@ public class HrOrganizationController {
      * 获取全部系统组织机构
      *
      * @author fengshuonan
-     * @date 2020/11/04 11:05
+     * @since 2020/11/04 11:05
      */
     @GetResource(name = "获取全部系统组织机构", path = "/hrOrganization/list")
     public ResponseData<List<HrOrganization>> list(HrOrganizationRequest hrOrganizationRequest) {
@@ -153,7 +153,7 @@ public class HrOrganizationController {
      * 获取全部系统组织机构树（用于新增，编辑组织机构时选择上级节点，用于获取用户管理界面左侧组织机构树）
      *
      * @author chenjinlong
-     * @date 2021/01/05 15:55
+     * @since 2021/01/05 15:55
      */
     @GetResource(name = "获取全部系统组织机构树", path = "/hrOrganization/tree")
     public ResponseData<List<OrganizationTreeNode>> organizationTree(HrOrganizationRequest hrOrganizationRequest) {
@@ -164,7 +164,7 @@ public class HrOrganizationController {
      * 获取公司管理组织机构树
      *
      * @author fengshuonan
-     * @date 2022/5/21 11:24
+     * @since 2022/5/21 11:24
      */
     @GetResource(name = "获取公司管理组织机构树", path = "/hrOrganization/companyTree")
     public ResponseData<List<OrganizationTreeNode>> companyTree(HrOrganizationRequest hrOrganizationRequest) {
@@ -176,7 +176,7 @@ public class HrOrganizationController {
      * 获取组织机构树（用于用户绑定数据范围，可以渲染是否选中信息）
      *
      * @author fengshuonan
-     * @date 2021/3/19 22:20
+     * @since 2021/3/19 22:20
      */
     @GetResource(name = "获取组织机构树(用于用户绑定数据范围)", path = "/hrOrganization/userBindOrgScope")
     public ResponseData<List<OrganizationTreeNode>> userBindOrgScope(@Validated(HrOrganizationRequest.userBindOrgScope.class) HrOrganizationRequest hrOrganizationRequest) {
@@ -187,7 +187,7 @@ public class HrOrganizationController {
      * Layui版本--获取组织机构树（用于角色配置数据范围类型，并且数据范围类型是指定组织机构时）
      *
      * @author fengshuonan
-     * @date 2021/1/9 18:37
+     * @since 2021/1/9 18:37
      */
     @GetResource(name = "Layui版本--获取组织机构树（用于角色配置数据范围类型，并且数据范围类型是指定组织机构时）", path = "/hrOrganization/roleBindOrgScope")
     public List<ZTreeNode> roleBindOrgScope(@Validated(HrOrganizationRequest.roleBindOrgScope.class) HrOrganizationRequest hrOrganizationRequest) {
@@ -198,7 +198,7 @@ public class HrOrganizationController {
      * AntdVue版本--获取组织机构树（用于角色配置数据范围类型，并且数据范围类型是指定组织机构时）
      *
      * @author fengshuonan
-     * @date 2021/1/9 18:37
+     * @since 2021/1/9 18:37
      */
     @GetResource(name = "AntdVue版本--获取组织机构树（用于角色配置数据范围类型，并且数据范围类型是指定组织机构时）", path = "/hrOrganization/roleBindOrgScopeAntdv")
     public ResponseData<List<ZTreeNode>> roleBindOrgScopeAntdv(@Validated(HrOrganizationRequest.roleBindOrgScope.class) HrOrganizationRequest hrOrganizationRequest) {
@@ -212,7 +212,7 @@ public class HrOrganizationController {
      * 一般用在组织机构选择界面
      *
      * @author fengshuonan
-     * @date 2021/1/9 18:37
+     * @since 2021/1/9 18:37
      */
     @GetResource(name = "获取所有组织机构树（树形）", path = "/hrOrganization/getOrgTreeList")
     public ResponseData<List<OrganizationTreeNode>> getOrgTreeList(HrOrganizationRequest hrOrganizationRequest) {
@@ -224,7 +224,7 @@ public class HrOrganizationController {
      * 获取所有组织机构树列表，post方式
      *
      * @author fengshuonan
-     * @date 2022/9/27 9:50
+     * @since 2022/9/27 9:50
      */
     @PostResource(name = "获取所有组织机构树列表，post方式", path = "/hrOrganization/post/getOrgTreeList")
     public ResponseData<List<OrganizationTreeNode>> postGetOrgTreeList(@RequestBody HrOrganizationRequest hrOrganizationRequest) {
@@ -236,7 +236,7 @@ public class HrOrganizationController {
      * 获取某个公司下部门的机构树
      *
      * @author fengshuonan
-     * @date 2021/1/9 18:37
+     * @since 2021/1/9 18:37
      */
     @GetResource(name = "获取某个公司下部门的机构树", path = "/hrOrganization/getDeptOrgTree")
     public ResponseData<List<OrganizationTreeNode>> getDeptOrgTree(@Validated(HrOrganizationRequest.detail.class) HrOrganizationRequest hrOrganizationRequest) {
@@ -248,7 +248,7 @@ public class HrOrganizationController {
      * 批量获取组织机构信息列表
      *
      * @author fengshuonan
-     * @date 2022/11/2 13:56
+     * @since 2022/11/2 13:56
      */
     @PostResource(name = "批量获取组织机构信息列表", path = "/hrOrganization/getOrgInfoListByIds")
     public ResponseData<List<HrOrganizationDTO>> getOrgInfoListByIds(@RequestBody @Validated(HrOrganizationRequest.batchQuery.class) HrOrganizationRequest hrOrganizationRequest) {
@@ -262,7 +262,7 @@ public class HrOrganizationController {
      * @param request 请求参数
      * @return 返回组织信息
      * @author yxx
-     * @date 2023/03/05 09:49
+     * @since 2023/03/05 09:49
      */
     @GetResource(name = "组织机构_选择器", path = "/hrOrganization/selector",requiredPermission = false)
     public ResponseData<List<SimpleDict>> selector(HrOrganizationRequest request) {

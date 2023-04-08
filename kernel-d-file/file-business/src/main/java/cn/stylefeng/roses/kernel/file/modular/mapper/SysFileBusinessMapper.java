@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 业务关联的文件 Mapper 接口
  *
  * @author fengshuonan
- * @date 2023/03/31 13:30
+ * @since 2023/03/31 13:30
  */
 public interface SysFileBusinessMapper extends BaseMapper<SysFileBusiness> {
 

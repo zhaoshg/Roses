@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
  * 系统用户角色service接口实现类
  *
  * @author luojie
- * @date 2020/11/6 10:28
+ * @since 2020/11/6 10:28
  */
 @Service
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService {
@@ -152,7 +152,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
      * @param userRoleRequest dto实体
      * @return
      * @author chenjinlong
-     * @date 2021/2/3 15:02
+     * @since 2021/2/3 15:02
      */
     private SysUserRole querySysUserRoleById(UserRoleRequest userRoleRequest) {
         return this.getById(userRoleRequest.getUserRoleId());
@@ -163,7 +163,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
      *
      * @param userRoleRequest dto实体
      * @author chenjinlong
-     * @date 2021/2/3 14:54
+     * @since 2021/2/3 14:54
      */
     private LambdaQueryWrapper<SysUserRole> createQueryWrapper(UserRoleRequest userRoleRequest) {
         LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();

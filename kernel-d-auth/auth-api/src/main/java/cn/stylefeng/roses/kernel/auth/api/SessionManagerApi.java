@@ -36,7 +36,7 @@ import java.util.List;
  * 会话具有时效性，反之，当用户不再访问系统的时候，会话应该自动失效
  *
  * @author fengshuonan
- * @date 2020/10/19 16:47
+ * @since 2020/10/19 16:47
  */
 public interface SessionManagerApi {
 
@@ -46,7 +46,7 @@ public interface SessionManagerApi {
      * @param token     用户登录的token
      * @param loginUser 登录的用户
      * @author fengshuonan
-     * @date 2020/10/19 16:47
+     * @since 2020/10/19 16:47
      */
     void createSession(String token, LoginUser loginUser, Boolean createCookie);
 
@@ -56,7 +56,7 @@ public interface SessionManagerApi {
      * @param token     用户的当前token
      * @param loginUser 新的登录用户信息
      * @author fengshuonan
-     * @date 2021/1/9 10:43
+     * @since 2021/1/9 10:43
      */
     void updateSession(String token, LoginUser loginUser);
 
@@ -66,7 +66,7 @@ public interface SessionManagerApi {
      * @param token 用户token
      * @return token对应用户的详细信息
      * @author fengshuonan
-     * @date 2020/10/19 16:48
+     * @since 2020/10/19 16:48
      */
     LoginUser getSession(String token);
 
@@ -75,7 +75,7 @@ public interface SessionManagerApi {
      *
      * @param token 用户token
      * @author fengshuonan
-     * @date 2020/10/19 16:48
+     * @since 2020/10/19 16:48
      */
     void removeSession(String token);
 
@@ -86,7 +86,7 @@ public interface SessionManagerApi {
      *
      * @param token 用户token
      * @author fengshuonan
-     * @date 2020/10/21 16:18
+     * @since 2020/10/21 16:18
      */
     void removeSessionExcludeToken(String token);
 
@@ -96,7 +96,7 @@ public interface SessionManagerApi {
      * @param token 用户token
      * @return true-存在会话，false-不存在会话或者失效了
      * @author fengshuonan
-     * @date 2020/10/19 16:49
+     * @since 2020/10/19 16:49
      */
     boolean haveSession(String token);
 
@@ -105,7 +105,7 @@ public interface SessionManagerApi {
      *
      * @param token 用户的token
      * @author fengshuonan
-     * @date 2020/10/19 16:50
+     * @since 2020/10/19 16:50
      */
     void refreshSession(String token);
 
@@ -115,7 +115,7 @@ public interface SessionManagerApi {
      * 一般用在单体不分离版本中
      *
      * @author fengshuonan
-     * @date 2021/1/2 20:25
+     * @since 2021/1/2 20:25
      */
     void destroySessionCookie();
 
@@ -123,7 +123,7 @@ public interface SessionManagerApi {
      * 获取在线用户列表
      *
      * @author peihongwei
-     * @date 2021/1/9 10:41
+     * @since 2021/1/9 10:41
      */
     List<LoginUser> onlineUserList();
 

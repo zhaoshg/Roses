@@ -35,7 +35,7 @@ import java.util.Set;
  * 登录人详细信息
  *
  * @author fengshuonan
- * @date 2021/3/22 21:27
+ * @since 2021/3/22 21:27
  */
 @Data
 @AllArgsConstructor

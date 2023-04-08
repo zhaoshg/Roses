@@ -34,7 +34,7 @@ import java.util.Set;
  * 应用相关api
  *
  * @author fengshuonan
- * @date 2020/11/24 21:37
+ * @since 2020/11/24 21:37
  */
 public interface AppServiceApi {
 
@@ -44,7 +44,7 @@ public interface AppServiceApi {
      * @param appCodes 应用的编码
      * @return 应用的信息
      * @author fengshuonan
-     * @date 2020/11/29 20:06
+     * @since 2020/11/29 20:06
      */
     Set<SimpleDict> getAppsByAppCodes(Set<String> appCodes);
 
@@ -54,7 +54,7 @@ public interface AppServiceApi {
      * @param appCode 应用的编码
      * @return 应用的中文名
      * @author fengshuonan
-     * @date 2020/11/29 20:06
+     * @since 2020/11/29 20:06
      */
     String getAppNameByAppCode(String appCode);
 
@@ -63,7 +63,7 @@ public interface AppServiceApi {
      *
      * @return 激活的应用编码
      * @author fengshuonan
-     * @date 2021/1/8 19:01
+     * @since 2021/1/8 19:01
      */
     String getActiveAppCode();
 
@@ -71,7 +71,7 @@ public interface AppServiceApi {
      * 获取应用信息详情
      *
      * @author fengshuonan
-     * @date 2021/8/24 20:12
+     * @since 2021/8/24 20:12
      */
     SysAppResult getAppInfoByAppCode(String appCode);
 
@@ -79,7 +79,7 @@ public interface AppServiceApi {
      * 按顺序获取app的编码和名称
      *
      * @author fengshuonan
-     * @date 2022/4/6 22:34
+     * @since 2022/4/6 22:34
      */
     List<SysAppResult> getSortedApps();
 
@@ -88,7 +88,7 @@ public interface AppServiceApi {
      *
      * @param devopsFlag 是否包含运维平台的应用
      * @author fengshuonan
-     * @date 2022/4/6 22:34
+     * @since 2022/4/6 22:34
      */
     List<SysAppResult> getSortedApps(Boolean devopsFlag);
 

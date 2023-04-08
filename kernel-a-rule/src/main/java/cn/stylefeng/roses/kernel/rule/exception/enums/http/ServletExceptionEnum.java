@@ -34,7 +34,7 @@ import static cn.stylefeng.roses.kernel.rule.constants.RuleConstants.RULE_EXCEPT
  * servlet相关业务异常
  *
  * @author fengshuonan
- * @date 2020/10/15 17:39
+ * @since 2020/10/15 17:39
  */
 @Getter
 public enum ServletExceptionEnum implements AbstractExceptionEnum {

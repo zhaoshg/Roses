@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.security.api.constants.CaptchaConstants;
  * 图形验证码缓存
  *
  * @author chenjinlong
- * @date 2021/1/15 13:44
+ * @since 2021/1/15 13:44
  */
 public class CaptchaMemoryCache extends AbstractMemoryCacheOperator<String> {
 

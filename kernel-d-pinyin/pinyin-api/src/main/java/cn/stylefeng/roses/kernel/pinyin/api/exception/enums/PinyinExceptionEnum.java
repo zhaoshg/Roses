@@ -33,7 +33,7 @@ import lombok.Getter;
  * 拼音工具相关异常
  *
  * @author fengshuonan
- * @date 2020/12/4 9:32
+ * @since 2020/12/4 9:32
  */
 @Getter
 public enum PinyinExceptionEnum implements AbstractExceptionEnum {

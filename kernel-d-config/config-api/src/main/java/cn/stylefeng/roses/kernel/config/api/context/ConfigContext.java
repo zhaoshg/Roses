@@ -37,7 +37,7 @@ import static cn.stylefeng.roses.kernel.config.api.exception.enums.ConfigExcepti
  * 使用之前请调用setConfigApi初始化
  *
  * @author fengshuonan
- * @date 2020/10/17 10:27
+ * @since 2020/10/17 10:27
  */
 public class ConfigContext {
 
@@ -47,7 +47,7 @@ public class ConfigContext {
      * 获取config操作接口
      *
      * @author fengshuonan
-     * @date 2020/10/17 14:30
+     * @since 2020/10/17 14:30
      */
     public static ConfigApi me() {
         if (CONFIG_API == null) {
@@ -60,7 +60,7 @@ public class ConfigContext {
      * 设置config api的实现
      *
      * @author fengshuonan
-     * @date 2020/12/4 14:35
+     * @since 2020/12/4 14:35
      */
     public static void setConfigApi(ConfigApi configApi) {
         CONFIG_API = configApi;

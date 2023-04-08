@@ -36,7 +36,7 @@ import java.util.List;
  * 接口有多种实现，例如基于文件存储的日志，基于数据库存储的日志，基于es存储的日志
  *
  * @author fengshuonan
- * @date 2020/10/27 16:19
+ * @since 2020/10/27 16:19
  */
 public interface LogManagerApi {
 
@@ -46,7 +46,7 @@ public interface LogManagerApi {
      * @param logManagerRequest 查询条件
      * @return 返回查询日志列表
      * @author fengshuonan
-     * @date 2020/10/28 11:27
+     * @since 2020/10/28 11:27
      */
     List<LogRecordDTO> findList(LogManagerRequest logManagerRequest);
 
@@ -56,7 +56,7 @@ public interface LogManagerApi {
      * @param logManagerRequest 查询条件
      * @return 返回查询日志列表分页结果
      * @author luojie
-     * @date 2020/11/3 10:40
+     * @since 2020/11/3 10:40
      */
     PageResult<LogRecordDTO> findPage(LogManagerRequest logManagerRequest);
 
@@ -67,7 +67,7 @@ public interface LogManagerApi {
      *
      * @param logManagerRequest 参数的封装
      * @author fengshuonan
-     * @date 2020/10/28 11:47
+     * @since 2020/10/28 11:47
      */
     void del(LogManagerRequest logManagerRequest);
 
@@ -75,7 +75,7 @@ public interface LogManagerApi {
      * 查询日志详情
      *
      * @author chenjinlong
-     * @date 2021/2/1 19:47
+     * @since 2021/2/1 19:47
      */
     LogRecordDTO detail(LogManagerRequest logManagerRequest);
 

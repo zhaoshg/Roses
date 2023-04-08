@@ -51,7 +51,7 @@ import java.util.Map;
  * MinIo文件操作客户端
  *
  * @author fengshuonan
- * @date 2020/10/31 10:35
+ * @since 2020/10/31 10:35
  */
 public class MinIoFileOperator implements FileOperatorApi {
 
@@ -243,7 +243,7 @@ public class MinIoFileOperator implements FileOperatorApi {
      * 获取文件后缀对应的contentType
      *
      * @author fengshuonan
-     * @date 2020/11/2 18:08
+     * @since 2020/11/2 18:08
      */
     private Map<String, String> getFileContentType() {
         synchronized (LOCK) {
@@ -280,7 +280,7 @@ public class MinIoFileOperator implements FileOperatorApi {
      * 获取文件后缀对应的contentType
      *
      * @author fengshuonan
-     * @date 2020/11/2 18:05
+     * @since 2020/11/2 18:05
      */
     private String getFileContentType(String fileSuffix) {
         String contentType = getFileContentType().get(fileSuffix);

@@ -17,7 +17,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  * 安全模块，缓存的依赖
  *
  * @author fengshuonan
- * @date 2022/11/8 9:57
+ * @since 2022/11/8 9:57
  */
 @Configuration
 @ConditionalOnClass(name = "org.springframework.data.redis.connection.RedisConnectionFactory")
@@ -27,7 +27,7 @@ public class SecurityRedisCacheAutoConfiguration {
      * 验证码相关的缓存，Redis缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 20:44
+     * @since 2022/11/8 20:44
      */
     @Bean("captchaCache")
     public CacheOperatorApi<String> captchaRedisCache(RedisConnectionFactory redisConnectionFactory) {
@@ -40,7 +40,7 @@ public class SecurityRedisCacheAutoConfiguration {
      * 黑名单的缓存，Redis缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 21:24
+     * @since 2022/11/8 21:24
      */
     @Bean("blackListCache")
     public CacheOperatorApi<String> blackListRedisCache(RedisConnectionFactory redisConnectionFactory) {
@@ -52,7 +52,7 @@ public class SecurityRedisCacheAutoConfiguration {
      * 白名单的缓存，Redis缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 21:24
+     * @since 2022/11/8 21:24
      */
     @Bean("whiteListCache")
     public CacheOperatorApi<String> whiteListRedisCache(RedisConnectionFactory redisConnectionFactory) {
@@ -64,7 +64,7 @@ public class SecurityRedisCacheAutoConfiguration {
      * 计数缓存，Redis缓存
      *
      * @author fengshuonan
-     * @date 2022/11/8 21:24
+     * @since 2022/11/8 21:24
      */
     @Bean("countValidateCache")
     public CacheOperatorApi<Long> countValidateRedisCache(RedisConnectionFactory redisConnectionFactory) {

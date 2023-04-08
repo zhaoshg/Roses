@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
  * 用户管理控制器
  *
  * @author chenjinlong
- * @date 2021/1/7 19:09
+ * @since 2021/1/7 19:09
  */
 @Controller
 @ApiResource(name = "用户管理界面渲染", resBizType = ResBizTypeEnum.SYSTEM)
@@ -19,7 +19,7 @@ public class UserViewController {
      * 用户管理-首页-视图
      *
      * @author chenjinlong
-     * @date 2021/1/7 19:09
+     * @since 2021/1/7 19:09
      */
     @GetResource(name = "用户管理-首页-视图", path = "/view/user")
     public String indexView() {
@@ -30,7 +30,7 @@ public class UserViewController {
      * 用户管理—新增-视图
      *
      * @author chenjinlong
-     * @date 2021/1/7 19:09
+     * @since 2021/1/7 19:09
      */
     @GetResource(name = "用户管理—新增-视图", path = "/view/user/addView")
     public String addView() {
@@ -41,7 +41,7 @@ public class UserViewController {
      * 用户管理_修改_视图
      *
      * @author chenjinlong
-     * @date 2021/1/7 19:09
+     * @since 2021/1/7 19:09
      */
     @GetResource(name = "用户管理-修改-视图", path = "/view/user/editView")
     public String editView() {
@@ -52,7 +52,7 @@ public class UserViewController {
      * 用户管理-角色-视图
      *
      * @author chenjinlong
-     * @date 2021/1/7 19:09
+     * @since 2021/1/7 19:09
      */
     @GetResource(name = "用户管理-角色-视图", path = "/view/user/roleView")
     public String roleView() {
@@ -63,7 +63,7 @@ public class UserViewController {
      * 用户管理-注册-视图
      *
      * @author chenjinlong
-     * @date 2021/1/7 19:09
+     * @since 2021/1/7 19:09
      */
     @GetResource(name = "用户管理-注册-视图", path = "/register", requiredPermission = false, requiredLogin = false)
     public String registerView() {
@@ -74,7 +74,7 @@ public class UserViewController {
      * 用户管理-找回密码-视图
      *
      * @author chenjinlong
-     * @date 2021/1/7 19:09
+     * @since 2021/1/7 19:09
      */
     @GetResource(name = "用户管理-找回密码-视图", path = "/forget", requiredPermission = false, requiredLogin = false)
     public String forgetView() {

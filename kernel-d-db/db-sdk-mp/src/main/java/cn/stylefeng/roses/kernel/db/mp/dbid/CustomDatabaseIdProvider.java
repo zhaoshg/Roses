@@ -38,7 +38,7 @@ import java.sql.SQLException;
  * 提供给mybatis能识别不同数据库的标识
  *
  * @author fengshuonan
- * @date 2020/10/16 17:02
+ * @since 2020/10/16 17:02
  */
 @Slf4j
 public class CustomDatabaseIdProvider implements DatabaseIdProvider {

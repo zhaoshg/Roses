@@ -34,7 +34,7 @@ import org.springframework.context.annotation.Configuration;
  * 加密算法自动配置
  *
  * @author majianguo
- * @date 2021/7/5 10:06
+ * @since 2021/7/5 10:06
  */
 @Configuration
 public class EncryptAlgorithmAutoConfiguration {
@@ -44,7 +44,7 @@ public class EncryptAlgorithmAutoConfiguration {
      *
      * @return {@link cn.stylefeng.roses.kernel.security.database.algorithm.EncryptAlgorithmApi}
      * @author majianguo
-     * @date 2021/7/5 10:16
+     * @since 2021/7/5 10:16
      **/
     @Bean
     @ConditionalOnMissingBean(EncryptAlgorithmApi.class)

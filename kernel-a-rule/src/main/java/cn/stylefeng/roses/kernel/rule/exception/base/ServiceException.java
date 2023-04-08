@@ -44,7 +44,7 @@ import static cn.stylefeng.roses.kernel.rule.constants.RuleConstants.RULE_MODULE
  * 第三种是第三方系统调用出错，例如文件服务调用失败，RPC调用超时
  *
  * @author fengshuonan
- * @date 2020/10/15 9:07
+ * @since 2020/10/15 9:07
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

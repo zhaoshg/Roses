@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.log.api.pojo.record.LogRecordDTO;
  * 日志信息追加，用来追加用户的登录信息
  *
  * @author fengshuonan
- * @date 2020/10/27 17:45
+ * @since 2020/10/27 17:45
  */
 public class AuthedLogAppender {
 
@@ -42,7 +42,7 @@ public class AuthedLogAppender {
      * 但是此方法会依赖auth-api模块，所以用这个方法得引入auth模块
      *
      * @author fengshuonan
-     * @date 2020/10/27 18:22
+     * @since 2020/10/27 18:22
      */
     public static void appendAuthedHttpLog(LogRecordDTO logRecordDTO) {
 

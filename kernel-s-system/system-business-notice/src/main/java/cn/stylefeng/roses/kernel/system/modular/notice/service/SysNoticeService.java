@@ -36,7 +36,7 @@ import java.util.List;
  * 通知服务类
  *
  * @author liuhanqing
- * @date 2021/1/8 19:56
+ * @since 2021/1/8 19:56
  */
 public interface SysNoticeService extends IService<SysNotice>, NoticeServiceApi {
 
@@ -45,7 +45,7 @@ public interface SysNoticeService extends IService<SysNotice>, NoticeServiceApi 
      *
      * @param sysNoticeRequest 添加参数
      * @author liuhanqing
-     * @date 2021/1/9 14:57
+     * @since 2021/1/9 14:57
      */
     void add(SysNoticeRequest sysNoticeRequest);
 
@@ -54,7 +54,7 @@ public interface SysNoticeService extends IService<SysNotice>, NoticeServiceApi 
      *
      * @param sysNoticeRequest 删除参数
      * @author liuhanqing
-     * @date 2021/1/9 14:57
+     * @since 2021/1/9 14:57
      */
     void del(SysNoticeRequest sysNoticeRequest);
 
@@ -63,7 +63,7 @@ public interface SysNoticeService extends IService<SysNotice>, NoticeServiceApi 
      *
      * @param sysNoticeRequest 编辑参数
      * @author liuhanqing
-     * @date 2021/1/9 14:58
+     * @since 2021/1/9 14:58
      */
     void edit(SysNoticeRequest sysNoticeRequest);
 
@@ -73,7 +73,7 @@ public interface SysNoticeService extends IService<SysNotice>, NoticeServiceApi 
      * @param sysNoticeRequest 查看参数
      * @return 系统应用
      * @author liuhanqing
-     * @date 2021/1/9 14:56
+     * @since 2021/1/9 14:56
      */
     SysNotice detail(SysNoticeRequest sysNoticeRequest);
 
@@ -83,7 +83,7 @@ public interface SysNoticeService extends IService<SysNotice>, NoticeServiceApi 
      * @param sysNoticeRequest 查询参数
      * @return 查询分页结果
      * @author liuhanqing
-     * @date 2021/1/9 14:56
+     * @since 2021/1/9 14:56
      */
     PageResult<SysNotice> findPage(SysNoticeRequest sysNoticeRequest);
 
@@ -93,7 +93,7 @@ public interface SysNoticeService extends IService<SysNotice>, NoticeServiceApi 
      * @param sysNoticeRequest 查询参数
      * @return 系统应用列表
      * @author liuhanqing
-     * @date 2021/1/9 14:56
+     * @since 2021/1/9 14:56
      */
     List<SysNotice> findList(SysNoticeRequest sysNoticeRequest);
 

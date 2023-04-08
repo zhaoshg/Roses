@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
  * 校验token是否正确的请求参数
  *
  * @author fengshuonan
- * @date 2021/6/18 15:29
+ * @since 2021/6/18 15:29
  */
 @Data
 public class ValidateTokenRequest {

@@ -22,7 +22,7 @@ import javax.annotation.Resource;
  * 系统主题控制器
  *
  * @author xixiaowei
- * @date 2021/12/17 16:40
+ * @since 2021/12/17 16:40
  */
 @RestController
 @ApiResource(name = "系统主题管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -35,7 +35,7 @@ public class SysThemeController {
      * 增加系统主题
      *
      * @author xixiaowei
-     * @date 2021/12/17 16:43
+     * @since 2021/12/17 16:43
      */
     @PostResource(name = "增加系统主题", path = "/sysTheme/add")
     @BusinessLog
@@ -48,7 +48,7 @@ public class SysThemeController {
      * 删除系统主题
      *
      * @author xixiaowei
-     * @date 2021/12/17 16:45
+     * @since 2021/12/17 16:45
      */
     @PostResource(name = "删除系统主题", path = "/sysTheme/del")
     @BusinessLog
@@ -61,7 +61,7 @@ public class SysThemeController {
      * 修改系统主题
      *
      * @author xixiaowei
-     * @date 2021/12/17 16:50
+     * @since 2021/12/17 16:50
      */
     @PostResource(name = "修改系统主题", path = "/sysTheme/edit")
     @BusinessLog
@@ -74,7 +74,7 @@ public class SysThemeController {
      * 查询系统主题
      *
      * @author xixiaowei
-     * @date 2021/12/17 16:58
+     * @since 2021/12/17 16:58
      */
     @GetResource(name = "查询系统主题", path = "/sysTheme/findPage")
     public ResponseData<PageResult<SysThemeDTO>> findPage(SysThemeRequest sysThemeParam) {
@@ -85,7 +85,7 @@ public class SysThemeController {
      * 查询系统主题详情
      *
      * @author xixiaowei
-     * @date 2021/12/17 17:04
+     * @since 2021/12/17 17:04
      */
     @GetResource(name = "查询系统主题详情", path = "/sysTheme/detail")
     public ResponseData<SysTheme> detail(@Validated(SysThemeRequest.updateStatus.class) SysThemeRequest sysThemeParam) {
@@ -96,7 +96,7 @@ public class SysThemeController {
      * 修改系统主题启用状态
      *
      * @author xixiaowei
-     * @date 2021/12/17 17:32
+     * @since 2021/12/17 17:32
      */
     @PostResource(name = "修改系统主题启用状态", path = "/sysTheme/updateStatus")
     @BusinessLog

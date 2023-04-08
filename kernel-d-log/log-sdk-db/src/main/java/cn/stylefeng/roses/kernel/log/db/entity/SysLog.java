@@ -36,7 +36,7 @@ import lombok.EqualsAndHashCode;
  * 日志记录
  *
  * @author luojie
- * @date 2020/11/2 15:59
+ * @since 2020/11/2 15:59
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

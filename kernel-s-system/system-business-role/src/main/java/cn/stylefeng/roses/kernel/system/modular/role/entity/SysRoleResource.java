@@ -35,7 +35,7 @@ import lombok.Data;
  * 角色资源关联
  *
  * @author fengshuonan
- * @date 2020/11/5 下午4:30
+ * @since 2020/11/5 下午4:30
  */
 @Data
 @TableName("sys_role_resource")

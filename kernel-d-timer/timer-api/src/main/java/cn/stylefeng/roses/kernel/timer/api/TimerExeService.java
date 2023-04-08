@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.timer.api;
  * 本接口用来，屏蔽定时任务的多样性
  *
  * @author fengshuonan
- * @date 2020/10/27 13:18
+ * @since 2020/10/27 13:18
  */
 public interface TimerExeService {
 
@@ -36,7 +36,7 @@ public interface TimerExeService {
      * 开启定时器调度
      *
      * @author fengshuonan
-     * @date 2021/1/12 20:33
+     * @since 2021/1/12 20:33
      */
     void start();
 
@@ -44,7 +44,7 @@ public interface TimerExeService {
      * 关闭定时器调度
      *
      * @author fengshuonan
-     * @date 2021/1/12 20:33
+     * @since 2021/1/12 20:33
      */
     void stop();
 
@@ -60,7 +60,7 @@ public interface TimerExeService {
      * @param className 类的全名，必须是TimerAction的子类
      * @param params    自定义参数
      * @author stylefeng
-     * @date 2020/7/1 13:51
+     * @since 2020/7/1 13:51
      */
     void startTimer(String taskId, String cron, String className, String params);
 
@@ -69,7 +69,7 @@ public interface TimerExeService {
      *
      * @param taskId 定时任务Id
      * @author stylefeng
-     * @date 2020/7/1 14:08
+     * @since 2020/7/1 14:08
      */
     void stopTimer(String taskId);
 

@@ -36,7 +36,7 @@ import java.util.List;
  * 组织机构树节点
  *
  * @author chenjinlong
- * @date 2020/12/27 18:36
+ * @since 2020/12/27 18:36
  */
 @Data
 public class OrganizationTreeNode implements AbstractTreeNode<OrganizationTreeNode>, AbstractXmSelectNode {

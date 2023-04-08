@@ -48,7 +48,7 @@ import java.util.List;
  * 在线用户管理
  *
  * @author fengshuonan
- * @date 2021/1/11 22:52
+ * @since 2021/1/11 22:52
  */
 @RestController
 @ApiResource(name = "在线用户管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -64,7 +64,7 @@ public class OnlineUserController {
      * 当前在线用户列表
      *
      * @author fengshuonan
-     * @date 2021/1/11 22:53
+     * @since 2021/1/11 22:53
      */
     @GetResource(name = "当前在线用户列表", path = "/sysUser/onlineUserList")
     public ResponseData<List<OnlineUserDTO>> onlineUserList(OnlineUserRequest onlineUserRequest) {
@@ -75,7 +75,7 @@ public class OnlineUserController {
      * 踢掉在线用户
      *
      * @author fengshuonan
-     * @date 2021/1/11 22:53
+     * @since 2021/1/11 22:53
      */
     @PostResource(name = "踢掉在线用户", path = "/sysUser/removeSession")
     public ResponseData<?> removeSession(@Valid @RequestBody OnlineUserRequest onlineUserRequest) {

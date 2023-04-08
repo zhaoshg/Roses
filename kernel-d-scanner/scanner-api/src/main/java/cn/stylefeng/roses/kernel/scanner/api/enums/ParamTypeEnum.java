@@ -30,7 +30,7 @@ import lombok.Getter;
  * 请求参数类型
  *
  * @author fengshuonan
- * @date 2022/1/20 11:32
+ * @since 2022/1/20 11:32
  */
 @Getter
 public enum ParamTypeEnum {

@@ -32,7 +32,7 @@ import java.util.List;
  * 菜单被哪个权限绑定的详情
  *
  * @author fengshuonan
- * @date 2021/1/7 18:16
+ * @since 2021/1/7 18:16
  */
 @Data
 public class AntdvMenuAuthorityItem {

@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.migration.api.constants;
  * migration 模块常量
  *
  * @author majianguo
- * @date 2021/7/6 15:04
+ * @since 2021/7/6 15:04
  */
 public interface MigrationConstants {
 

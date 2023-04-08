@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 用户组详情 Mapper 接口
  *
  * @author fengshuonan
- * @date 2022/09/26 10:12
+ * @since 2022/09/26 10:12
  */
 public interface SysUserGroupDetailMapper extends BaseMapper<SysUserGroupDetail> {
 

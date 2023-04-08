@@ -51,7 +51,7 @@ import java.util.Map;
  * controller结果包装的aop
  *
  * @author fengshuonan
- * @date 2020/7/24 17:42
+ * @since 2020/7/24 17:42
  */
 @Aspect
 @Slf4j
@@ -61,7 +61,7 @@ public class WrapperAop {
      * 切入点
      *
      * @author fengshuonan
-     * @date 2020/7/24 17:42
+     * @since 2020/7/24 17:42
      */
     @Pointcut("@annotation(cn.stylefeng.roses.kernel.wrapper.api.annotation.Wrapper)")
     private void wrapperPointcut() {
@@ -71,7 +71,7 @@ public class WrapperAop {
      * 执行具体的包装过程
      *
      * @author fengshuonan
-     * @date 2020/7/24 17:44
+     * @since 2020/7/24 17:44
      */
     @Around("wrapperPointcut()")
     public Object doWrapper(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
@@ -86,7 +86,7 @@ public class WrapperAop {
      * 具体包装过程
      *
      * @author fengshuonan
-     * @date 2020/7/24 17:53
+     * @since 2020/7/24 17:53
      */
     @SuppressWarnings("all")
     private Object processWrapping(ProceedingJoinPoint proceedingJoinPoint, Object originResult) throws IllegalAccessException, InstantiationException {
@@ -196,7 +196,7 @@ public class WrapperAop {
      * 期间多次根据BaseWrapper接口方法执行包装过程
      *
      * @author fengshuonan
-     * @date 2020/7/24 21:40
+     * @since 2020/7/24 21:40
      */
     @SuppressWarnings("all")
     private Map<String, Object> wrapPureObject(Object originModel, Class<? extends BaseWrapper<?>>[] baseWrapperClasses) {

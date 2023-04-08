@@ -11,7 +11,7 @@ import lombok.Data;
  * 文件存储信息实例类
  *
  * @author fengshuonan
- * @date 2022/01/08 15:53
+ * @since 2022/01/08 15:53
  */
 @TableName("sys_file_storage")
 @Data

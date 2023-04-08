@@ -35,7 +35,7 @@ import java.util.Set;
  * 最新Antd3版本的首页登录用户信息需要的数据
  *
  * @author fengshuonan
- * @date 2022/4/8 14:56
+ * @since 2022/4/8 14:56
  */
 @Data
 public class IndexUserInfoV3 {

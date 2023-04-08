@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.customer.api.pojo.CustomerInfo;
  * C端用户的缓存
  *
  * @author fengshuonan
- * @date 2021/2/28 10:23
+ * @since 2021/2/28 10:23
  */
 public class CustomerMemoryCache extends AbstractMemoryCacheOperator<CustomerInfo> {
 

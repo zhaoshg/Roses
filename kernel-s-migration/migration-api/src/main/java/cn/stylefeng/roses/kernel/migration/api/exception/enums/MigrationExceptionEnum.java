@@ -33,7 +33,7 @@ import lombok.Getter;
  * Migration模块相关异常枚举
  *
  * @author majianguo
- * @date 2021/7/6 15:09
+ * @since 2021/7/6 15:09
  */
 @Getter
 public enum MigrationExceptionEnum implements AbstractExceptionEnum {

@@ -50,7 +50,7 @@ import java.util.stream.Collectors;
  * 数据库存储方式的日志记录器
  *
  * @author luojie
- * @date 2020/11/2 15:50
+ * @since 2020/11/2 15:50
  */
 @Slf4j
 public class DbLogRecordServiceImpl implements LogRecordApi {
@@ -142,7 +142,7 @@ public class DbLogRecordServiceImpl implements LogRecordApi {
      * 该类维护一个最大日志数和一个刷新日志间隔，满足任意一个条件即可触发从内存写出日志到磁盘的操作
      *
      * @author majianguo
-     * @date 2020/10/31 15:05
+     * @since 2020/10/31 15:05
      */
     class LogRefreshManager extends Thread {
 
@@ -196,7 +196,7 @@ public class DbLogRecordServiceImpl implements LogRecordApi {
          *
          * @param logRecordDTO 日志对象
          * @author majianguo
-         * @date 2020/10/31 14:59
+         * @since 2020/10/31 14:59
          */
         public void putLog(LogRecordDTO logRecordDTO) {
 
@@ -220,7 +220,7 @@ public class DbLogRecordServiceImpl implements LogRecordApi {
          * 刷新日志到磁盘的操作
          *
          * @author majianguo
-         * @date 2020/10/31 15:48
+         * @since 2020/10/31 15:48
          */
         private void refresh() {
 
@@ -250,7 +250,7 @@ public class DbLogRecordServiceImpl implements LogRecordApi {
          * 用于定时检测日志数据是否可以写入数据
          *
          * @author majianguo
-         * @date 2020/10/31 15:57
+         * @since 2020/10/31 15:57
          */
         private void timing() {
             long currentTimeMillis = System.currentTimeMillis();
@@ -267,7 +267,7 @@ public class DbLogRecordServiceImpl implements LogRecordApi {
          * 用于监听日志消息队列，达到设定的数就开始执行刷入硬盘的操作
          *
          * @author majianguo
-         * @date 2020/11/2 9:32
+         * @since 2020/11/2 9:32
          */
         private void listener() {
             // 判断如果队列里面的数据大于等于设定的最大消息数，就调用refresh方法刷新一次数据

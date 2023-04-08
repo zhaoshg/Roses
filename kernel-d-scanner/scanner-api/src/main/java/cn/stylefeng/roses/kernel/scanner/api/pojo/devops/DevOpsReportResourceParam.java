@@ -37,7 +37,7 @@ import java.util.List;
  * 资源发送到DevOps一体化平台的参数
  *
  * @author fengshuonan
- * @date 2022/1/11 14:05
+ * @since 2022/1/11 14:05
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

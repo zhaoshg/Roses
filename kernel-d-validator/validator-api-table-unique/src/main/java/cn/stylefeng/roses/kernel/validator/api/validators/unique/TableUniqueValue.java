@@ -38,7 +38,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * 一般用来校验code字段，例如同一个表中，code字段不能重复
  *
  * @author fengshuonan
- * @date 2020/11/4 14:06
+ * @since 2020/11/4 14:06
  */
 @Documented
 @Constraint(validatedBy = TableUniqueValueValidator.class)

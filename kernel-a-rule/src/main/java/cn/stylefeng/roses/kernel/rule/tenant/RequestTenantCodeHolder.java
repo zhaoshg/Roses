@@ -6,7 +6,7 @@ package cn.stylefeng.roses.kernel.rule.tenant;
  * 在一次Http请求中生效，一般用在登录接口，当前Context没有LoginUser时使用
  *
  * @author fengshuonan
- * @date 2022/11/8 0:58
+ * @since 2022/11/8 0:58
  */
 public class RequestTenantCodeHolder {
 
@@ -16,7 +16,7 @@ public class RequestTenantCodeHolder {
      * 设置租户编码
      *
      * @author fengshuonan
-     * @date 2022/11/8 0:59
+     * @since 2022/11/8 0:59
      */
     public static void setTenantCode(String aesKey) {
         CONTEXT_HOLDER.set(aesKey);
@@ -26,7 +26,7 @@ public class RequestTenantCodeHolder {
      * 获取租户编码
      *
      * @author fengshuonan
-     * @date 2022/11/8 0:59
+     * @since 2022/11/8 0:59
      */
     public static String getTenantCode() {
         return CONTEXT_HOLDER.get();
@@ -36,7 +36,7 @@ public class RequestTenantCodeHolder {
      * 清除租户编码
      *
      * @author fengshuonan
-     * @date 2022/11/8 0:59
+     * @since 2022/11/8 0:59
      */
     public static void clearTenantCode() {
         CONTEXT_HOLDER.remove();

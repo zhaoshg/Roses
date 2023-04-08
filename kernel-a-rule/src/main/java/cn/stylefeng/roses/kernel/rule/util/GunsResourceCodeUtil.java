@@ -8,7 +8,7 @@ import cn.hutool.core.util.StrUtil;
  * Guns资源编码为固定的guns$开头，如果项目编码修改后，应将资源标识前缀进行修改
  *
  * @author fengshuonan
- * @date 2022/11/16 23:07
+ * @since 2022/11/16 23:07
  */
 public class GunsResourceCodeUtil {
 
@@ -25,7 +25,7 @@ public class GunsResourceCodeUtil {
      * 修改之后为：{newAppCode参数}$sys_notice$add
      *
      * @author fengshuonan
-     * @date 2022/11/16 23:09
+     * @since 2022/11/16 23:09
      */
     public static String replace(String resourceCode, String newAppCode) {
 

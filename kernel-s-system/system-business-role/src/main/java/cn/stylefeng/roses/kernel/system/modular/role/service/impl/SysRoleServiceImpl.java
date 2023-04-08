@@ -80,7 +80,7 @@ import static cn.stylefeng.roses.kernel.system.api.constants.SystemConstants.SUP
  * 系统角色service接口实现类
  *
  * @author majianguo
- * @date 2020/11/5 上午11:33
+ * @since 2020/11/5 上午11:33
  */
 @Service
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
@@ -798,7 +798,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
      *
      * @param sysRoleRequest 请求信息
      * @author majianguo
-     * @date 2020/11/5 下午4:12
+     * @since 2020/11/5 下午4:12
      */
     private SysRole querySysRole(SysRoleRequest sysRoleRequest) {
 
@@ -824,7 +824,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
      * 创建查询wrapper
      *
      * @author fengshuonan
-     * @date 2020/11/22 15:14
+     * @since 2020/11/22 15:14
      */
     private LambdaQueryWrapper<SysRole> createWrapper(SysRoleRequest sysRoleRequest) {
         LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();

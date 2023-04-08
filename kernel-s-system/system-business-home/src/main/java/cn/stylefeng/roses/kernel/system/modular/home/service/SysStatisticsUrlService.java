@@ -11,7 +11,7 @@ import java.util.List;
  * 常用功能列表 服务类
  *
  * @author fengshuonan
- * @date 2022/02/10 21:17
+ * @since 2022/02/10 21:17
  */
 public interface SysStatisticsUrlService extends IService<SysStatisticsUrl> {
 
@@ -20,7 +20,7 @@ public interface SysStatisticsUrlService extends IService<SysStatisticsUrl> {
      *
      * @param sysStatisticsUrlRequest 请求参数
      * @author fengshuonan
-     * @date 2022/02/10 21:17
+     * @since 2022/02/10 21:17
      */
     void add(SysStatisticsUrlRequest sysStatisticsUrlRequest);
 
@@ -29,7 +29,7 @@ public interface SysStatisticsUrlService extends IService<SysStatisticsUrl> {
      *
      * @param sysStatisticsUrlRequest 请求参数
      * @author fengshuonan
-     * @date 2022/02/10 21:17
+     * @since 2022/02/10 21:17
      */
     void del(SysStatisticsUrlRequest sysStatisticsUrlRequest);
 
@@ -38,7 +38,7 @@ public interface SysStatisticsUrlService extends IService<SysStatisticsUrl> {
      *
      * @param sysStatisticsUrlRequest 请求参数
      * @author fengshuonan
-     * @date 2022/02/10 21:17
+     * @since 2022/02/10 21:17
      */
     void edit(SysStatisticsUrlRequest sysStatisticsUrlRequest);
 
@@ -47,7 +47,7 @@ public interface SysStatisticsUrlService extends IService<SysStatisticsUrl> {
      *
      * @param sysStatisticsUrlRequest 请求参数
      * @author fengshuonan
-     * @date 2022/02/10 21:17
+     * @since 2022/02/10 21:17
      */
     SysStatisticsUrl detail(SysStatisticsUrlRequest sysStatisticsUrlRequest);
 
@@ -57,7 +57,7 @@ public interface SysStatisticsUrlService extends IService<SysStatisticsUrl> {
      * @param sysStatisticsUrlRequest 请求参数
      * @return List<SysStatisticsUrl>   返回结果
      * @author fengshuonan
-     * @date 2022/02/10 21:17
+     * @since 2022/02/10 21:17
      */
     List<SysStatisticsUrl> findList(SysStatisticsUrlRequest sysStatisticsUrlRequest);
 
@@ -67,7 +67,7 @@ public interface SysStatisticsUrlService extends IService<SysStatisticsUrl> {
      * @param sysStatisticsUrlRequest 请求参数
      * @return PageResult<SysStatisticsUrl>   返回结果
      * @author fengshuonan
-     * @date 2022/02/10 21:17
+     * @since 2022/02/10 21:17
      */
     PageResult<SysStatisticsUrl> findPage(SysStatisticsUrlRequest sysStatisticsUrlRequest);
 

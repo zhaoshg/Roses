@@ -35,7 +35,7 @@ import java.util.List;
  * 系统角色数据范围service接口
  *
  * @author majianguo
- * @date 2020/11/5 上午11:21
+ * @since 2020/11/5 上午11:21
  */
 public interface SysRoleDataScopeService extends IService<SysRoleDataScope> {
 
@@ -44,7 +44,7 @@ public interface SysRoleDataScopeService extends IService<SysRoleDataScope> {
      *
      * @param sysRoleRequest 授权参数
      * @author majianguo
-     * @date 2020/11/5 上午11:20
+     * @since 2020/11/5 上午11:20
      */
     void grantDataScope(SysRoleRequest sysRoleRequest);
 
@@ -54,7 +54,7 @@ public interface SysRoleDataScopeService extends IService<SysRoleDataScope> {
      * @param roleIdList 角色id集合
      * @return 数据范围id集合
      * @author majianguo
-     * @date 2020/11/5 上午11:21
+     * @since 2020/11/5 上午11:21
      */
     List<Long> getRoleDataScopeIdList(List<Long> roleIdList);
 
@@ -63,7 +63,7 @@ public interface SysRoleDataScopeService extends IService<SysRoleDataScope> {
      *
      * @param sysRoleDataScopeRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void add(SysRoleDataScopeRequest sysRoleDataScopeRequest);
 
@@ -72,7 +72,7 @@ public interface SysRoleDataScopeService extends IService<SysRoleDataScope> {
      *
      * @param sysRoleDataScopeRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void del(SysRoleDataScopeRequest sysRoleDataScopeRequest);
 
@@ -81,7 +81,7 @@ public interface SysRoleDataScopeService extends IService<SysRoleDataScope> {
      *
      * @param roleId 角色id
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void delByRoleId(Long roleId);
 
@@ -91,7 +91,7 @@ public interface SysRoleDataScopeService extends IService<SysRoleDataScope> {
      *
      * @param sysRoleDataScopeRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     void edit(SysRoleDataScopeRequest sysRoleDataScopeRequest);
 
@@ -100,7 +100,7 @@ public interface SysRoleDataScopeService extends IService<SysRoleDataScope> {
      *
      * @param sysRoleDataScopeRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     SysRoleDataScope detail(SysRoleDataScopeRequest sysRoleDataScopeRequest);
 
@@ -109,7 +109,7 @@ public interface SysRoleDataScopeService extends IService<SysRoleDataScope> {
      *
      * @param sysRoleDataScopeRequest 参数对象
      * @author chenjinlong
-     * @date 2021/1/26 12:52
+     * @since 2021/1/26 12:52
      */
     List<SysRoleDataScope> findList(SysRoleDataScopeRequest sysRoleDataScopeRequest);
 

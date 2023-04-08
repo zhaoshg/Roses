@@ -33,7 +33,7 @@ import java.util.Date;
  * 所有父ids 修改的请求参数类
  *
  * @author fengshuonan
- * @date 2020/12/11 18:12
+ * @since 2020/12/11 18:12
  */
 @Data
 public class ParentIdsUpdateRequest implements Serializable {

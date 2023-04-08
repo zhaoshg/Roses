@@ -30,7 +30,7 @@ import lombok.Data;
  * 企业员工表，用户-组织机构的关联
  *
  * @author fengshuonan
- * @date 2020/11/04 11:05
+ * @since 2020/11/04 11:05
  */
 @Data
 public class SysUserOrgDTO {

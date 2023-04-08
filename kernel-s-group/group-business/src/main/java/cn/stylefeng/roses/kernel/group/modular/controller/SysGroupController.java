@@ -22,7 +22,7 @@ import java.util.List;
  * 业务分组控制器
  *
  * @author fengshuonan
- * @date 2022/05/11 12:54
+ * @since 2022/05/11 12:54
  */
 @RestController
 @ApiResource(name = "业务分组", resBizType = ResBizTypeEnum.SYSTEM)
@@ -38,7 +38,7 @@ public class SysGroupController {
      * 获取某个业务的分组列表
      *
      * @author fengshuonan
-     * @date 2022/05/11 12:54
+     * @since 2022/05/11 12:54
      */
     @GetResource(name = "获取列表", path = "/sysGroup/list")
     public ResponseData<List<SysGroupDTO>> list(@Validated(BaseRequest.list.class) SysGroupRequest sysGroupRequest) {
@@ -49,7 +49,7 @@ public class SysGroupController {
      * 添加分组时候的选择列表
      *
      * @author fengshuonan
-     * @date 2022/05/11 12:54
+     * @since 2022/05/11 12:54
      */
     @GetResource(name = "添加分组时候的选择列表", path = "/sysGroup/addSelect")
     public ResponseData<List<SysGroupDTO>> addSelect(@Validated(BaseRequest.list.class) SysGroupRequest sysGroupRequest) {
@@ -60,7 +60,7 @@ public class SysGroupController {
      * 将某个业务记录，增加到某个分组中，如果分组没有则创建分组
      *
      * @author fengshuonan
-     * @date 2022/05/11 12:54
+     * @since 2022/05/11 12:54
      */
     @PostResource(name = "添加", path = "/sysGroup/add")
     public ResponseData<?> add(@RequestBody @Validated(SysGroupRequest.add.class) SysGroupRequest sysGroupRequest) {
@@ -72,7 +72,7 @@ public class SysGroupController {
      * 删除分组
      *
      * @author fengshuonan
-     * @date 2022/05/11 12:54
+     * @since 2022/05/11 12:54
      */
     @PostResource(name = "删除", path = "/sysGroup/delete")
     public ResponseData<?> delete(@RequestBody @Validated(SysGroupRequest.delete.class) SysGroupRequest sysGroupRequest) {

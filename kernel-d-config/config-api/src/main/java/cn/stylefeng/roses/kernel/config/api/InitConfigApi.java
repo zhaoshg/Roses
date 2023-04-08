@@ -30,7 +30,7 @@ package cn.stylefeng.roses.kernel.config.api;
  * 系统配置表的实现可以用内存，数据库或redis
  *
  * @author fengshuonan
- * @date 2020/10/17 10:27
+ * @since 2020/10/17 10:27
  */
 public interface InitConfigApi {
 
@@ -39,7 +39,7 @@ public interface InitConfigApi {
      *
      * @return true-系统已经初始化，false-系统没有初始化
      * @author fengshuonan
-     * @date 2021/7/8 17:20
+     * @since 2021/7/8 17:20
      */
     Boolean getInitConfigFlag();
 

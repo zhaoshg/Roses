@@ -35,7 +35,7 @@ import java.util.Set;
  * 角色服务对外部模块的接口
  *
  * @author fengshuonan
- * @date 2020/11/5 19:17
+ * @since 2020/11/5 19:17
  */
 public interface RoleServiceApi {
 
@@ -45,7 +45,7 @@ public interface RoleServiceApi {
      * @param roleIds 角色id列表
      * @return 角色信息列表
      * @author fengshuonan
-     * @date 2020/11/21 9:17
+     * @since 2020/11/21 9:17
      */
     List<SysRoleDTO> getRolesByIds(List<Long> roleIds);
 
@@ -55,7 +55,7 @@ public interface RoleServiceApi {
      * @param roleIds 角色id集合
      * @return 组织机构id集合
      * @author fengshuonan
-     * @date 2020/11/21 9:56
+     * @since 2020/11/21 9:56
      */
     List<Long> getRoleDataScopes(List<Long> roleIds);
 
@@ -65,7 +65,7 @@ public interface RoleServiceApi {
      * @param roleIds 角色id集合
      * @return 菜单id集合
      * @author fengshuonan
-     * @date 2020/11/22 23:00
+     * @since 2020/11/22 23:00
      */
     List<Long> getMenuIdsByRoleIds(List<Long> roleIds);
 
@@ -75,7 +75,7 @@ public interface RoleServiceApi {
      * @param roleIdList 角色id集合
      * @return 资源code集合
      * @author majianguo
-     * @date 2020/11/5 上午11:17
+     * @since 2020/11/5 上午11:17
      */
     Set<String> getRoleResourceCodeList(List<Long> roleIdList);
 
@@ -85,7 +85,7 @@ public interface RoleServiceApi {
      * @param roleIdList 角色id集合
      * @return 资源code集合
      * @author majianguo
-     * @date 2020/11/5 上午11:17
+     * @since 2020/11/5 上午11:17
      */
     List<SysRoleResourceDTO> getRoleResourceList(List<Long> roleIdList);
 
@@ -95,7 +95,7 @@ public interface RoleServiceApi {
      * @param roleIdList 角色id集合
      * @return 角色拥有的按钮编码集合
      * @author fengshuonan
-     * @date 2021/1/9 11:08
+     * @since 2021/1/9 11:08
      */
     Set<String> getRoleButtonCodes(List<Long> roleIdList);
 
@@ -104,7 +104,7 @@ public interface RoleServiceApi {
      *
      * @param roleIdList 角色集合
      * @author majianguo
-     * @date 2021/1/9 17:33
+     * @since 2021/1/9 17:33
      */
     List<SysRoleMenuDTO> getRoleMenuList(List<Long> roleIdList);
 
@@ -113,7 +113,7 @@ public interface RoleServiceApi {
      *
      * @param roleIdList 角色集合
      * @author majianguo
-     * @date 2021/1/9 17:33
+     * @since 2021/1/9 17:33
      */
     List<SysRoleMenuButtonDTO> getRoleMenuButtonList(List<Long> roleIdList);
 
@@ -121,7 +121,7 @@ public interface RoleServiceApi {
      * 获取所有角色列表
      *
      * @author fengshuonan
-     * @date 2022/6/8 14:58
+     * @since 2022/6/8 14:58
      */
     List<SysRoleDTO> getRoleSelectList(SysRoleRequest sysRoleRequest);
 
@@ -129,7 +129,7 @@ public interface RoleServiceApi {
      * 添加管理员角色
      *
      * @author fengshuonan
-     * @date 2022/6/8 14:58
+     * @since 2022/6/8 14:58
      */
     void addAdminRole(SysRoleRequest sysRoleRequest);
 
@@ -137,7 +137,7 @@ public interface RoleServiceApi {
      * 角色权限界面，绑定角色的操作权限，全选操作
      *
      * @author fengshuonan
-     * @date 2022/9/29 10:46
+     * @since 2022/9/29 10:46
      */
     List<MenuAndButtonTreeResponse> grantButtonGrantAll(SysRoleRequest sysRoleRequest);
 
@@ -146,7 +146,7 @@ public interface RoleServiceApi {
      *
      * @param sysRoleRequest 删除参数
      * @author majianguo
-     * @date 2020/11/5 上午11:14
+     * @since 2020/11/5 上午11:14
      */
     void del(SysRoleRequest sysRoleRequest);
 
@@ -154,7 +154,7 @@ public interface RoleServiceApi {
      * 角色绑定所有资源
      *
      * @author fengshuonan
-     * @date 2022/9/29 14:05
+     * @since 2022/9/29 14:05
      */
     void grantResourceV2GrantAll(SysRoleRequest sysRoleRequest);
 
@@ -162,7 +162,7 @@ public interface RoleServiceApi {
      * 通过角色编码获取角色
      *
      * @author fengshuonan
-     * @date 2022/10/21 0:18
+     * @since 2022/10/21 0:18
      */
     SysRoleDTO getRoleByCode(String roleCode);
 
@@ -171,7 +171,7 @@ public interface RoleServiceApi {
      *
      * @param roleIdList 角色id集合
      * @author fengshuonan
-     * @date 2022/10/25 15:53
+     * @since 2022/10/25 15:53
      */
     RoleAuthorizeInfo getRoleAuthorizeInfo(List<Long> roleIdList);
 

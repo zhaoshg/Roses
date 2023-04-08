@@ -36,7 +36,7 @@ import java.util.Map;
  * 发送短信的参数
  *
  * @author fengshuonan
- * @date 2020/10/26 22:16
+ * @since 2020/10/26 22:16
  */
 @Data
 public class SysSmsSendParam {

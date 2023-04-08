@@ -38,7 +38,7 @@ import org.springframework.context.annotation.Configuration;
  * 资源缓存自动配置
  *
  * @author fengshuonan
- * @date 2021/5/17 16:44
+ * @since 2021/5/17 16:44
  */
 @Configuration
 @ConditionalOnMissingClass("org.springframework.data.redis.connection.RedisConnectionFactory")
@@ -48,7 +48,7 @@ public class GunsResourceMemoryCacheAutoConfiguration {
      * 资源缓存
      *
      * @author fengshuonan
-     * @date 2021/5/17 16:44
+     * @since 2021/5/17 16:44
      */
     @Bean
     public CacheOperatorApi<ResourceDefinition> resourceCache() {

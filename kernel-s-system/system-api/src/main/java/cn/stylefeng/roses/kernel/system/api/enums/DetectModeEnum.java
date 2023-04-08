@@ -9,7 +9,7 @@ import lombok.Getter;
  * 指定查找模式
  *
  * @author fengshuonan
- * @date 2022/10/1 18:02
+ * @since 2022/10/1 18:02
  */
 @Getter
 public enum DetectModeEnum implements ReadableEnum<DetectModeEnum> {

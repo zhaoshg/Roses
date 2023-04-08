@@ -34,7 +34,7 @@ import java.math.BigDecimal;
  * 系统组织机构表
  *
  * @author fengshuonan
- * @date 2020/11/04 11:05
+ * @since 2020/11/04 11:05
  */
 @Data
 public class HrOrganizationDTO {

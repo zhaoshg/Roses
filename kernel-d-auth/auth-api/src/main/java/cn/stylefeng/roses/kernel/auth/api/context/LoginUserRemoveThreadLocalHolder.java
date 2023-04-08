@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * 清除当前登录用户相关的ThreadLocalHolder
  *
  * @author fengshuonan
- * @date 2021/10/29 11:41
+ * @since 2021/10/29 11:41
  */
 @Component
 public class LoginUserRemoveThreadLocalHolder implements RemoveThreadLocalApi {

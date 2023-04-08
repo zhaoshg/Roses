@@ -39,7 +39,7 @@ import javax.annotation.PostConstruct;
  * druid监控的自动配置类
  *
  * @author fengshuonan
- * @date 2021/1/24 11:27
+ * @since 2021/1/24 11:27
  */
 @Configuration
 public class GunsDruidMonitorAutoConfiguration {
@@ -48,7 +48,7 @@ public class GunsDruidMonitorAutoConfiguration {
      * Druid监控界面的配置
      *
      * @author fengshuonan
-     * @date 2021/1/10 11:29
+     * @since 2021/1/10 11:29
      */
     @Bean
     public ServletRegistrationBean<StatViewServlet> statViewServletRegistrationBean() {
@@ -65,7 +65,7 @@ public class GunsDruidMonitorAutoConfiguration {
      * 用于配置Druid监控url统计
      *
      * @author fengshuonan
-     * @date 2021/1/10 11:45
+     * @since 2021/1/10 11:45
      */
     @Bean
     public FilterRegistrationBean<WebStatFilter> webStatFilterRegistrationBean() {
@@ -90,7 +90,7 @@ public class GunsDruidMonitorAutoConfiguration {
      * 解决druid discard long time none received connection问题
      *
      * @author fengshuonan
-     * @date 2021/7/7 14:15
+     * @since 2021/7/7 14:15
      */
     @PostConstruct
     public void setProperties() {

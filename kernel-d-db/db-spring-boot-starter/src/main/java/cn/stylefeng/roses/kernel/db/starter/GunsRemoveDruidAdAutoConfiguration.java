@@ -14,7 +14,7 @@ import java.io.IOException;
  * 去除druid底部广告
  *
  * @author fengshuonan
- * @date 2022/3/15 16:40
+ * @since 2022/3/15 16:40
  */
 @Configuration
 @AutoConfigureBefore(DataSourceAutoConfiguration.class)
@@ -24,7 +24,7 @@ public class GunsRemoveDruidAdAutoConfiguration {
      * 除去页面底部的广告
      *
      * @author xixiaowei
-     * @date 2022/1/24 15:23
+     * @since 2022/1/24 15:23
      */
     @Bean
     public FilterRegistrationBean<?> removeDruidAdFilterRegistrationBean() {

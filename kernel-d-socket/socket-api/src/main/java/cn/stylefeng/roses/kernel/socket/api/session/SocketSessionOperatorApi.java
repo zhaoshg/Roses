@@ -31,7 +31,7 @@ package cn.stylefeng.roses.kernel.socket.api.session;
  * 该接口支持扩展，可参考WebSocket模块中{@link cn.stylefeng.roses.kernel.socket.websocket.operator.channel}包下的类
  *
  * @author majianguo
- * @date 2021/6/1 上午11:46
+ * @since 2021/6/1 上午11:46
  */
 public interface SocketSessionOperatorApi {
 
@@ -39,7 +39,7 @@ public interface SocketSessionOperatorApi {
      * 写出数据，经过责任链
      *
      * @author majianguo
-     * @date 2021/6/1 上午11:48
+     * @since 2021/6/1 上午11:48
      **/
     void writeAndFlush(Object obj);
 
@@ -47,7 +47,7 @@ public interface SocketSessionOperatorApi {
      * 写出数据，不经过责任链
      *
      * @author majianguo
-     * @date 2021/6/1 上午11:48
+     * @since 2021/6/1 上午11:48
      **/
     void writeToChannel(Object obj);
 
@@ -55,7 +55,7 @@ public interface SocketSessionOperatorApi {
      * 关闭会话
      *
      * @author majianguo
-     * @date 2021/6/1 上午11:48
+     * @since 2021/6/1 上午11:48
      **/
     void close();
 
@@ -64,7 +64,7 @@ public interface SocketSessionOperatorApi {
      *
      * @return {@link boolean}
      * @author majianguo
-     * @date 2021/6/1 上午11:50
+     * @since 2021/6/1 上午11:50
      **/
     boolean isInvalid();
 }

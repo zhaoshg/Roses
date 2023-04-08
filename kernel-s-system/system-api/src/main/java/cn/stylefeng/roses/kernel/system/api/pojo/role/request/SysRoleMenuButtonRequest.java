@@ -31,7 +31,7 @@ import lombok.Data;
  * 角色按钮
  *
  * @author majianguo
- * @date 2021/1/9 17:33
+ * @since 2021/1/9 17:33
  */
 @Data
 public class SysRoleMenuButtonRequest {

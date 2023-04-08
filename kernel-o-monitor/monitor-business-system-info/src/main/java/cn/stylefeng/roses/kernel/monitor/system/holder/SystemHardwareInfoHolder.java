@@ -31,7 +31,7 @@ import cn.stylefeng.roses.kernel.timer.api.TimerAction;
  * 定时刷新服务器状态信息
  *
  * @author fengshuonan
- * @date 2021/1/31 21:52
+ * @since 2021/1/31 21:52
  */
 public class SystemHardwareInfoHolder implements TimerAction {
 

@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  * Mongodb模块的异常
  *
  * @author fengshuonan
- * @date 2021/13/17 23:59
+ * @since 2021/13/17 23:59
  */
 public class MongodbException extends ServiceException {
 

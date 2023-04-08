@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
  * 系统资源信息关联
  *
  * @author fengshuonan
- * @date 2021/8/8 21:38
+ * @since 2021/8/8 21:38
  */
 @Service
 public class SysMenuResourceServiceImpl extends ServiceImpl<SysMenuResourceMapper, SysMenuResource> implements SysMenuResourceService {

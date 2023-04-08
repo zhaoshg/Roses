@@ -34,7 +34,7 @@ import java.util.List;
  * 角色绑定资源的缓存
  *
  * @author fengshuonan
- * @date 2021/7/30 23:20
+ * @since 2021/7/30 23:20
  */
 public class RoleResourceMemoryCache extends AbstractMemoryCacheOperator<List<String>> {
 

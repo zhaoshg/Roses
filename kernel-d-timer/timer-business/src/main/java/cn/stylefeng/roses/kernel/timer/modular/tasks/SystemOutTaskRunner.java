@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
  * 这是一个定时任务的示例程序
  *
  * @author stylefeng
- * @date 2020/6/30 22:09
+ * @since 2020/6/30 22:09
  */
 @Component
 public class SystemOutTaskRunner implements TimerAction {

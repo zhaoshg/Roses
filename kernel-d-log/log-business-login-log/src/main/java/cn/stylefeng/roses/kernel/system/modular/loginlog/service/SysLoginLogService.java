@@ -34,7 +34,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 登录日志service接口
  *
  * @author chenjinlong
- * @date 2021/1/13 10:56
+ * @since 2021/1/13 10:56
  */
 public interface SysLoginLogService extends IService<SysLoginLog> {
 
@@ -43,7 +43,7 @@ public interface SysLoginLogService extends IService<SysLoginLog> {
      *
      * @param sysLoginLogRequest 参数
      * @author chenjinlong
-     * @date 2021/1/13 10:55
+     * @since 2021/1/13 10:55
      */
     void del(SysLoginLogRequest sysLoginLogRequest);
 
@@ -51,7 +51,7 @@ public interface SysLoginLogService extends IService<SysLoginLog> {
      * 清空登录日志
      *
      * @author chenjinlong
-     * @date 2021/1/13 10:55
+     * @since 2021/1/13 10:55
      */
     void delAll();
 
@@ -60,7 +60,7 @@ public interface SysLoginLogService extends IService<SysLoginLog> {
      *
      * @param sysLoginLogRequest 参数
      * @author chenjinlong
-     * @date 2021/1/13 10:56
+     * @since 2021/1/13 10:56
      */
     SysLoginLog detail(SysLoginLogRequest sysLoginLogRequest);
 
@@ -69,7 +69,7 @@ public interface SysLoginLogService extends IService<SysLoginLog> {
      *
      * @param sysLoginLogRequest 参数
      * @author chenjinlong
-     * @date 2021/1/13 10:57
+     * @since 2021/1/13 10:57
      */
     PageResult<SysLoginLogDto> findPage(SysLoginLogRequest sysLoginLogRequest);
 

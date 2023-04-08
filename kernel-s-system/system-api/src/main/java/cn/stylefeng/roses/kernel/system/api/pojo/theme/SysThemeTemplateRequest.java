@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * 系统主题模板参数
  *
  * @author xixiaowei
- * @date 2021/12/17 16:19
+ * @since 2021/12/17 16:19
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

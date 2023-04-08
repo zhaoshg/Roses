@@ -36,7 +36,7 @@ import java.util.Set;
  * API资源的包装类
  *
  * @author fengshuonan
- * @date 2018-01-03-下午3:27
+ * @since 2018-01-03-下午3:27
  */
 @Data
 public class ResourceDefinition implements Serializable {

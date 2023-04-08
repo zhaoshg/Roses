@@ -33,7 +33,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  * 黑名单用户的缓存
  *
  * @author fengshuonan
- * @date 2020/11/20 15:50
+ * @since 2020/11/20 15:50
  */
 public class BlackListRedisCache extends AbstractRedisCacheOperator<String> {
 

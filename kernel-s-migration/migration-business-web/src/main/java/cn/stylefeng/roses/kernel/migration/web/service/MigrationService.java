@@ -10,7 +10,7 @@ import java.util.List;
  * 迁移服务接口
  *
  * @author majianguo
- * @date 2021/7/7 9:34
+ * @since 2021/7/7 9:34
  */
 public interface MigrationService {
 
@@ -19,7 +19,7 @@ public interface MigrationService {
      *
      * @return {@link List< MigrationRequest>}
      * @author majianguo
-     * @date 2021/7/7 9:36
+     * @since 2021/7/7 9:36
      **/
     List<MigrationRequest> getAllMigrationList();
 
@@ -27,7 +27,7 @@ public interface MigrationService {
      * 备份指定数据列表
      *
      * @author majianguo
-     * @date 2021/7/7 9:37
+     * @since 2021/7/7 9:37
      **/
     String migrationSelectData(MigrationAggregationPOJO migrationAggregationPOJO);
 
@@ -35,7 +35,7 @@ public interface MigrationService {
      * 恢复备份数据
      *
      * @author majianguo
-     * @date 2021/7/7 11:14
+     * @since 2021/7/7 11:14
      **/
     void restoreData(MultipartFile file,String type);
 }

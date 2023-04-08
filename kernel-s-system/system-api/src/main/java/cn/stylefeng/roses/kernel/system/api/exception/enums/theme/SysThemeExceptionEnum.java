@@ -9,7 +9,7 @@ import lombok.Getter;
  * 系统主题异常类
  *
  * @author xixiaowei
- * @date 2021/12/23 17:00
+ * @since 2021/12/23 17:00
  */
 @Getter
 public enum SysThemeExceptionEnum implements AbstractExceptionEnum {

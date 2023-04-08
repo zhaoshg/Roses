@@ -15,7 +15,7 @@ import java.util.Map;
  * 用于扫描所有的迁移实现类
  *
  * @author majianguo
- * @date 2021/7/7 9:49
+ * @since 2021/7/7 9:49
  */
 @Component
 public class MigrationApplicationRunnerImpl implements ApplicationRunner {

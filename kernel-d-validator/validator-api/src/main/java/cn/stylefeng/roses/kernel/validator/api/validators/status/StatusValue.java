@@ -34,7 +34,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * 状态校验，校验参数的状态是否是 StatusEnum 中的值
  *
  * @author fengshuonan
- * @date 2020/10/31 13:56
+ * @since 2020/10/31 13:56
  */
 @Documented
 @Constraint(validatedBy = StatusValueValidator.class)

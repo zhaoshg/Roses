@@ -47,7 +47,7 @@ import java.util.List;
  * 日志管理控制器
  *
  * @author luojie
- * @date 2020/11/3 12:44
+ * @since 2020/11/3 12:44
  */
 @RestController
 @ApiResource(name = "日志管理控制器", resBizType = ResBizTypeEnum.SYSTEM)
@@ -69,7 +69,7 @@ public class LogManagerController {
      * 查询日志列表
      *
      * @author luojie
-     * @date 2020/11/3 12:58
+     * @since 2020/11/3 12:58
      */
     @GetResource(name = "查询日志列表", path = "/logManager/list")
     public ResponseData<List<LogRecordDTO>> list(@RequestBody LogManagerRequest logManagerRequest) {
@@ -80,7 +80,7 @@ public class LogManagerController {
      * 查询日志
      *
      * @author tengshuqi
-     * @date 2021/1/8 17:36
+     * @since 2021/1/8 17:36
      */
     @GetResource(name = "查询日志列表", path = "/logManager/page")
     public ResponseData<PageResult<LogRecordDTO>> page(LogManagerRequest logManagerRequest) {
@@ -91,7 +91,7 @@ public class LogManagerController {
      * 删除日志
      *
      * @author luojie
-     * @date 2020/11/3 13:47
+     * @since 2020/11/3 13:47
      */
     @PostResource(name = "删除日志", path = "/logManager/delete")
     @BusinessLog
@@ -104,7 +104,7 @@ public class LogManagerController {
      * 查看日志详情
      *
      * @author TSQ
-     * @date 2021/1/11 17:36
+     * @since 2021/1/11 17:36
      */
     @GetResource(name = "查看日志详情", path = "/logManager/detail")
     public ResponseData<LogRecordDTO> detail(@Validated(LogManagerRequest.detail.class) LogManagerRequest logManagerRequest) {

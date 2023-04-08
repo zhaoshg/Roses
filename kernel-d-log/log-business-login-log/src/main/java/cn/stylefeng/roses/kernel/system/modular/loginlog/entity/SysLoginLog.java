@@ -37,7 +37,7 @@ import java.util.Date;
  * 登录日志表
  *
  * @author chenjinlong
- * @date 2021/1/13 11:05
+ * @since 2021/1/13 11:05
  */
 @Data
 @TableName("sys_login_log")

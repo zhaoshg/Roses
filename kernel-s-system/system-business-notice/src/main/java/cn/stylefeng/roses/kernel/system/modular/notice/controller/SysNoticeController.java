@@ -45,7 +45,7 @@ import java.util.List;
  * 通知管理控制器
  *
  * @author liuhanqing
- * @date 2021/1/8 19:47
+ * @since 2021/1/8 19:47
  */
 @RestController
 @ApiResource(name = "通知管理")
@@ -58,7 +58,7 @@ public class SysNoticeController {
      * 添加通知管理
      *
      * @author liuhanqing
-     * @date 2021/1/9 14:44
+     * @since 2021/1/9 14:44
      */
     @PostResource(name = "添加通知管理", path = "/sysNotice/add")
     @BusinessLog
@@ -71,7 +71,7 @@ public class SysNoticeController {
      * 编辑通知管理
      *
      * @author liuhanqing
-     * @date 2021/1/9 14:54
+     * @since 2021/1/9 14:54
      */
     @PostResource(name = "编辑通知管理", path = "/sysNotice/edit")
     @BusinessLog
@@ -84,7 +84,7 @@ public class SysNoticeController {
      * 删除通知管理
      *
      * @author liuhanqing
-     * @date 2021/1/9 14:54
+     * @since 2021/1/9 14:54
      */
     @PostResource(name = "删除通知管理", path = "/sysNotice/delete")
     @BusinessLog
@@ -97,7 +97,7 @@ public class SysNoticeController {
      * 查看通知管理
      *
      * @author liuhanqing
-     * @date 2021/1/9 9:49
+     * @since 2021/1/9 9:49
      */
     @GetResource(name = "查看通知管理", path = "/sysNotice/detail")
     public ResponseData<SysNotice> detail(@Validated(SysNoticeRequest.detail.class) SysNoticeRequest sysNoticeParam) {
@@ -108,7 +108,7 @@ public class SysNoticeController {
      * 查询通知管理
      *
      * @author liuhanqing
-     * @date 2021/1/9 21:23
+     * @since 2021/1/9 21:23
      */
     @GetResource(name = "查询通知管理", path = "/sysNotice/page")
     public ResponseData<PageResult<SysNotice>> page(SysNoticeRequest sysNoticeParam) {
@@ -119,7 +119,7 @@ public class SysNoticeController {
      * 通知管理列表
      *
      * @author liuhanqing
-     * @date 2021/1/9 14:55
+     * @since 2021/1/9 14:55
      */
     @GetResource(name = "通知管理列表", path = "/sysNotice/list")
     public ResponseData<List<SysNotice>> list(SysNoticeRequest sysNoticeParam) {

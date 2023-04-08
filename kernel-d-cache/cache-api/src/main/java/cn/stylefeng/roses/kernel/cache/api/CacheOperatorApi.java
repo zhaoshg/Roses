@@ -41,7 +41,7 @@ import static cn.stylefeng.roses.kernel.cache.api.constants.CacheConstants.CACHE
  * 泛型为cache的值类class类型
  *
  * @author stylefeng
- * @date 2020/7/8 22:02
+ * @since 2020/7/8 22:02
  */
 public interface CacheOperatorApi<T> {
 
@@ -51,7 +51,7 @@ public interface CacheOperatorApi<T> {
      * @param key   键
      * @param value 值
      * @author stylefeng
-     * @date 2020/7/8 22:06
+     * @since 2020/7/8 22:06
      */
     void put(String key, T value);
 
@@ -62,7 +62,7 @@ public interface CacheOperatorApi<T> {
      * @param value          值
      * @param timeoutSeconds 过期时间，单位秒
      * @author stylefeng
-     * @date 2020/7/8 22:07
+     * @since 2020/7/8 22:07
      */
     void put(String key, T value, Long timeoutSeconds);
 
@@ -72,7 +72,7 @@ public interface CacheOperatorApi<T> {
      * @param key 键
      * @return 值
      * @author stylefeng
-     * @date 2020/7/8 22:08
+     * @since 2020/7/8 22:08
      */
     T get(String key);
 
@@ -81,7 +81,7 @@ public interface CacheOperatorApi<T> {
      *
      * @param key 键，多个
      * @author stylefeng
-     * @date 2020/7/8 22:09
+     * @since 2020/7/8 22:09
      */
     void remove(String... key);
 
@@ -90,7 +90,7 @@ public interface CacheOperatorApi<T> {
      *
      * @param key 键，多个
      * @author stylefeng
-     * @date 2020/7/8 22:09
+     * @since 2020/7/8 22:09
      */
     void expire(String key, Long expiredSeconds);
 
@@ -100,7 +100,7 @@ public interface CacheOperatorApi<T> {
      * @param key 缓存的键
      * @return true-存在，false-不存在
      * @author fengshuonan
-     * @date 2020/11/20 16:50
+     * @since 2020/11/20 16:50
      */
     boolean contains(String key);
 
@@ -109,7 +109,7 @@ public interface CacheOperatorApi<T> {
      *
      * @return key列表
      * @author stylefeng
-     * @date 2020/7/8 22:11
+     * @since 2020/7/8 22:11
      */
     Collection<String> getAllKeys();
 
@@ -118,7 +118,7 @@ public interface CacheOperatorApi<T> {
      *
      * @return 值列表
      * @author stylefeng
-     * @date 2020/7/8 22:11
+     * @since 2020/7/8 22:11
      */
     Collection<T> getAllValues();
 
@@ -127,7 +127,7 @@ public interface CacheOperatorApi<T> {
      *
      * @return 键值map
      * @author stylefeng
-     * @date 2020/7/8 22:11
+     * @since 2020/7/8 22:11
      */
     Map<String, T> getAllKeyValues();
 
@@ -138,7 +138,7 @@ public interface CacheOperatorApi<T> {
      *
      * @return 缓存前缀
      * @author stylefeng
-     * @date 2020/7/9 11:06
+     * @since 2020/7/9 11:06
      */
     String getCommonKeyPrefix();
 
@@ -150,7 +150,7 @@ public interface CacheOperatorApi<T> {
      * 如果不开启租户切割，则租户前缀一直会为master:
      *
      * @author fengshuonan
-     * @date 2022/11/9 19:02
+     * @since 2022/11/9 19:02
      */
     default Boolean divideByTenant() {
         return false;
@@ -162,7 +162,7 @@ public interface CacheOperatorApi<T> {
      * key的组成方式：租户前缀:业务前缀:业务key
      *
      * @author fengshuonan
-     * @date 2022/11/9 10:41
+     * @since 2022/11/9 10:41
      */
     default String getFinalPrefix() {
         // 获取租户前缀
@@ -180,7 +180,7 @@ public interface CacheOperatorApi<T> {
      * @param keyParam 用户传递的key参数
      * @return 最终插入缓存的key值
      * @author fengshuonan
-     * @date 2021/7/30 21:18
+     * @since 2021/7/30 21:18
      */
     default String calcKey(String keyParam) {
         if (StrUtil.isEmpty(keyParam)) {
@@ -196,7 +196,7 @@ public interface CacheOperatorApi<T> {
      * @param finalKey 最终存在CacheOperator的key
      * @return 用户最原始的key
      * @author fengshuonan
-     * @date 2022/11/9 10:31
+     * @since 2022/11/9 10:31
      */
     default String removePrefix(String finalKey) {
 
@@ -211,7 +211,7 @@ public interface CacheOperatorApi<T> {
      * 获取租户前缀
      *
      * @author fengshuonan
-     * @date 2022/11/9 10:35
+     * @since 2022/11/9 10:35
      */
     default String getTenantPrefix() {
 

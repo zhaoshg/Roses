@@ -30,7 +30,7 @@ import lombok.Getter;
  * 短信发送状态枚举
  *
  * @author fengshuonan
- * @date 2020/10/26 21:29
+ * @since 2020/10/26 21:29
  */
 @Getter
 public enum SmsSendStatusEnum {

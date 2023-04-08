@@ -17,7 +17,7 @@ import java.util.List;
  * 系统消息相关的界面渲染
  *
  * @author liuhanqing
- * @date 2021/1/11 19:37
+ * @since 2021/1/11 19:37
  */
 @Controller
 @ApiResource(name = "系统消息相关的界面渲染", resBizType = ResBizTypeEnum.SYSTEM)
@@ -30,7 +30,7 @@ public class MessageViewController {
      * 系统消息界面
      *
      * @author liuhanqing
-     * @date 2021/1/10 17:42
+     * @since 2021/1/10 17:42
      */
     @GetResource(name = "系统消息界面", path = "/view/message", requiredPermission = false)
     public String message(Model model) {
@@ -47,7 +47,7 @@ public class MessageViewController {
      * 我的消息界面
      *
      * @author liuhanqing
-     * @date 2021/1/12 20:22
+     * @since 2021/1/12 20:22
      */
     @GetResource(name = "我的消息界面", path = "/view/message_list", requiredPermission = false)
     public String indexView() {
@@ -58,7 +58,7 @@ public class MessageViewController {
      * 我的消息界面
      *
      * @author liuhanqing
-     * @date 2021/1/12 20:22
+     * @since 2021/1/12 20:22
      */
     @GetResource(name = "我的消息界面", path = "/view/message_view", requiredPermission = false)
     public String view(Model model) {

@@ -32,7 +32,7 @@ import lombok.EqualsAndHashCode;
  * 获取资源通过url请求
  *
  * @author fengshuonan
- * @date 2020/10/19 22:05
+ * @since 2020/10/19 22:05
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

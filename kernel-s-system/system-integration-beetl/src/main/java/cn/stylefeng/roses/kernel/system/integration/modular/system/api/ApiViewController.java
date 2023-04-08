@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
  * API文档管理
  *
  * @author fengshuonan
- * @date 2021/1/14 21:05
+ * @since 2021/1/14 21:05
  */
 @Controller
 @ApiResource(name = "API文档管理", resBizType = ResBizTypeEnum.SYSTEM)
@@ -19,7 +19,7 @@ public class ApiViewController {
      * 编辑应用界面
      *
      * @author fengshuonan
-     * @date 2021/1/6 13:37
+     * @since 2021/1/6 13:37
      */
     @GetResource(name = "API文档界面", path = "/view/api")
     public String apiIndex() {

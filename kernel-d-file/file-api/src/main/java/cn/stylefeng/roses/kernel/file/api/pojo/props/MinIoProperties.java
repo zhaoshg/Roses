@@ -30,7 +30,7 @@ import lombok.Data;
  * MinIO文件存储配置
  *
  * @author luojie
- * @date 2020/10/31 11:19
+ * @since 2020/10/31 11:19
  */
 @Data
 public class MinIoProperties {

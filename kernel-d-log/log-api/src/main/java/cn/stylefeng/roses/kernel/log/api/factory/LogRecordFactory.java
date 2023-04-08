@@ -38,7 +38,7 @@ import java.util.Date;
  * 一般用法为用本类去创建一个对象，再用其他的填充器去填充其他信息，例如认证，http接口信息等
  *
  * @author fengshuonan
- * @date 2020/10/28 17:28
+ * @since 2020/10/28 17:28
  */
 public class LogRecordFactory {
 
@@ -46,7 +46,7 @@ public class LogRecordFactory {
      * 创建日志记录
      *
      * @author fengshuonan
-     * @date 2020/10/28 17:31
+     * @since 2020/10/28 17:31
      */
     public static LogRecordDTO createLogRecord(String name, Object content) {
         LogRecordDTO logRecordDTO = new LogRecordDTO();

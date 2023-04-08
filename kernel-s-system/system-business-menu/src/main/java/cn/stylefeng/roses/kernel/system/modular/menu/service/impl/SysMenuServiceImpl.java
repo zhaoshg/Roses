@@ -85,7 +85,7 @@ import java.util.stream.Collectors;
  * 系统菜单service接口实现类
  *
  * @author fengshuonan
- * @date 2020/3/13 16:05
+ * @since 2020/3/13 16:05
  */
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService, MenuServiceApi {
@@ -722,7 +722,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * 获取系统菜单
      *
      * @author fengshuonan
-     * @date 2020/3/27 9:13
+     * @since 2020/3/27 9:13
      */
     private SysMenu querySysMenu(SysMenuRequest sysMenuRequest) {
         SysMenu sysMenu = this.getById(sysMenuRequest.getMenuId());
@@ -740,7 +740,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * 如果pid不是顶级节点，pids就是父菜单的pids + [pid] + ,
      *
      * @author fengshuonan, stylefeng
-     * @date 2020/3/26 11:28
+     * @since 2020/3/26 11:28
      */
     private String createPids(Long pid) {
         if (pid.equals(TreeConstants.DEFAULT_PARENT_ID)) {
@@ -760,7 +760,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * 创建查询条件wrapper
      *
      * @author fengshuonan
-     * @date 2020/11/6 10:16
+     * @since 2020/11/6 10:16
      */
     private LambdaQueryWrapper<SysMenu> createWrapper(SysMenuRequest sysMenuRequest) {
         LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
@@ -798,7 +798,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * 获取当前用户的菜单id集合
      *
      * @author fengshuonan
-     * @date 2020/11/22 23:15
+     * @since 2020/11/22 23:15
      */
     private List<Long> getCurrentUserMenuIds() {
 
@@ -824,7 +824,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * 更新子节点以及子节点的子节点的appCode和层级关系（pids）
      *
      * @author fengshuonan
-     * @date 2020/11/23 22:05
+     * @since 2020/11/23 22:05
      */
     private String updateChildrenAppAndLevel(SysMenuRequest sysMenuRequest, SysMenu oldMenu) {
 
@@ -894,7 +894,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      *
      * @param antdvFrontType 菜单是前台显示还是后台显示
      * @author fengshuonan
-     * @date 2022/9/28 17:46
+     * @since 2022/9/28 17:46
      */
     private List<SysMenu> totalMenusWithOneLevel(Integer antdvFrontType) {
         // 查询所有菜单列表，根据前台传递参数，可选择前台还是后台菜单
@@ -941,7 +941,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * 校验菜单，是否在通应用下重复
      *
      * @author fengshuonan
-     * @date 2023/3/14 14:37
+     * @since 2023/3/14 14:37
      */
     private void validateMenu(SysMenuRequest request) {
         SysMenuRequest param = new SysMenuRequest();

@@ -34,7 +34,7 @@ import java.util.List;
  * 新版的角色绑定菜单和按钮，用在角色分配菜单和按钮节点
  *
  * @author fengshuonan
- * @date 2021/8/10 22:36
+ * @since 2021/8/10 22:36
  */
 @Data
 public class MenuAndButtonTreeResponse implements AbstractTreeNode<MenuAndButtonTreeResponse> {

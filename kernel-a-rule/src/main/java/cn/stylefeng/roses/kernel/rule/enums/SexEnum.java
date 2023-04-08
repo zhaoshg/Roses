@@ -35,7 +35,7 @@ import lombok.Getter;
  * 性别的枚举
  *
  * @author fengshuonan
- * @date 2020/10/17 10:01
+ * @since 2020/10/17 10:01
  */
 @Getter
 public enum SexEnum implements ReadableEnum<SexEnum> {
@@ -65,7 +65,7 @@ public enum SexEnum implements ReadableEnum<SexEnum> {
      * 根据code获取枚举
      *
      * @author fengshuonan
-     * @date 2020/10/29 18:59
+     * @since 2020/10/29 18:59
      */
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static SexEnum codeToEnum(String code) {
@@ -83,7 +83,7 @@ public enum SexEnum implements ReadableEnum<SexEnum> {
      * 编码转化成中文含义
      *
      * @author fengshuonan
-     * @date 2021/1/11 22:34
+     * @since 2021/1/11 22:34
      */
     public static String codeToMessage(String code) {
         if (null != code) {

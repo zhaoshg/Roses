@@ -39,7 +39,7 @@ import java.util.List;
  * 文件信息表 服务类
  *
  * @author stylefeng
- * @date 2020/6/7 22:15
+ * @since 2020/6/7 22:15
  */
 public interface SysFileInfoService extends IService<SysFileInfo> {
 
@@ -49,7 +49,7 @@ public interface SysFileInfoService extends IService<SysFileInfo> {
      * @param fileId 文件id
      * @return 文件信息结果集
      * @author fengshuonan
-     * @date 2020/11/29 14:16
+     * @since 2020/11/29 14:16
      */
     SysFileInfoResponse getFileInfoResult(Long fileId);
 
@@ -59,7 +59,7 @@ public interface SysFileInfoService extends IService<SysFileInfo> {
      * @param file 要上传的文件
      * @return 文件上传信息体
      * @author majianguo
-     * @date 2020/12/16 15:47
+     * @since 2020/12/16 15:47
      */
     SysFileInfoResponse uploadFile(MultipartFile file, SysFileInfoRequest sysFileInfoRequest);
 
@@ -70,7 +70,7 @@ public interface SysFileInfoService extends IService<SysFileInfo> {
      * @param sysFileInfoRequest 如果是替换，需带上code以便版本升级
      * @return 文件上传返回体
      * @author majianguo
-     * @date 2020/12/16 15:46
+     * @since 2020/12/16 15:46
      */
     SysFileInfoResponse updateFile(MultipartFile file, SysFileInfoRequest sysFileInfoRequest);
 
@@ -80,7 +80,7 @@ public interface SysFileInfoService extends IService<SysFileInfo> {
      * @param sysFileInfoRequest 文件下载参数
      * @param response           响应结果
      * @author fengshuonan
-     * @date 2020/11/29 13:39
+     * @since 2020/11/29 13:39
      */
     void download(SysFileInfoRequest sysFileInfoRequest, HttpServletResponse response);
 
@@ -89,7 +89,7 @@ public interface SysFileInfoService extends IService<SysFileInfo> {
      *
      * @param sysFileInfoRequest 删除参数
      * @author fengshuonan
-     * @date 2020/11/29 13:44
+     * @since 2020/11/29 13:44
      */
     void deleteReally(SysFileInfoRequest sysFileInfoRequest);
 
@@ -99,7 +99,7 @@ public interface SysFileInfoService extends IService<SysFileInfo> {
      * @param sysFileInfoRequest 查询参数
      * @return 查询分页结果
      * @author fengshuonan
-     * @date 2020/11/29 14:09
+     * @since 2020/11/29 14:09
      */
     PageResult<SysFileInfoListResponse> fileInfoListPage(SysFileInfoRequest sysFileInfoRequest);
 
@@ -110,7 +110,7 @@ public interface SysFileInfoService extends IService<SysFileInfo> {
      * @param secretFlag 是否私有文件
      * @param response   响应结果
      * @author majianguo
-     * @date 2020/12/7 下午4:47
+     * @since 2020/12/7 下午4:47
      */
     void packagingDownload(String fileIds, String secretFlag, HttpServletResponse response);
 
@@ -119,7 +119,7 @@ public interface SysFileInfoService extends IService<SysFileInfo> {
      *
      * @param fileIds 附件IDS
      * @author majianguo
-     * @date 2020/12/27 12:52
+     * @since 2020/12/27 12:52
      */
     List<SysFileInfoResponse> getFileInfoListByFileIds(String fileIds);
 
@@ -127,7 +127,7 @@ public interface SysFileInfoService extends IService<SysFileInfo> {
      * 文件预览
      *
      * @author fengshuonan
-     * @date 2020/11/29 11:29
+     * @since 2020/11/29 11:29
      */
     void preview(SysFileInfoRequest sysFileInfoRequest, HttpServletResponse response);
 
@@ -135,7 +135,7 @@ public interface SysFileInfoService extends IService<SysFileInfo> {
      * 版本回退
      *
      * @author majianguo
-     * @date 2020/12/27 13:49
+     * @since 2020/12/27 13:49
      */
     SysFileInfoResponse versionBack(SysFileInfoRequest sysFileInfoRequest);
 
@@ -145,7 +145,7 @@ public interface SysFileInfoService extends IService<SysFileInfo> {
      * @param sysFileInfoRequest 文件预览参数
      * @param response           响应结果
      * @author fengshuonan
-     * @date 2020/11/29 13:45
+     * @since 2020/11/29 13:45
      */
     void previewByBucketAndObjName(SysFileInfoRequest sysFileInfoRequest, HttpServletResponse response);
 
@@ -155,7 +155,7 @@ public interface SysFileInfoService extends IService<SysFileInfo> {
      * @param sysFileInfoRequest 查看参数
      * @return 文件信息
      * @author fengshuonan
-     * @date 2020/11/29 14:08
+     * @since 2020/11/29 14:08
      */
     SysFileInfo detail(SysFileInfoRequest sysFileInfoRequest);
 
@@ -164,7 +164,7 @@ public interface SysFileInfoService extends IService<SysFileInfo> {
      *
      * @param fileIdList 文件ID列表
      * @author majianguo
-     * @date 2020/12/27 12:57
+     * @since 2020/12/27 12:57
      */
     List<SysFileInfoResponse> getFileInfoListByFileIds(List<Long> fileIdList);
 

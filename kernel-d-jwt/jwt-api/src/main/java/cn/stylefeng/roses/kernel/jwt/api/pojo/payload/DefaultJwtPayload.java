@@ -33,7 +33,7 @@ import java.util.Map;
  * jwt的载体，也就是jwt本身带的一些信息
  *
  * @author fengshuonan
- * @date 2020/10/21 11:37
+ * @since 2020/10/21 11:37
  */
 @Data
 public class DefaultJwtPayload {

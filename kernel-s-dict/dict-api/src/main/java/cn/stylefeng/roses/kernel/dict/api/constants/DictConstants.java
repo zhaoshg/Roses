@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.dict.api.constants;
  * 字典模块的常量
  *
  * @author fengshuonan
- * @date 2020/10/29 11:38
+ * @since 2020/10/29 11:38
  */
 public interface DictConstants {
 

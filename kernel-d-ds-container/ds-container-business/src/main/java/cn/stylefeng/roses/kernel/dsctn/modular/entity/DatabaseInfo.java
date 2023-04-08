@@ -34,7 +34,7 @@ import lombok.EqualsAndHashCode;
  * 数据库信息表
  *
  * @author fengshuonan
- * @date 2020/11/1 0:15
+ * @since 2020/11/1 0:15
  */
 @TableName("sys_database_info")
 @Data

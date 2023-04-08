@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.system.api.constants;
  * 系统管理模块的常量
  *
  * @author fengshuonan
- * @date 2020/11/4 15:48
+ * @since 2020/11/4 15:48
  */
 public interface SystemConstants {
 

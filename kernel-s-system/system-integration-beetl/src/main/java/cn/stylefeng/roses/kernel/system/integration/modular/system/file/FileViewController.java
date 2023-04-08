@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
  * 文件管理界面
  *
  * @author lgq
- * @date 2021/1/9
+ * @since 2021/1/9
  */
 @Controller
 @ApiResource(name = "文件管理界面", resBizType = ResBizTypeEnum.SYSTEM)
@@ -19,7 +19,7 @@ public class FileViewController {
      * 文件管理首页
      *
      * @author lgq
-     * @date 2021/1/9
+     * @since 2021/1/9
      */
     @GetResource(name = "文件管理首页", path = "/view/file")
     public String fileIndex() {
@@ -30,7 +30,7 @@ public class FileViewController {
      * 文件详情页面
      *
      * @author lgq
-     * @date 2021/1/9
+     * @since 2021/1/9
      */
     @GetResource(name = "文件详情页面", path = "/view/fileInfoDetails")
     public String details() {

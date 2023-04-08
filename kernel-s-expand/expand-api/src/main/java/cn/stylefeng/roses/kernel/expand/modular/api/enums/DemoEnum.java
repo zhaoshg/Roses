@@ -6,7 +6,7 @@ import lombok.Getter;
  * 一个示例
  *
  * @author fengshuonan
- * @date 2022-03-29 23:14:31
+ * @since 2022-03-29 23:14:31
  */
 @Getter
 public enum DemoEnum {

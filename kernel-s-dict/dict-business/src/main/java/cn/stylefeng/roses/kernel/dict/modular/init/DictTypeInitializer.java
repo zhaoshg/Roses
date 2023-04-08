@@ -35,7 +35,7 @@ import org.springframework.stereotype.Component;
  * 字典数据库初始化程序
  *
  * @author majianguo
- * @date 2020/12/9 上午11:02
+ * @since 2020/12/9 上午11:02
  * @see AbstractSql
  */
 @Component

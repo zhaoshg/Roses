@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.wrapper.api.constants;
  * Wrapper的常量
  *
  * @author fengshuonan
- * @date 2021/1/19 22:23
+ * @since 2021/1/19 22:23
  */
 public interface WrapperConstants {
 

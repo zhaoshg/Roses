@@ -50,7 +50,7 @@ import java.util.List;
  * 数据库初始化，可初始化表，校验字段，校验表名是否存在等
  *
  * @author fengshuonan
- * @date 2018-07-29 22:05
+ * @since 2018-07-29 22:05
  */
 @Slf4j
 @Getter
@@ -78,7 +78,7 @@ public abstract class DbInitializer {
      * 初始化数据库
      *
      * @author fengshuonan
-     * @date 2018/7/30 上午10:30
+     * @since 2018/7/30 上午10:30
      */
     public void dbInit() {
 
@@ -93,7 +93,7 @@ public abstract class DbInitializer {
      * 初始化表结构
      *
      * @author fengshuonan
-     * @date 2018/7/30 上午10:24
+     * @since 2018/7/30 上午10:24
      */
     private void initTable() {
 
@@ -128,7 +128,7 @@ public abstract class DbInitializer {
      * 校验实体和对应表结构是否有不一致的
      *
      * @author fengshuonan
-     * @date 2018/7/30 上午10:24
+     * @since 2018/7/30 上午10:24
      */
     private void fieldsValidate() {
 
@@ -162,7 +162,7 @@ public abstract class DbInitializer {
      * 反射获取类的所有字段
      *
      * @author fengshuonan
-     * @date 2018/7/30 上午10:06
+     * @since 2018/7/30 上午10:06
      */
     private List<String> getClassFields() {
         Class<?> entityClass = this.getEntityClass();
@@ -187,7 +187,7 @@ public abstract class DbInitializer {
      * 获取表的初始化语句
      *
      * @author stylefeng
-     * @date 2018/7/29 22:10
+     * @since 2018/7/29 22:10
      */
     protected abstract String getTableInitSql();
 
@@ -195,7 +195,7 @@ public abstract class DbInitializer {
      * 获取表的名称
      *
      * @author stylefeng
-     * @date 2018/7/29 22:10
+     * @since 2018/7/29 22:10
      */
     protected abstract String getTableName();
 
@@ -203,7 +203,7 @@ public abstract class DbInitializer {
      * 获取表对应的实体
      *
      * @author stylefeng
-     * @date 2018/7/29 22:49
+     * @since 2018/7/29 22:49
      */
     protected abstract Class<?> getEntityClass();
 

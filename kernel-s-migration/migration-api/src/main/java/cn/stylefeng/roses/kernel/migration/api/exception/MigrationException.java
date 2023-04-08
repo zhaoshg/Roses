@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  * migration模块异常
  *
  * @author majianguo
- * @date 2021/7/6 15:07
+ * @since 2021/7/6 15:07
  */
 public class MigrationException extends ServiceException {
 

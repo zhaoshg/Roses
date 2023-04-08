@@ -22,7 +22,7 @@ import java.util.List;
  * C端用户表控制器
  *
  * @author fengshuonan
- * @date 2021/06/07 11:40
+ * @since 2021/06/07 11:40
  */
 @RestController
 @ApiResource(name = "C端用户表", resBizType = ResBizTypeEnum.SYSTEM)
@@ -35,7 +35,7 @@ public class CustomerManageController {
      * 添加
      *
      * @author fengshuonan
-     * @date 2021/06/07 11:40
+     * @since 2021/06/07 11:40
      */
     @PostResource(name = "添加", path = "/customer/add")
     @BusinessLog
@@ -48,7 +48,7 @@ public class CustomerManageController {
      * 删除
      *
      * @author fengshuonan
-     * @date 2021/06/07 11:40
+     * @since 2021/06/07 11:40
      */
     @PostResource(name = "删除", path = "/customer/delete")
     @BusinessLog
@@ -61,7 +61,7 @@ public class CustomerManageController {
      * 编辑
      *
      * @author fengshuonan
-     * @date 2021/06/07 11:40
+     * @since 2021/06/07 11:40
      */
     @PostResource(name = "编辑", path = "/customer/edit")
     @BusinessLog
@@ -74,7 +74,7 @@ public class CustomerManageController {
      * 查看详情
      *
      * @author fengshuonan
-     * @date 2021/06/07 11:40
+     * @since 2021/06/07 11:40
      */
     @GetResource(name = "查看详情", path = "/customer/detail")
     public ResponseData<Customer> detail(@Validated(CustomerRequest.detail.class) CustomerRequest customerRequest) {
@@ -85,7 +85,7 @@ public class CustomerManageController {
      * 获取列表
      *
      * @author fengshuonan
-     * @date 2021/06/07 11:40
+     * @since 2021/06/07 11:40
      */
     @GetResource(name = "获取列表", path = "/customer/list")
     public ResponseData<List<Customer>> list(CustomerRequest customerRequest) {
@@ -96,7 +96,7 @@ public class CustomerManageController {
      * 获取列表（带分页）
      *
      * @author fengshuonan
-     * @date 2021/06/07 11:40
+     * @since 2021/06/07 11:40
      */
     @GetResource(name = "分页查询", path = "/customer/page")
     public ResponseData<PageResult<Customer>> page(CustomerRequest customerRequest) {

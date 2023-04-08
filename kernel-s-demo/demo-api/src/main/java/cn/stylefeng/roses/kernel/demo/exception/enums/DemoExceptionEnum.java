@@ -33,7 +33,7 @@ import lombok.Getter;
  * 演示环境操作的异常枚举
  *
  * @author fengshuonan
- * @date 2020/10/16 10:53
+ * @since 2020/10/16 10:53
  */
 @Getter
 public enum DemoExceptionEnum implements AbstractExceptionEnum {

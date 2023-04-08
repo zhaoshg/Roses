@@ -43,7 +43,7 @@ import java.util.Map;
  * 针对于antd vue版本的前端菜单的组装
  *
  * @author fengshuonan
- * @date 2020/12/30 20:11
+ * @since 2020/12/30 20:11
  */
 public class Antdv3MenusFactory {
 
@@ -53,7 +53,7 @@ public class Antdv3MenusFactory {
      * @param appSortedMenus 按应用排序过的菜单集合
      * @param appNames       排序过的应用名称
      * @author fengshuonan
-     * @date 2021/1/7 18:17
+     * @since 2021/1/7 18:17
      */
     public static List<IndexMenuInfo> createTotalMenus(Map<String, List<SysMenu>> appSortedMenus, List<String> appNames) {
 
@@ -94,7 +94,7 @@ public class Antdv3MenusFactory {
      * SysMenu转化为需要的IndexMenuInfo
      *
      * @author fengshuonan
-     * @date 2022/4/8 16:14
+     * @since 2022/4/8 16:14
      */
     private static List<IndexMenuInfo> doModelReBuild(List<SysMenu> sysMenuList) {
         if (ObjectUtil.isEmpty(sysMenuList)) {
@@ -127,7 +127,7 @@ public class Antdv3MenusFactory {
      * 创建顶层应用层级的菜单
      *
      * @author fengshuonan
-     * @date 2022/4/8 16:14
+     * @since 2022/4/8 16:14
      */
     private static IndexMenuInfo createRootAppMenu(String appCode) {
 

@@ -35,7 +35,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * context初始化的监听器
  *
  * @author fengshuonan
- * @date 2021/5/14 20:28
+ * @since 2021/5/14 20:28
  */
 @Slf4j
 public abstract class ContextInitializedListener implements ApplicationListener<ApplicationContextInitializedEvent> {
@@ -57,7 +57,7 @@ public abstract class ContextInitializedListener implements ApplicationListener<
      * 监听器具体的业务逻辑
      *
      * @author fengshuonan
-     * @date 2021/5/14 20:17
+     * @since 2021/5/14 20:17
      */
     public abstract void eventCallback(ApplicationContextInitializedEvent event);
 

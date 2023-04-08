@@ -33,7 +33,7 @@ import lombok.Getter;
  * XSS过滤异常的枚举
  *
  * @author fengshuonan
- * @date 2021/1/13 23:23
+ * @since 2021/1/13 23:23
  */
 @Getter
 public enum XssFilterExceptionEnum implements AbstractExceptionEnum {

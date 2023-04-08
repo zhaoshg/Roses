@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.openapi.api.constants;
  * OpenApi模块的常量
  *
  * @author caiti
- * @date 2022-11-11
+ * @since 2022-11-11
  */
 public interface OpenApiConstants {
 

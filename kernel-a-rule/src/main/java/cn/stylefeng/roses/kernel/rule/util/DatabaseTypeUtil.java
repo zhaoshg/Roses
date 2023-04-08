@@ -31,7 +31,7 @@ import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
  * 判断数据库类型的工具
  *
  * @author fengshuonan
- * @date 2021/3/27 21:24
+ * @since 2021/3/27 21:24
  */
 public class DatabaseTypeUtil {
 
@@ -39,7 +39,7 @@ public class DatabaseTypeUtil {
      * 判断数据库类型
      *
      * @author fengshuonan
-     * @date 2021/3/27 21:25
+     * @since 2021/3/27 21:25
      */
     public static DbTypeEnum getDbType(String jdbcUrl) {
         if (StrUtil.isEmpty(jdbcUrl)) {

@@ -33,7 +33,7 @@ import lombok.EqualsAndHashCode;
  * 定时任务
  *
  * @author stylefeng
- * @date 2020/6/30 18:26
+ * @since 2020/6/30 18:26
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

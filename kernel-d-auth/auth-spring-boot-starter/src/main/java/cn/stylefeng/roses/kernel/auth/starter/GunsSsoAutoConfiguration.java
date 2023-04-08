@@ -34,7 +34,7 @@ import org.springframework.context.annotation.Configuration;
  * 单点配置
  *
  * @author fengshuonan
- * @date 2021/5/25 22:29
+ * @since 2021/5/25 22:29
  */
 @Configuration
 public class GunsSsoAutoConfiguration {
@@ -43,7 +43,7 @@ public class GunsSsoAutoConfiguration {
      * 单点的开关配置
      *
      * @author fengshuonan
-     * @date 2021/5/25 22:29
+     * @since 2021/5/25 22:29
      */
     @Bean
     @ConfigurationProperties(prefix = "sso")

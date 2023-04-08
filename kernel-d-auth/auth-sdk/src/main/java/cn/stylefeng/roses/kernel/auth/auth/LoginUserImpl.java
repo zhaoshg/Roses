@@ -40,7 +40,7 @@ import javax.annotation.Resource;
  * 当前登陆用户的接口实现
  *
  * @author fengshuonan
- * @date 2020/10/21 18:09
+ * @since 2020/10/21 18:09
  */
 @Service
 public class LoginUserImpl implements LoginUserApi {

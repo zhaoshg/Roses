@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  * 系统主题模板表
  *
  * @author xixiaowei
- * @date 2021/12/17 9:23
+ * @since 2021/12/17 9:23
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

@@ -30,7 +30,7 @@ import lombok.Getter;
  * 解析字段元数据时，各种情况的枚举
  *
  * @author fengshuonan
- * @date 2022/1/13 16:37
+ * @since 2022/1/13 16:37
  */
 @Getter
 public enum FieldTypeEnum {

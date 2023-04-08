@@ -19,7 +19,7 @@ import java.util.Set;
  * 字段信息创建工具
  *
  * @author fengshuonan
- * @date 2022/1/13 13:49
+ * @since 2022/1/13 13:49
  */
 @Slf4j
 public class ClassDetailMetadataFactory {
@@ -30,7 +30,7 @@ public class ClassDetailMetadataFactory {
      * @param fieldType 需要被解析的对象的类型，可以是class也可以是泛型
      * @param uuid      随机字符串，保证唯一性，用来标识从开始到结束一个context周期内的一系列解析
      * @author fengshuonan
-     * @date 2022/1/14 14:31
+     * @since 2022/1/14 14:31
      */
     public static Set<FieldMetadata> createFieldDetailMetadataSet(Type fieldType, String uuid) {
 
@@ -125,7 +125,7 @@ public class ClassDetailMetadataFactory {
      * 获取实体带泛型类型的字段填充详情，例如PageResult<SysUser>这种字段
      *
      * @author fengshuonan
-     * @date 2022/1/14 18:51
+     * @since 2022/1/14 18:51
      */
     public static Set<FieldMetadata> getEntityWithGenericFieldMetadataList(Type fieldType, Type genericType, String uuid) {
         if (fieldType instanceof Class<?>) {

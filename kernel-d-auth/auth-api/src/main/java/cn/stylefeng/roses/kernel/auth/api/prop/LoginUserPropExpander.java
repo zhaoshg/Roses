@@ -40,7 +40,7 @@ import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
  * 注意，这个方法里边的实现在编写时，不能使用 LoginContext 获取当前用户
  *
  * @author fengshuonan
- * @date 2020/12/22 14:18
+ * @since 2020/12/22 14:18
  */
 public interface LoginUserPropExpander {
 
@@ -49,7 +49,7 @@ public interface LoginUserPropExpander {
      *
      * @param loginUser 当前登录用户
      * @author fengshuonan
-     * @date 2020/12/22 14:26
+     * @since 2020/12/22 14:26
      */
     void expandAction(LoginUser loginUser);
 

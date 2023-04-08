@@ -4,7 +4,7 @@ package cn.stylefeng.roses.kernel.system.api.constants;
  * 接口统计缓存前缀相关
  *
  * @author xixiaowei
- * @date 2022/2/9 16:42
+ * @since 2022/2/9 16:42
  */
 public interface StatisticsCacheConstants {
 

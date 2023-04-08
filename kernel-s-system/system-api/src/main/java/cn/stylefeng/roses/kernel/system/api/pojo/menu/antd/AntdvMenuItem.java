@@ -33,7 +33,7 @@ import java.util.List;
  * 用于antdv的菜单响应
  *
  * @author fengshuonan
- * @date 2021/1/7 18:09
+ * @since 2021/1/7 18:09
  */
 @Data
 public class AntdvMenuItem implements AbstractTreeNode<AntdvMenuItem> {

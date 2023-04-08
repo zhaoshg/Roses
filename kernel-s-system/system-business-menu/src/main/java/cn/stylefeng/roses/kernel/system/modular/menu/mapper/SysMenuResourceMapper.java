@@ -31,7 +31,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 菜单资源关联信息
  *
  * @author fengshuonan
- * @date 2021/8/8 21:37
+ * @since 2021/8/8 21:37
  */
 public interface SysMenuResourceMapper extends BaseMapper<SysMenuResource> {
 

@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.security.api.constants.SecurityConstants;
  * 安全模块异常
  *
  * @author fengshuonan
- * @date 2021/2/19 8:48
+ * @since 2021/2/19 8:48
  */
 public class SecurityException extends ServiceException {
 

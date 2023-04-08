@@ -12,7 +12,7 @@ import java.util.List;
  * 用户组 服务类
  *
  * @author fengshuonan
- * @date 2022/09/26 10:12
+ * @since 2022/09/26 10:12
  */
 public interface SysUserGroupService extends IService<SysUserGroup> {
 
@@ -21,7 +21,7 @@ public interface SysUserGroupService extends IService<SysUserGroup> {
      *
      * @param sysUserGroupRequest 请求参数
      * @author fengshuonan
-     * @date 2022/09/26 10:12
+     * @since 2022/09/26 10:12
      */
     SysUserGroup add(SysUserGroupRequest sysUserGroupRequest);
 
@@ -30,7 +30,7 @@ public interface SysUserGroupService extends IService<SysUserGroup> {
      *
      * @param sysUserGroupRequest 请求参数
      * @author fengshuonan
-     * @date 2022/09/26 10:12
+     * @since 2022/09/26 10:12
      */
     void del(SysUserGroupRequest sysUserGroupRequest);
 
@@ -39,7 +39,7 @@ public interface SysUserGroupService extends IService<SysUserGroup> {
      *
      * @param sysUserGroupRequest 请求参数
      * @author fengshuonan
-     * @date 2022/09/26 10:12
+     * @since 2022/09/26 10:12
      */
     void edit(SysUserGroupRequest sysUserGroupRequest);
 
@@ -48,7 +48,7 @@ public interface SysUserGroupService extends IService<SysUserGroup> {
      *
      * @param sysUserGroupRequest 请求参数
      * @author fengshuonan
-     * @date 2022/09/26 10:12
+     * @since 2022/09/26 10:12
      */
     SysUserGroup detail(SysUserGroupRequest sysUserGroupRequest);
 
@@ -58,7 +58,7 @@ public interface SysUserGroupService extends IService<SysUserGroup> {
      * @param sysUserGroupRequest 请求参数
      * @return List<SysUserGroup>   返回结果
      * @author fengshuonan
-     * @date 2022/09/26 10:12
+     * @since 2022/09/26 10:12
      */
     List<SysUserGroup> findList(SysUserGroupRequest sysUserGroupRequest);
 
@@ -68,7 +68,7 @@ public interface SysUserGroupService extends IService<SysUserGroup> {
      * @param sysUserGroupRequest 请求参数
      * @return PageResult<SysUserGroup>   返回结果
      * @author fengshuonan
-     * @date 2022/09/26 10:12
+     * @since 2022/09/26 10:12
      */
     PageResult<SysUserGroup> findPage(SysUserGroupRequest sysUserGroupRequest);
 
@@ -76,7 +76,7 @@ public interface SysUserGroupService extends IService<SysUserGroup> {
      * 获取选择关系列表
      *
      * @author fengshuonan
-     * @date 2022/9/26 17:30
+     * @since 2022/9/26 17:30
      */
     List<SimpleDict> getSelectRelationList();
 

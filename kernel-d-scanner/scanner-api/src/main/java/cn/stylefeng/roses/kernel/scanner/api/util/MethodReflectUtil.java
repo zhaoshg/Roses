@@ -47,7 +47,7 @@ import static cn.stylefeng.roses.kernel.scanner.api.constants.ScannerConstants.D
  * 反射工具类，获取方法的一些元数据
  *
  * @author fengshuonan
- * @date 2020/12/8 17:48
+ * @since 2020/12/8 17:48
  */
 @Slf4j
 public class MethodReflectUtil {
@@ -60,7 +60,7 @@ public class MethodReflectUtil {
      * @param method 方法反射信息
      * @return 方法参数上的注解集合
      * @author fengshuonan
-     * @date 2020/12/8 17:49
+     * @since 2020/12/8 17:49
      */
     public static List<Annotation> getMethodFirstParamAnnotations(Method method) {
         if (method == null) {
@@ -98,7 +98,7 @@ public class MethodReflectUtil {
      * @param method 方法反射信息
      * @return 方法的参数校验分组信息
      * @author fengshuonan
-     * @date 2020/12/8 17:59
+     * @since 2020/12/8 17:59
      */
     public static Set<String> getMethodValidateGroup(Method method) {
         List<Annotation> methodFirstParamAnnotations = getMethodFirstParamAnnotations(method);
@@ -138,7 +138,7 @@ public class MethodReflectUtil {
      * @param method 方法反射信息
      * @return 方法第一个参数的class类型
      * @author fengshuonan
-     * @date 2020/12/8 18:16
+     * @since 2020/12/8 18:16
      */
     public static Type[] getMethodGenericTypes(Method method) {
         if (method == null) {
@@ -153,7 +153,7 @@ public class MethodReflectUtil {
      * @param method 方法反射信息
      * @return 方法返回值的class类型
      * @author fengshuonan
-     * @date 2020/12/8 18:20
+     * @since 2020/12/8 18:20
      */
     public static Type getMethodReturnType(Method method) {
         if (method == null) {
@@ -166,7 +166,7 @@ public class MethodReflectUtil {
      * 获取方法的所有参数元数据信息
      *
      * @author fengshuonan
-     * @date 2022/1/20 11:51
+     * @since 2022/1/20 11:51
      */
     public static List<ParameterMetadata> getMethodParameterInfos(Method method) {
         List<ParameterMetadata> result = new LinkedList<>();
@@ -207,7 +207,7 @@ public class MethodReflectUtil {
      * 根据参数上的注解判断出是param参数还是request body参数
      *
      * @author fengshuonan
-     * @date 2022/1/20 13:43
+     * @since 2022/1/20 13:43
      */
     public static ParamTypeEnum getParamTypeEnum(Annotation[] annotations) {
 

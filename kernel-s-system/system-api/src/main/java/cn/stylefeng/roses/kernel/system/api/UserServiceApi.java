@@ -40,7 +40,7 @@ import java.util.Set;
  * 用户管理服务接口
  *
  * @author fengshuonan
- * @date 2020/10/20 13:20
+ * @since 2020/10/20 13:20
  */
 public interface UserServiceApi {
 
@@ -50,7 +50,7 @@ public interface UserServiceApi {
      * @param account 账号
      * @return 用户登录需要的详细信息
      * @author fengshuonan
-     * @date 2020/10/20 16:59
+     * @since 2020/10/20 16:59
      */
     UserLoginInfoDTO getUserLoginInfo(String account);
 
@@ -62,7 +62,7 @@ public interface UserServiceApi {
      * 本方法解决了实时获取当前登录用户不准确的问题
      *
      * @author fengshuonan
-     * @date 2021/7/29 22:03
+     * @since 2021/7/29 22:03
      */
     LoginUser getEffectiveLoginUser(LoginUser loginUser);
 
@@ -73,7 +73,7 @@ public interface UserServiceApi {
      * @param date   用户登录时间
      * @param ip     用户登录的ip
      * @author fengshuonan
-     * @date 2020/10/21 14:13
+     * @since 2020/10/21 14:13
      */
     void updateUserLoginInfo(Long userId, Date date, String ip);
 
@@ -82,7 +82,7 @@ public interface UserServiceApi {
      *
      * @param organizationIds 组织架构id集合
      * @author fengshuonan
-     * @date 2020/10/20 16:59
+     * @since 2020/10/20 16:59
      */
     void deleteUserDataScopeListByOrgIdList(Set<Long> organizationIds);
 
@@ -92,7 +92,7 @@ public interface UserServiceApi {
      * @param userId 用户id
      * @return 角色id集合
      * @author majianguo
-     * @date 2020/11/5 下午3:57
+     * @since 2020/11/5 下午3:57
      */
     List<Long> getUserRoleIdList(Long userId);
 
@@ -101,7 +101,7 @@ public interface UserServiceApi {
      *
      * @param roleId 角色id
      * @author majianguo
-     * @date 2020/11/5 下午3:58
+     * @since 2020/11/5 下午3:58
      */
     void deleteUserRoleListByRoleId(Long roleId);
 
@@ -111,7 +111,7 @@ public interface UserServiceApi {
      * @param userId 用户id
      * @return 用户数据范围
      * @author fengshuonan
-     * @date 2020/11/21 12:15
+     * @since 2020/11/21 12:15
      */
     List<Long> getUserBindDataScope(Long userId);
 
@@ -119,7 +119,7 @@ public interface UserServiceApi {
      * 获取在线用户列表
      *
      * @author fengshuonan
-     * @date 2021/1/10 9:56
+     * @since 2021/1/10 9:56
      */
     List<OnlineUserDTO> onlineUserList(OnlineUserRequest onlineUserRequest);
 
@@ -128,7 +128,7 @@ public interface UserServiceApi {
      *
      * @param userId 用户ID
      * @author majianguo
-     * @date 2021/1/9 19:00
+     * @since 2021/1/9 19:00
      */
     SysUserDTO getUserInfoByUserId(Long userId);
 
@@ -138,7 +138,7 @@ public interface UserServiceApi {
      * @param userIdSet 用户id集合
      * @return 返回用户所有信息
      * @author fengshuonan
-     * @date 2022/9/25 10:14
+     * @since 2022/9/25 10:14
      */
     List<SysUserDTO> getUserInfoList(List<Long> userIdSet);
 
@@ -148,7 +148,7 @@ public interface UserServiceApi {
      * @param sysUserRequest 查询参数
      * @return List<Long> 用户id 集合
      * @author liuhanqing
-     * @date 2021/1/4 22:09
+     * @since 2021/1/4 22:09
      */
     List<Long> queryAllUserIdList(SysUserRequest sysUserRequest);
 
@@ -158,7 +158,7 @@ public interface UserServiceApi {
      * @param userId 用户id
      * @return 用户信息
      * @author liuhanqing
-     * @date 2021/1/4 22:55
+     * @since 2021/1/4 22:55
      */
     Boolean userExist(Long userId);
 
@@ -166,7 +166,7 @@ public interface UserServiceApi {
      * 获取用户的头像url
      *
      * @author fengshuonan
-     * @date 2021/12/29 17:27
+     * @since 2021/12/29 17:27
      */
     String getUserAvatarUrlByUserId(Long userId);
 
@@ -174,7 +174,7 @@ public interface UserServiceApi {
      * 创建并保存OAuth2用户信息
      *
      * @author fengshuonan
-     * @date 2022/7/1 19:03
+     * @since 2022/7/1 19:03
      */
     SysUserDTO createAndSaveOAuth2User(OAuth2AuthUserDTO oAuth2AuthUserDTO);
 

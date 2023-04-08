@@ -53,7 +53,7 @@ import java.util.stream.Collectors;
  * 系统角色菜单service接口实现类
  *
  * @author majianguo
- * @date 2020/11/5 上午11:32
+ * @since 2020/11/5 上午11:32
  */
 @Service
 public class SysRoleResourceServiceImpl extends ServiceImpl<SysRoleResourceMapper, SysRoleResource> implements SysRoleResourceService {
@@ -174,7 +174,7 @@ public class SysRoleResourceServiceImpl extends ServiceImpl<SysRoleResourceMappe
      * 批量保存角色和资源的绑定
      *
      * @author fengshuonan
-     * @date 2022/9/29 14:34
+     * @since 2022/9/29 14:34
      */
     @Override
     public void batchSaveResCodes(Long roleId, List<SysRoleResourceDTO> totalResource) {

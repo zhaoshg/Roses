@@ -40,7 +40,7 @@ import java.util.List;
  * 定时刷新各个数据源的状态，并更新到数据库
  *
  * @author fengshuonan
- * @date 2021/4/22 10:45
+ * @since 2021/4/22 10:45
  */
 @Component
 public class DataSourceStatusCheckTimer implements TimerAction {

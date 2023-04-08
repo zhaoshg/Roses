@@ -21,7 +21,7 @@ import java.util.List;
  * 业务拓展-具体数据控制器
  *
  * @author fengshuonan
- * @date 2022/03/29 23:47
+ * @since 2022/03/29 23:47
  */
 @RestController
 @ApiResource(name = "业务拓展-具体数据", resBizType = ResBizTypeEnum.SYSTEM)
@@ -34,7 +34,7 @@ public class SysExpandDataController {
      * 删除
      *
      * @author fengshuonan
-     * @date 2022/03/29 23:47
+     * @since 2022/03/29 23:47
      */
     @PostResource(name = "删除", path = "/sysExpandData/delete")
     public ResponseData<?> delete(@RequestBody @Validated(SysExpandDataRequest.delete.class) SysExpandDataRequest sysExpandDataRequest) {
@@ -46,7 +46,7 @@ public class SysExpandDataController {
      * 查看详情
      *
      * @author fengshuonan
-     * @date 2022/03/29 23:47
+     * @since 2022/03/29 23:47
      */
     @GetResource(name = "查看详情", path = "/sysExpandData/detail")
     public ResponseData<SysExpandData> detail(@Validated(SysExpandDataRequest.detail.class) SysExpandDataRequest sysExpandDataRequest) {
@@ -57,7 +57,7 @@ public class SysExpandDataController {
      * 获取列表
      *
      * @author fengshuonan
-     * @date 2022/03/29 23:47
+     * @since 2022/03/29 23:47
      */
     @GetResource(name = "获取列表", path = "/sysExpandData/list")
     public ResponseData<List<SysExpandData>> list(SysExpandDataRequest sysExpandDataRequest) {
@@ -68,7 +68,7 @@ public class SysExpandDataController {
      * 获取列表（带分页）
      *
      * @author fengshuonan
-     * @date 2022/03/29 23:47
+     * @since 2022/03/29 23:47
      */
     @GetResource(name = "分页查询", path = "/sysExpandData/page")
     public ResponseData<PageResult<SysExpandData>> page(SysExpandDataRequest sysExpandDataRequest) {

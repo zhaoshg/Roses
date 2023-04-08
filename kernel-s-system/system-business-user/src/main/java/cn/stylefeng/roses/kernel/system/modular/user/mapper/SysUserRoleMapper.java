@@ -34,7 +34,7 @@ import java.util.List;
  * 系统用户角色mapper接口
  *
  * @author luojie
- * @date 2020/11/6 14:50
+ * @since 2020/11/6 14:50
  */
 public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
@@ -42,7 +42,7 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
      * 获取用户的管理员角色列表
      *
      * @author fengshuonan
-     * @date 2022/9/30 13:20
+     * @since 2022/9/30 13:20
      */
     List<SysUserRole> getAdminUserRoleList(@Param("userIdList") List<Long> userIdList);
 

@@ -32,7 +32,7 @@ import lombok.Data;
  * 用户数据范围
  *
  * @author chenjinlong
- * @date 2021/2/3 15:35
+ * @since 2021/2/3 15:35
  */
 @Data
 public class UserDataScopeRequest {

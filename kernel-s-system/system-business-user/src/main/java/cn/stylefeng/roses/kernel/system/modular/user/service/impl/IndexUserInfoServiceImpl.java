@@ -46,7 +46,7 @@ import java.util.List;
  * 获取首页用户登录信息
  *
  * @author fengshuonan
- * @date 2022/4/8 15:40
+ * @since 2022/4/8 15:40
  */
 @Service
 public class IndexUserInfoServiceImpl implements IndexUserInfoService {
@@ -128,7 +128,7 @@ public class IndexUserInfoServiceImpl implements IndexUserInfoService {
      * 获取用户的角色信息
      *
      * @author fengshuonan
-     * @date 2022/4/8 15:53
+     * @since 2022/4/8 15:53
      */
     private List<IndexRoleInfo> buildRoles(LoginUser loginUser) {
 

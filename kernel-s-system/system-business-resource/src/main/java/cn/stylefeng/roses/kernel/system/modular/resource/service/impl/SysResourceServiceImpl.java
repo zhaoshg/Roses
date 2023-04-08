@@ -77,7 +77,7 @@ import java.util.stream.Collectors;
  * 资源表 服务实现类
  *
  * @author fengshuonan
- * @date 2020/11/23 22:45
+ * @since 2020/11/23 22:45
  */
 @Service
 @Slf4j
@@ -454,7 +454,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
      * 创建wrapper
      *
      * @author fengshuonan
-     * @date 2020/11/6 10:16
+     * @since 2020/11/6 10:16
      */
     private LambdaQueryWrapper<SysResource> createWrapper(ResourceRequest resourceRequest) {
         LambdaQueryWrapper<SysResource> queryWrapper = new LambdaQueryWrapper<>();
@@ -480,7 +480,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
      *
      * @return 第一个key是应用名称，第二个key是模块名称，值是应用对应的模块对应的资源列表
      * @author fengshuonan
-     * @date 2020/12/18 15:34
+     * @since 2020/12/18 15:34
      */
     private Map<String, Map<String, List<LayuiApiResourceTreeNode>>> divideResources(List<SysResource> sysResources) {
         HashMap<String, Map<String, List<LayuiApiResourceTreeNode>>> appModularResources = new HashMap<>();
@@ -521,7 +521,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
      * 创建模块code和name的映射
      *
      * @author fengshuonan
-     * @date 2020/12/21 11:23
+     * @since 2020/12/21 11:23
      */
     private Map<String, String> createModularCodeName(List<SysResource> resources) {
         HashMap<String, String> modularCodeName = new HashMap<>();
@@ -535,7 +535,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
      * 根据归好类的资源，创建资源树
      *
      * @author fengshuonan
-     * @date 2020/12/18 15:45
+     * @since 2020/12/18 15:45
      */
     private List<LayuiApiResourceTreeNode> createResourceTree(Map<String, Map<String, List<LayuiApiResourceTreeNode>>> appModularResources, Map<String, String> modularCodeName) {
 

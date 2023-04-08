@@ -7,7 +7,7 @@ import lombok.Getter;
  * 添加数据源的sql
  *
  * @author fengshuonan
- * @date 2019-07-16-13:06
+ * @since 2019-07-16-13:06
  */
 @Getter
 public class AddDatabaseInfoSql extends AbstractSql {

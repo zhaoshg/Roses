@@ -38,7 +38,7 @@ import java.math.BigDecimal;
  * 字典请求参数封装
  *
  * @author fengshuonan
- * @date 2020/10/30 11:04
+ * @since 2020/10/30 11:04
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

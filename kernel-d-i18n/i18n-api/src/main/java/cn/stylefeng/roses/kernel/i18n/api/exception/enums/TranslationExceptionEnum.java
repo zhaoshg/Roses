@@ -33,7 +33,7 @@ import lombok.Getter;
  * 多语言翻译的异常枚举
  *
  * @author fengshuonan
- * @date 2021/1/24 16:40
+ * @since 2021/1/24 16:40
  */
 @Getter
 public enum TranslationExceptionEnum implements AbstractExceptionEnum {

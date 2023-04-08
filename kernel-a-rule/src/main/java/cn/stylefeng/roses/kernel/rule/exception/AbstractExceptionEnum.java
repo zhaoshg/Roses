@@ -32,7 +32,7 @@ package cn.stylefeng.roses.kernel.rule.exception;
  * ServiceException抛出时必须为本接口的实现类
  *
  * @author fengshuonan
- * @date 2020/10/14 21:41
+ * @since 2020/10/14 21:41
  */
 public interface AbstractExceptionEnum {
 
@@ -41,7 +41,7 @@ public interface AbstractExceptionEnum {
      *
      * @return 状态码
      * @author fengshuonan
-     * @date 2020/10/14 21:42
+     * @since 2020/10/14 21:42
      */
     String getErrorCode();
 
@@ -50,7 +50,7 @@ public interface AbstractExceptionEnum {
      *
      * @return 提示信息
      * @author fengshuonan
-     * @date 2020/10/14 21:42
+     * @since 2020/10/14 21:42
      */
     String getUserTip();
 

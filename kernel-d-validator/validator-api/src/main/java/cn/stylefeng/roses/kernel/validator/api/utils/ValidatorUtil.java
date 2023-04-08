@@ -40,7 +40,7 @@ import java.util.Set;
  * 手动验证带有校验注解的参数是否合法
  *
  * @author fengshuonan
- * @date 2020/10/31 14:13
+ * @since 2020/10/31 14:13
  */
 public class ValidatorUtil {
 
@@ -56,7 +56,7 @@ public class ValidatorUtil {
      * @param groups 校验组
      * @return 参数校验的结果，为ConstraintViolation的集合
      * @author fengshuonan
-     * @date 2020/10/31 14:13
+     * @since 2020/10/31 14:13
      */
     public static Set<ConstraintViolation<Object>> validate(Object object, Class<?>... groups) {
         return VALIDATOR_INSTANCE.validate(object, groups);
@@ -69,7 +69,7 @@ public class ValidatorUtil {
      * @param groups 校验组
      * @return true-参数合法，false-参数不合法
      * @author fengshuonan
-     * @date 2020/10/31 14:13
+     * @since 2020/10/31 14:13
      */
     public static boolean simpleValidate(Object object, Class<?>... groups) {
         Set<ConstraintViolation<Object>> constraintViolations = VALIDATOR_INSTANCE.validate(object, groups);
@@ -82,7 +82,7 @@ public class ValidatorUtil {
      * @param object 被校验的包装类参数
      * @param groups 校验组
      * @author fengshuonan
-     * @date 2020/10/31 14:13
+     * @since 2020/10/31 14:13
      */
     public static void validateThrowMessage(Object object, Class<?>... groups) {
         String errorMessage = validateGetMessage(object, groups);
@@ -99,7 +99,7 @@ public class ValidatorUtil {
      * @param object 被校验的包装类参数
      * @param groups 校验组
      * @author fengshuonan
-     * @date 2020/10/31 14:13
+     * @since 2020/10/31 14:13
      */
     public static String validateGetMessage(Object object, Class<?>... groups) {
         Set<ConstraintViolation<Object>> constraintViolations = VALIDATOR_INSTANCE.validate(object, groups);

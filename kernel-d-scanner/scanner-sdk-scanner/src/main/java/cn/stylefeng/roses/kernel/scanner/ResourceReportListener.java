@@ -49,7 +49,7 @@ import java.util.Map;
  * 监听项目初始化完毕，汇报资源到服务（可为远程服务，可为本服务）
  *
  * @author fengshuonan
- * @date 2020/10/19 22:27
+ * @since 2020/10/19 22:27
  */
 @Slf4j
 public class ResourceReportListener extends ApplicationReadyListener implements Ordered {

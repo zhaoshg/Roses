@@ -45,7 +45,7 @@ import org.springframework.context.annotation.Configuration;
  * 资源的自动配置
  *
  * @author fengshuonan
- * @date 2020/12/1 17:24
+ * @since 2020/12/1 17:24
  */
 @Configuration
 public class GunsResourceAutoConfiguration {
@@ -64,7 +64,7 @@ public class GunsResourceAutoConfiguration {
      * 资源扫描器的配置
      *
      * @author fengshuonan
-     * @date 2020/12/3 17:54
+     * @since 2020/12/3 17:54
      */
     @Bean
     @ConfigurationProperties(prefix = SCANNER_PREFIX)
@@ -76,7 +76,7 @@ public class GunsResourceAutoConfiguration {
      * DevOps一体化平台的交互配置
      *
      * @author fengshuonan
-     * @date 2020/12/3 17:54
+     * @since 2020/12/3 17:54
      */
     @Bean
     @ConfigurationProperties(prefix = DEVOPS_REPORT_PREFIX)
@@ -88,7 +88,7 @@ public class GunsResourceAutoConfiguration {
      * 资源扫描器
      *
      * @author fengshuonan
-     * @date 2020/12/1 17:29
+     * @since 2020/12/1 17:29
      */
     @Bean
     @ConditionalOnMissingBean(ApiResourceScanner.class)
@@ -107,7 +107,7 @@ public class GunsResourceAutoConfiguration {
      * 资源搜集器
      *
      * @author fengshuonan
-     * @date 2020/12/1 17:29
+     * @since 2020/12/1 17:29
      */
     @Bean
     @ConditionalOnMissingBean(ResourceCollectorApi.class)
@@ -120,7 +120,7 @@ public class GunsResourceAutoConfiguration {
      * 向DevOps平台汇报资源，传统方式，远程资源汇报
      *
      * @author fengshuonan
-     * @date 2022/4/2 14:41
+     * @since 2022/4/2 14:41
      */
     @Bean
     @ConditionalOnMissingBean(DevOpsDetectApi.class)
@@ -132,7 +132,7 @@ public class GunsResourceAutoConfiguration {
      * 向DevOps平台汇报资源，新方式，本地化集成运维平台
      *
      * @author fengshuonan
-     * @date 2022/10/18 0:03
+     * @since 2022/10/18 0:03
      */
     @Bean
     @ConditionalOnBean(DevOpsDetectApi.class)

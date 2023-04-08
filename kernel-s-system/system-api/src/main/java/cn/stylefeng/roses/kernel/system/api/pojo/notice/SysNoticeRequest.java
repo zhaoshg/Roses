@@ -38,7 +38,7 @@ import java.util.Date;
  * 系统通知参数
  *
  * @author liuhanqing
- * @date 2021/1/8 21:53
+ * @since 2021/1/8 21:53
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

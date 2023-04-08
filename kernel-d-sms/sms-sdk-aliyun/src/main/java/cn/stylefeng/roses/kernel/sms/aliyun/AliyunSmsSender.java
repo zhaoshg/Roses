@@ -50,7 +50,7 @@ import static cn.stylefeng.roses.kernel.sms.api.exception.enums.SmsExceptionEnum
  * 阿里云短信发送服务
  *
  * @author fengshuonan
- * @date 2020/10/26 17:12
+ * @since 2020/10/26 17:12
  */
 @Slf4j
 public class AliyunSmsSender implements SmsSenderApi {
@@ -100,7 +100,7 @@ public class AliyunSmsSender implements SmsSenderApi {
      * 初始化短信发送的客户端
      *
      * @author fengshuonan
-     * @date 2018/7/6 下午3:57
+     * @since 2018/7/6 下午3:57
      */
     private IAcsClient initClient() {
         final String accessKeyId = aliyunSmsProperties.getAccessKeyId();
@@ -115,7 +115,7 @@ public class AliyunSmsSender implements SmsSenderApi {
      * 组装请求对象
      *
      * @author fengshuonan
-     * @date 2018/7/6 下午3:00
+     * @since 2018/7/6 下午3:00
      */
     private JSONObject createSmsRequest(String phoneNumber, String templateCode, Map<String, Object> params, IAcsClient acsClient) {
         CommonRequest request = new CommonRequest();
@@ -155,7 +155,7 @@ public class AliyunSmsSender implements SmsSenderApi {
      * 校验发送短信的参数是否正确
      *
      * @author fengshuonan
-     * @date 2018/7/6 下午3:19
+     * @since 2018/7/6 下午3:19
      */
     private void assertSendSmsParams(String phoneNumber, String templateCode, Map<String, Object> params,
                                      AliyunSmsProperties aliyunSmsProperties) {
@@ -181,7 +181,7 @@ public class AliyunSmsSender implements SmsSenderApi {
      * 获取sms发送的sign标识，参数phone是发送的手机号码
      *
      * @author stylefeng
-     * @date 2018/8/13 21:23
+     * @since 2018/8/13 21:23
      */
     private String getSmsSign(String phone) {
         String signName = aliyunSmsProperties.getSignName();

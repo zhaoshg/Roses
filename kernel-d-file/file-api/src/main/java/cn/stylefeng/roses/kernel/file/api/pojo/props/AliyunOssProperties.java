@@ -30,7 +30,7 @@ import lombok.Data;
  * 腾讯云cos文件存储配置
  *
  * @author fengshuonan
- * @date 2020/10/26 10:50
+ * @since 2020/10/26 10:50
  */
 @Data
 public class AliyunOssProperties {

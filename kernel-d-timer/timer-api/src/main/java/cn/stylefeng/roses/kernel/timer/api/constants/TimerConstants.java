@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.timer.api.constants;
  * 定时任务模块的常量
  *
  * @author fengshuonan
- * @date 2020/10/27 13:46
+ * @since 2020/10/27 13:46
  */
 public interface TimerConstants {
 

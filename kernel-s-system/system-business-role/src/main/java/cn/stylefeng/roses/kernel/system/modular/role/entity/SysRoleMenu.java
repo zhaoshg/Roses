@@ -36,7 +36,7 @@ import lombok.EqualsAndHashCode;
  * 角色菜单关联表
  *
  * @author fengshuonan
- * @date 2020/12/19 18:19
+ * @since 2020/12/19 18:19
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

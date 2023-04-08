@@ -30,7 +30,7 @@ import lombok.Data;
  * 菜单按钮的DTO
  *
  * @author fengshuonan
- * @date 2022/9/29 11:48
+ * @since 2022/9/29 11:48
  */
 @Data
 public class SysMenuButtonDTO {

@@ -36,7 +36,7 @@ import java.math.BigDecimal;
  * 字典类型表，一个字典类型下有多个字典
  *
  * @author fengshuonan
- * @date 2020/10/30 10:07
+ * @since 2020/10/30 10:07
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

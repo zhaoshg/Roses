@@ -65,7 +65,7 @@ import java.util.List;
  * C端用户表业务实现层
  *
  * @author fengshuonan
- * @date 2021/06/07 11:40
+ * @since 2021/06/07 11:40
  */
 @Service
 @Slf4j
@@ -501,7 +501,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
      * 获取信息
      *
      * @author fengshuonan
-     * @date 2021/06/07 11:40
+     * @since 2021/06/07 11:40
      */
     private Customer queryCustomer(CustomerRequest customerRequest) {
         Customer customer = this.getById(customerRequest.getCustomerId());
@@ -515,7 +515,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
      * 创建查询wrapper
      *
      * @author fengshuonan
-     * @date 2021/06/07 11:40
+     * @since 2021/06/07 11:40
      */
     private LambdaQueryWrapper<Customer> createWrapper(CustomerRequest customerRequest) {
         LambdaQueryWrapper<Customer> queryWrapper = new LambdaQueryWrapper<>();
@@ -547,7 +547,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
      * 校验是否存在重复的账号和邮箱
      *
      * @author fengshuonan
-     * @date 2021/6/7 21:43
+     * @since 2021/6/7 21:43
      */
     private void validateRepeat(CustomerRequest customerRequest) {
 
@@ -570,7 +570,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
      * 验证码是否正确
      *
      * @author fengshuonan
-     * @date 2021/7/6 15:07
+     * @since 2021/7/6 15:07
      */
     private void validateCaptcha(String verKey, String verCode) {
 

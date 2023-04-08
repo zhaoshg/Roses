@@ -46,7 +46,7 @@ import static cn.stylefeng.roses.kernel.dsctn.api.exception.enums.DatasourceCont
  * 多数据源的初始化，加入到数据源Context中的过程
  *
  * @author fengshuonan
- * @date 2020/11/1 0:02
+ * @since 2020/11/1 0:02
  */
 @Slf4j
 public class DataSourceInitListener extends ContextInitializedListener implements Ordered {
@@ -101,7 +101,7 @@ public class DataSourceInitListener extends ContextInitializedListener implement
      * 配置其他的druid数据源配控制
      *
      * @author fengshuonan
-     * @date 2022/9/15 11:00
+     * @since 2022/9/15 11:00
      */
     private void setOtherDruidConfigs(ConfigurableEnvironment environment, DruidProperties druidProperties) {
 

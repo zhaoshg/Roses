@@ -36,7 +36,7 @@ import lombok.EqualsAndHashCode;
  * 系统角色数据范围表
  *
  * @author majianguo
- * @date 2020/11/5 下午4:29
+ * @since 2020/11/5 下午4:29
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
