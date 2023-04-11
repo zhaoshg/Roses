@@ -354,6 +354,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setPassword(passwordStoredEncryptApi.encrypt(password));
 
         this.updateById(sysUser);
+
+        // 清除缓存中的用户信息
+        sysUserCacheOperatorApi.remove(String.valueOf(sysUser.getUserId()));
     }
 
     @Override
