@@ -2,7 +2,7 @@ package cn.stylefeng.roses.kernel.system.modular.theme.factory;
 
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.system.modular.theme.pojo.DefaultTheme;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.Data;
 
 import java.beans.IntrospectionException;
