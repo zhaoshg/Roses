@@ -33,8 +33,9 @@ import cn.stylefeng.roses.kernel.system.modular.theme.service.SysThemeService;
 import cn.stylefeng.roses.kernel.system.modular.theme.service.SysThemeTemplateFieldService;
 import cn.stylefeng.roses.kernel.system.modular.theme.service.SysThemeTemplateRelService;
 import cn.stylefeng.roses.kernel.system.modular.theme.service.SysThemeTemplateService;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -110,7 +111,8 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
 
         // 删除保存的图片
         String themeValue = sysTheme.getThemeValue();
-        Map<String, String> themeMap = JSON.parseObject(themeValue, Map.class);
+        Map<String, String> themeMap = JSON.parseObject(themeValue, new TypeReference<Map<String, String>>() {
+        });
 
         // 获取map的key
         List<String> themeKeys = new ArrayList<>(themeMap.keySet());
@@ -185,14 +187,15 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
 
         // 设置动态属性表单
         String themeValueJson = sysTheme.getThemeValue();
-        JSONObject jsonObject = JSON.parseObject(themeValueJson);
-        sysTheme.setDynamicForm(jsonObject.getInnerMap());
+        Map<String, Object> jsonObject = JSON.parseObject(themeValueJson, new TypeReference<Map<String, Object>>() {
+        });
+        sysTheme.setDynamicForm(jsonObject);
 
         // 遍历表单属性，找到所有文件类型的，组装文件的图片和名称等信息
         HashMap<String, AntdvFileInfo[]> tempFileList = new HashMap<>();
         for (Map.Entry<String, Object> keyValues : jsonObject.entrySet()) {
             String key = keyValues.getKey();
-            String value = jsonObject.getString(key);
+            String value = (String) jsonObject.get(key);
             // 判断是否是文件类型
             boolean keyFileFlag = sysThemeTemplateFieldService.getKeyFileFlag(key);
             if (keyFileFlag) {
