@@ -68,10 +68,11 @@ public interface FileBusinessApi {
     /**
      * 删除业务id的文件关联信息
      *
-     * @param businessId 业务id
+     * @param businessCode 业务编码
+     * @param businessId   业务id
      * @author fengshuonan
      * @since 2023/3/31 14:23
      */
-    void removeBusinessIdFileList(Long businessId);
+    void removeBusinessIdFileList(String businessCode, Long businessId);
 
 }

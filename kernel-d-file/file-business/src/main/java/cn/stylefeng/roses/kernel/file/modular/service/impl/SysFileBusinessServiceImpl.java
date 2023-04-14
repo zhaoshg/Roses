@@ -79,6 +79,9 @@ public class SysFileBusinessServiceImpl extends ServiceImpl<SysFileBusinessMappe
             return;
         }
 
+        // 删除业务id下的所有文件
+        this.removeBusinessIdFileList(businessCode, businessId);
+
         ArrayList<SysFileBusiness> sysFileBusinesses = new ArrayList<>();
         for (Long fileId : fileIdList) {
             SysFileBusiness sysFileBusiness = new SysFileBusiness();
@@ -142,8 +145,14 @@ public class SysFileBusinessServiceImpl extends ServiceImpl<SysFileBusinessMappe
     }
 
     @Override
-    public void removeBusinessIdFileList(Long businessId) {
+    public void removeBusinessIdFileList(String businessCode, Long businessId) {
+
+        if (ObjectUtil.isEmpty(businessCode) || ObjectUtil.isEmpty(businessId)) {
+            return;
+        }
+
         LambdaQueryWrapper<SysFileBusiness> sysFileBusinessLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysFileBusinessLambdaQueryWrapper.eq(SysFileBusiness::getBusinessCode, businessCode);
         sysFileBusinessLambdaQueryWrapper.eq(SysFileBusiness::getBusinessId, businessId);
         this.remove(sysFileBusinessLambdaQueryWrapper);
     }
