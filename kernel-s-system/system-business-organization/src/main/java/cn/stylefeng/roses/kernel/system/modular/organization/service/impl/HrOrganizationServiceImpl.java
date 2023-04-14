@@ -346,6 +346,39 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     @Override
+    public List<HrOrganizationDTO> getSubOrgList(HrOrganizationRequest request) {
+
+        Long orgId = request.getOrgId();
+        String searchText = request.getSearchText();
+
+        LambdaQueryWrapper<HrOrganization> queryWrapper = new LambdaQueryWrapper<>();
+
+        // 查询未删除状态的
+        queryWrapper.eq(HrOrganization::getDelFlag, YesOrNotEnum.N.getCode());
+
+        // 根据排序升序排列，序号越小越在前
+        queryWrapper.orderByAsc(HrOrganization::getOrgSort);
+
+        // 根据条件模糊查询
+        if (ObjectUtil.isNotEmpty(searchText)) {
+            queryWrapper.like(HrOrganization::getOrgName, searchText);
+        }
+
+        // 查找当前和子集所有的组织机构
+        if (ObjectUtil.isNotEmpty(orgId)) {
+            queryWrapper.nested(
+                    item -> item.and(i -> i.eq(HrOrganization::getOrgId, orgId).or().like(HrOrganization::getOrgPids, orgId)));
+        }
+
+        List<HrOrganization> list = this.list(queryWrapper);
+        if (ObjectUtil.isEmpty(list)) {
+            return new ArrayList<>();
+        }
+
+        return BeanUtil.copyToList(list, HrOrganizationDTO.class);
+    }
+
+    @Override
     public List<HrOrganizationDTO> orgList() {
 
         LambdaQueryWrapper<HrOrganization> queryWrapper = new LambdaQueryWrapper<>();

@@ -28,6 +28,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.rule.tree.ztree.ZTreeNode;
 import cn.stylefeng.roses.kernel.system.api.OrganizationServiceApi;
+import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationRequest;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.OrganizationTreeNode;
 import cn.stylefeng.roses.kernel.system.modular.organization.entity.HrOrganization;
@@ -143,8 +144,18 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
 
     /**
      * 组织机构选择器
+     *
      * @param request 请求参数
      * @return 选择列表
      */
     List<SimpleDict> selector(HrOrganizationRequest request);
+
+    /**
+     * 获取组织机构下所有的子组织机构信息
+     *
+     * @author fengshuonan
+     * @since 2023/4/14 21:50
+     */
+    List<HrOrganizationDTO> getSubOrgList(HrOrganizationRequest request);
+
 }

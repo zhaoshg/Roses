@@ -38,7 +38,6 @@ import cn.stylefeng.roses.kernel.system.api.enums.OrgTypeEnum;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationRequest;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.OrganizationTreeNode;
-import cn.stylefeng.roses.kernel.system.api.pojo.user.request.SysUserRequest;
 import cn.stylefeng.roses.kernel.system.modular.organization.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.system.modular.organization.service.HrOrganizationService;
 import cn.stylefeng.roses.kernel.system.modular.organization.wrapper.OrgExpandWrapper;
@@ -264,8 +263,20 @@ public class HrOrganizationController {
      * @author yxx
      * @since 2023/03/05 09:49
      */
-    @GetResource(name = "组织机构_选择器", path = "/hrOrganization/selector",requiredPermission = false)
+    @GetResource(name = "组织机构_选择器", path = "/hrOrganization/selector", requiredPermission = false)
     public ResponseData<List<SimpleDict>> selector(HrOrganizationRequest request) {
         return new SuccessResponseData<>(hrOrganizationService.selector(request));
     }
+
+    /**
+     * 获取指定组织机构下所有的子组织机构信息
+     *
+     * @author fengshuonan
+     * @since 2023/4/14 21:49
+     */
+    @GetResource(name = "获取指定组织机构下所有的子组织机构信息", path = "/hrOrganization/getSubOrgList")
+    public ResponseData<List<HrOrganizationDTO>> getSubOrgList(HrOrganizationRequest request) {
+        return new SuccessResponseData<>(hrOrganizationService.getSubOrgList(request));
+    }
+
 }
