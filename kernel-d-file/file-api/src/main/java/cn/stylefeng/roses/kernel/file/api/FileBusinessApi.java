@@ -65,4 +65,13 @@ public interface FileBusinessApi {
      */
     void addFileDownloadCount(Long businessId, Long fileId);
 
+    /**
+     * 删除业务id的文件关联信息
+     *
+     * @param businessId 业务id
+     * @author fengshuonan
+     * @since 2023/3/31 14:23
+     */
+    void removeBusinessIdFileList(Long businessId);
+
 }

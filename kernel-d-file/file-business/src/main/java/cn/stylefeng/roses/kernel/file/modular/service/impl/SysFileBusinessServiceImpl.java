@@ -141,6 +141,13 @@ public class SysFileBusinessServiceImpl extends ServiceImpl<SysFileBusinessMappe
 
     }
 
+    @Override
+    public void removeBusinessIdFileList(Long businessId) {
+        LambdaQueryWrapper<SysFileBusiness> sysFileBusinessLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysFileBusinessLambdaQueryWrapper.eq(SysFileBusiness::getBusinessId, businessId);
+        this.remove(sysFileBusinessLambdaQueryWrapper);
+    }
+
     /**
      * 获取信息
      *
