@@ -27,6 +27,7 @@ package cn.stylefeng.roses.kernel.system.modular.user.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
+import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.system.api.OrganizationServiceApi;
 import cn.stylefeng.roses.kernel.system.api.exception.SystemModularException;
@@ -192,13 +193,26 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
     @Override
     public List<HrOrganizationDTO> getUserCompanyList() {
 
+        ArrayList<HrOrganizationDTO> results = new ArrayList<>();
+
+        LoginUser loginUser = LoginContext.me().getLoginUser();
+
+        // 获取当前登录用户的组织机构id，放在第一位
+        Long currentOrgId = loginUser.getOrganizationId();
+
+        // 获取当前用户orgId的公司信息
+        HrOrganizationDTO currentCompanyInfo = organizationServiceApi.getOrgCompanyInfo(currentOrgId);
+        results.add(currentCompanyInfo);
+
         // 获取当前用户绑定的组织机构列表
         UserOrgRequest userOrgResponse = new UserOrgRequest();
-        userOrgResponse.setUserId(LoginContext.me().getLoginUser().getUserId());
+        userOrgResponse.setUserId(loginUser.getUserId());
         List<SysUserOrg> sysUserOrgList = this.findList(userOrgResponse);
-
-        ArrayList<HrOrganizationDTO> results = new ArrayList<>();
         for (SysUserOrg sysUserOrg : sysUserOrgList) {
+
+            if (sysUserOrg.getOrgId().equals(currentCompanyInfo.getOrgId())) {
+                continue;
+            }
 
             // 获取用户的公司信息
             HrOrganizationDTO companyInfo = organizationServiceApi.getOrgCompanyInfo(sysUserOrg.getOrgId());
