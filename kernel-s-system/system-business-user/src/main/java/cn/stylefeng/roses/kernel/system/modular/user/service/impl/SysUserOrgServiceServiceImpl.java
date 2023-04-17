@@ -210,12 +210,17 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
         List<SysUserOrg> sysUserOrgList = this.findList(userOrgResponse);
         for (SysUserOrg sysUserOrg : sysUserOrgList) {
 
-            if (sysUserOrg.getOrgId().equals(currentCompanyInfo.getOrgId())) {
+            // 公司id已经添加到列表中，不用再继续添加
+            if (currentCompanyInfo.getOrgId().equals(sysUserOrg.getOrgId())) {
                 continue;
             }
 
             // 获取用户的公司信息
             HrOrganizationDTO companyInfo = organizationServiceApi.getOrgCompanyInfo(sysUserOrg.getOrgId());
+            if (currentCompanyInfo.getOrgId().equals(companyInfo.getOrgId())) {
+                continue;
+            }
+
             results.add(companyInfo);
         }
 
