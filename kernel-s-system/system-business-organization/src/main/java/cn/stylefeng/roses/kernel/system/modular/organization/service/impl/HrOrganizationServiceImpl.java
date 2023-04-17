@@ -52,6 +52,7 @@ import cn.stylefeng.roses.kernel.system.api.RoleServiceApi;
 import cn.stylefeng.roses.kernel.system.api.UserOrgServiceApi;
 import cn.stylefeng.roses.kernel.system.api.UserServiceApi;
 import cn.stylefeng.roses.kernel.system.api.enums.DetectModeEnum;
+import cn.stylefeng.roses.kernel.system.api.enums.OrgTypeEnum;
 import cn.stylefeng.roses.kernel.system.api.exception.SystemModularException;
 import cn.stylefeng.roses.kernel.system.api.exception.enums.organization.OrganizationExceptionEnum;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
@@ -495,6 +496,31 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         } else {
             return calcParentOrgId(orgId, parentLevelNum, false);
         }
+    }
+
+    @Override
+    public HrOrganizationDTO getOrgCompanyInfo(Long orgId) {
+
+        // 如果组织机构id是空，则直接返回
+        if (ObjectUtil.isEmpty(orgId)) {
+            return new HrOrganizationDTO();
+        }
+
+        // 获取参数公司的信息
+        HrOrganizationDTO orgDetail = this.getOrgDetail(orgId);
+
+        // 如果是到了根节点，则直接返回当前根节点信息
+        if (TreeConstants.DEFAULT_PARENT_ID.equals(orgDetail.getOrgParentId())) {
+            return orgDetail;
+        }
+
+        // 如果是公司则直接返回公司信息
+        if (OrgTypeEnum.COMPANY.getCode().equals(orgDetail.getOrgType())) {
+            return orgDetail;
+        }
+
+        // 如果当前节点是部门，则继续向上查询部门的公司信息
+        return getOrgCompanyInfo(orgDetail.getOrgParentId());
     }
 
     /**

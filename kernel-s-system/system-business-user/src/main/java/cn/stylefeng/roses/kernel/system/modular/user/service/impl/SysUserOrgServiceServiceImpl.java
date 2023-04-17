@@ -26,9 +26,12 @@ package cn.stylefeng.roses.kernel.system.modular.user.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
+import cn.stylefeng.roses.kernel.system.api.OrganizationServiceApi;
 import cn.stylefeng.roses.kernel.system.api.exception.SystemModularException;
 import cn.stylefeng.roses.kernel.system.api.exception.enums.user.SysUserOrgExceptionEnum;
+import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.SysUserOrgDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.request.UserOrgRequest;
 import cn.stylefeng.roses.kernel.system.modular.user.entity.SysUserOrg;
@@ -40,6 +43,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -56,6 +60,9 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
 
     @Resource(name = "userOrgCacheApi")
     private CacheOperatorApi<SysUserOrgDTO> userOrgCacheApi;
+
+    @Resource
+    private OrganizationServiceApi organizationServiceApi;
 
     @Override
     public SysUserOrgDTO getUserOrgByUserId(Long userId) {
@@ -87,7 +94,6 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
         List<SysUserOrg> userOrgs = this.lambdaQuery().in(SysUserOrg::getOrgId, organizationIds).list();
         return userOrgs.stream().map(SysUserOrg::getUserId).collect(Collectors.toSet());
     }
-
 
 
     @Override
@@ -183,6 +189,24 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
         return this.list(queryWrapper);
     }
 
+    @Override
+    public List<HrOrganizationDTO> getUserCompanyList() {
+
+        // 获取当前用户绑定的组织机构列表
+        UserOrgRequest userOrgResponse = new UserOrgRequest();
+        userOrgResponse.setUserId(LoginContext.me().getLoginUser().getUserId());
+        List<SysUserOrg> sysUserOrgList = this.findList(userOrgResponse);
+
+        ArrayList<HrOrganizationDTO> results = new ArrayList<>();
+        for (SysUserOrg sysUserOrg : sysUserOrgList) {
+
+            // 获取用户的公司信息
+            HrOrganizationDTO companyInfo = organizationServiceApi.getOrgCompanyInfo(sysUserOrg.getOrgId());
+            results.add(companyInfo);
+        }
+
+        return results;
+    }
 
     @Override
     public Boolean getUserOrgFlag(Long orgId, Long positionId) {

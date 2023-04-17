@@ -95,4 +95,12 @@ public interface OrganizationServiceApi {
      */
     Long getParentLevelOrgId(Long orgId, Integer parentLevelNum, DetectModeEnum detectModeEnum);
 
+    /**
+     * 根据组织机构id，获取这个组织机构的公司信息
+     *
+     * @author fengshuonan
+     * @since 2023/4/17 17:12
+     */
+    HrOrganizationDTO getOrgCompanyInfo(Long orgId);
+
 }

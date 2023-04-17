@@ -25,6 +25,7 @@
 package cn.stylefeng.roses.kernel.system.modular.user.service;
 
 import cn.stylefeng.roses.kernel.system.api.UserOrgServiceApi;
+import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.request.UserOrgRequest;
 import cn.stylefeng.roses.kernel.system.modular.user.entity.SysUserOrg;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -51,8 +52,8 @@ public interface SysUserOrgService extends IService<SysUserOrg>, UserOrgServiceA
     /**
      * 新增
      *
-     * @param userId     用户id
-     * @param orgId      机构id
+     * @param userId 用户id
+     * @param orgId  机构id
      * @author chenjinlong
      * @since 2021/1/26 12:52
      */
@@ -99,8 +100,8 @@ public interface SysUserOrgService extends IService<SysUserOrg>, UserOrgServiceA
     /**
      * 修改
      *
-     * @param userId     用户id
-     * @param orgId      机构id
+     * @param userId 用户id
+     * @param orgId  机构id
      * @author chenjinlong
      * @since 2021/1/26 12:52
      */
@@ -135,5 +136,12 @@ public interface SysUserOrgService extends IService<SysUserOrg>, UserOrgServiceA
      */
     List<SysUserOrg> findList(UserOrgRequest userOrgResponse);
 
+    /**
+     * 获取当前登录用户的公司列表
+     *
+     * @author fengshuonan
+     * @since 2023/4/17 17:11
+     */
+    List<HrOrganizationDTO> getUserCompanyList();
 
 }
