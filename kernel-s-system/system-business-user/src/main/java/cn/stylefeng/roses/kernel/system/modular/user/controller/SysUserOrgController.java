@@ -83,9 +83,6 @@ public class SysUserOrgController {
     @PostResource(name = "更新当前用户信息的组织机构id", path = "/sysUserOrg/updateUserOrg", requiredPermission = false)
     public ResponseData<?> updateUserOrg(@RequestBody @Validated(BaseRequest.edit.class) SysUserOrgRequest sysUserOrgRequest) {
 
-        LoginUser loginUser = LoginContext.me().getLoginUser();
-        loginUser.setOrganizationId(sysUserOrgRequest.getOrgId());
-
         // 判断当前用户是否有对应组织机构对的id
         boolean orgIdRightFlag = false;
         List<HrOrganizationDTO> userCompanyList = sysUserOrgService.getUserCompanyList();
@@ -98,6 +95,9 @@ public class SysUserOrgController {
         if (!orgIdRightFlag) {
             throw new ServiceException(SysUserOrgExceptionEnum.CANT_CHANGE_ORG_ID);
         }
+
+        LoginUser loginUser = LoginContext.me().getLoginUser();
+        loginUser.setOrganizationId(sysUserOrgRequest.getOrgId());
 
         // 更新会话信息
         sessionManagerApi.updateSession(LoginContext.me().getToken(), loginUser);
