@@ -24,13 +24,23 @@
  */
 package cn.stylefeng.roses.kernel.system.modular.user.controller;
 
+import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
+import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
+import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
+import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
+import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
+import cn.stylefeng.roses.kernel.system.modular.user.enums.SysUserOrgExceptionEnum;
+import cn.stylefeng.roses.kernel.system.modular.user.pojo.request.SysUserOrgRequest;
 import cn.stylefeng.roses.kernel.system.modular.user.service.SysUserOrgService;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -49,6 +59,9 @@ public class SysUserOrgController {
     @Resource
     private SysUserOrgService sysUserOrgService;
 
+    @Resource
+    private SessionManagerApi sessionManagerApi;
+
     /**
      * 获取当前登录用户所在组织机构列表
      *
@@ -59,6 +72,37 @@ public class SysUserOrgController {
     public ResponseData<List<HrOrganizationDTO>> getUserOrgList() {
         List<HrOrganizationDTO> userCompanyList = sysUserOrgService.getUserCompanyList();
         return new SuccessResponseData<>(userCompanyList);
+    }
+
+    /**
+     * 更新当前用户信息的组织机构id
+     *
+     * @author fengshuonan
+     * @since 2023/4/17 17:08
+     */
+    @PostResource(name = "更新当前用户信息的组织机构id", path = "/sysUserOrg/updateUserOrg", requiredPermission = false)
+    public ResponseData<?> updateUserOrg(@RequestBody @Validated(BaseRequest.edit.class) SysUserOrgRequest sysUserOrgRequest) {
+
+        LoginUser loginUser = LoginContext.me().getLoginUser();
+        loginUser.setOrganizationId(sysUserOrgRequest.getOrgId());
+
+        // 判断当前用户是否有对应组织机构对的id
+        boolean orgIdRightFlag = false;
+        List<HrOrganizationDTO> userCompanyList = sysUserOrgService.getUserCompanyList();
+        for (HrOrganizationDTO hrOrganizationDTO : userCompanyList) {
+            if (sysUserOrgRequest.getOrgId().equals(hrOrganizationDTO.getOrgId())) {
+                orgIdRightFlag = true;
+                break;
+            }
+        }
+        if (!orgIdRightFlag) {
+            throw new ServiceException(SysUserOrgExceptionEnum.CANT_CHANGE_ORG_ID);
+        }
+
+        // 更新会话信息
+        sessionManagerApi.updateSession(LoginContext.me().getToken(), loginUser);
+
+        return new SuccessResponseData<>();
     }
 
 }
