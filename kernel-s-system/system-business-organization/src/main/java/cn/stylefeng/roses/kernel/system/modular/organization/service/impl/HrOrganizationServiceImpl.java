@@ -503,7 +503,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 如果组织机构id是空，则直接返回
         if (ObjectUtil.isEmpty(orgId)) {
-            return new HrOrganizationDTO();
+            return null;
         }
 
         // 获取参数公司的信息
