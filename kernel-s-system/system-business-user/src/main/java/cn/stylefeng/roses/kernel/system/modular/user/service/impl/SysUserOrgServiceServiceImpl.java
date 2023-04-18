@@ -96,6 +96,28 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
         return userOrgs.stream().map(SysUserOrg::getUserId).collect(Collectors.toSet());
     }
 
+    @Override
+    public HrOrganizationDTO getUserCompany(Long userId) {
+
+        LoginUser loginUserNullable = LoginContext.me().getLoginUserNullable();
+        if (loginUserNullable == null) {
+            return null;
+        }
+
+        // 获取当前用户的组织机构id
+        Long currentOrgId = loginUserNullable.getOrganizationId();
+        if (currentOrgId == null) {
+            return null;
+        }
+
+        // 获取当前用户orgId的公司信息
+        HrOrganizationDTO currentCompanyInfo = organizationServiceApi.getOrgCompanyInfo(currentOrgId);
+        if (currentCompanyInfo == null) {
+            return null;
+        }
+        return currentCompanyInfo;
+    }
+
 
     @Override
     public void add(UserOrgRequest userOrgResponse) {
@@ -202,7 +224,9 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
 
         // 获取当前用户orgId的公司信息
         HrOrganizationDTO currentCompanyInfo = organizationServiceApi.getOrgCompanyInfo(currentOrgId);
-        results.add(currentCompanyInfo);
+        if (currentCompanyInfo != null) {
+            results.add(currentCompanyInfo);
+        }
 
         // 获取当前用户绑定的组织机构列表
         UserOrgRequest userOrgResponse = new UserOrgRequest();
