@@ -91,7 +91,7 @@ public class HrOrganization extends BaseEntity {
     /**
      * 状态：1-启用，2-禁用
      */
-    @TableField(value = "status_flag",fill = FieldFill.INSERT)
+    @TableField(value = "status_flag", fill = FieldFill.INSERT)
     @ChineseDescription("状态：1-启用，2-禁用")
     private Integer statusFlag;
 
@@ -119,8 +119,36 @@ public class HrOrganization extends BaseEntity {
     /**
      * 删除标记（Y-已删除，N-未删除）
      */
-    @TableField(value = "del_flag",fill = FieldFill.INSERT)
+    @TableField(value = "del_flag", fill = FieldFill.INSERT)
     @ChineseDescription("删除标记（Y-已删除，N-未删除）")
     private String delFlag;
+
+    /**
+     * 主数据orgId
+     */
+    @TableField(value = "master_org_id")
+    @ChineseDescription("主数据orgId")
+    private String masterOrgId;
+
+    /**
+     * 主数据的父级id
+     */
+    @TableField(value = "master_org_parent_id")
+    @ChineseDescription("主数据的父级id")
+    private String masterOrgParentId;
+
+    /**
+     * 主数据的简称
+     */
+    @TableField(value = "master_short_name")
+    @ChineseDescription("主数据的简称")
+    private String masterShortName;
+
+    /**
+     * 主数据组织层级
+     */
+    @TableField(value = "master_level")
+    @ChineseDescription("主数据组织层级")
+    private String masterLevel;
 
 }

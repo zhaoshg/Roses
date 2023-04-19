@@ -55,15 +55,40 @@ public class SysUserOrg extends BaseEntity {
     private Long userId;
 
     /**
+     * 主数据用户id
+     */
+    @TableField("master_user_id")
+    private String masterUserId;
+
+    /**
      * 所属机构id
      */
     @TableField("org_id")
     private Long orgId;
 
     /**
+     * 主数据组织机构id
+     */
+    @TableField("master_org_id")
+    private String masterOrgId;
+
+    /**
      * 职位id
      */
     @TableField("position_id")
     private Long positionId;
+
+    /**
+     * 是否是主部门
+     */
+    @TableField("main_flag")
+    private String mainFlag;
+
+    /**
+     * officeId
+     */
+    @TableField("take_office_id")
+    private String takeOfficeId;
+
 
 }

@@ -159,4 +159,11 @@ public class SysUser extends BaseEntity {
      */
     @TableField("login_count")
     private Integer loginCount;
+
+    /**
+     * 主数据用户id
+     */
+    @TableField(value = "master_user_id")
+    private String masterUserId;
+
 }
