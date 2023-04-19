@@ -149,6 +149,6 @@ public class HrOrganization extends BaseEntity {
      */
     @TableField(value = "master_level")
     @ChineseDescription("主数据组织层级")
-    private String masterLevel;
+    private Integer masterLevel;
 
 }
