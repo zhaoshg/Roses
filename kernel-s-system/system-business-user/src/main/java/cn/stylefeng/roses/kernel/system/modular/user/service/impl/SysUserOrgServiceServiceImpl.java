@@ -288,7 +288,6 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
         queryWrapper.eq(ObjectUtil.isNotEmpty(userOrgResponse.getOrgId()), SysUserOrg::getOrgId, userOrgResponse.getOrgId());
         queryWrapper.eq(ObjectUtil.isNotEmpty(userOrgResponse.getPositionId()), SysUserOrg::getPositionId, userOrgResponse.getPositionId());
 
-        queryWrapper.ne(SysUserOrg::getOrgId, null);
         queryWrapper.eq(SysUserOrg::getMainFlag, YesOrNotEnum.Y.getKey());
 
         return queryWrapper;
