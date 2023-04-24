@@ -24,7 +24,7 @@ public class UserFormatProcess extends BaseSimpleFieldFormatProcess {
     /**
      * 未知人员的名称
      */
-    private static final String NOT_FIND_USER_NAME = "未知人员";
+    public static final String NOT_FIND_USER_NAME = "未知人员";
 
     @Override
     public Class<?> getItemClass() {
@@ -58,7 +58,7 @@ public class UserFormatProcess extends BaseSimpleFieldFormatProcess {
      * @author fengshuonan
      * @since 2022/11/10 1:29
      */
-    private Object execute(Object businessId) {
+    protected Object execute(Object businessId) {
         Long userId = Convert.toLong(businessId);
         UserServiceApi bean = SpringUtil.getBean(UserServiceApi.class);
         SysUserDTO userInfoByUserId = bean.getUserInfoByUserId(userId);
