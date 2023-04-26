@@ -419,7 +419,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUserDTO sysUserResponse = new SysUserDTO();
 
         // 获取用户基本信息
-        SysUser sysUser = this.querySysUser(sysUserRequest);
+        SysUser sysUser = this.getById(sysUserRequest.getUserId());
         BeanUtil.copyProperties(sysUser, sysUserResponse, CopyOptions.create().ignoreError());
 
         // 获取用户组织绑定信息
