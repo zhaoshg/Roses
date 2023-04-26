@@ -930,7 +930,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             sysUserOrgLambdaQueryWrapper.eq(SysUserOrg::getUserId, userId);
             SysUserOrg one = sysUserOrgService.getOne(sysUserOrgLambdaQueryWrapper, false);
             if (one != null) {
+
                 Long orgId = one.getOrgId();
+                result.setOrgId(orgId);
+
                 HrOrganizationDTO orgDetail = this.organizationServiceApi.getOrgDetail(orgId);
                 if (orgDetail != null) {
                     String orgName = orgDetail.getOrgName();
