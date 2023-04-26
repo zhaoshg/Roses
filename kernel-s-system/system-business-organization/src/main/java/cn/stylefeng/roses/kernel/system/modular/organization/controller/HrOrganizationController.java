@@ -27,6 +27,7 @@ package cn.stylefeng.roses.kernel.system.modular.organization.controller;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
 import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
+import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.rule.tree.ztree.ZTreeNode;
@@ -37,6 +38,7 @@ import cn.stylefeng.roses.kernel.system.api.enums.OrgTypeEnum;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationRequest;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.OrganizationTreeNode;
+import cn.stylefeng.roses.kernel.system.api.pojo.user.request.SysUserRequest;
 import cn.stylefeng.roses.kernel.system.modular.organization.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.system.modular.organization.service.HrOrganizationService;
 import cn.stylefeng.roses.kernel.system.modular.organization.wrapper.OrgExpandWrapper;
@@ -254,4 +256,16 @@ public class HrOrganizationController {
         return new SuccessResponseData<>(orgDetailList);
     }
 
+    /**
+     * 组织下拉列表，可以根据组织名称搜索
+     *
+     * @param request 请求参数
+     * @return 返回组织信息
+     * @author yxx
+     * @date 2023/03/05 09:49
+     */
+    @GetResource(name = "组织机构_选择器", path = "/hrOrganization/selector",requiredPermission = false)
+    public ResponseData<List<SimpleDict>> selector(HrOrganizationRequest request) {
+        return new SuccessResponseData<>(hrOrganizationService.selector(request));
+    }
 }

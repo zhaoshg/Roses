@@ -7,7 +7,7 @@
     <parent>
         <groupId>cn.stylefeng.roses</groupId>
         <artifactId>kernel-d-file</artifactId>
-        <version>7.3.3</version>
+        <version>7.3.4</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -21,6 +21,13 @@
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>file-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
+        <!--格式化用户id展示姓名使用-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>system-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
