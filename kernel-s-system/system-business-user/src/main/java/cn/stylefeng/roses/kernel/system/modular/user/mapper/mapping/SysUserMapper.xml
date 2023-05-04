@@ -5,6 +5,7 @@
     <!--用户列表sql-->
     <sql id="user_list_mysql">
         select
+            distinct
         suser.user_id as userId,
         suser.account as account,
         suser.nick_name as nickName,
@@ -16,10 +17,8 @@
         suser.phone as phone,
         suser.tel as tel,
         suser.status_flag as statusFlag,
-        suorg.org_id as orgId,
         suorg.position_id as positionId,
-        hpos.position_name as positionName,
-        hrorg.org_name as orgName
+        hpos.position_name as positionName
         from sys_user suser
         left join sys_user_org suorg on suser.user_id = suorg.user_id
         left join hr_position hpos on suorg.position_id = hpos.position_id
