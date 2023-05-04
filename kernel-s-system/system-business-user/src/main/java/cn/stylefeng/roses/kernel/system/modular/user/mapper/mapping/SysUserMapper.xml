@@ -18,7 +18,8 @@
         suser.tel as tel,
         suser.status_flag as statusFlag,
         suorg.position_id as positionId,
-        hpos.position_name as positionName
+        hpos.position_name as positionName,
+        suser.create_time as createTime
         from sys_user suser
         left join sys_user_org suorg on suser.user_id = suorg.user_id
         left join hr_position hpos on suorg.position_id = hpos.position_id
