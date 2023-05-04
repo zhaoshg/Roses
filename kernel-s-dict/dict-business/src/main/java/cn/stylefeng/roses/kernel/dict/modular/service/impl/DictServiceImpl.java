@@ -224,6 +224,16 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         this.removeById(dictId);
     }
 
+    @Override
+    public String getDictNameByDictId(Long dictId) {
+        SysDict sysDict = this.getById(dictId);
+        if (sysDict == null) {
+            return "";
+        } else {
+            return sysDict.getDictName();
+        }
+    }
+
     /**
      * 获取详细信息
      *
