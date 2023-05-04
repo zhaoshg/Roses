@@ -27,6 +27,7 @@ package cn.stylefeng.roses.kernel.system.api;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.SysUserOrgDTO;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -69,5 +70,13 @@ public interface UserOrgServiceApi {
      * @since 2023/4/18 10:36
      */
     HrOrganizationDTO getUserCompany(Long userId);
+
+    /**
+     * 获取当前登录用户的公司列表
+     *
+     * @author fengshuonan
+     * @since 2023/4/17 17:11
+     */
+    List<HrOrganizationDTO> getUserCompanyList();
 
 }
