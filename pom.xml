@@ -130,7 +130,7 @@
         <lombok.versin>1.18.26</lombok.versin>
         <mp.version>3.5.3.1</mp.version>
         <mysql-connector-java.version>8.0.21</mysql-connector-java.version>
-        <druid.version>1.2.16</druid.version>
+        <druid.version>1.2.4</druid.version>
         <jwt.version>0.9.1</jwt.version>
         <java.mail.version>1.4.7</java.mail.version>
         <aliyun.oss.version>3.8.0</aliyun.oss.version>
