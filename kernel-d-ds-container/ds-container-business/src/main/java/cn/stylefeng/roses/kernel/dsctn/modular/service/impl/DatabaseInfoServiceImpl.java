@@ -33,6 +33,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.druid.DruidProperties;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.dsctn.api.exception.DatasourceContainerException;
+import cn.stylefeng.roses.kernel.dsctn.api.exception.enums.DatasourceContainerExceptionEnum;
 import cn.stylefeng.roses.kernel.dsctn.api.pojo.DataBaseInfoDto;
 import cn.stylefeng.roses.kernel.dsctn.api.pojo.DataSourceDto;
 import cn.stylefeng.roses.kernel.dsctn.api.pojo.request.DatabaseInfoRequest;
@@ -67,7 +68,6 @@ import java.util.stream.Collectors;
 
 import static cn.stylefeng.roses.kernel.dsctn.api.constants.DatasourceContainerConstants.DATASOURCE_GROUP_CODE;
 import static cn.stylefeng.roses.kernel.dsctn.api.constants.DatasourceContainerConstants.MASTER_DATASOURCE_NAME;
-import static cn.stylefeng.roses.kernel.dsctn.api.exception.enums.DatasourceContainerExceptionEnum.*;
 
 /**
  * 数据库信息表 服务实现类
@@ -139,12 +139,12 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
 
         // 如果是租户数据库不能删除
         if (databaseInfo.getDbName().startsWith(RuleConstants.TENANT_DB_PREFIX)) {
-            throw new DatasourceContainerException(TENANT_DATASOURCE_CANT_DELETE);
+            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.TENANT_DATASOURCE_CANT_DELETE);
         }
 
         // 不能删除主数据源
         if (MASTER_DATASOURCE_NAME.equals(databaseInfo.getDbName())) {
-            throw new DatasourceContainerException(MASTER_DATASOURCE_CANT_DELETE);
+            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.MASTER_DATASOURCE_CANT_DELETE);
         }
 
         // 删除库中的数据源记录
@@ -165,7 +165,7 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
 
         // 不能修改数据源的名称
         if (!databaseInfoRequest.getDbName().equals(databaseInfo.getDbName())) {
-            throw new DatasourceContainerException(EDIT_DATASOURCE_NAME_ERROR, databaseInfo.getDbName());
+            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.EDIT_DATASOURCE_NAME_ERROR, databaseInfo.getDbName());
         }
 
         // 判断数据库连接是否可用
@@ -236,7 +236,7 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
             Class.forName(param.getJdbcDriver());
             conn = DriverManager.getConnection(param.getJdbcUrl(), param.getUsername(), param.getPassword());
         } catch (Exception e) {
-            throw new DatasourceContainerException(VALIDATE_DATASOURCE_ERROR, param.getJdbcUrl(), e.getMessage());
+            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.VALIDATE_DATASOURCE_ERROR, param.getJdbcUrl(), e.getMessage());
         } finally {
             if (conn != null) {
                 try {
@@ -275,8 +275,8 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
             // 先判断context中是否有了这个数据源
             DataSource dataSource = DataSourceContext.getDataSources().get(databaseInfo.getDbName());
             if (dataSource != null) {
-                String userTip = StrUtil.format(DATASOURCE_NAME_REPEAT.getUserTip(), databaseInfo.getDbName());
-                throw new DatasourceContainerException(DATASOURCE_NAME_REPEAT, userTip);
+                String userTip = StrUtil.format(DatasourceContainerExceptionEnum.DATASOURCE_NAME_REPEAT.getUserTip(), databaseInfo.getDbName());
+                throw new DatasourceContainerException(DatasourceContainerExceptionEnum.DATASOURCE_NAME_REPEAT, userTip);
             }
         }
 
@@ -290,8 +290,8 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
             druidDataSource.init();
         } catch (SQLException exception) {
             log.error("初始化数据源异常！", exception);
-            String userTip = StrUtil.format(INIT_DATASOURCE_ERROR.getUserTip(), exception.getMessage());
-            throw new DatasourceContainerException(INIT_DATASOURCE_ERROR, userTip);
+            String userTip = StrUtil.format(DatasourceContainerExceptionEnum.INIT_DATASOURCE_ERROR.getUserTip(), exception.getMessage());
+            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.INIT_DATASOURCE_ERROR, userTip);
         }
     }
 
@@ -304,7 +304,7 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
     private DatabaseInfo queryDatabaseInfoById(DatabaseInfoRequest databaseInfoRequest) {
         DatabaseInfo databaseInfo = this.getById(databaseInfoRequest.getDbId());
         if (databaseInfo == null) {
-            throw new DatasourceContainerException(DATASOURCE_INFO_NOT_EXISTED, databaseInfoRequest.getDbId());
+            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.DATASOURCE_INFO_NOT_EXISTED, databaseInfoRequest.getDbId());
         }
         return databaseInfo;
     }

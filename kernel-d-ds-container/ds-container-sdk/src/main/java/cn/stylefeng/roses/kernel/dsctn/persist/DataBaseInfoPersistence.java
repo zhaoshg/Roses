@@ -29,6 +29,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.db.api.pojo.druid.DruidProperties;
 import cn.stylefeng.roses.kernel.dsctn.api.exception.DatasourceContainerException;
+import cn.stylefeng.roses.kernel.dsctn.api.exception.enums.DatasourceContainerExceptionEnum;
 import cn.stylefeng.roses.kernel.dsctn.persist.sqladapter.AddDatabaseInfoSql;
 import cn.stylefeng.roses.kernel.dsctn.persist.sqladapter.DatabaseListSql;
 import cn.stylefeng.roses.kernel.dsctn.persist.sqladapter.DeleteDatabaseInfoSql;
@@ -41,7 +42,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static cn.stylefeng.roses.kernel.dsctn.api.constants.DatasourceContainerConstants.MASTER_DATASOURCE_NAME;
-import static cn.stylefeng.roses.kernel.dsctn.api.exception.enums.DatasourceContainerExceptionEnum.*;
 
 
 /**
@@ -86,8 +86,8 @@ public class DataBaseInfoPersistence {
 
         } catch (Exception exception) {
             log.error("查询数据源信息错误！", exception);
-            String userTip = StrUtil.format(QUERY_DBS_DAO_ERROR.getUserTip(), exception.getMessage());
-            throw new DatasourceContainerException(QUERY_DBS_DAO_ERROR, userTip);
+            String userTip = StrUtil.format(DatasourceContainerExceptionEnum.QUERY_DBS_DAO_ERROR.getUserTip(), exception.getMessage());
+            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.QUERY_DBS_DAO_ERROR, userTip);
         } finally {
             IoUtil.close(conn);
         }
@@ -122,8 +122,8 @@ public class DataBaseInfoPersistence {
             log.info("初始化master的databaseInfo信息！初始化" + i + "条！");
         } catch (Exception exception) {
             log.error("初始化master的databaseInfo信息错误！", exception);
-            String userTip = StrUtil.format(INSERT_DBS_DAO_ERROR.getUserTip(), exception.getMessage());
-            throw new DatasourceContainerException(INSERT_DBS_DAO_ERROR, userTip);
+            String userTip = StrUtil.format(DatasourceContainerExceptionEnum.INSERT_DBS_DAO_ERROR.getUserTip(), exception.getMessage());
+            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.INSERT_DBS_DAO_ERROR, userTip);
         } finally {
             IoUtil.close(conn);
         }
@@ -148,8 +148,8 @@ public class DataBaseInfoPersistence {
             log.info("删除master的databaseInfo信息！删除" + i + "条！");
         } catch (Exception exception) {
             log.info("删除master的databaseInfo信息失败！", exception);
-            String userTip = StrUtil.format(DELETE_DBS_DAO_ERROR.getUserTip(), exception.getMessage());
-            throw new DatasourceContainerException(DELETE_DBS_DAO_ERROR, userTip);
+            String userTip = StrUtil.format(DatasourceContainerExceptionEnum.DELETE_DBS_DAO_ERROR.getUserTip(), exception.getMessage());
+            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.DELETE_DBS_DAO_ERROR, userTip);
         } finally {
             IoUtil.close(conn);
         }
@@ -175,8 +175,8 @@ public class DataBaseInfoPersistence {
             druidProperties.setPassword(resultSet.getString("password"));
         } catch (SQLException exception) {
             log.info("根据数据库查询结果，创建DruidProperties失败！", exception);
-            String userTip = StrUtil.format(CREATE_PROP_DAO_ERROR.getUserTip(), exception.getMessage());
-            throw new DatasourceContainerException(CREATE_PROP_DAO_ERROR, userTip);
+            String userTip = StrUtil.format(DatasourceContainerExceptionEnum.CREATE_PROP_DAO_ERROR.getUserTip(), exception.getMessage());
+            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.CREATE_PROP_DAO_ERROR, userTip);
         }
 
         return druidProperties;

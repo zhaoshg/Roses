@@ -27,6 +27,7 @@ package cn.stylefeng.roses.kernel.db.mp.fieldfill;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
+import cn.stylefeng.roses.kernel.db.api.constants.DbFieldConstants;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
@@ -37,7 +38,6 @@ import org.apache.ibatis.reflection.ReflectionException;
 import java.lang.reflect.Field;
 import java.util.Date;
 
-import static cn.stylefeng.roses.kernel.db.api.constants.DbFieldConstants.*;
 
 /**
  * 字段自动填充工具，在mybatis-plus执行更新和新增操作时候，会对指定字段进行自动填充，例如 create_time 等字段
@@ -53,10 +53,10 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
 
         try {
             // 设置createUser（BaseEntity)
-            setValue(metaObject, CREATE_USER, this.getUserUniqueId());
+            setValue(metaObject, DbFieldConstants.CREATE_USER, this.getUserUniqueId());
 
             // 设置createTime（BaseEntity)
-            setValue(metaObject, CREATE_TIME, new Date());
+            setValue(metaObject, DbFieldConstants.CREATE_TIME, new Date());
 
             // 设置删除标记 默认N-删除
             setDelFlagDefaultValue(metaObject);
@@ -65,10 +65,10 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
             setStatusDefaultValue(metaObject);
 
             // 设置乐观锁字段，从0开始
-            setValue(metaObject, VERSION_FLAG, 0L);
+            setValue(metaObject, DbFieldConstants.VERSION_FLAG, 0L);
 
             // 设置组织id
-            setValue(metaObject, ORG_ID, this.getUserOrgId());
+            setValue(metaObject, DbFieldConstants.ORG_ID, this.getUserOrgId());
 
         } catch (ReflectionException e) {
             log.warn("CustomMetaObjectHandler处理过程中无相关字段，不做处理");
@@ -81,10 +81,10 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
 
         try {
             // 设置updateUser（BaseEntity)
-            setValue(metaObject, UPDATE_USER, this.getUserUniqueId());
+            setValue(metaObject, DbFieldConstants.UPDATE_USER, this.getUserUniqueId());
 
             // 设置updateTime（BaseEntity)
-            setValue(metaObject, UPDATE_TIME, new Date());
+            setValue(metaObject, DbFieldConstants.UPDATE_TIME, new Date());
         } catch (ReflectionException e) {
             log.warn("CustomMetaObjectHandler处理过程中无相关字段，不做处理");
         }
@@ -145,18 +145,18 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
      * @since 2022/9/7 17:23
      */
     private void setDelFlagDefaultValue(MetaObject metaObject) {
-        Object originalAttr = getFieldValByName(DEL_FLAG, metaObject);
+        Object originalAttr = getFieldValByName(DbFieldConstants.DEL_FLAG, metaObject);
         if (ObjectUtil.isNotEmpty(originalAttr)) {
             return;
         }
         Object originalObject = metaObject.getOriginalObject();
         try {
             // 获取delFlag字段的类型，如果是枚举类型，则设置枚举
-            Field declaredField = originalObject.getClass().getDeclaredField(DEL_FLAG);
+            Field declaredField = originalObject.getClass().getDeclaredField(DbFieldConstants.DEL_FLAG);
             if (ClassUtil.isEnum(declaredField.getType())) {
-                setFieldValByName(DEL_FLAG, YesOrNotEnum.N, metaObject);
+                setFieldValByName(DbFieldConstants.DEL_FLAG, YesOrNotEnum.N, metaObject);
             } else {
-                setFieldValByName(DEL_FLAG, YesOrNotEnum.N.getCode(), metaObject);
+                setFieldValByName(DbFieldConstants.DEL_FLAG, YesOrNotEnum.N.getCode(), metaObject);
             }
         } catch (NoSuchFieldException ignored) {
             // 没有字段，忽略
@@ -170,18 +170,18 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
      * @since 2022/9/7 17:23
      */
     private void setStatusDefaultValue(MetaObject metaObject) {
-        Object originalAttr = getFieldValByName(STATUS_FLAG, metaObject);
+        Object originalAttr = getFieldValByName(DbFieldConstants.STATUS_FLAG, metaObject);
         if (ObjectUtil.isNotEmpty(originalAttr)) {
             return;
         }
         Object originalObject = metaObject.getOriginalObject();
         try {
             // 获取statusFlag字段的类型，如果是枚举类型，则设置枚举
-            Field declaredField = originalObject.getClass().getDeclaredField(STATUS_FLAG);
+            Field declaredField = originalObject.getClass().getDeclaredField(DbFieldConstants.STATUS_FLAG);
             if (ClassUtil.isEnum(declaredField.getType())) {
-                setFieldValByName(STATUS_FLAG, StatusEnum.ENABLE, metaObject);
+                setFieldValByName(DbFieldConstants.STATUS_FLAG, StatusEnum.ENABLE, metaObject);
             } else {
-                setFieldValByName(STATUS_FLAG, StatusEnum.ENABLE.getCode(), metaObject);
+                setFieldValByName(DbFieldConstants.STATUS_FLAG, StatusEnum.ENABLE.getCode(), metaObject);
             }
         } catch (NoSuchFieldException ignored) {
             // 没有字段，忽略
