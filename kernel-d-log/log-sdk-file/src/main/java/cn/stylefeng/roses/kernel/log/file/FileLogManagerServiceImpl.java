@@ -32,6 +32,7 @@ import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.log.api.LogManagerApi;
 import cn.stylefeng.roses.kernel.log.api.exception.LogException;
+import cn.stylefeng.roses.kernel.log.api.exception.enums.LogExceptionEnum;
 import cn.stylefeng.roses.kernel.log.api.pojo.manage.LogManagerRequest;
 import cn.stylefeng.roses.kernel.log.api.pojo.record.LogRecordDTO;
 import com.alibaba.fastjson.JSON;
@@ -49,7 +50,6 @@ import static cn.stylefeng.roses.kernel.log.api.constants.LogConstants.DEFAULT_B
 import static cn.stylefeng.roses.kernel.log.api.constants.LogConstants.DEFAULT_PAGE_SIZE;
 import static cn.stylefeng.roses.kernel.log.api.constants.LogFileConstants.FILE_CONTRACT_SYMBOL;
 import static cn.stylefeng.roses.kernel.log.api.constants.LogFileConstants.FILE_SUFFIX;
-import static cn.stylefeng.roses.kernel.log.api.exception.enums.LogExceptionEnum.*;
 
 /**
  * 文件日志读取管理实现类
@@ -84,12 +84,12 @@ public class FileLogManagerServiceImpl implements LogManagerApi {
 
         // 文件日志，必须有AppName,否则文件太多太大
         if (ObjectUtil.isEmpty(logManagerParam.getAppName())) {
-            throw new LogException(APP_NAME_NOT_EXIST);
+            throw new LogException(LogExceptionEnum.APP_NAME_NOT_EXIST);
         }
 
         // 文件日志，必须有开始时间,否则文件太多太大
         if (ObjectUtil.isEmpty(logManagerParam.getBeginDate())) {
-            throw new LogException(BEGIN_DATETIME_NOT_EXIST);
+            throw new LogException(LogExceptionEnum.BEGIN_DATETIME_NOT_EXIST);
         }
 
         // 获取文件路径
@@ -127,17 +127,17 @@ public class FileLogManagerServiceImpl implements LogManagerApi {
 
         // 删除操作,必须有appName
         if (ObjectUtil.isEmpty(logManagerParam.getAppName())) {
-            throw new LogException(APP_NAME_NOT_EXIST);
+            throw new LogException(LogExceptionEnum.APP_NAME_NOT_EXIST);
         }
 
         // 删除操作,必须有appName
         if (ObjectUtil.isEmpty(logManagerParam.getBeginDate())) {
-            throw new LogException(BEGIN_DATETIME_NOT_EXIST);
+            throw new LogException(LogExceptionEnum.BEGIN_DATETIME_NOT_EXIST);
         }
 
         // 文件日志，必须有结束时间,否则文件太多太大
         if (ObjectUtil.isEmpty(logManagerParam.getEndDate())) {
-            throw new LogException(END_DATETIME_NOT_EXIST);
+            throw new LogException(LogExceptionEnum.END_DATETIME_NOT_EXIST);
         }
 
         // 计算开始和结束两个时间之间的所有日期
@@ -161,12 +161,12 @@ public class FileLogManagerServiceImpl implements LogManagerApi {
 
         // 文件日志，必须有AppName,否则文件太多太大
         if (ObjectUtil.isEmpty(logManagerRequest.getAppName())) {
-            throw new LogException(APP_NAME_NOT_EXIST);
+            throw new LogException(LogExceptionEnum.APP_NAME_NOT_EXIST);
         }
 
         // 文件日志，必须有开始时间,否则文件太多太大
         if (ObjectUtil.isEmpty(logManagerRequest.getBeginDate())) {
-            throw new LogException(BEGIN_DATETIME_NOT_EXIST);
+            throw new LogException(LogExceptionEnum.BEGIN_DATETIME_NOT_EXIST);
         }
 
         // 获取文件路径

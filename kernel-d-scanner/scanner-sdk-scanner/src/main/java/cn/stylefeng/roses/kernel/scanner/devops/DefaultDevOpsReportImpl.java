@@ -10,6 +10,7 @@ import cn.stylefeng.roses.kernel.jwt.JwtTokenOperator;
 import cn.stylefeng.roses.kernel.jwt.api.pojo.config.JwtConfig;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.DevOpsReportApi;
+import cn.stylefeng.roses.kernel.scanner.api.constants.ScannerConstants;
 import cn.stylefeng.roses.kernel.scanner.api.exception.ScannerException;
 import cn.stylefeng.roses.kernel.scanner.api.exception.enums.DevOpsExceptionEnum;
 import cn.stylefeng.roses.kernel.scanner.api.pojo.devops.DevOpsReportProperties;
@@ -20,7 +21,6 @@ import com.alibaba.fastjson.JSON;
 import java.util.HashMap;
 import java.util.List;
 
-import static cn.stylefeng.roses.kernel.scanner.api.constants.ScannerConstants.*;
 
 /**
  * 运维平台资源汇报过程
@@ -40,14 +40,14 @@ public class DefaultDevOpsReportImpl implements DevOpsReportApi {
         }
 
         // 组装请求DevOps平台的地址
-        String devopsReportUrl = serverHost + DEVOPS_REQUEST_PATH;
+        String devopsReportUrl = serverHost + ScannerConstants.DEVOPS_REQUEST_PATH;
 
         // jwt token生成
         String projectInteractionSecretKey = devOpsReportProperties.getProjectInteractionSecretKey();
         Long tokenValidityPeriodSeconds = devOpsReportProperties.getTokenValidityPeriodSeconds();
         JwtConfig jwtConfig = new JwtConfig();
         jwtConfig.setJwtSecret(projectInteractionSecretKey);
-        jwtConfig.setExpiredSeconds(ObjectUtil.isNotEmpty(tokenValidityPeriodSeconds) ? tokenValidityPeriodSeconds : DEVOPS_REPORT_TIMEOUT_SECONDS);
+        jwtConfig.setExpiredSeconds(ObjectUtil.isNotEmpty(tokenValidityPeriodSeconds) ? tokenValidityPeriodSeconds : ScannerConstants.DEVOPS_REPORT_TIMEOUT_SECONDS);
         JwtTokenOperator jwtTokenOperator = new JwtTokenOperator(jwtConfig);
         String jwtToken = jwtTokenOperator.generateToken(new HashMap<>());
 
@@ -58,7 +58,7 @@ public class DefaultDevOpsReportImpl implements DevOpsReportApi {
         // 进行post请求，汇报资源
         HttpRequest httpRequest = HttpUtil.createPost(devopsReportUrl);
         httpRequest.body(JSON.toJSONString(devOpsReportResourceParam));
-        httpRequest.setConnectionTimeout(Convert.toInt(DEVOPS_REPORT_CONNECTION_TIMEOUT_SECONDS * 1000));
+        httpRequest.setConnectionTimeout(Convert.toInt(ScannerConstants.DEVOPS_REPORT_CONNECTION_TIMEOUT_SECONDS * 1000));
         ResponseData<?> responseData = null;
         HttpResponse execute = httpRequest.execute();
         String body = execute.body();

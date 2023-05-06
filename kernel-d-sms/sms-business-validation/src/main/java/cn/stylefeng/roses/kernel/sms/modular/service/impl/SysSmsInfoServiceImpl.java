@@ -24,7 +24,6 @@
  */
 package cn.stylefeng.roses.kernel.sms.modular.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
@@ -35,6 +34,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.security.api.ImageCaptchaApi;
 import cn.stylefeng.roses.kernel.sms.api.SmsSenderApi;
 import cn.stylefeng.roses.kernel.sms.api.exception.SmsException;
+import cn.stylefeng.roses.kernel.sms.api.exception.enums.SmsExceptionEnum;
 import cn.stylefeng.roses.kernel.sms.api.expander.SmsConfigExpander;
 import cn.stylefeng.roses.kernel.sms.modular.entity.SysSms;
 import cn.stylefeng.roses.kernel.sms.modular.enums.SmsSendStatusEnum;
@@ -60,7 +60,6 @@ import java.util.List;
 import java.util.Map;
 
 import static cn.stylefeng.roses.kernel.sms.api.constants.SmsConstants.SMS_CODE_PARAM_NAME;
-import static cn.stylefeng.roses.kernel.sms.api.exception.enums.SmsExceptionEnum.*;
 
 /**
  * 系统短信接口实现类
@@ -177,7 +176,7 @@ public class SysSmsInfoServiceImpl extends ServiceImpl<SysSmsMapper, SysSms> imp
 
         // 如果找不到记录，提示验证失败
         if (ObjectUtil.isEmpty(sysSmsList)) {
-            throw new SmsException(SMS_VALIDATE_ERROR_NOT_EXISTED_RECORD);
+            throw new SmsException(SmsExceptionEnum.SMS_VALIDATE_ERROR_NOT_EXISTED_RECORD);
         }
 
         // 获取最近发送的第一条
@@ -185,18 +184,18 @@ public class SysSmsInfoServiceImpl extends ServiceImpl<SysSmsMapper, SysSms> imp
 
         // 先判断状态是不是失效的状态
         if (SmsSendStatusEnum.INVALID.getCode().equals(sysSms.getStatusFlag())) {
-            throw new SmsException(SMS_VALIDATE_ERROR_INVALIDATE_STATUS);
+            throw new SmsException(SmsExceptionEnum.SMS_VALIDATE_ERROR_INVALIDATE_STATUS);
         }
 
         // 如果验证码和传过来的不一致
         if (!sysSmsVerifyParam.getCode().equals(sysSms.getValidateCode())) {
-            throw new SmsException(SMS_VALIDATE_ERROR_INVALIDATE_CODE);
+            throw new SmsException(SmsExceptionEnum.SMS_VALIDATE_ERROR_INVALIDATE_CODE);
         }
 
         // 判断是否超时
         Date invalidTime = sysSms.getInvalidTime();
         if (ObjectUtil.isEmpty(invalidTime) || new Date().after(invalidTime)) {
-            throw new SmsException(SMS_VALIDATE_ERROR_INVALIDATE_TIME);
+            throw new SmsException(SmsExceptionEnum.SMS_VALIDATE_ERROR_INVALIDATE_TIME);
         }
 
         // 验证成功把短信设置成失效
