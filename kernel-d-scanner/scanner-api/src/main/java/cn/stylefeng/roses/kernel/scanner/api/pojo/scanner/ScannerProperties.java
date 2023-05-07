@@ -46,8 +46,10 @@ public class ScannerProperties {
      * 如果配置了本包名，则ClassTypeUtil扫描到的本包名中的实体，就会扫描到实体的所有字段
      * <p>
      * 非配置包名，则扫描到是pojo类型也不会识别里边的字段
+     * <p>
+     * 这里默认是扫描cn.stylefeng包下
      */
-    private String entityScanPackage;
+    private String entityScanPackage = "cn.stylefeng";
 
     /**
      * 扫描到的资源的url是否要带appCode属性，此值默认为false
