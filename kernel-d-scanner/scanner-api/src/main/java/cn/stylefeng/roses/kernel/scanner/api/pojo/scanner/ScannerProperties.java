@@ -41,6 +41,15 @@ public class ScannerProperties {
     private Boolean open;
 
     /**
+     * 实体扫描包配置，如果是多个可以用逗号隔开
+     * <p>
+     * 如果配置了本包名，则ClassTypeUtil扫描到的本包名中的实体，就会扫描到实体的所有字段
+     * <p>
+     * 非配置包名，则扫描到是pojo类型也不会识别里边的字段
+     */
+    private String entityScanPackage;
+
+    /**
      * 扫描到的资源的url是否要带appCode属性，此值默认为false
      * <p>
      * 也就是资源的url上不会带appCode属性，一般在微服务的系统中需要把此值设为true
