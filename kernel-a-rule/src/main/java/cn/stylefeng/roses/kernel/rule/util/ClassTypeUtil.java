@@ -1,6 +1,5 @@
 package cn.stylefeng.roses.kernel.rule.util;
 
-import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.stylefeng.roses.kernel.rule.enums.FieldTypeEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +9,6 @@ import sun.reflect.generics.reflectiveObjects.WildcardTypeImpl;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,26 +19,6 @@ import java.util.Map;
  */
 @Slf4j
 public class ClassTypeUtil {
-
-    /**
-     * 认定为实体对象的包结构，如果属于此包结构，则会被认定为实体结构
-     */
-    public static List<String> entityScanPackage = ListUtil.list(false, "cn.stylefeng");
-
-    /**
-     * 判断类类型是否是扫描的包范围之内
-     *
-     * @author fengshuonan
-     * @since 2022/1/13 17:49
-     */
-    public static boolean ensureEntityFlag(Class<?> clazz) {
-        for (String packageName : entityScanPackage) {
-            if (clazz.getName().startsWith(packageName)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * 获取类类型的类别
@@ -76,11 +54,6 @@ public class ClassTypeUtil {
                 return FieldTypeEnum.BASE_COLLECTION;
             }
 
-            // 如果是实体对象类型
-            else if (ClassTypeUtil.ensureEntityFlag(clazz)) {
-                return FieldTypeEnum.OBJECT;
-            }
-
             // 如果是Object类型，则认定为基本类型，不解析他的具体内容
             else if (Object.class.equals(clazz)) {
                 return FieldTypeEnum.BASIC;
@@ -107,11 +80,6 @@ public class ClassTypeUtil {
                 // 如果泛型主体是集合
                 if (Collection.class.isAssignableFrom(rawTypeClass)) {
                     return FieldTypeEnum.COLLECTION_WITH_OBJECT;
-                }
-
-                // 如果泛型的主体是实体包装类
-                else if (ClassTypeUtil.ensureEntityFlag(rawTypeClass)) {
-                    return FieldTypeEnum.OBJECT_WITH_GENERIC;
                 }
 
                 // 如果是map类型，则认定为基本类型，不做处理，不解析他的元数据
