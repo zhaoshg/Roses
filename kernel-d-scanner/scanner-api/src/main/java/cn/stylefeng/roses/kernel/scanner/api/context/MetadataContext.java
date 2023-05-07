@@ -2,8 +2,8 @@ package cn.stylefeng.roses.kernel.scanner.api.context;
 
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.rule.enums.FieldTypeEnum;
-import cn.stylefeng.roses.kernel.rule.util.ClassTypeUtil;
 import cn.stylefeng.roses.kernel.scanner.api.enums.ParamTypeEnum;
+import cn.stylefeng.roses.kernel.scanner.api.util.AdvancedClassTypeUtil;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -75,7 +75,7 @@ public class MetadataContext {
         Set<String> classRecords = META_DATA_CLASS_COUNT_CONTEXT.get(uuid);
         if (classRecords != null) {
             // 获取字段类型，如果是数组，collection带实体的，需要获取真实的实体类型
-            FieldTypeEnum classFieldType = ClassTypeUtil.getClassFieldType(genericType);
+            FieldTypeEnum classFieldType = AdvancedClassTypeUtil.getClassFieldType(genericType);
 
             // 如果是对象类型，直接判断
             if (classFieldType.equals(FieldTypeEnum.OBJECT)) {

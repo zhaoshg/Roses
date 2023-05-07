@@ -1,10 +1,10 @@
 package cn.stylefeng.roses.kernel.scanner.api.factory;
 
 import cn.stylefeng.roses.kernel.rule.enums.FieldTypeEnum;
-import cn.stylefeng.roses.kernel.rule.util.ClassTypeUtil;
 import cn.stylefeng.roses.kernel.scanner.api.constants.ScannerConstants;
 import cn.stylefeng.roses.kernel.scanner.api.context.MetadataContext;
 import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.FieldMetadata;
+import cn.stylefeng.roses.kernel.scanner.api.util.AdvancedClassTypeUtil;
 import cn.stylefeng.roses.kernel.scanner.api.util.ClassDescriptionUtil;
 import cn.stylefeng.roses.kernel.scanner.api.util.FieldDescriptionUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class ClassDetailMetadataFactory {
     public static Set<FieldMetadata> createFieldDetailMetadataSet(Type fieldType, String uuid) {
 
         // 获取参数的类型枚举
-        FieldTypeEnum classFieldType = ClassTypeUtil.getClassFieldType(fieldType);
+        FieldTypeEnum classFieldType = AdvancedClassTypeUtil.getClassFieldType(fieldType);
 
         // 设置响应结果
         Set<FieldMetadata> fieldMetadata = null;
@@ -158,7 +158,7 @@ public class ClassDetailMetadataFactory {
 
                 // 如果是T这种形式，应该将当前fieldMetadata的类型改为泛型的类型，例如参数genericType是List时候
                 if (FieldTypeEnum.WITH_UNKNOWN_GENERIC.getCode().equals(fieldMetadata.getFieldType())) {
-                    FieldTypeEnum classFieldType = ClassTypeUtil.getClassFieldType(genericType);
+                    FieldTypeEnum classFieldType = AdvancedClassTypeUtil.getClassFieldType(genericType);
                     fieldMetadata.setFieldType(classFieldType.getCode());
                 }
             }
