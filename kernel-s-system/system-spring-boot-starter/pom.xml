@@ -24,45 +24,17 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!--菜单管理的业务-->
+        <!--组织机构人力的业务-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-menu</artifactId>
+            <artifactId>system-business-hr</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--组织机构管理的业务-->
+        <!--门户业务-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-organization</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--资源管理的业务-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-resource</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--角色管理的业务-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-role</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--主题管理业务-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-theme</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--用户管理的业务-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-user</artifactId>
+            <artifactId>system-business-portal</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
@@ -78,20 +50,6 @@
             <artifactId>cache-sdk-redis</artifactId>
             <version>${roses.version}</version>
             <optional>true</optional>
-        </dependency>
-
-        <!--通知管理的业务-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-portal</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--首页统计的业务-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-home</artifactId>
-            <version>${roses.version}</version>
         </dependency>
 
         <!--expand字段拓展业务-->

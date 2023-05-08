@@ -1,7 +1,6 @@
 package cn.stylefeng.roses.kernel.system.modular.home.service;
 
 import cn.stylefeng.roses.kernel.log.api.pojo.record.LogRecordDTO;
-import cn.stylefeng.roses.kernel.system.api.pojo.home.HomeCompanyInfo;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.request.OnlineUserRequest;
 import cn.stylefeng.roses.kernel.system.modular.home.pojo.OnlineUserStat;
 import cn.stylefeng.roses.kernel.system.modular.menu.entity.SysMenu;
@@ -31,14 +30,6 @@ public interface HomePageService {
      * @since 2022/2/11 20:40
      */
     OnlineUserStat getOnlineUserList(OnlineUserRequest onlineUserRequest);
-
-    /**
-     * 获取首页公司部门人员信息统计
-     *
-     * @author fengshuonan
-     * @since 2022/2/11 21:03
-     */
-    HomeCompanyInfo getHomeCompanyInfo();
 
     /**
      * 获取常用功能集合

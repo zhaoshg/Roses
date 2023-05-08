@@ -6,7 +6,6 @@ import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
-import cn.stylefeng.roses.kernel.system.api.pojo.home.HomeCompanyInfo;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.request.OnlineUserRequest;
 import cn.stylefeng.roses.kernel.system.modular.home.pojo.OnlineUserStat;
 import cn.stylefeng.roses.kernel.system.modular.home.service.HomePageService;
@@ -49,17 +48,6 @@ public class HomePageController {
     @GetResource(name = "查询在线用户列表", path = "/homePage/getOnlineUserList", requiredPermission = false)
     public ResponseData<OnlineUserStat> getOnlineUserList(OnlineUserRequest onlineUserRequest) {
         return new SuccessResponseData<>(homePageService.getOnlineUserList(onlineUserRequest));
-    }
-
-    /**
-     * 获取首页企业和公司信息
-     *
-     * @author xixiaowei
-     * @since 2022/2/9 10:12
-     */
-    @GetResource(name = "获取首页企业和公司信息", path = "/homePage/getHomeCompanyInfo", requiredPermission = false)
-    public ResponseData<HomeCompanyInfo> getHomeCompanyInfo() {
-        return new SuccessResponseData<>(homePageService.getHomeCompanyInfo());
     }
 
     /**

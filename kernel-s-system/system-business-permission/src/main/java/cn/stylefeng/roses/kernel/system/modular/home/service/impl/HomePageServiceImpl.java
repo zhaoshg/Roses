@@ -1,6 +1,5 @@
 package cn.stylefeng.roses.kernel.system.modular.home.service.impl;
 
-import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
@@ -14,10 +13,8 @@ import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.system.api.HomePageServiceApi;
 import cn.stylefeng.roses.kernel.system.api.PositionServiceApi;
 import cn.stylefeng.roses.kernel.system.api.UserServiceApi;
-import cn.stylefeng.roses.kernel.system.api.pojo.home.HomeCompanyInfo;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.OnlineUserDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.request.OnlineUserRequest;
-import cn.stylefeng.roses.kernel.system.api.pojo.user.request.SysUserRequest;
 import cn.stylefeng.roses.kernel.system.modular.home.entity.SysStatisticsCount;
 import cn.stylefeng.roses.kernel.system.modular.home.entity.SysStatisticsUrl;
 import cn.stylefeng.roses.kernel.system.modular.home.mapper.SysStatisticsUrlMapper;
@@ -27,10 +24,6 @@ import cn.stylefeng.roses.kernel.system.modular.home.service.SysStatisticsCountS
 import cn.stylefeng.roses.kernel.system.modular.home.service.SysStatisticsUrlService;
 import cn.stylefeng.roses.kernel.system.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.system.modular.menu.mapper.SysMenuMapper;
-import cn.stylefeng.roses.kernel.system.modular.organization.entity.HrOrganization;
-import cn.stylefeng.roses.kernel.system.modular.organization.service.HrOrganizationService;
-import cn.stylefeng.roses.kernel.system.modular.user.entity.SysUserOrg;
-import cn.stylefeng.roses.kernel.system.modular.user.service.SysUserOrgService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -39,9 +32,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static cn.stylefeng.roses.kernel.rule.constants.SymbolConstant.LEFT_SQUARE_BRACKETS;
-import static cn.stylefeng.roses.kernel.rule.constants.SymbolConstant.RIGHT_SQUARE_BRACKETS;
 
 /**
  * 首页服务实现类
@@ -59,13 +49,7 @@ public class HomePageServiceImpl implements HomePageService, HomePageServiceApi 
     private UserServiceApi userServiceApi;
 
     @Resource
-    private HrOrganizationService hrOrganizationService;
-
-    @Resource
     private PositionServiceApi positionServiceApi;
-
-    @Resource
-    private SysUserOrgService sysUserOrgService;
 
     @Resource(name = "requestCountCacheApi")
     private CacheOperatorApi<Map<Long, Integer>> requestCountCacheApi;
@@ -115,44 +99,6 @@ public class HomePageServiceImpl implements HomePageService, HomePageServiceApi 
         onlineUserStat.setTotalUserNames(newSet);
 
         return onlineUserStat;
-    }
-
-    @Override
-    public HomeCompanyInfo getHomeCompanyInfo() {
-        HomeCompanyInfo homeCompanyInfo = new HomeCompanyInfo();
-
-        // 获取组织机构总数量
-        long count = hrOrganizationService.count();
-        homeCompanyInfo.setOrganizationNum(Convert.toInt(count));
-
-        // 获取企业人员总数量
-        SysUserRequest sysUserRequest = new SysUserRequest();
-        List<Long> allUserIdList = userServiceApi.queryAllUserIdList(sysUserRequest);
-        homeCompanyInfo.setEnterprisePersonNum(allUserIdList.size());
-
-        // 获取所有职位总数
-        int positionNum = positionServiceApi.positionNum();
-        homeCompanyInfo.setPositionNum(positionNum);
-
-        // 获取当前登录人的组织机构id
-        LoginUser loginUser = LoginContext.me().getLoginUser();
-        Long organizationId = loginUser.getOrganizationId();
-
-        // 获取当前公司的所有子公司数量(含当前公司)
-        LambdaQueryWrapper<HrOrganization> wrapper = Wrappers.lambdaQuery(HrOrganization.class)
-                .like(HrOrganization::getOrgPids, LEFT_SQUARE_BRACKETS + organizationId + RIGHT_SQUARE_BRACKETS)
-                .or()
-                .eq(HrOrganization::getOrgId, organizationId)
-                .select(HrOrganization::getOrgId);
-        List<HrOrganization> organizations = hrOrganizationService.list(wrapper);
-        homeCompanyInfo.setCurrentDeptNum(organizations.size());
-
-        // 设置当前所属机构和所有子机构的人数
-        List<Long> orgIds = organizations.stream().map(HrOrganization::getOrgId).collect(Collectors.toList());
-        Long currentOrgPersonNum = sysUserOrgService.count(Wrappers.lambdaQuery(SysUserOrg.class).in(SysUserOrg::getOrgId, orgIds));
-        homeCompanyInfo.setCurrentCompanyPersonNum(Convert.toInt(currentOrgPersonNum));
-
-        return homeCompanyInfo;
     }
 
     @Override

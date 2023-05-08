@@ -102,27 +102,6 @@
             <optional>true</optional>
         </dependency>
 
-        <!--用户业务-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-user</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--菜单业务-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-menu</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--组织业务-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-organization</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
         <!-- 拦截接口，记录常用功能 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -134,13 +113,6 @@
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>i18n-api</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--资源模块-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-resource</artifactId>
             <version>${roses.version}</version>
         </dependency>
 

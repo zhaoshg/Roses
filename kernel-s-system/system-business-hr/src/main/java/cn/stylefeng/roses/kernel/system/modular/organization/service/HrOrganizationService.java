@@ -28,6 +28,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.rule.tree.ztree.ZTreeNode;
 import cn.stylefeng.roses.kernel.system.api.OrganizationServiceApi;
+import cn.stylefeng.roses.kernel.system.api.pojo.home.HomeCompanyInfo;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationRequest;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.OrganizationTreeNode;
@@ -157,5 +158,13 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
      * @since 2023/4/14 21:50
      */
     List<HrOrganizationDTO> getSubOrgList(HrOrganizationRequest request);
+
+    /**
+     * 获取首页公司部门人员信息统计
+     *
+     * @author fengshuonan
+     * @since 2022/2/11 21:03
+     */
+    HomeCompanyInfo getHomeCompanyInfo();
 
 }

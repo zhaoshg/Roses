@@ -35,6 +35,7 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.system.api.enums.OrgTypeEnum;
+import cn.stylefeng.roses.kernel.system.api.pojo.home.HomeCompanyInfo;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationRequest;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.OrganizationTreeNode;
@@ -277,6 +278,17 @@ public class HrOrganizationController {
     @GetResource(name = "获取指定组织机构下所有的子组织机构信息", path = "/hrOrganization/getSubOrgList")
     public ResponseData<List<HrOrganizationDTO>> getSubOrgList(HrOrganizationRequest request) {
         return new SuccessResponseData<>(hrOrganizationService.getSubOrgList(request));
+    }
+
+    /**
+     * 获取首页企业和公司信息
+     *
+     * @author xixiaowei
+     * @since 2022/2/9 10:12
+     */
+    @GetResource(name = "获取首页企业和公司信息", path = "/homePage/getHomeCompanyInfo", requiredPermission = false)
+    public ResponseData<HomeCompanyInfo> getHomeCompanyInfo() {
+        return new SuccessResponseData<>(hrOrganizationService.getHomeCompanyInfo());
     }
 
 }

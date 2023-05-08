@@ -34,6 +34,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.enums.DataScopeTypeEnum;
+import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.context.DbOperatorContext;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
@@ -47,24 +48,26 @@ import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import cn.stylefeng.roses.kernel.rule.tree.ztree.ZTreeNode;
-import cn.stylefeng.roses.kernel.system.api.RoleDataScopeServiceApi;
-import cn.stylefeng.roses.kernel.system.api.RoleServiceApi;
-import cn.stylefeng.roses.kernel.system.api.UserOrgServiceApi;
-import cn.stylefeng.roses.kernel.system.api.UserServiceApi;
+import cn.stylefeng.roses.kernel.system.api.*;
 import cn.stylefeng.roses.kernel.system.api.enums.DetectModeEnum;
 import cn.stylefeng.roses.kernel.system.api.enums.OrgTypeEnum;
 import cn.stylefeng.roses.kernel.system.api.exception.SystemModularException;
 import cn.stylefeng.roses.kernel.system.api.exception.enums.organization.OrganizationExceptionEnum;
+import cn.stylefeng.roses.kernel.system.api.pojo.home.HomeCompanyInfo;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationRequest;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.OrganizationTreeNode;
+import cn.stylefeng.roses.kernel.system.api.pojo.user.request.SysUserRequest;
 import cn.stylefeng.roses.kernel.system.api.util.DataScopeUtil;
 import cn.stylefeng.roses.kernel.system.modular.organization.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.system.modular.organization.factory.OrganizationFactory;
 import cn.stylefeng.roses.kernel.system.modular.organization.mapper.HrOrganizationMapper;
 import cn.stylefeng.roses.kernel.system.modular.organization.service.HrOrganizationService;
+import cn.stylefeng.roses.kernel.system.modular.user.entity.SysUserOrg;
+import cn.stylefeng.roses.kernel.system.modular.user.service.SysUserOrgService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -74,6 +77,9 @@ import javax.annotation.Resource;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static cn.stylefeng.roses.kernel.rule.constants.SymbolConstant.LEFT_SQUARE_BRACKETS;
+import static cn.stylefeng.roses.kernel.rule.constants.SymbolConstant.RIGHT_SQUARE_BRACKETS;
 
 /**
  * 组织架构管理
@@ -101,6 +107,12 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
     @Resource
     private DbOperatorApi dbOperatorApi;
+
+    @Resource
+    private PositionServiceApi positionServiceApi;
+
+    @Resource
+    private SysUserOrgService sysUserOrgService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -521,6 +533,44 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 如果当前节点是部门，则继续向上查询部门的公司信息
         return getOrgCompanyInfo(orgDetail.getOrgParentId());
+    }
+
+    @Override
+    public HomeCompanyInfo getHomeCompanyInfo() {
+        HomeCompanyInfo homeCompanyInfo = new HomeCompanyInfo();
+
+        // 获取组织机构总数量
+        long count = this.count();
+        homeCompanyInfo.setOrganizationNum(Convert.toInt(count));
+
+        // 获取企业人员总数量
+        SysUserRequest sysUserRequest = new SysUserRequest();
+        List<Long> allUserIdList = userServiceApi.queryAllUserIdList(sysUserRequest);
+        homeCompanyInfo.setEnterprisePersonNum(allUserIdList.size());
+
+        // 获取所有职位总数
+        int positionNum = positionServiceApi.positionNum();
+        homeCompanyInfo.setPositionNum(positionNum);
+
+        // 获取当前登录人的组织机构id
+        LoginUser loginUser = LoginContext.me().getLoginUser();
+        Long organizationId = loginUser.getOrganizationId();
+
+        // 获取当前公司的所有子公司数量(含当前公司)
+        LambdaQueryWrapper<HrOrganization> wrapper = Wrappers.lambdaQuery(HrOrganization.class)
+                .like(HrOrganization::getOrgPids, LEFT_SQUARE_BRACKETS + organizationId + RIGHT_SQUARE_BRACKETS)
+                .or()
+                .eq(HrOrganization::getOrgId, organizationId)
+                .select(HrOrganization::getOrgId);
+        List<HrOrganization> organizations = this.list(wrapper);
+        homeCompanyInfo.setCurrentDeptNum(organizations.size());
+
+        // 设置当前所属机构和所有子机构的人数
+        List<Long> orgIds = organizations.stream().map(HrOrganization::getOrgId).collect(Collectors.toList());
+        Long currentOrgPersonNum = sysUserOrgService.count(Wrappers.lambdaQuery(SysUserOrg.class).in(SysUserOrg::getOrgId, orgIds));
+        homeCompanyInfo.setCurrentCompanyPersonNum(Convert.toInt(currentOrgPersonNum));
+
+        return homeCompanyInfo;
     }
 
     /**
