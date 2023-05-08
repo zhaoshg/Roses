@@ -17,24 +17,26 @@
 
     <dependencies>
 
-        <!-- 通用注解 -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-annotation</artifactId>
-            <version>${mp.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-        </dependency>
-
-        <!-- spring boot -->
+        <!-- spring boot基础依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-        <!-- hutool -->
+        <!-- my的实体注解依赖，实体会放在api层 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
+            <version>${mp.version}</version>
+        </dependency>
+
+        <!-- jackson注解，枚举上加的 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+
+        <!-- hutool工具 -->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
@@ -46,7 +48,7 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <!--json解析-->
+        <!-- json解析 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -59,9 +61,6 @@
             <artifactId>javax.servlet-api</artifactId>
             <optional>true</optional>
         </dependency>
-
-        <!--spring-web-->
-        <!--HttpServletContext获取http请求上下文会用到-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
