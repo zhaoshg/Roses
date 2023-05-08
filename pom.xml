@@ -106,9 +106,6 @@
         <!--系统管理基础业务-->
         <module>kernel-s-system</module>
 
-        <!-- 分布式事务seata -->
-        <module>kernel-d-seata</module>
-
         <!-- Socket模块 -->
         <module>kernel-d-socket</module>
 
@@ -149,7 +146,6 @@
         <easy.excel.version>3.2.1</easy.excel.version>
         <pinyin4j.version>2.5.0</pinyin4j.version>
         <openfeign.version>2.2.6.RELEASE</openfeign.version>
-        <seata.all.version>1.3.0</seata.all.version>
         <bcprov.version>1.68</bcprov.version>
         <springdoc.version>1.6.12</springdoc.version>
     </properties>
