@@ -17,17 +17,10 @@
 
     <modules>
         <module>system-api</module>
-        <module>system-business-app</module>
-        <module>system-business-organization</module>
-        <module>system-business-resource</module>
-        <module>system-business-user</module>
-        <module>system-business-role</module>
-        <module>system-business-menu</module>
-        <module>system-business-notice</module>
-        <module>system-integration-rest</module>
+        <module>system-business-hr</module>
+        <module>system-business-permission</module>
+        <module>system-business-portal</module>
         <module>system-spring-boot-starter</module>
-        <module>system-business-theme</module>
-        <module>system-business-home</module>
     </modules>
 
     <dependencies>

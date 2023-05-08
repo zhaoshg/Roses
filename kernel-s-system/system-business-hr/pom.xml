@@ -11,62 +11,86 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>system-spring-boot-starter</artifactId>
+    <artifactId>system-business-hr</artifactId>
 
     <packaging>jar</packaging>
 
     <dependencies>
 
-        <!--应用权限管理模块-->
+        <!--包装器模块-->
+        <!--包装结果-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-permission</artifactId>
+            <artifactId>wrapper-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--菜单管理的业务-->
+        <!--系统管理的api-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-menu</artifactId>
+            <artifactId>system-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--组织机构管理的业务-->
+        <!--资源api模块-->
+        <!--用在资源控制器，资源扫描上-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-organization</artifactId>
+            <artifactId>scanner-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--资源管理的业务-->
+        <!--参数校验模块-->
+        <!--用在控制器，参数校验-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-resource</artifactId>
+            <artifactId>validator-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--角色管理的业务-->
+        <!--数据库sdk-->
+        <!--数据库dao框架-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-role</artifactId>
+            <artifactId>db-sdk-mp</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--主题管理业务-->
+        <!--web模块-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--demo的api-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-theme</artifactId>
+            <artifactId>demo-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--用户管理的业务-->
+        <!--office模块api-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-user</artifactId>
+            <artifactId>office-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--缓存配置-->
+        <!--文件操作的api-->
+        <!--用在用户头像等文件的操作-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>file-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
+        <!--缓存api-->
+        <!--用户的查询会使用缓存-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>cache-sdk-memory</artifactId>
@@ -80,24 +104,32 @@
             <optional>true</optional>
         </dependency>
 
-        <!--通知管理的业务-->
+        <!--数据库sdk-->
+        <!--数据库dao框架-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-portal</artifactId>
+            <artifactId>db-sdk-mp</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--首页统计的业务-->
+        <!--登录sdk-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-home</artifactId>
+            <artifactId>auth-sdk</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--expand字段拓展业务-->
+        <!--web模块-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--office模块-->
+        <!--用户有导出功能-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>expand-spring-boot-starter</artifactId>
+            <artifactId>office-spring-boot-starter</artifactId>
             <version>${roses.version}</version>
         </dependency>
 

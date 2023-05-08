@@ -11,62 +11,85 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>system-spring-boot-starter</artifactId>
+    <artifactId>system-business-portal</artifactId>
 
     <packaging>jar</packaging>
 
     <dependencies>
 
-        <!--应用权限管理模块-->
+        <!--系统管理api模块-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-permission</artifactId>
+            <artifactId>system-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--菜单管理的业务-->
+        <!--通知api模块-->
+        <!--用在通知控制器，通知扫描上-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-menu</artifactId>
+            <artifactId>scanner-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--组织机构管理的业务-->
+        <!--包装器模块-->
+        <!--包装结果-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-organization</artifactId>
+            <artifactId>wrapper-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--资源管理的业务-->
+        <!--参数校验模块-->
+        <!--用在控制器，参数校验-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-resource</artifactId>
+            <artifactId>validator-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--角色管理的业务-->
+        <!--数据库sdk-->
+        <!--数据库dao框架-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-role</artifactId>
+            <artifactId>db-sdk-mp</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--主题管理业务-->
+        <!--web模块-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--消息模块-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-theme</artifactId>
+            <artifactId>message-spring-boot-starter</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--用户管理的业务-->
+        <!--字典模块-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-user</artifactId>
+            <artifactId>dict-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
-        <!--缓存配置-->
+        <!--文件管理-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>file-business</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
+        <!--缓存api-->
+        <!--默认主题查询到会缓存-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>cache-sdk-memory</artifactId>
@@ -78,27 +101,6 @@
             <artifactId>cache-sdk-redis</artifactId>
             <version>${roses.version}</version>
             <optional>true</optional>
-        </dependency>
-
-        <!--通知管理的业务-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-portal</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--首页统计的业务-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-home</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--expand字段拓展业务-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>expand-spring-boot-starter</artifactId>
-            <version>${roses.version}</version>
         </dependency>
 
     </dependencies>

@@ -3,7 +3,8 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   cn.stylefeng.roses.kernel.system.starter.cache.GunsSystemRedisCacheAutoConfiguration,\
   cn.stylefeng.roses.kernel.system.starter.cache.GunsResourceMemoryCacheAutoConfiguration,\
   cn.stylefeng.roses.kernel.system.starter.cache.GunsResourceRedisCacheAutoConfiguration,\
-  cn.stylefeng.roses.kernel.system.starter.GunsSystemHomeStatisticsAutoConfiguration
+  cn.stylefeng.roses.kernel.system.starter.GunsSystemHomeStatisticsAutoConfiguration,\
+  cn.stylefeng.roses.kernel.system.starter.config.RestErrorViewAutoConfiguration
 org.springframework.context.ApplicationListener=\
   cn.stylefeng.roses.kernel.system.modular.menu.listener.MenuResourceUpdateListener,\
   cn.stylefeng.roses.kernel.system.modular.role.listener.RoleResourceUpdateListener
