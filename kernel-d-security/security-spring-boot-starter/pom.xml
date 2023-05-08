@@ -66,7 +66,7 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!--CORS过滤器，默认不开启-->
+        <!--CORS过滤器，默认开启允许跨域-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>security-sdk-cors</artifactId>
