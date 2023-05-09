@@ -54,13 +54,6 @@
 
         <!--将常用的模块集成在system中，主项目中保持简洁-->
 
-        <!--expand字段拓展业务-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>expand-spring-boot-starter</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
         <!--认证和鉴权模块-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>

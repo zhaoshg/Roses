@@ -42,8 +42,6 @@ import cn.stylefeng.roses.kernel.system.api.pojo.user.request.SysUserRequest;
 import cn.stylefeng.roses.kernel.system.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.system.modular.user.service.SysUserRoleService;
 import cn.stylefeng.roses.kernel.system.modular.user.service.SysUserService;
-import cn.stylefeng.roses.kernel.system.modular.user.wrapper.UserExpandWrapper;
-import cn.stylefeng.roses.kernel.wrapper.api.annotation.Wrapper;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -205,7 +203,6 @@ public class SysUserController {
      * @since 2020/11/6 13:49
      */
     @GetResource(name = "系统用户_查询", path = "/sysUser/page")
-    @Wrapper(UserExpandWrapper.class)
     public ResponseData<PageResult<SysUserDTO>> page(SysUserRequest sysUserRequest) {
         return new SuccessResponseData<>(sysUserService.findPage(sysUserRequest));
     }
