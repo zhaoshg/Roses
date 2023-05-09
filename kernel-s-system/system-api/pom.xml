@@ -27,27 +27,7 @@
         <!--参数校验模块的api-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>validator-api</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
             <artifactId>validator-api-table-unique</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--config模块的api-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>config-api</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--资源扫描器的api-->
-        <!--ResourceServiceApi需要用scanner-api的ResourceDefinition相关类-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>scanner-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
@@ -73,23 +53,6 @@
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>ds-container-api</artifactId>
             <version>${roses.version}</version>
-        </dependency>
-
-        <!--web-->
-        <!--ResourcePersistenceApi会用到web，用在提供feign接口时-->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
         </dependency>
 
     </dependencies>
