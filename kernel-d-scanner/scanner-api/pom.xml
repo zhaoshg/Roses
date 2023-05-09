@@ -25,7 +25,7 @@
         </dependency>
 
         <!--web-->
-        <!--ResourcePersistenceApi会用到web，用在提供feign接口时-->
+        <!--ResourceReportApi会用到web，用在提供feign接口时-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
