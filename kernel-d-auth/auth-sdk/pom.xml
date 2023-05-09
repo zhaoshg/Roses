@@ -17,6 +17,13 @@
 
     <dependencies>
 
+        <!--auth本模块的api-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>auth-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!-- 多数据源操作的api -->
         <!-- 获取当前登录用户之前需要切数据源 -->
         <dependency>
@@ -29,13 +36,6 @@
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>demo-api</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--auth本模块的api-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>auth-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
@@ -55,14 +55,6 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!--资源模块的api-->
-        <!--权限校验等功能，需要用到资源模块的接口-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>scanner-api</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
         <!--安全模块的api-->
         <!--需要用到校验验证码的接口-->
         <dependency>
@@ -79,23 +71,20 @@
             <version>${roses.version}</version>
         </dependency>
 
+        <!--系统消息业务模块的api-->
+        <!--获取当前登录用户的ws-url-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>message-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!--jwt模块的api-->
         <!--token用的jwt token-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>jwt-sdk</artifactId>
             <version>${roses.version}</version>
-        </dependency>
-
-        <!--web模块-->
-        <!--web获取token的操作需要从http header中取-->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
         </dependency>
 
         <!--缓存的依赖-->
@@ -116,14 +105,6 @@
             <artifactId>cache-sdk-redis</artifactId>
             <version>${roses.version}</version>
             <optional>true</optional>
-        </dependency>
-
-        <!--系统消息业务模块的api-->
-        <!--获取当前登录用户的ws-url-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>message-api</artifactId>
-            <version>${roses.version}</version>
         </dependency>
 
     </dependencies>
