@@ -96,13 +96,6 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!--pinyin工具类-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>pinyin-spring-boot-starter</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
         <!--字典业务-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
@@ -128,13 +121,6 @@
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>timer-spring-boot-starter</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--消息通知-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>message-spring-boot-starter</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
