@@ -18,7 +18,6 @@
     <modules>
         <module>db-api</module>
         <module>db-sdk-flyway</module>
-        <module>db-sdk-init</module>
         <module>db-sdk-mp</module>
         <module>db-spring-boot-starter</module>
     </modules>

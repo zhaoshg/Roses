@@ -81,14 +81,6 @@
         </dependency>
 
         <!--数据库sdk-->
-        <!--数据库初始化-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>db-sdk-init</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--数据库sdk-->
         <!--数据库dao框架-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>

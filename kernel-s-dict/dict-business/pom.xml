@@ -44,15 +44,7 @@
         <!--用在控制器，参数校验-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>validator-api</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--数据库sdk-->
-        <!--数据库初始化-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>db-sdk-init</artifactId>
+            <artifactId>validator-api-table-unique</artifactId>
             <version>${roses.version}</version>
         </dependency>
 

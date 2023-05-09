@@ -24,13 +24,6 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!--数据库初始化模块-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>db-sdk-init</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
         <!--flyway数据同步-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
