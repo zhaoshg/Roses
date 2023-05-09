@@ -6,30 +6,28 @@
 
     <parent>
         <groupId>cn.stylefeng.roses</groupId>
-        <artifactId>roses-kernel</artifactId>
+        <artifactId>kernel-d-config</artifactId>
         <version>7.6.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>kernel-d-config</artifactId>
+    <artifactId>config-spring-boot-starter-redis</artifactId>
 
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>config-api</module>
-        <module>config-sdk-map</module>
-        <module>config-sdk-redis</module>
-        <module>config-business</module>
-        <module>config-spring-boot-starter-memory</module>
-        <module>config-spring-boot-starter-redis</module>
-    </modules>
+    <packaging>jar</packaging>
 
     <dependencies>
 
-        <!-- 开发规则 -->
+        <!--config包含的业务模块-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>kernel-a-rule</artifactId>
+            <artifactId>config-business</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
+        <!--基于Redis的缓存实现-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>config-sdk-redis</artifactId>
             <version>${roses.version}</version>
         </dependency>
 

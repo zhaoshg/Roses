@@ -11,7 +11,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>config-spring-boot-starter</artifactId>
+    <artifactId>config-spring-boot-starter-memory</artifactId>
 
     <packaging>jar</packaging>
 
@@ -21,6 +21,13 @@
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>config-business</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
+        <!--基于内存的配置存储实现-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>config-sdk-map</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
