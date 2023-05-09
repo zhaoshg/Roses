@@ -17,28 +17,6 @@
 
     <dependencies>
 
-        <!--文件api-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>file-api</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--系统配置表的redis的sdk-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>config-sdk-redis</artifactId>
-            <version>${roses.version}</version>
-            <optional>true</optional>
-        </dependency>
-
-        <!--默认系统配置表的sdk-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>config-sdk-map</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
         <!--资源api模块-->
         <!--用在资源控制器，资源扫描上-->
         <dependency>
@@ -53,6 +31,21 @@
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>validator-api</artifactId>
             <version>${roses.version}</version>
+        </dependency>
+
+        <!--系统配置表的缓存，使用redis还是map，Redis用在将系统部署在分布式环境-->
+        <!--默认使用Map，如果分布式环境，则在项目依赖中切换-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>config-sdk-map</artifactId>
+            <version>${roses.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>config-sdk-redis</artifactId>
+            <version>${roses.version}</version>
+            <optional>true</optional>
         </dependency>
 
         <!--数据库sdk-->

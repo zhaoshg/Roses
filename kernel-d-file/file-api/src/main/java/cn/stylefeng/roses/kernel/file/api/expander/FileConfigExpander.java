@@ -28,6 +28,7 @@ import cn.hutool.core.util.RandomUtil;
 import cn.stylefeng.roses.kernel.config.api.context.ConfigContext;
 import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
 import cn.stylefeng.roses.kernel.file.api.pojo.props.LocalFileProperties;
+import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
 
 /**
  * 文件相关的配置获取
@@ -56,7 +57,7 @@ public class FileConfigExpander {
      * @since 2020/11/29 16:13
      */
     public static String getServerDeployHost() {
-        return ConfigContext.me().getSysConfigValueWithDefault("SYS_SERVER_DEPLOY_HOST", String.class, FileConstants.DEFAULT_SERVER_DEPLOY_HOST);
+        return ConfigContext.me().getSysConfigValueWithDefault("SYS_SERVER_DEPLOY_HOST", String.class, RuleConstants.DEFAULT_SERVER_DEPLOY_HOST);
     }
 
     /**

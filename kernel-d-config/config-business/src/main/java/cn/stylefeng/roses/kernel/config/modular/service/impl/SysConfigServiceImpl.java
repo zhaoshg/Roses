@@ -46,7 +46,6 @@ import cn.stylefeng.roses.kernel.config.modular.service.SysConfigService;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
 import cn.stylefeng.roses.kernel.rule.callback.ConfigUpdateCallback;
 import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
@@ -267,7 +266,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         if (sysConfig != null) {
             return sysConfig.getConfigValue();
         } else {
-            return FileConstants.DEFAULT_SERVER_DEPLOY_HOST;
+            return RuleConstants.DEFAULT_SERVER_DEPLOY_HOST;
         }
     }
 

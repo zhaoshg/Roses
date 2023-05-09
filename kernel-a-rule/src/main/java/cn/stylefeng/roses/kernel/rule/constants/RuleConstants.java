@@ -102,4 +102,9 @@ public interface RuleConstants {
      */
     int DEFAULT_BATCH_INSERT_SIZE = 100;
 
+    /**
+     * 服务默认部署的环境地址，不要改这个常量，改系统配置表中的配置 SYS_SERVER_DEPLOY_HOST
+     */
+    String DEFAULT_SERVER_DEPLOY_HOST = "http://localhost:8080";
+
 }

@@ -53,11 +53,6 @@ public interface FileConstants {
     String DEFAULT_BUCKET_NAME = "defaultBucket";
 
     /**
-     * 服务默认部署的环境地址，不要改这个常量，改系统配置表中的配置 SYS_SERVER_DEPLOY_HOST
-     */
-    String DEFAULT_SERVER_DEPLOY_HOST = "http://localhost:8080";
-
-    /**
      * 文件鉴权的时间，默认两小时
      */
     Long DEFAULT_FILE_TIMEOUT_SECONDS = 7200L;
