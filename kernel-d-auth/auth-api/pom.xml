@@ -25,13 +25,6 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!--解析需要转化时间-->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
         <!--config模块的api-->
         <!--权限相关的配置要放到容器里-->
         <dependency>
@@ -54,17 +47,21 @@
             <version>${roses.version}</version>
         </dependency>
 
+        <!--解析需要转化时间-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+
         <!--web-->
         <!--ResourcePersistenceApi会用到web，用在提供feign接口时-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <scope>provided</scope>
         </dependency>
 
     </dependencies>

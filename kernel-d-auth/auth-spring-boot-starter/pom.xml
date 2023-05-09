@@ -24,7 +24,29 @@
             <version>${roses.version}</version>
         </dependency>
 
+        <!--jwt的sdk-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>jwt-sdk</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
+        <!--系统配置-自动装配-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>config-spring-boot-starter</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
+        <!--参数校验-自动装配-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>validator-spring-boot-starter</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!--缓存配置-->
+        <!--在项目中进行配置是开启内存还是Redis缓存-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>cache-sdk-memory</artifactId>
@@ -36,13 +58,6 @@
             <artifactId>cache-sdk-redis</artifactId>
             <version>${roses.version}</version>
             <optional>true</optional>
-        </dependency>
-
-        <!--jwt的sdk-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>jwt-sdk</artifactId>
-            <version>${roses.version}</version>
         </dependency>
 
         <!--properties自动提示装载-->
