@@ -37,11 +37,6 @@
             <artifactId>log-sdk-db</artifactId>
             <version>${roses.version}</version>
         </dependency>
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>log-sdk-file</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
 
         <!--登录日志的业务-->
         <dependency>
