@@ -19,8 +19,8 @@
         <module>cache-api</module>
         <module>cache-sdk-memory</module>
         <module>cache-sdk-redis</module>
-        <module>memory-cache-spring-boot-starter</module>
-        <module>redis-spring-boot-starter</module>
+        <module>cache-spring-boot-starter-memory</module>
+        <module>cache-spring-boot-starter-redis</module>
     </modules>
 
     <dependencies>

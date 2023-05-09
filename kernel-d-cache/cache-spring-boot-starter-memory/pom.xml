@@ -11,16 +11,16 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>redis-spring-boot-starter</artifactId>
+    <artifactId>cache-spring-boot-starter-memory</artifactId>
 
     <packaging>jar</packaging>
 
     <dependencies>
 
-        <!--redis的sdk-->
+        <!--内存缓存的sdk-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>cache-sdk-redis</artifactId>
+            <artifactId>cache-sdk-memory</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
