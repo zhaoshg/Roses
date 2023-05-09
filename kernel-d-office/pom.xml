@@ -18,7 +18,6 @@
     <modules>
         <module>office-api</module>
         <module>office-sdk-excel</module>
-        <module>office-spring-boot-starter</module>
     </modules>
 
     <dependencies>
