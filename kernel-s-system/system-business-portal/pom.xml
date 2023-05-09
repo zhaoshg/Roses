@@ -24,14 +24,6 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!--通知api模块-->
-        <!--用在通知控制器，通知扫描上-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>scanner-api</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
         <!--包装器模块-->
         <!--包装结果-->
         <dependency>
@@ -40,39 +32,17 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!--参数校验模块-->
-        <!--用在控制器，参数校验-->
+        <!--字典模块-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>validator-api</artifactId>
+            <artifactId>dict-api</artifactId>
             <version>${roses.version}</version>
-        </dependency>
-
-        <!--数据库sdk-->
-        <!--数据库dao框架-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>db-sdk-mp</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--web模块-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <!--消息模块-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>message-spring-boot-starter</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--字典模块-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>dict-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
@@ -101,6 +71,20 @@
             <artifactId>cache-sdk-redis</artifactId>
             <version>${roses.version}</version>
             <optional>true</optional>
+        </dependency>
+
+        <!--数据库sdk-->
+        <!--数据库dao框架-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>db-sdk-mp</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
+        <!--web模块-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
     </dependencies>

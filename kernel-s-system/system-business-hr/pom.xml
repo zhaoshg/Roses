@@ -17,14 +17,6 @@
 
     <dependencies>
 
-        <!--包装器模块-->
-        <!--包装结果-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>wrapper-api</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
         <!--系统管理的api-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
@@ -32,34 +24,12 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!--资源api模块-->
-        <!--用在资源控制器，资源扫描上-->
+        <!--包装器模块-->
+        <!--包装结果-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>scanner-api</artifactId>
+            <artifactId>wrapper-api</artifactId>
             <version>${roses.version}</version>
-        </dependency>
-
-        <!--参数校验模块-->
-        <!--用在控制器，参数校验-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>validator-api</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--数据库sdk-->
-        <!--数据库dao框架-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>db-sdk-mp</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--web模块-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <!--demo的api-->
@@ -74,6 +44,13 @@
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>file-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
+        <!--登录sdk-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>auth-sdk</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
@@ -102,13 +79,6 @@
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>db-sdk-mp</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--登录sdk-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>auth-sdk</artifactId>
             <version>${roses.version}</version>
         </dependency>
 

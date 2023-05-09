@@ -17,17 +17,17 @@
 
     <dependencies>
 
-        <!--应用权限管理模块-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-business-permission</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
         <!--组织机构人力的业务-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>system-business-hr</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
+        <!--应用权限管理模块-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>system-business-permission</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
