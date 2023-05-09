@@ -29,7 +29,7 @@ import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginRequest;
 import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginResponse;
 import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginWithTokenRequest;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
-import cn.stylefeng.roses.kernel.jwt.api.pojo.payload.DefaultJwtPayload;
+import cn.stylefeng.roses.kernel.auth.api.pojo.payload.DefaultJwtPayload;
 
 /**
  * 认证服务的接口，包括基本的登录退出操作和校验token等操作

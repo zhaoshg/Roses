@@ -1,8 +1,8 @@
 package cn.stylefeng.roses.kernel.socket.business.websocket.server;
 
 import cn.hutool.core.util.ObjectUtil;
-import cn.stylefeng.roses.kernel.jwt.api.context.JwtContext;
-import cn.stylefeng.roses.kernel.jwt.api.pojo.payload.DefaultJwtPayload;
+import cn.stylefeng.roses.kernel.auth.api.context.AuthJwtContext;
+import cn.stylefeng.roses.kernel.auth.api.pojo.payload.DefaultJwtPayload;
 import cn.stylefeng.roses.kernel.socket.api.enums.ClientMessageTypeEnum;
 import cn.stylefeng.roses.kernel.socket.api.enums.ServerMessageTypeEnum;
 import cn.stylefeng.roses.kernel.socket.api.enums.SystemMessageTypeEnum;
@@ -46,7 +46,7 @@ public class WebSocketServer {
         String userId = null;
         try {
             // 解析用户信息
-            DefaultJwtPayload defaultPayload = JwtContext.me().getDefaultPayload(token);
+            DefaultJwtPayload defaultPayload = AuthJwtContext.me().getDefaultPayload(token);
             userId = defaultPayload.getUserId().toString();
         } catch (io.jsonwebtoken.JwtException e) {
             try {

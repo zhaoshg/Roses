@@ -40,6 +40,7 @@ import cn.stylefeng.roses.kernel.auth.api.SsoServerApi;
 import cn.stylefeng.roses.kernel.auth.api.TempSecretApi;
 import cn.stylefeng.roses.kernel.auth.api.constants.AuthConstants;
 import cn.stylefeng.roses.kernel.auth.api.constants.LoginCacheConstants;
+import cn.stylefeng.roses.kernel.auth.api.context.AuthJwtContext;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.enums.SsoClientTypeEnum;
 import cn.stylefeng.roses.kernel.auth.api.exception.AuthException;
@@ -51,6 +52,7 @@ import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginRequest;
 import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginResponse;
 import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginWithTokenRequest;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
+import cn.stylefeng.roses.kernel.auth.api.pojo.payload.DefaultJwtPayload;
 import cn.stylefeng.roses.kernel.auth.api.pojo.sso.SsoLoginCodeRequest;
 import cn.stylefeng.roses.kernel.auth.api.pojo.sso.SsoProperties;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
@@ -58,11 +60,10 @@ import cn.stylefeng.roses.kernel.demo.expander.DemoConfigExpander;
 import cn.stylefeng.roses.kernel.dsctn.api.constants.DatasourceContainerConstants;
 import cn.stylefeng.roses.kernel.dsctn.api.context.CurrentDataSourceContext;
 import cn.stylefeng.roses.kernel.jwt.JwtTokenOperator;
-import cn.stylefeng.roses.kernel.jwt.api.context.JwtContext;
+import cn.stylefeng.roses.kernel.jwt.api.JwtApi;
 import cn.stylefeng.roses.kernel.jwt.api.exception.JwtException;
 import cn.stylefeng.roses.kernel.jwt.api.exception.enums.JwtExceptionEnum;
 import cn.stylefeng.roses.kernel.jwt.api.pojo.config.JwtConfig;
-import cn.stylefeng.roses.kernel.jwt.api.pojo.payload.DefaultJwtPayload;
 import cn.stylefeng.roses.kernel.log.api.LoginLogServiceApi;
 import cn.stylefeng.roses.kernel.message.api.expander.WebSocketConfigExpander;
 import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
@@ -129,6 +130,9 @@ public class AuthServiceImpl implements AuthServiceApi {
 
     @Resource(name = "caClientTokenCacheApi")
     private CacheOperatorApi<String> caClientTokenCacheApi;
+
+    @Resource
+    private JwtApi jwtApi;
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
@@ -225,10 +229,10 @@ public class AuthServiceImpl implements AuthServiceApi {
     public DefaultJwtPayload validateToken(String token) throws AuthException {
         try {
             // 1. 先校验jwt token本身是否有问题
-            JwtContext.me().validateTokenWithException(token);
+            jwtApi.validateTokenWithException(token);
 
             // 2. 获取jwt的payload
-            DefaultJwtPayload defaultPayload = JwtContext.me().getDefaultPayload(token);
+            DefaultJwtPayload defaultPayload = AuthJwtContext.me().getDefaultPayload(token);
 
             // 3. 如果是7天免登陆，则不校验session过期
             if (defaultPayload.getRememberMe()) {
@@ -412,7 +416,7 @@ public class AuthServiceImpl implements AuthServiceApi {
 
         // 9. 生成用户的token
         DefaultJwtPayload defaultJwtPayload = new DefaultJwtPayload(loginUser.getUserId(), loginUser.getAccount(), loginRequest.getRememberMe(), caToken, loginRequest.getTenantCode());
-        String jwtToken = JwtContext.me().generateTokenDefaultPayload(defaultJwtPayload);
+        String jwtToken = AuthJwtContext.me().generateTokenDefaultPayload(defaultJwtPayload);
         loginUser.setToken(jwtToken);
 
         // 如果包含租户编码，则放到loginUser中

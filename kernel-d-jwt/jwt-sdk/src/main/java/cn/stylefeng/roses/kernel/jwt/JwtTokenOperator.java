@@ -24,7 +24,6 @@
  */
 package cn.stylefeng.roses.kernel.jwt;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
@@ -32,7 +31,6 @@ import cn.stylefeng.roses.kernel.jwt.api.JwtApi;
 import cn.stylefeng.roses.kernel.jwt.api.exception.JwtException;
 import cn.stylefeng.roses.kernel.jwt.api.exception.enums.JwtExceptionEnum;
 import cn.stylefeng.roses.kernel.jwt.api.pojo.config.JwtConfig;
-import cn.stylefeng.roses.kernel.jwt.api.pojo.payload.DefaultJwtPayload;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -73,36 +71,11 @@ public class JwtTokenOperator implements JwtApi {
     }
 
     @Override
-    public String generateTokenDefaultPayload(DefaultJwtPayload defaultJwtPayload) {
-
-        // 计算过期时间
-        DateTime expirationDate = DateUtil.offsetSecond(new Date(), Convert.toInt(jwtConfig.getExpiredSeconds()));
-
-        // 设置过期时间
-        defaultJwtPayload.setExpirationDate(expirationDate.getTime());
-
-        // 构造jwt token
-        return Jwts.builder()
-                .setClaims(BeanUtil.beanToMap(defaultJwtPayload))
-                .setSubject(defaultJwtPayload.getUserId().toString())
-                .setIssuedAt(new Date())
-                .setExpiration(expirationDate)
-                .signWith(SignatureAlgorithm.HS512, jwtConfig.getJwtSecret())
-                .compact();
-    }
-
-    @Override
     public Claims getJwtPayloadClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(jwtConfig.getJwtSecret())
                 .parseClaimsJws(token)
                 .getBody();
-    }
-
-    @Override
-    public DefaultJwtPayload getDefaultPayload(String token) {
-        Map<String, Object> jwtPayload = getJwtPayloadClaims(token);
-        return BeanUtil.toBeanIgnoreError(jwtPayload, DefaultJwtPayload.class);
     }
 
     @Override

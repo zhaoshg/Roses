@@ -22,10 +22,10 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.jwt.api.context;
+package cn.stylefeng.roses.kernel.auth.api.context;
 
 import cn.hutool.extra.spring.SpringUtil;
-import cn.stylefeng.roses.kernel.jwt.api.JwtApi;
+import cn.stylefeng.roses.kernel.auth.api.AuthJwtTokenApi;
 
 /**
  * Jwt工具的context，获取容器中的jwt工具类
@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.jwt.api.JwtApi;
  * @author fengshuonan
  * @since 2020/10/21 14:07
  */
-public class JwtContext {
+public class AuthJwtContext {
 
     /**
      * 获取jwt操作接口
@@ -41,8 +41,8 @@ public class JwtContext {
      * @author fengshuonan
      * @since 2020/10/21 14:07
      */
-    public static JwtApi me() {
-        return SpringUtil.getBean(JwtApi.class);
+    public static AuthJwtTokenApi me() {
+        return SpringUtil.getBean(AuthJwtTokenApi.class);
     }
 
 }

@@ -18,7 +18,6 @@
     <modules>
         <module>jwt-api</module>
         <module>jwt-sdk</module>
-        <module>jwt-spring-boot-starter</module>
     </modules>
 
     <dependencies>

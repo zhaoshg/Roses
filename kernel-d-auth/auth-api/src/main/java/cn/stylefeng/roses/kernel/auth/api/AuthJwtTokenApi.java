@@ -22,42 +22,36 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.jwt.starter;
+package cn.stylefeng.roses.kernel.auth.api;
 
-import cn.stylefeng.roses.kernel.jwt.JwtTokenOperator;
-import cn.stylefeng.roses.kernel.jwt.api.JwtApi;
-import cn.stylefeng.roses.kernel.jwt.api.expander.JwtConfigExpander;
-import cn.stylefeng.roses.kernel.jwt.api.pojo.config.JwtConfig;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import cn.stylefeng.roses.kernel.auth.api.pojo.payload.DefaultJwtPayload;
 
 /**
- * jwt的自动配置
+ * Auth模块对jwt的使用的封装
  *
  * @author fengshuonan
- * @since 2020/12/1 14:34
+ * @since 2023/5/9 10:04
  */
-@Configuration
-public class GunsJwtAutoConfiguration {
+public interface AuthJwtTokenApi {
 
     /**
-     * jwt操作工具类的配置
+     * 生成token，用默认的payload格式
      *
+     * @param defaultJwtPayload jwt的载体信息
+     * @return jwt token
      * @author fengshuonan
-     * @since 2020/12/1 14:40
+     * @since 2020/10/21 11:38
      */
-    @Bean
-    @ConditionalOnMissingBean(JwtApi.class)
-    public JwtApi jwtApi() {
+    String generateTokenDefaultPayload(DefaultJwtPayload defaultJwtPayload);
 
-        JwtConfig jwtConfig = new JwtConfig();
-
-        // 从系统配置表中读取配置
-        jwtConfig.setJwtSecret(JwtConfigExpander.getJwtSecret());
-        jwtConfig.setExpiredSeconds(JwtConfigExpander.getJwtTimeoutSeconds());
-
-        return new JwtTokenOperator(jwtConfig);
-    }
+    /**
+     * 获取jwt的payload（限定默认格式）
+     *
+     * @param token jwt的token
+     * @return 返回默认格式的payload
+     * @author fengshuonan
+     * @since 2020/10/21 11:51
+     */
+    DefaultJwtPayload getDefaultPayload(String token);
 
 }

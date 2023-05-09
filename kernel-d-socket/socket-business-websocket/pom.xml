@@ -37,7 +37,7 @@
         <!--jwt模块的sdk-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>jwt-sdk</artifactId>
+            <artifactId>auth-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
     </dependencies>

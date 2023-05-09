@@ -25,7 +25,6 @@
 package cn.stylefeng.roses.kernel.jwt.api;
 
 import cn.stylefeng.roses.kernel.jwt.api.exception.JwtException;
-import cn.stylefeng.roses.kernel.jwt.api.pojo.payload.DefaultJwtPayload;
 
 import java.util.Map;
 
@@ -48,16 +47,6 @@ public interface JwtApi {
     String generateToken(Map<String, Object> payload);
 
     /**
-     * 生成token，用默认的payload格式
-     *
-     * @param defaultJwtPayload jwt的载体信息
-     * @return jwt token
-     * @author fengshuonan
-     * @since 2020/10/21 11:38
-     */
-    String generateTokenDefaultPayload(DefaultJwtPayload defaultJwtPayload);
-
-    /**
      * 获取jwt的payload（通用的）
      *
      * @param token jwt的token
@@ -66,16 +55,6 @@ public interface JwtApi {
      * @since 2020/10/21 11:52
      */
     Map<String, Object> getJwtPayloadClaims(String token);
-
-    /**
-     * 获取jwt的payload（限定默认格式）
-     *
-     * @param token jwt的token
-     * @return 返回默认格式的payload
-     * @author fengshuonan
-     * @since 2020/10/21 11:51
-     */
-    DefaultJwtPayload getDefaultPayload(String token);
 
     /**
      * 校验jwt token是否正确
