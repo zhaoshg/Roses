@@ -69,13 +69,6 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!--office模块api-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>office-api</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
         <!--文件操作的api-->
         <!--用在用户头像等文件的操作-->
         <dependency>
@@ -123,14 +116,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!--office模块-->
-        <!--用户有导出功能-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>office-spring-boot-starter</artifactId>
-            <version>${roses.version}</version>
         </dependency>
 
     </dependencies>

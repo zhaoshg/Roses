@@ -48,8 +48,6 @@ import cn.stylefeng.roses.kernel.expand.modular.api.ExpandApi;
 import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
 import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
 import cn.stylefeng.roses.kernel.message.api.expander.WebSocketConfigExpander;
-import cn.stylefeng.roses.kernel.office.api.OfficeExcelApi;
-import cn.stylefeng.roses.kernel.office.api.pojo.report.ExcelExportParam;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.enums.TreeNodeEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
@@ -85,13 +83,12 @@ import cn.stylefeng.roses.kernel.system.modular.user.service.SysUserDataScopeSer
 import cn.stylefeng.roses.kernel.system.modular.user.service.SysUserOrgService;
 import cn.stylefeng.roses.kernel.system.modular.user.service.SysUserRoleService;
 import cn.stylefeng.roses.kernel.system.modular.user.service.SysUserService;
-import com.alibaba.excel.support.ExcelTypeEnum;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -125,9 +122,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Resource
     private SysUserDataScopeService sysUserDataScopeService;
-
-    @Resource
-    private OfficeExcelApi officeExcelApi;
 
     @Resource
     private DataScopeApi dataScopeApi;
@@ -498,16 +492,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public void export(HttpServletResponse response) {
-        ExcelExportParam excelExportParam = new ExcelExportParam();
-        List<SysUser> sysUserList = this.list();
-
-        excelExportParam.setClazz(SysUser.class);
-        excelExportParam.setDataList(sysUserList);
-        excelExportParam.setExcelTypeEnum(ExcelTypeEnum.XLS);
-        excelExportParam.setFileName("系统用户导出");
-        excelExportParam.setResponse(response);
-
-        officeExcelApi.easyExportDownload(excelExportParam);
     }
 
     @Override
