@@ -148,6 +148,7 @@
         <openfeign.version>2.2.6.RELEASE</openfeign.version>
         <bcprov.version>1.68</bcprov.version>
         <springdoc.version>1.6.12</springdoc.version>
+        <flyway.version>7.1.1</flyway.version>
     </properties>
 
     <dependencyManagement>
