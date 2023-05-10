@@ -11,7 +11,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>security-sdk-cors</artifactId>
+    <artifactId>security-sdk-allow-cors</artifactId>
 
     <packaging>jar</packaging>
 

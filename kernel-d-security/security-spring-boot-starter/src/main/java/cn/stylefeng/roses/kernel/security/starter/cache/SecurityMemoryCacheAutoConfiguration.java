@@ -5,8 +5,6 @@ import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.TimedCache;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.cache.api.constants.CacheConstants;
-import cn.stylefeng.roses.kernel.security.blackwhite.cache.BlackListMemoryCache;
-import cn.stylefeng.roses.kernel.security.blackwhite.cache.WhiteListMemoryCache;
 import cn.stylefeng.roses.kernel.security.captcha.cache.CaptchaMemoryCache;
 import cn.stylefeng.roses.kernel.security.count.cache.CountValidateMemoryCache;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
@@ -34,30 +32,6 @@ public class SecurityMemoryCacheAutoConfiguration {
         // 验证码过期时间 120秒
         TimedCache<String, String> timedCache = CacheUtil.newTimedCache(1000 * 120);
         return new CaptchaMemoryCache(timedCache);
-    }
-
-    /**
-     * 黑名单的缓存
-     *
-     * @author fengshuonan
-     * @since 2022/11/8 21:24
-     */
-    @Bean("blackListCache")
-    public CacheOperatorApi<String> blackListMemoryCache() {
-        TimedCache<String, String> timedCache = CacheUtil.newTimedCache(CacheConstants.NONE_EXPIRED_TIME);
-        return new BlackListMemoryCache(timedCache);
-    }
-
-    /**
-     * 白名单的缓存
-     *
-     * @author fengshuonan
-     * @since 2022/11/8 21:24
-     */
-    @Bean("whiteListCache")
-    public CacheOperatorApi<String> whiteListMemoryCache() {
-        TimedCache<String, String> timedCache = CacheUtil.newTimedCache(CacheConstants.NONE_EXPIRED_TIME);
-        return new WhiteListMemoryCache(timedCache);
     }
 
     /**

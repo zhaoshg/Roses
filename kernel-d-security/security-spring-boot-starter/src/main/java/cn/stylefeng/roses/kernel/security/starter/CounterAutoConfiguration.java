@@ -25,11 +25,7 @@
 package cn.stylefeng.roses.kernel.security.starter;
 
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
-import cn.stylefeng.roses.kernel.security.api.BlackListApi;
 import cn.stylefeng.roses.kernel.security.api.CountValidatorApi;
-import cn.stylefeng.roses.kernel.security.api.WhiteListApi;
-import cn.stylefeng.roses.kernel.security.blackwhite.BlackListService;
-import cn.stylefeng.roses.kernel.security.blackwhite.WhiteListService;
 import cn.stylefeng.roses.kernel.security.count.DefaultCountValidator;
 import cn.stylefeng.roses.kernel.security.starter.cache.SecurityMemoryCacheAutoConfiguration;
 import cn.stylefeng.roses.kernel.security.starter.cache.SecurityRedisCacheAutoConfiguration;
@@ -50,36 +46,8 @@ import javax.annotation.Resource;
 @AutoConfigureAfter({SecurityMemoryCacheAutoConfiguration.class, SecurityRedisCacheAutoConfiguration.class})
 public class CounterAutoConfiguration {
 
-    @Resource(name = "blackListCache")
-    private CacheOperatorApi<String> blackListCache;
-
-    @Resource(name = "whiteListCache")
-    private CacheOperatorApi<String> whiteListCache;
-
     @Resource(name = "countValidateCache")
     private CacheOperatorApi<Long> countValidateCache;
-
-    /**
-     * 黑名单校验
-     *
-     * @author fengshuonan
-     * @since 2020/12/1 21:18
-     */
-    @Bean
-    public BlackListApi blackListApi() {
-        return new BlackListService(blackListCache);
-    }
-
-    /**
-     * 白名单校验
-     *
-     * @author fengshuonan
-     * @since 2020/12/1 21:18
-     */
-    @Bean
-    public WhiteListApi whiteListApi() {
-        return new WhiteListService(whiteListCache);
-    }
 
     /**
      * 计数校验器
