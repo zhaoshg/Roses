@@ -55,7 +55,7 @@ import java.util.Set;
  * @since 2020/11/30 22:16
  */
 @Configuration
-public class GunsAuthAutoConfiguration {
+public class AuthAutoConfiguration {
 
     @Resource
     private PwdRsaSecretProperties pwdRsaSecretProperties;

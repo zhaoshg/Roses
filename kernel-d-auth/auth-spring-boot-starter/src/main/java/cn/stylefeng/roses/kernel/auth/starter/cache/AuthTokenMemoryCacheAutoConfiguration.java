@@ -24,20 +24,23 @@
  */
 package cn.stylefeng.roses.kernel.auth.starter.cache;
 
+import cn.hutool.cache.CacheUtil;
+import cn.hutool.cache.impl.TimedCache;
+import cn.stylefeng.roses.kernel.auth.api.constants.LoginCacheConstants;
+import cn.stylefeng.roses.kernel.auth.api.expander.AuthConfigExpander;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
-import cn.stylefeng.roses.kernel.auth.cache.LoginErrorCountRedisCache;
-import cn.stylefeng.roses.kernel.auth.session.cache.catoken.RedisCaClientTokenCache;
-import cn.stylefeng.roses.kernel.auth.session.cache.logintoken.RedisLoginTokenCache;
-import cn.stylefeng.roses.kernel.auth.session.cache.loginuser.RedisLoginUserCache;
+import cn.stylefeng.roses.kernel.auth.cache.LoginErrorCountMemoryCache;
+import cn.stylefeng.roses.kernel.auth.session.cache.catoken.MemoryCaClientTokenCache;
+import cn.stylefeng.roses.kernel.auth.session.cache.logintoken.MemoryLoginTokenCache;
+import cn.stylefeng.roses.kernel.auth.session.cache.loginuser.MemoryLoginUserCache;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
-import cn.stylefeng.roses.kernel.cache.redis.util.CreateRedisTemplateUtil;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Set;
+
+import static cn.stylefeng.roses.kernel.cache.api.constants.CacheConstants.NONE_EXPIRED_TIME;
 
 
 /**
@@ -47,8 +50,8 @@ import java.util.Set;
  * @since 2020/11/30 22:16
  */
 @Configuration
-@ConditionalOnClass(name = "org.springframework.data.redis.connection.RedisConnectionFactory")
-public class GunsAuthTokenRedisCacheAutoConfiguration {
+@ConditionalOnMissingClass("org.springframework.data.redis.connection.RedisConnectionFactory")
+public class AuthTokenMemoryCacheAutoConfiguration {
 
     /**
      * 登录用户的缓存，默认使用内存方式
@@ -59,9 +62,10 @@ public class GunsAuthTokenRedisCacheAutoConfiguration {
      * @since 2021/1/31 21:04
      */
     @Bean
-    public CacheOperatorApi<LoginUser> loginUserCache(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<String, LoginUser> redisTemplate = CreateRedisTemplateUtil.createObject(redisConnectionFactory);
-        return new RedisLoginUserCache(redisTemplate);
+    public CacheOperatorApi<LoginUser> loginUserCache() {
+        Long sessionExpiredSeconds = AuthConfigExpander.getSessionExpiredSeconds();
+        TimedCache<String, LoginUser> loginUsers = CacheUtil.newTimedCache(1000L * sessionExpiredSeconds);
+        return new MemoryLoginUserCache(loginUsers);
     }
 
     /**
@@ -73,9 +77,9 @@ public class GunsAuthTokenRedisCacheAutoConfiguration {
      * @since 2021/1/31 21:04
      */
     @Bean
-    public CacheOperatorApi<Set<String>> allPlaceLoginTokenCache(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<String, Set<String>> redisTemplate = CreateRedisTemplateUtil.createObject(redisConnectionFactory);
-        return new RedisLoginTokenCache(redisTemplate);
+    public CacheOperatorApi<Set<String>> allPlaceLoginTokenCache() {
+        TimedCache<String, Set<String>> loginTokens = CacheUtil.newTimedCache(NONE_EXPIRED_TIME);
+        return new MemoryLoginTokenCache(loginTokens);
     }
 
     /**
@@ -85,9 +89,9 @@ public class GunsAuthTokenRedisCacheAutoConfiguration {
      * @since 2022/3/15 17:25
      */
     @Bean
-    public CacheOperatorApi<Integer> loginErrorCountCacheApi(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<String, Integer> redisTemplate = CreateRedisTemplateUtil.createObject(redisConnectionFactory);
-        return new LoginErrorCountRedisCache(redisTemplate);
+    public CacheOperatorApi<Integer> loginErrorCountCacheApi() {
+        TimedCache<String, Integer> loginTimeCache = CacheUtil.newTimedCache(LoginCacheConstants.LOGIN_CACHE_TIMEOUT_SECONDS * 1000);
+        return new LoginErrorCountMemoryCache(loginTimeCache);
     }
 
     /**
@@ -97,9 +101,9 @@ public class GunsAuthTokenRedisCacheAutoConfiguration {
      * @since 2022/5/20 11:52
      */
     @Bean
-    public CacheOperatorApi<String> caClientTokenCacheApi(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<String, String> redisTemplate = CreateRedisTemplateUtil.createString(redisConnectionFactory);
-        return new RedisCaClientTokenCache(redisTemplate);
+    public CacheOperatorApi<String> caClientTokenCacheApi() {
+        TimedCache<String, String> loginTimeCache = CacheUtil.newTimedCache(NONE_EXPIRED_TIME);
+        return new MemoryCaClientTokenCache(loginTimeCache);
     }
 
 }

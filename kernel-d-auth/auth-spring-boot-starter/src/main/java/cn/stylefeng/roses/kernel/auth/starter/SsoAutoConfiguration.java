@@ -24,31 +24,31 @@
  */
 package cn.stylefeng.roses.kernel.auth.starter;
 
-import cn.stylefeng.roses.kernel.auth.api.pojo.auth.PwdRsaSecretProperties;
+import cn.stylefeng.roses.kernel.auth.api.pojo.sso.SsoProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
 /**
- * 密码认证配置
+ * 单点配置
  *
  * @author fengshuonan
- * @since 2022/10/16 15:33
+ * @since 2021/5/25 22:29
  */
 @Configuration
-public class GunsPasswordRsaPropAutoConfiguration {
+public class SsoAutoConfiguration {
 
     /**
-     * 密码加密传输的配置，RSA加密密钥对
+     * 单点的开关配置
      *
      * @author fengshuonan
-     * @since 2022/10/16 15:34
+     * @since 2021/5/25 22:29
      */
     @Bean
-    @ConfigurationProperties(prefix = "guns.password.rsa")
-    public PwdRsaSecretProperties pwdRsaSecretProperties() {
-        return new PwdRsaSecretProperties();
+    @ConfigurationProperties(prefix = "sso")
+    public SsoProperties ssoProperties() {
+        return new SsoProperties();
     }
 
 }
