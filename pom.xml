@@ -70,6 +70,9 @@
         <!--sms模块-->
         <module>kernel-d-sms</module>
 
+        <!-- Socket模块 -->
+        <module>kernel-d-socket</module>
+
         <!--定时任务模块-->
         <module>kernel-d-timer</module>
 
@@ -97,11 +100,11 @@
         <!--系统消息模块-->
         <module>kernel-s-message</module>
 
+        <!--业务点击统计-->
+        <module>kernel-s-stat</module>
+
         <!--系统管理基础业务-->
         <module>kernel-s-system</module>
-
-        <!-- Socket模块 -->
-        <module>kernel-d-socket</module>
 
     </modules>
 
