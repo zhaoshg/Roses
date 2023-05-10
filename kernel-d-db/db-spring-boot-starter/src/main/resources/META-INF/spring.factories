@@ -1,6 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  cn.stylefeng.roses.kernel.db.starter.GunsDataSourceAutoConfiguration,\
-  cn.stylefeng.roses.kernel.db.starter.GunsDruidPropertiesAutoConfiguration,\
-  cn.stylefeng.roses.kernel.db.starter.GunsMyBatisPlusAutoConfiguration,\
-  cn.stylefeng.roses.kernel.db.starter.GunsDruidMonitorAutoConfiguration,\
-  cn.stylefeng.roses.kernel.db.starter.GunsRemoveDruidAdAutoConfiguration
+  cn.stylefeng.roses.kernel.db.starter.SingleDataSourceAutoConfiguration,\
+  cn.stylefeng.roses.kernel.db.starter.ProjectDruidPropertiesAutoConfiguration,\
+  cn.stylefeng.roses.kernel.db.starter.ProjectMyBatisPlusAutoConfiguration,\
+  cn.stylefeng.roses.kernel.db.starter.ProjectDruidMonitorAutoConfiguration,\
+  cn.stylefeng.roses.kernel.db.starter.RemoveDruidAdAutoConfiguration

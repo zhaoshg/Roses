@@ -1,4 +1,2 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  cn.stylefeng.roses.kernel.config.starter.GunsSysConfigAutoConfiguration
 org.springframework.context.ApplicationListener=\
   cn.stylefeng.roses.kernel.config.modular.listener.ConfigInitListener

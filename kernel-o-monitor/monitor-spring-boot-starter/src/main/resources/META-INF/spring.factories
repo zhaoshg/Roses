@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  cn.stylefeng.roses.kernel.monitor.starter.GunsMonitorAutoConfiguration
+  cn.stylefeng.roses.kernel.monitor.starter.ProjectMonitorAutoConfiguration
