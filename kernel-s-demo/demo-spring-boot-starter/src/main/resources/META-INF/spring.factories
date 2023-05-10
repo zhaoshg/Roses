@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  cn.stylefeng.roses.kernel.demo.starter.GunsDemoAutoConfiguration
+  cn.stylefeng.roses.kernel.demo.starter.SystemDemoAutoConfiguration

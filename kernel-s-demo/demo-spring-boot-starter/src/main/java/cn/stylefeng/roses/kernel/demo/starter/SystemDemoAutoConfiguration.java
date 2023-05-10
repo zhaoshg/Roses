@@ -39,7 +39,7 @@ import java.util.Date;
  * @since 2020/12/1 21:51
  */
 @Configuration
-public class GunsDemoAutoConfiguration {
+public class SystemDemoAutoConfiguration {
 
     @Value("${project.start.interval:20}")
     private Integer projectStartInterval;
