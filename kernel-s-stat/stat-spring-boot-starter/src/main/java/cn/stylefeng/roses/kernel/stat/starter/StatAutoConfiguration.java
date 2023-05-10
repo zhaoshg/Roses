@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Configuration;
  * 点击统计自动装配
  *
  * @author fengshuonan
- * @date 2023-05-10 10:10:15
+ * @since 2023-05-10 10:10:15
  */
 @Configuration
 public class StatAutoConfiguration {

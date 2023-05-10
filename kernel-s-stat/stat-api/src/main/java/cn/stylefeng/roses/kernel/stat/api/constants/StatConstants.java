@@ -28,7 +28,7 @@ package cn.stylefeng.roses.kernel.stat.api.constants;
  * 点击统计业务
  *
  * @author fengshuonan
- * @date 2023-05-10 10:10:15
+ * @since 2023-05-10 10:10:15
  */
 public interface StatConstants {
 

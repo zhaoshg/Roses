@@ -22,40 +22,36 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.stat.api.exception.enums;
+package cn.stylefeng.roses.kernel.stat.api;
 
-import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
-import cn.stylefeng.roses.kernel.rule.exception.AbstractExceptionEnum;
-import cn.stylefeng.roses.kernel.stat.api.constants.StatConstants;
-import lombok.Getter;
+import cn.stylefeng.roses.kernel.stat.api.callback.ClickCountCallback;
+
+import java.util.List;
 
 /**
- * 点击统计的异常枚举
+ * 计算业务的点击次数
  *
  * @author fengshuonan
- * @since 2023-05-10 10:10:15
+ * @since 2023/3/28 15:07
  */
-@Getter
-public enum StatExceptionEnum implements AbstractExceptionEnum {
+public interface ClickCountCalcApi {
 
     /**
-     * 查询不到对应点击统计
+     * 计算一组数据的点击数量
+     *
+     * @param clickCountCallbackList 原始数据，需要实现callback接口
+     * @author fengshuonan
+     * @since 2023/3/28 15:03
      */
-    CANT_FIND_STAT(RuleConstants.BUSINESS_ERROR_TYPE_CODE + StatConstants.STAT_EXCEPTION_STEP_CODE + "01", "查询不到对应点击统计，具体信息：{}");
+    <T extends ClickCountCallback> void calcClickCount(List<T> clickCountCallbackList);
 
     /**
-     * 错误编码
+     * 将某个业务数据的点击数量统计+1
+     *
+     * @param clickCountCallback 原始数据
+     * @author fengshuonan
+     * @since 2023/3/28 15:39
      */
-    private final String errorCode;
-
-    /**
-     * 提示用户信息
-     */
-    private final String userTip;
-
-    StatExceptionEnum(String errorCode, String userTip) {
-        this.errorCode = errorCode;
-        this.userTip = userTip;
-    }
+    Long addOneClickCount(ClickCountCallback clickCountCallback);
 
 }

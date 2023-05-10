@@ -24,13 +24,34 @@
  */
 package cn.stylefeng.roses.kernel.stat.api;
 
+import cn.stylefeng.roses.kernel.stat.api.callback.ClickStatusCallback;
+
+import java.util.List;
+
 /**
- * 点击统计Api
+ * 计算点击状态
  *
  * @author fengshuonan
- * @date 2023-05-10 10:10:15
+ * @since 2023/3/28 15:08
  */
-public interface StatApi {
+public interface ClickStatusCalcApi {
 
+    /**
+     * 计算一组数据的点击状态
+     *
+     * @param clickStatusCallbackList 原始数据，需要实现callback接口
+     * @author fengshuonan
+     * @since 2023/3/28 15:03
+     */
+    <T extends ClickStatusCallback> void calcClickStatus(List<T> clickStatusCallbackList);
+
+    /**
+     * 更新某条记录的点击状态为已点击
+     *
+     * @param clickStatusCallback 原始数据
+     * @author fengshuonan
+     * @since 2023/3/28 15:39
+     */
+    void addClickStatus(ClickStatusCallback clickStatusCallback);
 
 }

@@ -33,7 +33,7 @@ import cn.stylefeng.roses.kernel.stat.api.constants.StatConstants;
  * 点击统计异常
  *
  * @author fengshuonan
- * @date 2023-05-10 10:10:15
+ * @since 2023-05-10 10:10:15
  */
 public class StatException extends ServiceException {
 

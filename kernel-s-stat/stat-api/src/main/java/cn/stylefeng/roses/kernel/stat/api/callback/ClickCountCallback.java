@@ -22,40 +22,39 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.stat.api.exception.enums;
-
-import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
-import cn.stylefeng.roses.kernel.rule.exception.AbstractExceptionEnum;
-import cn.stylefeng.roses.kernel.stat.api.constants.StatConstants;
-import lombok.Getter;
+package cn.stylefeng.roses.kernel.stat.api.callback;
 
 /**
- * 点击统计的异常枚举
+ * 回调事件：计算点击次数
  *
  * @author fengshuonan
- * @since 2023-05-10 10:10:15
+ * @since 2023/3/28 15:02
  */
-@Getter
-public enum StatExceptionEnum implements AbstractExceptionEnum {
+public interface ClickCountCallback {
 
     /**
-     * 查询不到对应点击统计
+     * 给元素增加点击次数的获取
+     *
+     * @param count 设定点击次数
+     * @author fengshuonan
+     * @since 2023/3/28 14:43
      */
-    CANT_FIND_STAT(RuleConstants.BUSINESS_ERROR_TYPE_CODE + StatConstants.STAT_EXCEPTION_STEP_CODE + "01", "查询不到对应点击统计，具体信息：{}");
+    void addClickCount(Long count);
 
     /**
-     * 错误编码
+     * 获取业务主键id
+     *
+     * @author fengshuonan
+     * @since 2023/3/28 15:05
      */
-    private final String errorCode;
+    Long getBusinessId();
 
     /**
-     * 提示用户信息
+     * 获取业务的类别编码
+     *
+     * @author fengshuonan
+     * @since 2023/3/28 15:05
      */
-    private final String userTip;
-
-    StatExceptionEnum(String errorCode, String userTip) {
-        this.errorCode = errorCode;
-        this.userTip = userTip;
-    }
+    String getBusinessTypeCode();
 
 }
