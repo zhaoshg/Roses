@@ -24,8 +24,11 @@
  */
 package cn.stylefeng.roses.kernel.system.modular.user.entity;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
-import com.baomidou.mybatisplus.annotation.*;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseBusinessEntity;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -40,7 +43,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("sys_user")
-public class SysUser extends BaseEntity {
+public class SysUser extends BaseBusinessEntity {
 
     /**
      * 主键
@@ -121,6 +124,12 @@ public class SysUser extends BaseEntity {
     private Integer statusFlag;
 
     /**
+     * 登录次数
+     */
+    @TableField("login_count")
+    private Integer loginCount;
+
+    /**
      * 最后登陆IP
      */
     @TableField("last_login_ip")
@@ -133,14 +142,9 @@ public class SysUser extends BaseEntity {
     private Date lastLoginTime;
 
     /**
-     * 删除标记（Y-已删除，N-未删除）
+     * 对接外部主数据的用户id
      */
-    @TableField(value = "del_flag", fill = FieldFill.INSERT)
-    private String delFlag;
+    @TableField("master_user_id")
+    private String masterUserId;
 
-    /**
-     * 登录次数
-     */
-    @TableField("login_count")
-    private Integer loginCount;
 }

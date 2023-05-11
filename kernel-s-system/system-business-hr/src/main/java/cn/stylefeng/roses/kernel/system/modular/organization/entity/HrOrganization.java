@@ -1,6 +1,6 @@
 package cn.stylefeng.roses.kernel.system.modular.organization.entity;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseBusinessEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
@@ -19,7 +19,7 @@ import java.util.Map;
 @TableName(value = "hr_organization", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class HrOrganization extends BaseEntity {
+public class HrOrganization extends BaseBusinessEntity {
 
     /**
      * 主键
@@ -126,25 +126,5 @@ public class HrOrganization extends BaseEntity {
     @ChineseDescription("拓展字段")
     private Map<String, Object> expandField;
 
-    /**
-     * 乐观锁
-     */
-    @TableField("version_flag")
-    @ChineseDescription("乐观锁")
-    private Long versionFlag;
-
-    /**
-     * 删除标记：Y-已删除，N-未删除
-     */
-    @TableField(value = "del_flag", fill = FieldFill.INSERT)
-    @ChineseDescription("删除标记：Y-已删除，N-未删除")
-    private String delFlag;
-
-    /**
-     * 租户号
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户号")
-    private Long tenantId;
 
 }
