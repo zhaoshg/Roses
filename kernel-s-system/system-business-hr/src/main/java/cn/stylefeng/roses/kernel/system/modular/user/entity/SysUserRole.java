@@ -31,6 +31,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 系统用户角色表
@@ -38,6 +39,7 @@ import lombok.Data;
  * @author luojie
  * @since 2020/11/6 09:46
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("sys_user_role")
 public class SysUserRole extends BaseEntity {
