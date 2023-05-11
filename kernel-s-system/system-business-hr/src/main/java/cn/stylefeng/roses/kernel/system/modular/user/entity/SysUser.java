@@ -25,14 +25,17 @@
 package cn.stylefeng.roses.kernel.system.modular.user.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseBusinessEntity;
+import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * 系统用户表
@@ -146,5 +149,12 @@ public class SysUser extends BaseBusinessEntity {
      */
     @TableField("master_user_id")
     private String masterUserId;
+
+    /**
+     * 拓展字段
+     */
+    @TableField(value = "expand_field", typeHandler = JacksonTypeHandler.class)
+    @ChineseDescription("拓展字段")
+    private Map<String, Object> expandField;
 
 }
