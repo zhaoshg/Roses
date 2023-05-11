@@ -92,7 +92,7 @@ public class SysUserOrgController {
                 break;
             }
         }
-        if (!orgIdRightFlag) {
+        if (!orgIdRightFlag && !LoginContext.me().getSuperAdminFlag()) {
             throw new ServiceException(SysUserOrgExceptionEnum.CANT_CHANGE_ORG_ID);
         }
 
