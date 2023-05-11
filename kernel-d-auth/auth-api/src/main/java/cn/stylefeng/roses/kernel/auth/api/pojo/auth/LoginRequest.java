@@ -75,12 +75,6 @@ public class LoginRequest extends BaseRequest {
     private String verCode;
 
     /**
-     * 是否写入cookie会话信息
-     */
-    @ChineseDescription("是否写入cookie会话信息")
-    private Boolean createCookie = false;
-
-    /**
      * 租户编码
      */
     @ChineseDescription("租户编码")

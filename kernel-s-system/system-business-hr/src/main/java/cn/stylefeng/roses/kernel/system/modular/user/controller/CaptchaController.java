@@ -47,7 +47,7 @@ import static cn.stylefeng.roses.kernel.rule.constants.RuleConstants.BASE64_IMG_
  */
 @RestController
 @ApiResource(name = "用户登录图形验证码", resBizType = ResBizTypeEnum.SYSTEM)
-public class KaptchaController {
+public class CaptchaController {
 
     @Resource
     private ImageCaptchaApi captchaApi;
@@ -72,7 +72,7 @@ public class KaptchaController {
      * @author fengshuonan
      * @since 2021/7/5 12:00
      */
-    @GetResource(name = "获取图形验证码", path = "/dragCaptcha", requiredPermission = false, requiredLogin = false)
+    @GetResource(name = "获取拖拽验证码", path = "/dragCaptcha", requiredPermission = false, requiredLogin = false)
     public ResponseData<DragCaptchaImageDTO> dragCaptcha() {
         DragCaptchaImageDTO captcha = dragCaptchaApi.createCaptcha();
         captcha.setSrcImage(BASE64_IMG_PREFIX + captcha.getSrcImage());

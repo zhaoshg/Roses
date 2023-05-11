@@ -48,7 +48,7 @@ public interface SessionManagerApi {
      * @author fengshuonan
      * @since 2020/10/19 16:47
      */
-    void createSession(String token, LoginUser loginUser, Boolean createCookie);
+    void createSession(String token, LoginUser loginUser);
 
     /**
      * 更新当前会话的loginUser对象的内容
@@ -108,16 +108,6 @@ public interface SessionManagerApi {
      * @since 2020/10/19 16:50
      */
     void refreshSession(String token);
-
-    /**
-     * 销毁当前用户对应的会话cookie
-     * <p>
-     * 一般用在单体不分离版本中
-     *
-     * @author fengshuonan
-     * @since 2021/1/2 20:25
-     */
-    void destroySessionCookie();
 
     /**
      * 获取在线用户列表

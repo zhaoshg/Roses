@@ -25,7 +25,6 @@
 package cn.stylefeng.roses.kernel.auth.starter;
 
 import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
-import cn.stylefeng.roses.kernel.auth.api.cookie.SessionCookieCreator;
 import cn.stylefeng.roses.kernel.auth.api.expander.AuthConfigExpander;
 import cn.stylefeng.roses.kernel.auth.api.password.PasswordStoredEncryptApi;
 import cn.stylefeng.roses.kernel.auth.api.password.PasswordTransferEncryptApi;
@@ -34,7 +33,6 @@ import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.auth.password.BcryptPasswordStoredEncrypt;
 import cn.stylefeng.roses.kernel.auth.password.RsaPasswordTransferEncrypt;
 import cn.stylefeng.roses.kernel.auth.session.DefaultSessionManager;
-import cn.stylefeng.roses.kernel.auth.session.cookie.DefaultSessionCookieCreator;
 import cn.stylefeng.roses.kernel.auth.session.timer.ClearInvalidLoginUserCacheTimer;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.jwt.JwtTokenOperator;
@@ -104,18 +102,6 @@ public class AuthAutoConfiguration {
     }
 
     /**
-     * session cookie的创建
-     *
-     * @author fengshuonan
-     * @since 2020/12/27 15:48
-     */
-    @Bean
-    @ConditionalOnMissingBean(SessionCookieCreator.class)
-    public SessionCookieCreator sessionCookieCreator() {
-        return new DefaultSessionCookieCreator();
-    }
-
-    /**
      * 默认的session缓存为内存缓存，方便启动
      * <p>
      * 如需替换请在项目中增加一个SessionManagerApi Bean即可
@@ -127,7 +113,7 @@ public class AuthAutoConfiguration {
     @ConditionalOnMissingBean(SessionManagerApi.class)
     public SessionManagerApi sessionManagerApi(CacheOperatorApi<LoginUser> loginUserCache, CacheOperatorApi<Set<String>> allPlaceLoginTokenCache) {
         Long sessionExpiredSeconds = AuthConfigExpander.getSessionExpiredSeconds();
-        return new DefaultSessionManager(loginUserCache, allPlaceLoginTokenCache, sessionExpiredSeconds, sessionCookieCreator());
+        return new DefaultSessionManager(loginUserCache, allPlaceLoginTokenCache, sessionExpiredSeconds);
     }
 
     /**

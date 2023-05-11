@@ -156,8 +156,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
 
-        // 不创建cookie，默认开启记住我（7天会话）
-        loginRequest.setCreateCookie(false);
+        // 默认开启记住我（7天会话）
         loginRequest.setRememberMe(true);
 
         // 验证拖拽验证码
@@ -207,7 +206,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
         synchronized (SESSION_OPERATE_LOCK) {
             // 缓存用户信息，创建会话
-            sessionManagerApi.createSession(jwtToken, loginUser, loginRequest.getCreateCookie());
+            sessionManagerApi.createSession(jwtToken, loginUser);
 
             // 如果开启了单账号单端在线，则踢掉已经上线的该用户
             if (AuthConfigExpander.getSingleAccountLoginFlag()) {

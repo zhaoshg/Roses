@@ -25,20 +25,14 @@
 package cn.stylefeng.roses.kernel.auth.session;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
-import cn.stylefeng.roses.kernel.auth.api.cookie.SessionCookieCreator;
-import cn.stylefeng.roses.kernel.auth.api.expander.AuthConfigExpander;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.message.api.expander.WebSocketConfigExpander;
 import cn.stylefeng.roses.kernel.rule.callback.ConfigUpdateCallback;
-import cn.stylefeng.roses.kernel.rule.util.HttpServletUtil;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 import static cn.stylefeng.roses.kernel.message.api.constants.MessageConstants.WEB_SOCKET_WS_URL_CONFIG_CODE;
@@ -74,23 +68,16 @@ public class DefaultSessionManager implements SessionManagerApi, ConfigUpdateCal
      */
     private final Long sessionExpiredSeconds;
 
-    /**
-     * cookie的创建器，用在session创建时，给response添加cookie
-     */
-    private final SessionCookieCreator sessionCookieCreator;
-
     public DefaultSessionManager(CacheOperatorApi<LoginUser> loginUserCache,
                                  CacheOperatorApi<Set<String>> allPlaceLoginTokenCache,
-                                 Long sessionExpiredSeconds,
-                                 SessionCookieCreator sessionCookieCreator) {
+                                 Long sessionExpiredSeconds) {
         this.loginUserCache = loginUserCache;
         this.allPlaceLoginTokenCache = allPlaceLoginTokenCache;
         this.sessionExpiredSeconds = sessionExpiredSeconds;
-        this.sessionCookieCreator = sessionCookieCreator;
     }
 
     @Override
-    public void createSession(String token, LoginUser loginUser, Boolean createCookie) {
+    public void createSession(String token, LoginUser loginUser) {
 
         // 装配用户信息的缓存
         loginUserCache.put(token, loginUser, sessionExpiredSeconds);
@@ -102,15 +89,6 @@ public class DefaultSessionManager implements SessionManagerApi, ConfigUpdateCal
         }
         theUserTokens.add(token);
         allPlaceLoginTokenCache.put(loginUser.getUserId().toString(), theUserTokens);
-
-        // 如果开启了cookie存储会话信息，则需要给HttpServletResponse添加一个cookie
-        if (createCookie) {
-            String sessionCookieName = AuthConfigExpander.getSessionCookieName();
-            Cookie cookie = sessionCookieCreator.createCookie(sessionCookieName, token, Convert.toInt(AuthConfigExpander.getAuthJwtTimeoutSeconds()));
-            HttpServletResponse response = HttpServletUtil.getResponse();
-            response.addCookie(cookie);
-        }
-
     }
 
     @Override
@@ -191,15 +169,6 @@ public class DefaultSessionManager implements SessionManagerApi, ConfigUpdateCal
         if (loginUser != null) {
             loginUserCache.expire(token, sessionExpiredSeconds);
         }
-    }
-
-    @Override
-    public void destroySessionCookie() {
-        // 如果开启了cookie存储会话信息，则需要给HttpServletResponse添加一个cookie
-        String sessionCookieName = AuthConfigExpander.getSessionCookieName();
-        Cookie cookie = sessionCookieCreator.createCookie(sessionCookieName, null, 0);
-        HttpServletResponse response = HttpServletUtil.getResponse();
-        response.addCookie(cookie);
     }
 
     @Override

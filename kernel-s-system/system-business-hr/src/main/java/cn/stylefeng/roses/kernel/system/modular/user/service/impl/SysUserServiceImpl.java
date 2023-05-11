@@ -666,7 +666,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             loginUser.setWsUrl(WebSocketConfigExpander.getWebSocketWsUrl());
 
             // 缓存用户信息，创建会话
-            sessionManagerApi.createSession(jwtToken, loginUser, false);
+            sessionManagerApi.createSession(jwtToken, loginUser);
 
             // 如果开启了单账号单端在线，则踢掉已经上线的该用户
             if (AuthConfigExpander.getSingleAccountLoginFlag()) {

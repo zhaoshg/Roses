@@ -216,7 +216,6 @@ public class AuthServiceImpl implements AuthServiceApi {
         }
 
         logoutWithToken(token);
-        sessionManagerApi.destroySessionCookie();
     }
 
     @Override
@@ -428,7 +427,7 @@ public class AuthServiceImpl implements AuthServiceApi {
             loginUser.setWsUrl(WebSocketConfigExpander.getWebSocketWsUrl());
 
             // 10. 缓存用户信息，创建会话
-            sessionManagerApi.createSession(jwtToken, loginUser, loginRequest.getCreateCookie());
+            sessionManagerApi.createSession(jwtToken, loginUser);
 
             // 11. 如果开启了单账号单端在线，则踢掉已经上线的该用户
             if (AuthConfigExpander.getSingleAccountLoginFlag()) {
