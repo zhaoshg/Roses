@@ -5,7 +5,7 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.stylefeng.roses.kernel.auth.api.AuthJwtTokenApi;
-import cn.stylefeng.roses.kernel.auth.api.expander.JwtConfigExpander;
+import cn.stylefeng.roses.kernel.auth.api.expander.AuthConfigExpander;
 import cn.stylefeng.roses.kernel.auth.api.pojo.payload.DefaultJwtPayload;
 import cn.stylefeng.roses.kernel.jwt.api.JwtApi;
 import io.jsonwebtoken.Jwts;
@@ -32,7 +32,7 @@ public class AuthJwtTokenService implements AuthJwtTokenApi {
     public String generateTokenDefaultPayload(DefaultJwtPayload defaultJwtPayload) {
 
         // 计算过期时间
-        DateTime expirationDate = DateUtil.offsetSecond(new Date(), Convert.toInt(JwtConfigExpander.getJwtTimeoutSeconds()));
+        DateTime expirationDate = DateUtil.offsetSecond(new Date(), Convert.toInt(AuthConfigExpander.getAuthJwtTimeoutSeconds()));
 
         // 设置过期时间
         defaultJwtPayload.setExpirationDate(expirationDate.getTime());
@@ -43,7 +43,7 @@ public class AuthJwtTokenService implements AuthJwtTokenApi {
                 .setSubject(defaultJwtPayload.getUserId().toString())
                 .setIssuedAt(new Date())
                 .setExpiration(expirationDate)
-                .signWith(SignatureAlgorithm.HS512, JwtConfigExpander.getJwtSecret())
+                .signWith(SignatureAlgorithm.HS512, AuthConfigExpander.getAuthJwtSecret())
                 .compact();
     }
 
