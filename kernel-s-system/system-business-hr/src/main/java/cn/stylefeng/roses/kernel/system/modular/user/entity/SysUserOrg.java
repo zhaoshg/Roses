@@ -25,11 +25,15 @@
 package cn.stylefeng.roses.kernel.system.modular.user.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
+import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.Map;
 
 /**
  * 企业员工表，用户-组织机构的关联
@@ -55,15 +59,42 @@ public class SysUserOrg extends BaseEntity {
     private Long userId;
 
     /**
+     * 对接外部主数据的用户id
+     */
+    @TableField("master_user_id")
+    private String masterUserId;
+
+    /**
      * 所属机构id
      */
     @TableField("org_id")
     private Long orgId;
 
     /**
+     * 对接外部主数据的机构id
+     */
+    @TableField("master_org_id")
+    @ChineseDescription("对接外部主数据的机构id")
+    private String masterOrgId;
+
+    /**
      * 职位id
      */
     @TableField("position_id")
     private Long positionId;
+
+    /**
+     * 是否是主部门：Y-是，N-不是
+     */
+    @TableField("main_flag")
+    @ChineseDescription("是否是主部门：Y-是，N-不是")
+    private String mainFlag;
+
+    /**
+     * 拓展字段
+     */
+    @TableField(value = "expand_field", typeHandler = JacksonTypeHandler.class)
+    @ChineseDescription("拓展字段")
+    private Map<String, Object> expandField;
 
 }
