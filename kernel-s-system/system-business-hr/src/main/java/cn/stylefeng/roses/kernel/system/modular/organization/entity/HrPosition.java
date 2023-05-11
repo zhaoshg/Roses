@@ -24,18 +24,17 @@
  */
 package cn.stylefeng.roses.kernel.system.modular.organization.entity;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseBusinessEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
-import cn.stylefeng.roses.kernel.rule.tree.xmtree.base.AbstractXmSelectNode;
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Map;
 
 /**
  * 系统职位表
@@ -46,7 +45,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("hr_position")
-public class HrPosition extends BaseEntity implements AbstractXmSelectNode {
+public class HrPosition extends BaseBusinessEntity {
 
     /**
      * 主键
@@ -91,34 +90,10 @@ public class HrPosition extends BaseEntity implements AbstractXmSelectNode {
     private String positionRemark;
 
     /**
-     * 删除标记：Y-已删除，N-未删除
+     * 拓展字段
      */
-    @TableField(value = "del_flag", fill = FieldFill.INSERT)
-    @ChineseDescription("删除标记：Y-已删除，N-未删除")
-    private String delFlag;
+    @TableField(value = "expand_field", typeHandler = JacksonTypeHandler.class)
+    @ChineseDescription("拓展字段")
+    private Map<String, Object> expandField;
 
-    @Override
-    public String getName() {
-        return this.positionName;
-    }
-
-    @Override
-    public String getValue() {
-        return String.valueOf(positionId);
-    }
-
-    @Override
-    public Boolean getSelected() {
-        return false;
-    }
-
-    @Override
-    public Boolean getDisabled() {
-        return false;
-    }
-
-    @Override
-    public List<?> getChildren() {
-        return null;
-    }
 }

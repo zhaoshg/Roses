@@ -126,5 +126,4 @@ public class HrOrganization extends BaseBusinessEntity {
     @ChineseDescription("拓展字段")
     private Map<String, Object> expandField;
 
-
 }
