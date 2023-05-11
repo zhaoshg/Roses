@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.system.api.pojo.organization;
 
+import cn.hutool.core.lang.Dict;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.validator.api.validators.status.StatusValue;
@@ -73,6 +74,12 @@ public class HrOrganizationRequest extends BaseRequest {
     @NotBlank(message = "组织名称不能为空", groups = {add.class, edit.class})
     @ChineseDescription("组织名称")
     private String orgName;
+
+    /**
+     * 组织机构的简称
+     */
+    @ChineseDescription("组织机构的简称")
+    private String orgShortName;
 
     /**
      * 组织编码
@@ -127,6 +134,34 @@ public class HrOrganizationRequest extends BaseRequest {
      */
     @ChineseDescription("描述")
     private String orgRemark;
+
+    /**
+     * 组织机构的层级
+     */
+    @ChineseDescription("组织机构的层级")
+    private Integer orgLevel;
+
+    /**
+     * 主数据orgId
+     */
+    @ChineseDescription("主数据orgId")
+    private String masterOrgId;
+
+    /**
+     * 主数据的父级id
+     */
+    @ChineseDescription("主数据的父级id")
+    private String masterOrgParentId;
+
+    /**
+     * 拓展字段
+     */
+    @ChineseDescription("拓展字段")
+    private Dict expandField;
+
+    //-------------------------------非实体字段-------------------------------
+    //-------------------------------非实体字段-------------------------------
+    //-------------------------------非实体字段-------------------------------
 
     /**
      * 角色id

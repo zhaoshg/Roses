@@ -1,55 +1,30 @@
-/*
- * Copyright [2020-2030] [https://www.stylefeng.cn]
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * Guns采用APACHE LICENSE 2.0开源协议，您在使用过程中，需要注意以下几点：
- *
- * 1.请不要删除和修改根目录下的LICENSE文件。
- * 2.请不要删除和修改Guns源码头部的版权声明。
- * 3.请保留源码和相关描述文件的项目出处，作者声明等。
- * 4.分发源码时候，请注明软件出处 https://gitee.com/stylefeng/guns
- * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
- * 6.若您的项目无法满足以上几点，可申请商业授权
- */
 package cn.stylefeng.roses.kernel.system.modular.organization.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 /**
- * 系统组织机构表
+ * 组织机构信息实例类
  *
  * @author fengshuonan
- * @since 2020/11/04 11:05
+ * @date 2023/05/11 10:12
  */
+@TableName(value = "hr_organization", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("hr_organization")
 public class HrOrganization extends BaseEntity {
 
     /**
      * 主键
      */
-    @TableId("org_id")
+    @TableId(value = "org_id", type = IdType.ASSIGN_ID)
     @ChineseDescription("主键")
     private Long orgId;
 
@@ -75,6 +50,13 @@ public class HrOrganization extends BaseEntity {
     private String orgName;
 
     /**
+     * 组织机构简称
+     */
+    @TableField(value = "org_short_name")
+    @ChineseDescription("组织机构简称")
+    private String orgShortName;
+
+    /**
      * 组织编码
      */
     @TableField("org_code")
@@ -91,36 +73,78 @@ public class HrOrganization extends BaseEntity {
     /**
      * 状态：1-启用，2-禁用
      */
-    @TableField(value = "status_flag",fill = FieldFill.INSERT)
+    @TableField(value = "status_flag", fill = FieldFill.INSERT)
     @ChineseDescription("状态：1-启用，2-禁用")
     private Integer statusFlag;
 
     /**
      * 组织机构类型：1-公司，2-部门
      */
-    @TableField(value = "org_type")
+    @TableField("org_type")
     @ChineseDescription("组织机构类型：1-公司，2-部门")
     private Integer orgType;
 
     /**
      * 税号
      */
-    @TableField(value = "tax_no")
+    @TableField("tax_no")
     @ChineseDescription("税号")
     private String taxNo;
 
     /**
-     * 组织机构描述
+     * 描述
      */
     @TableField("org_remark")
-    @ChineseDescription("组织机构描述")
+    @ChineseDescription("描述")
     private String orgRemark;
 
     /**
-     * 删除标记（Y-已删除，N-未删除）
+     * 组织机构层级
      */
-    @TableField(value = "del_flag",fill = FieldFill.INSERT)
-    @ChineseDescription("删除标记（Y-已删除，N-未删除）")
+    @TableField("org_level")
+    @ChineseDescription("组织机构层级")
+    private Integer orgLevel;
+
+    /**
+     * 对接外部主数据的机构id
+     */
+    @TableField("master_org_id")
+    @ChineseDescription("对接外部主数据的机构id")
+    private String masterOrgId;
+
+    /**
+     * 对接外部主数据的父级机构id
+     */
+    @TableField("master_org_parent_id")
+    @ChineseDescription("对接外部主数据的父级机构id")
+    private String masterOrgParentId;
+
+    /**
+     * 拓展字段
+     */
+    @TableField(value = "expand_field", typeHandler = JacksonTypeHandler.class)
+    @ChineseDescription("拓展字段")
+    private Map<String, Object> expandField;
+
+    /**
+     * 乐观锁
+     */
+    @TableField("version_flag")
+    @ChineseDescription("乐观锁")
+    private Long versionFlag;
+
+    /**
+     * 删除标记：Y-已删除，N-未删除
+     */
+    @TableField(value = "del_flag", fill = FieldFill.INSERT)
+    @ChineseDescription("删除标记：Y-已删除，N-未删除")
     private String delFlag;
+
+    /**
+     * 租户号
+     */
+    @TableField("tenant_id")
+    @ChineseDescription("租户号")
+    private Long tenantId;
 
 }
