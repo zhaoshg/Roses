@@ -204,7 +204,12 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
 
     @Override
     public SysUserOrg detail(UserOrgRequest userOrgResponse) {
-        return this.getOne(this.createWrapper(userOrgResponse), false);
+        LambdaQueryWrapper<SysUserOrg> wrapper = this.createWrapper(userOrgResponse);
+
+        // 只查询一个主公司
+        wrapper.eq(SysUserOrg::getMainFlag, YesOrNotEnum.Y.getKey());
+
+        return this.getOne(wrapper, false);
     }
 
     @Override
@@ -287,7 +292,6 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
         queryWrapper.eq(ObjectUtil.isNotEmpty(userOrgResponse.getUserId()), SysUserOrg::getUserId, userOrgResponse.getUserId());
         queryWrapper.eq(ObjectUtil.isNotEmpty(userOrgResponse.getOrgId()), SysUserOrg::getOrgId, userOrgResponse.getOrgId());
         queryWrapper.eq(ObjectUtil.isNotEmpty(userOrgResponse.getPositionId()), SysUserOrg::getPositionId, userOrgResponse.getPositionId());
-        queryWrapper.eq(SysUserOrg::getMainFlag, YesOrNotEnum.Y.getKey());
         return queryWrapper;
     }
 
