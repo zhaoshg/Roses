@@ -120,6 +120,15 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     }
 
     @Override
+    public List<Long> findUserIdsByRoleId(Long roleId) {
+        UserRoleRequest userRoleRequest = new UserRoleRequest();
+        userRoleRequest.setRoleId(roleId);
+        LambdaQueryWrapper<SysUserRole> queryWrapper = this.createQueryWrapper(userRoleRequest);
+        List<SysUserRole> list = this.list(queryWrapper);
+        return list.stream().map(SysUserRole::getUserId).collect(Collectors.toList());
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void assignRoles(SysUserRequest sysUserRequest) {
         // 获取用户id
