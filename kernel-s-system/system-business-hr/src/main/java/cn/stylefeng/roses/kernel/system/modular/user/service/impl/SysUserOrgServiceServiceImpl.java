@@ -258,6 +258,23 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
     }
 
     @Override
+    public List<Long> getPositionUserList(Long orgId, Long positionId) {
+
+        UserOrgRequest userOrgRequest = new UserOrgRequest();
+        userOrgRequest.setOrgId(orgId);
+        userOrgRequest.setPositionId(positionId);
+
+        LambdaQueryWrapper<SysUserOrg> wrapper = this.createWrapper(userOrgRequest);
+        List<SysUserOrg> list = this.list(wrapper);
+
+        if (ObjectUtil.isNotEmpty(list)) {
+            return list.stream().map(SysUserOrg::getUserId).collect(Collectors.toList());
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
     public Boolean getUserOrgFlag(Long orgId, Long positionId) {
         LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ObjectUtil.isNotNull(orgId), SysUserOrg::getOrgId, orgId);

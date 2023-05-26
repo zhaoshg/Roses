@@ -79,4 +79,12 @@ public interface UserOrgServiceApi {
      */
     List<HrOrganizationDTO> getUserCompanyList();
 
+    /**
+     * 获取职位对应的用户列表
+     *
+     * @author fengshuonan
+     * @since 2023/5/26 11:29
+     */
+    List<Long> getPositionUserList(Long orgId, Long positionId);
+
 }
