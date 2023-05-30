@@ -24,7 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.group.api;
 
-import cn.stylefeng.roses.kernel.group.api.callback.GroupNameRenderApi;
+import cn.stylefeng.roses.kernel.group.api.callback.GroupNameCallbackApi;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 
 import java.util.List;
@@ -67,6 +67,6 @@ public interface GroupConditionApi {
      * @author fengshuonan
      * @since 2023/5/30 17:15
      */
-    void renderBizListGroupName(String groupBizCode, List<? extends GroupNameRenderApi> businessList);
+    void renderBizListGroupName(String groupBizCode, List<? extends GroupNameCallbackApi> businessList);
 
 }

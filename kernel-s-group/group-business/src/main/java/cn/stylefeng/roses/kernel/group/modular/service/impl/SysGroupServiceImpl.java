@@ -3,7 +3,7 @@ package cn.stylefeng.roses.kernel.group.modular.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
-import cn.stylefeng.roses.kernel.group.api.callback.GroupNameRenderApi;
+import cn.stylefeng.roses.kernel.group.api.callback.GroupNameCallbackApi;
 import cn.stylefeng.roses.kernel.group.api.constants.GroupConstants;
 import cn.stylefeng.roses.kernel.group.api.pojo.SysGroupDTO;
 import cn.stylefeng.roses.kernel.group.api.pojo.SysGroupRequest;
@@ -156,7 +156,7 @@ public class SysGroupServiceImpl extends ServiceImpl<SysGroupMapper, SysGroup> i
     }
 
     @Override
-    public void renderBizListGroupName(String groupBizCode, List<? extends GroupNameRenderApi> businessList) {
+    public void renderBizListGroupName(String groupBizCode, List<? extends GroupNameCallbackApi> businessList) {
 
         if (ObjectUtil.isEmpty(businessList)) {
             return;
@@ -169,7 +169,7 @@ public class SysGroupServiceImpl extends ServiceImpl<SysGroupMapper, SysGroup> i
 
         // 增加返回结果的分组名称
         for (SysGroupDTO sysGroupDTO : list) {
-            for (GroupNameRenderApi item : businessList) {
+            for (GroupNameCallbackApi item : businessList) {
                 if (item.getRenderBusinessId().equals(sysGroupDTO.getBusinessId())) {
                     item.renderGroupName(sysGroupDTO.getGroupName());
                 }

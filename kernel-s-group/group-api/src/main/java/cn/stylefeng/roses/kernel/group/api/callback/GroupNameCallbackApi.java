@@ -6,7 +6,7 @@ package cn.stylefeng.roses.kernel.group.api.callback;
  * @author fengshuonan
  * @since 2023/5/30 17:13
  */
-public interface GroupNameRenderApi {
+public interface GroupNameCallbackApi {
 
     /**
      * 获取被渲染数据的主键id
