@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
  * @author fengshuonan
  * @since 2023/03/28 14:52
  */
-@TableName("portal_click_count")
+@TableName("click_count")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ClickCount extends BaseEntity {

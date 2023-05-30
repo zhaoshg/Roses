@@ -386,12 +386,12 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>center</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>company-hosted</id>
+            <url>http://192.168.31.121:8081/repository/company-hosted</url>
         </snapshotRepository>
         <repository>
-            <id>center</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+            <id>company-hosted</id>
+            <url>http://192.168.31.121:8081/repository/company-hosted</url>
         </repository>
     </distributionManagement>
 
