@@ -22,69 +22,35 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.system.modular.organization.entity;
+package cn.stylefeng.roses.kernel.db.api.pojo.entity;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.math.BigDecimal;
+import java.util.Map;
 
 /**
- * 系统职位表
+ * 基础业务性质的实体
+ * <p>
+ * 具有乐观锁，业务逻辑删除，租户id标识
  *
  * @author fengshuonan
- * @since 2020/11/04 11:07
+ * @since 2023/5/11 13:22
  */
-@Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("hr_position")
-public class HrPosition extends BaseExpandFieldEntity {
+@Data
+public class BaseExpandFieldEntity extends BaseBusinessEntity {
+
+    private static final long serialVersionUID = 1L;
 
     /**
-     * 主键
+     * 拓展字段
      */
-    @TableId("position_id")
-    @ChineseDescription("主键")
-    private Long positionId;
-
-    /**
-     * 职位名称
-     */
-    @TableField("position_name")
-    @ChineseDescription("职位名称")
-    private String positionName;
-
-    /**
-     * 职位编码
-     */
-    @TableField("position_code")
-    @ChineseDescription("职位编码")
-    private String positionCode;
-
-    /**
-     * 排序
-     */
-    @TableField("position_sort")
-    @ChineseDescription("排序")
-    private BigDecimal positionSort;
-
-    /**
-     * 状态：1-启用，2-禁用
-     */
-    @TableField("status_flag")
-    @ChineseDescription("状态：1-启用，2-禁用")
-    private Integer statusFlag;
-
-    /**
-     * 职位备注
-     */
-    @TableField("position_remark")
-    @ChineseDescription("职位备注")
-    private String positionRemark;
+    @TableField(value = "expand_field", typeHandler = JacksonTypeHandler.class)
+    @ChineseDescription("拓展字段")
+    private Map<String, Object> expandField;
 
 }

@@ -1,14 +1,12 @@
 package cn.stylefeng.roses.kernel.system.modular.organization.entity;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseBusinessEntity;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 /**
  * 组织机构信息实例类
@@ -19,7 +17,7 @@ import java.util.Map;
 @TableName(value = "hr_organization", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class HrOrganization extends BaseBusinessEntity {
+public class HrOrganization extends BaseExpandFieldEntity {
 
     /**
      * 主键
@@ -118,12 +116,5 @@ public class HrOrganization extends BaseBusinessEntity {
     @TableField("master_org_parent_id")
     @ChineseDescription("对接外部主数据的父级机构id")
     private String masterOrgParentId;
-
-    /**
-     * 拓展字段
-     */
-    @TableField(value = "expand_field", typeHandler = JacksonTypeHandler.class)
-    @ChineseDescription("拓展字段")
-    private Map<String, Object> expandField;
 
 }
