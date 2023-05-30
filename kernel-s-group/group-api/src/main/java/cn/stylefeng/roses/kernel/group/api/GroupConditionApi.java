@@ -67,6 +67,6 @@ public interface GroupConditionApi {
      * @author fengshuonan
      * @since 2023/5/30 17:15
      */
-    void renderBizListGroupName(String groupBizCode, List<GroupNameRenderApi> businessList);
+    void renderBizListGroupName(String groupBizCode, List<? extends GroupNameRenderApi> businessList);
 
 }

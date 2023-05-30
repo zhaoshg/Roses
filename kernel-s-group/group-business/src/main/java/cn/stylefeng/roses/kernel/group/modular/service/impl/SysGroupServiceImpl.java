@@ -156,7 +156,11 @@ public class SysGroupServiceImpl extends ServiceImpl<SysGroupMapper, SysGroup> i
     }
 
     @Override
-    public void renderBizListGroupName(String groupBizCode, List<GroupNameRenderApi> businessList) {
+    public void renderBizListGroupName(String groupBizCode, List<? extends GroupNameRenderApi> businessList) {
+
+        if (ObjectUtil.isEmpty(businessList)) {
+            return;
+        }
 
         // 查询结果中有没有用户挂标签的，有的话就返回中文分组名称
         SysGroupRequest sysGroupRequest = new SysGroupRequest();
