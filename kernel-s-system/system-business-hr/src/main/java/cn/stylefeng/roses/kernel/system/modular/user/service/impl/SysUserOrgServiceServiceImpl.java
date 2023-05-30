@@ -141,6 +141,7 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
         sysUserOrg.setUserId(userId);
         sysUserOrg.setOrgId(orgId);
         sysUserOrg.setPositionId(positionId);
+        sysUserOrg.setMainFlag(YesOrNotEnum.Y.getCode());
         this.save(sysUserOrg);
     }
 
