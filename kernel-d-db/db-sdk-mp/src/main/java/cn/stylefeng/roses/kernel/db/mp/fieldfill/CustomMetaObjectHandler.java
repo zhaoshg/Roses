@@ -28,6 +28,7 @@ import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.db.api.constants.DbFieldConstants;
+import cn.stylefeng.roses.kernel.db.api.util.EntityFieldUtil;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
@@ -152,7 +153,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
         Object originalObject = metaObject.getOriginalObject();
         try {
             // 获取delFlag字段的类型，如果是枚举类型，则设置枚举
-            Field declaredField = originalObject.getClass().getDeclaredField(DbFieldConstants.DEL_FLAG);
+            Field declaredField = EntityFieldUtil.getDeclaredField(originalObject, DbFieldConstants.DEL_FLAG);
             if (ClassUtil.isEnum(declaredField.getType())) {
                 setFieldValByName(DbFieldConstants.DEL_FLAG, YesOrNotEnum.N, metaObject);
             } else {
@@ -177,7 +178,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
         Object originalObject = metaObject.getOriginalObject();
         try {
             // 获取statusFlag字段的类型，如果是枚举类型，则设置枚举
-            Field declaredField = originalObject.getClass().getDeclaredField(DbFieldConstants.STATUS_FLAG);
+            Field declaredField = EntityFieldUtil.getDeclaredField(originalObject, DbFieldConstants.STATUS_FLAG);
             if (ClassUtil.isEnum(declaredField.getType())) {
                 setFieldValByName(DbFieldConstants.STATUS_FLAG, StatusEnum.ENABLE, metaObject);
             } else {
