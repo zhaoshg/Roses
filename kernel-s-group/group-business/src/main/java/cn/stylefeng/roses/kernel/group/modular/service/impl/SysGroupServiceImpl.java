@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.group.modular.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.group.api.constants.GroupConstants;
@@ -8,6 +9,7 @@ import cn.stylefeng.roses.kernel.group.api.pojo.SysGroupRequest;
 import cn.stylefeng.roses.kernel.group.modular.entity.SysGroup;
 import cn.stylefeng.roses.kernel.group.modular.mapper.SysGroupMapper;
 import cn.stylefeng.roses.kernel.group.modular.service.SysGroupService;
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -121,6 +123,37 @@ public class SysGroupServiceImpl extends ServiceImpl<SysGroupMapper, SysGroup> i
         this.remove(wrapper);
     }
 
+    @Override
+    public Boolean getRequestUnGroupedFlag(BaseRequest baseRequest) {
+        // 获取前端请求的分组名称
+        String conditionGroupName = baseRequest.getConditionGroupName();
+        return GroupConstants.GROUP_DELETE_NAME.equals(conditionGroupName);
+    }
+
+    @Override
+    public List<Long> getUserGroupBizIds(String groupBizCode, BaseRequest baseRequest) {
+        // 拼接分组相关的查询条件
+        String conditionGroupName = baseRequest.getConditionGroupName();
+        List<Long> userBizIds = new ArrayList<>();
+
+        // 如果查询的是所有分组，就是查询所有的数据，不需要拼接条件
+        if (ObjectUtil.isNotEmpty(conditionGroupName) && !conditionGroupName.equals(GroupConstants.ALL_GROUP_NAME)) {
+
+            SysGroupRequest sysGroupRequest = new SysGroupRequest();
+            sysGroupRequest.setGroupBizCode(groupBizCode);
+
+            // 查詢的不是未分组，则需要拼接一个groupName
+            if (!getRequestUnGroupedFlag(baseRequest)) {
+                sysGroupRequest.setGroupName(conditionGroupName);
+            }
+
+            // 获取到筛选条件的结果
+            userBizIds = this.findUserGroupDataList(sysGroupRequest);
+        }
+
+        return userBizIds;
+    }
+
     /**
      * 返回结果增加通用的两个分组名称
      *
@@ -164,6 +197,5 @@ public class SysGroupServiceImpl extends ServiceImpl<SysGroupMapper, SysGroup> i
         result.add(0, noneGroup);
         result.add(0, addGroup);
     }
-
 
 }
