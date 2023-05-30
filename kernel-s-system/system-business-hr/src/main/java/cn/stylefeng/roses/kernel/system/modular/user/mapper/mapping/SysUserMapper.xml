@@ -18,6 +18,7 @@
         suser.status_flag as statusFlag,
         suorg.position_id as positionId,
         hpos.position_name as positionName,
+        hrorg.org_id as orgId,
         hrorg.org_name as orgName,
         suser.create_time as createTime
         from sys_user suser
