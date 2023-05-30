@@ -24,7 +24,10 @@
  */
 package cn.stylefeng.roses.kernel.rule.pojo.request;
 
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.util.SqlInjectionDetector;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -163,6 +166,29 @@ public class BaseRequest implements Serializable {
      * 参数校验分组：批量删除
      */
     public @interface batchDelete {
+    }
+
+    /**
+     * 获取排序的结尾拼接sql
+     * <p>
+     * 根据orderBy和sortBy参数，这俩参数均进行过sql注入过滤
+     *
+     * @author fengshuonan
+     * @since 2023/5/30 16:29
+     */
+    public String getOrderByLastSql() {
+
+        if (ObjectUtil.isEmpty(this.orderBy) || ObjectUtil.isEmpty(this.sortBy)) {
+            return StrUtil.EMPTY;
+        }
+
+        // 检测这俩参数有没有注入风险
+        if (SqlInjectionDetector.hasSqlInjection(this.orderBy) || SqlInjectionDetector.hasSqlInjection(this.sortBy)) {
+            return StrUtil.EMPTY;
+        }
+
+        // 进行order by语句的拼接
+        return " order by " + this.orderBy + " " + this.sortBy + " ";
     }
 
 }
