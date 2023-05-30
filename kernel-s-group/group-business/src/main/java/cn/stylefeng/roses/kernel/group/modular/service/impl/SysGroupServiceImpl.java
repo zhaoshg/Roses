@@ -3,6 +3,7 @@ package cn.stylefeng.roses.kernel.group.modular.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
+import cn.stylefeng.roses.kernel.group.api.callback.GroupNameRenderApi;
 import cn.stylefeng.roses.kernel.group.api.constants.GroupConstants;
 import cn.stylefeng.roses.kernel.group.api.pojo.SysGroupDTO;
 import cn.stylefeng.roses.kernel.group.api.pojo.SysGroupRequest;
@@ -152,6 +153,24 @@ public class SysGroupServiceImpl extends ServiceImpl<SysGroupMapper, SysGroup> i
         }
 
         return userBizIds;
+    }
+
+    @Override
+    public void renderBizListGroupName(String groupBizCode, List<GroupNameRenderApi> businessList) {
+
+        // 查询结果中有没有用户挂标签的，有的话就返回中文分组名称
+        SysGroupRequest sysGroupRequest = new SysGroupRequest();
+        sysGroupRequest.setGroupBizCode(groupBizCode);
+        List<SysGroupDTO> list = this.findGroupList(sysGroupRequest, true);
+
+        // 增加返回结果的分组名称
+        for (SysGroupDTO sysGroupDTO : list) {
+            for (GroupNameRenderApi item : businessList) {
+                if (item.getRenderBusinessId().equals(sysGroupDTO.getBusinessId())) {
+                    item.renderGroupName(sysGroupDTO.getGroupName());
+                }
+            }
+        }
     }
 
     /**

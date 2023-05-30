@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.group.api;
 
+import cn.stylefeng.roses.kernel.group.api.callback.GroupNameRenderApi;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 
 import java.util.List;
@@ -58,5 +59,14 @@ public interface GroupConditionApi {
      * @since 2023/5/30 16:49
      */
     List<Long> getUserGroupBizIds(String groupBizCode, BaseRequest baseRequest);
+
+    /**
+     * 将业务的数据集合渲染分组名称
+     *
+     * @param businessList 业务的数据集合
+     * @author fengshuonan
+     * @since 2023/5/30 17:15
+     */
+    void renderBizListGroupName(String groupBizCode, List<GroupNameRenderApi> businessList);
 
 }
