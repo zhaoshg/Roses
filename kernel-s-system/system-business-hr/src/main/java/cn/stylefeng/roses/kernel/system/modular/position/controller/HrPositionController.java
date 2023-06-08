@@ -22,7 +22,7 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.system.modular.organization.controller;
+package cn.stylefeng.roses.kernel.system.modular.position.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
@@ -35,8 +35,8 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrPositionDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrPositionRequest;
-import cn.stylefeng.roses.kernel.system.modular.organization.entity.HrPosition;
-import cn.stylefeng.roses.kernel.system.modular.organization.service.HrPositionService;
+import cn.stylefeng.roses.kernel.system.modular.position.entity.HrPosition;
+import cn.stylefeng.roses.kernel.system.modular.position.service.HrPositionService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

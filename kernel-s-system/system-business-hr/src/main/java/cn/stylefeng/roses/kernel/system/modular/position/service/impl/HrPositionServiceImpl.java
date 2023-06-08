@@ -22,7 +22,7 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.system.modular.organization.service.impl;
+package cn.stylefeng.roses.kernel.system.modular.position.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
@@ -39,9 +39,9 @@ import cn.stylefeng.roses.kernel.system.api.exception.SystemModularException;
 import cn.stylefeng.roses.kernel.system.api.exception.enums.organization.PositionExceptionEnum;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrPositionDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrPositionRequest;
-import cn.stylefeng.roses.kernel.system.modular.organization.entity.HrPosition;
-import cn.stylefeng.roses.kernel.system.modular.organization.mapper.HrPositionMapper;
-import cn.stylefeng.roses.kernel.system.modular.organization.service.HrPositionService;
+import cn.stylefeng.roses.kernel.system.modular.position.entity.HrPosition;
+import cn.stylefeng.roses.kernel.system.modular.position.mapper.HrPositionMapper;
+import cn.stylefeng.roses.kernel.system.modular.position.service.HrPositionService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
