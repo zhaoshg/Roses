@@ -18,7 +18,6 @@
     <modules>
         <module>sys-api</module>
         <module>sys-business</module>
-        <module>sys-sdk</module>
         <module>sys-spring-boot-starter</module>
     </modules>
 
