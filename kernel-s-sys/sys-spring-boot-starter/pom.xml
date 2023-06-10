@@ -20,7 +20,7 @@
         <!--基础核心业务业务模块-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>sys-business</artifactId>
+            <artifactId>sys-business-hr</artifactId>
             <version>${roses.version}</version>
         </dependency>   
 

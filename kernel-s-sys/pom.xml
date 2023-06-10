@@ -17,7 +17,9 @@
 
     <modules>
         <module>sys-api</module>
-        <module>sys-business</module>
+        <module>sys-business-hr</module>
+        <module>sys-business-permission</module>
+        <module>sys-business-portal</module>
         <module>sys-spring-boot-starter</module>
     </modules>
 

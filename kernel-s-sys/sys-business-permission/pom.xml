@@ -11,7 +11,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>sys-business</artifactId>
+    <artifactId>sys-business-permission</artifactId>
 
     <packaging>jar</packaging>
 
