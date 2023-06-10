@@ -1,0 +1,74 @@
+package cn.stylefeng.roses.kernel.sys.modular.user.service;
+
+import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
+import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserOrgRequest;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
+
+/**
+ * 用户组织机构关联 服务类
+ *
+ * @author fengshuonan
+ * @date 2023/06/10 21:26
+ */
+public interface SysUserOrgService extends IService<SysUserOrg> {
+
+	/**
+     * 新增
+     *
+     * @param sysUserOrgRequest 请求参数
+     * @author fengshuonan
+     * @date 2023/06/10 21:26
+     */
+    void add(SysUserOrgRequest sysUserOrgRequest);
+
+	/**
+     * 删除
+     *
+     * @param sysUserOrgRequest 请求参数
+     * @author fengshuonan
+     * @date 2023/06/10 21:26
+     */
+    void del(SysUserOrgRequest sysUserOrgRequest);
+
+	/**
+     * 编辑
+     *
+     * @param sysUserOrgRequest 请求参数
+     * @author fengshuonan
+     * @date 2023/06/10 21:26
+     */
+    void edit(SysUserOrgRequest sysUserOrgRequest);
+
+	/**
+     * 查询详情
+     *
+     * @param sysUserOrgRequest 请求参数
+     * @author fengshuonan
+     * @date 2023/06/10 21:26
+     */
+    SysUserOrg detail(SysUserOrgRequest sysUserOrgRequest);
+
+	/**
+     * 获取列表
+     *
+     * @param sysUserOrgRequest        请求参数
+     * @return List<SysUserOrg>   返回结果
+     * @author fengshuonan
+     * @date 2023/06/10 21:26
+     */
+    List<SysUserOrg> findList(SysUserOrgRequest sysUserOrgRequest);
+
+	/**
+     * 获取列表（带分页）
+     *
+     * @param sysUserOrgRequest              请求参数
+     * @return PageResult<SysUserOrg>   返回结果
+     * @author fengshuonan
+     * @date 2023/06/10 21:26
+     */
+    PageResult<SysUserOrg> findPage(SysUserOrgRequest sysUserOrgRequest);
+
+}
