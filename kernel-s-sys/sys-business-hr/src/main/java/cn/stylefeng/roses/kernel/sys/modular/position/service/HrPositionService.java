@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface HrPositionService extends IService<HrPosition> {
 
-	/**
+    /**
      * 新增
      *
      * @param hrPositionRequest 请求参数
@@ -24,7 +24,7 @@ public interface HrPositionService extends IService<HrPosition> {
      */
     void add(HrPositionRequest hrPositionRequest);
 
-	/**
+    /**
      * 删除
      *
      * @param hrPositionRequest 请求参数
@@ -33,7 +33,15 @@ public interface HrPositionService extends IService<HrPosition> {
      */
     void del(HrPositionRequest hrPositionRequest);
 
-	/**
+    /**
+     * 批量删除职位
+     *
+     * @author fengshuonan
+     * @since 2023/6/11 17:14
+     */
+    void batchDelete(HrPositionRequest hrPositionRequest);
+
+    /**
      * 编辑
      *
      * @param hrPositionRequest 请求参数
@@ -42,7 +50,7 @@ public interface HrPositionService extends IService<HrPosition> {
      */
     void edit(HrPositionRequest hrPositionRequest);
 
-	/**
+    /**
      * 查询详情
      *
      * @param hrPositionRequest 请求参数
@@ -51,20 +59,20 @@ public interface HrPositionService extends IService<HrPosition> {
      */
     HrPosition detail(HrPositionRequest hrPositionRequest);
 
-	/**
+    /**
      * 获取列表
      *
-     * @param hrPositionRequest        请求参数
+     * @param hrPositionRequest 请求参数
      * @return List<HrPosition>   返回结果
      * @author fengshuonan
      * @date 2023/06/10 21:25
      */
     List<HrPosition> findList(HrPositionRequest hrPositionRequest);
 
-	/**
+    /**
      * 获取列表（带分页）
      *
-     * @param hrPositionRequest              请求参数
+     * @param hrPositionRequest 请求参数
      * @return PageResult<HrPosition>   返回结果
      * @author fengshuonan
      * @date 2023/06/10 21:25

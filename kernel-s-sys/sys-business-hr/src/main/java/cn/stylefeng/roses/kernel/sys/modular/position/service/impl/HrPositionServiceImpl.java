@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -39,6 +40,13 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
     public void del(HrPositionRequest hrPositionRequest) {
         HrPosition hrPosition = this.queryHrPosition(hrPositionRequest);
         this.removeById(hrPosition.getPositionId());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void batchDelete(HrPositionRequest hrPositionRequest) {
+        List<Long> positionIdList = hrPositionRequest.getPositionIdList();
+        this.removeBatchByIds(positionIdList);
     }
 
     @Override
