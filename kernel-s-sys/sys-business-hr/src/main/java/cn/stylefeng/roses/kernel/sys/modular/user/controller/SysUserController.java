@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * 系统用户控制器
@@ -74,17 +73,6 @@ public class SysUserController {
     @GetResource(name = "查看详情", path = "/sysUser/detail")
     public ResponseData<SysUser> detail(@Validated(SysUserRequest.detail.class) SysUserRequest sysUserRequest) {
         return new SuccessResponseData<>(sysUserService.detail(sysUserRequest));
-    }
-
-    /**
-     * 获取列表
-     *
-     * @author fengshuonan
-     * @date 2023/06/10 21:26
-     */
-    @GetResource(name = "获取列表", path = "/sysUser/list")
-    public ResponseData<List<SysUser>> list(SysUserRequest sysUserRequest) {
-        return new SuccessResponseData<>(sysUserService.findList(sysUserRequest));
     }
 
     /**

@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -133,6 +134,13 @@ public class SysUser extends BaseExpandFieldEntity {
     @TableField("last_login_time")
     @ChineseDescription("最后登陆时间")
     private Date lastLoginTime;
+
+    /**
+     * 用户的排序
+     */
+    @TableField("user_sort")
+    @ChineseDescription("用户的排序")
+    private BigDecimal userSort;
 
     /**
      * 对接外部主数据的用户id

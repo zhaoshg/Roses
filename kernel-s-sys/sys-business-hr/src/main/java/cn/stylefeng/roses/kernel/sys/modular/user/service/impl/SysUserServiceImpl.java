@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
@@ -27,7 +28,7 @@ import java.util.List;
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
-	@Override
+    @Override
     public void add(SysUserRequest sysUserRequest) {
         SysUser sysUser = new SysUser();
         BeanUtil.copyProperties(sysUserRequest, sysUser);
@@ -55,6 +56,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public PageResult<SysUser> findPage(SysUserRequest sysUserRequest) {
         LambdaQueryWrapper<SysUser> wrapper = createWrapper(sysUserRequest);
+
+        // 只查询需要的字段
+        wrapper.select(SysUser::getUserId, SysUser::getRealName, SysUser::getAccount, SysUser::getSex, SysUser::getStatusFlag, BaseEntity::getCreateTime);
+
         Page<SysUser> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
     }
@@ -88,49 +93,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private LambdaQueryWrapper<SysUser> createWrapper(SysUserRequest sysUserRequest) {
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long userId = sysUserRequest.getUserId();
-        String realName = sysUserRequest.getRealName();
-        String nickName = sysUserRequest.getNickName();
-        String account = sysUserRequest.getAccount();
-        String password = sysUserRequest.getPassword();
-        Long avatar = sysUserRequest.getAvatar();
-        String birthday = sysUserRequest.getBirthday();
-        String sex = sysUserRequest.getSex();
-        String email = sysUserRequest.getEmail();
-        String phone = sysUserRequest.getPhone();
-        String tel = sysUserRequest.getTel();
-        String superAdminFlag = sysUserRequest.getSuperAdminFlag();
-        Integer statusFlag = sysUserRequest.getStatusFlag();
-        Integer loginCount = sysUserRequest.getLoginCount();
-        String lastLoginIp = sysUserRequest.getLastLoginIp();
-        String lastLoginTime = sysUserRequest.getLastLoginTime();
-        String masterUserId = sysUserRequest.getMasterUserId();
-        String expandField = sysUserRequest.getExpandField();
-        Long versionFlag = sysUserRequest.getVersionFlag();
-        String delFlag = sysUserRequest.getDelFlag();
-        Long tenantId = sysUserRequest.getTenantId();
+        // 根据输入内容进行查询
+        String searchText = sysUserRequest.getSearchText();
+        if (ObjectUtil.isNotEmpty(searchText)) {
+            queryWrapper.like(SysUser::getRealName, searchText);
+            queryWrapper.or().like(SysUser::getAccount, searchText);
+        }
 
-        queryWrapper.eq(ObjectUtil.isNotNull(userId), SysUser::getUserId, userId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(realName), SysUser::getRealName, realName);
-        queryWrapper.like(ObjectUtil.isNotEmpty(nickName), SysUser::getNickName, nickName);
-        queryWrapper.like(ObjectUtil.isNotEmpty(account), SysUser::getAccount, account);
-        queryWrapper.like(ObjectUtil.isNotEmpty(password), SysUser::getPassword, password);
-        queryWrapper.eq(ObjectUtil.isNotNull(avatar), SysUser::getAvatar, avatar);
-        queryWrapper.eq(ObjectUtil.isNotNull(birthday), SysUser::getBirthday, birthday);
-        queryWrapper.like(ObjectUtil.isNotEmpty(sex), SysUser::getSex, sex);
-        queryWrapper.like(ObjectUtil.isNotEmpty(email), SysUser::getEmail, email);
-        queryWrapper.like(ObjectUtil.isNotEmpty(phone), SysUser::getPhone, phone);
-        queryWrapper.like(ObjectUtil.isNotEmpty(tel), SysUser::getTel, tel);
-        queryWrapper.like(ObjectUtil.isNotEmpty(superAdminFlag), SysUser::getSuperAdminFlag, superAdminFlag);
-        queryWrapper.eq(ObjectUtil.isNotNull(statusFlag), SysUser::getStatusFlag, statusFlag);
-        queryWrapper.eq(ObjectUtil.isNotNull(loginCount), SysUser::getLoginCount, loginCount);
-        queryWrapper.like(ObjectUtil.isNotEmpty(lastLoginIp), SysUser::getLastLoginIp, lastLoginIp);
-        queryWrapper.eq(ObjectUtil.isNotNull(lastLoginTime), SysUser::getLastLoginTime, lastLoginTime);
-        queryWrapper.like(ObjectUtil.isNotEmpty(masterUserId), SysUser::getMasterUserId, masterUserId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(expandField), SysUser::getExpandField, expandField);
-        queryWrapper.eq(ObjectUtil.isNotNull(versionFlag), SysUser::getVersionFlag, versionFlag);
-        queryWrapper.like(ObjectUtil.isNotEmpty(delFlag), SysUser::getDelFlag, delFlag);
-        queryWrapper.eq(ObjectUtil.isNotNull(tenantId), SysUser::getTenantId, tenantId);
+        // 根据状态进行查询
+        Integer statusFlag = sysUserRequest.getStatusFlag();
+        queryWrapper.eq(ObjectUtil.isNotEmpty(statusFlag), SysUser::getStatusFlag, statusFlag);
+
+        // 按用户排序字段排序
+        queryWrapper.orderByAsc(SysUser::getUserSort);
 
         return queryWrapper;
     }
