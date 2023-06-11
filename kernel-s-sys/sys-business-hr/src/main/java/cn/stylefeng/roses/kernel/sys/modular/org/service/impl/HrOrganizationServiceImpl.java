@@ -163,6 +163,10 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
             queryWrapper.or().like(HrOrganization::getRemark, searchText);
         }
 
+        // 根据机构状态查询
+        Integer statusFlag = hrOrganizationRequest.getStatusFlag();
+        queryWrapper.eq(ObjectUtil.isNotNull(statusFlag), HrOrganization::getStatusFlag, statusFlag);
+
         // 根据排序正序查询
         queryWrapper.orderByAsc(HrOrganization::getOrgSort);
 
