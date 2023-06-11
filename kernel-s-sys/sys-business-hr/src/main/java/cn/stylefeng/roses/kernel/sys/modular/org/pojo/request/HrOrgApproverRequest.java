@@ -20,7 +20,6 @@ public class HrOrgApproverRequest extends BaseRequest {
     /**
      * 主键id
      */
-    @NotNull(message = "主键id不能为空", groups = {edit.class, delete.class})
     @ChineseDescription("主键id")
     private Long orgApproverId;
 
@@ -34,6 +33,7 @@ public class HrOrgApproverRequest extends BaseRequest {
      * 组织机构id
      */
     @ChineseDescription("组织机构id")
+    @NotNull(message = "组织机构id不能为空", groups = {list.class})
     private Long orgId;
 
     /**

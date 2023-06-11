@@ -24,13 +24,23 @@
  */
 package cn.stylefeng.roses.kernel.sys.api;
 
+import cn.stylefeng.roses.kernel.sys.api.pojo.SysUserDTO;
+
 /**
  * 基础核心业务Api
  *
  * @author fengshuonan
  * @date 2023-06-10 20:50:43
  */
-public interface SysApi {
+public interface SysUserServiceApi {
 
+    /**
+     * 根据用户ID获取用户信息
+     *
+     * @param userId 用户ID
+     * @author majianguo
+     * @since 2021/1/9 19:00
+     */
+    SysUserDTO getUserInfoByUserId(Long userId);
 
 }

@@ -2,12 +2,15 @@ package cn.stylefeng.roses.kernel.sys.modular.org.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.ApproverBindUserItem;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.List;
 
 /**
  * 组织机构审批人实例类
@@ -54,5 +57,16 @@ public class HrOrgApprover extends BaseEntity {
     @TableField("tenant_id")
     @ChineseDescription("租户id")
     private Long tenantId;
+
+    //-------------------------------非实体字段-------------------------------
+    //-------------------------------非实体字段-------------------------------
+    //-------------------------------非实体字段-------------------------------
+
+    /**
+     * 绑定人员信息
+     */
+    @TableField(exist = false)
+    @ChineseDescription("绑定人员信息")
+    private List<ApproverBindUserItem> bindUserItemList;
 
 }

@@ -81,4 +81,12 @@ public interface HrOrgApproverService extends IService<HrOrgApprover> {
      */
     List<SimpleDict> getApproverTypeList();
 
+    /**
+     * 获取组织机构绑定的审批人列表
+     *
+     * @author fengshuonan
+     * @since 2023/6/11 15:23
+     */
+    List<HrOrgApprover> getOrgApproverList(HrOrgApproverRequest hrOrgApproverRequest);
+
 }

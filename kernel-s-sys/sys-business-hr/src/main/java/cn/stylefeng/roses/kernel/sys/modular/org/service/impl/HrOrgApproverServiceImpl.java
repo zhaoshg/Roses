@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
@@ -12,8 +13,10 @@ import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.org.constants.ApproverConstants;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrgApprover;
 import cn.stylefeng.roses.kernel.sys.modular.org.enums.HrOrgApproverExceptionEnum;
+import cn.stylefeng.roses.kernel.sys.modular.org.factory.OrgApproverFactory;
 import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrgApproverMapper;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrgApproverRequest;
+import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.ApproverBindUserItem;
 import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrgApproverService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -22,8 +25,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 组织机构审批人业务实现层
@@ -72,6 +78,44 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
     @Override
     public List<SimpleDict> getApproverTypeList() {
         return dictApi.getDictDetailsByDictTypeCode(ApproverConstants.APPROVER_TYPE_DICT_TYPE_CODE);
+    }
+
+    @Override
+    public List<HrOrgApprover> getOrgApproverList(HrOrgApproverRequest hrOrgApproverRequest) {
+
+        // 获取当前系统的审批人类型列表
+        List<SimpleDict> approverTypeList = this.getApproverTypeList();
+
+        // 获取指定机构的绑定情况
+        LambdaQueryWrapper<HrOrgApprover> hrOrgApproverLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        hrOrgApproverLambdaQueryWrapper.eq(HrOrgApprover::getOrgId, hrOrgApproverRequest.getOrgId());
+        List<HrOrgApprover> orgTotalBindingList = this.list(hrOrgApproverLambdaQueryWrapper);
+        if (ObjectUtil.isEmpty(orgTotalBindingList)) {
+            return new ArrayList<>();
+        }
+
+        // 将每个类型的用户分组，key是审批组类型，value是该组下的用户
+        Map<Integer, List<HrOrgApprover>> groupingByUsers = orgTotalBindingList.stream().collect(Collectors.groupingBy(HrOrgApprover::getOrgApproverType));
+
+        // 先初始化空的绑定情况列表
+        ArrayList<HrOrgApprover> resultList = new ArrayList<>();
+        for (SimpleDict orgApproverType : approverTypeList) {
+            HrOrgApprover hrOrgApprover = new HrOrgApprover();
+
+            // 设置类型
+            hrOrgApprover.setOrgApproverType(Convert.toInt(orgApproverType.getCode()));
+
+            // 设置该类型下的审批人列表
+            List<HrOrgApprover> userList = groupingByUsers.get(hrOrgApprover.getOrgApproverType());
+            if (ObjectUtil.isNotEmpty(userList)) {
+                List<ApproverBindUserItem> bindUserItems = OrgApproverFactory.convertUserItem(userList);
+                hrOrgApprover.setBindUserItemList(bindUserItems);
+            }
+
+            resultList.add(hrOrgApprover);
+        }
+
+        return resultList;
     }
 
     @Override

@@ -5,7 +5,10 @@ import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
+import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrgApprover;
+import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrgApproverRequest;
 import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrgApproverService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -33,6 +36,17 @@ public class HrOrgApproverController {
     @GetResource(name = "获取组织机构审批人类型列表", path = "/hrOrgApprover/getApproverTypeList")
     public ResponseData<List<SimpleDict>> getApproverTypeList() {
         return new SuccessResponseData<>(hrOrgApproverService.getApproverTypeList());
+    }
+
+    /**
+     * 获取组织机构审批人绑定列表
+     *
+     * @author fengshuonan
+     * @since 2022/09/13 23:15
+     */
+    @GetResource(name = "获取组织机构审批人绑定列表", path = "/hrOrgApprover/getBindingList")
+    public ResponseData<List<HrOrgApprover>> getOrgApproverList(@Validated(HrOrgApproverRequest.list.class) HrOrgApproverRequest hrOrgApproverRequest) {
+        return new SuccessResponseData<>(hrOrgApproverService.getOrgApproverList(hrOrgApproverRequest));
     }
 
 }
