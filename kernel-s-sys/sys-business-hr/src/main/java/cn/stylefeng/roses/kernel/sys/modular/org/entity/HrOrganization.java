@@ -1,7 +1,8 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.entity;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.tree.factory.base.AbstractTreeNode;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -10,6 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 组织机构信息实例类
@@ -17,10 +19,10 @@ import java.math.BigDecimal;
  * @author fengshuonan
  * @date 2023/06/10 21:23
  */
-@TableName("hr_organization")
+@TableName(value = "hr_organization", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class HrOrganization extends BaseEntity {
+public class HrOrganization extends BaseExpandFieldEntity implements AbstractTreeNode<HrOrganization> {
 
     /**
      * 主键
@@ -120,32 +122,37 @@ public class HrOrganization extends BaseEntity {
     @ChineseDescription("对接外部主数据的父级机构id")
     private String masterOrgParentId;
 
-    /**
-     * 拓展字段
-     */
-    @TableField("expand_field")
-    @ChineseDescription("拓展字段")
-    private String expandField;
+    //-------------------------------非实体字段-------------------------------
+    //-------------------------------非实体字段-------------------------------
+    //-------------------------------非实体字段-------------------------------
 
     /**
-     * 乐观锁
+     * 子节点的集合
      */
-    @TableField("version_flag")
-    @ChineseDescription("乐观锁")
-    private Long versionFlag;
+    @ChineseDescription("子节点的集合")
+    private List<HrOrganization> children;
 
-    /**
-     * 删除标记：Y-已删除，N-未删除
-     */
-    @TableField("del_flag")
-    @ChineseDescription("删除标记：Y-已删除，N-未删除")
-    private String delFlag;
+    @Override
+    public String getNodeId() {
+        if (this.orgId == null) {
+            return null;
+        } else {
+            return this.orgId.toString();
+        }
+    }
 
-    /**
-     * 租户号
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户号")
-    private Long tenantId;
+    @Override
+    public String getNodeParentId() {
+        if (this.orgParentId == null) {
+            return null;
+        } else {
+            return this.orgParentId.toString();
+        }
+    }
+
+    @Override
+    public void setChildrenNodes(List<HrOrganization> childrenNodes) {
+        this.children = childrenNodes;
+    }
 
 }

@@ -2,12 +2,15 @@ package cn.stylefeng.roses.kernel.sys.modular.org.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.enums.HrOrganizationExceptionEnum;
+import cn.stylefeng.roses.kernel.sys.modular.org.factory.OrganizationFactory;
 import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrganizationMapper;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrganizationRequest;
 import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrganizationService;
@@ -16,8 +19,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 组织机构信息业务实现层
@@ -28,7 +32,7 @@ import java.util.List;
 @Service
 public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper, HrOrganization> implements HrOrganizationService {
 
-	@Override
+    @Override
     public void add(HrOrganizationRequest hrOrganizationRequest) {
         HrOrganization hrOrganization = new HrOrganization();
         BeanUtil.copyProperties(hrOrganizationRequest, hrOrganization);
@@ -54,6 +58,12 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     @Override
+    public List<HrOrganization> findList(HrOrganizationRequest hrOrganizationRequest) {
+        LambdaQueryWrapper<HrOrganization> wrapper = this.createWrapper(hrOrganizationRequest);
+        return this.list(wrapper);
+    }
+
+    @Override
     public PageResult<HrOrganization> findPage(HrOrganizationRequest hrOrganizationRequest) {
         LambdaQueryWrapper<HrOrganization> wrapper = createWrapper(hrOrganizationRequest);
         Page<HrOrganization> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
@@ -61,9 +71,33 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     @Override
-    public List<HrOrganization> findList(HrOrganizationRequest hrOrganizationRequest) {
+    public List<HrOrganization> commonOrgTree(HrOrganizationRequest hrOrganizationRequest) {
+
+        // 根据条件查询组织机构列表
         LambdaQueryWrapper<HrOrganization> wrapper = this.createWrapper(hrOrganizationRequest);
-        return this.list(wrapper);
+        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgParentId, HrOrganization::getOrgPids,
+                HrOrganization::getOrgName, HrOrganization::getOrgSort, HrOrganization::getOrgType);
+        List<HrOrganization> hrOrganizationList = this.list(wrapper);
+
+        if (ObjectUtil.isEmpty(hrOrganizationList)) {
+            return hrOrganizationList;
+        }
+
+        // 如果查询条件不为空，则把相关的查询结果的父级也查询出来，组成一颗完整树
+        String searchText = hrOrganizationRequest.getSearchText();
+        List<HrOrganization> parentOrgList = new ArrayList<>();
+        if (ObjectUtil.isNotEmpty(searchText)) {
+            Set<Long> orgParentIdList = OrganizationFactory.getOrgParentIdList(hrOrganizationList);
+            LambdaQueryWrapper<HrOrganization> parentWrapper = new LambdaQueryWrapper<>();
+            parentWrapper.in(HrOrganization::getOrgId, orgParentIdList);
+            parentOrgList = this.list(parentWrapper);
+        }
+
+        // 合并两个集合
+        hrOrganizationList.addAll(parentOrgList);
+
+        // 构建树形结构
+        return new DefaultTreeBuildFactory<HrOrganization>().doTreeBuild(hrOrganizationList);
     }
 
     /**
@@ -89,43 +123,18 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     private LambdaQueryWrapper<HrOrganization> createWrapper(HrOrganizationRequest hrOrganizationRequest) {
         LambdaQueryWrapper<HrOrganization> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long orgId = hrOrganizationRequest.getOrgId();
-        Long orgParentId = hrOrganizationRequest.getOrgParentId();
-        String orgPids = hrOrganizationRequest.getOrgPids();
-        String orgName = hrOrganizationRequest.getOrgName();
-        String orgShortName = hrOrganizationRequest.getOrgShortName();
-        String orgCode = hrOrganizationRequest.getOrgCode();
-        BigDecimal orgSort = hrOrganizationRequest.getOrgSort();
-        Integer statusFlag = hrOrganizationRequest.getStatusFlag();
-        Integer orgType = hrOrganizationRequest.getOrgType();
-        String taxNo = hrOrganizationRequest.getTaxNo();
-        String remark = hrOrganizationRequest.getRemark();
-        Integer orgLevel = hrOrganizationRequest.getOrgLevel();
-        String masterOrgId = hrOrganizationRequest.getMasterOrgId();
-        String masterOrgParentId = hrOrganizationRequest.getMasterOrgParentId();
-        String expandField = hrOrganizationRequest.getExpandField();
-        Long versionFlag = hrOrganizationRequest.getVersionFlag();
-        String delFlag = hrOrganizationRequest.getDelFlag();
-        Long tenantId = hrOrganizationRequest.getTenantId();
+        // 如果按文本查询条件不为空，则判断组织机构名称、简称、税号、备注是否有匹配
+        String searchText = hrOrganizationRequest.getSearchText();
+        if (StrUtil.isNotEmpty(searchText)) {
+            queryWrapper.like(HrOrganization::getOrgName, searchText);
+            queryWrapper.or().like(HrOrganization::getOrgShortName, searchText);
+            queryWrapper.or().like(HrOrganization::getTaxNo, searchText);
+            queryWrapper.or().like(HrOrganization::getOrgCode, searchText);
+            queryWrapper.or().like(HrOrganization::getRemark, searchText);
+        }
 
-        queryWrapper.eq(ObjectUtil.isNotNull(orgId), HrOrganization::getOrgId, orgId);
-        queryWrapper.eq(ObjectUtil.isNotNull(orgParentId), HrOrganization::getOrgParentId, orgParentId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(orgPids), HrOrganization::getOrgPids, orgPids);
-        queryWrapper.like(ObjectUtil.isNotEmpty(orgName), HrOrganization::getOrgName, orgName);
-        queryWrapper.like(ObjectUtil.isNotEmpty(orgShortName), HrOrganization::getOrgShortName, orgShortName);
-        queryWrapper.like(ObjectUtil.isNotEmpty(orgCode), HrOrganization::getOrgCode, orgCode);
-        queryWrapper.eq(ObjectUtil.isNotNull(orgSort), HrOrganization::getOrgSort, orgSort);
-        queryWrapper.eq(ObjectUtil.isNotNull(statusFlag), HrOrganization::getStatusFlag, statusFlag);
-        queryWrapper.eq(ObjectUtil.isNotNull(orgType), HrOrganization::getOrgType, orgType);
-        queryWrapper.like(ObjectUtil.isNotEmpty(taxNo), HrOrganization::getTaxNo, taxNo);
-        queryWrapper.like(ObjectUtil.isNotEmpty(remark), HrOrganization::getRemark, remark);
-        queryWrapper.eq(ObjectUtil.isNotNull(orgLevel), HrOrganization::getOrgLevel, orgLevel);
-        queryWrapper.like(ObjectUtil.isNotEmpty(masterOrgId), HrOrganization::getMasterOrgId, masterOrgId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(masterOrgParentId), HrOrganization::getMasterOrgParentId, masterOrgParentId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(expandField), HrOrganization::getExpandField, expandField);
-        queryWrapper.eq(ObjectUtil.isNotNull(versionFlag), HrOrganization::getVersionFlag, versionFlag);
-        queryWrapper.like(ObjectUtil.isNotEmpty(delFlag), HrOrganization::getDelFlag, delFlag);
-        queryWrapper.eq(ObjectUtil.isNotNull(tenantId), HrOrganization::getTenantId, tenantId);
+        // 根据排序正序查询
+        queryWrapper.orderByAsc(HrOrganization::getOrgSort);
 
         return queryWrapper;
     }

@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface HrOrganizationService extends IService<HrOrganization> {
 
-	/**
+    /**
      * 新增
      *
      * @param hrOrganizationRequest 请求参数
@@ -24,7 +24,7 @@ public interface HrOrganizationService extends IService<HrOrganization> {
      */
     void add(HrOrganizationRequest hrOrganizationRequest);
 
-	/**
+    /**
      * 删除
      *
      * @param hrOrganizationRequest 请求参数
@@ -33,7 +33,7 @@ public interface HrOrganizationService extends IService<HrOrganization> {
      */
     void del(HrOrganizationRequest hrOrganizationRequest);
 
-	/**
+    /**
      * 编辑
      *
      * @param hrOrganizationRequest 请求参数
@@ -42,7 +42,7 @@ public interface HrOrganizationService extends IService<HrOrganization> {
      */
     void edit(HrOrganizationRequest hrOrganizationRequest);
 
-	/**
+    /**
      * 查询详情
      *
      * @param hrOrganizationRequest 请求参数
@@ -51,24 +51,34 @@ public interface HrOrganizationService extends IService<HrOrganization> {
      */
     HrOrganization detail(HrOrganizationRequest hrOrganizationRequest);
 
-	/**
+    /**
      * 获取列表
      *
-     * @param hrOrganizationRequest        请求参数
+     * @param hrOrganizationRequest 请求参数
      * @return List<HrOrganization>   返回结果
      * @author fengshuonan
      * @date 2023/06/10 21:23
      */
     List<HrOrganization> findList(HrOrganizationRequest hrOrganizationRequest);
 
-	/**
+    /**
      * 获取列表（带分页）
      *
-     * @param hrOrganizationRequest              请求参数
+     * @param hrOrganizationRequest 请求参数
      * @return PageResult<HrOrganization>   返回结果
      * @author fengshuonan
      * @date 2023/06/10 21:23
      */
     PageResult<HrOrganization> findPage(HrOrganizationRequest hrOrganizationRequest);
+
+    /**
+     * 通用获取组织机构树
+     * <p>
+     * ps：用在获取用户管理和组织机构管理界面左侧树
+     *
+     * @author fengshuonan
+     * @since 2023/6/11 10:40
+     */
+    List<HrOrganization> commonOrgTree(HrOrganizationRequest hrOrganizationRequest);
 
 }
