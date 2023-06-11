@@ -63,4 +63,16 @@ public class HrOrgApproverController {
         return new SuccessResponseData<>();
     }
 
+    /**
+     * 删除审批人的绑定
+     *
+     * @author fengshuonan
+     * @since 2022/09/13 23:15
+     */
+    @PostResource(name = "删除审批人的绑定", path = "/hrOrgApprover/delete")
+    public ResponseData<?> delete(@RequestBody @Validated(HrOrgApproverRequest.delete.class) HrOrgApproverRequest hrOrgApproverRequest) {
+        hrOrgApproverService.del(hrOrgApproverRequest);
+        return new SuccessResponseData<>();
+    }
+
 }

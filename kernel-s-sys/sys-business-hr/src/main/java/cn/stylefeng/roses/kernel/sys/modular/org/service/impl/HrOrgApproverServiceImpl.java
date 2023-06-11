@@ -1,11 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
-import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
-import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
-import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.dict.api.DictApi;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
@@ -20,7 +16,6 @@ import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.ApproverBindUserI
 import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrgApproverService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,35 +40,9 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
     private DictApi dictApi;
 
     @Override
-    public void add(HrOrgApproverRequest hrOrgApproverRequest) {
-        HrOrgApprover hrOrgApprover = new HrOrgApprover();
-        BeanUtil.copyProperties(hrOrgApproverRequest, hrOrgApprover);
-        this.save(hrOrgApprover);
-    }
-
-    @Override
     public void del(HrOrgApproverRequest hrOrgApproverRequest) {
-        HrOrgApprover hrOrgApprover = this.queryHrOrgApprover(hrOrgApproverRequest);
-        this.removeById(hrOrgApprover.getOrgApproverId());
-    }
-
-    @Override
-    public void edit(HrOrgApproverRequest hrOrgApproverRequest) {
-        HrOrgApprover hrOrgApprover = this.queryHrOrgApprover(hrOrgApproverRequest);
-        BeanUtil.copyProperties(hrOrgApproverRequest, hrOrgApprover);
-        this.updateById(hrOrgApprover);
-    }
-
-    @Override
-    public HrOrgApprover detail(HrOrgApproverRequest hrOrgApproverRequest) {
-        return this.queryHrOrgApprover(hrOrgApproverRequest);
-    }
-
-    @Override
-    public PageResult<HrOrgApprover> findPage(HrOrgApproverRequest hrOrgApproverRequest) {
-        LambdaQueryWrapper<HrOrgApprover> wrapper = createWrapper(hrOrgApproverRequest);
-        Page<HrOrgApprover> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
-        return PageResultFactory.createPageResult(sysRolePage);
+        LambdaQueryWrapper<HrOrgApprover> wrapper = this.createWrapper(hrOrgApproverRequest);
+        this.remove(wrapper);
     }
 
     @Override
@@ -164,12 +133,6 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
     }
 
     @Override
-    public List<HrOrgApprover> findList(HrOrgApproverRequest hrOrgApproverRequest) {
-        LambdaQueryWrapper<HrOrgApprover> wrapper = this.createWrapper(hrOrgApproverRequest);
-        return this.list(wrapper);
-    }
-
-    @Override
     public void validateHaveOrgBind(Set<Long> beRemovedOrgIdList) {
         // none
     }
@@ -211,6 +174,10 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
         // 根据组织机构id查询
         Long orgId = hrOrgApproverRequest.getOrgId();
         queryWrapper.eq(ObjectUtil.isNotNull(orgId), HrOrgApprover::getOrgId, orgId);
+
+        // 根据用户id查询
+        Long userId = hrOrgApproverRequest.getUserId();
+        queryWrapper.eq(ObjectUtil.isNotNull(userId), HrOrgApprover::getUserId, userId);
 
         return queryWrapper;
     }
