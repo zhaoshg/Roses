@@ -71,7 +71,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void edit(SysUserRequest sysUserRequest) {
         SysUser sysUser = this.querySysUser(sysUserRequest);
         BeanUtil.copyProperties(sysUserRequest, sysUser);
+
+        // 编辑不能修改密码
+        sysUser.setPassword(null);
+
+        // 更新用户详情信息
         this.updateById(sysUser);
+
+        // 更新用户的任职信息
+        sysUserOrgService.updateUserOrg(sysUser.getUserId(), sysUserRequest.getUserOrgList());
     }
 
     @Override
