@@ -5,8 +5,11 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.dict.api.DictApi;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
+import cn.stylefeng.roses.kernel.sys.modular.org.constants.ApproverConstants;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrgApprover;
 import cn.stylefeng.roses.kernel.sys.modular.org.enums.HrOrgApproverExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrgApproverMapper;
@@ -18,6 +21,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +33,9 @@ import java.util.Set;
  */
 @Service
 public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, HrOrgApprover> implements HrOrgApproverService, RemoveOrgCallbackApi {
+
+    @Resource
+    private DictApi dictApi;
 
     @Override
     public void add(HrOrgApproverRequest hrOrgApproverRequest) {
@@ -60,6 +67,11 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
         LambdaQueryWrapper<HrOrgApprover> wrapper = createWrapper(hrOrgApproverRequest);
         Page<HrOrgApprover> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
+    }
+
+    @Override
+    public List<SimpleDict> getApproverTypeList() {
+        return dictApi.getDictDetailsByDictTypeCode(ApproverConstants.APPROVER_TYPE_DICT_TYPE_CODE);
     }
 
     @Override
