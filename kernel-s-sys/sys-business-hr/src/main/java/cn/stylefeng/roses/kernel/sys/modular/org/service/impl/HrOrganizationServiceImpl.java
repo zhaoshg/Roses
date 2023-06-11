@@ -7,6 +7,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.db.api.context.DbOperatorContext;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
@@ -104,6 +105,11 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     @Override
     public PageResult<HrOrganization> findPage(HrOrganizationRequest hrOrganizationRequest) {
         LambdaQueryWrapper<HrOrganization> wrapper = createWrapper(hrOrganizationRequest);
+
+        // 只查询需要的字段
+        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgName, HrOrganization::getOrgCode,
+                HrOrganization::getStatusFlag, HrOrganization::getOrgType, HrOrganization::getOrgSort, BaseEntity::getCreateTime);
+
         Page<HrOrganization> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
     }
