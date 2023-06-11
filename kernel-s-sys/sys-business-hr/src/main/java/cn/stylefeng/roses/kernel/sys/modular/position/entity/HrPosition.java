@@ -1,6 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.position.entity;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -17,10 +17,10 @@ import java.math.BigDecimal;
  * @author fengshuonan
  * @date 2023/06/10 21:25
  */
-@TableName("hr_position")
+@TableName(value = "hr_position", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class HrPosition extends BaseEntity {
+public class HrPosition extends BaseExpandFieldEntity {
 
     /**
      * 主键
@@ -63,33 +63,5 @@ public class HrPosition extends BaseEntity {
     @TableField("remark")
     @ChineseDescription("备注")
     private String remark;
-
-    /**
-     * 拓展字段
-     */
-    @TableField("expand_field")
-    @ChineseDescription("拓展字段")
-    private String expandField;
-
-    /**
-     * 乐观锁
-     */
-    @TableField("version_flag")
-    @ChineseDescription("乐观锁")
-    private Long versionFlag;
-
-    /**
-     * 删除标记：Y-已删除，N-未删除
-     */
-    @TableField("del_flag")
-    @ChineseDescription("删除标记：Y-已删除，N-未删除")
-    private String delFlag;
-
-    /**
-     * 租户号
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户号")
-    private Long tenantId;
 
 }

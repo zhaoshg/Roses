@@ -1,6 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.entity;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -17,10 +17,10 @@ import java.util.Date;
  * @author fengshuonan
  * @date 2023/06/10 21:26
  */
-@TableName("sys_user")
+@TableName(value = "sys_user", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SysUser extends BaseEntity {
+public class SysUser extends BaseExpandFieldEntity {
 
     /**
      * 主键
@@ -140,33 +140,5 @@ public class SysUser extends BaseEntity {
     @TableField("master_user_id")
     @ChineseDescription("对接外部主数据的用户id")
     private String masterUserId;
-
-    /**
-     * 拓展字段
-     */
-    @TableField("expand_field")
-    @ChineseDescription("拓展字段")
-    private String expandField;
-
-    /**
-     * 乐观锁
-     */
-    @TableField("version_flag")
-    @ChineseDescription("乐观锁")
-    private Long versionFlag;
-
-    /**
-     * 删除标记：Y-已删除，N-未删除
-     */
-    @TableField("del_flag")
-    @ChineseDescription("删除标记：Y-已删除，N-未删除")
-    private String delFlag;
-
-    /**
-     * 租户号
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户号")
-    private Long tenantId;
 
 }
