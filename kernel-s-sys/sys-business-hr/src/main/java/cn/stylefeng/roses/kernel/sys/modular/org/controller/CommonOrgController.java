@@ -33,7 +33,7 @@ public class CommonOrgController {
      * @author fengshuonan
      * @since 2023/6/11 10:31
      */
-    @GetResource(name = "分页查询", path = "/common/org/tree")
+    @GetResource(name = "通用获取组织机构树", path = "/common/org/tree")
     public ResponseData<List<HrOrganization>> commonOrgTree(HrOrganizationRequest hrOrganizationRequest) {
         return new SuccessResponseData<>(hrOrganizationService.commonOrgTree(hrOrganizationRequest));
     }

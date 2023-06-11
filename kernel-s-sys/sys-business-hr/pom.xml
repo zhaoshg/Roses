@@ -46,6 +46,13 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!--参数校验模块的api-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>validator-api-table-unique</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>
