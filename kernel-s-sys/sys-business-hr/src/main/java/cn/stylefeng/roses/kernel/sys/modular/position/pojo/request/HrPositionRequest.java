@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 /**
  * 职位信息封装类
@@ -23,7 +23,7 @@ public class HrPositionRequest extends BaseRequest {
     /**
      * 主键
      */
-    @NotNull(message = "主键不能为空", groups = {edit.class, delete.class})
+    @NotNull(message = "主键不能为空", groups = {edit.class, delete.class, detail.class})
     @ChineseDescription("主键")
     private Long positionId;
 
@@ -51,7 +51,6 @@ public class HrPositionRequest extends BaseRequest {
     /**
      * 状态：1-启用，2-禁用
      */
-    @NotNull(message = "状态：1-启用，2-禁用不能为空", groups = {add.class, edit.class})
     @ChineseDescription("状态：1-启用，2-禁用")
     private Integer statusFlag;
 
@@ -68,6 +67,6 @@ public class HrPositionRequest extends BaseRequest {
      */
     @NotNull(message = "职位id集合不能为空", groups = {batchDelete.class})
     @ChineseDescription("职位id集合")
-    private List<Long> positionIdList;
+    private Set<Long> positionIdList;
 
 }
