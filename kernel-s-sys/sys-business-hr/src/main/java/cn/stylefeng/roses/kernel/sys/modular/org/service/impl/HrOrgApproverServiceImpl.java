@@ -103,17 +103,13 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
     private LambdaQueryWrapper<HrOrgApprover> createWrapper(HrOrgApproverRequest hrOrgApproverRequest) {
         LambdaQueryWrapper<HrOrgApprover> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long orgApproverId = hrOrgApproverRequest.getOrgApproverId();
+        // 根据审批人类型查询
         Integer orgApproverType = hrOrgApproverRequest.getOrgApproverType();
-        Long orgId = hrOrgApproverRequest.getOrgId();
-        Long userId = hrOrgApproverRequest.getUserId();
-        Long tenantId = hrOrgApproverRequest.getTenantId();
-
-        queryWrapper.eq(ObjectUtil.isNotNull(orgApproverId), HrOrgApprover::getOrgApproverId, orgApproverId);
         queryWrapper.eq(ObjectUtil.isNotNull(orgApproverType), HrOrgApprover::getOrgApproverType, orgApproverType);
+
+        // 根据组织机构id查询
+        Long orgId = hrOrgApproverRequest.getOrgId();
         queryWrapper.eq(ObjectUtil.isNotNull(orgId), HrOrgApprover::getOrgId, orgId);
-        queryWrapper.eq(ObjectUtil.isNotNull(userId), HrOrgApprover::getUserId, userId);
-        queryWrapper.eq(ObjectUtil.isNotNull(tenantId), HrOrgApprover::getTenantId, tenantId);
 
         return queryWrapper;
     }

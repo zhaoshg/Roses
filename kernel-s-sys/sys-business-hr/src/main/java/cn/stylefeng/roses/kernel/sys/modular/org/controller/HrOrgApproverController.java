@@ -1,4 +1,4 @@
-package cn.stylefeng.roses.kernel.sys.modular.org.controller.bak;
+package cn.stylefeng.roses.kernel.sys.modular.org.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
