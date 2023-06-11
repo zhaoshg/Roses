@@ -42,7 +42,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         HrOrganization hrOrganization = new HrOrganization();
         BeanUtil.copyProperties(hrOrganizationRequest, hrOrganization);
 
-        // 填充父级节点
+        // 填充父级parentIds
         OrganizationFactory.fillParentIds(hrOrganization);
 
         this.save(hrOrganization);
@@ -75,6 +75,10 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     public void edit(HrOrganizationRequest hrOrganizationRequest) {
         HrOrganization hrOrganization = this.queryHrOrganization(hrOrganizationRequest);
         BeanUtil.copyProperties(hrOrganizationRequest, hrOrganization);
+
+        // 填充父级parentIds
+        OrganizationFactory.fillParentIds(hrOrganization);
+
         this.updateById(hrOrganization);
     }
 
