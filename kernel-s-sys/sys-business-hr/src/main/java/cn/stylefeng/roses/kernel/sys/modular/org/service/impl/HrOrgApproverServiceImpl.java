@@ -23,6 +23,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -116,6 +117,50 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
         }
 
         return resultList;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void bindUserList(HrOrgApproverRequest hrOrgApproverRequest) {
+
+        // 获取改组织下，该种类型已经绑定的人
+        LambdaQueryWrapper<HrOrgApprover> wrapper = this.createWrapper(hrOrgApproverRequest);
+        List<HrOrgApprover> alreadyBindUsers = this.list(wrapper);
+
+        // 如果已经绑定的人是空的，则直接绑定
+        if (ObjectUtil.isEmpty(alreadyBindUsers)) {
+            ArrayList<HrOrgApprover> tempApproverList = new ArrayList<>();
+            for (Long userId : hrOrgApproverRequest.getUserIdList()) {
+                HrOrgApprover hrOrgApprover = new HrOrgApprover();
+                hrOrgApprover.setOrgId(hrOrgApproverRequest.getOrgId());
+                hrOrgApprover.setOrgApproverType(hrOrgApproverRequest.getOrgApproverType());
+                hrOrgApprover.setUserId(userId);
+                tempApproverList.add(hrOrgApprover);
+            }
+            this.saveBatch(tempApproverList);
+            return;
+        }
+
+        // 如果有已经绑定的人，则需要判断请求参数中的人是否已经包含在内，包含在内则不用从新绑定
+        List<Long> alreadyBindUserIdList = alreadyBindUsers.stream().map(HrOrgApprover::getUserId).collect(Collectors.toList());
+        ArrayList<HrOrgApprover> tempApprovers = new ArrayList<>();
+        for (Long needToBindUserId : hrOrgApproverRequest.getUserIdList()) {
+            boolean needToAdd = true;
+            for (Long tempUserId : alreadyBindUserIdList) {
+                if (tempUserId.equals(needToBindUserId)) {
+                    needToAdd = false;
+                    break;
+                }
+            }
+            if (needToAdd) {
+                HrOrgApprover hrOrgApprover = new HrOrgApprover();
+                hrOrgApprover.setOrgId(hrOrgApproverRequest.getOrgId());
+                hrOrgApprover.setOrgApproverType(hrOrgApproverRequest.getOrgApproverType());
+                hrOrgApprover.setUserId(needToBindUserId);
+                tempApprovers.add(hrOrgApprover);
+            }
+            this.saveBatch(tempApprovers);
+        }
     }
 
     @Override

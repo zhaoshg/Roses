@@ -89,4 +89,12 @@ public interface HrOrgApproverService extends IService<HrOrgApprover> {
      */
     List<HrOrgApprover> getOrgApproverList(HrOrgApproverRequest hrOrgApproverRequest);
 
+    /**
+     * 组织机构审批人，绑定用户（可以绑定多个）
+     *
+     * @author fengshuonan
+     * @since 2023/6/11 15:51
+     */
+    void bindUserList(HrOrgApproverRequest hrOrgApproverRequest);
+
 }
