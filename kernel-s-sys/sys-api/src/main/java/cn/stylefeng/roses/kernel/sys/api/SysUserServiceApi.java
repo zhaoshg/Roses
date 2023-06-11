@@ -63,4 +63,14 @@ public interface SysUserServiceApi {
      */
     List<UserOrgDTO> getUserOrgList(Long userId);
 
+    /**
+     * 获取某个机构下的所有用户id集合
+     *
+     * @param orgId             组织机构id
+     * @param containSubOrgFlag 是否包含指定机构的子集机构，true-包含子集，false-不包含
+     * @author fengshuonan
+     * @since 2023/6/11 21:46
+     */
+    List<Long> getOrgUserIdList(Long orgId, Boolean containSubOrgFlag);
+
 }

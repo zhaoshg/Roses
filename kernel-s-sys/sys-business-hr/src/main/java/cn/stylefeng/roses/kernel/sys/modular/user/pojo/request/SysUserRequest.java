@@ -61,7 +61,7 @@ public class SysUserRequest extends BaseRequest {
      * 生日
      */
     @ChineseDescription("生日")
-	private String birthday;
+    private String birthday;
 
     /**
      * 性别：M-男，F-女
@@ -118,7 +118,7 @@ public class SysUserRequest extends BaseRequest {
      * 最后登陆时间
      */
     @ChineseDescription("最后登陆时间")
-	private String lastLoginTime;
+    private String lastLoginTime;
 
     /**
      * 对接外部主数据的用户id
@@ -126,29 +126,14 @@ public class SysUserRequest extends BaseRequest {
     @ChineseDescription("对接外部主数据的用户id")
     private String masterUserId;
 
-    /**
-     * 拓展字段
-     */
-    @ChineseDescription("拓展字段")
-    private String expandField;
+    //-------------------------------非实体字段-------------------------------
+    //-------------------------------非实体字段-------------------------------
+    //-------------------------------非实体字段-------------------------------
 
     /**
-     * 乐观锁
+     * 组织机构id查询条件
      */
-    @ChineseDescription("乐观锁")
-    private Long versionFlag;
-
-    /**
-     * 删除标记：Y-已删除，N-未删除
-     */
-    @NotBlank(message = "删除标记：Y-已删除，N-未删除不能为空", groups = {add.class, edit.class})
-    @ChineseDescription("删除标记：Y-已删除，N-未删除")
-    private String delFlag;
-
-    /**
-     * 租户号
-     */
-    @ChineseDescription("租户号")
-    private Long tenantId;
+    @ChineseDescription("组织机构id查询条件")
+    private Long orgIdCondition;
 
 }
