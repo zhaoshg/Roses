@@ -36,6 +36,10 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     public void add(HrOrganizationRequest hrOrganizationRequest) {
         HrOrganization hrOrganization = new HrOrganization();
         BeanUtil.copyProperties(hrOrganizationRequest, hrOrganization);
+
+        // 填充父级节点
+        OrganizationFactory.fillParentIds(hrOrganization);
+
         this.save(hrOrganization);
     }
 

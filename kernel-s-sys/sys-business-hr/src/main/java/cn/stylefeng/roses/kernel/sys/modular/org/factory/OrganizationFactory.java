@@ -1,7 +1,12 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.factory;
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.extra.spring.SpringUtil;
+import cn.stylefeng.roses.kernel.rule.constants.SymbolConstant;
+import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
+import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrganizationRequest;
+import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrganizationService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -42,6 +47,38 @@ public class OrganizationFactory {
         }
 
         return orgIdList;
+    }
+
+    /**
+     * 填充该节点的pIds
+     * <p>
+     * 如果pid是顶级节点，pids就是 [-1],
+     * <p>
+     * 如果pid不是顶级节点，pids就是父节点的pids + [pid] + ,
+     *
+     * @author fengshuonan
+     * @since 2020/11/5 13:45
+     */
+    public static void fillParentIds(HrOrganization hrOrganization) {
+
+        // 如果父级是-1，则代表顶级节点
+        if (TreeConstants.DEFAULT_PARENT_ID.equals(hrOrganization.getOrgParentId())) {
+            hrOrganization.setOrgPids(SymbolConstant.LEFT_SQUARE_BRACKETS + TreeConstants.DEFAULT_PARENT_ID + SymbolConstant.RIGHT_SQUARE_BRACKETS + SymbolConstant.COMMA);
+        }
+
+        // 如果不是顶级节点，则查询到父级的id集合，再拼接上级id即可
+        else {
+
+            HrOrganizationService hrOrganizationService = SpringUtil.getBean(HrOrganizationService.class);
+
+            // 获取父组织机构
+            HrOrganizationRequest hrOrganizationRequest = new HrOrganizationRequest();
+            hrOrganizationRequest.setOrgId(hrOrganization.getOrgParentId());
+            HrOrganization parentOrganization = hrOrganizationService.detail(hrOrganizationRequest);
+
+            // 设置本节点的父ids为 (上一个节点的pids + (上级节点的id) )
+            hrOrganization.setOrgPids(parentOrganization.getOrgPids() + SymbolConstant.LEFT_SQUARE_BRACKETS + parentOrganization.getOrgId() + SymbolConstant.RIGHT_SQUARE_BRACKETS + SymbolConstant.COMMA);
+        }
     }
 
 }
