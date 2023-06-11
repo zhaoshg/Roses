@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.modular.position.entity.HrPosition;
@@ -16,7 +17,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -28,7 +28,7 @@ import java.util.List;
 @Service
 public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosition> implements HrPositionService {
 
-	@Override
+    @Override
     public void add(HrPositionRequest hrPositionRequest) {
         HrPosition hrPosition = new HrPosition();
         BeanUtil.copyProperties(hrPositionRequest, hrPosition);
@@ -55,7 +55,11 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
 
     @Override
     public PageResult<HrPosition> findPage(HrPositionRequest hrPositionRequest) {
-        LambdaQueryWrapper<HrPosition> wrapper = createWrapper(hrPositionRequest);
+        LambdaQueryWrapper<HrPosition> wrapper = this.createWrapper(hrPositionRequest);
+
+        // 筛选主要属性
+        wrapper.select(HrPosition::getPositionId, HrPosition::getPositionName, HrPosition::getPositionCode, HrPosition::getRemark, BaseEntity::getCreateTime);
+
         Page<HrPosition> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
     }
@@ -63,6 +67,10 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
     @Override
     public List<HrPosition> findList(HrPositionRequest hrPositionRequest) {
         LambdaQueryWrapper<HrPosition> wrapper = this.createWrapper(hrPositionRequest);
+
+        // 筛选主要属性
+        wrapper.select(HrPosition::getPositionId, HrPosition::getPositionName, HrPosition::getPositionCode, HrPosition::getRemark, BaseEntity::getCreateTime);
+
         return this.list(wrapper);
     }
 
@@ -89,27 +97,12 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
     private LambdaQueryWrapper<HrPosition> createWrapper(HrPositionRequest hrPositionRequest) {
         LambdaQueryWrapper<HrPosition> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long positionId = hrPositionRequest.getPositionId();
-        String positionName = hrPositionRequest.getPositionName();
-        String positionCode = hrPositionRequest.getPositionCode();
-        BigDecimal positionSort = hrPositionRequest.getPositionSort();
-        Integer statusFlag = hrPositionRequest.getStatusFlag();
-        String remark = hrPositionRequest.getRemark();
-        String expandField = hrPositionRequest.getExpandField();
-        Long versionFlag = hrPositionRequest.getVersionFlag();
-        String delFlag = hrPositionRequest.getDelFlag();
-        Long tenantId = hrPositionRequest.getTenantId();
-
-        queryWrapper.eq(ObjectUtil.isNotNull(positionId), HrPosition::getPositionId, positionId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(positionName), HrPosition::getPositionName, positionName);
-        queryWrapper.like(ObjectUtil.isNotEmpty(positionCode), HrPosition::getPositionCode, positionCode);
-        queryWrapper.eq(ObjectUtil.isNotNull(positionSort), HrPosition::getPositionSort, positionSort);
-        queryWrapper.eq(ObjectUtil.isNotNull(statusFlag), HrPosition::getStatusFlag, statusFlag);
-        queryWrapper.like(ObjectUtil.isNotEmpty(remark), HrPosition::getRemark, remark);
-        queryWrapper.like(ObjectUtil.isNotEmpty(expandField), HrPosition::getExpandField, expandField);
-        queryWrapper.eq(ObjectUtil.isNotNull(versionFlag), HrPosition::getVersionFlag, versionFlag);
-        queryWrapper.like(ObjectUtil.isNotEmpty(delFlag), HrPosition::getDelFlag, delFlag);
-        queryWrapper.eq(ObjectUtil.isNotNull(tenantId), HrPosition::getTenantId, tenantId);
+        // 根据输入的搜索内容查询
+        String searchText = hrPositionRequest.getSearchText();
+        if (ObjectUtil.isNotEmpty(searchText)) {
+            queryWrapper.like(HrPosition::getPositionName, searchText);
+            queryWrapper.or().like(HrPosition::getPositionCode, searchText);
+        }
 
         return queryWrapper;
     }

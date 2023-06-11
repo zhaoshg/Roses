@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * 职位信息控制器
@@ -74,17 +73,6 @@ public class HrPositionController {
     @GetResource(name = "查看详情", path = "/hrPosition/detail")
     public ResponseData<HrPosition> detail(@Validated(HrPositionRequest.detail.class) HrPositionRequest hrPositionRequest) {
         return new SuccessResponseData<>(hrPositionService.detail(hrPositionRequest));
-    }
-
-    /**
-     * 获取列表
-     *
-     * @author fengshuonan
-     * @date 2023/06/10 21:25
-     */
-    @GetResource(name = "获取列表", path = "/hrPosition/list")
-    public ResponseData<List<HrPosition>> list(HrPositionRequest hrPositionRequest) {
-        return new SuccessResponseData<>(hrPositionService.findList(hrPositionRequest));
     }
 
     /**
