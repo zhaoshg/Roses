@@ -6,17 +6,20 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrgApprover;
 import cn.stylefeng.roses.kernel.sys.modular.org.enums.HrOrgApproverExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrgApproverMapper;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrgApproverRequest;
 import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrgApproverService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 组织机构审批人业务实现层
@@ -25,9 +28,9 @@ import java.util.List;
  * @date 2023/06/10 21:23
  */
 @Service
-public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, HrOrgApprover> implements HrOrgApproverService {
+public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, HrOrgApprover> implements HrOrgApproverService, RemoveOrgCallbackApi {
 
-	@Override
+    @Override
     public void add(HrOrgApproverRequest hrOrgApproverRequest) {
         HrOrgApprover hrOrgApprover = new HrOrgApprover();
         BeanUtil.copyProperties(hrOrgApproverRequest, hrOrgApprover);
@@ -63,6 +66,18 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
     public List<HrOrgApprover> findList(HrOrgApproverRequest hrOrgApproverRequest) {
         LambdaQueryWrapper<HrOrgApprover> wrapper = this.createWrapper(hrOrgApproverRequest);
         return this.list(wrapper);
+    }
+
+    @Override
+    public void validateHaveOrgBind(Set<Long> beRemovedOrgIdList) {
+        // none
+    }
+
+    @Override
+    public void removeOrgAction(Set<Long> beRemovedOrgIdList) {
+        LambdaUpdateWrapper<HrOrgApprover> hrOrgApproverLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        hrOrgApproverLambdaUpdateWrapper.in(HrOrgApprover::getOrgId, beRemovedOrgIdList);
+        this.remove(hrOrgApproverLambdaUpdateWrapper);
     }
 
     /**

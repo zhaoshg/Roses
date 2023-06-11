@@ -6,6 +6,8 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.enums.HrOrganizationExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserOrgMapper;
@@ -17,6 +19,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 用户组织机构关联业务实现层
@@ -25,9 +28,9 @@ import java.util.List;
  * @date 2023/06/10 21:26
  */
 @Service
-public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUserOrg> implements SysUserOrgService {
+public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUserOrg> implements SysUserOrgService, RemoveOrgCallbackApi {
 
-	@Override
+    @Override
     public void add(SysUserOrgRequest sysUserOrgRequest) {
         SysUserOrg sysUserOrg = new SysUserOrg();
         BeanUtil.copyProperties(sysUserOrgRequest, sysUserOrg);
@@ -65,6 +68,23 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         return this.list(wrapper);
     }
 
+    @Override
+    public void validateHaveOrgBind(Set<Long> beRemovedOrgIdList) {
+        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysUserOrg::getOrgId, beRemovedOrgIdList);
+        long count = this.count(queryWrapper);
+        if (count > 0) {
+            throw new ServiceException(HrOrganizationExceptionEnum.DELETE_ORGANIZATION_ERROR);
+        }
+    }
+
+    @Override
+    public void removeOrgAction(Set<Long> beRemovedOrgIdList) {
+        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysUserOrg::getOrgId, beRemovedOrgIdList);
+        this.remove(queryWrapper);
+    }
+
     /**
      * 获取信息
      *
@@ -88,25 +108,8 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
     private LambdaQueryWrapper<SysUserOrg> createWrapper(SysUserOrgRequest sysUserOrgRequest) {
         LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long userOrgId = sysUserOrgRequest.getUserOrgId();
-        Long userId = sysUserOrgRequest.getUserId();
-        String masterUserId = sysUserOrgRequest.getMasterUserId();
         Long orgId = sysUserOrgRequest.getOrgId();
-        String masterOrgId = sysUserOrgRequest.getMasterOrgId();
-        Long positionId = sysUserOrgRequest.getPositionId();
-        String mainFlag = sysUserOrgRequest.getMainFlag();
-        String expandField = sysUserOrgRequest.getExpandField();
-        Long tenantId = sysUserOrgRequest.getTenantId();
-
-        queryWrapper.eq(ObjectUtil.isNotNull(userOrgId), SysUserOrg::getUserOrgId, userOrgId);
-        queryWrapper.eq(ObjectUtil.isNotNull(userId), SysUserOrg::getUserId, userId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(masterUserId), SysUserOrg::getMasterUserId, masterUserId);
         queryWrapper.eq(ObjectUtil.isNotNull(orgId), SysUserOrg::getOrgId, orgId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(masterOrgId), SysUserOrg::getMasterOrgId, masterOrgId);
-        queryWrapper.eq(ObjectUtil.isNotNull(positionId), SysUserOrg::getPositionId, positionId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(mainFlag), SysUserOrg::getMainFlag, mainFlag);
-        queryWrapper.like(ObjectUtil.isNotEmpty(expandField), SysUserOrg::getExpandField, expandField);
-        queryWrapper.eq(ObjectUtil.isNotNull(tenantId), SysUserOrg::getTenantId, tenantId);
 
         return queryWrapper;
     }
