@@ -22,45 +22,66 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.api;
+package cn.stylefeng.roses.kernel.sys.api.pojo;
 
-import cn.stylefeng.roses.kernel.sys.api.pojo.SimpleUserDTO;
-import cn.stylefeng.roses.kernel.sys.api.pojo.UserOrgDTO;
-
-import java.util.List;
+import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import lombok.Data;
 
 /**
- * 基础核心业务Api
+ * 用户信息的简单包装
  *
  * @author fengshuonan
- * @date 2023-06-10 20:50:43
+ * @since 2023/6/11 17:05
  */
-public interface SysUserServiceApi {
+@Data
+public class UserOrgDTO {
 
     /**
-     * 获取用户的基本信息
-     *
-     * @author fengshuonan
-     * @since 2023/6/11 21:07
+     * 用户id
      */
-    SimpleUserDTO getUserInfoByUserId(Long userId);
+    @ChineseDescription("用户id")
+    private Long userId;
 
     /**
-     * 获取用户的主要任职信息
-     * <p>
-     * 返回一条结果，只返回主部门的信息
-     *
-     * @author fengshuonan
-     * @since 2023/6/11 21:07
+     * 用户所属公司id
      */
-    UserOrgDTO getUserMainOrgInfo(Long userId);
+    @ChineseDescription("用户所属公司id")
+    private Long companyId;
 
     /**
-     * 获取用户绑定的组织机构列表，主要任职部门和次要任职部门都返回
-     *
-     * @author fengshuonan
-     * @since 2023/6/11 21:08
+     * 用户所属公司名称
      */
-    List<UserOrgDTO> getUserOrgList(Long userId);
+    @ChineseDescription("用户所属公司名称")
+    private String companyName;
+
+    /**
+     * 用户所属部门id
+     */
+    @ChineseDescription("用户所属部门id")
+    private Long deptId;
+
+    /**
+     * 用户所属部门名称
+     */
+    @ChineseDescription("用户所属部门名称")
+    private String deptName;
+
+    /**
+     * 所属部门的职位id
+     */
+    @ChineseDescription("所属部门的职位id")
+    private Long positionId;
+
+    /**
+     * 用户所属职位名称
+     */
+    @ChineseDescription("用户所属职位名称")
+    private String positionName;
+
+    /**
+     * 是否是主部门：Y-是主部门，N-不是主部门
+     */
+    @ChineseDescription("是否是主部门：Y-是主部门，N-不是主部门")
+    private String mainFlag;
 
 }

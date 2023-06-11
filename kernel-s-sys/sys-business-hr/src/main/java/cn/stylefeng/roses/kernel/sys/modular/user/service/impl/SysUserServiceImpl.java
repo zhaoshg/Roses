@@ -7,6 +7,9 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.pojo.SimpleUserDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserMapper;
@@ -26,7 +29,7 @@ import java.util.List;
  * @date 2023/06/10 21:26
  */
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService, SysUserServiceApi {
 
     @Override
     public void add(SysUserRequest sysUserRequest) {
@@ -60,14 +63,35 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 只查询需要的字段
         wrapper.select(SysUser::getUserId, SysUser::getRealName, SysUser::getAccount, SysUser::getSex, SysUser::getStatusFlag, BaseEntity::getCreateTime);
 
-        Page<SysUser> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
-        return PageResultFactory.createPageResult(sysRolePage);
+        Page<SysUser> sysUserPage = this.page(PageFactory.defaultPage(), wrapper);
+
+        // 遍历查询结果，增加对用户部门信息的返回
+        for (SysUser record : sysUserPage.getRecords()) {
+            record.setUserOrgDTO(this.getUserMainOrgInfo(record.getUserId()));
+        }
+
+        return PageResultFactory.createPageResult(sysUserPage);
     }
 
     @Override
     public List<SysUser> findList(SysUserRequest sysUserRequest) {
         LambdaQueryWrapper<SysUser> wrapper = this.createWrapper(sysUserRequest);
         return this.list(wrapper);
+    }
+
+    @Override
+    public SimpleUserDTO getUserInfoByUserId(Long userId) {
+        return null;
+    }
+
+    @Override
+    public UserOrgDTO getUserMainOrgInfo(Long userId) {
+        return null;
+    }
+
+    @Override
+    public List<UserOrgDTO> getUserOrgList(Long userId) {
+        return null;
     }
 
     /**

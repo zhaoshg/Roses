@@ -2,6 +2,9 @@ package cn.stylefeng.roses.kernel.sys.modular.user.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.annotation.EnumFieldFormat;
+import cn.stylefeng.roses.kernel.rule.enums.SexEnum;
+import cn.stylefeng.roses.kernel.sys.api.pojo.UserOrgDTO;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -77,6 +80,7 @@ public class SysUser extends BaseExpandFieldEntity {
      */
     @TableField("sex")
     @ChineseDescription("性别：M-男，F-女")
+    @EnumFieldFormat(processEnum = SexEnum.class)
     private String sex;
 
     /**
@@ -148,5 +152,16 @@ public class SysUser extends BaseExpandFieldEntity {
     @TableField("master_user_id")
     @ChineseDescription("对接外部主数据的用户id")
     private String masterUserId;
+
+    //-------------------------------非实体字段-------------------------------
+    //-------------------------------非实体字段-------------------------------
+    //-------------------------------非实体字段-------------------------------
+
+    /**
+     * 用户组织机构详情
+     */
+    @TableField(exist = false)
+    @ChineseDescription("用户组织机构详情")
+    private UserOrgDTO userOrgDTO;
 
 }
