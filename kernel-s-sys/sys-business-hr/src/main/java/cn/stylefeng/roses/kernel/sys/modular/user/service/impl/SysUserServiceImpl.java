@@ -2,21 +2,25 @@ package cn.stylefeng.roses.kernel.sys.modular.user.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.auth.api.password.PasswordStoredEncryptApi;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserMapper;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
+import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -33,11 +37,28 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Resource
     private SysUserServiceApi sysUserServiceApi;
 
+    @Resource
+    private PasswordStoredEncryptApi passwordStoredEncryptApi;
+
+    @Resource
+    private SysUserOrgService sysUserOrgService;
+
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void add(SysUserRequest sysUserRequest) {
         SysUser sysUser = new SysUser();
         BeanUtil.copyProperties(sysUserRequest, sysUser);
+
+        // 将密码加密存储到库中
+        sysUser.setPassword(passwordStoredEncryptApi.encrypt(sysUser.getPassword()));
+
+        // 设置用户默认头像
+        sysUser.setAvatar(FileConstants.DEFAULT_AVATAR_FILE_ID);
+
         this.save(sysUser);
+
+        // 更新用户的任职信息
+        sysUserOrgService.updateUserOrg(sysUser.getUserId(), sysUserRequest.getUserOrgList());
     }
 
     @Override

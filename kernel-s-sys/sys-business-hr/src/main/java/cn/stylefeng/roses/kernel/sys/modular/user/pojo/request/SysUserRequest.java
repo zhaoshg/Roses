@@ -2,11 +2,16 @@ package cn.stylefeng.roses.kernel.sys.modular.user.pojo.request;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
+import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 系统用户封装类
@@ -29,6 +34,7 @@ public class SysUserRequest extends BaseRequest {
      * 姓名
      */
     @ChineseDescription("姓名")
+    @NotBlank(message = "姓名不能为空", groups = {add.class, edit.class})
     private String realName;
 
     /**
@@ -47,7 +53,7 @@ public class SysUserRequest extends BaseRequest {
     /**
      * 密码，加密方式为BCrypt
      */
-    @NotBlank(message = "密码，加密方式为BCrypt不能为空", groups = {add.class, edit.class})
+    @NotBlank(message = "密码，加密方式为BCrypt不能为空", groups = {add.class})
     @ChineseDescription("密码，加密方式为BCrypt")
     private String password;
 
@@ -98,27 +104,16 @@ public class SysUserRequest extends BaseRequest {
     /**
      * 状态：1-正常，2-冻结
      */
-    @NotNull(message = "状态：1-正常，2-冻结不能为空", groups = {add.class, edit.class})
     @ChineseDescription("状态：1-正常，2-冻结")
+    @NotNull(message = "状态不能为空", groups = {add.class, edit.class})
     private Integer statusFlag;
 
     /**
-     * 登录次数
+     * 用户的排序
      */
-    @ChineseDescription("登录次数")
-    private Integer loginCount;
-
-    /**
-     * 最后登陆IP
-     */
-    @ChineseDescription("最后登陆IP")
-    private String lastLoginIp;
-
-    /**
-     * 最后登陆时间
-     */
-    @ChineseDescription("最后登陆时间")
-    private String lastLoginTime;
+    @TableField("user_sort")
+    @ChineseDescription("用户的排序")
+    private BigDecimal userSort = new BigDecimal(1000);
 
     /**
      * 对接外部主数据的用户id
@@ -135,5 +130,12 @@ public class SysUserRequest extends BaseRequest {
      */
     @ChineseDescription("组织机构id查询条件")
     private Long orgIdCondition;
+
+    /**
+     * 用户和组织机构关系集合
+     */
+    @ChineseDescription("用户和组织机构关系集合")
+    @NotEmpty(message = "用户和组织机构关系集合不能为空", groups = {add.class, edit.class})
+    private List<SysUserOrg> userOrgList;
 
 }

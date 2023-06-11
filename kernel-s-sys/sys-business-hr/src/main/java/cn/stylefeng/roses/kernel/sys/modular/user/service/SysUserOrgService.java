@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface SysUserOrgService extends IService<SysUserOrg> {
 
-	/**
+    /**
      * 新增
      *
      * @param sysUserOrgRequest 请求参数
@@ -24,7 +24,7 @@ public interface SysUserOrgService extends IService<SysUserOrg> {
      */
     void add(SysUserOrgRequest sysUserOrgRequest);
 
-	/**
+    /**
      * 删除
      *
      * @param sysUserOrgRequest 请求参数
@@ -33,7 +33,7 @@ public interface SysUserOrgService extends IService<SysUserOrg> {
      */
     void del(SysUserOrgRequest sysUserOrgRequest);
 
-	/**
+    /**
      * 编辑
      *
      * @param sysUserOrgRequest 请求参数
@@ -42,7 +42,7 @@ public interface SysUserOrgService extends IService<SysUserOrg> {
      */
     void edit(SysUserOrgRequest sysUserOrgRequest);
 
-	/**
+    /**
      * 查询详情
      *
      * @param sysUserOrgRequest 请求参数
@@ -51,24 +51,34 @@ public interface SysUserOrgService extends IService<SysUserOrg> {
      */
     SysUserOrg detail(SysUserOrgRequest sysUserOrgRequest);
 
-	/**
+    /**
      * 获取列表
      *
-     * @param sysUserOrgRequest        请求参数
+     * @param sysUserOrgRequest 请求参数
      * @return List<SysUserOrg>   返回结果
      * @author fengshuonan
      * @date 2023/06/10 21:26
      */
     List<SysUserOrg> findList(SysUserOrgRequest sysUserOrgRequest);
 
-	/**
+    /**
      * 获取列表（带分页）
      *
-     * @param sysUserOrgRequest              请求参数
+     * @param sysUserOrgRequest 请求参数
      * @return PageResult<SysUserOrg>   返回结果
      * @author fengshuonan
      * @date 2023/06/10 21:26
      */
     PageResult<SysUserOrg> findPage(SysUserOrgRequest sysUserOrgRequest);
+
+    /**
+     * 更新用户的任职信息
+     *
+     * @param userId      用户id
+     * @param userOrgList 用户绑定的组织机构列表
+     * @author fengshuonan
+     * @since 2023/6/11 22:23
+     */
+    void updateUserOrg(Long userId, List<SysUserOrg> userOrgList);
 
 }

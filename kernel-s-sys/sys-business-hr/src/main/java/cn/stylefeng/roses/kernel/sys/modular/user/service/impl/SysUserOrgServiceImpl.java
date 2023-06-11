@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.enums.HrOrganizationExceptionEnum;
@@ -17,6 +18,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -60,6 +62,22 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         LambdaQueryWrapper<SysUserOrg> wrapper = createWrapper(sysUserOrgRequest);
         Page<SysUserOrg> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateUserOrg(Long userId, List<SysUserOrg> userOrgList) {
+
+        // 先校验组织机构
+        List<SysUserOrg> sysUserOrgResult = this.validateUserOrgParam(userId, userOrgList);
+
+        // 删除已经绑定的组织机构
+        LambdaQueryWrapper<SysUserOrg> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysUserOrg::getUserId, userId);
+        this.remove(wrapper);
+
+        // 重新绑定用户对应的组织机构
+        this.saveBatch(sysUserOrgResult);
     }
 
     @Override
@@ -112,6 +130,43 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         queryWrapper.eq(ObjectUtil.isNotNull(orgId), SysUserOrg::getOrgId, orgId);
 
         return queryWrapper;
+    }
+
+    /**
+     * 校验用户绑定的组织机构是否合法
+     * <p>
+     * 1. 校验orgId和positionId和mainFlag是否有空的
+     * 2. 校验是否有且只有一个主部门
+     *
+     * @return 填充好userId的正确参数，直接可以保存到库中
+     * @author fengshuonan
+     * @since 2023/6/11 22:26
+     */
+    private List<SysUserOrg> validateUserOrgParam(Long userId, List<SysUserOrg> userOrgList) {
+
+        int mainFlagCount = 0;
+
+        for (SysUserOrg sysUserOrg : userOrgList) {
+
+            // 校验参数是否缺失
+            if (ObjectUtil.isEmpty(sysUserOrg.getOrgId()) || ObjectUtil.isEmpty(sysUserOrg.getPositionId()) || ObjectUtil.isEmpty(sysUserOrg.getMainFlag())) {
+                throw new ServiceException(SysUserOrgExceptionEnum.EMPTY_PARAM);
+            }
+
+            // 统计主部门的数量
+            if (YesOrNotEnum.Y.getCode().equals(sysUserOrg.getMainFlag())) {
+                mainFlagCount++;
+            }
+
+            // 绑定用户id
+            sysUserOrg.setUserId(userId);
+        }
+
+        if (mainFlagCount > 1 || mainFlagCount == 0) {
+            throw new ServiceException(SysUserOrgExceptionEnum.MAIN_FLAG_ERROR);
+        }
+
+        return userOrgList;
     }
 
 }

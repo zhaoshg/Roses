@@ -29,12 +29,12 @@ public class SysUserController {
     private SysUserService sysUserService;
 
     /**
-     * 添加
+     * 添加用户
      *
      * @author fengshuonan
      * @date 2023/06/10 21:26
      */
-    @PostResource(name = "添加", path = "/sysUser/add")
+    @PostResource(name = "添加用户", path = "/sysUser/add")
     public ResponseData<SysUser> add(@RequestBody @Validated(SysUserRequest.add.class) SysUserRequest sysUserRequest) {
         sysUserService.add(sysUserRequest);
         return new SuccessResponseData<>();

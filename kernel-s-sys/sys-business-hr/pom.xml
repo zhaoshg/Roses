@@ -32,6 +32,14 @@
             <version>${roses.version}</version>
         </dependency>
 
+        <!--文件api-->
+        <!--用户头像相关的操作-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>file-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!--资源api模块-->
         <!--用在资源控制器，资源扫描上-->
         <dependency>
