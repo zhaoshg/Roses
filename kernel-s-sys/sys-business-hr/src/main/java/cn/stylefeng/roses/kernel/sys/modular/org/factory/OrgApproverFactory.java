@@ -3,7 +3,7 @@ package cn.stylefeng.roses.kernel.sys.modular.org.factory;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
-import cn.stylefeng.roses.kernel.sys.api.pojo.SysUserDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrgApprover;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.ApproverBindUserItem;
 
@@ -41,7 +41,7 @@ public class OrgApproverFactory {
 
             // 获取用户详情信息
             SysUserServiceApi sysUserServiceApi = SpringUtil.getBean(SysUserServiceApi.class);
-            SysUserDTO sysUserDTO = sysUserServiceApi.getUserInfoByUserId(userId);
+            SimpleUserDTO sysUserDTO = sysUserServiceApi.getUserInfoByUserId(userId);
 
             bindUserItem.setName(sysUserDTO.getRealName());
             bindUserItem.setAvatarUrl(sysUserDTO.getAvatarUrl());

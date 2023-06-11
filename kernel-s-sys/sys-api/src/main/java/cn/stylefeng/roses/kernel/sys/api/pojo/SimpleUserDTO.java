@@ -22,25 +22,36 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.api;
+package cn.stylefeng.roses.kernel.sys.api.pojo;
 
-import cn.stylefeng.roses.kernel.sys.api.pojo.SimpleUserDTO;
+import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import lombok.Data;
 
 /**
- * 基础核心业务Api
+ * 用户信息的简单包装
  *
  * @author fengshuonan
- * @date 2023-06-10 20:50:43
+ * @since 2023/6/11 17:05
  */
-public interface SysUserServiceApi {
+@Data
+public class SimpleUserDTO {
 
     /**
-     * 根据用户ID获取用户信息
-     *
-     * @param userId 用户ID
-     * @author majianguo
-     * @since 2021/1/9 19:00
+     * 主键
      */
-    SimpleUserDTO getUserInfoByUserId(Long userId);
+    @ChineseDescription("主键")
+    private Long userId;
+
+    /**
+     * 姓名
+     */
+    @ChineseDescription("姓名")
+    private String realName;
+
+    /**
+     * 头像地址
+     */
+    @ChineseDescription("头像地址")
+    private String avatarUrl;
 
 }
