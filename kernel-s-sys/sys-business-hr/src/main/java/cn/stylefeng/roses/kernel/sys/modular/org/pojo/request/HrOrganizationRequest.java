@@ -7,8 +7,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Set;
 
 /**
  * 组织机构信息封装类
@@ -58,13 +60,7 @@ public class HrOrganizationRequest extends BaseRequest {
      */
     @NotBlank(message = "组织编码不能为空", groups = {add.class, edit.class})
     @ChineseDescription("组织编码")
-    @TableUniqueValue(
-            message = "组织编码存在重复",
-            groups = {add.class, edit.class},
-            tableName = "hr_organization",
-            columnName = "org_code",
-            idFieldName = "org_id",
-            excludeLogicDeleteItems = true)
+    @TableUniqueValue(message = "组织编码存在重复", groups = {add.class, edit.class}, tableName = "hr_organization", columnName = "org_code", idFieldName = "org_id", excludeLogicDeleteItems = true)
     private String orgCode;
 
     /**
@@ -117,5 +113,14 @@ public class HrOrganizationRequest extends BaseRequest {
      */
     @ChineseDescription("对接外部主数据的父级机构id")
     private String masterOrgParentId;
+
+    /**
+     * 组织机构id集合
+     * <p>
+     * 用在批量删除
+     */
+    @NotEmpty(message = "组织机构id集合不能为空", groups = {batchDelete.class})
+    @ChineseDescription("组织机构id集合")
+    private Set<Long> orgIdList;
 
 }

@@ -34,6 +34,14 @@ public interface HrOrganizationService extends IService<HrOrganization> {
     void del(HrOrganizationRequest hrOrganizationRequest);
 
     /**
+     * 批量删除组织机构
+     *
+     * @author fengshuonan
+     * @since 2023/6/11 16:59
+     */
+    void batchDelete(HrOrganizationRequest hrOrganizationRequest);
+
+    /**
      * 编辑
      *
      * @param hrOrganizationRequest 请求参数

@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -49,6 +50,18 @@ public class HrOrganizationController {
     @PostResource(name = "删除组织机构", path = "/hrOrganization/delete")
     public ResponseData<?> delete(@RequestBody @Validated(HrOrganizationRequest.delete.class) HrOrganizationRequest hrOrganizationRequest) {
         hrOrganizationService.del(hrOrganizationRequest);
+        return new SuccessResponseData<>();
+    }
+
+    /**
+     * 批量删除组织机构
+     *
+     * @author fengshuonan
+     * @date 2023/06/10 21:23
+     */
+    @PostResource(name = "批量删除组织机构", path = "/hrOrganization/batchDelete")
+    public ResponseData<?> batchDelete(@RequestBody @Validated(BaseRequest.batchDelete.class) HrOrganizationRequest hrOrganizationRequest) {
+        hrOrganizationService.batchDelete(hrOrganizationRequest);
         return new SuccessResponseData<>();
     }
 
