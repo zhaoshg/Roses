@@ -3,13 +3,16 @@ package cn.stylefeng.roses.kernel.sys.modular.org.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import cn.stylefeng.roses.kernel.db.api.context.DbOperatorContext;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.enums.HrOrganizationExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
-import cn.stylefeng.roses.kernel.sys.modular.org.enums.HrOrganizationExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.org.factory.OrganizationFactory;
 import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrganizationMapper;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrganizationRequest;
@@ -18,9 +21,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -44,9 +49,26 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void del(HrOrganizationRequest hrOrganizationRequest) {
-        HrOrganization hrOrganization = this.queryHrOrganization(hrOrganizationRequest);
-        this.removeById(hrOrganization.getOrgId());
+
+        // 查询被删除组织机构的所有子级节点
+        Set<Long> totalOrgIdSet = DbOperatorContext.me().findSubListByParentId("hr_organization", "org_pids", "org_id", hrOrganizationRequest.getOrgId());
+        totalOrgIdSet.add(hrOrganizationRequest.getOrgId());
+
+        // 判断业务是否和组织机构有绑定关系
+        Map<String, RemoveOrgCallbackApi> callbackApiMap = SpringUtil.getBeansOfType(RemoveOrgCallbackApi.class);
+        for (RemoveOrgCallbackApi removeOrgCallbackApi : callbackApiMap.values()) {
+            removeOrgCallbackApi.validateHaveOrgBind(totalOrgIdSet);
+        }
+
+        // 联动删除所有和本组织机构相关其他业务数据
+        for (RemoveOrgCallbackApi removeOrgCallbackApi : callbackApiMap.values()) {
+            removeOrgCallbackApi.removeOrgAction(totalOrgIdSet);
+        }
+
+        // 批量删除所有相关节点
+        this.removeBatchByIds(totalOrgIdSet);
     }
 
     @Override
