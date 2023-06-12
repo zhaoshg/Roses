@@ -16,7 +16,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -62,6 +64,26 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void bindRoles(SysUserRoleRequest sysUserRoleRequest) {
+
+        // 清空已有的用户角色绑定
+        LambdaQueryWrapper<SysUserRole> wrapper = this.createWrapper(sysUserRoleRequest);
+        this.remove(wrapper);
+
+        // 重新绑定用户角色信息
+        Set<Long> roleIdList = sysUserRoleRequest.getRoleIdList();
+        ArrayList<SysUserRole> newUserRoles = new ArrayList<>();
+        for (Long newRoleId : roleIdList) {
+            SysUserRole sysUserRole = new SysUserRole();
+            sysUserRole.setUserId(sysUserRoleRequest.getUserId());
+            sysUserRole.setRoleId(newRoleId);
+            newUserRoles.add(sysUserRole);
+        }
+        this.saveBatch(newUserRoles);
+    }
+
+    @Override
     public List<SysUserRole> findList(SysUserRoleRequest sysUserRoleRequest) {
         LambdaQueryWrapper<SysUserRole> wrapper = this.createWrapper(sysUserRoleRequest);
         return this.list(wrapper);
@@ -102,15 +124,8 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     private LambdaQueryWrapper<SysUserRole> createWrapper(SysUserRoleRequest sysUserRoleRequest) {
         LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long userRoleId = sysUserRoleRequest.getUserRoleId();
         Long userId = sysUserRoleRequest.getUserId();
-        Long roleId = sysUserRoleRequest.getRoleId();
-        Long tenantId = sysUserRoleRequest.getTenantId();
-
-        queryWrapper.eq(ObjectUtil.isNotNull(userRoleId), SysUserRole::getUserRoleId, userRoleId);
         queryWrapper.eq(ObjectUtil.isNotNull(userId), SysUserRole::getUserId, userId);
-        queryWrapper.eq(ObjectUtil.isNotNull(roleId), SysUserRole::getRoleId, roleId);
-        queryWrapper.eq(ObjectUtil.isNotNull(tenantId), SysUserRole::getTenantId, tenantId);
 
         return queryWrapper;
     }

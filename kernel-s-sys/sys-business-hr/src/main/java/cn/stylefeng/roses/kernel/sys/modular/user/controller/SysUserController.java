@@ -9,6 +9,8 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
+import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRoleRequest;
+import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +30,9 @@ public class SysUserController {
 
     @Resource
     private SysUserService sysUserService;
+
+    @Resource
+    private SysUserRoleService sysUserRoleService;
 
     /**
      * 添加用户
@@ -108,6 +113,18 @@ public class SysUserController {
     @PostResource(name = "修改用户状态", path = "/sysUser/updateStatus")
     public ResponseData<?> updateStatus(@RequestBody @Validated(SysUserRequest.updateStatus.class) SysUserRequest sysUserRequest) {
         sysUserService.updateStatus(sysUserRequest);
+        return new SuccessResponseData<>();
+    }
+
+    /**
+     * 绑定用户角色
+     *
+     * @author fengshuonan
+     * @since 2023/6/12 10:58
+     */
+    @PostResource(name = "绑定用户角色", path = "/sysUser/bindRoles")
+    public ResponseData<?> bindRoles(@RequestBody @Validated(SysUserRoleRequest.bindRoles.class) SysUserRoleRequest sysUserRoleRequest) {
+        sysUserRoleService.bindRoles(sysUserRoleRequest);
         return new SuccessResponseData<>();
     }
 

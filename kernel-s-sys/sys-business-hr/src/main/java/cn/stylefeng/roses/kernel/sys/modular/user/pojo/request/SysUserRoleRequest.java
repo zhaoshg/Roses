@@ -5,7 +5,9 @@ import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 /**
  * 用户角色关联封装类
@@ -20,28 +22,33 @@ public class SysUserRoleRequest extends BaseRequest {
     /**
      * 主键
      */
-    @NotNull(message = "主键不能为空", groups = {edit.class, delete.class})
     @ChineseDescription("主键")
     private Long userRoleId;
 
     /**
      * 用户id
      */
-    @NotNull(message = "用户id不能为空", groups = {add.class, edit.class})
     @ChineseDescription("用户id")
+    @NotNull(message = "用户id不能为空", groups = {bindRoles.class})
     private Long userId;
 
     /**
      * 角色id
      */
-    @NotNull(message = "角色id不能为空", groups = {add.class, edit.class})
     @ChineseDescription("角色id")
     private Long roleId;
 
     /**
-     * 租户号
+     * 用户id集合，用在批量删除用户的参数
      */
-    @ChineseDescription("租户号")
-    private Long tenantId;
+    @ChineseDescription("用户id集合，用在批量删除用户的参数")
+    @NotEmpty(message = "用户id集合不能为空", groups = bindRoles.class)
+    private Set<Long> roleIdList;
+
+    /**
+     * 参数校验分组：用户绑定角色
+     */
+    public @interface bindRoles {
+    }
 
 }
