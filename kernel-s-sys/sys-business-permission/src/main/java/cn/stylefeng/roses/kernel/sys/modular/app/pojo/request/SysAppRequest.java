@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.app.pojo.request;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
+import cn.stylefeng.roses.kernel.validator.api.validators.unique.TableUniqueValue;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -31,6 +32,13 @@ public class SysAppRequest extends BaseRequest {
      */
     @NotBlank(message = "应用名称不能为空", groups = {add.class, edit.class})
     @ChineseDescription("应用名称")
+    @TableUniqueValue(
+            message = "应用名称存在重复",
+            groups = {add.class, edit.class},
+            tableName = "sys_app",
+            columnName = "app_name",
+            idFieldName = "app_id",
+            excludeLogicDeleteItems = true)
     private String appName;
 
     /**
@@ -38,12 +46,20 @@ public class SysAppRequest extends BaseRequest {
      */
     @NotBlank(message = "编码不能为空", groups = {add.class, edit.class})
     @ChineseDescription("编码")
+    @TableUniqueValue(
+            message = "应用编码存在重复",
+            groups = {add.class, edit.class},
+            tableName = "sys_app",
+            columnName = "app_code",
+            idFieldName = "app_id",
+            excludeLogicDeleteItems = true)
     private String appCode;
 
     /**
      * 应用图标，存fileId，上传的图片
      */
     @ChineseDescription("应用图标，存fileId，上传的图片")
+    @NotNull(message = "应用图标不能为空", groups = {add.class, edit.class})
     private Long appIcon;
 
     /**
@@ -57,6 +73,7 @@ public class SysAppRequest extends BaseRequest {
      * 排序
      */
     @ChineseDescription("排序")
+    @NotNull(message = "排序不能为空", groups = {add.class, edit.class})
     private BigDecimal appSort;
 
     /**
@@ -64,30 +81,5 @@ public class SysAppRequest extends BaseRequest {
      */
     @ChineseDescription("备注")
     private String remark;
-
-    /**
-     * 拓展字段
-     */
-    @ChineseDescription("拓展字段")
-    private String expandField;
-
-    /**
-     * 乐观锁
-     */
-    @ChineseDescription("乐观锁")
-    private Long versionFlag;
-
-    /**
-     * 删除标记：Y-已删除，N-未删除
-     */
-    @NotBlank(message = "删除标记：Y-已删除，N-未删除不能为空", groups = {add.class, edit.class})
-    @ChineseDescription("删除标记：Y-已删除，N-未删除")
-    private String delFlag;
-
-    /**
-     * 租户号
-     */
-    @ChineseDescription("租户号")
-    private Long tenantId;
 
 }
