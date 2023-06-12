@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserRoleExceptionEnum;
@@ -29,7 +30,7 @@ import java.util.Set;
  * @date 2023/06/10 21:26
  */
 @Service
-public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService, RemoveUserCallbackApi {
+public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService, RemoveUserCallbackApi, RemoveRoleCallbackApi {
 
     @Override
     public void add(SysUserRoleRequest sysUserRoleRequest) {
@@ -99,6 +100,18 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         LambdaQueryWrapper<SysUserRole> sysUserRoleLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysUserRoleLambdaQueryWrapper.in(SysUserRole::getUserId, beRemovedUserIdList);
         this.remove(sysUserRoleLambdaQueryWrapper);
+    }
+
+    @Override
+    public void validateHaveRoleBind(Set<Long> beRemovedRoleIdList) {
+        // none
+    }
+
+    @Override
+    public void removeRoleAction(Set<Long> beRemovedRoleIdList) {
+        LambdaQueryWrapper<SysUserRole> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(SysUserRole::getRoleId, beRemovedRoleIdList);
+        this.remove(wrapper);
     }
 
     /**

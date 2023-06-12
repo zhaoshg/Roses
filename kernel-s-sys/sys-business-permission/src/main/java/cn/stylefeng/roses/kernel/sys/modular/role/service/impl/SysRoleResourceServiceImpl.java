@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleResource;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.SysRoleResourceExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleResourceMapper;
@@ -17,6 +18,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 角色资源关联业务实现层
@@ -25,9 +27,9 @@ import java.util.List;
  * @date 2023/06/10 21:29
  */
 @Service
-public class SysRoleResourceServiceImpl extends ServiceImpl<SysRoleResourceMapper, SysRoleResource> implements SysRoleResourceService {
+public class SysRoleResourceServiceImpl extends ServiceImpl<SysRoleResourceMapper, SysRoleResource> implements SysRoleResourceService, RemoveRoleCallbackApi {
 
-	@Override
+    @Override
     public void add(SysRoleResourceRequest sysRoleResourceRequest) {
         SysRoleResource sysRoleResource = new SysRoleResource();
         BeanUtil.copyProperties(sysRoleResourceRequest, sysRoleResource);
@@ -63,6 +65,18 @@ public class SysRoleResourceServiceImpl extends ServiceImpl<SysRoleResourceMappe
     public List<SysRoleResource> findList(SysRoleResourceRequest sysRoleResourceRequest) {
         LambdaQueryWrapper<SysRoleResource> wrapper = this.createWrapper(sysRoleResourceRequest);
         return this.list(wrapper);
+    }
+
+    @Override
+    public void validateHaveRoleBind(Set<Long> beRemovedRoleIdList) {
+        // none
+    }
+
+    @Override
+    public void removeRoleAction(Set<Long> beRemovedRoleIdList) {
+        LambdaQueryWrapper<SysRoleResource> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(SysRoleResource::getRoleId, beRemovedRoleIdList);
+        this.remove(wrapper);
     }
 
     /**

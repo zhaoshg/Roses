@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleDataScope;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.SysRoleDataScopeExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleDataScopeMapper;
@@ -17,6 +18,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 角色数据范围业务实现层
@@ -25,9 +27,9 @@ import java.util.List;
  * @date 2023/06/10 21:29
  */
 @Service
-public class SysRoleDataScopeServiceImpl extends ServiceImpl<SysRoleDataScopeMapper, SysRoleDataScope> implements SysRoleDataScopeService {
+public class SysRoleDataScopeServiceImpl extends ServiceImpl<SysRoleDataScopeMapper, SysRoleDataScope> implements SysRoleDataScopeService, RemoveRoleCallbackApi {
 
-	@Override
+    @Override
     public void add(SysRoleDataScopeRequest sysRoleDataScopeRequest) {
         SysRoleDataScope sysRoleDataScope = new SysRoleDataScope();
         BeanUtil.copyProperties(sysRoleDataScopeRequest, sysRoleDataScope);
@@ -63,6 +65,18 @@ public class SysRoleDataScopeServiceImpl extends ServiceImpl<SysRoleDataScopeMap
     public List<SysRoleDataScope> findList(SysRoleDataScopeRequest sysRoleDataScopeRequest) {
         LambdaQueryWrapper<SysRoleDataScope> wrapper = this.createWrapper(sysRoleDataScopeRequest);
         return this.list(wrapper);
+    }
+
+    @Override
+    public void validateHaveRoleBind(Set<Long> beRemovedRoleIdList) {
+        // none
+    }
+
+    @Override
+    public void removeRoleAction(Set<Long> beRemovedRoleIdList) {
+        LambdaQueryWrapper<SysRoleDataScope> sysRoleDataScopeLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleDataScopeLambdaQueryWrapper.in(SysRoleDataScope::getRoleId, beRemovedRoleIdList);
+        this.remove(sysRoleDataScopeLambdaQueryWrapper);
     }
 
     /**

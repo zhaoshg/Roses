@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenu;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.SysRoleMenuExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleMenuMapper;
@@ -17,6 +18,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 角色菜单关联业务实现层
@@ -25,9 +27,9 @@ import java.util.List;
  * @date 2023/06/10 21:29
  */
 @Service
-public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements SysRoleMenuService {
+public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements SysRoleMenuService, RemoveRoleCallbackApi {
 
-	@Override
+    @Override
     public void add(SysRoleMenuRequest sysRoleMenuRequest) {
         SysRoleMenu sysRoleMenu = new SysRoleMenu();
         BeanUtil.copyProperties(sysRoleMenuRequest, sysRoleMenu);
@@ -63,6 +65,18 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     public List<SysRoleMenu> findList(SysRoleMenuRequest sysRoleMenuRequest) {
         LambdaQueryWrapper<SysRoleMenu> wrapper = this.createWrapper(sysRoleMenuRequest);
         return this.list(wrapper);
+    }
+
+    @Override
+    public void validateHaveRoleBind(Set<Long> beRemovedRoleIdList) {
+        // none
+    }
+
+    @Override
+    public void removeRoleAction(Set<Long> beRemovedRoleIdList) {
+        LambdaQueryWrapper<SysRoleMenu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(SysRoleMenu::getRoleId, beRemovedRoleIdList);
+        this.remove(wrapper);
     }
 
     /**

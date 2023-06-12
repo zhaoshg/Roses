@@ -21,7 +21,12 @@ public enum SysRoleExceptionEnum implements AbstractExceptionEnum {
     /**
      * 角色编码不能被修改
      */
-    SUPER_ADMIN_ROLE_CODE_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "角色编码不能被修改");
+    SUPER_ADMIN_ROLE_CODE_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "角色编码不能被修改"),
+
+    /**
+     * 超级管理员不能被删除
+     */
+    SYSTEM_ROLE_CANT_DELETE(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10003", "系统角色不能被删除");
 
     /**
      * 错误编码

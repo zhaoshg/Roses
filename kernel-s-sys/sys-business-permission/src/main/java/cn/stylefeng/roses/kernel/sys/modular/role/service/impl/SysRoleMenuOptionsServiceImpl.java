@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.SysRoleMenuOptionsExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleMenuOptionsMapper;
@@ -17,6 +18,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 角色和菜单下的功能关联业务实现层
@@ -25,9 +27,9 @@ import java.util.List;
  * @date 2023/06/10 21:29
  */
 @Service
-public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOptionsMapper, SysRoleMenuOptions> implements SysRoleMenuOptionsService {
+public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOptionsMapper, SysRoleMenuOptions> implements SysRoleMenuOptionsService, RemoveRoleCallbackApi {
 
-	@Override
+    @Override
     public void add(SysRoleMenuOptionsRequest sysRoleMenuOptionsRequest) {
         SysRoleMenuOptions sysRoleMenuOptions = new SysRoleMenuOptions();
         BeanUtil.copyProperties(sysRoleMenuOptionsRequest, sysRoleMenuOptions);
@@ -63,6 +65,18 @@ public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOption
     public List<SysRoleMenuOptions> findList(SysRoleMenuOptionsRequest sysRoleMenuOptionsRequest) {
         LambdaQueryWrapper<SysRoleMenuOptions> wrapper = this.createWrapper(sysRoleMenuOptionsRequest);
         return this.list(wrapper);
+    }
+
+    @Override
+    public void validateHaveRoleBind(Set<Long> beRemovedRoleIdList) {
+        // none
+    }
+
+    @Override
+    public void removeRoleAction(Set<Long> beRemovedRoleIdList) {
+        LambdaQueryWrapper<SysRoleMenuOptions> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(SysRoleMenuOptions::getRoleId, beRemovedRoleIdList);
+        this.remove(wrapper);
     }
 
     /**
