@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserRoleExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserRoleMapper;
@@ -17,6 +18,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 用户角色关联业务实现层
@@ -25,9 +27,9 @@ import java.util.List;
  * @date 2023/06/10 21:26
  */
 @Service
-public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService {
+public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService, RemoveUserCallbackApi {
 
-	@Override
+    @Override
     public void add(SysUserRoleRequest sysUserRoleRequest) {
         SysUserRole sysUserRole = new SysUserRole();
         BeanUtil.copyProperties(sysUserRoleRequest, sysUserRole);
@@ -63,6 +65,18 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     public List<SysUserRole> findList(SysUserRoleRequest sysUserRoleRequest) {
         LambdaQueryWrapper<SysUserRole> wrapper = this.createWrapper(sysUserRoleRequest);
         return this.list(wrapper);
+    }
+
+    @Override
+    public void validateHaveUserBind(Set<Long> beRemovedUserIdList) {
+
+    }
+
+    @Override
+    public void removeUserAction(Set<Long> beRemovedUserIdList) {
+        LambdaQueryWrapper<SysUserRole> sysUserRoleLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserRoleLambdaQueryWrapper.in(SysUserRole::getUserId, beRemovedUserIdList);
+        this.remove(sysUserRoleLambdaQueryWrapper);
     }
 
     /**

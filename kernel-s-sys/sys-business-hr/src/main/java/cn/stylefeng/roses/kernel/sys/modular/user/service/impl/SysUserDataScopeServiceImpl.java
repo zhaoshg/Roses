@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserDataScope;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserDataScopeExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserDataScopeMapper;
@@ -17,6 +18,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 用户数据范围业务实现层
@@ -25,9 +27,9 @@ import java.util.List;
  * @date 2023/06/10 21:26
  */
 @Service
-public class SysUserDataScopeServiceImpl extends ServiceImpl<SysUserDataScopeMapper, SysUserDataScope> implements SysUserDataScopeService {
+public class SysUserDataScopeServiceImpl extends ServiceImpl<SysUserDataScopeMapper, SysUserDataScope> implements SysUserDataScopeService, RemoveUserCallbackApi {
 
-	@Override
+    @Override
     public void add(SysUserDataScopeRequest sysUserDataScopeRequest) {
         SysUserDataScope sysUserDataScope = new SysUserDataScope();
         BeanUtil.copyProperties(sysUserDataScopeRequest, sysUserDataScope);
@@ -63,6 +65,18 @@ public class SysUserDataScopeServiceImpl extends ServiceImpl<SysUserDataScopeMap
     public List<SysUserDataScope> findList(SysUserDataScopeRequest sysUserDataScopeRequest) {
         LambdaQueryWrapper<SysUserDataScope> wrapper = this.createWrapper(sysUserDataScopeRequest);
         return this.list(wrapper);
+    }
+
+    @Override
+    public void validateHaveUserBind(Set<Long> beRemovedUserIdList) {
+
+    }
+
+    @Override
+    public void removeUserAction(Set<Long> beRemovedUserIdList) {
+        LambdaQueryWrapper<SysUserDataScope> sysUserDataScopeLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserDataScopeLambdaQueryWrapper.in(SysUserDataScope::getUserId, beRemovedUserIdList);
+        this.remove(sysUserDataScopeLambdaQueryWrapper);
     }
 
     /**

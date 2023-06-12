@@ -8,6 +8,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.enums.HrOrganizationExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExceptionEnum;
@@ -30,7 +31,7 @@ import java.util.Set;
  * @date 2023/06/10 21:26
  */
 @Service
-public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUserOrg> implements SysUserOrgService, RemoveOrgCallbackApi {
+public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUserOrg> implements SysUserOrgService, RemoveOrgCallbackApi, RemoveUserCallbackApi {
 
     @Override
     public void add(SysUserOrgRequest sysUserOrgRequest) {
@@ -100,6 +101,18 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
     public void removeOrgAction(Set<Long> beRemovedOrgIdList) {
         LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(SysUserOrg::getOrgId, beRemovedOrgIdList);
+        this.remove(queryWrapper);
+    }
+
+    @Override
+    public void validateHaveUserBind(Set<Long> beRemovedUserIdList) {
+
+    }
+
+    @Override
+    public void removeUserAction(Set<Long> beRemovedUserIdList) {
+        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysUserOrg::getUserId, beRemovedUserIdList);
         this.remove(queryWrapper);
     }
 
