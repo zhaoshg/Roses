@@ -29,59 +29,59 @@ public class SysAppController {
     private SysAppService sysAppService;
 
     /**
-     * 添加
+     * 添加应用
      *
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
-    @PostResource(name = "添加", path = "/sysApp/add")
+    @PostResource(name = "添加应用", path = "/sysApp/add")
     public ResponseData<SysApp> add(@RequestBody @Validated(SysAppRequest.add.class) SysAppRequest sysAppRequest) {
         sysAppService.add(sysAppRequest);
         return new SuccessResponseData<>();
     }
 
     /**
-     * 删除
+     * 删除应用
      *
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
-    @PostResource(name = "删除", path = "/sysApp/delete")
+    @PostResource(name = "删除应用", path = "/sysApp/delete")
     public ResponseData<?> delete(@RequestBody @Validated(SysAppRequest.delete.class) SysAppRequest sysAppRequest) {
         sysAppService.del(sysAppRequest);
         return new SuccessResponseData<>();
     }
 
     /**
-     * 编辑
+     * 编辑应用
      *
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
-    @PostResource(name = "编辑", path = "/sysApp/edit")
+    @PostResource(name = "编辑应用", path = "/sysApp/edit")
     public ResponseData<?> edit(@RequestBody @Validated(SysAppRequest.edit.class) SysAppRequest sysAppRequest) {
         sysAppService.edit(sysAppRequest);
         return new SuccessResponseData<>();
     }
 
     /**
-     * 查看详情
+     * 查看应用详情
      *
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
-    @GetResource(name = "查看详情", path = "/sysApp/detail")
+    @GetResource(name = "查看应用详情", path = "/sysApp/detail")
     public ResponseData<SysApp> detail(@Validated(SysAppRequest.detail.class) SysAppRequest sysAppRequest) {
         return new SuccessResponseData<>(sysAppService.detail(sysAppRequest));
     }
 
     /**
-     * 获取列表（带分页）
+     * 分页查询-应用列表
      *
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
-    @GetResource(name = "分页查询", path = "/sysApp/page")
+    @GetResource(name = "分页查询-应用列表", path = "/sysApp/page")
     public ResponseData<PageResult<SysApp>> page(SysAppRequest sysAppRequest) {
         return new SuccessResponseData<>(sysAppService.findPage(sysAppRequest));
     }
