@@ -16,7 +16,12 @@ public enum SysAppExceptionEnum implements AbstractExceptionEnum {
     /**
      * 查询结果不存在
      */
-    SYS_APP_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE +  "10001", "查询结果不存在");
+    SYS_APP_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10001", "查询结果不存在"),
+
+    /**
+     * 不允许修改应用编码
+     */
+    APP_CODE_CANT_EDIT(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "不允许修改应用编码");
 
     /**
      * 错误编码

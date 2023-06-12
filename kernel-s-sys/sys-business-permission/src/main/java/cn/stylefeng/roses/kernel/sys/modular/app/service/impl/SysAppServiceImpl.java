@@ -44,7 +44,14 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
     @Override
     public void edit(SysAppRequest sysAppRequest) {
         SysApp sysApp = this.querySysApp(sysAppRequest);
+
+        // 应用编码不允许修改
+        if (!sysApp.getAppCode().equals(sysAppRequest.getAppCode())) {
+            throw new ServiceException(SysAppExceptionEnum.APP_CODE_CANT_EDIT);
+        }
+
         BeanUtil.copyProperties(sysAppRequest, sysApp);
+
         this.updateById(sysApp);
     }
 
