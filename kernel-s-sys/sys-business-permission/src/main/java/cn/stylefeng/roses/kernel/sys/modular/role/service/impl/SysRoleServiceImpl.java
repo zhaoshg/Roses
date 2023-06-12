@@ -110,6 +110,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     public List<SysRole> findList(SysRoleRequest sysRoleRequest) {
         LambdaQueryWrapper<SysRole> wrapper = this.createWrapper(sysRoleRequest);
+
+        // 只查询id和名称
+        wrapper.select(SysRole::getRoleId, SysRole::getRoleName);
+
         return this.list(wrapper);
     }
 
