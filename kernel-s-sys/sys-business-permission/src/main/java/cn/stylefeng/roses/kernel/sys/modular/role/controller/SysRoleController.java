@@ -29,59 +29,59 @@ public class SysRoleController {
     private SysRoleService sysRoleService;
 
     /**
-     * 添加
+     * 添加角色
      *
      * @author fengshuonan
      * @date 2023/06/10 21:29
      */
-    @PostResource(name = "添加", path = "/sysRole/add")
+    @PostResource(name = "添加角色", path = "/sysRole/add")
     public ResponseData<SysRole> add(@RequestBody @Validated(SysRoleRequest.add.class) SysRoleRequest sysRoleRequest) {
         sysRoleService.add(sysRoleRequest);
         return new SuccessResponseData<>();
     }
 
     /**
-     * 删除
+     * 删除角色
      *
      * @author fengshuonan
      * @date 2023/06/10 21:29
      */
-    @PostResource(name = "删除", path = "/sysRole/delete")
+    @PostResource(name = "删除角色", path = "/sysRole/delete")
     public ResponseData<?> delete(@RequestBody @Validated(SysRoleRequest.delete.class) SysRoleRequest sysRoleRequest) {
         sysRoleService.del(sysRoleRequest);
         return new SuccessResponseData<>();
     }
 
     /**
-     * 编辑
+     * 编辑角色
      *
      * @author fengshuonan
      * @date 2023/06/10 21:29
      */
-    @PostResource(name = "编辑", path = "/sysRole/edit")
+    @PostResource(name = "编辑角色", path = "/sysRole/edit")
     public ResponseData<?> edit(@RequestBody @Validated(SysRoleRequest.edit.class) SysRoleRequest sysRoleRequest) {
         sysRoleService.edit(sysRoleRequest);
         return new SuccessResponseData<>();
     }
 
     /**
-     * 查看详情
+     * 查看角色详情
      *
      * @author fengshuonan
      * @date 2023/06/10 21:29
      */
-    @GetResource(name = "查看详情", path = "/sysRole/detail")
+    @GetResource(name = "查看角色详情", path = "/sysRole/detail")
     public ResponseData<SysRole> detail(@Validated(SysRoleRequest.detail.class) SysRoleRequest sysRoleRequest) {
         return new SuccessResponseData<>(sysRoleService.detail(sysRoleRequest));
     }
 
     /**
-     * 获取列表（带分页）
+     * 分页查询-角色列表
      *
      * @author fengshuonan
      * @date 2023/06/10 21:29
      */
-    @GetResource(name = "分页查询", path = "/sysRole/page")
+    @GetResource(name = "分页查询-角色列表", path = "/sysRole/page")
     public ResponseData<PageResult<SysRole>> page(SysRoleRequest sysRoleRequest) {
         return new SuccessResponseData<>(sysRoleService.findPage(sysRoleRequest));
     }
