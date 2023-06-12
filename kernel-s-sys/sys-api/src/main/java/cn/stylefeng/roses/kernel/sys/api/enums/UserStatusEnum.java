@@ -24,6 +24,9 @@
  */
 package cn.stylefeng.roses.kernel.sys.api.enums;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.rule.base.ReadableEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.UserExceptionEnum;
@@ -36,7 +39,7 @@ import lombok.Getter;
  * @since 2020/10/20 18:19
  */
 @Getter
-public enum UserStatusEnum {
+public enum UserStatusEnum implements ReadableEnum<UserStatusEnum> {
 
     /**
      * 启用
@@ -108,4 +111,26 @@ public enum UserStatusEnum {
         throw new SysException(UserExceptionEnum.REQUEST_USER_STATUS_ERROR, code);
     }
 
+    @Override
+    public Object getKey() {
+        return this.code;
+    }
+
+    @Override
+    public Object getName() {
+        return this.message;
+    }
+
+    @Override
+    public UserStatusEnum parseToEnum(String originValue) {
+        if (ObjectUtil.isEmpty(originValue)) {
+            return null;
+        }
+        for (UserStatusEnum value : UserStatusEnum.values()) {
+            if (value.code.equals(Convert.toInt(originValue))) {
+                return value;
+            }
+        }
+        return null;
+    }
 }

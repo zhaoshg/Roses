@@ -129,6 +129,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         List<Long> userRoleIdList = sysUserServiceApi.getUserRoleIdList(sysUser.getUserId());
         sysUser.setRoleIdList(userRoleIdList);
 
+        // 屏蔽不需要的字段
+        sysUser.setPassword(null);
+
         return sysUser;
     }
 

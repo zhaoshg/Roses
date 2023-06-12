@@ -4,6 +4,8 @@ import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.annotation.EnumFieldFormat;
 import cn.stylefeng.roses.kernel.rule.enums.SexEnum;
+import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
+import cn.stylefeng.roses.kernel.sys.api.enums.UserStatusEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.UserOrgDTO;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -110,6 +112,7 @@ public class SysUser extends BaseExpandFieldEntity {
      */
     @TableField("super_admin_flag")
     @ChineseDescription("是否是超级管理员：Y-是，N-否")
+    @EnumFieldFormat(processEnum = YesOrNotEnum.class)
     private String superAdminFlag;
 
     /**
@@ -117,6 +120,7 @@ public class SysUser extends BaseExpandFieldEntity {
      */
     @TableField("status_flag")
     @ChineseDescription("状态：1-正常，2-冻结")
+    @EnumFieldFormat(processEnum = UserStatusEnum.class)
     private Integer statusFlag;
 
     /**
