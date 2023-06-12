@@ -11,7 +11,7 @@ import java.util.Set;
 public interface RemoveOrgCallbackApi {
 
     /**
-     * 校验置顶orgId集合是否有和业务的绑定关系
+     * 校验指定orgId集合是否有和业务的绑定关系
      * <p>
      * 如果有绑定关系直接抛出异常即可
      *
