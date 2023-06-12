@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.auth.api.enums.DataScopeTypeEnum;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
@@ -32,6 +33,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public void add(SysRoleRequest sysRoleRequest) {
         SysRole sysRole = new SysRole();
         BeanUtil.copyProperties(sysRoleRequest, sysRole);
+
+        // 设置角色默认的数据范围，默认查看全部
+        sysRole.setDataScopeType(DataScopeTypeEnum.ALL.getCode());
+
         this.save(sysRole);
     }
 

@@ -74,29 +74,4 @@ public class SysRoleRequest extends BaseRequest {
     @ChineseDescription("是否是系统角色：Y-是，N-否。系统角色不能删除")
     private String roleSystemFlag;
 
-    /**
-     * 拓展字段
-     */
-    @ChineseDescription("拓展字段")
-    private String expandField;
-
-    /**
-     * 乐观锁
-     */
-    @ChineseDescription("乐观锁")
-    private Long versionFlag;
-
-    /**
-     * 删除标记：Y-已删除，N-未删除
-     */
-    @NotBlank(message = "删除标记：Y-已删除，N-未删除不能为空", groups = {add.class, edit.class})
-    @ChineseDescription("删除标记：Y-已删除，N-未删除")
-    private String delFlag;
-
-    /**
-     * 租户号
-     */
-    @ChineseDescription("租户号")
-    private Long tenantId;
-
 }
