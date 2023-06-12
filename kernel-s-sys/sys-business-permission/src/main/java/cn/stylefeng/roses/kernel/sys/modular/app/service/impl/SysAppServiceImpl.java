@@ -18,9 +18,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 系统应用业务实现层
@@ -51,6 +53,20 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
         }
 
         this.removeById(sysApp.getAppId());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void batchDelete(SysAppRequest sysAppRequest) {
+
+        Set<Long> appIdList = sysAppRequest.getAppIdList();
+
+        // 判断应用下是否有绑定菜单
+        if (this.sysMenuService.validateMenuBindApp(appIdList)) {
+            throw new ServiceException(SysAppExceptionEnum.APP_BIND_MENU);
+        }
+
+        this.removeBatchByIds(appIdList);
     }
 
     @Override

@@ -7,8 +7,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Set;
 
 /**
  * 系统应用封装类
@@ -81,5 +83,12 @@ public class SysAppRequest extends BaseRequest {
      */
     @ChineseDescription("备注")
     private String remark;
+
+    /**
+     * 主键id集合，用在批量删除
+     */
+    @NotEmpty(message = "主键id集合不能为空", groups = batchDelete.class)
+    @ChineseDescription("主键id集合")
+    private Set<Long> appIdList;
 
 }

@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.app.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -49,6 +50,18 @@ public class SysAppController {
     @PostResource(name = "删除应用", path = "/sysApp/delete")
     public ResponseData<?> delete(@RequestBody @Validated(SysAppRequest.delete.class) SysAppRequest sysAppRequest) {
         sysAppService.del(sysAppRequest);
+        return new SuccessResponseData<>();
+    }
+
+    /**
+     * 批量删除应用
+     *
+     * @author fengshuonan
+     * @date 2023/06/10 21:28
+     */
+    @PostResource(name = "批量删除应用", path = "/sysApp/batchDelete")
+    public ResponseData<?> batchDelete(@RequestBody @Validated(BaseRequest.batchDelete.class) SysAppRequest sysAppRequest) {
+        sysAppService.batchDelete(sysAppRequest);
         return new SuccessResponseData<>();
     }
 
