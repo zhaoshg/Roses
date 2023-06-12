@@ -41,47 +41,47 @@ public class SysUserController {
     }
 
     /**
-     * 删除
+     * 删除用户
      *
      * @author fengshuonan
      * @date 2023/06/10 21:26
      */
-    @PostResource(name = "删除", path = "/sysUser/delete")
+    @PostResource(name = "删除用户", path = "/sysUser/delete")
     public ResponseData<?> delete(@RequestBody @Validated(SysUserRequest.delete.class) SysUserRequest sysUserRequest) {
         sysUserService.del(sysUserRequest);
         return new SuccessResponseData<>();
     }
 
     /**
-     * 编辑
+     * 编辑用户
      *
      * @author fengshuonan
      * @date 2023/06/10 21:26
      */
-    @PostResource(name = "编辑", path = "/sysUser/edit")
+    @PostResource(name = "编辑用户", path = "/sysUser/edit")
     public ResponseData<?> edit(@RequestBody @Validated(SysUserRequest.edit.class) SysUserRequest sysUserRequest) {
         sysUserService.edit(sysUserRequest);
         return new SuccessResponseData<>();
     }
 
     /**
-     * 查看详情
+     * 查看用户详情
      *
      * @author fengshuonan
      * @date 2023/06/10 21:26
      */
-    @GetResource(name = "查看详情", path = "/sysUser/detail")
+    @GetResource(name = "查看用户详情", path = "/sysUser/detail")
     public ResponseData<SysUser> detail(@Validated(SysUserRequest.detail.class) SysUserRequest sysUserRequest) {
         return new SuccessResponseData<>(sysUserService.detail(sysUserRequest));
     }
 
     /**
-     * 获取列表（带分页）
+     * 获取列表-用户信息（带分页）
      *
      * @author fengshuonan
      * @date 2023/06/10 21:26
      */
-    @GetResource(name = "分页查询", path = "/sysUser/page")
+    @GetResource(name = "分页查询-用户信息", path = "/sysUser/page")
     public ResponseData<PageResult<SysUser>> page(SysUserRequest sysUserRequest) {
         return new SuccessResponseData<>(sysUserService.findPage(sysUserRequest));
     }
