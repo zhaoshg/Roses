@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * 系统角色控制器
@@ -74,17 +73,6 @@ public class SysRoleController {
     @GetResource(name = "查看详情", path = "/sysRole/detail")
     public ResponseData<SysRole> detail(@Validated(SysRoleRequest.detail.class) SysRoleRequest sysRoleRequest) {
         return new SuccessResponseData<>(sysRoleService.detail(sysRoleRequest));
-    }
-
-    /**
-     * 获取列表
-     *
-     * @author fengshuonan
-     * @date 2023/06/10 21:29
-     */
-    @GetResource(name = "获取列表", path = "/sysRole/list")
-    public ResponseData<List<SysRole>> list(SysRoleRequest sysRoleRequest) {
-        return new SuccessResponseData<>(sysRoleService.findList(sysRoleRequest));
     }
 
     /**
