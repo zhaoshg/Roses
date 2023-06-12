@@ -73,4 +73,12 @@ public interface SysUserServiceApi {
      */
     List<Long> getOrgUserIdList(Long orgId, Boolean containSubOrgFlag);
 
+    /**
+     * 获取用户的角色id列表
+     *
+     * @author fengshuonan
+     * @since 2023/6/12 11:29
+     */
+    List<Long> getUserRoleIdList(Long userId);
+
 }

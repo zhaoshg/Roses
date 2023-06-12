@@ -14,6 +14,7 @@ import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 系统用户实例类
@@ -158,10 +159,30 @@ public class SysUser extends BaseExpandFieldEntity {
     //-------------------------------非实体字段-------------------------------
 
     /**
-     * 用户组织机构详情
+     * 用户组织机构详情【只返回主部门】
+     * <p>
+     * 用在用户分页列表的响应
      */
     @TableField(exist = false)
-    @ChineseDescription("用户组织机构详情")
+    @ChineseDescription("用户组织机构详情【只返回主部门】")
     private UserOrgDTO userOrgDTO;
+
+    /**
+     * 用户组织机构详情【所有部门都显示】
+     * <p>
+     * 用在获取用户详情信息的响应
+     */
+    @TableField(exist = false)
+    @ChineseDescription("用户组织机构详情【所有部门都显示】")
+    private List<UserOrgDTO> userOrgDTOList;
+
+    /**
+     * 获取用户角色id列表
+     * <p>
+     * 用在获取用户详情信息的响应
+     */
+    @TableField(exist = false)
+    @ChineseDescription("获取用户角色id列表")
+    private List<Long> roleIdList;
 
 }

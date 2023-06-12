@@ -15,6 +15,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.enums.UserStatusEnum;
+import cn.stylefeng.roses.kernel.sys.api.pojo.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserMapper;
@@ -118,7 +119,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public SysUser detail(SysUserRequest sysUserRequest) {
-        return this.querySysUser(sysUserRequest);
+        SysUser sysUser = this.querySysUser(sysUserRequest);
+
+        // 获取用户的组织机构信息
+        List<UserOrgDTO> userOrgList = sysUserServiceApi.getUserOrgList(sysUser.getUserId());
+        sysUser.setUserOrgDTOList(userOrgList);
+
+        // 获取用户的角色信息
+        List<Long> userRoleIdList = sysUserServiceApi.getUserRoleIdList(sysUser.getUserId());
+        sysUser.setRoleIdList(userRoleIdList);
+
+        return sysUser;
     }
 
     @Override

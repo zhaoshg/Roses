@@ -36,4 +36,9 @@ public class UserIntegrationService implements SysUserServiceApi {
         return null;
     }
 
+    @Override
+    public List<Long> getUserRoleIdList(Long userId) {
+        return null;
+    }
+
 }
