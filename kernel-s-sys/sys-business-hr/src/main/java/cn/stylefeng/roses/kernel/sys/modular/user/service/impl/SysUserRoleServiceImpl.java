@@ -91,7 +91,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
     @Override
     public void validateHaveUserBind(Set<Long> beRemovedUserIdList) {
-
+        // none
     }
 
     @Override

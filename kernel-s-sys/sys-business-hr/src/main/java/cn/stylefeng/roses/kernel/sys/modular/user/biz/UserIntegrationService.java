@@ -10,8 +10,10 @@ import cn.stylefeng.roses.kernel.sys.api.pojo.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
+import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.factory.UserOrgFactory;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
+import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,9 @@ public class UserIntegrationService implements SysUserServiceApi {
 
     @Resource
     private DbOperatorApi dbOperatorApi;
+
+    @Resource
+    private SysUserRoleService sysUserRoleService;
 
     @Override
     public SimpleUserDTO getUserInfoByUserId(Long userId) {
@@ -145,7 +150,16 @@ public class UserIntegrationService implements SysUserServiceApi {
 
     @Override
     public List<Long> getUserRoleIdList(Long userId) {
-        return null;
+        if (userId == null) {
+            return new ArrayList<>();
+        }
+
+        LambdaQueryWrapper<SysUserRole> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysUserRole::getUserId, userId);
+        wrapper.select(SysUserRole::getRoleId);
+        List<SysUserRole> sysUserRoleList = this.sysUserRoleService.list(wrapper);
+
+        return sysUserRoleList.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
     }
 
 }
