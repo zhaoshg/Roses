@@ -22,66 +22,33 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.api.pojo;
+package cn.stylefeng.roses.kernel.sys.api.enums;
 
-import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
-import lombok.Data;
+import lombok.Getter;
 
 /**
- * 用户组织机构的信息封装
+ * 组织机构类型
  *
  * @author fengshuonan
- * @since 2023/6/12 15:41
+ * @since 2022/5/21 11:26
  */
-@Data
-public class UserOrgDTO {
+@Getter
+public enum OrgTypeEnum {
 
     /**
-     * 用户id
+     * 公司
      */
-    @ChineseDescription("用户id")
-    private Long userId;
+    COMPANY(1),
 
     /**
-     * 用户所属公司id
+     * 部门
      */
-    @ChineseDescription("用户所属公司id")
-    private Long companyId;
+    DEPT(2);
 
-    /**
-     * 用户所属公司名称
-     */
-    @ChineseDescription("用户所属公司名称")
-    private String companyName;
+    private final Integer code;
 
-    /**
-     * 用户所属部门id
-     */
-    @ChineseDescription("用户所属部门id")
-    private Long deptId;
-
-    /**
-     * 用户所属部门名称
-     */
-    @ChineseDescription("用户所属部门名称")
-    private String deptName;
-
-    /**
-     * 所属部门的职位id
-     */
-    @ChineseDescription("所属部门的职位id")
-    private Long positionId;
-
-    /**
-     * 用户所属职位名称
-     */
-    @ChineseDescription("用户所属职位名称")
-    private String positionName;
-
-    /**
-     * 是否是主部门：Y-是主部门，N-不是主部门
-     */
-    @ChineseDescription("是否是主部门：Y-是主部门，N-不是主部门")
-    private String mainFlag;
+    OrgTypeEnum(Integer code) {
+        this.code = code;
+    }
 
 }

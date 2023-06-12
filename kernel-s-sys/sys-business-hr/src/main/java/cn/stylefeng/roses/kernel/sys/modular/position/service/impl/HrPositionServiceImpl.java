@@ -94,6 +94,23 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
     }
 
     @Override
+    public String getPositionName(Long positionId) {
+        if (positionId == null) {
+            return null;
+        }
+
+        LambdaQueryWrapper<HrPosition> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(HrPosition::getPositionId, positionId);
+        queryWrapper.select(HrPosition::getPositionName);
+        HrPosition hrPosition = this.getOne(queryWrapper);
+        if (hrPosition == null) {
+            return null;
+        } else {
+            return hrPosition.getPositionName();
+        }
+    }
+
+    @Override
     public List<HrPosition> findList(HrPositionRequest hrPositionRequest) {
         LambdaQueryWrapper<HrPosition> wrapper = this.createWrapper(hrPositionRequest);
 

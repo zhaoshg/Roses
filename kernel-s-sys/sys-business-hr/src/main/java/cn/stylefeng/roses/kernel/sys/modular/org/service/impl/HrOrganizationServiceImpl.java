@@ -9,10 +9,13 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.enums.OrgTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
+import cn.stylefeng.roses.kernel.sys.api.pojo.CompanyDeptDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.factory.OrganizationFactory;
 import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrganizationMapper;
@@ -54,8 +57,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     public void del(HrOrganizationRequest hrOrganizationRequest) {
 
         // 查询被删除组织机构的所有子级节点
-        Set<Long> totalOrgIdSet = DbOperatorContext.me().findSubListByParentId(
-                "hr_organization", "org_pids", "org_id", hrOrganizationRequest.getOrgId());
+        Set<Long> totalOrgIdSet = DbOperatorContext.me().findSubListByParentId("hr_organization", "org_pids", "org_id", hrOrganizationRequest.getOrgId());
         totalOrgIdSet.add(hrOrganizationRequest.getOrgId());
 
         // 执行删除操作
@@ -71,8 +73,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         // 批量查询组织机构下的下属机构
         for (Long orgId : orgIdList) {
             // 查询被删除组织机构的所有子级节点
-            Set<Long> tempSubOrgIdList = DbOperatorContext.me().findSubListByParentId(
-                    "hr_organization", "org_pids", "org_id", orgId);
+            Set<Long> tempSubOrgIdList = DbOperatorContext.me().findSubListByParentId("hr_organization", "org_pids", "org_id", orgId);
             orgIdList.addAll(tempSubOrgIdList);
         }
 
@@ -107,8 +108,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         LambdaQueryWrapper<HrOrganization> wrapper = createWrapper(hrOrganizationRequest);
 
         // 只查询需要的字段
-        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgName, HrOrganization::getOrgCode,
-                HrOrganization::getStatusFlag, HrOrganization::getOrgType, HrOrganization::getOrgSort, BaseEntity::getCreateTime);
+        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgName, HrOrganization::getOrgCode, HrOrganization::getStatusFlag, HrOrganization::getOrgType, HrOrganization::getOrgSort, BaseEntity::getCreateTime);
 
         Page<HrOrganization> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
@@ -141,6 +141,56 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 构建树形结构
         return new DefaultTreeBuildFactory<HrOrganization>().doTreeBuild(hrOrganizationList);
+    }
+
+    @Override
+    public CompanyDeptDTO getCompanyDeptInfo(Long orgId) {
+
+        if (orgId == null) {
+            return null;
+        }
+
+        HrOrganization hrOrganization = this.getById(orgId);
+        if (hrOrganization == null) {
+            return null;
+        }
+
+        // 获取当前组织机构id是公司还是部门，如果是公司，则直接返回结果
+        if (OrgTypeEnum.COMPANY.getCode().equals(hrOrganization.getOrgType())) {
+            return new CompanyDeptDTO(hrOrganization.getOrgId(), hrOrganization.getOrgName());
+        }
+
+        // 如果是部门，则递归向上查询到部门所属的公司id
+        CompanyDeptDTO orgCompanyInfo = this.getOrgCompanyInfo(hrOrganization);
+        if (orgCompanyInfo != null) {
+            orgCompanyInfo.setDeptId(hrOrganization.getOrgId());
+            orgCompanyInfo.setDeptName(hrOrganization.getOrgName());
+        }
+
+        return orgCompanyInfo;
+    }
+
+    @Override
+    public CompanyDeptDTO getOrgCompanyInfo(HrOrganization hrOrganization) {
+
+        if (hrOrganization == null) {
+            return null;
+        }
+
+        // 如果是到了根节点，则直接返回当前根节点信息
+        if (TreeConstants.DEFAULT_PARENT_ID.equals(hrOrganization.getOrgParentId())) {
+            return new CompanyDeptDTO(hrOrganization.getOrgId(), hrOrganization.getOrgName());
+        }
+
+        // 如果当前已经是公司类型，则直接返回
+        if (OrgTypeEnum.COMPANY.getCode().equals(hrOrganization.getOrgType())) {
+            return new CompanyDeptDTO(hrOrganization.getOrgId(), hrOrganization.getOrgName());
+        }
+
+        // 查询父级是否是公司
+        Long orgParentId = hrOrganization.getOrgParentId();
+        HrOrganization parentOrgInfo = this.getById(orgParentId);
+        return this.getOrgCompanyInfo(parentOrgInfo);
     }
 
     /**

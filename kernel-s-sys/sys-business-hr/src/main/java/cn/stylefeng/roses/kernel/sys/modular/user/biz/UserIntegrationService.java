@@ -2,16 +2,23 @@ package cn.stylefeng.roses.kernel.sys.modular.user.biz;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
+import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
 import cn.stylefeng.roses.kernel.sys.api.pojo.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
+import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
+import cn.stylefeng.roses.kernel.sys.modular.user.factory.UserOrgFactory;
+import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+
+import static cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExceptionEnum.MAIN_FLAG_COUNT_ERROR;
 
 /**
  * 用户相关的综合业务
@@ -27,6 +34,9 @@ public class UserIntegrationService implements SysUserServiceApi {
 
     @Resource
     private FileInfoApi fileInfoApi;
+
+    @Resource
+    private SysUserOrgService sysUserOrgService;
 
     @Override
     public SimpleUserDTO getUserInfoByUserId(Long userId) {
@@ -62,7 +72,22 @@ public class UserIntegrationService implements SysUserServiceApi {
 
     @Override
     public UserOrgDTO getUserMainOrgInfo(Long userId) {
-        return null;
+
+        if (userId == null) {
+            return null;
+        }
+
+        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserOrg::getUserId, userId);
+        queryWrapper.eq(SysUserOrg::getMainFlag, YesOrNotEnum.Y.getCode());
+        List<SysUserOrg> sysUserOrgList = sysUserOrgService.list(queryWrapper);
+        if (sysUserOrgList.size() > 1) {
+            throw new SysException(MAIN_FLAG_COUNT_ERROR, userId);
+        }
+
+        // 获取到用户的主部门信息
+        SysUserOrg sysUserOrg = sysUserOrgList.get(0);
+        return UserOrgFactory.createUserOrgDetailInfo(sysUserOrg);
     }
 
     @Override

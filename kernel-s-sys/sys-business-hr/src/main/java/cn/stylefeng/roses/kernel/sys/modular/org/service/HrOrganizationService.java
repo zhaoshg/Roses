@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.sys.api.pojo.CompanyDeptDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrganizationRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -88,5 +89,25 @@ public interface HrOrganizationService extends IService<HrOrganization> {
      * @since 2023/6/11 10:40
      */
     List<HrOrganization> commonOrgTree(HrOrganizationRequest hrOrganizationRequest);
+
+    /**
+     * 根据组织机构id，获取对应的具体的公司和部门信息
+     *
+     * @param orgId 组织机构id
+     * @return 公司和部门信息
+     * @author fengshuonan
+     * @since 2023/6/12 15:42
+     */
+    CompanyDeptDTO getCompanyDeptInfo(Long orgId);
+
+    /**
+     * 获取组织机构对应的公司信息
+     *
+     * @param hrOrganization 被查询的组织机构
+     * @return 单独返回公司信息
+     * @author fengshuonan
+     * @since 2023/6/12 16:09
+     */
+    CompanyDeptDTO getOrgCompanyInfo(HrOrganization hrOrganization);
 
 }

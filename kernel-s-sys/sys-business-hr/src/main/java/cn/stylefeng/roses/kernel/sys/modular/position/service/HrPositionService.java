@@ -79,4 +79,12 @@ public interface HrPositionService extends IService<HrPosition> {
      */
     PageResult<HrPosition> findPage(HrPositionRequest hrPositionRequest);
 
+    /**
+     * 获取职务的名称
+     *
+     * @author fengshuonan
+     * @since 2023/6/12 16:38
+     */
+    String getPositionName(Long positionId);
+
 }
