@@ -9,7 +9,7 @@ import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
-import cn.stylefeng.roses.kernel.sys.api.enums.HrOrganizationExceptionEnum;
+import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserOrgMapper;
@@ -93,7 +93,7 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         queryWrapper.in(SysUserOrg::getOrgId, beRemovedOrgIdList);
         long count = this.count(queryWrapper);
         if (count > 0) {
-            throw new ServiceException(HrOrganizationExceptionEnum.DELETE_ORGANIZATION_ERROR);
+            throw new ServiceException(OrgExceptionEnum.DELETE_ORGANIZATION_ERROR);
         }
     }
 

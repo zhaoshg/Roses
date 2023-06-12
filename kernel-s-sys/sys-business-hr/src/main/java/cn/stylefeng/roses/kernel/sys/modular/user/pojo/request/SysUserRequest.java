@@ -27,7 +27,7 @@ public class SysUserRequest extends BaseRequest {
     /**
      * 主键
      */
-    @NotNull(message = "主键不能为空", groups = {edit.class, delete.class})
+    @NotNull(message = "主键不能为空", groups = {edit.class, delete.class, updateStatus.class})
     @ChineseDescription("主键")
     private Long userId;
 
@@ -106,7 +106,7 @@ public class SysUserRequest extends BaseRequest {
      * 状态：1-正常，2-冻结
      */
     @ChineseDescription("状态：1-正常，2-冻结")
-    @NotNull(message = "状态不能为空", groups = {add.class, edit.class})
+    @NotNull(message = "状态不能为空", groups = {add.class, edit.class, updateStatus.class})
     private Integer statusFlag;
 
     /**

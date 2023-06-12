@@ -12,7 +12,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
-import cn.stylefeng.roses.kernel.sys.api.enums.HrOrganizationExceptionEnum;
+import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.factory.OrganizationFactory;
 import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrganizationMapper;
@@ -152,7 +152,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     private HrOrganization queryHrOrganization(HrOrganizationRequest hrOrganizationRequest) {
         HrOrganization hrOrganization = this.getById(hrOrganizationRequest.getOrgId());
         if (ObjectUtil.isEmpty(hrOrganization)) {
-            throw new ServiceException(HrOrganizationExceptionEnum.HR_ORGANIZATION_NOT_EXISTED);
+            throw new ServiceException(OrgExceptionEnum.HR_ORGANIZATION_NOT_EXISTED);
         }
         return hrOrganization;
     }

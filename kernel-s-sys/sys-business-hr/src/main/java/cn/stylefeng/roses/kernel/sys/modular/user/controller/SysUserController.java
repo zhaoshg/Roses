@@ -99,4 +99,16 @@ public class SysUserController {
         return new SuccessResponseData<>(sysUserService.findPage(sysUserRequest));
     }
 
+    /**
+     * 修改用户状态
+     *
+     * @author fengshuonan
+     * @since 2023/6/12 10:58
+     */
+    @PostResource(name = "修改用户状态", path = "/sysUser/updateStatus")
+    public ResponseData<?> updateStatus(@RequestBody @Validated(SysUserRequest.updateStatus.class) SysUserRequest sysUserRequest) {
+        sysUserService.updateStatus(sysUserRequest);
+        return new SuccessResponseData<>();
+    }
+
 }

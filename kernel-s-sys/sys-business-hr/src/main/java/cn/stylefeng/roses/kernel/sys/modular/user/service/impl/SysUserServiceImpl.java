@@ -14,6 +14,7 @@ import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.enums.UserStatusEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserMapper;
@@ -21,6 +22,7 @@ import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -135,6 +137,21 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
 
         return PageResultFactory.createPageResult(sysUserPage);
+    }
+
+    @Override
+    public void updateStatus(SysUserRequest sysUserRequest) {
+
+        // 校验状态传值是否正确
+        Integer statusFlag = sysUserRequest.getStatusFlag();
+        UserStatusEnum.validateUserStatus(statusFlag);
+
+        // 更新用户状态
+        LambdaUpdateWrapper<SysUser> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.set(SysUser::getStatusFlag, sysUserRequest.getStatusFlag());
+        updateWrapper.eq(SysUser::getUserId, sysUserRequest.getUserId());
+        this.update(updateWrapper);
+
     }
 
     @Override

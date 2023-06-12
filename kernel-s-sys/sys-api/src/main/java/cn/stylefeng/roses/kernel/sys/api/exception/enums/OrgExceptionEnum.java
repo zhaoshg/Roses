@@ -1,4 +1,4 @@
-package cn.stylefeng.roses.kernel.sys.api.enums;
+package cn.stylefeng.roses.kernel.sys.api.exception.enums;
 
 import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
 import cn.stylefeng.roses.kernel.rule.exception.AbstractExceptionEnum;
@@ -11,7 +11,7 @@ import lombok.Getter;
  * @date 2023/06/10 21:23
  */
 @Getter
-public enum HrOrganizationExceptionEnum implements AbstractExceptionEnum {
+public enum OrgExceptionEnum implements AbstractExceptionEnum {
 
     /**
      * 查询结果不存在
@@ -33,7 +33,7 @@ public enum HrOrganizationExceptionEnum implements AbstractExceptionEnum {
      */
     private final String userTip;
 
-    HrOrganizationExceptionEnum(String errorCode, String userTip) {
+    OrgExceptionEnum(String errorCode, String userTip) {
         this.errorCode = errorCode;
         this.userTip = userTip;
     }

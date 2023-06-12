@@ -78,4 +78,13 @@ public interface SysUserService extends IService<SysUser> {
      * @date 2023/06/10 21:26
      */
     PageResult<SysUser> findPage(SysUserRequest sysUserRequest);
+
+    /**
+     * 修改用户状态
+     *
+     * @author fengshuonan
+     * @since 2023/6/12 10:59
+     */
+    void updateStatus(SysUserRequest sysUserRequest);
+    
 }
