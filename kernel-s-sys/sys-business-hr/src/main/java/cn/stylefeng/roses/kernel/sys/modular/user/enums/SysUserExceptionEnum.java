@@ -16,7 +16,12 @@ public enum SysUserExceptionEnum implements AbstractExceptionEnum {
     /**
      * 查询结果不存在
      */
-    SYS_USER_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE +  "10001", "查询结果不存在");
+    SYS_USER_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10001", "查询结果不存在"),
+
+    /**
+     * 不能删除超级管理员
+     */
+    USER_CAN_NOT_DELETE_ADMIN(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "不能删除超级管理员");
 
     /**
      * 错误编码

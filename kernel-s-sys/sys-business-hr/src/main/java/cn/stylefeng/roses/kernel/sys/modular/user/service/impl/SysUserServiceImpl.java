@@ -1,15 +1,19 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.auth.api.password.PasswordStoredEncryptApi;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
+import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserMapper;
@@ -24,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 系统用户业务实现层
@@ -62,9 +67,28 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void del(SysUserRequest sysUserRequest) {
         SysUser sysUser = this.querySysUser(sysUserRequest);
+
+        // 不能删除超级管理员
+        if (YesOrNotEnum.Y.getCode().equals(sysUser.getSuperAdminFlag())) {
+            throw new ServiceException(SysUserExceptionEnum.USER_CAN_NOT_DELETE_ADMIN);
+        }
+
+        // 校验是否有其他业务绑定了用户信息
+        Map<String, RemoveUserCallbackApi> removeUserCallbackApiMap = SpringUtil.getBeansOfType(RemoveUserCallbackApi.class);
+        for (RemoveUserCallbackApi removeUserCallbackApi : removeUserCallbackApiMap.values()) {
+            removeUserCallbackApi.validateHaveUserBind(CollectionUtil.set(false, sysUser.getUserId()));
+        }
+
+        // 执行删除用户操作
         this.removeById(sysUser.getUserId());
+
+        // 执行删除用户关联业务的操作
+        for (RemoveUserCallbackApi removeUserCallbackApi : removeUserCallbackApiMap.values()) {
+            removeUserCallbackApi.removeUserAction(CollectionUtil.set(false, sysUser.getUserId()));
+        }
     }
 
     @Override
