@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 import static cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExceptionEnum.MAIN_FLAG_COUNT_ERROR;
@@ -92,7 +93,25 @@ public class UserIntegrationService implements SysUserServiceApi {
 
     @Override
     public List<UserOrgDTO> getUserOrgList(Long userId) {
-        return null;
+
+        if (userId == null) {
+            return null;
+        }
+
+        // 获取用户所有的部门信息
+        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserOrg::getUserId, userId);
+        queryWrapper.orderByDesc(SysUserOrg::getMainFlag);
+        List<SysUserOrg> sysUserOrgList = sysUserOrgService.list(queryWrapper);
+
+        // 补充完整用户的部门和职位信息
+        ArrayList<UserOrgDTO> userOrgDTOS = new ArrayList<>();
+        for (SysUserOrg sysUserOrg : sysUserOrgList) {
+            UserOrgDTO userOrgDetailInfo = UserOrgFactory.createUserOrgDetailInfo(sysUserOrg);
+            userOrgDTOS.add(userOrgDetailInfo);
+        }
+
+        return userOrgDTOS;
     }
 
     @Override
