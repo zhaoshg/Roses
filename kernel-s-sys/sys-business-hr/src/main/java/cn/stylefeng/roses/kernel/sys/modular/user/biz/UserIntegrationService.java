@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.biz;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExceptionEnum.MAIN_FLAG_COUNT_ERROR;
 
@@ -38,6 +41,9 @@ public class UserIntegrationService implements SysUserServiceApi {
 
     @Resource
     private SysUserOrgService sysUserOrgService;
+
+    @Resource
+    private DbOperatorApi dbOperatorApi;
 
     @Override
     public SimpleUserDTO getUserInfoByUserId(Long userId) {
@@ -116,7 +122,25 @@ public class UserIntegrationService implements SysUserServiceApi {
 
     @Override
     public List<Long> getOrgUserIdList(Long orgId, Boolean containSubOrgFlag) {
-        return null;
+
+        // 如果不包含查询子公司，则直接查询参数指定公司下的人员
+        if (!containSubOrgFlag) {
+            LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(SysUserOrg::getOrgId, orgId);
+            queryWrapper.select(SysUserOrg::getUserId);
+            List<SysUserOrg> list = this.sysUserOrgService.list(queryWrapper);
+            return list.stream().map(SysUserOrg::getUserId).collect(Collectors.toList());
+        }
+
+        // 如果包含查询子公司，以及子公司的子公司
+        Set<Long> subOrgIdList = dbOperatorApi.findSubListByParentId("hr_organization", "org_pids", "org_id", orgId);
+        subOrgIdList.add(orgId);
+
+        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysUserOrg::getOrgId, subOrgIdList);
+        queryWrapper.select(SysUserOrg::getUserId);
+        List<SysUserOrg> list = this.sysUserOrgService.list(queryWrapper);
+        return list.stream().map(SysUserOrg::getUserId).collect(Collectors.toList());
     }
 
     @Override
