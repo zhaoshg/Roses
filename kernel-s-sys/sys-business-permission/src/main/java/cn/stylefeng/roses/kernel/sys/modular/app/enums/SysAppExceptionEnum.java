@@ -21,7 +21,12 @@ public enum SysAppExceptionEnum implements AbstractExceptionEnum {
     /**
      * 不允许修改应用编码
      */
-    APP_CODE_CANT_EDIT(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "不允许修改应用编码");
+    APP_CODE_CANT_EDIT(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "不允许修改应用编码"),
+
+    /**
+     * 该应用下有绑定菜单，无法删除应用
+     */
+    APP_BIND_MENU(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10003", "该应用下有绑定菜单，无法删除应用");
 
     /**
      * 错误编码

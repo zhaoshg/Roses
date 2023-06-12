@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.app.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
@@ -12,11 +13,13 @@ import cn.stylefeng.roses.kernel.sys.modular.app.enums.SysAppExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.app.mapper.SysAppMapper;
 import cn.stylefeng.roses.kernel.sys.modular.app.pojo.request.SysAppRequest;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
+import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -28,6 +31,9 @@ import java.util.List;
 @Service
 public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> implements SysAppService {
 
+    @Resource
+    private SysMenuService sysMenuService;
+
     @Override
     public void add(SysAppRequest sysAppRequest) {
         SysApp sysApp = new SysApp();
@@ -38,6 +44,12 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
     @Override
     public void del(SysAppRequest sysAppRequest) {
         SysApp sysApp = this.querySysApp(sysAppRequest);
+
+        // 判断应用下是否有绑定菜单
+        if (this.sysMenuService.validateMenuBindApp(CollectionUtil.set(false, sysApp.getAppId()))) {
+            throw new ServiceException(SysAppExceptionEnum.APP_BIND_MENU);
+        }
+
         this.removeById(sysApp.getAppId());
     }
 

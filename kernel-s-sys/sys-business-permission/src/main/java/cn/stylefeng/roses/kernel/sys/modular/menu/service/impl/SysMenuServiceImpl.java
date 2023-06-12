@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 系统菜单业务实现层
@@ -28,7 +29,7 @@ import java.util.List;
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
 
-	@Override
+    @Override
     public void add(SysMenuRequest sysMenuRequest) {
         SysMenu sysMenu = new SysMenu();
         BeanUtil.copyProperties(sysMenuRequest, sysMenu);
@@ -58,6 +59,17 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         LambdaQueryWrapper<SysMenu> wrapper = createWrapper(sysMenuRequest);
         Page<SysMenu> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
+    }
+
+    @Override
+    public boolean validateMenuBindApp(Set<Long> appIdList) {
+
+        LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysMenuLambdaQueryWrapper.in(SysMenu::getAppId, appIdList);
+        sysMenuLambdaQueryWrapper.select(SysMenu::getMenuId);
+        long count = this.count(sysMenuLambdaQueryWrapper);
+
+        return count > 0;
     }
 
     @Override
