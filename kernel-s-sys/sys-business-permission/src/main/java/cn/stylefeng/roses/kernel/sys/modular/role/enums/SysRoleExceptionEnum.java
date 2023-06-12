@@ -16,7 +16,12 @@ public enum SysRoleExceptionEnum implements AbstractExceptionEnum {
     /**
      * 查询结果不存在
      */
-    SYS_ROLE_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE +  "10001", "查询结果不存在");
+    SYS_ROLE_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10001", "查询结果不存在"),
+
+    /**
+     * 角色编码不能被修改
+     */
+    SUPER_ADMIN_ROLE_CODE_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "角色编码不能被修改");
 
     /**
      * 错误编码

@@ -49,6 +49,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     public void edit(SysRoleRequest sysRoleRequest) {
         SysRole sysRole = this.querySysRole(sysRoleRequest);
+
+        // 不允许修改角色编码
+        if (!sysRole.getRoleCode().equals(sysRoleRequest.getRoleCode())) {
+            throw new ServiceException(SysRoleExceptionEnum.SUPER_ADMIN_ROLE_CODE_ERROR);
+        }
+
         BeanUtil.copyProperties(sysRoleRequest, sysRole);
         this.updateById(sysRole);
     }
