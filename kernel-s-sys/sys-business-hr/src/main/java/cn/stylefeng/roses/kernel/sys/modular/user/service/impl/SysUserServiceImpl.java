@@ -29,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 系统用户业务实现层
@@ -76,19 +77,26 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new ServiceException(SysUserExceptionEnum.USER_CAN_NOT_DELETE_ADMIN);
         }
 
-        // 校验是否有其他业务绑定了用户信息
-        Map<String, RemoveUserCallbackApi> removeUserCallbackApiMap = SpringUtil.getBeansOfType(RemoveUserCallbackApi.class);
-        for (RemoveUserCallbackApi removeUserCallbackApi : removeUserCallbackApiMap.values()) {
-            removeUserCallbackApi.validateHaveUserBind(CollectionUtil.set(false, sysUser.getUserId()));
+        // 删除用户的业务操作
+        this.baseRemoveUser(CollectionUtil.set(false, sysUser.getUserId()));
+    }
+
+    @Override
+    public void batchDel(SysUserRequest sysUserRequest) {
+
+        // 判断被删除用户是否有管理员
+        Set<Long> userIdList = sysUserRequest.getUserIdList();
+
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper.in(SysUser::getUserId, userIdList);
+        sysUserLambdaQueryWrapper.eq(SysUser::getSuperAdminFlag, YesOrNotEnum.Y.getCode());
+        long adminCount = this.count(sysUserLambdaQueryWrapper);
+        if (adminCount > 0) {
+            throw new ServiceException(SysUserExceptionEnum.USER_CAN_NOT_DELETE_ADMIN);
         }
 
-        // 执行删除用户操作
-        this.removeById(sysUser.getUserId());
-
-        // 执行删除用户关联业务的操作
-        for (RemoveUserCallbackApi removeUserCallbackApi : removeUserCallbackApiMap.values()) {
-            removeUserCallbackApi.removeUserAction(CollectionUtil.set(false, sysUser.getUserId()));
-        }
+        // 删除用户的业务操作
+        this.baseRemoveUser(userIdList);
     }
 
     @Override
@@ -181,6 +189,28 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
 
         return queryWrapper;
+    }
+
+    /**
+     * 删除用户操作的基础业务
+     *
+     * @author fengshuonan
+     * @since 2023/6/12 10:44
+     */
+    private void baseRemoveUser(Set<Long> userIdList) {
+        // 校验是否有其他业务绑定了用户信息
+        Map<String, RemoveUserCallbackApi> removeUserCallbackApiMap = SpringUtil.getBeansOfType(RemoveUserCallbackApi.class);
+        for (RemoveUserCallbackApi removeUserCallbackApi : removeUserCallbackApiMap.values()) {
+            removeUserCallbackApi.validateHaveUserBind(userIdList);
+        }
+
+        // 执行删除用户操作
+        this.removeBatchByIds(userIdList);
+
+        // 执行删除用户关联业务的操作
+        for (RemoveUserCallbackApi removeUserCallbackApi : removeUserCallbackApiMap.values()) {
+            removeUserCallbackApi.removeUserAction(userIdList);
+        }
     }
 
 }

@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 系统用户封装类
@@ -137,5 +138,12 @@ public class SysUserRequest extends BaseRequest {
     @ChineseDescription("用户和组织机构关系集合")
     @NotEmpty(message = "用户和组织机构关系集合不能为空", groups = {add.class, edit.class})
     private List<SysUserOrg> userOrgList;
+
+    /**
+     * 用户id集合，用在批量删除用户的参数
+     */
+    @ChineseDescription("用户id集合，用在批量删除用户的参数")
+    @NotEmpty(message = "用户id集合不能为空", groups = batchDelete.class)
+    private Set<Long> userIdList;
 
 }

@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -49,6 +50,18 @@ public class SysUserController {
     @PostResource(name = "删除用户", path = "/sysUser/delete")
     public ResponseData<?> delete(@RequestBody @Validated(SysUserRequest.delete.class) SysUserRequest sysUserRequest) {
         sysUserService.del(sysUserRequest);
+        return new SuccessResponseData<>();
+    }
+
+    /**
+     * 批量删除用户
+     *
+     * @author fengshuonan
+     * @date 2023/06/10 21:26
+     */
+    @PostResource(name = "批量删除用户", path = "/sysUser/batchDelete")
+    public ResponseData<?> batchDelete(@RequestBody @Validated(BaseRequest.batchDelete.class) SysUserRequest sysUserRequest) {
+        sysUserService.batchDel(sysUserRequest);
         return new SuccessResponseData<>();
     }
 
