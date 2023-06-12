@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 系统角色业务实现层
@@ -56,19 +57,25 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             throw new ServiceException(SysRoleExceptionEnum.SYSTEM_ROLE_CANT_DELETE);
         }
 
-        // 执行角色相关的校验
-        Map<String, RemoveRoleCallbackApi> callbackApiMap = SpringUtil.getBeansOfType(RemoveRoleCallbackApi.class);
-        for (RemoveRoleCallbackApi removeRoleCallbackApi : callbackApiMap.values()) {
-            removeRoleCallbackApi.validateHaveRoleBind(CollectionUtil.set(false, sysRole.getRoleId()));
-        }
-
-        // 执行角色相关关联业务的删除操作
-        for (RemoveRoleCallbackApi removeRoleCallbackApi : callbackApiMap.values()) {
-            removeRoleCallbackApi.removeRoleAction(CollectionUtil.set(false, sysRole.getRoleId()));
-        }
-
         // 删除角色
-        this.removeById(sysRole.getRoleId());
+        this.baseDelete(CollectionUtil.set(false, sysRole.getRoleId()));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void batchDelete(SysRoleRequest sysRoleRequest) {
+
+        // 校验被删除的角色中是否有管理员角色
+        LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysRole::getRoleId, sysRoleRequest.getRoleIdList());
+        queryWrapper.eq(SysRole::getRoleSystemFlag, YesOrNotEnum.Y.getCode());
+        long haveSystemFlagCount = this.count(queryWrapper);
+        if (haveSystemFlagCount > 0) {
+            throw new ServiceException(SysRoleExceptionEnum.SYSTEM_ROLE_CANT_DELETE);
+        }
+
+        // 执行删除角色
+        this.baseDelete(sysRoleRequest.getRoleIdList());
     }
 
     @Override
@@ -140,6 +147,28 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         queryWrapper.orderByAsc(SysRole::getRoleSort);
 
         return queryWrapper;
+    }
+
+    /**
+     * 删除角色的基础业务操作
+     *
+     * @author fengshuonan
+     * @since 2023/6/12 21:14
+     */
+    private void baseDelete(Set<Long> roleIdList) {
+        // 执行角色相关的校验
+        Map<String, RemoveRoleCallbackApi> callbackApiMap = SpringUtil.getBeansOfType(RemoveRoleCallbackApi.class);
+        for (RemoveRoleCallbackApi removeRoleCallbackApi : callbackApiMap.values()) {
+            removeRoleCallbackApi.validateHaveRoleBind(roleIdList);
+        }
+
+        // 执行角色相关关联业务的删除操作
+        for (RemoveRoleCallbackApi removeRoleCallbackApi : callbackApiMap.values()) {
+            removeRoleCallbackApi.removeRoleAction(roleIdList);
+        }
+
+        // 删除角色
+        this.removeBatchByIds(roleIdList);
     }
 
 }

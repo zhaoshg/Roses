@@ -6,8 +6,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Set;
 
 /**
  * 系统角色封装类
@@ -73,5 +75,12 @@ public class SysRoleRequest extends BaseRequest {
     @NotBlank(message = "是否是系统角色：Y-是，N-否。系统角色不能删除不能为空", groups = {add.class, edit.class})
     @ChineseDescription("是否是系统角色：Y-是，N-否。系统角色不能删除")
     private String roleSystemFlag;
+
+    /**
+     * 角色id集合，用在批量删除
+     */
+    @NotEmpty(message = "角色id集合不能为空", groups = batchDelete.class)
+    @ChineseDescription("角色id集合，用在批量删除")
+    private Set<Long> roleIdList;
 
 }

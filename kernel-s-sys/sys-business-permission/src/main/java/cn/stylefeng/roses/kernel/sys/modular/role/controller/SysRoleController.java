@@ -53,6 +53,18 @@ public class SysRoleController {
     }
 
     /**
+     * 批量删除角色
+     *
+     * @author fengshuonan
+     * @date 2023/06/10 21:29
+     */
+    @PostResource(name = "批量删除角色", path = "/sysRole/batchDelete")
+    public ResponseData<?> batchDelete(@RequestBody @Validated(SysRoleRequest.batchDelete.class) SysRoleRequest sysRoleRequest) {
+        sysRoleService.batchDelete(sysRoleRequest);
+        return new SuccessResponseData<>();
+    }
+
+    /**
      * 编辑角色
      *
      * @author fengshuonan

@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface SysRoleService extends IService<SysRole> {
 
-	/**
+    /**
      * 新增
      *
      * @param sysRoleRequest 请求参数
@@ -24,7 +24,7 @@ public interface SysRoleService extends IService<SysRole> {
      */
     void add(SysRoleRequest sysRoleRequest);
 
-	/**
+    /**
      * 删除
      *
      * @param sysRoleRequest 请求参数
@@ -33,7 +33,15 @@ public interface SysRoleService extends IService<SysRole> {
      */
     void del(SysRoleRequest sysRoleRequest);
 
-	/**
+    /**
+     * 批量删除角色
+     *
+     * @author fengshuonan
+     * @since 2023/6/12 21:11
+     */
+    void batchDelete(SysRoleRequest sysRoleRequest);
+
+    /**
      * 编辑
      *
      * @param sysRoleRequest 请求参数
@@ -42,7 +50,7 @@ public interface SysRoleService extends IService<SysRole> {
      */
     void edit(SysRoleRequest sysRoleRequest);
 
-	/**
+    /**
      * 查询详情
      *
      * @param sysRoleRequest 请求参数
@@ -51,20 +59,20 @@ public interface SysRoleService extends IService<SysRole> {
      */
     SysRole detail(SysRoleRequest sysRoleRequest);
 
-	/**
+    /**
      * 获取列表
      *
-     * @param sysRoleRequest        请求参数
+     * @param sysRoleRequest 请求参数
      * @return List<SysRole>   返回结果
      * @author fengshuonan
      * @date 2023/06/10 21:29
      */
     List<SysRole> findList(SysRoleRequest sysRoleRequest);
 
-	/**
+    /**
      * 获取列表（带分页）
      *
-     * @param sysRoleRequest              请求参数
+     * @param sysRoleRequest 请求参数
      * @return PageResult<SysRole>   返回结果
      * @author fengshuonan
      * @date 2023/06/10 21:29
