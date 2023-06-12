@@ -27,7 +27,7 @@ public class SysUserRequest extends BaseRequest {
     /**
      * 主键
      */
-    @NotNull(message = "主键不能为空", groups = {edit.class, delete.class, updateStatus.class})
+    @NotNull(message = "主键不能为空", groups = {edit.class, delete.class, detail.class, updateStatus.class, resetPassword.class})
     @ChineseDescription("主键")
     private Long userId;
 
@@ -145,5 +145,11 @@ public class SysUserRequest extends BaseRequest {
     @ChineseDescription("用户id集合，用在批量删除用户的参数")
     @NotEmpty(message = "用户id集合不能为空", groups = batchDelete.class)
     private Set<Long> userIdList;
+
+    /**
+     * 参数校验分组：重置用户密码
+     */
+    public @interface resetPassword {
+    }
 
 }

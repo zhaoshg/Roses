@@ -22,29 +22,28 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.api.constants;
+package cn.stylefeng.roses.kernel.sys.api.expander;
+
+import cn.stylefeng.roses.kernel.config.api.context.ConfigContext;
+import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
+
 
 /**
- * 基础核心业务业务
+ * 系统的一些基础信息
  *
  * @author fengshuonan
- * @date 2023-06-10 20:50:43
+ * @since 2020/12/27 17:13
  */
-public interface SysConstants {
+public class SysConfigExpander {
 
     /**
-     * 基础核心业务模块名称
+     * 获取默认密码
+     *
+     * @author luojie
+     * @since 2020/11/6 10:05
      */
-    String SYS_MODULE_NAME = "kernel-s-sys";
-
-    /**
-     * 异常枚举的步进值
-     */
-    String SYS_EXCEPTION_STEP_CODE = "99";
-
-    /**
-     * 默认登录密码
-     */
-    String DEFAULT_LOGIN_PASSWORD = "Aa123456!";
+    public static String getDefaultPassWord() {
+        return ConfigContext.me().getSysConfigValueWithDefault("SYS_DEFAULT_PASSWORD", String.class, SysConstants.DEFAULT_LOGIN_PASSWORD);
+    }
 
 }

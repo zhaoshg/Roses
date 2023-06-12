@@ -128,4 +128,16 @@ public class SysUserController {
         return new SuccessResponseData<>();
     }
 
+    /**
+     * 重置用户密码
+     *
+     * @author fengshuonan
+     * @since 2023/6/12 14:49
+     */
+    @PostResource(name = "重置用户密码", path = "/sysUser/resetPassword")
+    public ResponseData<?> resetPassword(@RequestBody @Validated(SysUserRequest.resetPassword.class) SysUserRequest sysUserRequest) {
+        sysUserService.resetPassword(sysUserRequest);
+        return new SuccessResponseData<>();
+    }
+
 }

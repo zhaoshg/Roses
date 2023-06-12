@@ -86,5 +86,13 @@ public interface SysUserService extends IService<SysUser> {
      * @since 2023/6/12 10:59
      */
     void updateStatus(SysUserRequest sysUserRequest);
-    
+
+    /**
+     * 重置用户密码
+     *
+     * @author fengshuonan
+     * @since 2023/6/12 14:55
+     */
+    void resetPassword(SysUserRequest sysUserRequest);
+
 }
