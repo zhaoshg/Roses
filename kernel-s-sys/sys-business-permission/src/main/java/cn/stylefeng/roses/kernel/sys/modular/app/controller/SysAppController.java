@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * 系统应用控制器
@@ -74,17 +73,6 @@ public class SysAppController {
     @GetResource(name = "查看详情", path = "/sysApp/detail")
     public ResponseData<SysApp> detail(@Validated(SysAppRequest.detail.class) SysAppRequest sysAppRequest) {
         return new SuccessResponseData<>(sysAppService.detail(sysAppRequest));
-    }
-
-    /**
-     * 获取列表
-     *
-     * @author fengshuonan
-     * @date 2023/06/10 21:28
-     */
-    @GetResource(name = "获取列表", path = "/sysApp/list")
-    public ResponseData<List<SysApp>> list(SysAppRequest sysAppRequest) {
-        return new SuccessResponseData<>(sysAppService.findList(sysAppRequest));
     }
 
     /**

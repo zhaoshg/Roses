@@ -17,6 +17,14 @@
 
     <dependencies>
 
+        <!--文件api-->
+        <!--应用图片相关的操作-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>file-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!--基础核心业务api-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>

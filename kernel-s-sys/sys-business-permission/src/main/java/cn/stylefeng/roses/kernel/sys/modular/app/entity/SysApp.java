@@ -1,7 +1,9 @@
 package cn.stylefeng.roses.kernel.sys.modular.app.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
+import cn.stylefeng.roses.kernel.file.api.format.FileUrlFormatProcess;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -48,6 +50,7 @@ public class SysApp extends BaseExpandFieldEntity {
      */
     @TableField("app_icon")
     @ChineseDescription("应用图标，存fileId，上传的图片")
+    @SimpleFieldFormat(processClass = FileUrlFormatProcess.class)
     private Long appIcon;
 
     /**

@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.modular.app.entity.SysApp;
@@ -16,7 +17,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -28,7 +28,7 @@ import java.util.List;
 @Service
 public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> implements SysAppService {
 
-	@Override
+    @Override
     public void add(SysAppRequest sysAppRequest) {
         SysApp sysApp = new SysApp();
         BeanUtil.copyProperties(sysAppRequest, sysApp);
@@ -56,8 +56,12 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
     @Override
     public PageResult<SysApp> findPage(SysAppRequest sysAppRequest) {
         LambdaQueryWrapper<SysApp> wrapper = createWrapper(sysAppRequest);
-        Page<SysApp> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
-        return PageResultFactory.createPageResult(sysRolePage);
+
+        // 只查询有用的列
+        wrapper.select(SysApp::getAppId, SysApp::getAppName, SysApp::getAppCode, SysApp::getAppIcon, SysApp::getStatusFlag, SysApp::getAppSort, BaseEntity::getCreateTime);
+
+        Page<SysApp> sysAppPage = this.page(PageFactory.defaultPage(), wrapper);
+        return PageResultFactory.createPageResult(sysAppPage);
     }
 
     @Override
@@ -89,29 +93,16 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
     private LambdaQueryWrapper<SysApp> createWrapper(SysAppRequest sysAppRequest) {
         LambdaQueryWrapper<SysApp> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long appId = sysAppRequest.getAppId();
-        String appName = sysAppRequest.getAppName();
-        String appCode = sysAppRequest.getAppCode();
-        Long appIcon = sysAppRequest.getAppIcon();
-        Integer statusFlag = sysAppRequest.getStatusFlag();
-        BigDecimal appSort = sysAppRequest.getAppSort();
-        String remark = sysAppRequest.getRemark();
-        String expandField = sysAppRequest.getExpandField();
-        Long versionFlag = sysAppRequest.getVersionFlag();
-        String delFlag = sysAppRequest.getDelFlag();
-        Long tenantId = sysAppRequest.getTenantId();
+        // 根据搜索条件查询
+        String searchText = sysAppRequest.getSearchText();
+        if (ObjectUtil.isNotEmpty(searchText)) {
+            queryWrapper.like(SysApp::getAppCode, searchText);
+            queryWrapper.or().like(SysApp::getAppName, searchText);
+            queryWrapper.or().like(SysApp::getRemark, searchText);
+        }
 
-        queryWrapper.eq(ObjectUtil.isNotNull(appId), SysApp::getAppId, appId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(appName), SysApp::getAppName, appName);
-        queryWrapper.like(ObjectUtil.isNotEmpty(appCode), SysApp::getAppCode, appCode);
-        queryWrapper.eq(ObjectUtil.isNotNull(appIcon), SysApp::getAppIcon, appIcon);
-        queryWrapper.eq(ObjectUtil.isNotNull(statusFlag), SysApp::getStatusFlag, statusFlag);
-        queryWrapper.eq(ObjectUtil.isNotNull(appSort), SysApp::getAppSort, appSort);
-        queryWrapper.like(ObjectUtil.isNotEmpty(remark), SysApp::getRemark, remark);
-        queryWrapper.like(ObjectUtil.isNotEmpty(expandField), SysApp::getExpandField, expandField);
-        queryWrapper.eq(ObjectUtil.isNotNull(versionFlag), SysApp::getVersionFlag, versionFlag);
-        queryWrapper.like(ObjectUtil.isNotEmpty(delFlag), SysApp::getDelFlag, delFlag);
-        queryWrapper.eq(ObjectUtil.isNotNull(tenantId), SysApp::getTenantId, tenantId);
+        // 根据排序查询
+        queryWrapper.orderByAsc(SysApp::getAppSort);
 
         return queryWrapper;
     }
