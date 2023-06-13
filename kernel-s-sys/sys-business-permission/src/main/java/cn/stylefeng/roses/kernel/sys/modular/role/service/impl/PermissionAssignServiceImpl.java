@@ -1,11 +1,13 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
+import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.sys.modular.app.entity.SysApp;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
+import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleAssignOperateAction;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenu;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.factory.PermissionAssignFactory;
@@ -18,9 +20,7 @@ import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -61,7 +61,13 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
 
     @Override
     public List<RoleBindPermissionItem> updateRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest) {
-        return null;
+        Map<String, RoleAssignOperateAction> operateActionMap = SpringUtil.getBeansOfType(RoleAssignOperateAction.class);
+        for (RoleAssignOperateAction roleAssignOperateAction : operateActionMap.values()) {
+            if (roleAssignOperateAction.getNodeType().getCode().equals(roleBindPermissionRequest.getPermissionNodeType())) {
+                return roleAssignOperateAction.doOperateAction(roleBindPermissionRequest);
+            }
+        }
+        return new ArrayList<>();
     }
 
     @Override
