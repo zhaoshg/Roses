@@ -3,6 +3,7 @@ package cn.stylefeng.roses.kernel.sys.modular.role.factory;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.sys.modular.app.entity.SysApp;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
+import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.PermissionNodeTypeEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionItem;
 
@@ -43,18 +44,8 @@ public class PermissionAssignFactory {
         ArrayList<RoleBindPermissionItem> roleBindPermissionItems = new ArrayList<>();
 
         for (SysMenu leafMenu : leafMenus) {
-            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem();
-
-            // 设置节点id和名称为菜单id和菜单名称
-            roleBindPermissionItem.setNodeId(leafMenu.getMenuId());
-            roleBindPermissionItem.setNodeName(leafMenu.getMenuName());
-
-            // 设置节点类型为2-菜单
-            roleBindPermissionItem.setPermissionNodeType(PermissionNodeTypeEnum.MENU.getCode());
-
-            // 默认未选中
-            roleBindPermissionItem.setChecked(false);
-
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(
+                    leafMenu.getMenuId(), leafMenu.getMenuName(), PermissionNodeTypeEnum.MENU.getCode(), false);
             roleBindPermissionItems.add(roleBindPermissionItem);
         }
 
@@ -77,25 +68,34 @@ public class PermissionAssignFactory {
 
         // 封装响应结果
         for (SysApp sysApp : sysApps) {
-
-            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem();
-
-            // 设置应用id
-            roleBindPermissionItem.setNodeId(sysApp.getAppId());
-
-            // 设置应用名称
-            roleBindPermissionItem.setNodeName(sysApp.getAppName());
-
-            // 设置未选中
-            roleBindPermissionItem.setChecked(false);
-
-            // 设置类型为1-应用
-            roleBindPermissionItem.setPermissionNodeType(PermissionNodeTypeEnum.APP.getCode());
-
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(
+                    sysApp.getAppId(), sysApp.getAppName(), PermissionNodeTypeEnum.APP.getCode(), false);
             appResults.add(roleBindPermissionItem);
         }
 
         return appResults;
+    }
+
+    /**
+     * @author fengshuonan
+     * @since 2023/6/13 17:25
+     */
+    public static List<RoleBindPermissionItem> createMenuOptions(List<SysMenuOptions> sysMenuOptionsList) {
+
+        if (ObjectUtil.isEmpty(sysMenuOptionsList)) {
+            return new ArrayList<>();
+        }
+
+        ArrayList<RoleBindPermissionItem> optionsResult = new ArrayList<>();
+
+        // 封装响应结果
+        for (SysMenuOptions sysMenuOptions : sysMenuOptionsList) {
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(
+                    sysMenuOptions.getMenuOptionId(), sysMenuOptions.getOptionName(), PermissionNodeTypeEnum.OPTIONS.getCode(), false);
+            optionsResult.add(roleBindPermissionItem);
+        }
+
+        return optionsResult;
     }
 
 }

@@ -70,4 +70,15 @@ public class RoleBindPermissionItem {
     @ChineseDescription("子节点集合")
     private List<RoleBindPermissionItem> children;
 
+    public RoleBindPermissionItem() {
+
+    }
+
+    public RoleBindPermissionItem(Long nodeId, String nodeName, Integer permissionNodeType, Boolean checked) {
+        this.nodeId = nodeId;
+        this.nodeName = nodeName;
+        this.permissionNodeType = permissionNodeType;
+        this.checked = checked;
+    }
+
 }

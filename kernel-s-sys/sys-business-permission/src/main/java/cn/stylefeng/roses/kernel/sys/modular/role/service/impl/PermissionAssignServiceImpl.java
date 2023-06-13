@@ -3,6 +3,8 @@ package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 import cn.stylefeng.roses.kernel.sys.modular.app.entity.SysApp;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
+import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
+import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import cn.stylefeng.roses.kernel.sys.modular.role.factory.PermissionAssignFactory;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
@@ -30,6 +32,9 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
     @Resource
     private SysAppService sysAppService;
 
+    @Resource
+    private SysMenuOptionsService sysMenuOptionsService;
+
     @Override
     public RoleBindPermissionResponse getRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest) {
         // 1. 整理出一个总的响应的结构树，选择状态为空
@@ -46,10 +51,6 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
     @Override
     public RoleBindPermissionResponse createSelectTreeStructure() {
 
-        // 最顶层，代表是否全选
-        RoleBindPermissionResponse roleBindPermissionResponse = new RoleBindPermissionResponse();
-        roleBindPermissionResponse.setChecked(false);
-
         // 获取所有的菜单
         LambdaQueryWrapper<SysMenu> menuLambdaQueryWrapper = new LambdaQueryWrapper<>();
         menuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuName, SysMenu::getMenuParentId, SysMenu::getAppId);
@@ -61,23 +62,27 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
 
         // 查询菜单对应的所有应用
         Set<Long> appIdList = totalMenus.stream().map(SysMenu::getAppId).collect(Collectors.toSet());
-        LambdaQueryWrapper<SysApp> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.in(SysApp::getAppId, appIdList);
-        queryWrapper.select(SysApp::getAppId, SysApp::getAppName);
-        List<SysApp> totalAppList = sysAppService.list(queryWrapper);
+        LambdaQueryWrapper<SysApp> sysAppLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysAppLambdaQueryWrapper.in(SysApp::getAppId, appIdList);
+        sysAppLambdaQueryWrapper.select(SysApp::getAppId, SysApp::getAppName);
+        List<SysApp> totalAppList = sysAppService.list(sysAppLambdaQueryWrapper);
 
         // 组装所有的应用节点信息【初始化应用】
         List<RoleBindPermissionItem> totalResultApps = PermissionAssignFactory.createApps(totalAppList);
 
-
-        // 组装所有的应用节点信息
-
-
         // 获取所有的菜单上的功能
+        LambdaQueryWrapper<SysMenuOptions> optionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        optionsLambdaQueryWrapper.select(SysMenuOptions::getMenuOptionId, SysMenuOptions::getOptionName);
+        Set<Long> menuIds = totalResultMenus.stream().map(RoleBindPermissionItem::getNodeId).collect(Collectors.toSet());
+        optionsLambdaQueryWrapper.in(SysMenuOptions::getMenuId, menuIds);
+        List<SysMenuOptions> sysMenuOptionsList = sysMenuOptionsService.list(optionsLambdaQueryWrapper);
 
+        // 组装所有的应用节点信息【初始化菜单功能】
+        List<RoleBindPermissionItem> menuOptions = PermissionAssignFactory.createMenuOptions(sysMenuOptionsList);
 
-        // 获取菜单对应的应用
-
+        // 将应用、菜单、功能组成返回结果
+        RoleBindPermissionResponse roleBindPermissionResponse = new RoleBindPermissionResponse();
+        roleBindPermissionResponse.setChecked(false);
 
         return null;
     }
