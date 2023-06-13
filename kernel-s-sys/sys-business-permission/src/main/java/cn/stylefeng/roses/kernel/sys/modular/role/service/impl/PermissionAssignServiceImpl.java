@@ -6,14 +6,19 @@ import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
+import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenu;
+import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.factory.PermissionAssignFactory;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionItem;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionResponse;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.PermissionAssignService;
+import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
+import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
 import javax.annotation.Resource;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -35,6 +40,12 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
     @Resource
     private SysMenuOptionsService sysMenuOptionsService;
 
+    @Resource
+    private SysRoleMenuOptionsService sysRoleMenuOptionsService;
+
+    @Resource
+    private SysRoleMenuService sysRoleMenuService;
+
     @Override
     public RoleBindPermissionResponse getRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest) {
 
@@ -42,9 +53,10 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
         RoleBindPermissionResponse selectTreeStructure = this.createSelectTreeStructure();
 
         // 2. 获取角色绑定的应用，菜单，功能列表
-
+        Set<Long> roleBindMenusAndOptions = this.getRoleBindMenusAndOptions(roleBindPermissionRequest.getRoleId());
 
         // 3. 组合结构树和角色绑定的信息，填充选择状态，封装返回结果
+
 
         return null;
     }
@@ -84,6 +96,30 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
 
         // 将应用、菜单、功能组成返回结果
         return PermissionAssignFactory.composeSelectStructure(totalResultApps, totalResultMenus, totalResultOptions);
+    }
+
+    @Override
+    public Set<Long> getRoleBindMenusAndOptions(Long roleId) {
+
+        HashSet<Long> resultPermissions = new HashSet<>();
+
+        // 获取角色绑定的菜单
+        LambdaQueryWrapper<SysRoleMenu> sysRoleMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleMenuLambdaQueryWrapper.select(SysRoleMenu::getMenuId);
+        sysRoleMenuLambdaQueryWrapper.eq(SysRoleMenu::getRoleId, roleId);
+        List<SysRoleMenu> sysRoleMenuList = this.sysRoleMenuService.list(sysRoleMenuLambdaQueryWrapper);
+        Set<Long> menuIdSet = sysRoleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toSet());
+        resultPermissions.addAll(menuIdSet);
+
+        // 获取角色绑定的功能
+        LambdaQueryWrapper<SysRoleMenuOptions> sysRoleMenuOptionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleMenuOptionsLambdaQueryWrapper.select(SysRoleMenuOptions::getMenuOptionId);
+        sysRoleMenuOptionsLambdaQueryWrapper.eq(SysRoleMenuOptions::getRoleId, roleId);
+        List<SysRoleMenuOptions> sysRoleMenuOptionsList = this.sysRoleMenuOptionsService.list(sysRoleMenuOptionsLambdaQueryWrapper);
+        Set<Long> optionsIds = sysRoleMenuOptionsList.stream().map(SysRoleMenuOptions::getMenuOptionId).collect(Collectors.toSet());
+        resultPermissions.addAll(optionsIds);
+
+        return resultPermissions;
     }
 
 }

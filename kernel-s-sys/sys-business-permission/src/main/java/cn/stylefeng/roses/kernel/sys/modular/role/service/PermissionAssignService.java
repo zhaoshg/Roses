@@ -3,6 +3,8 @@ package cn.stylefeng.roses.kernel.sys.modular.role.service;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionResponse;
 
+import java.util.Set;
+
 /**
  * 角色权限绑定业务
  *
@@ -29,5 +31,13 @@ public interface PermissionAssignService {
      * @since 2023/6/13 16:17
      */
     RoleBindPermissionResponse createSelectTreeStructure();
+
+    /**
+     * 获取角色绑定的菜单和菜单功能，直接返回菜单和菜单功能组成的id集合
+     *
+     * @author fengshuonan
+     * @since 2023/6/13 18:11
+     */
+    Set<Long> getRoleBindMenusAndOptions(Long roleId);
 
 }
