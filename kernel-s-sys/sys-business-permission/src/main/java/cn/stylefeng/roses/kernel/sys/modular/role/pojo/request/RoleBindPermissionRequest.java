@@ -29,9 +29,7 @@ import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * 角色绑定权限的请求
@@ -51,21 +49,26 @@ public class RoleBindPermissionRequest extends BaseRequest {
     private Long roleId;
 
     /**
-     * 模块下的所有的菜单和菜单下的功能
+     * 节点ID，可以是菜单id和按钮id，或者是应用id
      * <p>
-     * 一个模块指的是一行菜单和菜单下的功能
+     * 如果permissionNodeType = -1，则不用传递此值
      */
-    @ChineseDescription("模块下的所有的菜单和菜单下的功能")
-    @NotEmpty(message = "模块下的所有的菜单和菜单下的功能不能为空", groups = roleBindPermission.class)
-    private List<Long> modularTotalItemList;
+    @ChineseDescription("节点ID")
+    private Long nodeId;
 
     /**
-     * 选中的菜单和菜单下的功能集合
-     * <p>
-     * 如果这里传空，则是取消选中这个模块下的所有菜单和功能
+     * 节点类型：1-应用，2-菜单，3-功能，-1-所有权限
      */
-    @ChineseDescription("选中的菜单和菜单下的功能集合")
-    private List<Long> selectedItemList;
+    @ChineseDescription("节点类型：1-应用，2-菜单，3-功能，-1-所有权限")
+    @NotNull(message = "节点类型不能为空", groups = {roleBindPermission.class})
+    private Integer permissionNodeType;
+
+    /**
+     * 是否选中
+     */
+    @ChineseDescription("是否选中")
+    @NotNull(message = "是否选中不能为空", groups = {roleBindPermission.class})
+    private Boolean checked;
 
     /**
      * 参数校验分组：角色绑定权限
