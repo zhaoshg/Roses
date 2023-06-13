@@ -102,12 +102,10 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     private LambdaQueryWrapper<SysRoleMenu> createWrapper(SysRoleMenuRequest sysRoleMenuRequest) {
         LambdaQueryWrapper<SysRoleMenu> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long roleMenuId = sysRoleMenuRequest.getRoleMenuId();
         Long roleId = sysRoleMenuRequest.getRoleId();
-        Long menuId = sysRoleMenuRequest.getMenuId();
-
-        queryWrapper.eq(ObjectUtil.isNotNull(roleMenuId), SysRoleMenu::getRoleMenuId, roleMenuId);
         queryWrapper.eq(ObjectUtil.isNotNull(roleId), SysRoleMenu::getRoleId, roleId);
+
+        Long menuId = sysRoleMenuRequest.getMenuId();
         queryWrapper.eq(ObjectUtil.isNotNull(menuId), SysRoleMenu::getMenuId, menuId);
 
         return queryWrapper;

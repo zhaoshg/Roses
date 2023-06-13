@@ -102,13 +102,8 @@ public class SysRoleDataScopeServiceImpl extends ServiceImpl<SysRoleDataScopeMap
     private LambdaQueryWrapper<SysRoleDataScope> createWrapper(SysRoleDataScopeRequest sysRoleDataScopeRequest) {
         LambdaQueryWrapper<SysRoleDataScope> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long roleDataScopeId = sysRoleDataScopeRequest.getRoleDataScopeId();
         Long roleId = sysRoleDataScopeRequest.getRoleId();
-        Long organizationId = sysRoleDataScopeRequest.getOrganizationId();
-
-        queryWrapper.eq(ObjectUtil.isNotNull(roleDataScopeId), SysRoleDataScope::getRoleDataScopeId, roleDataScopeId);
         queryWrapper.eq(ObjectUtil.isNotNull(roleId), SysRoleDataScope::getRoleId, roleId);
-        queryWrapper.eq(ObjectUtil.isNotNull(organizationId), SysRoleDataScope::getOrganizationId, organizationId);
 
         return queryWrapper;
     }

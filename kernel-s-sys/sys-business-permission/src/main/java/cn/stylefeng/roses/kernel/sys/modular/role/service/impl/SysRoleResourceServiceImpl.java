@@ -102,15 +102,8 @@ public class SysRoleResourceServiceImpl extends ServiceImpl<SysRoleResourceMappe
     private LambdaQueryWrapper<SysRoleResource> createWrapper(SysRoleResourceRequest sysRoleResourceRequest) {
         LambdaQueryWrapper<SysRoleResource> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long roleResourceId = sysRoleResourceRequest.getRoleResourceId();
         Long roleId = sysRoleResourceRequest.getRoleId();
-        String resourceCode = sysRoleResourceRequest.getResourceCode();
-        Integer resourceBizType = sysRoleResourceRequest.getResourceBizType();
-
-        queryWrapper.eq(ObjectUtil.isNotNull(roleResourceId), SysRoleResource::getRoleResourceId, roleResourceId);
         queryWrapper.eq(ObjectUtil.isNotNull(roleId), SysRoleResource::getRoleId, roleId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(resourceCode), SysRoleResource::getResourceCode, resourceCode);
-        queryWrapper.eq(ObjectUtil.isNotNull(resourceBizType), SysRoleResource::getResourceBizType, resourceBizType);
 
         return queryWrapper;
     }
