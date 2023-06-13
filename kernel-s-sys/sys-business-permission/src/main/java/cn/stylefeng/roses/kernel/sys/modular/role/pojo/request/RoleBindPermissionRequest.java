@@ -46,7 +46,7 @@ public class RoleBindPermissionRequest extends BaseRequest {
     /**
      * 角色id
      */
-    @NotNull(message = "角色id不能为空", groups = roleBindPermission.class)
+    @NotNull(message = "角色id不能为空", groups = {roleBindPermission.class, detail.class})
     @ChineseDescription("角色id")
     private Long roleId;
 

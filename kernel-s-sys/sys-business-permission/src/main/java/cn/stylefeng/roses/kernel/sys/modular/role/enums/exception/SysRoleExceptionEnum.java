@@ -1,4 +1,4 @@
-package cn.stylefeng.roses.kernel.sys.modular.role.enums;
+package cn.stylefeng.roses.kernel.sys.modular.role.enums.exception;
 
 import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
 import cn.stylefeng.roses.kernel.rule.exception.AbstractExceptionEnum;

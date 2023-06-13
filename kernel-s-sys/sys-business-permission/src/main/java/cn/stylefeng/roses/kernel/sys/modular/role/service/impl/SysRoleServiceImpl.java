@@ -13,7 +13,7 @@ import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
-import cn.stylefeng.roses.kernel.sys.modular.role.enums.SysRoleExceptionEnum;
+import cn.stylefeng.roses.kernel.sys.modular.role.enums.exception.SysRoleExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleMapper;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleService;

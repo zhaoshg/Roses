@@ -25,37 +25,85 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.pojo.response;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.tree.factory.base.AbstractTreeNode;
 import lombok.Data;
 
 import java.util.List;
 
 /**
  * 角色绑定权限界面的响应封装
+ * <p>
+ * 本结构是个树形结构，第1层级是应用，第2层级是应用下的菜单（菜单只显示最子节点），第3层级是菜单下的功能options
  *
  * @author fengshuonan
  * @since 2023/6/13 13:54
  */
 @Data
-public class RoleBindPermissionResponse {
+public class RoleBindPermissionItem implements AbstractTreeNode<RoleBindPermissionItem> {
 
     /**
-     * 是否已经全选了所有权限
+     * 节点ID，可以是菜单id和按钮id
      */
-    @ChineseDescription("是否已经全选了所有权限")
-    private Boolean totalSelectFlag;
+    @ChineseDescription("节点ID")
+    private Long nodeId;
+
+    /**
+     * 节点父ID
+     */
+    @ChineseDescription("节点父ID")
+    private Long nodeParentId;
+
+    /**
+     * 节点名称
+     */
+    @ChineseDescription("节点名称")
+    private String nodeName;
+
+    /**
+     * 节点编码
+     */
+    @ChineseDescription("节点编码")
+    private String nodeCode;
 
     /**
      * 节点类型：1-应用，2-菜单，3-功能，-1-所有权限
      */
     @ChineseDescription("节点类型：1-应用，2-菜单，3-功能，-1-所有权限")
-    private Integer permissionNodeType = -1;
+    private Integer permissionNodeType;
 
     /**
-     * 应用权限列表
-     * <p>
-     * 应用下边是菜单，菜单下边是功能
+     * 是否选择(已拥有的是true)
      */
-    @ChineseDescription("应用权限列表")
-    private List<RoleBindPermissionItem> appPermissionList;
+    @ChineseDescription("是否选择(已拥有的是true)")
+    private Boolean checked;
+
+    /**
+     * 子节点集合
+     */
+    @ChineseDescription("子节点集合")
+    private List<RoleBindPermissionItem> children;
+
+    @Override
+    public String getNodeId() {
+        if (this.nodeId != null) {
+            return this.nodeId.toString();
+        } else {
+            return "";
+        }
+    }
+
+    @Override
+    public String getNodeParentId() {
+        if (this.nodeParentId != null) {
+            return this.nodeParentId.toString();
+        } else {
+            return "";
+        }
+    }
+
+    @Override
+    public void setChildrenNodes(List<RoleBindPermissionItem> childrenNodes) {
+        this.children = childrenNodes;
+    }
 
 }

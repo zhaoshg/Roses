@@ -8,7 +8,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleResource;
-import cn.stylefeng.roses.kernel.sys.modular.role.enums.SysRoleResourceExceptionEnum;
+import cn.stylefeng.roses.kernel.sys.modular.role.enums.exception.SysRoleResourceExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleResourceMapper;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleResourceRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleResourceService;
