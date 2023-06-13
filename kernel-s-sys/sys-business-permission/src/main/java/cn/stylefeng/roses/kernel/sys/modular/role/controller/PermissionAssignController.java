@@ -9,6 +9,7 @@ import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionResponse;
+import cn.stylefeng.roses.kernel.sys.modular.role.service.PermissionAssignService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,9 @@ public class PermissionAssignController {
 
     @Resource
     private SysRoleService sysRoleService;
+
+    @Resource
+    private PermissionAssignService permissionAssignService;
 
     /**
      * 获取所有角色列表
@@ -53,8 +57,8 @@ public class PermissionAssignController {
      */
     @GetResource(name = "获取角色绑定的权限列表", path = "/permission/getRoleBindPermission")
     public ResponseData<RoleBindPermissionResponse> getRoleBindPermission(@Validated(BaseRequest.detail.class) RoleBindPermissionRequest roleBindPermissionRequest) {
-
-        return new SuccessResponseData<>();
+        RoleBindPermissionResponse roleBindPermission = permissionAssignService.getRoleBindPermission(roleBindPermissionRequest);
+        return new SuccessResponseData<>(roleBindPermission);
     }
 
 
