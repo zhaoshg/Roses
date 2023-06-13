@@ -138,57 +138,14 @@ public class PermissionAssignFactory {
         List<RoleBindPermissionItem> appList = roleBindPermissionResponse.getAppPermissionList();
 
         // 开始填充菜单和功能的选中状态
+        fillSubItemCheckedFlag(appList, rolePermissions);
+
+        // 填充应用的选中状态
         for (RoleBindPermissionItem appItem : appList) {
-
-            // 遍历菜单是否有选中的
-            List<RoleBindPermissionItem> menuStructure = appItem.getChildren();
-
-            if (ObjectUtil.isNotEmpty(menuStructure)) {
-
-                // 遍历菜单是否有选中的
-                for (RoleBindPermissionItem menuItem : menuStructure) {
-                    if (rolePermissions.contains(menuItem.getNodeId())) {
-                        menuItem.setChecked(true);
-                    }
-
-                    // 判断菜单中的按钮是否有角色分配的权限
-                    List<RoleBindPermissionItem> optionsStructure = menuItem.getChildren();
-                    if (ObjectUtil.isNotEmpty(optionsStructure)) {
-                        for (RoleBindPermissionItem bindPermissionItem : optionsStructure) {
-                            if (rolePermissions.contains(bindPermissionItem.getNodeId())) {
-                                menuItem.setChecked(true);
-                            }
-                        }
-                    }
-                }
-            }
+            fillParentCheckedFlag(appItem);
         }
 
-        // 如果所有的子集全选了，则设置当前节点全选
-        for (RoleBindPermissionItem appItem : appList) {
-
-            boolean appTotal = true;
-
-            // 判断所有菜单和所有功能都选中的话，就填充应用的全选
-            List<RoleBindPermissionItem> menuItemList = appItem.getChildren();
-            for (RoleBindPermissionItem menuItem : menuItemList) {
-
-                if (!menuItem.getChecked()) {
-                    appTotal = false;
-                }
-
-                List<RoleBindPermissionItem> optionsList = menuItem.getChildren();
-                for (RoleBindPermissionItem option : optionsList) {
-                    if (!option.getChecked()) {
-                        appTotal = false;
-                    }
-                }
-            }
-
-            appItem.setChecked(appTotal);
-        }
-
-        // 如果所有应用都全选了，则设置所有全选为选中
+        // 填充全选的选中状态
         roleBindPermissionResponse.setChecked(true);
         for (RoleBindPermissionItem appItem : appList) {
             if (!appItem.getChecked()) {
@@ -197,6 +154,51 @@ public class PermissionAssignFactory {
         }
 
         return roleBindPermissionResponse;
+    }
+
+    /**
+     * 填充子节点的选中状态
+     * <p>
+     * 根据执行的角色权限参数匹配判断
+     *
+     * @author fengshuonan
+     * @since 2023/6/13 19:21
+     */
+    private static void fillSubItemCheckedFlag(List<RoleBindPermissionItem> beFilled, Set<Long> rolePermissionList) {
+
+        if (ObjectUtil.isEmpty(beFilled) || ObjectUtil.isEmpty(rolePermissionList)) {
+            return;
+        }
+
+        for (RoleBindPermissionItem roleBindPermissionItem : beFilled) {
+            if (rolePermissionList.contains(roleBindPermissionItem.getNodeId())) {
+                roleBindPermissionItem.setChecked(true);
+            }
+
+            fillSubItemCheckedFlag(roleBindPermissionItem.getChildren(), rolePermissionList);
+        }
+    }
+
+    /**
+     * 填充父级的节点的选中状态
+     * <p>
+     * 如果所有子集都选中了，则选中所有的父级状态
+     *
+     * @author fengshuonan
+     * @since 2023/6/13 19:25
+     */
+    private static void fillParentCheckedFlag(RoleBindPermissionItem beFilled) {
+
+        if (ObjectUtil.isEmpty(beFilled)) {
+            return;
+        }
+
+        beFilled.setChecked(true);
+        for (RoleBindPermissionItem item : beFilled.getChildren()) {
+            if (!item.getChecked()) {
+                beFilled.setChecked(false);
+            }
+        }
     }
 
 }
