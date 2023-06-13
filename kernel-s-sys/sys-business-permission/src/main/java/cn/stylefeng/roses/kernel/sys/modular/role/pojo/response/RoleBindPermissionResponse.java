@@ -39,10 +39,10 @@ import java.util.List;
 public class RoleBindPermissionResponse {
 
     /**
-     * 是否已经全选了所有权限
+     * 是否选择(已拥有的是true)
      */
-    @ChineseDescription("是否已经全选了所有权限")
-    private Boolean totalSelectFlag;
+    @ChineseDescription("是否选择(已拥有的是true)")
+    private Boolean checked;
 
     /**
      * 节点类型：1-应用，2-菜单，3-功能，-1-所有权限
