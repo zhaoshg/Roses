@@ -47,8 +47,7 @@ public class PermissionAssignFactory {
         ArrayList<RoleBindPermissionItem> roleBindPermissionItems = new ArrayList<>();
 
         for (SysMenu leafMenu : leafMenus) {
-            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(
-                    leafMenu.getMenuId(), leafMenu.getAppId(), leafMenu.getMenuName(), PermissionNodeTypeEnum.MENU.getCode(), false);
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(leafMenu.getMenuId(), leafMenu.getAppId(), leafMenu.getMenuName(), PermissionNodeTypeEnum.MENU.getCode(), false);
             roleBindPermissionItems.add(roleBindPermissionItem);
         }
 
@@ -71,8 +70,7 @@ public class PermissionAssignFactory {
 
         // 封装响应结果
         for (SysApp sysApp : sysApps) {
-            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(
-                    sysApp.getAppId(), TreeConstants.DEFAULT_PARENT_ID, sysApp.getAppName(), PermissionNodeTypeEnum.APP.getCode(), false);
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(sysApp.getAppId(), TreeConstants.DEFAULT_PARENT_ID, sysApp.getAppName(), PermissionNodeTypeEnum.APP.getCode(), false);
             appResults.add(roleBindPermissionItem);
         }
 
@@ -95,8 +93,7 @@ public class PermissionAssignFactory {
 
         // 封装响应结果
         for (SysMenuOptions sysMenuOptions : sysMenuOptionsList) {
-            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(
-                    sysMenuOptions.getMenuOptionId(), sysMenuOptions.getMenuId(), sysMenuOptions.getOptionName(), PermissionNodeTypeEnum.OPTIONS.getCode(), false);
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(sysMenuOptions.getMenuOptionId(), sysMenuOptions.getMenuId(), sysMenuOptions.getOptionName(), PermissionNodeTypeEnum.OPTIONS.getCode(), false);
             optionsResult.add(roleBindPermissionItem);
         }
 
@@ -124,6 +121,80 @@ public class PermissionAssignFactory {
 
         List<RoleBindPermissionItem> roleBindPermissionItems = new DefaultTreeBuildFactory<RoleBindPermissionItem>().doTreeBuild(apps);
         roleBindPermissionResponse.setAppPermissionList(roleBindPermissionItems);
+
+        return roleBindPermissionResponse;
+    }
+
+    /**
+     * 将空状态的权限树，填充角色绑定的权限
+     *
+     * @param roleBindPermissionResponse 空状态的角色权限树（未设置选中状态）
+     * @param rolePermissions            角色所拥有的菜单id和功能id的集合
+     * @author fengshuonan
+     * @since 2023/6/13 19:00
+     */
+    public static RoleBindPermissionResponse fillCheckedFlag(RoleBindPermissionResponse roleBindPermissionResponse, Set<Long> rolePermissions) {
+
+        List<RoleBindPermissionItem> appList = roleBindPermissionResponse.getAppPermissionList();
+
+        // 开始填充菜单和功能的选中状态
+        for (RoleBindPermissionItem appItem : appList) {
+
+            // 遍历菜单是否有选中的
+            List<RoleBindPermissionItem> menuStructure = appItem.getChildren();
+
+            if (ObjectUtil.isNotEmpty(menuStructure)) {
+
+                // 遍历菜单是否有选中的
+                for (RoleBindPermissionItem menuItem : menuStructure) {
+                    if (rolePermissions.contains(menuItem.getNodeId())) {
+                        menuItem.setChecked(true);
+                    }
+
+                    // 判断菜单中的按钮是否有角色分配的权限
+                    List<RoleBindPermissionItem> optionsStructure = menuItem.getChildren();
+                    if (ObjectUtil.isNotEmpty(optionsStructure)) {
+                        for (RoleBindPermissionItem bindPermissionItem : optionsStructure) {
+                            if (rolePermissions.contains(bindPermissionItem.getNodeId())) {
+                                menuItem.setChecked(true);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // 如果所有的子集全选了，则设置当前节点全选
+        for (RoleBindPermissionItem appItem : appList) {
+
+            boolean appTotal = true;
+
+            // 判断所有菜单和所有功能都选中的话，就填充应用的全选
+            List<RoleBindPermissionItem> menuItemList = appItem.getChildren();
+            for (RoleBindPermissionItem menuItem : menuItemList) {
+
+                if (!menuItem.getChecked()) {
+                    appTotal = false;
+                }
+
+                List<RoleBindPermissionItem> optionsList = menuItem.getChildren();
+                for (RoleBindPermissionItem option : optionsList) {
+                    if (!option.getChecked()) {
+                        appTotal = false;
+                    }
+                }
+            }
+
+            appItem.setChecked(appTotal);
+        }
+
+        // 如果所有应用都全选了，则设置所有全选为选中
+        roleBindPermissionResponse.setChecked(true);
+        for (RoleBindPermissionItem appItem : appList) {
+            if (!appItem.getChecked()) {
+                roleBindPermissionResponse.setChecked(false);
+            }
+        }
 
         return roleBindPermissionResponse;
     }

@@ -56,9 +56,7 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
         Set<Long> roleBindMenusAndOptions = this.getRoleBindMenusAndOptions(roleBindPermissionRequest.getRoleId());
 
         // 3. 组合结构树和角色绑定的信息，填充选择状态，封装返回结果
-
-
-        return null;
+        return PermissionAssignFactory.fillCheckedFlag(selectTreeStructure, roleBindMenusAndOptions);
     }
 
     @Override
