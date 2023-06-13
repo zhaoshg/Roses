@@ -56,17 +56,21 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
         menuLambdaQueryWrapper.orderByAsc(SysMenu::getMenuSort);
         List<SysMenu> totalMenus = this.sysMenuService.list(menuLambdaQueryWrapper);
 
-        // 组装所有的叶子节点菜单
+        // 组装所有的叶子节点菜单【初始化菜单】
         List<RoleBindPermissionItem> totalResultMenus = PermissionAssignFactory.createPermissionMenus(totalMenus);
 
         // 查询菜单对应的所有应用
-        Set<String> appIdList = totalResultMenus.stream().map(RoleBindPermissionItem::getNodeParentId).collect(Collectors.toSet());
+        Set<Long> appIdList = totalMenus.stream().map(SysMenu::getAppId).collect(Collectors.toSet());
         LambdaQueryWrapper<SysApp> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysApp::getAppId, appIdList);
         queryWrapper.select(SysApp::getAppId, SysApp::getAppName);
         List<SysApp> totalAppList = sysAppService.list(queryWrapper);
 
-        // 组装所有的应用节点信息
+        // 组装所有的应用节点信息【初始化应用】
+        List<RoleBindPermissionItem> totalResultApps = PermissionAssignFactory.createApps(totalAppList);
 
+
+        // 组装所有的应用节点信息
 
 
         // 获取所有的菜单上的功能

@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.factory;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.sys.modular.app.entity.SysApp;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.PermissionNodeTypeEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionItem;
@@ -51,19 +52,50 @@ public class PermissionAssignFactory {
             // 设置节点类型为2-菜单
             roleBindPermissionItem.setPermissionNodeType(PermissionNodeTypeEnum.MENU.getCode());
 
-            // 父级id是应用id
-            roleBindPermissionItem.setNodeParentId(leafMenu.getAppId());
-
             // 默认未选中
             roleBindPermissionItem.setChecked(false);
-
-            // 设置空子集
-            roleBindPermissionItem.setChildren(new ArrayList<>());
 
             roleBindPermissionItems.add(roleBindPermissionItem);
         }
 
         return roleBindPermissionItems;
+    }
+
+    /**
+     * 创建权限绑定的应用信息
+     *
+     * @author fengshuonan
+     * @since 2023/6/13 17:00
+     */
+    public static List<RoleBindPermissionItem> createApps(List<SysApp> sysApps) {
+
+        if (ObjectUtil.isEmpty(sysApps)) {
+            return new ArrayList<>();
+        }
+
+        ArrayList<RoleBindPermissionItem> appResults = new ArrayList<>();
+
+        // 封装响应结果
+        for (SysApp sysApp : sysApps) {
+
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem();
+
+            // 设置应用id
+            roleBindPermissionItem.setNodeId(sysApp.getAppId());
+
+            // 设置应用名称
+            roleBindPermissionItem.setNodeName(sysApp.getAppName());
+
+            // 设置未选中
+            roleBindPermissionItem.setChecked(false);
+
+            // 设置类型为1-应用
+            roleBindPermissionItem.setPermissionNodeType(PermissionNodeTypeEnum.APP.getCode());
+
+            appResults.add(roleBindPermissionItem);
+        }
+
+        return appResults;
     }
 
 }
