@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  * 角色和菜单下的功能关联实例类
  *
  * @author fengshuonan
- * @date 2023/06/10 21:29
+ * @date 2023/06/13 22:39
  */
 @TableName("sys_role_menu_options")
 @Data
@@ -33,6 +33,20 @@ public class SysRoleMenuOptions extends BaseEntity {
     @TableField("role_id")
     @ChineseDescription("角色id")
     private Long roleId;
+
+    /**
+     * 冗余字段，菜单所属的应用id
+     */
+    @TableField("app_id")
+    @ChineseDescription("冗余字段，菜单所属的应用id")
+    private Long appId;
+
+    /**
+     * 冗余字段，功能所属的菜单id
+     */
+    @TableField("menu_id")
+    @ChineseDescription("冗余字段，功能所属的菜单id")
+    private Long menuId;
 
     /**
      * 菜单功能id，关联sys_menu_options主键id

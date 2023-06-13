@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  * 菜单下的功能操作实例类
  *
  * @author fengshuonan
- * @date 2023/06/10 21:28
+ * @date 2023/06/13 22:39
  */
 @TableName("sys_menu_options")
 @Data
@@ -26,6 +26,13 @@ public class SysMenuOptions extends BaseEntity {
     @TableId(value = "menu_option_id", type = IdType.ASSIGN_ID)
     @ChineseDescription("主键")
     private Long menuOptionId;
+
+    /**
+     * 冗余字段，菜单所属的应用id
+     */
+    @TableField("app_id")
+    @ChineseDescription("冗余字段，菜单所属的应用id")
+    private Long appId;
 
     /**
      * 菜单id

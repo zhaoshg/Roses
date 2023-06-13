@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  * 角色菜单关联实例类
  *
  * @author fengshuonan
- * @date 2023/06/10 21:29
+ * @date 2023/06/13 22:39
  */
 @TableName("sys_role_menu")
 @Data
@@ -33,6 +33,13 @@ public class SysRoleMenu extends BaseEntity {
     @TableField("role_id")
     @ChineseDescription("角色id")
     private Long roleId;
+
+    /**
+     * 冗余字段，菜单所属的应用id
+     */
+    @TableField("app_id")
+    @ChineseDescription("冗余字段，菜单所属的应用id")
+    private Long appId;
 
     /**
      * 菜单id
