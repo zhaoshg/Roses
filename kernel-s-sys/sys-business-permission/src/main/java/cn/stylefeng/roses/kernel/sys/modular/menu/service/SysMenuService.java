@@ -81,5 +81,12 @@ public interface SysMenuService extends IService<SysMenu> {
      */
     boolean validateMenuBindApp(Set<Long> appIdList);
 
+    /**
+     * 获取菜单的所属appId
+     *
+     * @author fengshuonan
+     * @since 2023/6/13 22:49
+     */
+    Long getMenuAppId(Long menuId);
 
 }

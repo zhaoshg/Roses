@@ -73,6 +73,19 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
+    public Long getMenuAppId(Long menuId) {
+        LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysMenu::getMenuId, menuId);
+        queryWrapper.select(SysMenu::getAppId);
+        SysMenu one = this.getOne(queryWrapper, false);
+        if (one != null) {
+            return one.getAppId();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public List<SysMenu> findList(SysMenuRequest sysMenuRequest) {
         LambdaQueryWrapper<SysMenu> wrapper = this.createWrapper(sysMenuRequest);
         return this.list(wrapper);
