@@ -77,6 +77,8 @@ public class PermissionAssignFactory {
     }
 
     /**
+     * 创建菜单功能信息
+     *
      * @author fengshuonan
      * @since 2023/6/13 17:25
      */
