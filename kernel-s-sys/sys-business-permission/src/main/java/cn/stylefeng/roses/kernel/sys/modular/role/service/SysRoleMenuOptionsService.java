@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface SysRoleMenuOptionsService extends IService<SysRoleMenuOptions> {
 
-	/**
+    /**
      * 新增
      *
      * @param sysRoleMenuOptionsRequest 请求参数
@@ -24,7 +24,7 @@ public interface SysRoleMenuOptionsService extends IService<SysRoleMenuOptions> 
      */
     void add(SysRoleMenuOptionsRequest sysRoleMenuOptionsRequest);
 
-	/**
+    /**
      * 删除
      *
      * @param sysRoleMenuOptionsRequest 请求参数
@@ -33,7 +33,7 @@ public interface SysRoleMenuOptionsService extends IService<SysRoleMenuOptions> 
      */
     void del(SysRoleMenuOptionsRequest sysRoleMenuOptionsRequest);
 
-	/**
+    /**
      * 编辑
      *
      * @param sysRoleMenuOptionsRequest 请求参数
@@ -42,7 +42,7 @@ public interface SysRoleMenuOptionsService extends IService<SysRoleMenuOptions> 
      */
     void edit(SysRoleMenuOptionsRequest sysRoleMenuOptionsRequest);
 
-	/**
+    /**
      * 查询详情
      *
      * @param sysRoleMenuOptionsRequest 请求参数
@@ -51,20 +51,20 @@ public interface SysRoleMenuOptionsService extends IService<SysRoleMenuOptions> 
      */
     SysRoleMenuOptions detail(SysRoleMenuOptionsRequest sysRoleMenuOptionsRequest);
 
-	/**
+    /**
      * 获取列表
      *
-     * @param sysRoleMenuOptionsRequest        请求参数
+     * @param sysRoleMenuOptionsRequest 请求参数
      * @return List<SysRoleMenuOptions>   返回结果
      * @author fengshuonan
      * @date 2023/06/10 21:29
      */
     List<SysRoleMenuOptions> findList(SysRoleMenuOptionsRequest sysRoleMenuOptionsRequest);
 
-	/**
+    /**
      * 获取列表（带分页）
      *
-     * @param sysRoleMenuOptionsRequest              请求参数
+     * @param sysRoleMenuOptionsRequest 请求参数
      * @return PageResult<SysRoleMenuOptions>   返回结果
      * @author fengshuonan
      * @date 2023/06/10 21:29

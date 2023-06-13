@@ -7,12 +7,17 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
+import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleAssignOperateAction;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenuOptions;
+import cn.stylefeng.roses.kernel.sys.modular.role.enums.PermissionNodeTypeEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.exception.SysRoleMenuOptionsExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleMenuOptionsMapper;
+import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleMenuOptionsRequest;
+import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionItem;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -27,7 +32,8 @@ import java.util.Set;
  * @date 2023/06/10 21:29
  */
 @Service
-public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOptionsMapper, SysRoleMenuOptions> implements SysRoleMenuOptionsService, RemoveRoleCallbackApi {
+public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOptionsMapper, SysRoleMenuOptions> implements
+        SysRoleMenuOptionsService, RemoveRoleCallbackApi, RoleAssignOperateAction {
 
     @Override
     public void add(SysRoleMenuOptionsRequest sysRoleMenuOptionsRequest) {
@@ -77,6 +83,32 @@ public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOption
         LambdaQueryWrapper<SysRoleMenuOptions> wrapper = new LambdaQueryWrapper<>();
         wrapper.in(SysRoleMenuOptions::getRoleId, beRemovedRoleIdList);
         this.remove(wrapper);
+    }
+
+    @Override
+    public PermissionNodeTypeEnum getNodeType() {
+        return PermissionNodeTypeEnum.OPTIONS;
+    }
+
+    @Override
+    public List<RoleBindPermissionItem> doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest) {
+
+        Long roleId = roleBindPermissionRequest.getRoleId();
+        Long menuOptionId = roleBindPermissionRequest.getNodeId();
+
+        if (roleBindPermissionRequest.getChecked()) {
+            SysRoleMenuOptions sysRoleMenuOptions = new SysRoleMenuOptions();
+            sysRoleMenuOptions.setRoleId(roleId);
+            sysRoleMenuOptions.setMenuOptionId(menuOptionId);
+            this.save(sysRoleMenuOptions);
+        } else {
+            LambdaUpdateWrapper<SysRoleMenuOptions> wrapper = new LambdaUpdateWrapper<>();
+            wrapper.eq(SysRoleMenuOptions::getRoleId, roleId);
+            wrapper.eq(SysRoleMenuOptions::getMenuOptionId, menuOptionId);
+            this.remove(wrapper);
+        }
+
+        return null;
     }
 
     /**
