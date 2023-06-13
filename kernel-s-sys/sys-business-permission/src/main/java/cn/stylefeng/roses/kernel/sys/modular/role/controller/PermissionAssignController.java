@@ -5,13 +5,16 @@ import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
+import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleRequest;
+import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionItem;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionResponse;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.PermissionAssignService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleService;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -59,6 +62,21 @@ public class PermissionAssignController {
     public ResponseData<RoleBindPermissionResponse> getRoleBindPermission(@Validated(BaseRequest.detail.class) RoleBindPermissionRequest roleBindPermissionRequest) {
         RoleBindPermissionResponse roleBindPermission = permissionAssignService.getRoleBindPermission(roleBindPermissionRequest);
         return new SuccessResponseData<>(roleBindPermission);
+    }
+
+    /**
+     * 更新角色绑定权限
+     * <p>
+     * 每点击一个权限直接调用一次接口，实时保存
+     *
+     * @author fengshuonan
+     * @since 2023/6/13 19:45
+     */
+    @PostResource(name = "更新角色绑定权限", path = "/permission/updateRoleBindPermission")
+    public ResponseData<List<RoleBindPermissionItem>> updateRoleBindPermission(
+            @RequestBody @Validated(RoleBindPermissionRequest.roleBindPermission.class) RoleBindPermissionRequest roleBindPermissionRequest) {
+        List<RoleBindPermissionItem> result = permissionAssignService.updateRoleBindPermission(roleBindPermissionRequest);
+        return new SuccessResponseData<>(result);
     }
 
 

@@ -60,6 +60,11 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
     }
 
     @Override
+    public List<RoleBindPermissionItem> updateRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest) {
+        return null;
+    }
+
+    @Override
     public RoleBindPermissionResponse createSelectTreeStructure() {
 
         // 获取所有的菜单

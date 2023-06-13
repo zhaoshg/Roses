@@ -1,8 +1,10 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service;
 
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
+import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionItem;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionResponse;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -39,5 +41,13 @@ public interface PermissionAssignService {
      * @since 2023/6/13 18:11
      */
     Set<Long> getRoleBindMenusAndOptions(Long roleId);
+
+    /**
+     * 更新角色绑定菜单和菜单下的功能
+     *
+     * @author fengshuonan
+     * @since 2023/6/13 19:48
+     */
+    List<RoleBindPermissionItem> updateRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest);
 
 }
