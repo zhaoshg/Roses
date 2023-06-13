@@ -60,12 +60,6 @@ public class RoleBindPermissionItem implements AbstractTreeNode<RoleBindPermissi
     private String nodeName;
 
     /**
-     * 节点编码
-     */
-    @ChineseDescription("节点编码")
-    private String nodeCode;
-
-    /**
      * 节点类型：1-应用，2-菜单，3-功能，-1-所有权限
      */
     @ChineseDescription("节点类型：1-应用，2-菜单，3-功能，-1-所有权限")
