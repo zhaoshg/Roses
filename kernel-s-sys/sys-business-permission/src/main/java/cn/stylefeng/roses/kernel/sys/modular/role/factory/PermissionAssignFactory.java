@@ -1,11 +1,14 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.factory;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
+import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import cn.stylefeng.roses.kernel.sys.modular.app.entity.SysApp;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.PermissionNodeTypeEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionItem;
+import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +48,7 @@ public class PermissionAssignFactory {
 
         for (SysMenu leafMenu : leafMenus) {
             RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(
-                    leafMenu.getMenuId(), leafMenu.getMenuName(), PermissionNodeTypeEnum.MENU.getCode(), false);
+                    leafMenu.getMenuId(), leafMenu.getAppId(), leafMenu.getMenuName(), PermissionNodeTypeEnum.MENU.getCode(), false);
             roleBindPermissionItems.add(roleBindPermissionItem);
         }
 
@@ -69,7 +72,7 @@ public class PermissionAssignFactory {
         // 封装响应结果
         for (SysApp sysApp : sysApps) {
             RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(
-                    sysApp.getAppId(), sysApp.getAppName(), PermissionNodeTypeEnum.APP.getCode(), false);
+                    sysApp.getAppId(), TreeConstants.DEFAULT_PARENT_ID, sysApp.getAppName(), PermissionNodeTypeEnum.APP.getCode(), false);
             appResults.add(roleBindPermissionItem);
         }
 
@@ -93,11 +96,36 @@ public class PermissionAssignFactory {
         // 封装响应结果
         for (SysMenuOptions sysMenuOptions : sysMenuOptionsList) {
             RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(
-                    sysMenuOptions.getMenuOptionId(), sysMenuOptions.getOptionName(), PermissionNodeTypeEnum.OPTIONS.getCode(), false);
+                    sysMenuOptions.getMenuOptionId(), sysMenuOptions.getMenuId(), sysMenuOptions.getOptionName(), PermissionNodeTypeEnum.OPTIONS.getCode(), false);
             optionsResult.add(roleBindPermissionItem);
         }
 
         return optionsResult;
+    }
+
+    /**
+     * 组合成角色绑定权限需要的详情信息，一颗树形结构，选中状态都是未选中
+     *
+     * @param apps    应用信息
+     * @param menus   菜单信息
+     * @param options 功能信息
+     * @author fengshuonan
+     * @since 2023/6/13 17:43
+     */
+    public static RoleBindPermissionResponse composeSelectStructure(List<RoleBindPermissionItem> apps, List<RoleBindPermissionItem> menus, List<RoleBindPermissionItem> options) {
+
+        // 定义全选属性
+        RoleBindPermissionResponse roleBindPermissionResponse = new RoleBindPermissionResponse();
+        roleBindPermissionResponse.setChecked(false);
+
+        // 合并应用菜单和功能，并构建树形结构
+        apps.addAll(menus);
+        apps.addAll(options);
+
+        List<RoleBindPermissionItem> roleBindPermissionItems = new DefaultTreeBuildFactory<RoleBindPermissionItem>().doTreeBuild(apps);
+        roleBindPermissionResponse.setAppPermissionList(roleBindPermissionItems);
+
+        return roleBindPermissionResponse;
     }
 
 }

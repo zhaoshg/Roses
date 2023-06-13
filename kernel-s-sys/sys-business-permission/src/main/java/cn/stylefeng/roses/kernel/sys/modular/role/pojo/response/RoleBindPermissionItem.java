@@ -25,6 +25,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.pojo.response;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.tree.factory.base.AbstractTreeNode;
 import lombok.Data;
 
 import java.util.List;
@@ -38,13 +39,19 @@ import java.util.List;
  * @since 2023/6/13 13:54
  */
 @Data
-public class RoleBindPermissionItem {
+public class RoleBindPermissionItem implements AbstractTreeNode<RoleBindPermissionItem> {
 
     /**
      * 节点ID，可以是菜单id和按钮id
      */
     @ChineseDescription("节点ID")
     private Long nodeId;
+
+    /**
+     * 父级节点id
+     */
+    @ChineseDescription("父级节点id")
+    private Long nodeParentId;
 
     /**
      * 节点名称
@@ -74,11 +81,32 @@ public class RoleBindPermissionItem {
 
     }
 
-    public RoleBindPermissionItem(Long nodeId, String nodeName, Integer permissionNodeType, Boolean checked) {
+    public RoleBindPermissionItem(Long nodeId, Long parentId, String nodeName, Integer permissionNodeType, Boolean checked) {
         this.nodeId = nodeId;
+        this.nodeParentId = parentId;
         this.nodeName = nodeName;
         this.permissionNodeType = permissionNodeType;
         this.checked = checked;
     }
 
+    @Override
+    public String getNodeId() {
+        if (this.nodeId == null) {
+            return "";
+        }
+        return this.nodeId.toString();
+    }
+
+    @Override
+    public String getNodeParentId() {
+        if (this.nodeParentId == null) {
+            return "";
+        }
+        return this.nodeParentId.toString();
+    }
+
+    @Override
+    public void setChildrenNodes(List<RoleBindPermissionItem> childrenNodes) {
+        this.children = childrenNodes;
+    }
 }

@@ -37,8 +37,9 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
 
     @Override
     public RoleBindPermissionResponse getRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest) {
-        // 1. 整理出一个总的响应的结构树，选择状态为空
 
+        // 1. 整理出一个总的响应的结构树，选择状态为空
+        RoleBindPermissionResponse selectTreeStructure = this.createSelectTreeStructure();
 
         // 2. 获取角色绑定的应用，菜单，功能列表
 
@@ -65,6 +66,7 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
         LambdaQueryWrapper<SysApp> sysAppLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysAppLambdaQueryWrapper.in(SysApp::getAppId, appIdList);
         sysAppLambdaQueryWrapper.select(SysApp::getAppId, SysApp::getAppName);
+        sysAppLambdaQueryWrapper.orderByAsc(SysApp::getAppSort);
         List<SysApp> totalAppList = sysAppService.list(sysAppLambdaQueryWrapper);
 
         // 组装所有的应用节点信息【初始化应用】
@@ -72,19 +74,16 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
 
         // 获取所有的菜单上的功能
         LambdaQueryWrapper<SysMenuOptions> optionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        optionsLambdaQueryWrapper.select(SysMenuOptions::getMenuOptionId, SysMenuOptions::getOptionName);
-        Set<Long> menuIds = totalResultMenus.stream().map(RoleBindPermissionItem::getNodeId).collect(Collectors.toSet());
+        optionsLambdaQueryWrapper.select(SysMenuOptions::getMenuId, SysMenuOptions::getMenuOptionId, SysMenuOptions::getOptionName);
+        Set<String> menuIds = totalResultMenus.stream().map(RoleBindPermissionItem::getNodeId).collect(Collectors.toSet());
         optionsLambdaQueryWrapper.in(SysMenuOptions::getMenuId, menuIds);
         List<SysMenuOptions> sysMenuOptionsList = sysMenuOptionsService.list(optionsLambdaQueryWrapper);
 
         // 组装所有的应用节点信息【初始化菜单功能】
-        List<RoleBindPermissionItem> menuOptions = PermissionAssignFactory.createMenuOptions(sysMenuOptionsList);
+        List<RoleBindPermissionItem> totalResultOptions = PermissionAssignFactory.createMenuOptions(sysMenuOptionsList);
 
         // 将应用、菜单、功能组成返回结果
-        RoleBindPermissionResponse roleBindPermissionResponse = new RoleBindPermissionResponse();
-        roleBindPermissionResponse.setChecked(false);
-
-        return null;
+        return PermissionAssignFactory.composeSelectStructure(totalResultApps, totalResultMenus, totalResultOptions);
     }
 
 }
