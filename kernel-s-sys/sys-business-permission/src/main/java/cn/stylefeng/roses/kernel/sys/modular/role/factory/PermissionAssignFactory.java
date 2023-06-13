@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.factory;
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
@@ -171,7 +172,7 @@ public class PermissionAssignFactory {
         }
 
         for (RoleBindPermissionItem roleBindPermissionItem : beFilled) {
-            if (rolePermissionList.contains(roleBindPermissionItem.getNodeId())) {
+            if (rolePermissionList.contains(Convert.toLong(roleBindPermissionItem.getNodeId()))) {
                 roleBindPermissionItem.setChecked(true);
             }
 
@@ -187,16 +188,22 @@ public class PermissionAssignFactory {
      * @author fengshuonan
      * @since 2023/6/13 19:25
      */
-    private static void fillParentCheckedFlag(RoleBindPermissionItem beFilled) {
+    private static void fillParentCheckedFlag(RoleBindPermissionItem appItem) {
 
-        if (ObjectUtil.isEmpty(beFilled)) {
+        if (ObjectUtil.isEmpty(appItem)) {
             return;
         }
 
-        beFilled.setChecked(true);
-        for (RoleBindPermissionItem item : beFilled.getChildren()) {
-            if (!item.getChecked()) {
-                beFilled.setChecked(false);
+        appItem.setChecked(true);
+        for (RoleBindPermissionItem menuItem : appItem.getChildren()) {
+            if (!menuItem.getChecked()) {
+                appItem.setChecked(false);
+            }
+
+            for (RoleBindPermissionItem options : menuItem.getChildren()) {
+                if (!options.getChecked()) {
+                    appItem.setChecked(false);
+                }
             }
         }
     }
