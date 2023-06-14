@@ -69,6 +69,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 更新用户的任职信息
         sysUserOrgService.updateUserOrg(sysUser.getUserId(), sysUserRequest.getUserOrgList());
+
+        // 添加用户一个默认角色 todo
+
     }
 
     @Override
@@ -141,7 +144,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         LambdaQueryWrapper<SysUser> wrapper = createWrapper(sysUserRequest);
 
         // 只查询需要的字段
-        wrapper.select(SysUser::getUserId, SysUser::getRealName, SysUser::getAccount, SysUser::getSex, SysUser::getStatusFlag, BaseEntity::getCreateTime);
+        wrapper.select(SysUser::getUserId, SysUser::getRealName, SysUser::getAccount, SysUser::getSex,
+                SysUser::getStatusFlag, BaseEntity::getCreateTime);
 
         // 分页查询
         Page<SysUser> sysUserPage = this.page(PageFactory.defaultPage(), wrapper);
@@ -227,7 +231,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 如果传递了组织机构id查询条件，则查询对应机构id下有哪些用户，再拼接用户查询条件
         if (ObjectUtil.isNotEmpty(sysUserRequest.getOrgIdCondition())) {
-            List<Long> orgUserIdList = this.sysUserServiceApi.getOrgUserIdList(sysUserRequest.getOrgIdCondition(), true);
+            List<Long> orgUserIdList = this.sysUserServiceApi.getOrgUserIdList(sysUserRequest.getOrgIdCondition(),
+                    true);
             queryWrapper.in(SysUser::getUserId, orgUserIdList);
         }
 
@@ -242,7 +247,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     private void baseRemoveUser(Set<Long> userIdList) {
         // 校验是否有其他业务绑定了用户信息
-        Map<String, RemoveUserCallbackApi> removeUserCallbackApiMap = SpringUtil.getBeansOfType(RemoveUserCallbackApi.class);
+        Map<String, RemoveUserCallbackApi> removeUserCallbackApiMap = SpringUtil.getBeansOfType(
+                RemoveUserCallbackApi.class);
         for (RemoveUserCallbackApi removeUserCallbackApi : removeUserCallbackApiMap.values()) {
             removeUserCallbackApi.validateHaveUserBind(userIdList);
         }
