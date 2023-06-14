@@ -248,6 +248,9 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
 
             // 获取用户的公司信息
             HrOrganizationDTO companyInfo = organizationServiceApi.getOrgCompanyInfo(sysUserOrg.getOrgId());
+            if (companyInfo == null) {
+                continue;
+            }
             if (currentCompanyInfo.getOrgId().equals(companyInfo.getOrgId())) {
                 continue;
             }
