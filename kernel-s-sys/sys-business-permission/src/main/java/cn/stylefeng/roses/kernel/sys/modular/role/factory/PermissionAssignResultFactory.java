@@ -1,6 +1,8 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.factory;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
+import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.PermissionNodeTypeEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionItem;
@@ -38,6 +40,37 @@ public class PermissionAssignResultFactory {
         }
 
         return result;
+    }
+
+    /**
+     * 创建角色绑定应用时候的响应结果
+     *
+     * @author fengshuonan
+     * @since 2023/6/14 14:53
+     */
+    public static List<RoleBindPermissionItem> createRoleBindAppResult(List<SysMenu> totalMenus, List<SysMenuOptions> totalMenuOptions, Boolean checkedFlag) {
+
+        List<RoleBindPermissionItem> result = new ArrayList<>();
+
+        if (ObjectUtil.isEmpty(totalMenus)) {
+            return result;
+        }
+
+        for (SysMenu sysMenu : totalMenus) {
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(
+                    sysMenu.getMenuId(), null, sysMenu.getMenuName(),
+                    PermissionNodeTypeEnum.MENU.getCode(), checkedFlag);
+            result.add(roleBindPermissionItem);
+        }
+
+        for (SysMenuOptions sysMenuOptions : totalMenuOptions) {
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(
+                    sysMenuOptions.getMenuOptionId(), sysMenuOptions.getMenuId(), sysMenuOptions.getOptionName(),
+                    PermissionNodeTypeEnum.OPTIONS.getCode(), checkedFlag);
+            result.add(roleBindPermissionItem);
+        }
+
+        return new DefaultTreeBuildFactory<RoleBindPermissionItem>().doTreeBuild(result);
     }
 
 }
