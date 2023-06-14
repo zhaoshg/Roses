@@ -8,6 +8,7 @@ import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.enums.SysMenuExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.menu.factory.MenuFactory;
+import cn.stylefeng.roses.kernel.sys.modular.menu.factory.MenuValidateFactory;
 import cn.stylefeng.roses.kernel.sys.modular.menu.mapper.SysMenuMapper;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.request.SysMenuRequest;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.response.AppGroupDetail;
@@ -36,8 +37,15 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public void add(SysMenuRequest sysMenuRequest) {
+
+        // 校验参数合法性
+        MenuValidateFactory.validateAddMenuParam(sysMenuRequest);
+
         SysMenu sysMenu = new SysMenu();
         BeanUtil.copyProperties(sysMenuRequest, sysMenu);
+
+        // 组装pids集合
+
         this.save(sysMenu);
     }
 

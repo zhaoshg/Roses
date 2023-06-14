@@ -27,7 +27,7 @@ public class SysMenuRequest extends BaseRequest {
     private Long menuId;
 
     /**
-     * 父id，顶级节点的父id是-1
+     * 父id，如果没有父级，则父级id为-1
      */
     @NotNull(message = "父id，顶级节点的父id是-1不能为空", groups = {add.class, edit.class})
     @ChineseDescription("父id，顶级节点的父id是-1")
@@ -71,7 +71,7 @@ public class SysMenuRequest extends BaseRequest {
      * 状态：1-启用，2-禁用
      */
     @ChineseDescription("状态：1-启用，2-禁用")
-    private Integer statusFlag;
+    private Integer statusFlag = 1;
 
     /**
      * 备注
