@@ -7,12 +7,14 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.modular.app.entity.SysApp;
 import cn.stylefeng.roses.kernel.sys.modular.app.enums.SysAppExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.app.mapper.SysAppMapper;
 import cn.stylefeng.roses.kernel.sys.modular.app.pojo.request.SysAppRequest;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
+import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.response.AppGroupDetail;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -97,6 +100,29 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
 
         Page<SysApp> sysAppPage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysAppPage);
+    }
+
+    @Override
+    public List<AppGroupDetail> getAppList() {
+
+        LambdaQueryWrapper<SysApp> wrapper = this.createWrapper(new SysAppRequest());
+
+        // 只查询启用的
+        wrapper.eq(SysApp::getStatusFlag, StatusEnum.ENABLE.getCode());
+
+        // 查询有效字段
+        wrapper.select(SysApp::getAppId, SysApp::getAppName, SysApp::getAppIcon, SysApp::getRemark);
+
+        List<SysApp> appList = this.list(wrapper);
+
+        // 结果转化为指定格式
+        ArrayList<AppGroupDetail> appGroupDetails = new ArrayList<>();
+        for (SysApp sysApp : appList) {
+            AppGroupDetail appGroupDetail = new AppGroupDetail(sysApp.getAppId(), sysApp.getAppName(), sysApp.getAppIcon(), sysApp.getRemark());
+            appGroupDetails.add(appGroupDetail);
+        }
+
+        return appGroupDetails;
     }
 
     @Override

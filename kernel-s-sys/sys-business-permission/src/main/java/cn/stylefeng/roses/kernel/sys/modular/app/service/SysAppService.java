@@ -3,6 +3,7 @@ package cn.stylefeng.roses.kernel.sys.modular.app.service;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.sys.modular.app.entity.SysApp;
 import cn.stylefeng.roses.kernel.sys.modular.app.pojo.request.SysAppRequest;
+import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.response.AppGroupDetail;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -78,5 +79,13 @@ public interface SysAppService extends IService<SysApp> {
      * @date 2023/06/10 21:28
      */
     PageResult<SysApp> findPage(SysAppRequest sysAppRequest);
+
+    /**
+     * 获取启用的应用列表（用在给菜单界面用）
+     *
+     * @author fengshuonan
+     * @since 2023/6/14 21:48
+     */
+    List<AppGroupDetail> getAppList();
 
 }

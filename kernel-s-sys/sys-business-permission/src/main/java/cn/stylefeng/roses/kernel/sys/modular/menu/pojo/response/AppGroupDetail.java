@@ -40,4 +40,13 @@ public class AppGroupDetail {
      */
     private List<MenuItemDetail> menuList;
 
+    public AppGroupDetail() {
+    }
+
+    public AppGroupDetail(Long appId, String appName, Long appIcon, String remark) {
+        this.appId = appId;
+        this.appName = appName;
+        this.appIcon = appIcon;
+        this.remark = remark;
+    }
 }
