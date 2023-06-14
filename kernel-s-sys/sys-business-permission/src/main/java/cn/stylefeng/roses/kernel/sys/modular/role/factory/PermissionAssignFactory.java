@@ -50,10 +50,7 @@ public class PermissionAssignFactory {
 
         for (SysMenu leafMenu : leafMenus) {
             RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(leafMenu.getMenuId(),
-                                                                                       leafMenu.getAppId(),
-                                                                                       leafMenu.getMenuName(),
-                                                                                       PermissionNodeTypeEnum.MENU.getCode(),
-                                                                                       false);
+                    leafMenu.getAppId(), leafMenu.getMenuName(), PermissionNodeTypeEnum.MENU.getCode(), false);
             roleBindPermissionItems.add(roleBindPermissionItem);
         }
 
@@ -77,10 +74,7 @@ public class PermissionAssignFactory {
         // 封装响应结果
         for (SysApp sysApp : sysApps) {
             RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(sysApp.getAppId(),
-                                                                                       TreeConstants.DEFAULT_PARENT_ID,
-                                                                                       sysApp.getAppName(),
-                                                                                       PermissionNodeTypeEnum.APP.getCode(),
-                                                                                       false);
+                    TreeConstants.DEFAULT_PARENT_ID, sysApp.getAppName(), PermissionNodeTypeEnum.APP.getCode(), false);
             appResults.add(roleBindPermissionItem);
         }
 
@@ -104,10 +98,8 @@ public class PermissionAssignFactory {
         // 封装响应结果
         for (SysMenuOptions sysMenuOptions : sysMenuOptionsList) {
             RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(sysMenuOptions.getMenuOptionId(),
-                                                                                       sysMenuOptions.getMenuId(),
-                                                                                       sysMenuOptions.getOptionName(),
-                                                                                       PermissionNodeTypeEnum.OPTIONS.getCode(),
-                                                                                       false);
+                    sysMenuOptions.getMenuId(), sysMenuOptions.getOptionName(),
+                    PermissionNodeTypeEnum.OPTIONS.getCode(), false);
             optionsResult.add(roleBindPermissionItem);
         }
 

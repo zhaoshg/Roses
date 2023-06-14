@@ -24,7 +24,8 @@ public class PermissionAssignResultFactory {
      * @author fengshuonan
      * @since 2023/6/13 23:03
      */
-    public static List<RoleBindPermissionItem> createRoleBindMenuResult(List<SysMenuOptions> menuOptions, Boolean checkedFlag) {
+    public static List<RoleBindPermissionItem> createRoleBindMenuResult(List<SysMenuOptions> menuOptions,
+                                                                        Boolean checkedFlag) {
 
         List<RoleBindPermissionItem> result = new ArrayList<>();
 
@@ -33,9 +34,8 @@ public class PermissionAssignResultFactory {
         }
 
         for (SysMenuOptions menuOption : menuOptions) {
-            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(
-                    menuOption.getMenuOptionId(), null, menuOption.getOptionName(),
-                    PermissionNodeTypeEnum.OPTIONS.getCode(), checkedFlag);
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(menuOption.getMenuOptionId(),
+                    null, menuOption.getOptionName(), PermissionNodeTypeEnum.OPTIONS.getCode(), checkedFlag);
             result.add(roleBindPermissionItem);
         }
 
@@ -48,7 +48,9 @@ public class PermissionAssignResultFactory {
      * @author fengshuonan
      * @since 2023/6/14 14:53
      */
-    public static List<RoleBindPermissionItem> createRoleBindAppResult(List<SysMenu> totalMenus, List<SysMenuOptions> totalMenuOptions, Boolean checkedFlag) {
+    public static List<RoleBindPermissionItem> createRoleBindAppResult(List<SysMenu> totalMenus,
+                                                                       List<SysMenuOptions> totalMenuOptions,
+                                                                       Boolean checkedFlag) {
 
         List<RoleBindPermissionItem> result = new ArrayList<>();
 
@@ -57,15 +59,14 @@ public class PermissionAssignResultFactory {
         }
 
         for (SysMenu sysMenu : totalMenus) {
-            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(
-                    sysMenu.getMenuId(), null, sysMenu.getMenuName(),
-                    PermissionNodeTypeEnum.MENU.getCode(), checkedFlag);
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(sysMenu.getMenuId(), null,
+                    sysMenu.getMenuName(), PermissionNodeTypeEnum.MENU.getCode(), checkedFlag);
             result.add(roleBindPermissionItem);
         }
 
         for (SysMenuOptions sysMenuOptions : totalMenuOptions) {
-            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(
-                    sysMenuOptions.getMenuOptionId(), sysMenuOptions.getMenuId(), sysMenuOptions.getOptionName(),
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(sysMenuOptions.getMenuOptionId(),
+                    sysMenuOptions.getMenuId(), sysMenuOptions.getOptionName(),
                     PermissionNodeTypeEnum.OPTIONS.getCode(), checkedFlag);
             result.add(roleBindPermissionItem);
         }
