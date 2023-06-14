@@ -236,7 +236,17 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
             if (companyInfo == null) {
                 continue;
             }
-            results.add(companyInfo);
+
+            // 判断是否已经加了这个公司
+            boolean alreadyHave = false;
+            for (HrOrganizationDTO dtoItem : results) {
+                if (dtoItem.getOrgId().equals(companyInfo.getOrgId())) {
+                    alreadyHave = true;
+                }
+            }
+            if (!alreadyHave) {
+                results.add(companyInfo);
+            }
         }
 
         return results;
