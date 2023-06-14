@@ -31,9 +31,11 @@ import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.basic.SimpleRoleInfo;
 import cn.stylefeng.roses.kernel.rule.enums.SexEnum;
 import cn.stylefeng.roses.kernel.system.api.MenuServiceApi;
+import cn.stylefeng.roses.kernel.system.api.OrganizationServiceApi;
 import cn.stylefeng.roses.kernel.system.api.enums.AntdvFrontTypeEnum;
 import cn.stylefeng.roses.kernel.system.api.pojo.login.v3.IndexRoleInfo;
 import cn.stylefeng.roses.kernel.system.api.pojo.login.v3.IndexUserInfoV3;
+import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
 import cn.stylefeng.roses.kernel.system.modular.user.service.IndexUserInfoService;
 import cn.stylefeng.roses.kernel.system.modular.user.service.SysUserService;
 import org.springframework.stereotype.Service;
@@ -56,6 +58,9 @@ public class IndexUserInfoServiceImpl implements IndexUserInfoService {
 
     @Resource
     private MenuServiceApi menuServiceApi;
+
+    @Resource
+    private OrganizationServiceApi organizationServiceApi;
 
     @Override
     public IndexUserInfoV3 userInfoV3(Integer menuFrontType, Boolean devopsFlag) {
@@ -96,6 +101,10 @@ public class IndexUserInfoServiceImpl implements IndexUserInfoService {
 
         // 设置组织机构id
         indexUserInfoV3.setOrganizationId(loginUser.getOrganizationId());
+        HrOrganizationDTO orgCompanyInfo = organizationServiceApi.getOrgCompanyInfo(loginUser.getOrganizationId());
+        if (orgCompanyInfo != null) {
+            indexUserInfoV3.setCompanyId(orgCompanyInfo.getOrgId());
+        }
 
         // 设置状态（暂时不设置）
         indexUserInfoV3.setStatus(null);

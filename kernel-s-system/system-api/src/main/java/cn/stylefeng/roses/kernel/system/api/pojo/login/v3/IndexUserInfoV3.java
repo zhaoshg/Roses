@@ -102,6 +102,12 @@ public class IndexUserInfoV3 {
     private Long organizationId;
 
     /**
+     * 用户所属公司id
+     */
+    @ChineseDescription("用户所属公司id")
+    private Long companyId;
+
+    /**
      * 用户状态
      */
     @ChineseDescription("状态")
