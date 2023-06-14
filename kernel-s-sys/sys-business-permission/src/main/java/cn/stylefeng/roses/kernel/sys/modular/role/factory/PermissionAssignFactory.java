@@ -42,13 +42,18 @@ public class PermissionAssignFactory {
         Set<Long> totalParentMenuId = sysMenus.stream().map(SysMenu::getMenuParentId).collect(Collectors.toSet());
 
         // 通过父级菜单，筛选出来所有的叶子节点（如果菜单不存在父级菜单里，则代表是叶子节点）
-        Set<SysMenu> leafMenus = sysMenus.stream().filter(item -> !totalParentMenuId.contains(item)).collect(Collectors.toSet());
+        Set<SysMenu> leafMenus = sysMenus.stream().filter(item -> !totalParentMenuId.contains(item))
+                .collect(Collectors.toSet());
 
         // 叶子节点转化为RoleBindPermissionItem结构
         ArrayList<RoleBindPermissionItem> roleBindPermissionItems = new ArrayList<>();
 
         for (SysMenu leafMenu : leafMenus) {
-            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(leafMenu.getMenuId(), leafMenu.getAppId(), leafMenu.getMenuName(), PermissionNodeTypeEnum.MENU.getCode(), false);
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(leafMenu.getMenuId(),
+                                                                                       leafMenu.getAppId(),
+                                                                                       leafMenu.getMenuName(),
+                                                                                       PermissionNodeTypeEnum.MENU.getCode(),
+                                                                                       false);
             roleBindPermissionItems.add(roleBindPermissionItem);
         }
 
@@ -71,7 +76,11 @@ public class PermissionAssignFactory {
 
         // 封装响应结果
         for (SysApp sysApp : sysApps) {
-            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(sysApp.getAppId(), TreeConstants.DEFAULT_PARENT_ID, sysApp.getAppName(), PermissionNodeTypeEnum.APP.getCode(), false);
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(sysApp.getAppId(),
+                                                                                       TreeConstants.DEFAULT_PARENT_ID,
+                                                                                       sysApp.getAppName(),
+                                                                                       PermissionNodeTypeEnum.APP.getCode(),
+                                                                                       false);
             appResults.add(roleBindPermissionItem);
         }
 
@@ -94,7 +103,11 @@ public class PermissionAssignFactory {
 
         // 封装响应结果
         for (SysMenuOptions sysMenuOptions : sysMenuOptionsList) {
-            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(sysMenuOptions.getMenuOptionId(), sysMenuOptions.getMenuId(), sysMenuOptions.getOptionName(), PermissionNodeTypeEnum.OPTIONS.getCode(), false);
+            RoleBindPermissionItem roleBindPermissionItem = new RoleBindPermissionItem(sysMenuOptions.getMenuOptionId(),
+                                                                                       sysMenuOptions.getMenuId(),
+                                                                                       sysMenuOptions.getOptionName(),
+                                                                                       PermissionNodeTypeEnum.OPTIONS.getCode(),
+                                                                                       false);
             optionsResult.add(roleBindPermissionItem);
         }
 
@@ -110,7 +123,9 @@ public class PermissionAssignFactory {
      * @author fengshuonan
      * @since 2023/6/13 17:43
      */
-    public static RoleBindPermissionResponse composeSelectStructure(List<RoleBindPermissionItem> apps, List<RoleBindPermissionItem> menus, List<RoleBindPermissionItem> options) {
+    public static RoleBindPermissionResponse composeSelectStructure(List<RoleBindPermissionItem> apps,
+                                                                    List<RoleBindPermissionItem> menus,
+                                                                    List<RoleBindPermissionItem> options) {
 
         // 定义全选属性
         RoleBindPermissionResponse roleBindPermissionResponse = new RoleBindPermissionResponse();
@@ -120,7 +135,8 @@ public class PermissionAssignFactory {
         apps.addAll(menus);
         apps.addAll(options);
 
-        List<RoleBindPermissionItem> roleBindPermissionItems = new DefaultTreeBuildFactory<RoleBindPermissionItem>().doTreeBuild(apps);
+        List<RoleBindPermissionItem> roleBindPermissionItems = new DefaultTreeBuildFactory<RoleBindPermissionItem>().doTreeBuild(
+                apps);
         roleBindPermissionResponse.setAppPermissionList(roleBindPermissionItems);
 
         return roleBindPermissionResponse;
@@ -134,7 +150,8 @@ public class PermissionAssignFactory {
      * @author fengshuonan
      * @since 2023/6/13 19:00
      */
-    public static RoleBindPermissionResponse fillCheckedFlag(RoleBindPermissionResponse roleBindPermissionResponse, Set<Long> rolePermissions) {
+    public static RoleBindPermissionResponse fillCheckedFlag(RoleBindPermissionResponse roleBindPermissionResponse,
+                                                             Set<Long> rolePermissions) {
 
         List<RoleBindPermissionItem> appList = roleBindPermissionResponse.getAppPermissionList();
 
