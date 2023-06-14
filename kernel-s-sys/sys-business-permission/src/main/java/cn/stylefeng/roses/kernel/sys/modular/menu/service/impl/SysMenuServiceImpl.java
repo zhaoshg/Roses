@@ -2,21 +2,19 @@ package cn.stylefeng.roses.kernel.sys.modular.menu.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
-import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
-import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.enums.SysMenuExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.menu.mapper.SysMenuMapper;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.request.SysMenuRequest;
+import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.response.AppGroupDetail;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -55,13 +53,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public PageResult<SysMenu> findPage(SysMenuRequest sysMenuRequest) {
-        LambdaQueryWrapper<SysMenu> wrapper = createWrapper(sysMenuRequest);
-        Page<SysMenu> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
-        return PageResultFactory.createPageResult(sysRolePage);
-    }
-
-    @Override
     public boolean validateMenuBindApp(Set<Long> appIdList) {
 
         LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -86,9 +77,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public List<SysMenu> findList(SysMenuRequest sysMenuRequest) {
+    public List<AppGroupDetail> getAppMenuGroupDetail(SysMenuRequest sysMenuRequest) {
         LambdaQueryWrapper<SysMenu> wrapper = this.createWrapper(sysMenuRequest);
-        return this.list(wrapper);
+        return new ArrayList<>();
     }
 
     /**

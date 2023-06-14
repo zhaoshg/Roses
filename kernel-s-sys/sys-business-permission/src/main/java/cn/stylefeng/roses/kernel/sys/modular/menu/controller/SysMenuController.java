@@ -1,6 +1,5 @@
 package cn.stylefeng.roses.kernel.sys.modular.menu.controller;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -8,6 +7,7 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.request.SysMenuRequest;
+import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.response.AppGroupDetail;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,17 +17,29 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 系统菜单控制器
+ * 菜单管理界面的接口
  *
  * @author fengshuonan
- * @date 2023/06/10 21:28
+ * @since 2023/6/14 21:29
  */
 @RestController
-@ApiResource(name = "系统菜单")
+@ApiResource(name = "菜单管理界面的接口")
 public class SysMenuController {
 
     @Resource
     private SysMenuService sysMenuService;
+
+    /**
+     * 获取菜单管理界面的每个应用组下的菜单信息
+     *
+     * @author fengshuonan
+     * @date 2023/06/10 21:28
+     */
+    @GetResource(name = "获取菜单管理界面的每个应用组下的菜单信息", path = "/sysMenu/getAppMenuGroupDetail")
+    public ResponseData<List<AppGroupDetail>> getAppMenuGroupDetail(SysMenuRequest sysMenuRequest) {
+        List<AppGroupDetail> appGroupDetails = sysMenuService.getAppMenuGroupDetail(sysMenuRequest);
+        return new SuccessResponseData<>(appGroupDetails);
+    }
 
     /**
      * 添加
@@ -74,28 +86,6 @@ public class SysMenuController {
     @GetResource(name = "查看详情", path = "/sysMenu/detail")
     public ResponseData<SysMenu> detail(@Validated(SysMenuRequest.detail.class) SysMenuRequest sysMenuRequest) {
         return new SuccessResponseData<>(sysMenuService.detail(sysMenuRequest));
-    }
-
-    /**
-     * 获取列表
-     *
-     * @author fengshuonan
-     * @date 2023/06/10 21:28
-     */
-    @GetResource(name = "获取列表", path = "/sysMenu/list")
-    public ResponseData<List<SysMenu>> list(SysMenuRequest sysMenuRequest) {
-        return new SuccessResponseData<>(sysMenuService.findList(sysMenuRequest));
-    }
-
-    /**
-     * 获取列表（带分页）
-     *
-     * @author fengshuonan
-     * @date 2023/06/10 21:28
-     */
-    @GetResource(name = "分页查询", path = "/sysMenu/page")
-    public ResponseData<PageResult<SysMenu>> page(SysMenuRequest sysMenuRequest) {
-        return new SuccessResponseData<>(sysMenuService.findPage(sysMenuRequest));
     }
 
 }
