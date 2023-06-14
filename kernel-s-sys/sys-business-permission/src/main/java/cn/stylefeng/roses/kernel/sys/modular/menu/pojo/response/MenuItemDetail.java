@@ -39,6 +39,16 @@ public class MenuItemDetail implements AbstractTreeNode<MenuItemDetail> {
      */
     private List<MenuItemDetail> children;
 
+    public MenuItemDetail() {
+    }
+
+    public MenuItemDetail(Long menuId, Long menuParentId, String menuName, Integer menuType) {
+        this.menuId = menuId;
+        this.menuParentId = menuParentId;
+        this.menuName = menuName;
+        this.menuType = menuType;
+    }
+
     @Override
     public String getNodeId() {
         if (menuId != null) {

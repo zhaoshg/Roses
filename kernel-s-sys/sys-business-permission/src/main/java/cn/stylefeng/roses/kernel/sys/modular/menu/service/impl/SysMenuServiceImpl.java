@@ -118,7 +118,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         }
 
         // 3. 组装应用信息和菜单信息
-        return new ArrayList<>();
+        return MenuFactory.createAppGroupDetailResult(appList, sysMenuList);
     }
 
     /**
