@@ -22,7 +22,7 @@ public class SysMenuRequest extends BaseRequest {
     /**
      * 主键
      */
-    @NotNull(message = "主键不能为空", groups = {edit.class, delete.class})
+    @NotNull(message = "主键不能为空", groups = {edit.class, delete.class, detail.class})
     @ChineseDescription("主键")
     private Long menuId;
 
@@ -36,7 +36,6 @@ public class SysMenuRequest extends BaseRequest {
     /**
      * 父id集合，中括号包住，逗号分隔
      */
-    @NotBlank(message = "父id集合，中括号包住，逗号分隔不能为空", groups = {add.class, edit.class})
     @ChineseDescription("父id集合，中括号包住，逗号分隔")
     private String menuPids;
 
@@ -71,7 +70,6 @@ public class SysMenuRequest extends BaseRequest {
     /**
      * 状态：1-启用，2-禁用
      */
-    @NotNull(message = "状态：1-启用，2-禁用不能为空", groups = {add.class, edit.class})
     @ChineseDescription("状态：1-启用，2-禁用")
     private Integer statusFlag;
 
@@ -85,6 +83,7 @@ public class SysMenuRequest extends BaseRequest {
      * 菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接
      */
     @ChineseDescription("菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接")
+    @NotNull(message = "菜单类型不能为空", groups = {add.class, edit.class})
     private Integer menuType;
 
     /**
@@ -122,30 +121,5 @@ public class SysMenuRequest extends BaseRequest {
      */
     @ChineseDescription("是否可见(分离版用)：Y-是，N-否")
     private String antdvVisible;
-
-    /**
-     * 拓展字段
-     */
-    @ChineseDescription("拓展字段")
-    private String expandField;
-
-    /**
-     * 乐观锁
-     */
-    @ChineseDescription("乐观锁")
-    private Long versionFlag;
-
-    /**
-     * 删除标记：Y-已删除，N-未删除
-     */
-    @NotBlank(message = "删除标记：Y-已删除，N-未删除不能为空", groups = {add.class, edit.class})
-    @ChineseDescription("删除标记：Y-已删除，N-未删除")
-    private String delFlag;
-
-    /**
-     * 租户号
-     */
-    @ChineseDescription("租户号")
-    private Long tenantId;
 
 }
