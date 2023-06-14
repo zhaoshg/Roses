@@ -226,35 +226,16 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
 
         LoginUser loginUser = LoginContext.me().getLoginUser();
 
-        // 获取当前登录用户的组织机构id，放在第一位
-        Long currentOrgId = loginUser.getOrganizationId();
-
-        // 获取当前用户orgId的公司信息
-        HrOrganizationDTO currentCompanyInfo = organizationServiceApi.getOrgCompanyInfo(currentOrgId);
-        if (currentCompanyInfo != null) {
-            results.add(currentCompanyInfo);
-        }
-
         // 获取当前用户绑定的组织机构列表
         UserOrgRequest userOrgResponse = new UserOrgRequest();
         userOrgResponse.setUserId(loginUser.getUserId());
         List<SysUserOrg> sysUserOrgList = this.findList(userOrgResponse);
         for (SysUserOrg sysUserOrg : sysUserOrgList) {
-
-            // 公司id已经添加到列表中，不用再继续添加
-            if (currentCompanyInfo.getOrgId().equals(sysUserOrg.getOrgId())) {
-                continue;
-            }
-
             // 获取用户的公司信息
             HrOrganizationDTO companyInfo = organizationServiceApi.getOrgCompanyInfo(sysUserOrg.getOrgId());
             if (companyInfo == null) {
                 continue;
             }
-            if (currentCompanyInfo.getOrgId().equals(companyInfo.getOrgId())) {
-                continue;
-            }
-
             results.add(companyInfo);
         }
 
