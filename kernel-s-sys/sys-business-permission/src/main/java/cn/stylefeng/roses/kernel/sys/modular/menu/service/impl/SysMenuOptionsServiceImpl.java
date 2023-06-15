@@ -86,6 +86,10 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
     @Override
     public PageResult<SysMenuOptions> findPage(SysMenuOptionsRequest sysMenuOptionsRequest) {
         LambdaQueryWrapper<SysMenuOptions> wrapper = createWrapper(sysMenuOptionsRequest);
+
+        // 只查询有用字段
+        wrapper.select(SysMenuOptions::getOptionName, SysMenuOptions::getOptionCode, SysMenuOptions::getMenuId, SysMenuOptions::getMenuOptionId);
+
         Page<SysMenuOptions> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
     }
@@ -129,6 +133,13 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
         // 根据菜单id查询
         Long menuId = sysMenuOptionsRequest.getMenuId();
         queryWrapper.eq(ObjectUtil.isNotNull(menuId), SysMenuOptions::getMenuId, menuId);
+
+        // 根据查询文本查询
+        String searchText = sysMenuOptionsRequest.getSearchText();
+        if (ObjectUtil.isNotEmpty(searchText)) {
+            queryWrapper.like(SysMenuOptions::getOptionCode, searchText);
+            queryWrapper.or().like(SysMenuOptions::getOptionName, searchText);
+        }
 
         return queryWrapper;
     }
