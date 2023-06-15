@@ -8,6 +8,7 @@ import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.rule.constants.SymbolConstant;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.rule.tree.buildpids.PidStructureBuildUtil;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
@@ -149,15 +150,23 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public void updateMenuTree(SysMenuRequest sysMenuRequest) {
 
         // 获取被更新的应用和菜单树信息
-        Long appId = sysMenuRequest.getAppId();
         List<SysMenu> updateTree = sysMenuRequest.getUpdateMenuTree();
 
         // 更新树节点的菜单顺序
         MenuTreeFactory.updateSort(updateTree, 1);
 
-        // 从新整理上下级结构
+        // 填充树节点的parentId字段
+        MenuTreeFactory.fillParentId(-1L, updateTree);
 
+        // 平行展开树形结构，准备从新整理pids
+        ArrayList<SysMenu> totalMenuList = new ArrayList<>();
+        MenuTreeFactory.collectTreeTasks(updateTree, totalMenuList);
 
+        // 从新整理上下级结构，整理id和pid关系
+        PidStructureBuildUtil.createPidStructure(totalMenuList);
+
+        // 更新菜单的sort字段、pid字段和pids字段这3个字段
+        this.updateBatchById(totalMenuList);
     }
 
     @Override

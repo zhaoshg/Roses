@@ -1,7 +1,9 @@
 package cn.stylefeng.roses.kernel.sys.modular.menu.entity;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.tree.buildpids.BasePidBuildModel;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -21,7 +23,7 @@ import java.util.List;
 @TableName(value = "sys_menu", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SysMenu extends BaseExpandFieldEntity {
+public class SysMenu extends BaseExpandFieldEntity implements BasePidBuildModel {
 
     /**
      * 主键
@@ -143,4 +145,24 @@ public class SysMenu extends BaseExpandFieldEntity {
     @TableField(exist = false)
     private List<SysMenu> children;
 
+    @Override
+    public String pidBuildNodeId() {
+        if (ObjectUtil.isEmpty(menuId)) {
+            return "";
+        }
+        return menuId.toString();
+    }
+
+    @Override
+    public String pidBuildParentId() {
+        if (ObjectUtil.isEmpty(menuParentId)) {
+            return "";
+        }
+        return menuParentId.toString();
+    }
+
+    @Override
+    public void setPidBuildPidStructure(String pids) {
+        this.menuPids = pids;
+    }
 }
