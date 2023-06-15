@@ -24,8 +24,6 @@
  */
 package cn.stylefeng.roses.kernel.system.api.pojo.organization;
 
-import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -93,5 +91,10 @@ public class HrOrganizationDTO {
      * 删除标记（Y-已删除，N-未删除）
      */
     private String delFlag;
+
+    /**
+     * 职务名称
+     */
+    private String positionName;
 
 }
