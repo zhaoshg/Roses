@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 系统菜单实例类
@@ -133,5 +134,13 @@ public class SysMenu extends BaseExpandFieldEntity {
     @TableField("antdv_visible")
     @ChineseDescription("是否可见(分离版用)：Y-是，N-否")
     private String antdvVisible;
+
+    /**
+     * 当前菜单的子菜单
+     * <p>
+     * 这个参数一般用在更新菜单树的顺序和上下级结构中
+     */
+    @TableField(exist = false)
+    private List<SysMenu> children;
 
 }

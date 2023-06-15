@@ -42,50 +42,62 @@ public class SysMenuController {
     }
 
     /**
-     * 添加
+     * 添加菜单
      *
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
-    @PostResource(name = "添加", path = "/sysMenu/add")
+    @PostResource(name = "添加菜单", path = "/sysMenu/add")
     public ResponseData<SysMenu> add(@RequestBody @Validated(SysMenuRequest.add.class) SysMenuRequest sysMenuRequest) {
         sysMenuService.add(sysMenuRequest);
         return new SuccessResponseData<>();
     }
 
     /**
-     * 删除
+     * 删除菜单
      *
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
-    @PostResource(name = "删除", path = "/sysMenu/delete")
+    @PostResource(name = "删除菜单", path = "/sysMenu/delete")
     public ResponseData<?> delete(@RequestBody @Validated(SysMenuRequest.delete.class) SysMenuRequest sysMenuRequest) {
         sysMenuService.del(sysMenuRequest);
         return new SuccessResponseData<>();
     }
 
     /**
-     * 编辑
+     * 编辑菜单
      *
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
-    @PostResource(name = "编辑", path = "/sysMenu/edit")
+    @PostResource(name = "编辑菜单", path = "/sysMenu/edit")
     public ResponseData<?> edit(@RequestBody @Validated(SysMenuRequest.edit.class) SysMenuRequest sysMenuRequest) {
         sysMenuService.edit(sysMenuRequest);
         return new SuccessResponseData<>();
     }
 
     /**
-     * 查看详情
+     * 查看菜单详情
      *
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
-    @GetResource(name = "查看详情", path = "/sysMenu/detail")
+    @GetResource(name = "查看菜单详情", path = "/sysMenu/detail")
     public ResponseData<SysMenu> detail(@Validated(SysMenuRequest.detail.class) SysMenuRequest sysMenuRequest) {
         return new SuccessResponseData<>(sysMenuService.detail(sysMenuRequest));
+    }
+
+    /**
+     * 调整菜单上下级机构和菜单的顺序
+     *
+     * @author fengshuonan
+     * @since 2023/6/15 11:28
+     */
+    @PostResource(name = "调整菜单上下级机构和菜单的顺序", path = "/sysMenu/updateMenuTree")
+    public ResponseData<?> updateMenuTree(@RequestBody @Validated(SysMenuRequest.updateMenuTree.class) SysMenuRequest sysMenuRequest) {
+        sysMenuService.updateMenuTree(sysMenuRequest);
+        return new SuccessResponseData<>();
     }
 
 }

@@ -13,6 +13,7 @@ import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.enums.SysMenuExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.menu.factory.MenuFactory;
+import cn.stylefeng.roses.kernel.sys.modular.menu.factory.MenuTreeFactory;
 import cn.stylefeng.roses.kernel.sys.modular.menu.factory.MenuValidateFactory;
 import cn.stylefeng.roses.kernel.sys.modular.menu.mapper.SysMenuMapper;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.request.SysMenuRequest;
@@ -142,6 +143,21 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         menuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuName, SysMenu::getMenuParentId, SysMenu::getAppId);
         menuLambdaQueryWrapper.orderByAsc(SysMenu::getMenuSort);
         return this.list(menuLambdaQueryWrapper);
+    }
+
+    @Override
+    public void updateMenuTree(SysMenuRequest sysMenuRequest) {
+
+        // 获取被更新的应用和菜单树信息
+        Long appId = sysMenuRequest.getAppId();
+        List<SysMenu> updateTree = sysMenuRequest.getUpdateMenuTree();
+
+        // 更新树节点的菜单顺序
+        MenuTreeFactory.updateSort(updateTree, 1);
+
+        // 从新整理上下级结构
+
+
     }
 
     @Override

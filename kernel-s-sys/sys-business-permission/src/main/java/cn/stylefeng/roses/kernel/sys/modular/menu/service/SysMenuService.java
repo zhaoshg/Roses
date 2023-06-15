@@ -85,4 +85,12 @@ public interface SysMenuService extends IService<SysMenu> {
      */
     List<SysMenu> getTotalMenus();
 
+    /**
+     * 调整菜单上下级结构和菜单的顺序
+     *
+     * @author fengshuonan
+     * @since 2023/6/15 11:28
+     */
+    void updateMenuTree(SysMenuRequest sysMenuRequest);
+
 }

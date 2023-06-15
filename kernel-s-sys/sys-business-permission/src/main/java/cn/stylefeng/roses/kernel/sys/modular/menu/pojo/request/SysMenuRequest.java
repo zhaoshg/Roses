@@ -2,12 +2,15 @@ package cn.stylefeng.roses.kernel.sys.modular.menu.pojo.request;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
+import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 系统菜单封装类
@@ -56,7 +59,7 @@ public class SysMenuRequest extends BaseRequest {
     /**
      * 所属应用id
      */
-    @NotNull(message = "所属应用id不能为空", groups = {add.class})
+    @NotNull(message = "所属应用id不能为空", groups = {add.class, updateMenuTree.class})
     @ChineseDescription("所属应用id")
     private Long appId;
 
@@ -121,5 +124,18 @@ public class SysMenuRequest extends BaseRequest {
      */
     @ChineseDescription("是否可见(分离版用)：Y-是，N-否")
     private String antdvVisible;
+
+    /**
+     * 指定应用的所有菜单集合（树结构）
+     */
+    @ChineseDescription("指定应用的所有菜单集合（树结构）")
+    @NotEmpty(message = "指定应用的所有菜单集合不能为空", groups = updateMenuTree.class)
+    private List<SysMenu> updateMenuTree;
+
+    /**
+     * 参数校验分组：更新菜单树
+     */
+    public @interface updateMenuTree {
+    }
 
 }
