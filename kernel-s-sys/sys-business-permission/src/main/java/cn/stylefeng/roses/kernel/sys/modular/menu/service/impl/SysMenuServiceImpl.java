@@ -101,7 +101,15 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public SysMenu detail(SysMenuRequest sysMenuRequest) {
-        return this.querySysMenu(sysMenuRequest);
+
+        LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysMenuLambdaQueryWrapper.eq(SysMenu::getMenuId, sysMenuRequest.getMenuId());
+
+        sysMenuLambdaQueryWrapper.select(SysMenu::getAppId, SysMenu::getMenuName, SysMenu::getMenuCode, SysMenu::getMenuSort,
+                SysMenu::getMenuType, SysMenu::getAntdvComponent, SysMenu::getAntdvRouter, SysMenu::getAntdvVisible,
+                SysMenu::getAntdvActiveUrl, SysMenu::getAntdvLinkUrl, SysMenu::getAntdvIcon);
+
+        return this.getOne(sysMenuLambdaQueryWrapper, false);
     }
 
     @Override
@@ -229,12 +237,16 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             return SymbolConstant.LEFT_SQUARE_BRACKETS + TreeConstants.DEFAULT_PARENT_ID + SymbolConstant.RIGHT_SQUARE_BRACKETS + SymbolConstant.COMMA;
         } else {
             //获取父菜单
-            SysMenuRequest sysMenuRequest = new SysMenuRequest();
-            sysMenuRequest.setMenuId(pid);
-            SysMenu parentMenu = this.querySysMenu(sysMenuRequest);
-
-            // 组装pids
-            return parentMenu.getMenuPids() + SymbolConstant.LEFT_SQUARE_BRACKETS + pid + SymbolConstant.RIGHT_SQUARE_BRACKETS + SymbolConstant.COMMA;
+            LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            sysMenuLambdaQueryWrapper.eq(SysMenu::getMenuId, pid);
+            sysMenuLambdaQueryWrapper.select(SysMenu::getMenuPids);
+            SysMenu parentMenu = this.getOne(sysMenuLambdaQueryWrapper, false);
+            if (parentMenu == null) {
+                return SymbolConstant.LEFT_SQUARE_BRACKETS + TreeConstants.DEFAULT_PARENT_ID + SymbolConstant.RIGHT_SQUARE_BRACKETS + SymbolConstant.COMMA;
+            } else {
+                // 组装pids
+                return parentMenu.getMenuPids() + SymbolConstant.LEFT_SQUARE_BRACKETS + pid + SymbolConstant.RIGHT_SQUARE_BRACKETS + SymbolConstant.COMMA;
+            }
         }
     }
 
