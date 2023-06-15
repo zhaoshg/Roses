@@ -31,17 +31,24 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.system.api.UserOrgServiceApi;
 import cn.stylefeng.roses.kernel.system.api.exception.SystemModularException;
 import cn.stylefeng.roses.kernel.system.api.exception.enums.organization.PositionExceptionEnum;
+import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrPositionDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrPositionRequest;
+import cn.stylefeng.roses.kernel.system.modular.organization.service.HrOrganizationService;
 import cn.stylefeng.roses.kernel.system.modular.position.entity.HrPosition;
 import cn.stylefeng.roses.kernel.system.modular.position.mapper.HrPositionMapper;
+import cn.stylefeng.roses.kernel.system.modular.position.pojo.DutyItem;
+import cn.stylefeng.roses.kernel.system.modular.position.pojo.ExpandDutyInfo;
 import cn.stylefeng.roses.kernel.system.modular.position.service.HrPositionService;
+import cn.stylefeng.roses.kernel.system.modular.user.entity.SysUser;
+import cn.stylefeng.roses.kernel.system.modular.user.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -50,6 +57,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 系统职位表 服务实现类
@@ -62,6 +70,12 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
 
     @Resource
     private UserOrgServiceApi userOrgServiceApi;
+
+    @Resource
+    private SysUserService sysUserService;
+
+    @Resource
+    private HrOrganizationService hrOrganizationService;
 
     @Override
     public void add(HrPositionRequest hrPositionRequest) {
@@ -128,6 +142,51 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
             HrPositionRequest tempRequest = new HrPositionRequest();
             tempRequest.setPositionId(userId);
             this.del(tempRequest);
+        }
+    }
+
+    @Override
+    public void fillDutyInfo(Long userId, List<HrOrganizationDTO> results) {
+
+        // 获取用户拓展字段中的职务信息
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
+        sysUserLambdaQueryWrapper.select(BaseExpandFieldEntity::getExpandField);
+        SysUser currentUser = this.sysUserService.getOne(sysUserLambdaQueryWrapper, false);
+        Map<String, Object> expandField = currentUser.getExpandField();
+
+        if (ObjectUtil.isEmpty(expandField)) {
+            return;
+        }
+
+        // 获取职务的信息包装
+        ExpandDutyInfo expandDutyInfo = BeanUtil.mapToBean(expandField, ExpandDutyInfo.class, false, CopyOptions.create().ignoreError());
+
+        // 多组织的职务列表
+        List<DutyItem> ptDuty = expandDutyInfo.getPtDuty();
+
+        // 如果多组织列表为空，则直接返回默认的职务名称
+        if (ObjectUtil.isEmpty(ptDuty)) {
+            for (HrOrganizationDTO result : results) {
+                result.setPositionName(expandDutyInfo.getDuty());
+            }
+        }
+
+        // 多组织的职务列表不为空，则获取职务的masterOrgId对应的公司id
+        for (DutyItem dutyItem : ptDuty) {
+
+            String masterOrgId = dutyItem.getOrgId();
+            Long masterOrgIdCompanyId = this.hrOrganizationService.getMasterOrgIdCompanyId(masterOrgId);
+            if (masterOrgIdCompanyId == null) {
+                continue;
+            }
+
+            // 遍历参数的组织机构列表，填充职务名称
+            for (HrOrganizationDTO result : results) {
+                if (result.getOrgId().equals(masterOrgIdCompanyId)) {
+                    result.setPositionName(dutyItem.getDutyName());
+                }
+            }
         }
     }
 

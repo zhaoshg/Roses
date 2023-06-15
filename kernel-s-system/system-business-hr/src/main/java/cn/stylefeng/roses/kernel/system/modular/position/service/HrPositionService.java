@@ -26,6 +26,7 @@ package cn.stylefeng.roses.kernel.system.modular.position.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.system.api.PositionServiceApi;
+import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrPositionRequest;
 import cn.stylefeng.roses.kernel.system.modular.position.entity.HrPosition;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -114,5 +115,13 @@ public interface HrPositionService extends IService<HrPosition>, PositionService
      * @since 2021/4/8 13:51
      */
     void batchDel(HrPositionRequest hrPositionRequest);
+
+    /**
+     * 填充用户的职务信息
+     *
+     * @author fengshuonan
+     * @since 2023/6/15 16:58
+     */
+    void fillDutyInfo(Long userId, List<HrOrganizationDTO> results);
 
 }
