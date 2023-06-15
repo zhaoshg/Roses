@@ -61,10 +61,7 @@ public class RoleBindTotalImpl implements RoleAssignOperateAction {
         if (roleBindPermissionRequest.getChecked()) {
 
             // 获取所有的菜单
-            LambdaQueryWrapper<SysMenu> menuLambdaQueryWrapper = new LambdaQueryWrapper<>();
-            menuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuName, SysMenu::getMenuParentId, SysMenu::getAppId);
-            menuLambdaQueryWrapper.orderByAsc(SysMenu::getMenuSort);
-            List<SysMenu> totalMenus = this.sysMenuService.list(menuLambdaQueryWrapper);
+            List<SysMenu> totalMenus = this.sysMenuService.getTotalMenus();
 
             // 绑定角色的所有菜单
             List<SysRoleMenu> sysRoleMenuList = new ArrayList<>();

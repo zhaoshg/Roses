@@ -77,4 +77,12 @@ public interface SysMenuService extends IService<SysMenu> {
      */
     Long getMenuAppId(Long menuId);
 
+    /**
+     * 获取所有的菜单信息，用在角色绑定权限界面
+     *
+     * @author fengshuonan
+     * @since 2023/6/15 9:24
+     */
+    List<SysMenu> getTotalMenus();
+
 }

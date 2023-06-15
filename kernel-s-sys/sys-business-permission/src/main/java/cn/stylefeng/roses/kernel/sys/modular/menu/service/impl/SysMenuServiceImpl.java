@@ -92,6 +92,14 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
+    public List<SysMenu> getTotalMenus() {
+        LambdaQueryWrapper<SysMenu> menuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        menuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuName, SysMenu::getMenuParentId, SysMenu::getAppId);
+        menuLambdaQueryWrapper.orderByAsc(SysMenu::getMenuSort);
+        return this.list(menuLambdaQueryWrapper);
+    }
+
+    @Override
     public List<AppGroupDetail> getAppMenuGroupDetail(SysMenuRequest sysMenuRequest) {
 
         // 1. 获取所有应用列表
@@ -106,7 +114,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         // 2. 获取应用对应的所有菜单
         LambdaQueryWrapper<SysMenu> wrapper = this.createWrapper(sysMenuRequest);
         wrapper.in(SysMenu::getAppId, totalAppIds);
-        wrapper.select(SysMenu::getMenuId, SysMenu::getMenuParentId, SysMenu::getMenuPids, SysMenu::getMenuName, SysMenu::getAppId, SysMenu::getMenuType);
+        wrapper.select(SysMenu::getMenuId, SysMenu::getMenuParentId, SysMenu::getMenuPids, SysMenu::getMenuName, SysMenu::getAppId,
+                SysMenu::getMenuType);
         List<SysMenu> sysMenuList = this.list(wrapper);
         if (ObjectUtil.isEmpty(sysMenuList)) {
             return appList;
@@ -118,7 +127,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             if (ObjectUtil.isNotEmpty(menuParentIds)) {
                 LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
                 queryWrapper.in(SysMenu::getMenuId, menuParentIds);
-                queryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuParentId, SysMenu::getMenuPids, SysMenu::getMenuName, SysMenu::getAppId, SysMenu::getMenuType);
+                queryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuParentId, SysMenu::getMenuPids, SysMenu::getMenuName,
+                        SysMenu::getAppId, SysMenu::getMenuType);
                 queryWrapper.orderByAsc(SysMenu::getMenuSort);
                 List<SysMenu> parentMenus = this.list(queryWrapper);
                 sysMenuList.addAll(parentMenus);
