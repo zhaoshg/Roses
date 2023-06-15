@@ -13,11 +13,13 @@ import cn.stylefeng.roses.kernel.sys.modular.menu.factory.MenuOptionsValidateFac
 import cn.stylefeng.roses.kernel.sys.modular.menu.mapper.SysMenuOptionsMapper;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.request.SysMenuOptionsRequest;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
+import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 
@@ -31,16 +33,22 @@ import java.util.Set;
 public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper, SysMenuOptions> implements SysMenuOptionsService,
         RemoveMenuCallbackApi {
 
+    @Resource
+    private SysMenuService sysMenuService;
+
     @Override
     public void add(SysMenuOptionsRequest sysMenuOptionsRequest) {
 
         // 同菜单下功能名称和编码不能重复
         MenuOptionsValidateFactory.validateMenuOptionsParam(sysMenuOptionsRequest);
 
-        // 获取菜单的应用id
-
         SysMenuOptions sysMenuOptions = new SysMenuOptions();
         BeanUtil.copyProperties(sysMenuOptionsRequest, sysMenuOptions);
+
+        // 获取菜单的应用id
+        Long appId = sysMenuService.getMenuAppId(sysMenuOptionsRequest.getMenuId());
+        sysMenuOptions.setAppId(appId);
+
         this.save(sysMenuOptions);
     }
 
