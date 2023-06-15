@@ -36,6 +36,7 @@ import cn.stylefeng.roses.kernel.system.api.exception.enums.user.SysUserOrgExcep
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.SysUserOrgDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.request.UserOrgRequest;
+import cn.stylefeng.roses.kernel.system.modular.position.service.HrPositionService;
 import cn.stylefeng.roses.kernel.system.modular.user.entity.SysUserOrg;
 import cn.stylefeng.roses.kernel.system.modular.user.mapper.SysUserOrgMapper;
 import cn.stylefeng.roses.kernel.system.modular.user.service.SysUserOrgService;
@@ -65,6 +66,9 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
 
     @Resource
     private OrganizationServiceApi organizationServiceApi;
+
+    @Resource
+    private HrPositionService hrPositionService;
 
     @Override
     public SysUserOrgDTO getUserOrgByUserId(Long userId) {
@@ -248,6 +252,9 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
                 results.add(companyInfo);
             }
         }
+
+        // 填充职务信息
+        hrPositionService.fillDutyInfo(loginUser.getUserId(), results);
 
         return results;
     }
