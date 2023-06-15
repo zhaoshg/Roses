@@ -33,8 +33,7 @@ import java.util.Set;
  * @date 2023/06/10 21:29
  */
 @Service
-public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOptionsMapper, SysRoleMenuOptions> implements
-        SysRoleMenuOptionsService, RemoveRoleCallbackApi, RoleAssignOperateAction, RemoveMenuCallbackApi {
+public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOptionsMapper, SysRoleMenuOptions> implements SysRoleMenuOptionsService, RemoveRoleCallbackApi, RoleAssignOperateAction, RemoveMenuCallbackApi {
 
     @Override
     public void add(SysRoleMenuOptionsRequest sysRoleMenuOptionsRequest) {
@@ -66,6 +65,13 @@ public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOption
         LambdaQueryWrapper<SysRoleMenuOptions> wrapper = createWrapper(sysRoleMenuOptionsRequest);
         Page<SysRoleMenuOptions> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
+    }
+
+    @Override
+    public void removeRoleBindOptions(Long optionsId) {
+        LambdaQueryWrapper<SysRoleMenuOptions> sysRoleMenuOptionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleMenuOptionsLambdaQueryWrapper.eq(SysRoleMenuOptions::getMenuOptionId, optionsId);
+        this.remove(sysRoleMenuOptionsLambdaQueryWrapper);
     }
 
     @Override

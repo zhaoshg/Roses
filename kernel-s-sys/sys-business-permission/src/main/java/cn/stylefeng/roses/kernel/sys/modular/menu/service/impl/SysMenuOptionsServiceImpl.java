@@ -14,10 +14,12 @@ import cn.stylefeng.roses.kernel.sys.modular.menu.mapper.SysMenuOptionsMapper;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.request.SysMenuOptionsRequest;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
+import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -30,11 +32,13 @@ import java.util.Set;
  * @date 2023/06/10 21:28
  */
 @Service
-public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper, SysMenuOptions> implements SysMenuOptionsService,
-        RemoveMenuCallbackApi {
+public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper, SysMenuOptions> implements SysMenuOptionsService, RemoveMenuCallbackApi {
 
     @Resource
     private SysMenuService sysMenuService;
+
+    @Resource
+    private SysRoleMenuOptionsService sysRoleMenuOptionsService;
 
     @Override
     public void add(SysMenuOptionsRequest sysMenuOptionsRequest) {
@@ -53,9 +57,14 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void del(SysMenuOptionsRequest sysMenuOptionsRequest) {
+
         SysMenuOptions sysMenuOptions = this.querySysMenuOptions(sysMenuOptionsRequest);
         this.removeById(sysMenuOptions.getMenuOptionId());
+
+        // 删除角色绑定的功能关联
+        sysRoleMenuOptionsService.removeRoleBindOptions(sysMenuOptionsRequest.getMenuOptionId());
     }
 
     @Override

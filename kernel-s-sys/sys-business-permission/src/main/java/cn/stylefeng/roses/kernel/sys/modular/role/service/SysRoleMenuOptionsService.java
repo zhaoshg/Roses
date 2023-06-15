@@ -71,4 +71,12 @@ public interface SysRoleMenuOptionsService extends IService<SysRoleMenuOptions> 
      */
     PageResult<SysRoleMenuOptions> findPage(SysRoleMenuOptionsRequest sysRoleMenuOptionsRequest);
 
+    /**
+     * 删除角色绑定的菜单功能
+     *
+     * @author fengshuonan
+     * @since 2023/6/15 23:38
+     */
+    void removeRoleBindOptions(Long optionsId);
+
 }
