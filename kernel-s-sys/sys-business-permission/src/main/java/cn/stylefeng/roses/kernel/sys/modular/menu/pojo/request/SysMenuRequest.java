@@ -59,7 +59,7 @@ public class SysMenuRequest extends BaseRequest {
     /**
      * 所属应用id
      */
-    @NotNull(message = "所属应用id不能为空", groups = {add.class, updateMenuTree.class})
+    @NotNull(message = "所属应用id不能为空", groups = {add.class})
     @ChineseDescription("所属应用id")
     private Long appId;
 
