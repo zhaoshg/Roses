@@ -147,6 +147,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateMenuTree(SysMenuRequest sysMenuRequest) {
 
         // 获取被更新的应用和菜单树信息
