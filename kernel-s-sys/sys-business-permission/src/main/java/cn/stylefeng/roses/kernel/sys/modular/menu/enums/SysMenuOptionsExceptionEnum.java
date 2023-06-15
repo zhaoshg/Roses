@@ -16,7 +16,17 @@ public enum SysMenuOptionsExceptionEnum implements AbstractExceptionEnum {
     /**
      * 查询结果不存在
      */
-    SYS_MENU_OPTIONS_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE +  "10001", "查询结果不存在");
+    SYS_MENU_OPTIONS_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10001", "查询结果不存在"),
+
+    /**
+     * 同菜单下功能编码不能重复
+     */
+    OPTIONS_CODE_REPEAT(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "同菜单下功能编码不能重复"),
+
+    /**
+     * 同菜单下功能名称不能重复
+     */
+    OPTIONS_NAME_REPEAT(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10003", "同菜单下功能名称不能重复");
 
     /**
      * 错误编码

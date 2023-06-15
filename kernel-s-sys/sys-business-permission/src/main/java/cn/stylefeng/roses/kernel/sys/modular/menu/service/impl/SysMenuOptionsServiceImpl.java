@@ -9,6 +9,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.menu.enums.SysMenuOptionsExceptionEnum;
+import cn.stylefeng.roses.kernel.sys.modular.menu.factory.MenuOptionsValidateFactory;
 import cn.stylefeng.roses.kernel.sys.modular.menu.mapper.SysMenuOptionsMapper;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.request.SysMenuOptionsRequest;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
@@ -32,6 +33,12 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
 
     @Override
     public void add(SysMenuOptionsRequest sysMenuOptionsRequest) {
+
+        // 同菜单下功能名称和编码不能重复
+        MenuOptionsValidateFactory.validateMenuOptionsParam(sysMenuOptionsRequest);
+
+        // 获取菜单的应用id
+
         SysMenuOptions sysMenuOptions = new SysMenuOptions();
         BeanUtil.copyProperties(sysMenuOptionsRequest, sysMenuOptions);
         this.save(sysMenuOptions);
