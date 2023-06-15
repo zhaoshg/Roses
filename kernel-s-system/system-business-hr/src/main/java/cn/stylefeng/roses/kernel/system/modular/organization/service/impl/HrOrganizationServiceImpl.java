@@ -520,6 +520,31 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     @Override
+    public Long getMasterOrgIdCompanyId(String masterOrgId) {
+
+        // 获取第三方公司对应的本系统机构id
+        LambdaQueryWrapper<HrOrganization> hrOrganizationLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        hrOrganizationLambdaQueryWrapper.eq(HrOrganization::getMasterOrgId, masterOrgId);
+        hrOrganizationLambdaQueryWrapper.select(HrOrganization::getOrgId);
+        HrOrganization hrOrganization = this.getOne(hrOrganizationLambdaQueryWrapper, false);
+
+        if (hrOrganization == null) {
+            return null;
+        }
+
+        Long orgId = hrOrganization.getOrgId();
+
+        // 获取组织机构对应的公司id
+        HrOrganizationDTO companyInfo = this.getOrgCompanyInfo(orgId);
+
+        if (companyInfo == null) {
+            return null;
+        }
+
+        return companyInfo.getOrgId();
+    }
+
+    @Override
     public HomeCompanyInfo getHomeCompanyInfo() {
         HomeCompanyInfo homeCompanyInfo = new HomeCompanyInfo();
 

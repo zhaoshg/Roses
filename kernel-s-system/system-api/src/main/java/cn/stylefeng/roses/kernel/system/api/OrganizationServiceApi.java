@@ -103,4 +103,12 @@ public interface OrganizationServiceApi {
      */
     HrOrganizationDTO getOrgCompanyInfo(Long orgId);
 
+    /**
+     * 获取第三方机构id，对应的本系统公司id
+     *
+     * @author fengshuonan
+     * @since 2023/6/15 17:05
+     */
+    Long getMasterOrgIdCompanyId(String masterOrgId);
+
 }
