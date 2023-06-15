@@ -83,8 +83,19 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public void edit(SysMenuRequest sysMenuRequest) {
+
+        // 无法修改上下级结构（使用拖拽接口比修改接口更方便）
+        sysMenuRequest.setMenuParentId(null);
+
+        // 无法修改菜单的所属应用
+        sysMenuRequest.setAppId(null);
+
+        // 校验参数合法性
+        MenuValidateFactory.validateAddMenuParam(sysMenuRequest);
+
         SysMenu sysMenu = this.querySysMenu(sysMenuRequest);
         BeanUtil.copyProperties(sysMenuRequest, sysMenu);
+
         this.updateById(sysMenu);
     }
 
