@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuResource;
 import cn.stylefeng.roses.kernel.sys.modular.menu.enums.SysMenuResourceExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.menu.mapper.SysMenuResourceMapper;
@@ -17,6 +18,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 菜单资源绑定业务实现层
@@ -25,9 +27,10 @@ import java.util.List;
  * @date 2023/06/10 21:28
  */
 @Service
-public class SysMenuResourceServiceImpl extends ServiceImpl<SysMenuResourceMapper, SysMenuResource> implements SysMenuResourceService {
+public class SysMenuResourceServiceImpl extends ServiceImpl<SysMenuResourceMapper, SysMenuResource> implements SysMenuResourceService,
+        RemoveMenuCallbackApi {
 
-	@Override
+    @Override
     public void add(SysMenuResourceRequest sysMenuResourceRequest) {
         SysMenuResource sysMenuResource = new SysMenuResource();
         BeanUtil.copyProperties(sysMenuResourceRequest, sysMenuResource);
@@ -65,6 +68,13 @@ public class SysMenuResourceServiceImpl extends ServiceImpl<SysMenuResourceMappe
         return this.list(wrapper);
     }
 
+    @Override
+    public void removeMenuAction(Set<Long> beRemovedMenuIdList) {
+        LambdaQueryWrapper<SysMenuResource> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysMenuResource::getBusinessId, beRemovedMenuIdList);
+        this.remove(queryWrapper);
+    }
+
     /**
      * 获取信息
      *
@@ -87,19 +97,6 @@ public class SysMenuResourceServiceImpl extends ServiceImpl<SysMenuResourceMappe
      */
     private LambdaQueryWrapper<SysMenuResource> createWrapper(SysMenuResourceRequest sysMenuResourceRequest) {
         LambdaQueryWrapper<SysMenuResource> queryWrapper = new LambdaQueryWrapper<>();
-
-        Long menuResourceId = sysMenuResourceRequest.getMenuResourceId();
-        Integer businessType = sysMenuResourceRequest.getBusinessType();
-        Long businessId = sysMenuResourceRequest.getBusinessId();
-        String resourceCode = sysMenuResourceRequest.getResourceCode();
-        Long tenantId = sysMenuResourceRequest.getTenantId();
-
-        queryWrapper.eq(ObjectUtil.isNotNull(menuResourceId), SysMenuResource::getMenuResourceId, menuResourceId);
-        queryWrapper.eq(ObjectUtil.isNotNull(businessType), SysMenuResource::getBusinessType, businessType);
-        queryWrapper.eq(ObjectUtil.isNotNull(businessId), SysMenuResource::getBusinessId, businessId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(resourceCode), SysMenuResource::getResourceCode, resourceCode);
-        queryWrapper.eq(ObjectUtil.isNotNull(tenantId), SysMenuResource::getTenantId, tenantId);
-
         return queryWrapper;
     }
 

@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.menu.enums.SysMenuOptionsExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.menu.mapper.SysMenuOptionsMapper;
@@ -17,6 +18,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 菜单下的功能操作业务实现层
@@ -25,9 +27,10 @@ import java.util.List;
  * @date 2023/06/10 21:28
  */
 @Service
-public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper, SysMenuOptions> implements SysMenuOptionsService {
+public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper, SysMenuOptions> implements SysMenuOptionsService,
+        RemoveMenuCallbackApi {
 
-	@Override
+    @Override
     public void add(SysMenuOptionsRequest sysMenuOptionsRequest) {
         SysMenuOptions sysMenuOptions = new SysMenuOptions();
         BeanUtil.copyProperties(sysMenuOptionsRequest, sysMenuOptions);
@@ -65,6 +68,13 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
         return this.list(wrapper);
     }
 
+    @Override
+    public void removeMenuAction(Set<Long> beRemovedMenuIdList) {
+        LambdaQueryWrapper<SysMenuOptions> menuOptionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        menuOptionsLambdaQueryWrapper.in(SysMenuOptions::getMenuId, beRemovedMenuIdList);
+        this.remove(menuOptionsLambdaQueryWrapper);
+    }
+
     /**
      * 获取信息
      *
@@ -88,17 +98,9 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
     private LambdaQueryWrapper<SysMenuOptions> createWrapper(SysMenuOptionsRequest sysMenuOptionsRequest) {
         LambdaQueryWrapper<SysMenuOptions> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long menuOptionId = sysMenuOptionsRequest.getMenuOptionId();
+        // 根据菜单id查询
         Long menuId = sysMenuOptionsRequest.getMenuId();
-        String optionName = sysMenuOptionsRequest.getOptionName();
-        String optionCode = sysMenuOptionsRequest.getOptionCode();
-        Long tenantId = sysMenuOptionsRequest.getTenantId();
-
-        queryWrapper.eq(ObjectUtil.isNotNull(menuOptionId), SysMenuOptions::getMenuOptionId, menuOptionId);
         queryWrapper.eq(ObjectUtil.isNotNull(menuId), SysMenuOptions::getMenuId, menuId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(optionName), SysMenuOptions::getOptionName, optionName);
-        queryWrapper.like(ObjectUtil.isNotEmpty(optionCode), SysMenuOptions::getOptionCode, optionCode);
-        queryWrapper.eq(ObjectUtil.isNotNull(tenantId), SysMenuOptions::getTenantId, tenantId);
 
         return queryWrapper;
     }

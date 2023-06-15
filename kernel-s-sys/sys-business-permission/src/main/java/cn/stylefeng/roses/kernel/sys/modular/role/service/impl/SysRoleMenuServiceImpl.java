@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
@@ -40,7 +41,8 @@ import java.util.stream.Collectors;
  * @date 2023/06/10 21:29
  */
 @Service
-public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements SysRoleMenuService, RemoveRoleCallbackApi, RoleAssignOperateAction {
+public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements SysRoleMenuService,
+        RemoveRoleCallbackApi, RoleAssignOperateAction, RemoveMenuCallbackApi {
 
     @Resource
     private SysMenuOptionsService sysMenuOptionsService;
@@ -128,7 +130,8 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         // 3. 先删除已经绑定的所有角色和功能的绑定
         LambdaQueryWrapper<SysRoleMenuOptions> roleMenuOptionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
         roleMenuOptionsLambdaQueryWrapper.eq(SysRoleMenuOptions::getRoleId, roleId);
-        roleMenuOptionsLambdaQueryWrapper.in(SysRoleMenuOptions::getMenuOptionId, totalMenuOptions.stream().map(SysMenuOptions::getMenuOptionId).collect(Collectors.toSet()));
+        roleMenuOptionsLambdaQueryWrapper.in(SysRoleMenuOptions::getMenuOptionId,
+                totalMenuOptions.stream().map(SysMenuOptions::getMenuOptionId).collect(Collectors.toSet()));
         sysRoleMenuOptionsService.remove(roleMenuOptionsLambdaQueryWrapper);
 
         // 4. 如果是选中状态，则从新进行这些角色和功能的绑定
@@ -147,6 +150,13 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
         // 5. 根据菜单下的资源信息，封装返回结果
         return PermissionAssignResultFactory.createRoleBindMenuResult(totalMenuOptions, roleBindPermissionRequest.getChecked());
+    }
+
+    @Override
+    public void removeMenuAction(Set<Long> beRemovedMenuIdList) {
+        LambdaQueryWrapper<SysRoleMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysRoleMenu::getMenuId, beRemovedMenuIdList);
+        this.remove(queryWrapper);
     }
 
     /**

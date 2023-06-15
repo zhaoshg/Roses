@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleAssignOperateAction;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenuOptions;
@@ -33,7 +34,7 @@ import java.util.Set;
  */
 @Service
 public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOptionsMapper, SysRoleMenuOptions> implements
-        SysRoleMenuOptionsService, RemoveRoleCallbackApi, RoleAssignOperateAction {
+        SysRoleMenuOptionsService, RemoveRoleCallbackApi, RoleAssignOperateAction, RemoveMenuCallbackApi {
 
     @Override
     public void add(SysRoleMenuOptionsRequest sysRoleMenuOptionsRequest) {
@@ -109,6 +110,13 @@ public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOption
         }
 
         return null;
+    }
+
+    @Override
+    public void removeMenuAction(Set<Long> beRemovedMenuIdList) {
+        LambdaQueryWrapper<SysRoleMenuOptions> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysRoleMenuOptions::getMenuId, beRemovedMenuIdList);
+        this.remove(queryWrapper);
     }
 
     /**
