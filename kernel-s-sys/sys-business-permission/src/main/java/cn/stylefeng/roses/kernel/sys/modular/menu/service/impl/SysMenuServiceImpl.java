@@ -3,9 +3,12 @@ package cn.stylefeng.roses.kernel.sys.modular.menu.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.rule.constants.SymbolConstant;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.enums.SysMenuExceptionEnum;
@@ -18,10 +21,12 @@ import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,6 +41,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Resource
     private SysAppService sysAppService;
+
+    @Resource
+    private DbOperatorApi dbOperatorApi;
 
     @Override
     public void add(SysMenuRequest sysMenuRequest) {
@@ -54,9 +62,23 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void del(SysMenuRequest sysMenuRequest) {
-        SysMenu sysMenu = this.querySysMenu(sysMenuRequest);
-        this.removeById(sysMenu.getMenuId());
+
+        Long menuId = sysMenuRequest.getMenuId();
+
+        // 获取所有子级的菜单id
+        Set<Long> totalMenuIds = this.dbOperatorApi.findSubListByParentId("sys_menu", "menu_pids", "menu_id", menuId);
+        totalMenuIds.add(menuId);
+
+        // 删除菜单
+        this.removeByIds(totalMenuIds);
+
+        // 删除菜单下面关联的其他业务关联表
+        Map<String, RemoveMenuCallbackApi> removeMenuCallbackApiMap = SpringUtil.getBeansOfType(RemoveMenuCallbackApi.class);
+        for (RemoveMenuCallbackApi removeMenuCallbackApi : removeMenuCallbackApiMap.values()) {
+            removeMenuCallbackApi.removeMenuAction(totalMenuIds);
+        }
     }
 
     @Override
