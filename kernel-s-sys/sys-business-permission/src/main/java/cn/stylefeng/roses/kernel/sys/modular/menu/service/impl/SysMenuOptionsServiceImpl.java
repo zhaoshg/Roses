@@ -69,6 +69,10 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
 
     @Override
     public void edit(SysMenuOptionsRequest sysMenuOptionsRequest) {
+
+        // 同菜单下功能名称和编码不能重复
+        MenuOptionsValidateFactory.validateMenuOptionsParam(sysMenuOptionsRequest);
+
         SysMenuOptions sysMenuOptions = this.querySysMenuOptions(sysMenuOptionsRequest);
         BeanUtil.copyProperties(sysMenuOptionsRequest, sysMenuOptions);
         this.updateById(sysMenuOptions);
