@@ -29,7 +29,7 @@ public class SysMenuRequest extends BaseRequest {
     /**
      * 父id，如果没有父级，则父级id为-1
      */
-    @NotNull(message = "父id，顶级节点的父id是-1不能为空", groups = {add.class, edit.class})
+    @NotNull(message = "父id，顶级节点的父id是-1不能为空", groups = {add.class})
     @ChineseDescription("父id，顶级节点的父id是-1")
     private Long menuParentId;
 
@@ -56,7 +56,7 @@ public class SysMenuRequest extends BaseRequest {
     /**
      * 所属应用id
      */
-    @NotNull(message = "所属应用id不能为空", groups = {add.class, edit.class})
+    @NotNull(message = "所属应用id不能为空", groups = {add.class})
     @ChineseDescription("所属应用id")
     private Long appId;
 
