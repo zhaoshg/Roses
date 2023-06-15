@@ -21,7 +21,27 @@ public enum SysMenuExceptionEnum implements AbstractExceptionEnum {
     /**
      * 当前应用下菜单编码存在重复，请更换编码
      */
-    MENU_CODE_REPEAT(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "当前应用下菜单编码存在重复，请更换编码");
+    MENU_CODE_REPEAT(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "当前应用下菜单编码存在重复，请更换编码"),
+
+    /**
+     * 路由地址不能为空
+     */
+    URL_CANT_EMPTY(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10003", "路由地址不能为空"),
+
+    /**
+     * 组件代码路径不能为空
+     */
+    COMPONENT_PATH_CANT_EMPTY(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10004", "组件代码路径不能为空"),
+
+    /**
+     * 是否隐藏不能为空
+     */
+    HIDDEN_FLAG_CANT_EMPTY(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10005", "是否隐藏不能为空"),
+
+    /**
+     * 链接地址不能为空
+     */
+    LINK_URL_CANT_EMPTY(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10006", "链接地址不能为空");
 
     /**
      * 错误编码

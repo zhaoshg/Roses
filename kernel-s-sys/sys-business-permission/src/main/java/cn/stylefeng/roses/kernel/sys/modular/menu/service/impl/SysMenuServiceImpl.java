@@ -3,6 +3,8 @@ package cn.stylefeng.roses.kernel.sys.modular.menu.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.stylefeng.roses.kernel.rule.constants.SymbolConstant;
+import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
@@ -45,6 +47,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         BeanUtil.copyProperties(sysMenuRequest, sysMenu);
 
         // 组装pids集合
+        String pids = this.createPids(sysMenuRequest.getMenuParentId());
+        sysMenu.setMenuPids(pids);
 
         this.save(sysMenu);
     }
@@ -175,6 +179,30 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         queryWrapper.orderByAsc(SysMenu::getMenuSort);
 
         return queryWrapper;
+    }
+
+    /**
+     * 创建pids的值
+     * <p>
+     * 如果pid是顶级节点，pids = 【[-1],】
+     * <p>
+     * 如果pid不是顶级节点，pids = 【父菜单的pids,[pid],】
+     *
+     * @author fengshuonan
+     * @since 2023/6/15 10:09
+     */
+    private String createPids(Long pid) {
+        if (pid.equals(TreeConstants.DEFAULT_PARENT_ID)) {
+            return SymbolConstant.LEFT_SQUARE_BRACKETS + TreeConstants.DEFAULT_PARENT_ID + SymbolConstant.RIGHT_SQUARE_BRACKETS + SymbolConstant.COMMA;
+        } else {
+            //获取父菜单
+            SysMenuRequest sysMenuRequest = new SysMenuRequest();
+            sysMenuRequest.setMenuId(pid);
+            SysMenu parentMenu = this.querySysMenu(sysMenuRequest);
+
+            // 组装pids
+            return parentMenu.getMenuPids() + SymbolConstant.LEFT_SQUARE_BRACKETS + pid + SymbolConstant.RIGHT_SQUARE_BRACKETS + SymbolConstant.COMMA;
+        }
     }
 
 }
