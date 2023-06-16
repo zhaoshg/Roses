@@ -24,8 +24,8 @@
  */
 package cn.stylefeng.roses.kernel.system.modular.user.mapper;
 
+import cn.stylefeng.roses.kernel.db.mp.injector.CustomBaseMapper;
 import cn.stylefeng.roses.kernel.system.modular.user.entity.SysUserRole;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -36,7 +36,7 @@ import java.util.List;
  * @author luojie
  * @since 2020/11/6 14:50
  */
-public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
+public interface SysUserRoleMapper extends CustomBaseMapper<SysUserRole> {
 
     /**
      * 获取用户的管理员角色列表

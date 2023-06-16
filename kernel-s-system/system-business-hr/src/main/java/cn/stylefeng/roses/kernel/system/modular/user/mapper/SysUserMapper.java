@@ -24,10 +24,10 @@
  */
 package cn.stylefeng.roses.kernel.system.modular.user.mapper;
 
+import cn.stylefeng.roses.kernel.db.mp.injector.CustomBaseMapper;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.SysUserDTO;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.request.SysUserRequest;
 import cn.stylefeng.roses.kernel.system.modular.user.entity.SysUser;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
@@ -39,7 +39,7 @@ import java.util.List;
  * @author luojie
  * @since 2020/11/6 14:50
  */
-public interface SysUserMapper extends BaseMapper<SysUser> {
+public interface SysUserMapper extends CustomBaseMapper<SysUser> {
 
     /**
      * 查询用户列表
