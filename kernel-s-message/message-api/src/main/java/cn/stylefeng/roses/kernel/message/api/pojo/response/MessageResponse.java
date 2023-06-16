@@ -29,8 +29,7 @@ import cn.stylefeng.roses.kernel.message.api.enums.MessagePriorityLevelEnum;
 import cn.stylefeng.roses.kernel.message.api.enums.MessageReadFlagEnum;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
-import cn.stylefeng.roses.kernel.system.api.format.UserFormatProcess;
-import com.baomidou.mybatisplus.annotation.TableField;
+import cn.stylefeng.roses.kernel.sys.api.format.UserNameFormatProcess;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -63,7 +62,7 @@ public class MessageResponse implements Serializable {
      * 发送用户id
      */
     @ChineseDescription("发送用户id")
-    @SimpleFieldFormat(processClass = UserFormatProcess.class)
+    @SimpleFieldFormat(processClass = UserNameFormatProcess.class)
     private Long sendUserId;
 
     /**
