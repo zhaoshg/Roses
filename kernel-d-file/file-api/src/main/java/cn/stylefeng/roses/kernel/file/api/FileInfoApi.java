@@ -106,4 +106,13 @@ public interface FileInfoApi {
      */
     SysFileInfoResponse uploadFileAndSave(File file, SysFileInfoRequest sysFileInfoRequest);
 
+    /**
+     * 删除文件信息（真删除文件信息）
+     *
+     * @param sysFileInfoRequest 删除参数
+     * @author fengshuonan
+     * @since 2020/11/29 13:44
+     */
+    void deleteReally(SysFileInfoRequest sysFileInfoRequest);
+
 }

@@ -25,6 +25,7 @@
 package cn.stylefeng.roses.kernel.file.modular.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
 import cn.stylefeng.roses.kernel.file.api.pojo.request.SysFileInfoRequest;
 import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoListResponse;
 import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoResponse;
@@ -41,7 +42,7 @@ import java.util.List;
  * @author stylefeng
  * @since 2020/6/7 22:15
  */
-public interface SysFileInfoService extends IService<SysFileInfo> {
+public interface SysFileInfoService extends IService<SysFileInfo>, FileInfoApi {
 
     /**
      * 获取文件信息结果集
@@ -83,15 +84,6 @@ public interface SysFileInfoService extends IService<SysFileInfo> {
      * @since 2020/11/29 13:39
      */
     void download(SysFileInfoRequest sysFileInfoRequest, HttpServletResponse response);
-
-    /**
-     * 删除文件信息（真删除文件信息）
-     *
-     * @param sysFileInfoRequest 删除参数
-     * @author fengshuonan
-     * @since 2020/11/29 13:44
-     */
-    void deleteReally(SysFileInfoRequest sysFileInfoRequest);
 
     /**
      * 分页查询文件信息表

@@ -34,7 +34,6 @@ import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
 import cn.stylefeng.roses.kernel.file.api.FileOperatorApi;
 import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
 import cn.stylefeng.roses.kernel.file.api.enums.FileLocationEnum;
@@ -89,7 +88,7 @@ import static cn.stylefeng.roses.kernel.file.api.exception.enums.FileExceptionEn
  */
 @Service
 @Slf4j
-public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFileInfo> implements SysFileInfoService, FileInfoApi {
+public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFileInfo> implements SysFileInfoService {
 
     @Resource
     private FileOperatorApi fileOperatorApi;
