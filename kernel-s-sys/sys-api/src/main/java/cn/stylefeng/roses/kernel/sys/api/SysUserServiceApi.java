@@ -81,4 +81,12 @@ public interface SysUserServiceApi {
      */
     List<Long> getUserRoleIdList(Long userId);
 
+    /**
+     * 获取用户真实姓名
+     *
+     * @author fengshuonan
+     * @since 2023/6/16 22:26
+     */
+    String getUserRealName(Long userId);
+
 }

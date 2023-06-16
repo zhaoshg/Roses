@@ -162,4 +162,16 @@ public class UserIntegrationService implements SysUserServiceApi {
         return sysUserRoleList.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
     }
 
+    @Override
+    public String getUserRealName(Long userId) {
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper.select(SysUser::getRealName);
+        sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
+        SysUser sysUser = this.sysUserService.getOne(sysUserLambdaQueryWrapper);
+        if (sysUser == null) {
+            return "";
+        }
+        return sysUser.getRealName();
+    }
+
 }
