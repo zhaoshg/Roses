@@ -175,7 +175,8 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         // 如果开启了旧版密码，并且bcrypt密码是空
         if (CustomerConfigExpander.getOldPasswordValidate()
                 && customer.getPassword().equals(CustomerConstants.DEFAULT_EMPTY_PASSWORD)) {
-            if (!oldPasswordValidateApi.validatePassword(loginRequest.getPassword(), customer.getOldPassword(), customer.getOldPasswordSalt())) {
+            if (!oldPasswordValidateApi.validatePassword(loginRequest.getPassword(), customer.getOldPassword(),
+                    customer.getOldPasswordSalt())) {
                 throw new AuthException(AuthExceptionEnum.USERNAME_PASSWORD_ERROR);
             }
         } else {
@@ -200,7 +201,8 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         LoginUser loginUser = CustomerFactory.createLoginUser(customer, fileOperatorApi);
 
         // 生成用户的token
-        DefaultJwtPayload defaultJwtPayload = new DefaultJwtPayload(loginUser.getUserId(), loginUser.getAccount(), loginRequest.getRememberMe(), null, null);
+        DefaultJwtPayload defaultJwtPayload = new DefaultJwtPayload(loginUser.getUserId(), loginRequest.getAccount(),
+                loginRequest.getRememberMe(), null, null);
         String jwtToken = AuthJwtContext.me().generateTokenDefaultPayload(defaultJwtPayload);
         loginUser.setToken(jwtToken);
 
@@ -226,7 +228,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         loginLogServiceApi.loginSuccess(loginUser.getUserId());
 
         // 组装返回结果
-        return new LoginResponse(loginUser, jwtToken, defaultJwtPayload.getExpirationDate());
+        return new LoginResponse(loginUser.getUserId(), jwtToken);
     }
 
     @Override
@@ -337,7 +339,8 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         Boolean passwordRightFlag = passwordStoredEncryptApi.checkPassword(customerInfoRequest.getOldPassword(), customer.getPassword());
 
         // 上一代密码校验md5
-        boolean lastPasswordRightFlag = oldPasswordValidateApi.validatePassword(customerInfoRequest.getOldPassword(), customer.getOldPassword(), customer.getOldPasswordSalt());
+        boolean lastPasswordRightFlag = oldPasswordValidateApi.validatePassword(customerInfoRequest.getOldPassword(),
+                customer.getOldPassword(), customer.getOldPasswordSalt());
 
         if (!passwordRightFlag && !lastPasswordRightFlag) {
             throw new CustomerException(CustomerExceptionEnum.PWD_ERROR);
