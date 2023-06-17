@@ -17,14 +17,12 @@
 
     <dependencies>
 
-        <!--auth模块的api-->
-        <!--记录日志时候，有可能需要记录当前登录用户id-->
-        <!--如果不要记录当前登录用户id时就不用本模块，所以optional=true-->
+        <!--sys系统模块-->
+        <!--用来获取userId的包装转化-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>auth-api</artifactId>
+            <artifactId>sys-api</artifactId>
             <version>${roses.version}</version>
-            <optional>true</optional>
         </dependency>
 
         <!--参数校验模块-->
@@ -40,14 +38,6 @@
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>db-api</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
-        <!--system api-->
-        <!--用在json响应用户id的转化-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
