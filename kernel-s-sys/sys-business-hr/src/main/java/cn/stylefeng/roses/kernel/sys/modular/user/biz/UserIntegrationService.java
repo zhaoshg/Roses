@@ -19,10 +19,12 @@ import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -178,7 +180,7 @@ public class UserIntegrationService implements SysUserServiceApi {
     }
 
     @Override
-    public UserValidateDTO getUserValidateDTO(String account) {
+    public UserValidateDTO getUserLoginValidateDTO(String account) {
         LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysUserLambdaQueryWrapper.eq(SysUser::getAccount, account);
         sysUserLambdaQueryWrapper.select(SysUser::getPassword, SysUser::getStatusFlag, SysUser::getUserId);
@@ -189,6 +191,20 @@ public class UserIntegrationService implements SysUserServiceApi {
         }
 
         return new UserValidateDTO(sysUserServiceOne.getUserId(), sysUserServiceOne.getPassword(), sysUserServiceOne.getStatusFlag());
+    }
+
+    @Override
+    public void updateUserLoginInfo(Long userId, String ip) {
+
+        if (ObjectUtil.isEmpty(userId) || ObjectUtil.isEmpty(ip)) {
+            return;
+        }
+
+        LambdaUpdateWrapper<SysUser> sysUserLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        sysUserLambdaUpdateWrapper.eq(SysUser::getUserId, userId);
+        sysUserLambdaUpdateWrapper.set(SysUser::getLastLoginTime, new Date());
+        sysUserLambdaUpdateWrapper.set(SysUser::getLastLoginIp, ip);
+        this.sysUserService.update(sysUserLambdaUpdateWrapper);
     }
 
 }

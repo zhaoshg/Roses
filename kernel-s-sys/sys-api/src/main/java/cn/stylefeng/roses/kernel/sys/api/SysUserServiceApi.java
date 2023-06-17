@@ -97,6 +97,14 @@ public interface SysUserServiceApi {
      * @author fengshuonan
      * @since 2023/6/17 21:56
      */
-    UserValidateDTO getUserValidateDTO(String account);
+    UserValidateDTO getUserLoginValidateDTO(String account);
+
+    /**
+     * 更新用户的登录ip和最后登录时间
+     *
+     * @author fengshuonan
+     * @since 2023/6/17 22:46
+     */
+    void updateUserLoginInfo(Long userId, String ip);
 
 }
