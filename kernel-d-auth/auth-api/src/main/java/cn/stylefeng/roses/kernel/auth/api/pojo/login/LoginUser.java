@@ -64,4 +64,12 @@ public class LoginUser implements Serializable {
     @ChineseDescription("用户的token")
     private String token;
 
+    public LoginUser() {
+    }
+
+    public LoginUser(Long userId, String token) {
+        this.userId = userId;
+        this.token = token;
+    }
+
 }

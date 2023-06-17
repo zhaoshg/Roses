@@ -75,9 +75,9 @@ import cn.stylefeng.roses.kernel.scanner.api.holder.InitScanFlagHolder;
 import cn.stylefeng.roses.kernel.security.api.DragCaptchaApi;
 import cn.stylefeng.roses.kernel.security.api.ImageCaptchaApi;
 import cn.stylefeng.roses.kernel.security.api.expander.SecurityConfigExpander;
-import cn.stylefeng.roses.kernel.system.api.UserServiceApi;
-import cn.stylefeng.roses.kernel.system.api.enums.UserStatusEnum;
-import cn.stylefeng.roses.kernel.system.api.pojo.user.UserLoginInfoDTO;
+import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserValidateDTO;
 import cn.stylefeng.roses.kernel.validator.api.exception.enums.ValidatorExceptionEnum;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -85,7 +85,6 @@ import io.jsonwebtoken.Claims;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -102,7 +101,7 @@ import static cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEn
 public class AuthServiceImpl implements AuthServiceApi {
 
     @Resource
-    private UserServiceApi userServiceApi;
+    private SysUserServiceApi sysUserServiceApi;
 
     @Resource
     private SessionManagerApi sessionManagerApi;
@@ -400,7 +399,7 @@ public class AuthServiceImpl implements AuthServiceApi {
         }
 
         // 5. 获取用户密码的加密值和用户的状态
-        UserLoginInfoDTO userValidateInfo = userServiceApi.getUserLoginInfo(loginRequest.getAccount());
+        UserValidateDTO userValidateInfo = sysUserServiceApi.getUserLoginValidateDTO(loginRequest.getAccount());
 
         // 6. 校验用户密码是否正确
         validateUserPassword(validatePassword, loginErrorCount, loginRequest, userValidateInfo);
@@ -410,21 +409,15 @@ public class AuthServiceImpl implements AuthServiceApi {
             throw new AuthException(AuthExceptionEnum.USER_STATUS_ERROR, UserStatusEnum.getCodeMessage(userValidateInfo.getUserStatus()));
         }
 
-        // 8. 获取LoginUser，用于用户的缓存
-        LoginUser loginUser = userValidateInfo.getLoginUser();
-
-        // 9. 生成用户的token
-        DefaultJwtPayload defaultJwtPayload = new DefaultJwtPayload(loginUser.getUserId(), loginUser.getAccount(), loginRequest.getRememberMe(), caToken, loginRequest.getTenantCode());
+        // 8. 生成用户的token
+        DefaultJwtPayload defaultJwtPayload = new DefaultJwtPayload(userValidateInfo.getUserId(), loginRequest.getAccount(),
+                loginRequest.getRememberMe(), caToken, loginRequest.getTenantCode());
         String jwtToken = AuthJwtContext.me().generateTokenDefaultPayload(defaultJwtPayload);
-        loginUser.setToken(jwtToken);
 
-        // 如果包含租户编码，则放到loginUser中
-        loginUser.setTenantCode(loginRequest.getTenantCode());
+        // 9. 创建loginUser对象
+        LoginUser loginUser = new LoginUser(userValidateInfo.getUserId(), jwtToken);
 
-        synchronized (loginUser.getAccount().intern()) {
-
-            // 9.1 获取ws-url 保存到用户信息中
-            loginUser.setWsUrl(WebSocketConfigExpander.getWebSocketWsUrl());
+        synchronized (loginRequest.getAccount().intern()) {
 
             // 10. 缓存用户信息，创建会话
             sessionManagerApi.createSession(jwtToken, loginUser);
@@ -439,7 +432,7 @@ public class AuthServiceImpl implements AuthServiceApi {
         if (!DemoConfigExpander.getDemoEnvFlag()) {
             // 12. 更新用户登录时间和ip
             String ip = HttpServletUtil.getRequestClientIp(HttpServletUtil.getRequest());
-            userServiceApi.updateUserLoginInfo(loginUser.getUserId(), new Date(), ip);
+            sysUserServiceApi.updateUserLoginInfo(loginUser.getUserId(), ip);
 
             // 13.登录成功日志
             loginLogServiceApi.loginSuccess(loginUser.getUserId());
@@ -449,7 +442,7 @@ public class AuthServiceImpl implements AuthServiceApi {
         this.cancelFreeze(loginRequest);
 
         // 14. 组装返回结果
-        return new LoginResponse(loginUser, jwtToken, defaultJwtPayload.getExpirationDate());
+        return new LoginResponse(loginUser.getUserId(), jwtToken);
     }
 
     /**
@@ -498,11 +491,13 @@ public class AuthServiceImpl implements AuthServiceApi {
      * @author fengshuonan
      * @since 2022/3/26 14:16
      */
-    private void validateUserPassword(Boolean validatePassword, Integer loginErrorCount, LoginRequest loginRequest, UserLoginInfoDTO userValidateInfo) {
+    private void validateUserPassword(Boolean validatePassword, Integer loginErrorCount, LoginRequest loginRequest,
+                                      UserValidateDTO userValidateInfo) {
 
         // 如果本次登录需要校验密码
         if (validatePassword) {
-            Boolean checkResult = passwordStoredEncryptApi.checkPassword(loginRequest.getPassword(), userValidateInfo.getUserPasswordHexed());
+            Boolean checkResult = passwordStoredEncryptApi.checkPassword(loginRequest.getPassword(),
+                    userValidateInfo.getUserPasswordHexed());
 
             // 校验用户表密码是否正确，如果正确则直接返回
             if (checkResult) {
@@ -514,7 +509,7 @@ public class AuthServiceImpl implements AuthServiceApi {
             try {
                 tempSecretApi = SpringUtil.getBean(TempSecretApi.class);
                 if (tempSecretApi != null) {
-                    String userTempSecretKey = tempSecretApi.getUserTempSecretKey(userValidateInfo.getLoginUser().getUserId());
+                    String userTempSecretKey = tempSecretApi.getUserTempSecretKey(userValidateInfo.getUserId());
                     // 如果用户有临时秘钥，则校验秘钥是否正确
                     if (StrUtil.isNotBlank(userTempSecretKey)) {
                         Boolean checkTempKeyResult = passwordStoredEncryptApi.checkPassword(loginRequest.getPassword(), userTempSecretKey);

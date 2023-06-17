@@ -24,6 +24,14 @@
             <version>${roses.version}</version>
         </dependency>
 
+        <!--日志api-->
+        <!--记录登录日志-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>log-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!-- 多数据源操作的api -->
         <!-- 获取当前登录用户之前需要切数据源 -->
         <dependency>
