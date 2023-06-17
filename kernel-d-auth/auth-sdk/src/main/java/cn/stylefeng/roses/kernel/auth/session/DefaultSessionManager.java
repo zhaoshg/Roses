@@ -30,12 +30,8 @@ import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
-import cn.stylefeng.roses.kernel.message.api.expander.WebSocketConfigExpander;
-import cn.stylefeng.roses.kernel.rule.callback.ConfigUpdateCallback;
 
 import java.util.*;
-
-import static cn.stylefeng.roses.kernel.message.api.constants.MessageConstants.WEB_SOCKET_WS_URL_CONFIG_CODE;
 
 /**
  * 基于redis的会话管理
@@ -43,7 +39,7 @@ import static cn.stylefeng.roses.kernel.message.api.constants.MessageConstants.W
  * @author fengshuonan
  * @since 2019-09-28-14:43
  */
-public class DefaultSessionManager implements SessionManagerApi, ConfigUpdateCallback {
+public class DefaultSessionManager implements SessionManagerApi {
 
     /**
      * 登录用户缓存
@@ -188,15 +184,4 @@ public class DefaultSessionManager implements SessionManagerApi, ConfigUpdateCal
         return loginUsers;
     }
 
-    @Override
-    public void configUpdate(String code, String value) {
-        // 如果系统配置修改了websocket url，则刷新所有在线用户的配置
-        if (WEB_SOCKET_WS_URL_CONFIG_CODE.equals(code)) {
-            Map<String, LoginUser> allKeyValues = loginUserCache.getAllKeyValues();
-            for (LoginUser loginUser : allKeyValues.values()) {
-                loginUser.setWsUrl(WebSocketConfigExpander.getWebSocketWsUrl());
-                this.updateSession(loginUser.getToken(), loginUser);
-            }
-        }
-    }
 }

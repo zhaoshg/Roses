@@ -70,15 +70,6 @@ public interface LoginUserApi {
     LoginUser getLoginUserNullable();
 
     /**
-     * 获取是否是超级管理员的标识
-     *
-     * @return true-是超级管理员，false-不是超级管理员
-     * @author fengshuonan
-     * @since 2020/11/4 15:45
-     */
-    boolean getSuperAdminFlag();
-
-    /**
      * 判断当前用户是否登录
      *
      * @return 是否登录，true是，false否
@@ -86,15 +77,5 @@ public interface LoginUserApi {
      * @since 2020/10/17 11:02
      */
     boolean hasLogin();
-
-    /**
-     * 是否包含某个按钮的权限
-     *
-     * @param buttonCode 按钮的编码
-     * @return true-有权限，false-没有权限
-     * @author fengshuonan
-     * @since 2021/1/9 11:32
-     */
-    boolean haveButton(String buttonCode);
 
 }

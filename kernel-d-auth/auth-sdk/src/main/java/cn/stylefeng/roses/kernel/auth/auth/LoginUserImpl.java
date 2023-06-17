@@ -31,7 +31,7 @@ import cn.stylefeng.roses.kernel.auth.api.exception.AuthException;
 import cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum;
 import cn.stylefeng.roses.kernel.auth.api.loginuser.CommonLoginUserUtil;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
-import cn.stylefeng.roses.kernel.system.api.UserServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -49,7 +49,7 @@ public class LoginUserImpl implements LoginUserApi {
     private SessionManagerApi sessionManagerApi;
 
     @Resource
-    private UserServiceApi userServiceApi;
+    private SysUserServiceApi sysUserServiceApi;
 
     @Override
     public String getToken() {
@@ -102,12 +102,6 @@ public class LoginUserImpl implements LoginUserApi {
     }
 
     @Override
-    public boolean getSuperAdminFlag() {
-        LoginUser loginUser = getLoginUser();
-        return loginUser.getSuperAdmin();
-    }
-
-    @Override
     public boolean hasLogin() {
 
         // 获取用户的token
@@ -120,16 +114,6 @@ public class LoginUserImpl implements LoginUserApi {
 
         // 获取是否在会话中有
         return sessionManagerApi.haveSession(token);
-    }
-
-    @Override
-    public boolean haveButton(String buttonCode) {
-        LoginUser loginUser = getLoginUser();
-        if (loginUser.getButtonCodes() == null) {
-            return false;
-        } else {
-            return loginUser.getButtonCodes().contains(buttonCode);
-        }
     }
 
 }
