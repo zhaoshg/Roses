@@ -173,7 +173,9 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
         // 如果多组织列表为空，则直接返回默认的职务名称
         if (ObjectUtil.isEmpty(ptDuty)) {
             for (HrOrganizationDTO result : results) {
-                result.setPositionName(expandDutyInfo.getDuty());
+                if (ObjectUtil.isEmpty(result.getPositionName())) {
+                    result.setPositionName(expandDutyInfo.getDuty());
+                }
             }
         }
 
@@ -189,9 +191,27 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
             // 遍历参数的组织机构列表，填充职务名称
             for (HrOrganizationDTO result : results) {
                 if (result.getOrgId().equals(masterOrgIdCompanyId)) {
-                    result.setPositionName(dutyItem.getDutyName());
+                    if (ObjectUtil.isEmpty(result.getPositionName())) {
+                        result.setPositionName(dutyItem.getDutyName());
+                    }
                 }
             }
+        }
+    }
+
+    @Override
+    public String getPositionName(Long positionId) {
+        if (positionId == null) {
+            return null;
+        }
+        LambdaQueryWrapper<HrPosition> hrPositionLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        hrPositionLambdaQueryWrapper.eq(HrPosition::getPositionId, positionId);
+        hrPositionLambdaQueryWrapper.select(HrPosition::getPositionName);
+        HrPosition one = this.getOne(hrPositionLambdaQueryWrapper, false);
+        if (one == null) {
+            return null;
+        } else {
+            return one.getPositionName();
         }
     }
 

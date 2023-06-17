@@ -241,6 +241,9 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
                 continue;
             }
 
+            // 填充用户的职务名称positionName
+            companyInfo.setPositionName(hrPositionService.getPositionName(sysUserOrg.getPositionId()));
+
             // 判断是否已经加了这个公司
             boolean alreadyHave = false;
             for (HrOrganizationDTO dtoItem : results) {

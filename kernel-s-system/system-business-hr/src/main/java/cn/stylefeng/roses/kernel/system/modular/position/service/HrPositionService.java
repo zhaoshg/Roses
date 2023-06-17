@@ -124,4 +124,12 @@ public interface HrPositionService extends IService<HrPosition>, PositionService
      */
     void fillDutyInfo(Long userId, List<HrOrganizationDTO> results);
 
+    /**
+     * 获取职务名称
+     *
+     * @author fengshuonan
+     * @since 2023/6/17 15:02
+     */
+    String getPositionName(Long positionId);
+
 }
