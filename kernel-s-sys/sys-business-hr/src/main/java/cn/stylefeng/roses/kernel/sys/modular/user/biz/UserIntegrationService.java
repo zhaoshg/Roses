@@ -4,13 +4,16 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
+import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserValidateDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
+import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.factory.UserOrgFactory;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
@@ -172,6 +175,21 @@ public class UserIntegrationService implements SysUserServiceApi {
             return "";
         }
         return sysUser.getRealName();
+    }
+
+    @Override
+    public UserValidateDTO getUserValidateDTO(Long account) {
+
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper.eq(SysUser::getAccount, account);
+        sysUserLambdaQueryWrapper.select(SysUser::getPassword, SysUser::getStatusFlag);
+        SysUser sysUserServiceOne = this.sysUserService.getOne(sysUserLambdaQueryWrapper, false);
+
+        if (sysUserServiceOne == null) {
+            throw new ServiceException(SysUserExceptionEnum.ACCOUNT_NOT_EXIST);
+        }
+
+        return new UserValidateDTO(sysUserServiceOne.getPassword(), sysUserServiceOne.getStatusFlag());
     }
 
 }

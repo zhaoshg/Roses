@@ -21,7 +21,14 @@ public enum SysUserExceptionEnum implements AbstractExceptionEnum {
     /**
      * 不能删除超级管理员
      */
-    USER_CAN_NOT_DELETE_ADMIN(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "不能删除超级管理员");
+    USER_CAN_NOT_DELETE_ADMIN(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "不能删除超级管理员"),
+
+    /**
+     * 用户账号不存在
+     * <p>
+     * 但是提示：用户账号或密码错误，请重新输入
+     */
+    ACCOUNT_NOT_EXIST(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10003", "用户账号或密码错误，请重新输入");
 
     /**
      * 错误编码

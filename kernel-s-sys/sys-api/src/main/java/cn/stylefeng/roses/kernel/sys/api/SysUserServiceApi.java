@@ -26,6 +26,7 @@ package cn.stylefeng.roses.kernel.sys.api;
 
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserValidateDTO;
 
 import java.util.List;
 
@@ -88,5 +89,13 @@ public interface SysUserServiceApi {
      * @since 2023/6/16 22:26
      */
     String getUserRealName(Long userId);
+
+    /**
+     * 获取用于用户校验的
+     *
+     * @author fengshuonan
+     * @since 2023/6/17 21:56
+     */
+    UserValidateDTO getUserValidateDTO(Long account);
 
 }
