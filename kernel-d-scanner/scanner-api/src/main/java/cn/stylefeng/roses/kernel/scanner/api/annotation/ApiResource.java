@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.scanner.api.annotation;
 
+import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,19 +70,23 @@ public @interface ApiResource {
     String name() default "";
 
     /**
-     * 是否是菜单(true-是菜单标识,false-不是菜单标识)
-     */
-    boolean menuFlag() default false;
-
-    /**
-     * 需要登录(true-需要登录,false-不需要登录)
+     * 当前接口是否需要登录(true-需要登录,false-不需要登录)
      */
     boolean requiredLogin() default true;
 
     /**
-     * 需要鉴权(true-需要鉴权,false-不需要鉴权)
+     * 当前接口是否需要鉴权(true-需要鉴权,false-不需要鉴权)
+     * <p>
+     * 【7.6.0】修改，默认改为false不需要权限校验
      */
-    boolean requiredPermission() default true;
+    boolean requiredPermission() default false;
+
+    /**
+     * 当前接口需要的权限标识（菜单的编码或者菜单功能的编码，从sys_menu表或者sys_menu_options表查询）
+     * <p>
+     * 如果requiredPermission = true，则需要填写此编码
+     */
+    String requirePermissionCode() default StrUtil.EMPTY;
 
     /**
      * 是否是视图类型：true-是，false-否
@@ -99,19 +104,16 @@ public @interface ApiResource {
     /**
      * 请求路径(同RequestMapping)
      */
-    @AliasFor(annotation = RequestMapping.class)
-    String[] path() default {};
+    @AliasFor(annotation = RequestMapping.class) String[] path() default {};
 
     /**
      * 请求的http方法(同RequestMapping)
      */
-    @AliasFor(annotation = RequestMapping.class)
-    RequestMethod[] method() default {};
+    @AliasFor(annotation = RequestMapping.class) RequestMethod[] method() default {};
 
     /**
      * 同RequestMapping
      */
-    @AliasFor(annotation = RequestMapping.class)
-    String[] produces() default {};
+    @AliasFor(annotation = RequestMapping.class) String[] produces() default {};
 
 }
