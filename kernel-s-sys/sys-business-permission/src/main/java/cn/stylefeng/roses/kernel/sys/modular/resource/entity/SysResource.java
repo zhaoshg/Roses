@@ -159,6 +159,13 @@ public class SysResource extends BaseEntity {
     private String requiredPermissionFlag;
 
     /**
+     * 需要鉴权的菜单或者功能编码
+     */
+    @TableField("permission_code")
+    @ChineseDescription("需要鉴权的菜单或者功能编码")
+    private String permissionCode;
+
+    /**
      * 需要进行参数校验的分组
      * <p>
      * json形式存储
