@@ -65,7 +65,6 @@ import cn.stylefeng.roses.kernel.jwt.api.exception.JwtException;
 import cn.stylefeng.roses.kernel.jwt.api.exception.enums.JwtExceptionEnum;
 import cn.stylefeng.roses.kernel.jwt.api.pojo.config.JwtConfig;
 import cn.stylefeng.roses.kernel.log.api.LoginLogServiceApi;
-import cn.stylefeng.roses.kernel.message.api.expander.WebSocketConfigExpander;
 import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
 import cn.stylefeng.roses.kernel.rule.tenant.RequestTenantCodeHolder;
 import cn.stylefeng.roses.kernel.rule.util.HttpServletUtil;
@@ -85,8 +84,6 @@ import io.jsonwebtoken.Claims;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
 
 import static cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum.AUTH_EXPIRED_ERROR;
 import static cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum.TOKEN_PARSE_ERROR;
@@ -285,7 +282,7 @@ public class AuthServiceImpl implements AuthServiceApi {
         // 获取用户租户信息
         String tenantCode = defaultJwtPayload.getTenantCode();
 
-        UserLoginInfoDTO userLoginInfo;
+        LoginUser loginUser;
         try {
             // 如果有特定租户则进行切换操作
             if (StrUtil.isNotEmpty(tenantCode) && !DatasourceContainerConstants.MASTER_DATASOURCE_NAME.equals(tenantCode)) {
@@ -293,16 +290,10 @@ public class AuthServiceImpl implements AuthServiceApi {
             }
 
             // 获取用户信息
-            userLoginInfo = userServiceApi.getUserLoginInfo(account);
-            LoginUser loginUser = userLoginInfo.getLoginUser();
-            loginUser.setTenantCode(tenantCode);
+            UserValidateDTO userValidateDTO = sysUserServiceApi.getUserLoginValidateDTO(account);
 
-            // 设置websocket url
-            String webSocketWsUrl = WebSocketConfigExpander.getWebSocketWsUrl();
-            Map<String, String> params = new HashMap<>(1);
-            params.put("token", token);
-            webSocketWsUrl = StrUtil.format(webSocketWsUrl, params);
-            loginUser.setWsUrl(webSocketWsUrl);
+            // 创建登录用户
+            loginUser = new LoginUser(userValidateDTO.getUserId(), token);
 
             // 创建用户会话信息
             sessionManagerApi.updateSession(token, loginUser);
@@ -311,7 +302,7 @@ public class AuthServiceImpl implements AuthServiceApi {
             CurrentDataSourceContext.clearDataSourceName();
         }
 
-        return userLoginInfo.getLoginUser();
+        return loginUser;
     }
 
     /**
