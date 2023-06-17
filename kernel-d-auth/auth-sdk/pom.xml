@@ -47,14 +47,6 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!--日志记录模块的api-->
-        <!--记录登录日志用-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>log-api</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
         <!--安全模块的api-->
         <!--需要用到校验验证码的接口-->
         <dependency>
@@ -67,7 +59,7 @@
         <!--登录和鉴权需要用到用户相关的接口-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-api</artifactId>
+            <artifactId>sys-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
