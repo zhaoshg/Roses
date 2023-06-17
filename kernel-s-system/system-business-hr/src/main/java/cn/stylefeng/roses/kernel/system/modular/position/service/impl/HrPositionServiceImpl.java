@@ -153,6 +153,11 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
         sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
         sysUserLambdaQueryWrapper.select(BaseExpandFieldEntity::getExpandField);
         SysUser currentUser = this.sysUserService.getOne(sysUserLambdaQueryWrapper, false);
+
+        if (currentUser == null) {
+            return;
+        }
+
         Map<String, Object> expandField = currentUser.getExpandField();
 
         if (ObjectUtil.isEmpty(expandField)) {

@@ -692,6 +692,12 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         LambdaQueryWrapper<HrOrganization> queryWrapper = this.createWrapper(hrOrganizationRequest);
 
+        // parentId不是null的
+        queryWrapper.isNotNull(HrOrganization::getOrgParentId);
+
+        // 查询启用的状态
+        queryWrapper.eq(HrOrganization::getStatusFlag, StatusEnum.ENABLE.getCode());
+
         // 数据范围过滤
         // 如果是超级管理员，或者数据范围权限是所有，则不过滤数据范围
         boolean needToDataScope = true;

@@ -900,9 +900,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
 
         // 获取用户的头像地址
-        String fileAuthUrl = fileInfoApi.getFileAuthUrl(detail.getAvatar());
-        if (fileAuthUrl != null) {
-            detail.setAvatarUrl(fileAuthUrl);
+        if(detail.getAvatar() != null){
+            String fileAuthUrl = fileInfoApi.getFileAuthUrl(detail.getAvatar());
+            if (fileAuthUrl != null) {
+                detail.setAvatarUrl(fileAuthUrl);
+            }
         }
 
         sysUserCacheOperatorApi.put(String.valueOf(userId), detail);
