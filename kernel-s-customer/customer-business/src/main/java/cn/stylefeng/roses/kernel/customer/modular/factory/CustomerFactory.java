@@ -5,7 +5,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.auth.api.password.PasswordStoredEncryptApi;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
-import cn.stylefeng.roses.kernel.auth.api.pojo.login.basic.SimpleUserInfo;
 import cn.stylefeng.roses.kernel.customer.api.expander.CustomerConfigExpander;
 import cn.stylefeng.roses.kernel.customer.modular.entity.Customer;
 import cn.stylefeng.roses.kernel.customer.modular.request.CustomerRequest;
@@ -16,7 +15,6 @@ import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 
 import java.util.Collections;
-import java.util.Date;
 
 /**
  * C端用户实体组装
@@ -98,23 +96,6 @@ public class CustomerFactory {
     public static LoginUser createLoginUser(Customer customer, FileOperatorApi fileOperatorApi) {
         LoginUser loginUser = new LoginUser();
         loginUser.setUserId(customer.getCustomerId());
-        loginUser.setAccount(customer.getAccount());
-        loginUser.setLoginTime(new Date());
-
-        SimpleUserInfo simpleUserInfo = new SimpleUserInfo();
-        simpleUserInfo.setAvatar(customer.getAvatar());
-        simpleUserInfo.setNickName(customer.getNickName());
-        simpleUserInfo.setEmail(customer.getEmail());
-        simpleUserInfo.setPhone(customer.getTelephone());
-        loginUser.setSimpleUserInfo(simpleUserInfo);
-
-        // 设置用户头像url
-        String fileAuthUrl = fileOperatorApi.getFileUnAuthUrl(CustomerConfigExpander.getCustomerBucket(), customer.getAvatarObjectName());
-        loginUser.setAvatarUrl(fileAuthUrl);
-
-        // 设置用户是C端用户
-        loginUser.setCustomerFlag(true);
-
         return loginUser;
     }
 

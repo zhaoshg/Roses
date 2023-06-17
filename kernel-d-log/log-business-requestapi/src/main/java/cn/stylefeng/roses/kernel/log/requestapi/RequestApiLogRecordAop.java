@@ -25,6 +25,8 @@
 package cn.stylefeng.roses.kernel.log.requestapi;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
+import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.log.api.LogRecordApi;
 import cn.stylefeng.roses.kernel.log.api.constants.LogConstants;
 import cn.stylefeng.roses.kernel.log.api.constants.LogFileConstants;
@@ -172,7 +174,10 @@ public class RequestApiLogRecordAop implements Ordered {
         LogRecordDTO logRecordDTO = LogRecordFactory.createLogRecord(LogConstants.LOG_DEFAULT_NAME, actionName);
 
         // 填充用户登录信息
-        AuthedLogAppender.appendAuthedHttpLog(logRecordDTO);
+        LoginUser loginUserNullable = LoginContext.me().getLoginUserNullable();
+        if (loginUserNullable != null) {
+            AuthedLogAppender.appendAuthedHttpLog(logRecordDTO, loginUserNullable.getToken(), loginUserNullable.getUserId());
+        }
 
         // 填充http接口请求信息
         HttpLogAppender.appendHttpLog(logRecordDTO);

@@ -25,6 +25,7 @@
 package cn.stylefeng.roses.kernel.auth.api.pojo.login;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -47,6 +48,12 @@ public class LoginUser implements Serializable {
     private Long userId;
 
     /**
+     * 用户的token
+     */
+    @ChineseDescription("用户的token")
+    private String token;
+
+    /**
      * 当前用户正在访问的appId
      */
     @ChineseDescription("当前用户正在访问的appId")
@@ -59,10 +66,20 @@ public class LoginUser implements Serializable {
     private Long currentOrgId;
 
     /**
-     * 用户的token
+     * 当前登录租户编码
      */
-    @ChineseDescription("用户的token")
-    private String token;
+    @ChineseDescription("当前登录租户编码")
+    private String tenantCode;
+
+    /**
+     * 当前用户语种的标识，例如：chinese，english
+     * <p>
+     * 这个值是根据字典获取，字典类型编码 languages
+     * <p>
+     * 默认语种是中文
+     */
+    @ChineseDescription("当前用户语种的标识")
+    private String tranLanguageCode = RuleConstants.CHINESE_TRAN_LANGUAGE_CODE;
 
     public LoginUser() {
     }

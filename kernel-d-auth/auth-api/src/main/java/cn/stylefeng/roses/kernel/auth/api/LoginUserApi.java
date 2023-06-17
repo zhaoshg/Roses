@@ -78,4 +78,13 @@ public interface LoginUserApi {
      */
     boolean hasLogin();
 
+    /**
+     * 获取是否是超级管理员的标识
+     *
+     * @return true-是超级管理员，false-不是超级管理员
+     * @author fengshuonan
+     * @since 2020/11/4 15:45
+     */
+    boolean getSuperAdminFlag();
+
 }

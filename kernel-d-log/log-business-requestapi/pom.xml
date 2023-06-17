@@ -32,6 +32,14 @@
             <version>${roses.version}</version>
         </dependency>
 
+        <!--auth模块-->
+        <!--获取当前登录用户-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>auth-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!-- web -->
         <!-- 用于本模块中对controller的拦截器 -->
         <dependency>

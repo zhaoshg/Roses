@@ -33,17 +33,14 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.dict.api.enums.DictTypeClassEnum;
 import cn.stylefeng.roses.kernel.dict.api.exception.DictException;
 import cn.stylefeng.roses.kernel.dict.api.exception.enums.DictExceptionEnum;
-import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDictType;
 import cn.stylefeng.roses.kernel.dict.modular.mapper.DictTypeMapper;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.request.DictTypeRequest;
-import cn.stylefeng.roses.kernel.dict.modular.service.DictService;
 import cn.stylefeng.roses.kernel.dict.modular.service.DictTypeService;
 import cn.stylefeng.roses.kernel.pinyin.api.PinYinApi;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -133,7 +130,6 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, SysDictType
         Page<SysDictType> page = this.page(PageFactory.defaultPage(), this.createWrapper(dictTypeRequest));
         return PageResultFactory.createPageResult(page);
     }
-
 
     /**
      * 校验dictTypeClass是否是系统字典，如果是系统字典只能超级管理员操作

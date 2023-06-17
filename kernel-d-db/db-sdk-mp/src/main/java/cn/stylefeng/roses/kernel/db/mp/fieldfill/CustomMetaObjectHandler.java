@@ -131,7 +131,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
     private Long getUserOrgId() {
 
         try {
-            return LoginContext.me().getLoginUser().getOrganizationId();
+            return LoginContext.me().getLoginUser().getCurrentOrgId();
         } catch (Exception e) {
             //如果获取不到就返回-1
             return -1L;

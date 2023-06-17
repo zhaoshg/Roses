@@ -33,6 +33,7 @@ import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashSet;
 import java.util.Set;
 
 import static cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum.AUTH_EXPIRED_ERROR;
@@ -64,8 +65,8 @@ public class PermissionServiceImpl implements PermissionServiceApi {
             throw new AuthException(AUTH_EXPIRED_ERROR);
         }
 
-        // 3. 验证用户有没有当前url的权限
-        Set<String> resourceUrls = session.getResourceUrls();
+        // 3. 验证用户有没有当前url的权限 todo 校验方法重写
+        Set<String> resourceUrls = new HashSet<>();
         if (resourceUrls == null || resourceUrls.size() == 0) {
             throw new AuthException(PERMISSION_RES_VALIDATE_ERROR);
         } else {

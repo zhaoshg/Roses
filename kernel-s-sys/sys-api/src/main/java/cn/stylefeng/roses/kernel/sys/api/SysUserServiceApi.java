@@ -107,4 +107,12 @@ public interface SysUserServiceApi {
      */
     void updateUserLoginInfo(Long userId, String ip);
 
+    /**
+     * 获取用户是否是超级管理员
+     *
+     * @author fengshuonan
+     * @since 2023/6/17 23:09
+     */
+    boolean getUserSuperAdminFlag(Long userId);
+
 }

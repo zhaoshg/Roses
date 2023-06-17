@@ -24,8 +24,6 @@
  */
 package cn.stylefeng.roses.kernel.log.api.factory.appender;
 
-import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
-import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.log.api.pojo.record.LogRecordDTO;
 
 /**
@@ -44,16 +42,15 @@ public class AuthedLogAppender {
      * @author fengshuonan
      * @since 2020/10/27 18:22
      */
-    public static void appendAuthedHttpLog(LogRecordDTO logRecordDTO) {
+    public static void appendAuthedHttpLog(LogRecordDTO logRecordDTO, String token, Long userId) {
 
         // 填充当前登录的用户信息
         try {
             // 填充登录用户的token
-            logRecordDTO.setToken(LoginContext.me().getToken());
+            logRecordDTO.setToken(token);
 
             // 填充登录用户的userId
-            LoginUser loginUser = LoginContext.me().getLoginUser();
-            logRecordDTO.setUserId(loginUser.getUserId());
+            logRecordDTO.setUserId(userId);
         } catch (Exception ignored) {
             // 获取不到用户登录信息，就不填充
         }

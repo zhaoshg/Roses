@@ -116,4 +116,10 @@ public class LoginUserImpl implements LoginUserApi {
         return sessionManagerApi.haveSession(token);
     }
 
+    @Override
+    public boolean getSuperAdminFlag() {
+        LoginUser loginUser = getLoginUser();
+        return sysUserServiceApi.getUserSuperAdminFlag(loginUser.getUserId());
+    }
+
 }
