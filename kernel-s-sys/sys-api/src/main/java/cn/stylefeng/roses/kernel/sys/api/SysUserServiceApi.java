@@ -93,9 +93,10 @@ public interface SysUserServiceApi {
     /**
      * 获取用于用户校验的
      *
+     * @param account 用户账号
      * @author fengshuonan
      * @since 2023/6/17 21:56
      */
-    UserValidateDTO getUserValidateDTO(Long account);
+    UserValidateDTO getUserValidateDTO(String account);
 
 }

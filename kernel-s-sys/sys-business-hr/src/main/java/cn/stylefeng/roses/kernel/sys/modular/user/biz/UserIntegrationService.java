@@ -178,18 +178,17 @@ public class UserIntegrationService implements SysUserServiceApi {
     }
 
     @Override
-    public UserValidateDTO getUserValidateDTO(Long account) {
-
+    public UserValidateDTO getUserValidateDTO(String account) {
         LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysUserLambdaQueryWrapper.eq(SysUser::getAccount, account);
-        sysUserLambdaQueryWrapper.select(SysUser::getPassword, SysUser::getStatusFlag);
+        sysUserLambdaQueryWrapper.select(SysUser::getPassword, SysUser::getStatusFlag, SysUser::getUserId);
         SysUser sysUserServiceOne = this.sysUserService.getOne(sysUserLambdaQueryWrapper, false);
 
         if (sysUserServiceOne == null) {
             throw new ServiceException(SysUserExceptionEnum.ACCOUNT_NOT_EXIST);
         }
 
-        return new UserValidateDTO(sysUserServiceOne.getPassword(), sysUserServiceOne.getStatusFlag());
+        return new UserValidateDTO(sysUserServiceOne.getUserId(), sysUserServiceOne.getPassword(), sysUserServiceOne.getStatusFlag());
     }
 
 }

@@ -37,6 +37,12 @@ import lombok.Data;
 public class UserValidateDTO {
 
     /**
+     * 用户id
+     */
+    @ChineseDescription("用户id")
+    private Long userId;
+
+    /**
      * 加密后的密码，存在sys_user表的password字段
      */
     @ChineseDescription("加密后的密码")
@@ -51,8 +57,10 @@ public class UserValidateDTO {
     public UserValidateDTO() {
     }
 
-    public UserValidateDTO(String userPasswordHexed, Integer userStatus) {
+    public UserValidateDTO(Long userId, String userPasswordHexed, Integer userStatus) {
+        this.userId = userId;
         this.userPasswordHexed = userPasswordHexed;
         this.userStatus = userStatus;
     }
+
 }
