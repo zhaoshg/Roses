@@ -16,7 +16,7 @@ import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
 import cn.stylefeng.roses.kernel.sys.api.expander.SysConfigExpander;
-import cn.stylefeng.roses.kernel.sys.api.pojo.UserOrgDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserMapper;

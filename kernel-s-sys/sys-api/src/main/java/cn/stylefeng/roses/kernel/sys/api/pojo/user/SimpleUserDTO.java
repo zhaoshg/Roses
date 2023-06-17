@@ -22,50 +22,36 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.api.pojo;
+package cn.stylefeng.roses.kernel.sys.api.pojo.user;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import lombok.Data;
 
 /**
- * 组织机构信息的包装（公司和部门的详细信息）
+ * 用户信息的简单包装
  *
  * @author fengshuonan
- * @since 2023/6/12 15:41
+ * @since 2023/6/11 17:05
  */
 @Data
-public class CompanyDeptDTO {
+public class SimpleUserDTO {
 
     /**
-     * 用户所属公司id
+     * 主键
      */
-    @ChineseDescription("用户所属公司id")
-    private Long companyId;
+    @ChineseDescription("主键")
+    private Long userId;
 
     /**
-     * 用户所属公司名称
+     * 姓名
      */
-    @ChineseDescription("用户所属公司名称")
-    private String companyName;
+    @ChineseDescription("姓名")
+    private String realName;
 
     /**
-     * 用户所属部门id
+     * 头像地址
      */
-    @ChineseDescription("用户所属部门id")
-    private Long deptId;
-
-    /**
-     * 用户所属部门名称
-     */
-    @ChineseDescription("用户所属部门名称")
-    private String deptName;
-
-    public CompanyDeptDTO() {
-    }
-
-    public CompanyDeptDTO(Long companyId, String companyName) {
-        this.companyId = companyId;
-        this.companyName = companyName;
-    }
+    @ChineseDescription("头像地址")
+    private String avatarUrl;
 
 }

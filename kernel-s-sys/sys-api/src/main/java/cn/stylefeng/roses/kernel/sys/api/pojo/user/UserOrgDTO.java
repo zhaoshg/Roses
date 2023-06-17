@@ -22,36 +22,66 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.api.pojo;
+package cn.stylefeng.roses.kernel.sys.api.pojo.user;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import lombok.Data;
 
 /**
- * 用户信息的简单包装
+ * 用户组织机构的信息封装
  *
  * @author fengshuonan
- * @since 2023/6/11 17:05
+ * @since 2023/6/12 15:41
  */
 @Data
-public class SimpleUserDTO {
+public class UserOrgDTO {
 
     /**
-     * 主键
+     * 用户id
      */
-    @ChineseDescription("主键")
+    @ChineseDescription("用户id")
     private Long userId;
 
     /**
-     * 姓名
+     * 用户所属公司id
      */
-    @ChineseDescription("姓名")
-    private String realName;
+    @ChineseDescription("用户所属公司id")
+    private Long companyId;
 
     /**
-     * 头像地址
+     * 用户所属公司名称
      */
-    @ChineseDescription("头像地址")
-    private String avatarUrl;
+    @ChineseDescription("用户所属公司名称")
+    private String companyName;
+
+    /**
+     * 用户所属部门id
+     */
+    @ChineseDescription("用户所属部门id")
+    private Long deptId;
+
+    /**
+     * 用户所属部门名称
+     */
+    @ChineseDescription("用户所属部门名称")
+    private String deptName;
+
+    /**
+     * 所属部门的职位id
+     */
+    @ChineseDescription("所属部门的职位id")
+    private Long positionId;
+
+    /**
+     * 用户所属职位名称
+     */
+    @ChineseDescription("用户所属职位名称")
+    private String positionName;
+
+    /**
+     * 是否是主部门：Y-是主部门，N-不是主部门
+     */
+    @ChineseDescription("是否是主部门：Y-是主部门，N-不是主部门")
+    private String mainFlag;
 
 }

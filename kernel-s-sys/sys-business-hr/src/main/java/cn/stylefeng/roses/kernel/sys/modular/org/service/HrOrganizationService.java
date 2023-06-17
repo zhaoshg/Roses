@@ -1,7 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.sys.api.pojo.CompanyDeptDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrganizationRequest;
 import com.baomidou.mybatisplus.extension.service.IService;

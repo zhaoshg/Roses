@@ -24,8 +24,8 @@
  */
 package cn.stylefeng.roses.kernel.sys.api;
 
-import cn.stylefeng.roses.kernel.sys.api.pojo.SimpleUserDTO;
-import cn.stylefeng.roses.kernel.sys.api.pojo.UserOrgDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 
 import java.util.List;
 

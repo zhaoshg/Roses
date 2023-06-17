@@ -2,8 +2,8 @@ package cn.stylefeng.roses.kernel.sys.modular.user.factory;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import cn.stylefeng.roses.kernel.sys.api.pojo.CompanyDeptDTO;
-import cn.stylefeng.roses.kernel.sys.api.pojo.UserOrgDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrganizationService;
 import cn.stylefeng.roses.kernel.sys.modular.position.service.HrPositionService;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;

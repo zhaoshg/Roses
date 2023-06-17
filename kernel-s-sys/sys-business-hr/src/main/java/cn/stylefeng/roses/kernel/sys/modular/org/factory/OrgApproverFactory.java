@@ -3,7 +3,7 @@ package cn.stylefeng.roses.kernel.sys.modular.org.factory;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
-import cn.stylefeng.roses.kernel.sys.api.pojo.SimpleUserDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrgApprover;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.ApproverBindUserItem;
 

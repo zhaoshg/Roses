@@ -6,7 +6,7 @@ import cn.stylefeng.roses.kernel.rule.annotation.EnumFieldFormat;
 import cn.stylefeng.roses.kernel.rule.enums.SexEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
-import cn.stylefeng.roses.kernel.sys.api.pojo.UserOrgDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
