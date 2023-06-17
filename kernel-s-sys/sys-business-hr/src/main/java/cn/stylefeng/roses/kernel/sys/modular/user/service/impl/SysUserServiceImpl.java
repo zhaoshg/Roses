@@ -14,7 +14,7 @@ import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
-import cn.stylefeng.roses.kernel.sys.api.enums.UserStatusEnum;
+import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
 import cn.stylefeng.roses.kernel.sys.api.expander.SysConfigExpander;
 import cn.stylefeng.roses.kernel.sys.api.pojo.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;

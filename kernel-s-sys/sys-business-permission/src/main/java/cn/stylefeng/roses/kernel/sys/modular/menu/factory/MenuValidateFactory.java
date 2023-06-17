@@ -3,7 +3,7 @@ package cn.stylefeng.roses.kernel.sys.modular.menu.factory;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
-import cn.stylefeng.roses.kernel.sys.api.enums.MenuTypeEnum;
+import cn.stylefeng.roses.kernel.sys.api.enums.menu.MenuTypeEnum;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.enums.SysMenuExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.request.SysMenuRequest;

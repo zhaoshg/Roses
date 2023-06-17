@@ -22,93 +22,49 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.api.enums;
+package cn.stylefeng.roses.kernel.sys.api.enums.menu;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.rule.base.ReadableEnum;
-import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
-import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
-import cn.stylefeng.roses.kernel.sys.api.exception.enums.UserExceptionEnum;
 import lombok.Getter;
 
 /**
- * 用户状态的枚举
+ * 菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接
  *
  * @author fengshuonan
- * @since 2020/10/20 18:19
+ * @since 2023/6/15 9:45
  */
 @Getter
-public enum UserStatusEnum implements ReadableEnum<UserStatusEnum> {
+public enum MenuTypeEnum implements ReadableEnum<MenuTypeEnum> {
 
     /**
-     * 启用
+     * 后台菜单
      */
-    ENABLE(1, "启用"),
+    BACKEND_MENU(10, "后台菜单"),
 
     /**
-     * 禁用
+     * 纯前台路由界面
      */
-    DISABLE(2, "禁用"),
+    FRONT_VUE(20, "纯前台路由界面"),
 
     /**
-     * 冻结
+     * 内部链接
      */
-    FREEZE(3, "冻结");
+    INNER_URL(30, "内部链接"),
+
+    /**
+     * 外部链接
+     */
+    OUT_URL(40, "外部链接");
 
     private final Integer code;
 
     private final String message;
 
-    UserStatusEnum(Integer code, String message) {
+    MenuTypeEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
-    }
-
-    /**
-     * code转化为enum
-     *
-     * @author fengshuonan
-     * @since 2020/10/21 9:29
-     */
-    public static UserStatusEnum toEnum(Integer code) {
-        for (UserStatusEnum userStatusEnum : UserStatusEnum.values()) {
-            if (userStatusEnum.getCode().equals(code)) {
-                return userStatusEnum;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * 获取code对应的message
-     *
-     * @author fengshuonan
-     * @since 2020/10/21 9:29
-     */
-    public static String getCodeMessage(Integer code) {
-        UserStatusEnum userStatusEnum = toEnum(code);
-        if (userStatusEnum != null) {
-            return userStatusEnum.getMessage();
-        } else {
-            return "";
-        }
-    }
-
-    /**
-     * 检查请求参数的状态是否正确
-     *
-     * @author stylefeng
-     * @since 2020/4/30 22:43
-     */
-    public static void validateUserStatus(Integer code) {
-        if (code == null) {
-            throw new ServiceException(UserExceptionEnum.REQUEST_USER_STATUS_EMPTY);
-        }
-        if (ENABLE.getCode().equals(code) || DISABLE.getCode().equals(code) || FREEZE.getCode().equals(code)) {
-            return;
-        }
-        throw new SysException(UserExceptionEnum.REQUEST_USER_STATUS_ERROR, code);
     }
 
     @Override
@@ -122,11 +78,11 @@ public enum UserStatusEnum implements ReadableEnum<UserStatusEnum> {
     }
 
     @Override
-    public UserStatusEnum parseToEnum(String originValue) {
+    public MenuTypeEnum parseToEnum(String originValue) {
         if (ObjectUtil.isEmpty(originValue)) {
             return null;
         }
-        for (UserStatusEnum value : UserStatusEnum.values()) {
+        for (MenuTypeEnum value : MenuTypeEnum.values()) {
             if (value.code.equals(Convert.toInt(originValue))) {
                 return value;
             }
