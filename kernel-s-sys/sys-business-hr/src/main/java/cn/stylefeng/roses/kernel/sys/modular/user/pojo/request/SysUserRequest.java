@@ -3,6 +3,7 @@ package cn.stylefeng.roses.kernel.sys.modular.user.pojo.request;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
+import cn.stylefeng.roses.kernel.validator.api.validators.unique.TableUniqueValue;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -49,6 +50,11 @@ public class SysUserRequest extends BaseRequest {
      */
     @NotBlank(message = "账号不能为空", groups = {add.class, edit.class})
     @ChineseDescription("账号")
+    @TableUniqueValue(message = "用户账号存在重复", groups = {add.class, edit.class},
+            tableName = "sys_user",
+            columnName = "account",
+            idFieldName = "user_id",
+            excludeLogicDeleteItems = true)
     private String account;
 
     /**
