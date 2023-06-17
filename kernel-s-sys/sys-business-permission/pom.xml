@@ -47,6 +47,25 @@
             <version>${roses.version}</version>
         </dependency>
 
+        <!--资源缓存-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>cache-sdk-memory</artifactId>
+            <version>${roses.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>cache-sdk-redis</artifactId>
+            <version>${roses.version}</version>
+            <optional>true</optional>
+        </dependency>
+
         <!--数据库sdk-->
         <!--数据库dao框架-->
         <dependency>
