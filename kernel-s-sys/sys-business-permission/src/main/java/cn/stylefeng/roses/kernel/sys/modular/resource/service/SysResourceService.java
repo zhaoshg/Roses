@@ -25,13 +25,9 @@
 package cn.stylefeng.roses.kernel.sys.modular.resource.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceDefinition;
 import cn.stylefeng.roses.kernel.sys.modular.resource.entity.SysResource;
-import cn.stylefeng.roses.kernel.sys.modular.resource.pojo.ResourceTreeNode;
+import cn.stylefeng.roses.kernel.sys.modular.resource.pojo.ResourceRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
-import jdk.management.resource.ResourceRequest;
-
-import java.util.List;
 
 /**
  * 资源服务类
@@ -50,66 +46,5 @@ public interface SysResourceService extends IService<SysResource> {
      * @since 2020/11/24 20:45
      */
     PageResult<SysResource> findPage(ResourceRequest resourceRequest);
-
-    /**
-     * 通过应用code获取获取资源下拉列表
-     * <p>
-     * 只获取菜单资源
-     *
-     * @param resourceRequest 请求参数
-     * @return 响应下拉结果
-     * @author fengshuonan
-     * @since 2020/11/24 20:45
-     */
-    List<SysResource> findList(ResourceRequest resourceRequest);
-
-    /**
-     * 获取角色绑定的资源树列表，用于分配接口权限
-     *
-     * @param roleId          角色id
-     * @param treeBuildFlag   true-带树形结构，false-不组装树形结构的
-     * @param resourceBizType 资源的类型，1-业务类，2-系统类
-     * @author fengshuonan
-     * @since 2022/9/28 23:46
-     */
-    List<ResourceTreeNode> getRoleResourceTree(Long roleId, Boolean treeBuildFlag, Integer resourceBizType);
-
-    /**
-     * 获取资源绑定列表（业务通用）
-     *
-     * @param resourceCodes   业务已经绑定的资源的编码集合
-     * @param treeBuildFlag   是否要构建成树
-     * @param resourceBizType 资源的类型，1-业务类，2-系统类
-     * @author fengshuonan
-     * @since 2021/8/8 22:24
-     */
-    List<ResourceTreeNode> getResourceList(List<String> resourceCodes, Boolean treeBuildFlag, Integer resourceBizType);
-
-    /**
-     * 获取资源的详情
-     *
-     * @param resourceRequest 请求参数
-     * @return 资源详情
-     * @author fengshuonan
-     * @since 2020/12/18 16:04
-     */
-    ResourceDefinition getApiResourceDetail(ResourceRequest resourceRequest);
-
-    /**
-     * 删除某个项目的所有资源
-     *
-     * @param projectCode 项目编码，一般为spring application name
-     * @author fengshuonan
-     * @since 2020/11/24 20:46
-     */
-    void deleteResourceByProjectCode(String projectCode);
-
-    /**
-     * 更新资源编码前缀，将guns$前缀改为新的
-     *
-     * @author fengshuonan
-     * @since 2022/11/17 0:17
-     */
-    void updateResourceAppCode(String newAppCode);
 
 }
