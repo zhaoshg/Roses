@@ -22,30 +22,29 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.modular.resource.service;
+package cn.stylefeng.roses.kernel.sys.api;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.sys.api.ResourceServiceApi;
-import cn.stylefeng.roses.kernel.sys.modular.resource.entity.SysResource;
-import cn.stylefeng.roses.kernel.sys.modular.resource.pojo.ResourceRequest;
-import com.baomidou.mybatisplus.extension.service.IService;
+import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceDefinition;
+import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceUrlParam;
 
 /**
- * 资源服务类
+ * 资源服务相关接口
  *
  * @author fengshuonan
- * @since 2020/11/24 19:56
+ * @since 2020/12/3 15:45
  */
-public interface SysResourceService extends IService<SysResource>, ResourceServiceApi {
+public interface ResourceServiceApi {
 
     /**
-     * 获取资源分页列表
+     * 通过url获取资源
+     * <p>
+     * 一般用在项目的安全拦截器，通过url信息，获取资源的详情
      *
-     * @param resourceRequest 请求参数
-     * @return 返回结果
+     * @param resourceUrlReq 资源url的封装
+     * @return 资源详情
      * @author fengshuonan
-     * @since 2020/11/24 20:45
+     * @since 2020/10/19 22:06
      */
-    PageResult<SysResource> findPage(ResourceRequest resourceRequest);
+    ResourceDefinition getResourceByUrl(ResourceUrlParam resourceUrlReq);
 
 }

@@ -32,6 +32,14 @@
             <version>${roses.version}</version>
         </dependency>
 
+        <!--scanner模块api-->
+        <!--需要用的resource相关的pojo-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>scanner-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

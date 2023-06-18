@@ -25,10 +25,14 @@
 package cn.stylefeng.roses.kernel.sys.modular.resource.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
+import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceDefinition;
+import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceUrlParam;
 import cn.stylefeng.roses.kernel.sys.modular.resource.entity.SysResource;
 import cn.stylefeng.roses.kernel.sys.modular.resource.mapper.SysResourceMapper;
 import cn.stylefeng.roses.kernel.sys.modular.resource.pojo.ResourceRequest;
@@ -37,7 +41,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 资源表 服务实现类
@@ -48,6 +56,9 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysResource> implements SysResourceService {
+
+    @Resource(name = "resourceCache")
+    private CacheOperatorApi<ResourceDefinition> resourceCache;
 
     @Override
     public PageResult<SysResource> findPage(ResourceRequest resourceRequest) {
@@ -60,6 +71,46 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
 
         Page<SysResource> page = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(page);
+    }
+
+    @Override
+    public ResourceDefinition getResourceByUrl(ResourceUrlParam resourceUrlReq) {
+
+        if (ObjectUtil.isEmpty(resourceUrlReq.getUrl()) || ObjectUtil.isEmpty(resourceUrlReq.getUrl())) {
+            return null;
+        }
+
+        // 先从缓存中查询
+        ResourceDefinition tempCachedResourceDefinition = resourceCache.get(resourceUrlReq.getUrl());
+        if (tempCachedResourceDefinition != null) {
+            return tempCachedResourceDefinition;
+        }
+
+        // 缓存中没有去数据库查询
+        LambdaQueryWrapper<SysResource> sysResourceLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysResourceLambdaQueryWrapper.eq(SysResource::getUrl, resourceUrlReq.getUrl());
+        List<SysResource> resources = this.list(sysResourceLambdaQueryWrapper);
+        if (resources == null || resources.isEmpty()) {
+            return null;
+        }
+
+        // 获取接口资源信息
+        SysResource resource = resources.get(0);
+        ResourceDefinition resourceDefinition = new ResourceDefinition();
+        BeanUtils.copyProperties(resource, resourceDefinition);
+
+        // 获取是否需要登录的标记, 判断是否需要登录，如果是则设置为true,否则为false
+        String requiredLoginFlag = resource.getRequiredLoginFlag();
+        resourceDefinition.setRequiredLoginFlag(YesOrNotEnum.Y.name().equals(requiredLoginFlag));
+
+        // 获取请求权限的标记，判断是否有权限，如果有则设置为true,否则为false
+        String requiredPermissionFlag = resource.getRequiredPermissionFlag();
+        resourceDefinition.setRequiredPermissionFlag(YesOrNotEnum.Y.name().equals(requiredPermissionFlag));
+
+        // 查询结果添加到缓存
+        resourceCache.put(resourceDefinition.getUrl(), resourceDefinition);
+
+        return resourceDefinition;
     }
 
     /**
@@ -86,5 +137,4 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
 
         return queryWrapper;
     }
-
 }
