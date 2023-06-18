@@ -8,6 +8,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
+import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
@@ -83,6 +84,30 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         LambdaQueryWrapper<SysRoleMenu> wrapper = createWrapper(sysRoleMenuRequest);
         Page<SysRoleMenu> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
+    }
+
+    @Override
+    public void bindRoleMenus(Long roleId, List<SysMenu> menuList) {
+
+        if (ObjectUtil.isEmpty(roleId) || ObjectUtil.isEmpty(menuList)) {
+            return;
+        }
+
+        // 清空角色的相关角色菜单关联
+        LambdaQueryWrapper<SysRoleMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysRoleMenu::getRoleId, roleId);
+        this.remove(queryWrapper);
+
+        // 绑定角色菜单
+        ArrayList<SysRoleMenu> sysRoleMenus = new ArrayList<>();
+        for (SysMenu sysMenu : menuList) {
+            SysRoleMenu sysRoleMenu = new SysRoleMenu();
+            sysRoleMenu.setRoleId(roleId);
+            sysRoleMenu.setAppId(sysMenu.getAppId());
+            sysRoleMenu.setMenuId(sysMenu.getMenuId());
+            sysRoleMenus.add(sysRoleMenu);
+        }
+        this.getBaseMapper().insertBatchSomeColumn(sysRoleMenus);
     }
 
     @Override
