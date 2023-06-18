@@ -26,6 +26,7 @@
 
         <!--文件api-->
         <!--应用图片相关的操作-->
+        <!--获取登录用户的头像url拼接-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>file-api</artifactId>

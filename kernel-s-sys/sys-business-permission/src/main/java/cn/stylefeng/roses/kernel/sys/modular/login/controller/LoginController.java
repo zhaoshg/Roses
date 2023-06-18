@@ -1,4 +1,4 @@
-package cn.stylefeng.roses.kernel.sys.modular.login;
+package cn.stylefeng.roses.kernel.sys.modular.login.controller;
 
 import cn.stylefeng.roses.kernel.auth.api.AuthServiceApi;
 import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginRequest;
