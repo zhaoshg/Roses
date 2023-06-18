@@ -129,6 +129,7 @@ public class HrOrganization extends BaseExpandFieldEntity implements AbstractTre
     /**
      * 子节点的集合
      */
+    @TableField(exist = false)
     @ChineseDescription("子节点的集合")
     private List<HrOrganization> children;
 
