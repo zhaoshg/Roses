@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.user.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
@@ -24,8 +25,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExceptionEnum.MAIN_FLAG_COUNT_ERROR;
 
@@ -36,7 +40,11 @@ import static cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExcepti
  * @date 2023/06/10 21:26
  */
 @Service
-public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUserOrg> implements SysUserOrgService, RemoveOrgCallbackApi, RemoveUserCallbackApi {
+public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUserOrg> implements SysUserOrgService, RemoveOrgCallbackApi,
+        RemoveUserCallbackApi {
+
+    @Resource
+    private DbOperatorApi dbOperatorApi;
 
     @Override
     public void add(SysUserOrgRequest sysUserOrgRequest) {
@@ -141,6 +149,52 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         return UserOrgFactory.createUserOrgDetailInfo(sysUserOrg);
     }
 
+    @Override
+    public List<UserOrgDTO> getUserOrgList(Long userId) {
+
+        if (userId == null) {
+            return null;
+        }
+
+        // 获取用户所有的部门信息
+        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserOrg::getUserId, userId);
+        queryWrapper.orderByDesc(SysUserOrg::getMainFlag);
+        List<SysUserOrg> sysUserOrgList = this.list(queryWrapper);
+
+        // 补充完整用户的部门和职位信息
+        ArrayList<UserOrgDTO> userOrgDTOS = new ArrayList<>();
+        for (SysUserOrg sysUserOrg : sysUserOrgList) {
+            UserOrgDTO userOrgDetailInfo = UserOrgFactory.createUserOrgDetailInfo(sysUserOrg);
+            userOrgDTOS.add(userOrgDetailInfo);
+        }
+
+        return userOrgDTOS;
+    }
+
+    @Override
+    public List<Long> getOrgUserIdList(Long orgId, Boolean containSubOrgFlag) {
+
+        // 如果不包含查询子公司，则直接查询参数指定公司下的人员
+        if (!containSubOrgFlag) {
+            LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(SysUserOrg::getOrgId, orgId);
+            queryWrapper.select(SysUserOrg::getUserId);
+            List<SysUserOrg> list = this.list(queryWrapper);
+            return list.stream().map(SysUserOrg::getUserId).collect(Collectors.toList());
+        }
+
+        // 如果包含查询子公司，以及子公司的子公司
+        Set<Long> subOrgIdList = dbOperatorApi.findSubListByParentId("hr_organization", "org_pids", "org_id", orgId);
+        subOrgIdList.add(orgId);
+
+        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysUserOrg::getOrgId, subOrgIdList);
+        queryWrapper.select(SysUserOrg::getUserId);
+        List<SysUserOrg> list = this.list(queryWrapper);
+        return list.stream().map(SysUserOrg::getUserId).collect(Collectors.toList());
+    }
+
     /**
      * 获取信息
      *
@@ -187,7 +241,8 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         for (SysUserOrg sysUserOrg : userOrgList) {
 
             // 校验参数是否缺失
-            if (ObjectUtil.isEmpty(sysUserOrg.getOrgId()) || ObjectUtil.isEmpty(sysUserOrg.getPositionId()) || ObjectUtil.isEmpty(sysUserOrg.getMainFlag())) {
+            if (ObjectUtil.isEmpty(sysUserOrg.getOrgId()) || ObjectUtil.isEmpty(sysUserOrg.getPositionId()) || ObjectUtil.isEmpty(
+                    sysUserOrg.getMainFlag())) {
                 throw new ServiceException(SysUserOrgExceptionEnum.EMPTY_PARAM);
             }
 

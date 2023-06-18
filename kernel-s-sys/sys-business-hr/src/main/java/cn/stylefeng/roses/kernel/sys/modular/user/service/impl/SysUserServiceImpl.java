@@ -126,7 +126,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUser = this.querySysUser(sysUserRequest);
 
         // 获取用户的组织机构信息
-        List<UserOrgDTO> userOrgList = sysUserServiceApi.getUserOrgList(sysUser.getUserId());
+        List<UserOrgDTO> userOrgList = sysUserOrgService.getUserOrgList(sysUser.getUserId());
         sysUser.setUserOrgDTOList(userOrgList);
 
         // 获取用户的角色信息
@@ -231,7 +231,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 如果传递了组织机构id查询条件，则查询对应机构id下有哪些用户，再拼接用户查询条件
         if (ObjectUtil.isNotEmpty(sysUserRequest.getOrgIdCondition())) {
-            List<Long> orgUserIdList = this.sysUserServiceApi.getOrgUserIdList(sysUserRequest.getOrgIdCondition(),
+            List<Long> orgUserIdList = this.sysUserOrgService.getOrgUserIdList(sysUserRequest.getOrgIdCondition(),
                     true);
             queryWrapper.in(SysUser::getUserId, orgUserIdList);
         }

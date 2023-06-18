@@ -7,13 +7,10 @@ import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
-import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserValidateDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
-import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
-import cn.stylefeng.roses.kernel.sys.modular.user.factory.UserOrgFactory;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
@@ -25,7 +22,6 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -82,52 +78,6 @@ public class UserIntegrationService implements SysUserServiceApi {
         simpleUserDTO.setAvatarUrl(fileAuthUrl);
 
         return simpleUserDTO;
-    }
-
-    @Override
-    public List<UserOrgDTO> getUserOrgList(Long userId) {
-
-        if (userId == null) {
-            return null;
-        }
-
-        // 获取用户所有的部门信息
-        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(SysUserOrg::getUserId, userId);
-        queryWrapper.orderByDesc(SysUserOrg::getMainFlag);
-        List<SysUserOrg> sysUserOrgList = sysUserOrgService.list(queryWrapper);
-
-        // 补充完整用户的部门和职位信息
-        ArrayList<UserOrgDTO> userOrgDTOS = new ArrayList<>();
-        for (SysUserOrg sysUserOrg : sysUserOrgList) {
-            UserOrgDTO userOrgDetailInfo = UserOrgFactory.createUserOrgDetailInfo(sysUserOrg);
-            userOrgDTOS.add(userOrgDetailInfo);
-        }
-
-        return userOrgDTOS;
-    }
-
-    @Override
-    public List<Long> getOrgUserIdList(Long orgId, Boolean containSubOrgFlag) {
-
-        // 如果不包含查询子公司，则直接查询参数指定公司下的人员
-        if (!containSubOrgFlag) {
-            LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(SysUserOrg::getOrgId, orgId);
-            queryWrapper.select(SysUserOrg::getUserId);
-            List<SysUserOrg> list = this.sysUserOrgService.list(queryWrapper);
-            return list.stream().map(SysUserOrg::getUserId).collect(Collectors.toList());
-        }
-
-        // 如果包含查询子公司，以及子公司的子公司
-        Set<Long> subOrgIdList = dbOperatorApi.findSubListByParentId("hr_organization", "org_pids", "org_id", orgId);
-        subOrgIdList.add(orgId);
-
-        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.in(SysUserOrg::getOrgId, subOrgIdList);
-        queryWrapper.select(SysUserOrg::getUserId);
-        List<SysUserOrg> list = this.sysUserOrgService.list(queryWrapper);
-        return list.stream().map(SysUserOrg::getUserId).collect(Collectors.toList());
     }
 
     @Override
