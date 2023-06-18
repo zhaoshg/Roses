@@ -7,17 +7,17 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
+import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
+import cn.stylefeng.roses.kernel.sys.modular.theme.constants.ThemeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplateField;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplateRel;
 import cn.stylefeng.roses.kernel.sys.modular.theme.enums.ThemeFieldTypeEnum;
+import cn.stylefeng.roses.kernel.sys.modular.theme.exceptions.SysThemeExceptionEnum;
+import cn.stylefeng.roses.kernel.sys.modular.theme.exceptions.SysThemeTemplateFieldExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.theme.mapper.SysThemeTemplateFieldMapper;
+import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeTemplateFieldRequest;
 import cn.stylefeng.roses.kernel.sys.modular.theme.service.SysThemeTemplateFieldService;
 import cn.stylefeng.roses.kernel.sys.modular.theme.service.SysThemeTemplateRelService;
-import cn.stylefeng.roses.kernel.system.api.constants.SystemConstants;
-import cn.stylefeng.roses.kernel.system.api.exception.SystemModularException;
-import cn.stylefeng.roses.kernel.system.api.exception.enums.theme.SysThemeExceptionEnum;
-import cn.stylefeng.roses.kernel.system.api.exception.enums.theme.SysThemeTemplateFieldExceptionEnum;
-import cn.stylefeng.roses.kernel.system.api.pojo.theme.SysThemeTemplateFieldRequest;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -36,7 +36,8 @@ import java.util.stream.Collectors;
  * @since 2021/12/17 10:34
  */
 @Service
-public class SysThemeTemplateFieldServiceImpl extends ServiceImpl<SysThemeTemplateFieldMapper, SysThemeTemplateField> implements SysThemeTemplateFieldService {
+public class SysThemeTemplateFieldServiceImpl extends ServiceImpl<SysThemeTemplateFieldMapper, SysThemeTemplateField> implements
+        SysThemeTemplateFieldService {
 
     @Resource
     private SysThemeTemplateRelService sysThemeTemplateRelService;
@@ -49,7 +50,8 @@ public class SysThemeTemplateFieldServiceImpl extends ServiceImpl<SysThemeTempla
         BeanUtil.copyProperties(sysThemeTemplateFieldRequest, sysThemeTemplateField);
 
         // 设置是否必填：如果请求参数为空，默认设置为非必填
-        sysThemeTemplateField.setFieldRequired(StringUtils.isBlank(sysThemeTemplateFieldRequest.getFieldType()) ? YesOrNotEnum.N.getCode().charAt(0) : sysThemeTemplateFieldRequest.getFieldRequired());
+        sysThemeTemplateField.setFieldRequired(StringUtils.isBlank(sysThemeTemplateFieldRequest.getFieldType()) ? YesOrNotEnum.N.getCode()
+                .charAt(0) : sysThemeTemplateFieldRequest.getFieldRequired());
 
         this.save(sysThemeTemplateField);
     }
@@ -59,8 +61,8 @@ public class SysThemeTemplateFieldServiceImpl extends ServiceImpl<SysThemeTempla
         SysThemeTemplateField sysThemeTemplateField = this.queryThemeTemplateFieldById(sysThemeTemplateFieldRequest);
 
         // Guns开头的模板字段不能删除，系统内置
-        if (sysThemeTemplateField.getFieldCode().toUpperCase(Locale.ROOT).startsWith(SystemConstants.THEME_CODE_SYSTEM_PREFIX)) {
-            throw new SystemModularException(SysThemeExceptionEnum.THEME_IS_SYSTEM);
+        if (sysThemeTemplateField.getFieldCode().toUpperCase(Locale.ROOT).startsWith(ThemeConstants.THEME_CODE_SYSTEM_PREFIX)) {
+            throw new SysException(SysThemeExceptionEnum.THEME_IS_SYSTEM);
         }
 
         // 校验系统主题模板属性使用
@@ -84,7 +86,7 @@ public class SysThemeTemplateFieldServiceImpl extends ServiceImpl<SysThemeTempla
 
         // 被使用，抛出异常
         if (themeTemplateRels.size() > 0) {
-            throw new SystemModularException(SysThemeTemplateFieldExceptionEnum.FIELD_IS_USED);
+            throw new SysException(SysThemeTemplateFieldExceptionEnum.FIELD_IS_USED);
         }
     }
 
@@ -110,7 +112,8 @@ public class SysThemeTemplateFieldServiceImpl extends ServiceImpl<SysThemeTempla
     public PageResult<SysThemeTemplateField> findPage(SysThemeTemplateFieldRequest sysThemeTemplateFieldRequest) {
         LambdaQueryWrapper<SysThemeTemplateField> queryWrapper = new LambdaQueryWrapper<>();
         // 根据属性名称模糊查询
-        queryWrapper.like(StrUtil.isNotBlank(sysThemeTemplateFieldRequest.getFieldName()), SysThemeTemplateField::getFieldName, sysThemeTemplateFieldRequest.getFieldName());
+        queryWrapper.like(StrUtil.isNotBlank(sysThemeTemplateFieldRequest.getFieldName()), SysThemeTemplateField::getFieldName,
+                sysThemeTemplateFieldRequest.getFieldName());
 
         Page<SysThemeTemplateField> page = page(PageFactory.defaultPage(), queryWrapper);
 
@@ -140,7 +143,8 @@ public class SysThemeTemplateFieldServiceImpl extends ServiceImpl<SysThemeTempla
      * @author xixiaowei
      * @since 2021/12/24 14:38
      */
-    private List<String> getFieldCodes(SysThemeTemplateFieldRequest sysThemeTemplateFieldRequest, SysThemeTemplateRelService sysThemeTemplateRelService) {
+    private List<String> getFieldCodes(SysThemeTemplateFieldRequest sysThemeTemplateFieldRequest,
+                                       SysThemeTemplateRelService sysThemeTemplateRelService) {
         // 查询有关联的属性
         LambdaQueryWrapper<SysThemeTemplateRel> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysThemeTemplateRel::getTemplateId, sysThemeTemplateFieldRequest.getTemplateId());
@@ -197,7 +201,7 @@ public class SysThemeTemplateFieldServiceImpl extends ServiceImpl<SysThemeTempla
     private SysThemeTemplateField queryThemeTemplateFieldById(SysThemeTemplateFieldRequest sysThemeTemplateFieldRequest) {
         SysThemeTemplateField sysThemeTemplateField = this.getById(sysThemeTemplateFieldRequest.getFieldId());
         if (ObjectUtil.isNull(sysThemeTemplateField)) {
-            throw new SystemModularException(SysThemeTemplateFieldExceptionEnum.FIELD_NOT_EXIST);
+            throw new SysException(SysThemeTemplateFieldExceptionEnum.FIELD_NOT_EXIST);
         }
         return sysThemeTemplateField;
     }

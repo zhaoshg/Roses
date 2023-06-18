@@ -1,14 +1,14 @@
 package cn.stylefeng.roses.kernel.sys.modular.theme.service.impl;
 
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
+import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplate;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplateRel;
+import cn.stylefeng.roses.kernel.sys.modular.theme.exceptions.SysThemeTemplateExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.theme.mapper.SysThemeTemplateRelMapper;
+import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeTemplateRelRequest;
 import cn.stylefeng.roses.kernel.sys.modular.theme.service.SysThemeTemplateRelService;
 import cn.stylefeng.roses.kernel.sys.modular.theme.service.SysThemeTemplateService;
-import cn.stylefeng.roses.kernel.system.api.exception.SystemModularException;
-import cn.stylefeng.roses.kernel.system.api.exception.enums.theme.SysThemeTemplateExceptionEnum;
-import cn.stylefeng.roses.kernel.system.api.pojo.theme.SysThemeTemplateRelRequest;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -66,7 +66,7 @@ public class SysThemeTemplateRelServiceImpl extends ServiceImpl<SysThemeTemplate
         SysThemeTemplate sysThemeTemplate = sysThemeTemplateService.getOne(queryWrapper, true);
         // 判断状态，如果是启用则禁止操作
         if (YesOrNotEnum.Y.getCode().equals(sysThemeTemplate.getStatusFlag().toString())) {
-            throw new SystemModularException(SysThemeTemplateExceptionEnum.TEMPLATE_IS_USED);
+            throw new SysException(SysThemeTemplateExceptionEnum.TEMPLATE_IS_USED);
         }
     }
 

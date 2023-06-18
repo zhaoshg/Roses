@@ -25,8 +25,8 @@
 package cn.stylefeng.roses.kernel.sys.modular.theme.cache;
 
 import cn.stylefeng.roses.kernel.cache.redis.AbstractRedisCacheOperator;
+import cn.stylefeng.roses.kernel.sys.modular.theme.constants.ThemeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.DefaultTheme;
-import cn.stylefeng.roses.kernel.system.api.constants.SystemCachesConstants;
 import org.springframework.data.redis.core.RedisTemplate;
 
 /**
@@ -43,7 +43,7 @@ public class ThemeRedisCache extends AbstractRedisCacheOperator<DefaultTheme> {
 
     @Override
     public String getCommonKeyPrefix() {
-        return SystemCachesConstants.SYSTEM_THEME_CACHE_PREFIX;
+        return ThemeConstants.SYSTEM_THEME_CACHE_PREFIX;
     }
 
 }

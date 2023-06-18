@@ -2,8 +2,8 @@ package cn.stylefeng.roses.kernel.sys.modular.theme.clean;
 
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.config.api.ConfigInitCallbackApi;
+import cn.stylefeng.roses.kernel.sys.modular.theme.constants.ThemeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.DefaultTheme;
-import cn.stylefeng.roses.kernel.system.api.constants.SystemConstants;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -27,7 +27,7 @@ public class ThemeConfigRefresh implements ConfigInitCallbackApi {
 
     @Override
     public void initAfter() {
-        themeCacheApi.remove(SystemConstants.THEME_GUNS_PLATFORM);
+        themeCacheApi.remove(ThemeConstants.THEME_GUNS_PLATFORM);
     }
 
 }

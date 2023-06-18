@@ -3,8 +3,8 @@ package cn.stylefeng.roses.kernel.sys.modular.theme.service;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysTheme;
 import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.DefaultTheme;
-import cn.stylefeng.roses.kernel.system.api.pojo.theme.SysThemeDTO;
-import cn.stylefeng.roses.kernel.system.api.pojo.theme.SysThemeRequest;
+import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeDTO;
+import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

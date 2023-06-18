@@ -2,8 +2,8 @@ package cn.stylefeng.roses.kernel.sys.modular.theme.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplate;
-import cn.stylefeng.roses.kernel.system.api.pojo.theme.SysThemeTemplateDataDTO;
-import cn.stylefeng.roses.kernel.system.api.pojo.theme.SysThemeTemplateRequest;
+import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeTemplateDataDTO;
+import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeTemplateRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

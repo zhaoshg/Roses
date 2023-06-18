@@ -1,7 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.theme.mapper;
 
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplate;
-import cn.stylefeng.roses.kernel.system.api.pojo.theme.SysThemeTemplateDataDTO;
+import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeTemplateDataDTO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 

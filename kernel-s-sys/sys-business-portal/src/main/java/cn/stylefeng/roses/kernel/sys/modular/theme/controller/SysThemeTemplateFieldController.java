@@ -9,8 +9,8 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplateField;
+import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeTemplateFieldRequest;
 import cn.stylefeng.roses.kernel.sys.modular.theme.service.SysThemeTemplateFieldService;
-import cn.stylefeng.roses.kernel.system.api.pojo.theme.SysThemeTemplateFieldRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,7 +39,8 @@ public class SysThemeTemplateFieldController {
      */
     @PostResource(name = "增加系统主题模板属性", path = "/sysThemeTemplateField/add")
     @BusinessLog
-    public ResponseData<?> add(@RequestBody @Validated(SysThemeTemplateFieldRequest.add.class) SysThemeTemplateFieldRequest sysThemeTemplateFieldParam) {
+    public ResponseData<?> add(
+            @RequestBody @Validated(SysThemeTemplateFieldRequest.add.class) SysThemeTemplateFieldRequest sysThemeTemplateFieldParam) {
         sysThemeTemplateFieldService.add(sysThemeTemplateFieldParam);
         return new SuccessResponseData<>();
     }
@@ -52,7 +53,8 @@ public class SysThemeTemplateFieldController {
      */
     @PostResource(name = "删除系统主题模板属性", path = "/sysThemeTemplateField/del")
     @BusinessLog
-    public ResponseData<?> del(@RequestBody @Validated(SysThemeTemplateFieldRequest.delete.class) SysThemeTemplateFieldRequest sysThemeTemplateFieldParam) {
+    public ResponseData<?> del(
+            @RequestBody @Validated(SysThemeTemplateFieldRequest.delete.class) SysThemeTemplateFieldRequest sysThemeTemplateFieldParam) {
         sysThemeTemplateFieldService.del(sysThemeTemplateFieldParam);
         return new SuccessResponseData<>();
     }
@@ -65,7 +67,8 @@ public class SysThemeTemplateFieldController {
      */
     @PostResource(name = "修改系统模板属性", path = "/sysThemeTemplateField/edit")
     @BusinessLog
-    public ResponseData<?> edit(@RequestBody @Validated(SysThemeTemplateFieldRequest.edit.class) SysThemeTemplateFieldRequest sysThemeTemplateFieldParam) {
+    public ResponseData<?> edit(
+            @RequestBody @Validated(SysThemeTemplateFieldRequest.edit.class) SysThemeTemplateFieldRequest sysThemeTemplateFieldParam) {
         sysThemeTemplateFieldService.edit(sysThemeTemplateFieldParam);
         return new SuccessResponseData<>();
     }
@@ -77,7 +80,8 @@ public class SysThemeTemplateFieldController {
      * @since 2021/12/17 11:49
      */
     @GetResource(name = "查询系统主题模板属性详情", path = "/sysThemeTemplateField/detail")
-    public ResponseData<SysThemeTemplateField> detail(@Validated(SysThemeTemplateFieldRequest.detail.class) SysThemeTemplateFieldRequest sysThemeTemplateFieldParam) {
+    public ResponseData<SysThemeTemplateField> detail(
+            @Validated(SysThemeTemplateFieldRequest.detail.class) SysThemeTemplateFieldRequest sysThemeTemplateFieldParam) {
         return new SuccessResponseData<>(sysThemeTemplateFieldService.detail(sysThemeTemplateFieldParam));
     }
 

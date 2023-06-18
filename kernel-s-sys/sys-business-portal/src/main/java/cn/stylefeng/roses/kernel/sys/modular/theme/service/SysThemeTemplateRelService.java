@@ -1,7 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.theme.service;
 
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplateRel;
-import cn.stylefeng.roses.kernel.system.api.pojo.theme.SysThemeTemplateRelRequest;
+import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeTemplateRelRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

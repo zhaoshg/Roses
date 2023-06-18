@@ -26,8 +26,8 @@ package cn.stylefeng.roses.kernel.sys.modular.theme.cache;
 
 import cn.hutool.cache.impl.TimedCache;
 import cn.stylefeng.roses.kernel.cache.memory.AbstractMemoryCacheOperator;
+import cn.stylefeng.roses.kernel.sys.modular.theme.constants.ThemeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.DefaultTheme;
-import cn.stylefeng.roses.kernel.system.api.constants.SystemCachesConstants;
 
 /**
  * 系统主题缓存
@@ -43,7 +43,7 @@ public class ThemeMemoryCache extends AbstractMemoryCacheOperator<DefaultTheme> 
 
     @Override
     public String getCommonKeyPrefix() {
-        return SystemCachesConstants.SYSTEM_THEME_CACHE_PREFIX;
+        return ThemeConstants.SYSTEM_THEME_CACHE_PREFIX;
     }
 
 }

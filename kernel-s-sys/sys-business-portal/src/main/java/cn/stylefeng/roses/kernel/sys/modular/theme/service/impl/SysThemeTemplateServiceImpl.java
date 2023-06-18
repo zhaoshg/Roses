@@ -7,19 +7,19 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
+import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
+import cn.stylefeng.roses.kernel.sys.modular.theme.constants.ThemeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysTheme;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplate;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplateRel;
+import cn.stylefeng.roses.kernel.sys.modular.theme.exceptions.SysThemeExceptionEnum;
+import cn.stylefeng.roses.kernel.sys.modular.theme.exceptions.SysThemeTemplateExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.theme.mapper.SysThemeTemplateMapper;
+import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeTemplateDataDTO;
+import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeTemplateRequest;
 import cn.stylefeng.roses.kernel.sys.modular.theme.service.SysThemeService;
 import cn.stylefeng.roses.kernel.sys.modular.theme.service.SysThemeTemplateRelService;
 import cn.stylefeng.roses.kernel.sys.modular.theme.service.SysThemeTemplateService;
-import cn.stylefeng.roses.kernel.system.api.constants.SystemConstants;
-import cn.stylefeng.roses.kernel.system.api.exception.SystemModularException;
-import cn.stylefeng.roses.kernel.system.api.exception.enums.theme.SysThemeExceptionEnum;
-import cn.stylefeng.roses.kernel.system.api.exception.enums.theme.SysThemeTemplateExceptionEnum;
-import cn.stylefeng.roses.kernel.system.api.pojo.theme.SysThemeTemplateDataDTO;
-import cn.stylefeng.roses.kernel.system.api.pojo.theme.SysThemeTemplateRequest;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -66,7 +66,7 @@ public class SysThemeTemplateServiceImpl extends ServiceImpl<SysThemeTemplateMap
         SysThemeTemplate sysThemeTemplate = this.querySysThemeTemplateById(sysThemeTemplateRequest);
 
         if (YesOrNotEnum.Y.getCode().equals(sysThemeTemplate.getStatusFlag().toString())) {
-            throw new SystemModularException(SysThemeTemplateExceptionEnum.TEMPLATE_IS_USED);
+            throw new SysException(SysThemeTemplateExceptionEnum.TEMPLATE_IS_USED);
         }
 
         // 拷贝属性
@@ -81,13 +81,13 @@ public class SysThemeTemplateServiceImpl extends ServiceImpl<SysThemeTemplateMap
         SysThemeTemplate sysThemeTemplate = this.querySysThemeTemplateById(sysThemeTemplateRequest);
 
         // Guns开头的模板字段不能删除，系统内置
-        if (sysThemeTemplate.getTemplateCode().toUpperCase(Locale.ROOT).startsWith(SystemConstants.THEME_CODE_SYSTEM_PREFIX)) {
-            throw new SystemModularException(SysThemeExceptionEnum.THEME_IS_SYSTEM);
+        if (sysThemeTemplate.getTemplateCode().toUpperCase(Locale.ROOT).startsWith(ThemeConstants.THEME_CODE_SYSTEM_PREFIX)) {
+            throw new SysException(SysThemeExceptionEnum.THEME_IS_SYSTEM);
         }
 
         // 启动的主题模板不能删除
         if (YesOrNotEnum.Y.getCode().equals(sysThemeTemplate.getStatusFlag().toString())) {
-            throw new SystemModularException(SysThemeTemplateExceptionEnum.TEMPLATE_IS_ENABLE);
+            throw new SysException(SysThemeTemplateExceptionEnum.TEMPLATE_IS_ENABLE);
         }
 
         // 删除关联关系条件
@@ -105,7 +105,8 @@ public class SysThemeTemplateServiceImpl extends ServiceImpl<SysThemeTemplateMap
     public PageResult<SysThemeTemplate> findPage(SysThemeTemplateRequest sysThemeTemplateRequest) {
         LambdaQueryWrapper<SysThemeTemplate> queryWrapper = new LambdaQueryWrapper<>();
         // 根据系统主题模板名称模糊查询
-        queryWrapper.like(StrUtil.isNotBlank(sysThemeTemplateRequest.getTemplateName()), SysThemeTemplate::getTemplateName, sysThemeTemplateRequest.getTemplateName());
+        queryWrapper.like(StrUtil.isNotBlank(sysThemeTemplateRequest.getTemplateName()), SysThemeTemplate::getTemplateName,
+                sysThemeTemplateRequest.getTemplateName());
 
         Page<SysThemeTemplate> page = page(PageFactory.defaultPage(), queryWrapper);
 
@@ -126,7 +127,7 @@ public class SysThemeTemplateServiceImpl extends ServiceImpl<SysThemeTemplateMap
         queryWrapper.eq(SysTheme::getTemplateId, sysThemeTemplate.getTemplateId());
         long sysThemeNum = sysThemeService.count(queryWrapper);
         if (sysThemeNum > 0) {
-            throw new SystemModularException(SysThemeTemplateExceptionEnum.TEMPLATE_IS_USED);
+            throw new SysException(SysThemeTemplateExceptionEnum.TEMPLATE_IS_USED);
         }
 
         // 修改状态
@@ -140,7 +141,7 @@ public class SysThemeTemplateServiceImpl extends ServiceImpl<SysThemeTemplateMap
             List<SysThemeTemplateRel> sysThemeTemplateRels = sysThemeTemplateRelService.list(wrapper);
 
             if (sysThemeTemplateRels.size() <= 0) {
-                throw new SystemModularException(SysThemeTemplateExceptionEnum.TEMPLATE_NOT_ATTRIBUTE);
+                throw new SysException(SysThemeTemplateExceptionEnum.TEMPLATE_NOT_ATTRIBUTE);
             }
 
             sysThemeTemplate.setStatusFlag(YesOrNotEnum.Y.getCode().charAt(0));
@@ -164,7 +165,7 @@ public class SysThemeTemplateServiceImpl extends ServiceImpl<SysThemeTemplateMap
     private SysThemeTemplate querySysThemeTemplateById(SysThemeTemplateRequest sysThemeTemplateRequest) {
         SysThemeTemplate sysThemeTemplate = this.getById(sysThemeTemplateRequest.getTemplateId());
         if (ObjectUtil.isNull(sysThemeTemplate)) {
-            throw new SystemModularException(SysThemeTemplateExceptionEnum.TEMPLATE_NOT_EXIT);
+            throw new SysException(SysThemeTemplateExceptionEnum.TEMPLATE_NOT_EXIT);
         }
         return sysThemeTemplate;
     }

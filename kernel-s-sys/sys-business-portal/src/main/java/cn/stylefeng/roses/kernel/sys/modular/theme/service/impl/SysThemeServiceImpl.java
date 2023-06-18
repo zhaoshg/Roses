@@ -14,24 +14,23 @@ import cn.stylefeng.roses.kernel.file.api.pojo.AntdvFileInfo;
 import cn.stylefeng.roses.kernel.file.api.pojo.request.SysFileInfoRequest;
 import cn.stylefeng.roses.kernel.rule.callback.ConfigUpdateCallback;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
+import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
+import cn.stylefeng.roses.kernel.sys.modular.theme.constants.ThemeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysTheme;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplate;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplateField;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplateRel;
 import cn.stylefeng.roses.kernel.sys.modular.theme.enums.ThemeFieldTypeEnum;
+import cn.stylefeng.roses.kernel.sys.modular.theme.exceptions.SysThemeExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.theme.factory.DefaultThemeFactory;
 import cn.stylefeng.roses.kernel.sys.modular.theme.mapper.SysThemeMapper;
 import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.DefaultTheme;
+import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeDTO;
+import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeRequest;
 import cn.stylefeng.roses.kernel.sys.modular.theme.service.SysThemeService;
 import cn.stylefeng.roses.kernel.sys.modular.theme.service.SysThemeTemplateFieldService;
 import cn.stylefeng.roses.kernel.sys.modular.theme.service.SysThemeTemplateRelService;
 import cn.stylefeng.roses.kernel.sys.modular.theme.service.SysThemeTemplateService;
-import cn.stylefeng.roses.kernel.system.api.ThemeServiceApi;
-import cn.stylefeng.roses.kernel.system.api.constants.SystemConstants;
-import cn.stylefeng.roses.kernel.system.api.exception.SystemModularException;
-import cn.stylefeng.roses.kernel.system.api.exception.enums.theme.SysThemeExceptionEnum;
-import cn.stylefeng.roses.kernel.system.api.pojo.theme.SysThemeDTO;
-import cn.stylefeng.roses.kernel.system.api.pojo.theme.SysThemeRequest;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.TypeReference;
@@ -58,7 +57,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> implements SysThemeService, ThemeServiceApi, ConfigUpdateCallback {
+public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> implements SysThemeService, ConfigUpdateCallback {
 
     @Resource
     private SysThemeTemplateService sysThemeTemplateService;
@@ -82,7 +81,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
 
         // 判断模板启用状态：如果为禁用状态不允许使用
         if (YesOrNotEnum.N.getCode().equals(sysThemeTemplate.getStatusFlag().toString())) {
-            throw new SystemModularException(SysThemeExceptionEnum.THEME_TEMPLATE_IS_DISABLE);
+            throw new SysException(SysThemeExceptionEnum.THEME_TEMPLATE_IS_DISABLE);
         }
 
         SysTheme sysTheme = new SysTheme();
@@ -102,7 +101,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
 
         // 已启用的主题不允许删除
         if (YesOrNotEnum.Y.getCode().equals(sysTheme.getStatusFlag().toString())) {
-            throw new SystemModularException(SysThemeExceptionEnum.THEME_NOT_ALLOW_DELETE);
+            throw new SysException(SysThemeExceptionEnum.THEME_NOT_ALLOW_DELETE);
         }
 
         // 删除保存的图片
@@ -117,8 +116,8 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
         List<String> fileNames = new ArrayList<>();
         if (themeKeys.size() > 0) {
             LambdaQueryWrapper<SysThemeTemplateField> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.in(SysThemeTemplateField::getFieldCode, themeKeys).eq(SysThemeTemplateField::getFieldType, ThemeFieldTypeEnum.FILE.getCode())
-                    .select(SysThemeTemplateField::getFieldCode);
+            queryWrapper.in(SysThemeTemplateField::getFieldCode, themeKeys)
+                    .eq(SysThemeTemplateField::getFieldType, ThemeFieldTypeEnum.FILE.getCode()).select(SysThemeTemplateField::getFieldCode);
             List<SysThemeTemplateField> sysThemeTemplateFields = sysThemeTemplateFieldService.list(queryWrapper);
             fileNames = sysThemeTemplateFields.stream().map(SysThemeTemplateField::getFieldCode).collect(Collectors.toList());
         }
@@ -174,7 +173,8 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
             sysThemeDTOList.add(sysThemeDTO);
         }
 
-        return PageResultFactory.createPageResult(sysThemeDTOList, page.getTotal(), Integer.valueOf(String.valueOf(page.getSize())), Integer.valueOf(String.valueOf(page.getCurrent())));
+        return PageResultFactory.createPageResult(sysThemeDTOList, page.getTotal(), Integer.valueOf(String.valueOf(page.getSize())),
+                Integer.valueOf(String.valueOf(page.getCurrent())));
     }
 
     @Override
@@ -211,7 +211,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
 
         // 已经启用系统主题不允许禁用
         if (YesOrNotEnum.Y.getCode().equals(sysTheme.getStatusFlag().toString())) {
-            throw new SystemModularException(SysThemeExceptionEnum.UNIQUE_ENABLE_NOT_DISABLE);
+            throw new SysException(SysThemeExceptionEnum.UNIQUE_ENABLE_NOT_DISABLE);
         } else {
             // 如果当前系统禁用，启用该系统主题，同时禁用已启用的系统主题
             sysTheme.setStatusFlag(YesOrNotEnum.Y.getCode().charAt(0));
@@ -235,7 +235,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
     public DefaultTheme currentThemeInfo(SysThemeRequest sysThemeParam) {
 
         // 获取缓存中是否有默认主题
-        DefaultTheme defaultTheme = themeCacheApi.get(SystemConstants.THEME_GUNS_PLATFORM);
+        DefaultTheme defaultTheme = themeCacheApi.get(ThemeConstants.THEME_GUNS_PLATFORM);
         if (defaultTheme != null) {
             return defaultTheme;
         }
@@ -247,7 +247,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
         this.parseFileUrls(result);
 
         // 缓存系统中激活的主题
-        themeCacheApi.put(SystemConstants.THEME_GUNS_PLATFORM, result);
+        themeCacheApi.put(ThemeConstants.THEME_GUNS_PLATFORM, result);
 
         return result;
     }
@@ -269,7 +269,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
     private SysTheme querySysThemeById(SysThemeRequest sysThemeRequest) {
         SysTheme sysTheme = this.getById(sysThemeRequest.getThemeId());
         if (ObjectUtil.isNull(sysTheme)) {
-            throw new SystemModularException(SysThemeExceptionEnum.THEME_NOT_EXIST);
+            throw new SysException(SysThemeExceptionEnum.THEME_NOT_EXIST);
         }
         return sysTheme;
     }
@@ -345,7 +345,8 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
         }
 
         // 所有文件类型的字段名
-        List<String> needToParse = fieldInfoList.stream().map(SysThemeTemplateField::getFieldCode).map(StrUtil::toCamelCase).collect(Collectors.toList());
+        List<String> needToParse = fieldInfoList.stream().map(SysThemeTemplateField::getFieldCode).map(StrUtil::toCamelCase)
+                .collect(Collectors.toList());
 
         // 其他属性
         Map<String, String> otherConfigs = theme.getOtherConfigs();
@@ -389,7 +390,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
     private Long getDefaultTemplateId() {
         // 查询编码为GUNS_PLATFORM的主题模板id
         LambdaQueryWrapper<SysThemeTemplate> sysThemeTemplateLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        sysThemeTemplateLambdaQueryWrapper.eq(SysThemeTemplate::getTemplateCode, SystemConstants.THEME_GUNS_PLATFORM);
+        sysThemeTemplateLambdaQueryWrapper.eq(SysThemeTemplate::getTemplateCode, ThemeConstants.THEME_GUNS_PLATFORM);
         SysThemeTemplate sysThemeTemplate = this.sysThemeTemplateService.getOne(sysThemeTemplateLambdaQueryWrapper, false);
         if (sysThemeTemplate == null) {
             log.error("当前系统主题模板编码GUNS_PLATFORM不存在，请检查数据库数据是否正常！");
@@ -405,7 +406,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
      * @since 2022/1/12 12:49
      */
     private void clearThemeCache() {
-        themeCacheApi.remove(SystemConstants.THEME_GUNS_PLATFORM);
+        themeCacheApi.remove(ThemeConstants.THEME_GUNS_PLATFORM);
     }
 
 }
