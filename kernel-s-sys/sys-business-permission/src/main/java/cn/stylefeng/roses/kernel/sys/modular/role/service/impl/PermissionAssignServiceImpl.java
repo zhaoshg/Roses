@@ -18,6 +18,7 @@ import cn.stylefeng.roses.kernel.sys.modular.role.service.PermissionAssignServic
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
  * @author fengshuonan
  * @since 2023/6/13 16:14
  */
+@Service
 public class PermissionAssignServiceImpl implements PermissionAssignService {
 
     @Resource
