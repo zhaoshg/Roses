@@ -1,7 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.biz;
 
 import cn.hutool.core.util.ObjectUtil;
-import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
@@ -10,8 +9,6 @@ import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserValidateDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
-import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
-import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -36,15 +33,6 @@ public class UserIntegrationService implements SysUserServiceApi {
 
     @Resource
     private FileInfoApi fileInfoApi;
-
-    @Resource
-    private SysUserOrgService sysUserOrgService;
-
-    @Resource
-    private DbOperatorApi dbOperatorApi;
-
-    @Resource
-    private SysUserRoleService sysUserRoleService;
 
     @Override
     public SimpleUserDTO getUserInfoByUserId(Long userId) {
