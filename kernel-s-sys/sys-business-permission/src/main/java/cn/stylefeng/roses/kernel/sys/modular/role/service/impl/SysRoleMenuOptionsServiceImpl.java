@@ -8,6 +8,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
+import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleAssignOperateAction;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.PermissionNodeTypeEnum;
@@ -23,6 +24,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +35,8 @@ import java.util.Set;
  * @date 2023/06/10 21:29
  */
 @Service
-public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOptionsMapper, SysRoleMenuOptions> implements SysRoleMenuOptionsService, RemoveRoleCallbackApi, RoleAssignOperateAction, RemoveMenuCallbackApi {
+public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOptionsMapper, SysRoleMenuOptions> implements
+        SysRoleMenuOptionsService, RemoveRoleCallbackApi, RoleAssignOperateAction, RemoveMenuCallbackApi {
 
     @Override
     public void add(SysRoleMenuOptionsRequest sysRoleMenuOptionsRequest) {
@@ -72,6 +75,31 @@ public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOption
         LambdaQueryWrapper<SysRoleMenuOptions> sysRoleMenuOptionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysRoleMenuOptionsLambdaQueryWrapper.eq(SysRoleMenuOptions::getMenuOptionId, optionsId);
         this.remove(sysRoleMenuOptionsLambdaQueryWrapper);
+    }
+
+    @Override
+    public void bindRoleMenuOptions(Long roleId, List<SysMenuOptions> sysMenuOptionsList) {
+
+        if (ObjectUtil.isEmpty(roleId) || ObjectUtil.isEmpty(sysMenuOptionsList)) {
+            return;
+        }
+
+        // 清空角色绑定的菜单功能
+        LambdaQueryWrapper<SysRoleMenuOptions> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysRoleMenuOptions::getRoleId, roleId);
+        this.remove(queryWrapper);
+
+        // 绑定角色的菜单功能
+        ArrayList<SysRoleMenuOptions> sysRoleMenuOptionList = new ArrayList<>();
+        for (SysMenuOptions sysMenuOptions : sysMenuOptionsList) {
+            SysRoleMenuOptions roleMenuOptionItem = new SysRoleMenuOptions();
+            roleMenuOptionItem.setRoleId(roleId);
+            roleMenuOptionItem.setMenuOptionId(sysMenuOptions.getMenuOptionId());
+            roleMenuOptionItem.setMenuId(sysMenuOptions.getMenuId());
+            roleMenuOptionItem.setAppId(sysMenuOptions.getAppId());
+            sysRoleMenuOptionList.add(roleMenuOptionItem);
+        }
+        this.getBaseMapper().insertBatchSomeColumn(sysRoleMenuOptionList);
     }
 
     @Override

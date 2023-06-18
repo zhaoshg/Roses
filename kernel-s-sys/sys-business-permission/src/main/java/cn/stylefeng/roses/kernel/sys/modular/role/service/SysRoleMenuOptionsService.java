@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleMenuOptionsRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -78,5 +79,13 @@ public interface SysRoleMenuOptionsService extends IService<SysRoleMenuOptions> 
      * @since 2023/6/15 23:38
      */
     void removeRoleBindOptions(Long optionsId);
+
+    /**
+     * 给角色绑定菜单功能
+     *
+     * @author fengshuonan
+     * @since 2023/6/18 20:52
+     */
+    void bindRoleMenuOptions(Long roleId, List<SysMenuOptions> sysMenuOptionsList);
 
 }
