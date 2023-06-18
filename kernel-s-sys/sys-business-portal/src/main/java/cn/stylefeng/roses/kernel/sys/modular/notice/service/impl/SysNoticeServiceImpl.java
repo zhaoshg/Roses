@@ -35,12 +35,12 @@ import cn.stylefeng.roses.kernel.message.api.MessageApi;
 import cn.stylefeng.roses.kernel.message.api.enums.MessageBusinessTypeEnum;
 import cn.stylefeng.roses.kernel.message.api.pojo.request.MessageSendRequest;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
+import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
 import cn.stylefeng.roses.kernel.sys.modular.notice.entity.SysNotice;
+import cn.stylefeng.roses.kernel.sys.modular.notice.exceptions.NoticeExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.notice.mapper.SysNoticeMapper;
+import cn.stylefeng.roses.kernel.sys.modular.notice.pojo.SysNoticeRequest;
 import cn.stylefeng.roses.kernel.sys.modular.notice.service.SysNoticeService;
-import cn.stylefeng.roses.kernel.system.api.exception.SystemModularException;
-import cn.stylefeng.roses.kernel.system.api.exception.enums.notice.NoticeExceptionEnum;
-import cn.stylefeng.roses.kernel.system.api.pojo.notice.SysNoticeRequest;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -96,7 +96,7 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
 
         // 通知范围不允许修改， 如果通知范围不同抛出异常
         if (!sysNoticeRequest.getNoticeScope().equals(sysNotice.getNoticeScope())) {
-            throw new SystemModularException(NoticeExceptionEnum.NOTICE_SCOPE_NOT_EDIT);
+            throw new SysException(NoticeExceptionEnum.NOTICE_SCOPE_NOT_EDIT);
         }
 
         // 获取通知范围，如果为空则设置为all
@@ -142,7 +142,7 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
     private SysNotice querySysNoticeById(SysNoticeRequest sysNoticeRequest) {
         SysNotice sysNotice = this.getById(sysNoticeRequest.getNoticeId());
         if (ObjectUtil.isNull(sysNotice)) {
-            throw new SystemModularException(NoticeExceptionEnum.NOTICE_NOT_EXIST, sysNoticeRequest.getNoticeId());
+            throw new SysException(NoticeExceptionEnum.NOTICE_NOT_EXIST, sysNoticeRequest.getNoticeId());
         }
         return sysNotice;
     }

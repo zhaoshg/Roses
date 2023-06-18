@@ -26,8 +26,7 @@ package cn.stylefeng.roses.kernel.sys.modular.notice.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.sys.modular.notice.entity.SysNotice;
-import cn.stylefeng.roses.kernel.system.api.NoticeServiceApi;
-import cn.stylefeng.roses.kernel.system.api.pojo.notice.SysNoticeRequest;
+import cn.stylefeng.roses.kernel.sys.modular.notice.pojo.SysNoticeRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -38,7 +37,7 @@ import java.util.List;
  * @author liuhanqing
  * @since 2021/1/8 19:56
  */
-public interface SysNoticeService extends IService<SysNotice>, NoticeServiceApi {
+public interface SysNoticeService extends IService<SysNotice> {
 
     /**
      * 添加系统应用
