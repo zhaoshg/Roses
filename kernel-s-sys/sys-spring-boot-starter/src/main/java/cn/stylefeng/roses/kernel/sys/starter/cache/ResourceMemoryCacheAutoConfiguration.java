@@ -22,39 +22,38 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.api.constants;
+package cn.stylefeng.roses.kernel.sys.starter.cache;
+
+import cn.hutool.cache.CacheUtil;
+import cn.hutool.cache.impl.TimedCache;
+import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
+import cn.stylefeng.roses.kernel.cache.api.constants.CacheConstants;
+import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceDefinition;
+import cn.stylefeng.roses.kernel.sys.modular.resource.cache.MemoryResourceCache;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * 基础核心业务业务
+ * 资源缓存自动配置
  *
  * @author fengshuonan
- * @date 2023-06-10 20:50:43
+ * @since 2021/5/17 16:44
  */
-public interface SysConstants {
+@Configuration
+@ConditionalOnMissingClass("org.springframework.data.redis.connection.RedisConnectionFactory")
+public class ResourceMemoryCacheAutoConfiguration {
 
     /**
-     * 基础核心业务模块名称
+     * 资源缓存
+     *
+     * @author fengshuonan
+     * @since 2021/5/17 16:44
      */
-    String SYS_MODULE_NAME = "kernel-s-sys";
-
-    /**
-     * 异常枚举的步进值
-     */
-    String SYS_EXCEPTION_STEP_CODE = "99";
-
-    /**
-     * 默认登录密码
-     */
-    String DEFAULT_LOGIN_PASSWORD = "Aa123456!";
-
-    /**
-     * 超级管理员的角色编码
-     */
-    String SUPER_ADMIN_ROLE_CODE = "superAdmin";
-
-    /**
-     * 初始化超级管理员的监听器顺序
-     */
-    Integer SUPER_ADMIN_INIT_LISTENER_SORT = 400;
+    @Bean
+    public CacheOperatorApi<ResourceDefinition> resourceCache() {
+        TimedCache<String, ResourceDefinition> timedCache = CacheUtil.newTimedCache(CacheConstants.NONE_EXPIRED_TIME);
+        return new MemoryResourceCache(timedCache);
+    }
 
 }

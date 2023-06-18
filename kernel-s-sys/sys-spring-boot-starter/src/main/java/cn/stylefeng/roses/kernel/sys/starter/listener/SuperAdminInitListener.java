@@ -22,17 +22,41 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.starter;
+package cn.stylefeng.roses.kernel.sys.starter.listener;
 
-import org.springframework.context.annotation.Configuration;
+import cn.stylefeng.roses.kernel.rule.listener.ApplicationReadyListener;
+import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
+import cn.stylefeng.roses.kernel.sys.starter.init.InitAdminService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
- * 基础核心业务自动装配
+ * 项目启动后初始化超级管理员
  *
  * @author fengshuonan
- * @date 2023-06-10 20:50:43
+ * @since 2020/12/17 21:44
  */
-@Configuration
-public class SysAutoConfiguration {
+@Component
+@Slf4j
+public class SuperAdminInitListener extends ApplicationReadyListener implements Ordered {
+
+    @Resource
+    private InitAdminService initAdminService;
+
+    @Override
+    public void eventCallback(ApplicationReadyEvent event) {
+        long startTime = System.currentTimeMillis();
+        initAdminService.initSuperAdmin();
+        log.info("初始化超级管理员权限完成，耗时：{}ms", (System.currentTimeMillis() - startTime));
+    }
+
+    @Override
+    public int getOrder() {
+        return SysConstants.SUPER_ADMIN_INIT_LISTENER_SORT;
+    }
 
 }

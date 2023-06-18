@@ -1,2 +1,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  cn.stylefeng.roses.kernel.sys.starter.SysAutoConfiguration
+  cn.stylefeng.roses.kernel.sys.starter.cache.SystemMemoryCacheAutoConfiguration,\
+  cn.stylefeng.roses.kernel.sys.starter.cache.SystemRedisCacheAutoConfiguration,\
+  cn.stylefeng.roses.kernel.sys.starter.cache.ResourceMemoryCacheAutoConfiguration,\
+  cn.stylefeng.roses.kernel.sys.starter.cache.ResourceRedisCacheAutoConfiguration,\
+  cn.stylefeng.roses.kernel.sys.starter.SystemHomeStatisticsAutoConfiguration,\
+  cn.stylefeng.roses.kernel.sys.starter.config.RestErrorViewAutoConfiguration
