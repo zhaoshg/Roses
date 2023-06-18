@@ -93,4 +93,15 @@ public interface SysMenuService extends IService<SysMenu> {
      */
     void updateMenuTree(SysMenuRequest sysMenuRequest);
 
+    /**
+     * 获取所有菜单id
+     * <p>
+     * 一般用在项目启动，管理员自动绑定所有菜单
+     *
+     * @return 结果只包含菜单id和应用id
+     * @author fengshuonan
+     * @since 2023/6/18 20:37
+     */
+    List<SysMenu> getTotalMenuList();
+
 }

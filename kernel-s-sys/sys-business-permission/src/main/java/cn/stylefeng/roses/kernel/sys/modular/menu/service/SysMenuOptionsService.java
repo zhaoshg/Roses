@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface SysMenuOptionsService extends IService<SysMenuOptions> {
 
-	/**
+    /**
      * 新增
      *
      * @param sysMenuOptionsRequest 请求参数
@@ -24,7 +24,7 @@ public interface SysMenuOptionsService extends IService<SysMenuOptions> {
      */
     void add(SysMenuOptionsRequest sysMenuOptionsRequest);
 
-	/**
+    /**
      * 删除
      *
      * @param sysMenuOptionsRequest 请求参数
@@ -33,7 +33,7 @@ public interface SysMenuOptionsService extends IService<SysMenuOptions> {
      */
     void del(SysMenuOptionsRequest sysMenuOptionsRequest);
 
-	/**
+    /**
      * 编辑
      *
      * @param sysMenuOptionsRequest 请求参数
@@ -42,7 +42,7 @@ public interface SysMenuOptionsService extends IService<SysMenuOptions> {
      */
     void edit(SysMenuOptionsRequest sysMenuOptionsRequest);
 
-	/**
+    /**
      * 查询详情
      *
      * @param sysMenuOptionsRequest 请求参数
@@ -51,24 +51,34 @@ public interface SysMenuOptionsService extends IService<SysMenuOptions> {
      */
     SysMenuOptions detail(SysMenuOptionsRequest sysMenuOptionsRequest);
 
-	/**
+    /**
      * 获取列表
      *
-     * @param sysMenuOptionsRequest        请求参数
+     * @param sysMenuOptionsRequest 请求参数
      * @return List<SysMenuOptions>   返回结果
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
     List<SysMenuOptions> findList(SysMenuOptionsRequest sysMenuOptionsRequest);
 
-	/**
+    /**
      * 获取列表（带分页）
      *
-     * @param sysMenuOptionsRequest              请求参数
+     * @param sysMenuOptionsRequest 请求参数
      * @return PageResult<SysMenuOptions>   返回结果
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
     PageResult<SysMenuOptions> findPage(SysMenuOptionsRequest sysMenuOptionsRequest);
+
+    /**
+     * 获取所有的菜单功能id
+     * <p>
+     * 一般用在项目启动管理员角色绑定所有的菜单功能
+     *
+     * @author fengshuonan
+     * @since 2023/6/18 20:37
+     */
+    List<SysMenuOptions> getTotalMenuOptionsList();
 
 }

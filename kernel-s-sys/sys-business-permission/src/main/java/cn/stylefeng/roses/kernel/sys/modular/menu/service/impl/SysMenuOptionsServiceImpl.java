@@ -32,7 +32,8 @@ import java.util.Set;
  * @date 2023/06/10 21:28
  */
 @Service
-public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper, SysMenuOptions> implements SysMenuOptionsService, RemoveMenuCallbackApi {
+public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper, SysMenuOptions> implements SysMenuOptionsService,
+        RemoveMenuCallbackApi {
 
     @Resource
     private SysMenuService sysMenuService;
@@ -88,10 +89,18 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
         LambdaQueryWrapper<SysMenuOptions> wrapper = createWrapper(sysMenuOptionsRequest);
 
         // 只查询有用字段
-        wrapper.select(SysMenuOptions::getOptionName, SysMenuOptions::getOptionCode, SysMenuOptions::getMenuId, SysMenuOptions::getMenuOptionId);
+        wrapper.select(SysMenuOptions::getOptionName, SysMenuOptions::getOptionCode, SysMenuOptions::getMenuId,
+                SysMenuOptions::getMenuOptionId);
 
         Page<SysMenuOptions> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
+    }
+
+    @Override
+    public List<SysMenuOptions> getTotalMenuOptionsList() {
+        LambdaQueryWrapper<SysMenuOptions> sysMenuOptionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysMenuOptionsLambdaQueryWrapper.select(SysMenuOptions::getMenuOptionId, SysMenuOptions::getMenuId, SysMenuOptions::getAppId);
+        return this.list(sysMenuOptionsLambdaQueryWrapper);
     }
 
     @Override

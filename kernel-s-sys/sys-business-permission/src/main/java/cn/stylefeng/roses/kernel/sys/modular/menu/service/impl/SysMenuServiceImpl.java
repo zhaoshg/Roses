@@ -171,6 +171,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
+    public List<SysMenu> getTotalMenuList() {
+        LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysMenuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getAppId);
+        return this.list(sysMenuLambdaQueryWrapper);
+    }
+
+    @Override
     public List<AppGroupDetail> getAppMenuGroupDetail(SysMenuRequest sysMenuRequest) {
 
         // 1. 获取所有应用列表
