@@ -27,7 +27,7 @@
         <!--格式化用户id展示姓名使用-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>system-api</artifactId>
+            <artifactId>sys-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
