@@ -1,8 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.login.pojo;
 
-import cn.stylefeng.roses.kernel.file.api.format.FileUrlFormatProcess;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
-import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
 import lombok.Data;
 
 import java.util.List;
@@ -31,11 +29,10 @@ public class UserIndexInfo {
     private String realName;
 
     /**
-     * 用户头像的文件id
+     * 头像地址
      */
-    @ChineseDescription("用户头像的文件id")
-    @SimpleFieldFormat(processClass = FileUrlFormatProcess.class)
-    private Long avatarFileId;
+    @ChineseDescription("头像地址")
+    private String avatarUrl;
 
     /**
      * 当前用户的部门和任职信息
