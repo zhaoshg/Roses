@@ -5,13 +5,13 @@ import lombok.Data;
 
 
 /**
- * 用户组织机构的绑定关系
+ * 用户组织机构的绑定关系，用在首页获取用户信息
  *
  * @author fengshuonan
  * @since 2023/6/18 22:12
  */
 @Data
-public class UserOrgInfo {
+public class IndexUserOrgInfo {
 
     /**
      * 用户id

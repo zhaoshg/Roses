@@ -38,7 +38,7 @@ public class UserIndexInfo {
      * 当前用户的部门和任职信息
      */
     @ChineseDescription("当前用户的部门和任职信息")
-    private List<UserOrgInfo> userOrgInfo;
+    private List<IndexUserOrgInfo> userOrgInfo;
 
     /**
      * 当前用户的权限编码集合，包括【菜单编码】和【菜单功能编码】
@@ -56,7 +56,7 @@ public class UserIndexInfo {
      * 用户菜单集合
      */
     @ChineseDescription("用户菜单集合")
-    private List<UserMenuInfo> menuList;
+    private List<IndexUserMenuInfo> menuList;
 
     /**
      * 菜单路由和appId的映射关系

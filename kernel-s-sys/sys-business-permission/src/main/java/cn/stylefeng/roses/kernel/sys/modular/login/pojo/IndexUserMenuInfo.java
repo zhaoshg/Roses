@@ -13,7 +13,7 @@ import java.util.List;
  * @since 2023/6/18 22:26
  */
 @Data
-public class UserMenuInfo {
+public class IndexUserMenuInfo {
 
     /**
      * 菜单id
@@ -73,6 +73,6 @@ public class UserMenuInfo {
      * 子级菜单
      */
     @ChineseDescription("子级菜单")
-    private List<UserMenuInfo> children;
+    private List<IndexUserMenuInfo> children;
 
 }

@@ -57,7 +57,8 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     public void del(HrOrganizationRequest hrOrganizationRequest) {
 
         // 查询被删除组织机构的所有子级节点
-        Set<Long> totalOrgIdSet = DbOperatorContext.me().findSubListByParentId("hr_organization", "org_pids", "org_id", hrOrganizationRequest.getOrgId());
+        Set<Long> totalOrgIdSet = DbOperatorContext.me()
+                .findSubListByParentId("hr_organization", "org_pids", "org_id", hrOrganizationRequest.getOrgId());
         totalOrgIdSet.add(hrOrganizationRequest.getOrgId());
 
         // 执行删除操作
@@ -108,7 +109,8 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         LambdaQueryWrapper<HrOrganization> wrapper = createWrapper(hrOrganizationRequest);
 
         // 只查询需要的字段
-        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgName, HrOrganization::getOrgCode, HrOrganization::getStatusFlag, HrOrganization::getOrgType, HrOrganization::getOrgSort, BaseEntity::getCreateTime);
+        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgName, HrOrganization::getOrgCode, HrOrganization::getStatusFlag,
+                HrOrganization::getOrgType, HrOrganization::getOrgSort, BaseEntity::getCreateTime);
 
         Page<HrOrganization> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
@@ -119,7 +121,8 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 根据条件查询组织机构列表
         LambdaQueryWrapper<HrOrganization> wrapper = this.createWrapper(hrOrganizationRequest);
-        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgParentId, HrOrganization::getOrgPids, HrOrganization::getOrgName, HrOrganization::getOrgSort, HrOrganization::getOrgType);
+        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgParentId, HrOrganization::getOrgPids, HrOrganization::getOrgName,
+                HrOrganization::getOrgSort, HrOrganization::getOrgType);
         List<HrOrganization> hrOrganizationList = this.list(wrapper);
 
         if (ObjectUtil.isEmpty(hrOrganizationList)) {
@@ -162,6 +165,8 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 如果是部门，则递归向上查询到部门所属的公司id
         CompanyDeptDTO orgCompanyInfo = this.getOrgCompanyInfo(hrOrganization);
+
+        // 查到公司id之后，设置部门id则为参数orgId
         if (orgCompanyInfo != null) {
             orgCompanyInfo.setDeptId(hrOrganization.getOrgId());
             orgCompanyInfo.setDeptName(hrOrganization.getOrgName());
