@@ -30,6 +30,8 @@ import cn.stylefeng.roses.kernel.sys.modular.resource.entity.SysResource;
 import cn.stylefeng.roses.kernel.sys.modular.resource.pojo.ResourceRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * 资源服务类
  *
@@ -47,5 +49,22 @@ public interface SysResourceService extends IService<SysResource>, ResourceServi
      * @since 2020/11/24 20:45
      */
     PageResult<SysResource> findPage(ResourceRequest resourceRequest);
+
+    /**
+     * 删除某个项目的所有资源
+     *
+     * @param projectCode 项目编码，一般为spring application name
+     * @author fengshuonan
+     * @since 2020/11/24 20:46
+     */
+    void deleteResourceByProjectCode(String projectCode);
+
+    /**
+     * 批量保存系统资源
+     *
+     * @author fengshuonan
+     * @since 2023/6/18 10:37
+     */
+    void batchSaveResourceList(List<SysResource> sysResourceList);
 
 }

@@ -24,12 +24,16 @@
  */
 package cn.stylefeng.roses.kernel.sys.modular.resource.service.impl;
 
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
+import cn.stylefeng.roses.kernel.db.api.context.DbOperatorContext;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
+import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceDefinition;
 import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceUrlParam;
@@ -71,6 +75,27 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
 
         Page<SysResource> page = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(page);
+    }
+
+    @Override
+    public void deleteResourceByProjectCode(String projectCode) {
+        LambdaQueryWrapper<SysResource> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysResource::getProjectCode, projectCode);
+        this.remove(wrapper);
+    }
+
+    @Override
+    public void batchSaveResourceList(List<SysResource> sysResourceList) {
+        DbTypeEnum currentDbType = DbOperatorContext.me().getCurrentDbType();
+        if (DbTypeEnum.MYSQL.equals(currentDbType)) {
+            // 分批插入记录
+            List<List<SysResource>> split = ListUtil.split(sysResourceList, RuleConstants.DEFAULT_BATCH_INSERT_SIZE);
+            for (List<SysResource> sysResources : split) {
+                this.getBaseMapper().insertBatchSomeColumn(sysResources);
+            }
+        } else {
+            this.saveBatch(sysResourceList, sysResourceList.size());
+        }
     }
 
     @Override
