@@ -25,15 +25,20 @@
 package cn.stylefeng.roses.kernel.sys.starter.init;
 
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
-import cn.stylefeng.roses.kernel.sys.modular.resource.service.SysResourceService;
+import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
+import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
+import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
+import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
-import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleResourceService;
+import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
+import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 初始化admin管理员的服务
@@ -48,10 +53,16 @@ public class InitAdminService {
     private SysRoleService sysRoleService;
 
     @Resource
-    private SysResourceService sysResourceService;
+    private SysMenuService sysMenuService;
 
     @Resource
-    private SysRoleResourceService sysRoleResourceService;
+    private SysMenuOptionsService sysMenuOptionsService;
+
+    @Resource
+    private SysRoleMenuService sysRoleMenuService;
+
+    @Resource
+    private SysRoleMenuOptionsService sysRoleMenuOptionsService;
 
     /**
      * 初始化超级管理员，超级管理员拥有最高权限
@@ -65,11 +76,16 @@ public class InitAdminService {
         // 找到超级管理员的角色id
         LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysRole::getRoleCode, SysConstants.SUPER_ADMIN_ROLE_CODE);
+        queryWrapper.select(SysRole::getRoleId);
         SysRole superAdminRole = sysRoleService.getOne(queryWrapper);
 
-        // todo 超级管理员绑定所有的菜单 和 菜单功能
+        // 获取所有的菜单和功能
+        List<SysMenu> totalMenuList = sysMenuService.getTotalMenuList();
+        List<SysMenuOptions> totalMenuOptionsList = sysMenuOptionsService.getTotalMenuOptionsList();
 
-
+        // 超级管理员绑定所有的菜单和菜单功能
+        sysRoleMenuService.bindRoleMenus(superAdminRole.getRoleId(), totalMenuList);
+        sysRoleMenuOptionsService.bindRoleMenuOptions(superAdminRole.getRoleId(), totalMenuOptionsList);
     }
 
 }
