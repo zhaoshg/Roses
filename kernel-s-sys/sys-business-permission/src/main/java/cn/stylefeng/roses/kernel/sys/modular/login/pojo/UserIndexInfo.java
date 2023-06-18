@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -40,7 +41,7 @@ public class UserIndexInfo {
      * 当前用户的部门和任职信息
      */
     @ChineseDescription("当前用户的部门和任职信息")
-    private List<UserOrgInfo> currentUserOrgInfo;
+    private List<UserOrgInfo> userOrgInfo;
 
     /**
      * 当前用户的权限编码集合，包括【菜单编码】和【菜单功能编码】
@@ -48,5 +49,30 @@ public class UserIndexInfo {
     @ChineseDescription("当前用户的权限编码集合，包括【菜单编码】和【菜单功能编码】")
     private Set<String> permissionCodeList;
 
+    /**
+     * 当前用户选择的应用id
+     */
+    @ChineseDescription("当前用户选择的应用id")
+    private Long currentAppId;
+
+    /**
+     * 用户菜单集合
+     */
+    @ChineseDescription("用户菜单集合")
+    private List<UserMenuInfo> menuList;
+
+    /**
+     * 菜单路由和appId的映射关系
+     * <p>
+     * 用在提供前端应用切换的需要
+     */
+    @ChineseDescription("菜单路由和appId的映射关系")
+    private Map<String, Long> menuUrlAppIdMap;
+
+    /**
+     * 登录人的websocketUrl，用来获取右上角的实时消息
+     */
+    @ChineseDescription("登录人的websocketUrl，用来获取右上角的实时消息")
+    private String websocketUrl;
 
 }
