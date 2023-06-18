@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 用户角色关联业务实现层
@@ -30,7 +31,8 @@ import java.util.Set;
  * @date 2023/06/10 21:26
  */
 @Service
-public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService, RemoveUserCallbackApi, RemoveRoleCallbackApi {
+public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService,
+        RemoveUserCallbackApi, RemoveRoleCallbackApi {
 
     @Override
     public void add(SysUserRoleRequest sysUserRoleRequest) {
@@ -112,6 +114,20 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         LambdaQueryWrapper<SysUserRole> wrapper = new LambdaQueryWrapper<>();
         wrapper.in(SysUserRole::getRoleId, beRemovedRoleIdList);
         this.remove(wrapper);
+    }
+
+    @Override
+    public List<Long> getUserRoleIdList(Long userId) {
+        if (userId == null) {
+            return new ArrayList<>();
+        }
+
+        LambdaQueryWrapper<SysUserRole> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysUserRole::getUserId, userId);
+        wrapper.select(SysUserRole::getRoleId);
+        List<SysUserRole> sysUserRoleList = this.list(wrapper);
+
+        return sysUserRoleList.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
     }
 
     /**

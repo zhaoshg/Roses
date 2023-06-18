@@ -12,7 +12,6 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
-import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
 import cn.stylefeng.roses.kernel.sys.api.expander.SysConfigExpander;
@@ -22,6 +21,7 @@ import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserMapper;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
+import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -45,13 +45,13 @@ import java.util.Set;
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
     @Resource
-    private SysUserServiceApi sysUserServiceApi;
-
-    @Resource
     private PasswordStoredEncryptApi passwordStoredEncryptApi;
 
     @Resource
     private SysUserOrgService sysUserOrgService;
+
+    @Resource
+    private SysUserRoleService sysUserRoleService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -130,7 +130,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setUserOrgDTOList(userOrgList);
 
         // 获取用户的角色信息
-        List<Long> userRoleIdList = sysUserServiceApi.getUserRoleIdList(sysUser.getUserId());
+        List<Long> userRoleIdList = sysUserRoleService.getUserRoleIdList(sysUser.getUserId());
         sysUser.setRoleIdList(userRoleIdList);
 
         // 屏蔽不需要的字段

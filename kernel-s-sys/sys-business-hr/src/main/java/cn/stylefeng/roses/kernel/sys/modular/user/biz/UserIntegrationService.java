@@ -9,7 +9,6 @@ import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserValidateDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
-import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
@@ -19,7 +18,6 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,20 +76,6 @@ public class UserIntegrationService implements SysUserServiceApi {
         simpleUserDTO.setAvatarUrl(fileAuthUrl);
 
         return simpleUserDTO;
-    }
-
-    @Override
-    public List<Long> getUserRoleIdList(Long userId) {
-        if (userId == null) {
-            return new ArrayList<>();
-        }
-
-        LambdaQueryWrapper<SysUserRole> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(SysUserRole::getUserId, userId);
-        wrapper.select(SysUserRole::getRoleId);
-        List<SysUserRole> sysUserRoleList = this.sysUserRoleService.list(wrapper);
-
-        return sysUserRoleList.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
     }
 
     @Override
