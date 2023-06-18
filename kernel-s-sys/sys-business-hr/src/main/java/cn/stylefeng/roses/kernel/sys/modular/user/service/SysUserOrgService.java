@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.sys.api.SysUserOrgServiceApi;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserOrgRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author fengshuonan
  * @date 2023/06/10 21:26
  */
-public interface SysUserOrgService extends IService<SysUserOrg> {
+public interface SysUserOrgService extends IService<SysUserOrg>, SysUserOrgServiceApi {
 
     /**
      * 新增

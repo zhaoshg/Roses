@@ -152,7 +152,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 遍历查询结果，增加对用户部门信息的返回
         for (SysUser record : sysUserPage.getRecords()) {
-            record.setUserOrgDTO(sysUserServiceApi.getUserMainOrgInfo(record.getUserId()));
+            record.setUserOrgDTO(sysUserOrgService.getUserMainOrgInfo(record.getUserId()));
         }
 
         return PageResultFactory.createPageResult(sysUserPage);

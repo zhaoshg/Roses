@@ -6,7 +6,6 @@ import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
-import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserValidateDTO;
@@ -28,8 +27,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExceptionEnum.MAIN_FLAG_COUNT_ERROR;
 
 /**
  * 用户相关的综合业务
@@ -85,26 +82,6 @@ public class UserIntegrationService implements SysUserServiceApi {
         simpleUserDTO.setAvatarUrl(fileAuthUrl);
 
         return simpleUserDTO;
-    }
-
-    @Override
-    public UserOrgDTO getUserMainOrgInfo(Long userId) {
-
-        if (userId == null) {
-            return null;
-        }
-
-        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(SysUserOrg::getUserId, userId);
-        queryWrapper.eq(SysUserOrg::getMainFlag, YesOrNotEnum.Y.getCode());
-        List<SysUserOrg> sysUserOrgList = sysUserOrgService.list(queryWrapper);
-        if (sysUserOrgList.size() > 1) {
-            throw new SysException(MAIN_FLAG_COUNT_ERROR, userId);
-        }
-
-        // 获取到用户的主部门信息
-        SysUserOrg sysUserOrg = sysUserOrgList.get(0);
-        return UserOrgFactory.createUserOrgDetailInfo(sysUserOrg);
     }
 
     @Override

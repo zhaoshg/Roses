@@ -47,16 +47,6 @@ public interface SysUserServiceApi {
     SimpleUserDTO getUserInfoByUserId(Long userId);
 
     /**
-     * 获取用户的主要任职信息
-     * <p>
-     * 返回一条结果，只返回主部门的信息
-     *
-     * @author fengshuonan
-     * @since 2023/6/11 21:07
-     */
-    UserOrgDTO getUserMainOrgInfo(Long userId);
-
-    /**
      * 获取用户绑定的组织机构列表，主要任职部门和次要任职部门都返回
      *
      * @author fengshuonan

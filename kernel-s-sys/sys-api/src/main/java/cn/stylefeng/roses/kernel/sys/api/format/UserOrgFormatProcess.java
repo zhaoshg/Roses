@@ -3,7 +3,7 @@ package cn.stylefeng.roses.kernel.sys.api.format;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.rule.format.BaseSimpleFieldFormatProcess;
-import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.SysUserOrgServiceApi;
 
 /**
  * 用户所属组织机构的信息包装
@@ -27,9 +27,9 @@ public class UserOrgFormatProcess extends BaseSimpleFieldFormatProcess {
 
         Long userId = Convert.toLong(businessId);
 
-        SysUserServiceApi sysUserServiceApi = SpringUtil.getBean(SysUserServiceApi.class);
+        SysUserOrgServiceApi sysUserOrgServiceApi = SpringUtil.getBean(SysUserOrgServiceApi.class);
 
-        return sysUserServiceApi.getUserMainOrgInfo(userId);
+        return sysUserOrgServiceApi.getUserMainOrgInfo(userId);
     }
 
 }
