@@ -31,6 +31,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.security.api.ImageCaptchaApi;
 import cn.stylefeng.roses.kernel.sms.api.SmsSenderApi;
 import cn.stylefeng.roses.kernel.sms.api.exception.SmsException;
@@ -44,7 +45,6 @@ import cn.stylefeng.roses.kernel.sms.modular.param.SysSmsInfoParam;
 import cn.stylefeng.roses.kernel.sms.modular.param.SysSmsSendParam;
 import cn.stylefeng.roses.kernel.sms.modular.param.SysSmsVerifyParam;
 import cn.stylefeng.roses.kernel.sms.modular.service.SysSmsInfoService;
-import cn.stylefeng.roses.kernel.system.api.exception.SystemModularException;
 import cn.stylefeng.roses.kernel.validator.api.exception.enums.ValidatorExceptionEnum;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -83,10 +83,10 @@ public class SysSmsInfoServiceImpl extends ServiceImpl<SysSmsMapper, SysSms> imp
         String verKey = sysSmsSendParam.getVerKey();
         String verCode = sysSmsSendParam.getVerCode();
         if (StrUtil.isEmpty(verKey) || StrUtil.isEmpty(verCode)) {
-            throw new SystemModularException(ValidatorExceptionEnum.CAPTCHA_EMPTY);
+            throw new ServiceException(ValidatorExceptionEnum.CAPTCHA_EMPTY);
         }
         if (!captchaApi.validateCaptcha(verKey, verCode)) {
-            throw new SystemModularException(ValidatorExceptionEnum.CAPTCHA_ERROR);
+            throw new ServiceException(ValidatorExceptionEnum.CAPTCHA_ERROR);
         }
 
         Map<String, Object> params = sysSmsSendParam.getParams();
@@ -114,7 +114,9 @@ public class SysSmsInfoServiceImpl extends ServiceImpl<SysSmsMapper, SysSms> imp
         // 4. 存储短信到数据库
         Long smsId = this.saveSmsInfo(sysSmsSendParam, validateCode);
 
-        log.info("开始发送短信：发送的电话号码= " + sysSmsSendParam.getPhone() + ",发送的模板号=" + sysSmsSendParam.getTemplateCode() + "，发送的参数是：" + JSON.toJSONString(params));
+        log.info(
+                "开始发送短信：发送的电话号码= " + sysSmsSendParam.getPhone() + ",发送的模板号=" + sysSmsSendParam.getTemplateCode() + "，发送的参数是：" + JSON.toJSONString(
+                        params));
 
         // 5. 发送短信
         smsSenderApi.sendSms(sysSmsSendParam.getPhone(), sysSmsSendParam.getTemplateCode(), params);

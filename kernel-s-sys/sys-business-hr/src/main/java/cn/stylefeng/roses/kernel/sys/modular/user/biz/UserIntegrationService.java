@@ -226,4 +226,20 @@ public class UserIntegrationService implements SysUserServiceApi {
         return YesOrNotEnum.Y.getCode().equals(result.getSuperAdminFlag());
     }
 
+    @Override
+    public List<Long> queryAllUserIdList() {
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper.select(SysUser::getUserId);
+        List<SysUser> list = this.sysUserService.list(sysUserLambdaQueryWrapper);
+        return list.stream().map(SysUser::getUserId).collect(Collectors.toList());
+    }
+
+    @Override
+    public Boolean userExist(Long userId) {
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysUser::getUserId, userId);
+        long count = this.sysUserService.count(wrapper);
+        return count > 0;
+    }
+
 }

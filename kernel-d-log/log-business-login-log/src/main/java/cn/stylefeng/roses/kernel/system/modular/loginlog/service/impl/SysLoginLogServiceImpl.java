@@ -33,13 +33,13 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.log.api.LoginLogServiceApi;
+import cn.stylefeng.roses.kernel.log.api.exception.LogException;
+import cn.stylefeng.roses.kernel.log.api.exception.enums.LogExceptionEnum;
 import cn.stylefeng.roses.kernel.log.api.pojo.loginlog.SysLoginLogDto;
 import cn.stylefeng.roses.kernel.log.api.pojo.loginlog.SysLoginLogRequest;
-import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.util.HttpServletUtil;
-import cn.stylefeng.roses.kernel.system.api.UserServiceApi;
-import cn.stylefeng.roses.kernel.system.api.exception.enums.log.LogExceptionEnum;
-import cn.stylefeng.roses.kernel.system.api.pojo.user.SysUserDTO;
+import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.system.modular.loginlog.constants.LoginLogConstant;
 import cn.stylefeng.roses.kernel.system.modular.loginlog.entity.SysLoginLog;
 import cn.stylefeng.roses.kernel.system.modular.loginlog.mapper.SysLoginLogMapper;
@@ -63,7 +63,7 @@ import java.util.Date;
 public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLoginLog> implements SysLoginLogService, LoginLogServiceApi {
 
     @Resource
-    private UserServiceApi userServiceApi;
+    private SysUserServiceApi sysUserServiceApi;
 
     @Override
     public void del(SysLoginLogRequest sysLoginLogRequest) {
@@ -88,14 +88,15 @@ public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLo
             BeanUtil.copyProperties(record, sysLoginLogDto);
 
             // 填充用户姓名
-            SysUserDTO userInfoByUserId = userServiceApi.getUserInfoByUserId(sysLoginLogDto.getUserId());
+            SimpleUserDTO userInfoByUserId = sysUserServiceApi.getUserInfoByUserId(sysLoginLogDto.getUserId());
             if (userInfoByUserId != null) {
                 sysLoginLogDto.setUserName(userInfoByUserId.getRealName());
             }
             sysLoginLogDtos.add(sysLoginLogDto);
         }
 
-        return PageResultFactory.createPageResult(sysLoginLogDtos, page.getTotal(), Convert.toInt(page.getSize()), Convert.toInt(page.getCurrent()));
+        return PageResultFactory.createPageResult(sysLoginLogDtos, page.getTotal(), Convert.toInt(page.getSize()),
+                Convert.toInt(page.getCurrent()));
     }
 
     @Override
@@ -163,7 +164,7 @@ public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLo
     private SysLoginLog querySysLoginLogById(SysLoginLogRequest sysLoginLogRequest) {
         SysLoginLog sysLoginLog = this.getById(sysLoginLogRequest.getLlgId());
         if (ObjectUtil.isNull(sysLoginLog)) {
-            throw new ServiceException(LogExceptionEnum.LOG_NOT_EXIST);
+            throw new LogException(LogExceptionEnum.LOG_NOT_EXISTED, sysLoginLogRequest.getLlgId());
         }
         return sysLoginLog;
     }

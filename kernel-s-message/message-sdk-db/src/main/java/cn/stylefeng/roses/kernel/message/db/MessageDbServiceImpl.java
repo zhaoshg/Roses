@@ -44,8 +44,7 @@ import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.socket.api.SocketOperatorApi;
 import cn.stylefeng.roses.kernel.socket.api.enums.ServerMessageTypeEnum;
 import cn.stylefeng.roses.kernel.socket.api.exception.SocketException;
-import cn.stylefeng.roses.kernel.system.api.UserServiceApi;
-import cn.stylefeng.roses.kernel.system.api.pojo.user.request.SysUserRequest;
+import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -69,7 +68,7 @@ public class MessageDbServiceImpl implements MessageApi {
     private SocketOperatorApi socketOperatorApi;
 
     @Resource
-    private UserServiceApi userServiceApi;
+    private SysUserServiceApi sysUserServiceApi;
 
     @Resource
     private SysMessageService sysMessageService;
@@ -87,7 +86,7 @@ public class MessageDbServiceImpl implements MessageApi {
         // 发送所有人判断
         if (MessageConstants.RECEIVE_ALL_USER_FLAG.equals(receiveUserIds)) {
             // 查询所有用户
-            userIds = userServiceApi.queryAllUserIdList(new SysUserRequest());
+            userIds = sysUserServiceApi.queryAllUserIdList();
         } else {
             String[] userIdArr = receiveUserIds.split(",");
             userIds = Convert.toList(Long.class, userIdArr);
@@ -102,7 +101,7 @@ public class MessageDbServiceImpl implements MessageApi {
         for (Long userId : userIdSet) {
 
             // 判断用户是否存在
-            if (!userServiceApi.userExist(userId)) {
+            if (!sysUserServiceApi.userExist(userId)) {
                 continue;
             }
 

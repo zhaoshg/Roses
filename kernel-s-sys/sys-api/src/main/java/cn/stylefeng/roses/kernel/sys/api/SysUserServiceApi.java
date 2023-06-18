@@ -115,4 +115,20 @@ public interface SysUserServiceApi {
      */
     boolean getUserSuperAdminFlag(Long userId);
 
+    /**
+     * 查询所有的用户id集合
+     *
+     * @author fengshuonan
+     * @since 2023/6/18 9:05
+     */
+    List<Long> queryAllUserIdList();
+
+    /**
+     * 判断用户是否存在
+     *
+     * @author fengshuonan
+     * @since 2023/6/18 9:06
+     */
+    Boolean userExist(Long userId);
+
 }

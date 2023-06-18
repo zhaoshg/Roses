@@ -27,7 +27,7 @@ package cn.stylefeng.roses.kernel.file.modular.pojo.vo;
 import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoResponse;
 import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
 import cn.stylefeng.roses.kernel.rule.enums.FormatTypeEnum;
-import cn.stylefeng.roses.kernel.system.api.format.UserFormatProcess;
+import cn.stylefeng.roses.kernel.sys.api.format.UserNameFormatProcess;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -42,7 +42,7 @@ import lombok.EqualsAndHashCode;
 public class SysFileInfoRes extends SysFileInfoResponse {
 
     @Override
-    @SimpleFieldFormat(formatType = FormatTypeEnum.ADD_FIELD, processClass = UserFormatProcess.class)
+    @SimpleFieldFormat(formatType = FormatTypeEnum.ADD_FIELD, processClass = UserNameFormatProcess.class)
     public Long getUploadUserId() {
         return super.getUploadUserId();
     }
