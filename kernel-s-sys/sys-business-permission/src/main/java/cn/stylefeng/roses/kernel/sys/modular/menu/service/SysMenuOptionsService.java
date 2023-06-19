@@ -81,4 +81,12 @@ public interface SysMenuOptionsService extends IService<SysMenuOptions> {
      */
     List<SysMenuOptions> getTotalMenuOptionsList();
 
+    /**
+     * 获取功能编码集合，通过功能id集合
+     *
+     * @author fengshuonan
+     * @since 2023/6/19 12:56
+     */
+    List<String> getOptionsCodeList(List<Long> optionsIdList);
+
 }

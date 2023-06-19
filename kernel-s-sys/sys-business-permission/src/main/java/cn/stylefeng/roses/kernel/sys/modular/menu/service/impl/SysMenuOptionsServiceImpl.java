@@ -22,8 +22,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 菜单下的功能操作业务实现层
@@ -101,6 +103,25 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
         LambdaQueryWrapper<SysMenuOptions> sysMenuOptionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysMenuOptionsLambdaQueryWrapper.select(SysMenuOptions::getMenuOptionId, SysMenuOptions::getMenuId, SysMenuOptions::getAppId);
         return this.list(sysMenuOptionsLambdaQueryWrapper);
+    }
+
+    @Override
+    public List<String> getOptionsCodeList(List<Long> optionsIdList) {
+
+        if (ObjectUtil.isEmpty(optionsIdList)) {
+            return new ArrayList<>();
+        }
+
+        LambdaQueryWrapper<SysMenuOptions> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysMenuOptions::getMenuOptionId, optionsIdList);
+        queryWrapper.select(SysMenuOptions::getOptionCode);
+        List<SysMenuOptions> sysMenuOptionsList = this.list(queryWrapper);
+
+        if (ObjectUtil.isEmpty(sysMenuOptionsList)) {
+            return new ArrayList<>();
+        }
+
+        return sysMenuOptionsList.stream().map(SysMenuOptions::getOptionCode).collect(Collectors.toList());
     }
 
     @Override
