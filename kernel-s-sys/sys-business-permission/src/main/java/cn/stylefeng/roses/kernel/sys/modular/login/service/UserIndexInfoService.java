@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.login.service;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
@@ -61,6 +62,9 @@ public class UserIndexInfoService {
     @Resource
     private SysAppService sysAppService;
 
+    @Resource
+    private SessionManagerApi sessionManagerApi;
+
     /**
      * 获取用户首页信息
      *
@@ -98,7 +102,7 @@ public class UserIndexInfoService {
         this.fillWebSocketUrl(loginUser, userIndexInfo);
 
         // 8. 更新用户的session信息，因为可能更新了loginUser中的值
-
+        sessionManagerApi.updateSession(loginUser.getToken(), loginUser);
 
         return userIndexInfo;
     }
