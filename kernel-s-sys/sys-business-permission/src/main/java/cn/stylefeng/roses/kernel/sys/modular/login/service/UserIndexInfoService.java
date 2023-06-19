@@ -86,8 +86,7 @@ public class UserIndexInfoService {
         this.fillUserOrgInfo(loginUser, userIndexInfo);
 
         // 3. 获取用户的权限编码集合
-        ArrayList<SysMenu> userMenuList = new ArrayList<>();
-        this.fillUserPermissionCodeList(loginUser, userIndexInfo, userMenuList);
+        List<SysMenu> userMenuList = this.fillUserPermissionCodeList(loginUser, userIndexInfo);
 
         // 4. 获取用户的当前登录App
         this.fillUserAppList(loginUser, userIndexInfo, userMenuList);
@@ -197,7 +196,7 @@ public class UserIndexInfoService {
      * @author fengshuonan
      * @since 2023/6/19 12:38
      */
-    private void fillUserPermissionCodeList(LoginUser loginUser, UserIndexInfo userIndexInfo, List<SysMenu> userMenuList) {
+    private List<SysMenu> fillUserPermissionCodeList(LoginUser loginUser, UserIndexInfo userIndexInfo) {
 
         Long userId = loginUser.getUserId();
 
@@ -206,7 +205,7 @@ public class UserIndexInfoService {
 
         if (ObjectUtil.isEmpty(roleIdList)) {
             userIndexInfo.setPermissionCodeList(new HashSet<>());
-            return;
+            return new ArrayList<>();
         }
 
         // 获取角色对应的菜单id和菜单功能id
@@ -216,7 +215,7 @@ public class UserIndexInfoService {
         HashSet<String> permissionCodeList = new HashSet<>();
 
         // 获取菜单对应的菜单编码集合
-        userMenuList = sysMenuService.getIndexMenuInfoList(menuIdList);
+        List<SysMenu> userMenuList = sysMenuService.getIndexMenuInfoList(menuIdList);
         Set<String> menuCodeList = userMenuList.stream().map(SysMenu::getMenuCode).collect(Collectors.toSet());
         permissionCodeList.addAll(menuCodeList);
 
@@ -225,6 +224,8 @@ public class UserIndexInfoService {
         permissionCodeList.addAll(optionsCodeList);
 
         userIndexInfo.setPermissionCodeList(permissionCodeList);
+
+        return userMenuList;
     }
 
     /**
