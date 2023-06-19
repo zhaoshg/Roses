@@ -111,6 +111,24 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     }
 
     @Override
+    public List<Long> getRoleBindMenuIdList(List<Long> roleIdList) {
+
+        if (ObjectUtil.isEmpty(roleIdList)) {
+            return new ArrayList<>();
+        }
+
+        LambdaQueryWrapper<SysRoleMenu> sysRoleMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleMenuLambdaQueryWrapper.in(SysRoleMenu::getRoleId, roleIdList);
+        sysRoleMenuLambdaQueryWrapper.select(SysRoleMenu::getMenuId);
+        List<SysRoleMenu> sysRoleMenuList = this.list(sysRoleMenuLambdaQueryWrapper);
+        if (ObjectUtil.isEmpty(sysRoleMenuList)) {
+            return new ArrayList<>();
+        }
+
+        return sysRoleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
+    }
+
+    @Override
     public List<SysRoleMenu> findList(SysRoleMenuRequest sysRoleMenuRequest) {
         LambdaQueryWrapper<SysRoleMenu> wrapper = this.createWrapper(sysRoleMenuRequest);
         return this.list(wrapper);

@@ -88,4 +88,12 @@ public interface SysRoleMenuOptionsService extends IService<SysRoleMenuOptions> 
      */
     void bindRoleMenuOptions(Long roleId, List<SysMenuOptions> sysMenuOptionsList);
 
+    /**
+     * 获取角色绑定的菜单功能id
+     *
+     * @author fengshuonan
+     * @since 2023/6/19 12:49
+     */
+    List<Long> getRoleBindMenuOptionsIdList(List<Long> roleIdList);
+
 }

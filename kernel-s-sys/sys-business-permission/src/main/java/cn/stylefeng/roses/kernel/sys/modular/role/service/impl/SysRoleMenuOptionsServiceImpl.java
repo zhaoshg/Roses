@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 角色和菜单下的功能关联业务实现层
@@ -100,6 +101,25 @@ public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOption
             sysRoleMenuOptionList.add(roleMenuOptionItem);
         }
         this.getBaseMapper().insertBatchSomeColumn(sysRoleMenuOptionList);
+    }
+
+    @Override
+    public List<Long> getRoleBindMenuOptionsIdList(List<Long> roleIdList) {
+
+        if (ObjectUtil.isEmpty(roleIdList)) {
+            return new ArrayList<>();
+        }
+
+        LambdaQueryWrapper<SysRoleMenuOptions> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysRoleMenuOptions::getRoleId, roleIdList);
+        queryWrapper.select(SysRoleMenuOptions::getMenuOptionId);
+        List<SysRoleMenuOptions> roleMenuOptions = this.list(queryWrapper);
+
+        if (ObjectUtil.isEmpty(roleMenuOptions)) {
+            return new ArrayList<>();
+        }
+
+        return roleMenuOptions.stream().map(SysRoleMenuOptions::getMenuOptionId).collect(Collectors.toList());
     }
 
     @Override
