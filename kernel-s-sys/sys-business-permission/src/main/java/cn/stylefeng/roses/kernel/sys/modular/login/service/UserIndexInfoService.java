@@ -192,7 +192,7 @@ public class UserIndexInfoService {
         HashSet<String> permissionCodeList = new HashSet<>();
 
         // 获取菜单对应的菜单编码集合
-        List<SysMenu> menuInfoList = sysMenuService.getMenuCodeList(menuIdList);
+        List<SysMenu> menuInfoList = sysMenuService.getIndexMenuInfoList(menuIdList);
         Set<String> menuCodeList = menuInfoList.stream().map(SysMenu::getMenuCode).collect(Collectors.toSet());
         permissionCodeList.addAll(menuCodeList);
 
