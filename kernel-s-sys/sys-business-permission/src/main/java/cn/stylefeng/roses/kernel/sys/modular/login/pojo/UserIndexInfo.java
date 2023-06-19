@@ -38,7 +38,7 @@ public class UserIndexInfo {
      * 当前用户的部门和任职信息
      */
     @ChineseDescription("当前用户的部门和任职信息")
-    private List<IndexUserOrgInfo> userOrgInfo;
+    private List<IndexUserOrgInfo> userOrgInfoList;
 
     /**
      * 当前用户的权限编码集合，包括【菜单编码】和【菜单功能编码】
@@ -47,10 +47,10 @@ public class UserIndexInfo {
     private Set<String> permissionCodeList;
 
     /**
-     * 当前用户选择的应用id
+     * 当前用户拥有的应用信息
      */
-    @ChineseDescription("当前用户选择的应用id")
-    private Long currentAppId;
+    @ChineseDescription("当前用户拥有的应用信息")
+    private List<IndexUserAppInfo> userAppInfoList;
 
     /**
      * 用户菜单集合

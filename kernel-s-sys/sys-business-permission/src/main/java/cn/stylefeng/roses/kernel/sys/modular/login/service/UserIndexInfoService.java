@@ -123,7 +123,7 @@ public class UserIndexInfoService {
 
         // 查询到机构为空，直接返回
         if (ObjectUtil.isEmpty(userOrgList)) {
-            userIndexInfo.setUserOrgInfo(resultUserOrg);
+            userIndexInfo.setUserOrgInfoList(resultUserOrg);
             return;
         }
 
@@ -164,7 +164,7 @@ public class UserIndexInfoService {
         }
 
         // 填充用户组织机构信息
-        userIndexInfo.setUserOrgInfo(resultUserOrg);
+        userIndexInfo.setUserOrgInfoList(resultUserOrg);
     }
 
     /**
