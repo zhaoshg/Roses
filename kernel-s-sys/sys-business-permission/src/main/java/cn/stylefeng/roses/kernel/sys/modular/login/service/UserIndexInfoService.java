@@ -5,15 +5,21 @@ import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.sys.api.SysUserOrgServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserOrgInfo;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.UserIndexInfo;
+import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
+import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
+import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
+import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -30,6 +36,21 @@ public class UserIndexInfoService {
 
     @Resource
     private SysUserOrgServiceApi sysUserOrgServiceApi;
+
+    @Resource
+    private SysUserRoleServiceApi sysUserRoleServiceApi;
+
+    @Resource
+    private SysRoleMenuService sysRoleMenuService;
+
+    @Resource
+    private SysRoleMenuOptionsService sysRoleMenuOptionsService;
+
+    @Resource
+    private SysMenuService sysMenuService;
+
+    @Resource
+    private SysMenuOptionsService sysMenuOptionsService;
 
     /**
      * 获取用户首页信息
@@ -52,8 +73,10 @@ public class UserIndexInfoService {
         this.fillUserOrgInfo(loginUser, userIndexInfo);
 
         // 3. 获取用户的权限编码集合
+        this.fillUserPermissionCodeList(loginUser, userIndexInfo);
 
         // 4. 获取用户的当前登录App和菜单
+
 
         // 5. 获取菜单和路由的appId映射关系
 
@@ -127,26 +150,53 @@ public class UserIndexInfoService {
         // 如果当前没激活的组织机构，则直接将主部门激活
         if (currentOrgId == null) {
             for (IndexUserOrgInfo indexUserOrgInfo : resultUserOrg) {
-                if (indexUserOrgInfo.getMainFlag()) {
-                    indexUserOrgInfo.setCurrentSelectFlag(true);
-                } else {
-                    indexUserOrgInfo.setCurrentSelectFlag(false);
-                }
+                indexUserOrgInfo.setCurrentSelectFlag(indexUserOrgInfo.getMainFlag());
             }
         }
         // 如果有激活的组织机构
         else {
             for (IndexUserOrgInfo indexUserOrgInfo : resultUserOrg) {
-                if (indexUserOrgInfo.getOrgId().equals(currentOrgId)) {
-                    indexUserOrgInfo.setCurrentSelectFlag(true);
-                } else {
-                    indexUserOrgInfo.setCurrentSelectFlag(false);
-                }
+                indexUserOrgInfo.setCurrentSelectFlag(indexUserOrgInfo.getOrgId().equals(currentOrgId));
             }
         }
 
         // 填充用户组织机构信息
         userIndexInfo.setUserOrgInfo(resultUserOrg);
+    }
+
+    /**
+     * 填充用户的权限编码集合
+     *
+     * @author fengshuonan
+     * @since 2023/6/19 12:38
+     */
+    private void fillUserPermissionCodeList(LoginUser loginUser, UserIndexInfo userIndexInfo) {
+
+        Long userId = loginUser.getUserId();
+
+        // 获取用户的角色集合
+        List<Long> roleIdList = sysUserRoleServiceApi.getUserRoleIdList(userId);
+
+        if (ObjectUtil.isEmpty(roleIdList)) {
+            userIndexInfo.setPermissionCodeList(new HashSet<>());
+            return;
+        }
+
+        // 获取角色对应的菜单id和菜单功能id
+        List<Long> menuIdList = sysRoleMenuService.getRoleBindMenuIdList(roleIdList);
+        List<Long> menuOptionsIdList = sysRoleMenuOptionsService.getRoleBindMenuOptionsIdList(roleIdList);
+
+        HashSet<String> permissionCodeList = new HashSet<>();
+
+        // 获取菜单对应的菜单编码集合
+        List<String> menuCodeList = sysMenuService.getMenuCodeList(menuIdList);
+        permissionCodeList.addAll(menuCodeList);
+
+        // 获取功能对应的功能编码集合
+        List<String> optionsCodeList = sysMenuOptionsService.getOptionsCodeList(menuOptionsIdList);
+        permissionCodeList.addAll(optionsCodeList);
+
+        userIndexInfo.setPermissionCodeList(permissionCodeList);
     }
 
 }
