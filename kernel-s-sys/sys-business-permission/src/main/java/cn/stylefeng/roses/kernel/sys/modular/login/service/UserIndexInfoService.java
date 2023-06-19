@@ -212,7 +212,7 @@ public class UserIndexInfoService {
         List<Long> menuIdList = sysRoleMenuService.getRoleBindMenuIdList(roleIdList);
         List<Long> menuOptionsIdList = sysRoleMenuOptionsService.getRoleBindMenuOptionsIdList(roleIdList);
 
-        HashSet<String> permissionCodeList = new HashSet<>();
+        Set<String> permissionCodeList = new HashSet<>();
 
         // 获取菜单对应的菜单编码集合
         List<SysMenu> userMenuList = sysMenuService.getIndexMenuInfoList(menuIdList);
@@ -222,6 +222,11 @@ public class UserIndexInfoService {
         // 获取功能对应的功能编码集合
         List<String> optionsCodeList = sysMenuOptionsService.getOptionsCodeList(menuOptionsIdList);
         permissionCodeList.addAll(optionsCodeList);
+
+        // 功能编码转化为大写
+        if (ObjectUtil.isNotEmpty(permissionCodeList)) {
+            permissionCodeList = permissionCodeList.stream().map(String::toUpperCase).collect(Collectors.toSet());
+        }
 
         userIndexInfo.setPermissionCodeList(permissionCodeList);
 
