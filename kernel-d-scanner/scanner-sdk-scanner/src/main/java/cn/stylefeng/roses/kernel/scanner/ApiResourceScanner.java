@@ -245,11 +245,13 @@ public class ApiResourceScanner implements BeanPostProcessor {
         RequestMethod[] requestMethods = invokeAnnotationMethod(apiResource, "method", RequestMethod[].class);
         Boolean requiredLogin = invokeAnnotationMethod(apiResource, "requiredLogin", Boolean.class);
         Boolean requiredPermission = invokeAnnotationMethod(apiResource, "requiredPermission", Boolean.class);
+        String requirePermissionCode = invokeAnnotationMethod(apiResource, "requirePermissionCode", String.class);
         Boolean viewFlag = invokeAnnotationMethod(apiResource, "viewFlag", Boolean.class);
         ResBizTypeEnum methodResBizType = invokeAnnotationMethod(apiResource, "resBizType", ResBizTypeEnum.class);
 
         resourceDefinition.setRequiredLoginFlag(requiredLogin);
         resourceDefinition.setRequiredPermissionFlag(requiredPermission);
+        resourceDefinition.setPermissionCode(requirePermissionCode);
         resourceDefinition.setResourceName(name);
 
         // 填充资源的业务类型

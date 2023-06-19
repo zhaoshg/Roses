@@ -139,6 +139,12 @@ public class ResourceDefinition implements Serializable {
     private Boolean requiredPermissionFlag;
 
     /**
+     * 需要鉴权的菜单或者功能编码
+     */
+    @ChineseDescription("需要鉴权的菜单或者功能编码")
+    private String permissionCode;
+
+    /**
      * 需要进行参数校验的分组
      */
     @ChineseDescription("需要进行参数校验的分组")
