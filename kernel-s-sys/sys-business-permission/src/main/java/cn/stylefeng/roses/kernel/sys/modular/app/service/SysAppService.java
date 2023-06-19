@@ -3,10 +3,12 @@ package cn.stylefeng.roses.kernel.sys.modular.app.service;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.sys.modular.app.entity.SysApp;
 import cn.stylefeng.roses.kernel.sys.modular.app.pojo.request.SysAppRequest;
+import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserAppInfo;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.response.AppGroupDetail;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 系统应用 服务类
@@ -87,5 +89,15 @@ public interface SysAppService extends IService<SysApp> {
      * @since 2023/6/14 21:48
      */
     List<AppGroupDetail> getAppList();
+
+    /**
+     * 根据应用id获取应用的名称信息，并且按应用的排序字段进行排序
+     * <p>
+     * 一般用在用户登录后，获取首页应用信息
+     *
+     * @author fengshuonan
+     * @since 2023/6/19 22:30
+     */
+    List<IndexUserAppInfo> getIndexUserAppList(Set<Long> appIds);
 
 }

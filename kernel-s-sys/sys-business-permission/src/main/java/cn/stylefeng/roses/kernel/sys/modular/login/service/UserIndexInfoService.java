@@ -9,6 +9,8 @@ import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
+import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
+import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserAppInfo;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserOrgInfo;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.UserIndexInfo;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
@@ -55,6 +57,9 @@ public class UserIndexInfoService {
     @Resource
     private SysMenuOptionsService sysMenuOptionsService;
 
+    @Resource
+    private SysAppService sysAppService;
+
     /**
      * 获取用户首页信息
      *
@@ -76,9 +81,11 @@ public class UserIndexInfoService {
         this.fillUserOrgInfo(loginUser, userIndexInfo);
 
         // 3. 获取用户的权限编码集合
-        this.fillUserPermissionCodeList(loginUser, userIndexInfo);
+        ArrayList<SysMenu> userMenuList = new ArrayList<>();
+        this.fillUserPermissionCodeList(loginUser, userIndexInfo, userMenuList);
 
-        // 4. 获取用户的当前登录App和菜单
+        // 4. 获取用户的当前登录App
+        this.fillUserAppList(loginUser, userIndexInfo, userMenuList);
 
 
         // 5. 获取菜单和路由的appId映射关系
@@ -154,6 +161,10 @@ public class UserIndexInfoService {
         if (currentOrgId == null) {
             for (IndexUserOrgInfo indexUserOrgInfo : resultUserOrg) {
                 indexUserOrgInfo.setCurrentSelectFlag(indexUserOrgInfo.getMainFlag());
+
+                if (indexUserOrgInfo.getMainFlag()) {
+                    // todo 更新当前用户的缓存 updateSession
+                }
             }
         }
         // 如果有激活的组织机构
@@ -173,7 +184,7 @@ public class UserIndexInfoService {
      * @author fengshuonan
      * @since 2023/6/19 12:38
      */
-    private void fillUserPermissionCodeList(LoginUser loginUser, UserIndexInfo userIndexInfo) {
+    private void fillUserPermissionCodeList(LoginUser loginUser, UserIndexInfo userIndexInfo, List<SysMenu> userMenuList) {
 
         Long userId = loginUser.getUserId();
 
@@ -192,8 +203,8 @@ public class UserIndexInfoService {
         HashSet<String> permissionCodeList = new HashSet<>();
 
         // 获取菜单对应的菜单编码集合
-        List<SysMenu> menuInfoList = sysMenuService.getIndexMenuInfoList(menuIdList);
-        Set<String> menuCodeList = menuInfoList.stream().map(SysMenu::getMenuCode).collect(Collectors.toSet());
+        userMenuList = sysMenuService.getIndexMenuInfoList(menuIdList);
+        Set<String> menuCodeList = userMenuList.stream().map(SysMenu::getMenuCode).collect(Collectors.toSet());
         permissionCodeList.addAll(menuCodeList);
 
         // 获取功能对应的功能编码集合
@@ -201,6 +212,39 @@ public class UserIndexInfoService {
         permissionCodeList.addAll(optionsCodeList);
 
         userIndexInfo.setPermissionCodeList(permissionCodeList);
+    }
+
+    /**
+     * 填充当前用户的应用列表和菜单信息
+     *
+     * @author fengshuonan
+     * @since 2023/6/19 22:25
+     */
+    private void fillUserAppList(LoginUser loginUser, UserIndexInfo userIndexInfo, List<SysMenu> userMenuList) {
+
+        if (ObjectUtil.isEmpty(userMenuList)) {
+            return;
+        }
+
+        // 先统计用户有多少个应用
+        Set<Long> userAppIds = userMenuList.stream().map(SysMenu::getAppId).collect(Collectors.toSet());
+
+        // 查询这些应用的应用名称，并且按应用的顺序进行排序
+        List<IndexUserAppInfo> indexUserAppList = sysAppService.getIndexUserAppList(userAppIds);
+
+        // 判断当前用户是否有绑定的应用id
+        // 如果没绑定的，则默认选中第一个
+        if (ObjectUtil.isEmpty(loginUser.getCurrentAppId())) {
+            indexUserAppList.get(0).setCurrentSelectFlag(true);
+        } else {
+            for (IndexUserAppInfo indexUserAppInfo : indexUserAppList) {
+                if (indexUserAppInfo.getAppId().equals(loginUser.getCurrentAppId())) {
+                    indexUserAppInfo.setCurrentSelectFlag(true);
+                }
+            }
+        }
+
+        userIndexInfo.setUserAppInfoList(indexUserAppList);
     }
 
 }

@@ -14,6 +14,7 @@ import cn.stylefeng.roses.kernel.sys.modular.app.enums.SysAppExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.app.mapper.SysAppMapper;
 import cn.stylefeng.roses.kernel.sys.modular.app.pojo.request.SysAppRequest;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
+import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserAppInfo;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.response.AppGroupDetail;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -96,7 +97,8 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
         LambdaQueryWrapper<SysApp> wrapper = createWrapper(sysAppRequest);
 
         // 只查询有用的列
-        wrapper.select(SysApp::getAppId, SysApp::getAppName, SysApp::getAppCode, SysApp::getAppIcon, SysApp::getStatusFlag, SysApp::getAppSort, BaseEntity::getCreateTime);
+        wrapper.select(SysApp::getAppId, SysApp::getAppName, SysApp::getAppCode, SysApp::getAppIcon, SysApp::getStatusFlag,
+                SysApp::getAppSort, BaseEntity::getCreateTime);
 
         Page<SysApp> sysAppPage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysAppPage);
@@ -118,11 +120,39 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
         // 结果转化为指定格式
         ArrayList<AppGroupDetail> appGroupDetails = new ArrayList<>();
         for (SysApp sysApp : appList) {
-            AppGroupDetail appGroupDetail = new AppGroupDetail(sysApp.getAppId(), sysApp.getAppName(), sysApp.getAppIcon(), sysApp.getRemark());
+            AppGroupDetail appGroupDetail = new AppGroupDetail(sysApp.getAppId(), sysApp.getAppName(), sysApp.getAppIcon(),
+                    sysApp.getRemark());
             appGroupDetails.add(appGroupDetail);
         }
 
         return appGroupDetails;
+    }
+
+    @Override
+    public List<IndexUserAppInfo> getIndexUserAppList(Set<Long> appIds) {
+
+        if (ObjectUtil.isEmpty(appIds)) {
+            return new ArrayList<>();
+        }
+
+        LambdaQueryWrapper<SysApp> sysAppLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysAppLambdaQueryWrapper.in(SysApp::getAppId, appIds);
+        sysAppLambdaQueryWrapper.select(SysApp::getAppId, SysApp::getAppName);
+        sysAppLambdaQueryWrapper.orderByAsc(SysApp::getAppSort);
+
+        List<SysApp> sysAppList = this.list(sysAppLambdaQueryWrapper);
+
+        // 获取应用详情
+        ArrayList<IndexUserAppInfo> indexUserAppInfos = new ArrayList<>();
+        for (SysApp sysApp : sysAppList) {
+            IndexUserAppInfo indexUserAppInfo = new IndexUserAppInfo();
+            indexUserAppInfo.setAppId(sysApp.getAppId());
+            indexUserAppInfo.setAppName(sysApp.getAppName());
+            indexUserAppInfo.setCurrentSelectFlag(false);
+            indexUserAppInfos.add(indexUserAppInfo);
+        }
+
+        return indexUserAppInfos;
     }
 
     @Override
