@@ -105,7 +105,7 @@ public interface SysMenuService extends IService<SysMenu> {
     List<SysMenu> getTotalMenuList();
 
     /**
-     * 获取菜单对应的菜单编码，以及菜单id、应用id，菜单名称、菜单图标、菜单是否隐藏、菜单激活地址、菜单路由、组件路径、排序信息
+     * 获取菜单对应的菜单编码，以及菜单id、父级id，应用id，菜单名称、菜单图标、菜单是否隐藏、菜单激活地址、菜单路由、组件路径、排序信息
      * <p>
      * 用在用户登录后，获取用户首页信息接口
      *

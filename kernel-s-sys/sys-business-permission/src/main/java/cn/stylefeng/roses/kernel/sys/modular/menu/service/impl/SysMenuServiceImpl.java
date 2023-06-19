@@ -189,9 +189,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         sysMenuLambdaQueryWrapper.in(SysMenu::getMenuId, menuIdList);
 
         // 查询指定的菜单内容
-        sysMenuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getAppId, SysMenu::getMenuCode, SysMenu::getMenuName,
+        sysMenuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuParentId, SysMenu::getAppId, SysMenu::getMenuCode,
+                SysMenu::getMenuName,
                 SysMenu::getAntdvIcon, SysMenu::getAntdvVisible, SysMenu::getAntdvActiveUrl, SysMenu::getAntdvRouter,
                 SysMenu::getAntdvComponent, SysMenu::getMenuSort);
+
+        sysMenuLambdaQueryWrapper.orderByAsc(SysMenu::getMenuSort);
 
         return this.list(sysMenuLambdaQueryWrapper);
     }

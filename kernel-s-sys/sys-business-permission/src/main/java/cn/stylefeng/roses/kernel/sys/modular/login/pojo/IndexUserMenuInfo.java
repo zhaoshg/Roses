@@ -1,6 +1,8 @@
 package cn.stylefeng.roses.kernel.sys.modular.login.pojo;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
+import cn.stylefeng.roses.kernel.rule.tree.factory.base.AbstractTreeNode;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -13,13 +15,19 @@ import java.util.List;
  * @since 2023/6/18 22:26
  */
 @Data
-public class IndexUserMenuInfo {
+public class IndexUserMenuInfo implements AbstractTreeNode<IndexUserMenuInfo> {
 
     /**
      * 菜单id
      */
     @ChineseDescription("菜单id")
     private Long menuId;
+
+    /**
+     * 菜单父级id
+     */
+    @ChineseDescription("菜单父级id")
+    private Long menuParentId;
 
     /**
      * 菜单的名称
@@ -74,5 +82,26 @@ public class IndexUserMenuInfo {
      */
     @ChineseDescription("子级菜单")
     private List<IndexUserMenuInfo> children;
+
+    @Override
+    public String getNodeId() {
+        if (this.menuId == null) {
+            return null;
+        }
+        return this.menuId.toString();
+    }
+
+    @Override
+    public String getNodeParentId() {
+        if (this.menuParentId == null) {
+            return TreeConstants.DEFAULT_PARENT_ID.toString();
+        }
+        return this.menuParentId.toString();
+    }
+
+    @Override
+    public void setChildrenNodes(List<IndexUserMenuInfo> childrenNodes) {
+        this.children = childrenNodes;
+    }
 
 }

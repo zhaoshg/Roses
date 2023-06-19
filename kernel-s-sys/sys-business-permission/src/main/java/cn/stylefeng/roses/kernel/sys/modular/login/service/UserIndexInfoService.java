@@ -4,6 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
+import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import cn.stylefeng.roses.kernel.sys.api.SysUserOrgServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
@@ -11,6 +12,7 @@ import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserAppInfo;
+import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserMenuInfo;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserOrgInfo;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.UserIndexInfo;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
@@ -87,10 +89,14 @@ public class UserIndexInfoService {
         // 4. 获取用户的当前登录App
         this.fillUserAppList(loginUser, userIndexInfo, userMenuList);
 
+        // 5. 填充用户的菜单信息
+        this.fillUserMenuList(loginUser, userIndexInfo, userMenuList);
 
-        // 5. 获取菜单和路由的appId映射关系
+        // 6. 获取菜单和路由的appId映射关系
 
-        // 6. 构建websocket url
+        // 7. 构建websocket url
+
+        // 8. 更新用户的session信息，因为可能更新了loginUser中的值
 
         return userIndexInfo;
     }
@@ -162,8 +168,9 @@ public class UserIndexInfoService {
             for (IndexUserOrgInfo indexUserOrgInfo : resultUserOrg) {
                 indexUserOrgInfo.setCurrentSelectFlag(indexUserOrgInfo.getMainFlag());
 
+                // 更新用户的当前组织机构id
                 if (indexUserOrgInfo.getMainFlag()) {
-                    // todo 更新当前用户的缓存 updateSession
+                    loginUser.setCurrentOrgId(indexUserOrgInfo.getOrgId());
                 }
             }
         }
@@ -236,6 +243,8 @@ public class UserIndexInfoService {
         // 如果没绑定的，则默认选中第一个
         if (ObjectUtil.isEmpty(loginUser.getCurrentAppId())) {
             indexUserAppList.get(0).setCurrentSelectFlag(true);
+            // 更新用户的当前应用id
+            loginUser.setCurrentAppId(indexUserAppList.get(0).getAppId());
         } else {
             for (IndexUserAppInfo indexUserAppInfo : indexUserAppList) {
                 if (indexUserAppInfo.getAppId().equals(loginUser.getCurrentAppId())) {
@@ -245,6 +254,41 @@ public class UserIndexInfoService {
         }
 
         userIndexInfo.setUserAppInfoList(indexUserAppList);
+    }
+
+    /**
+     * 填充用户的当前菜单信息
+     *
+     * @author fengshuonan
+     * @since 2023/6/19 22:38
+     */
+    private void fillUserMenuList(LoginUser loginUser, UserIndexInfo userIndexInfo, List<SysMenu> userMenuList) {
+
+        // 获取用户当前激活的应用
+        Long currentAppId = loginUser.getCurrentAppId();
+
+        // 从用户菜单中筛选这个应用下的所有菜单
+        List<SysMenu> sysUserMenus = userMenuList.stream().filter(i -> i.getAppId().equals(currentAppId)).collect(Collectors.toList());
+
+        // 菜单信息转化为首页需要的菜单信息
+        ArrayList<IndexUserMenuInfo> userIndexMenus = new ArrayList<>();
+        for (SysMenu menuItem : sysUserMenus) {
+            IndexUserMenuInfo indexUserMenuInfo = new IndexUserMenuInfo();
+            indexUserMenuInfo.setMenuId(menuItem.getMenuId());
+            indexUserMenuInfo.setMenuParentId(menuItem.getMenuParentId());
+            indexUserMenuInfo.setTitle(menuItem.getMenuName());
+            indexUserMenuInfo.setIcon(menuItem.getAntdvIcon());
+            indexUserMenuInfo.setHide(YesOrNotEnum.N.getCode().equals(menuItem.getAntdvVisible()));
+            indexUserMenuInfo.setActive(menuItem.getAntdvActiveUrl());
+            indexUserMenuInfo.setPath(menuItem.getAntdvRouter());
+            indexUserMenuInfo.setComponent(menuItem.getAntdvComponent());
+            indexUserMenuInfo.setSortNumber(menuItem.getMenuSort());
+            userIndexMenus.add(indexUserMenuInfo);
+        }
+
+        // 构造树形结构
+        List<IndexUserMenuInfo> indexUserMenuInfos = new DefaultTreeBuildFactory<IndexUserMenuInfo>().doTreeBuild(userIndexMenus);
+        userIndexInfo.setMenuList(indexUserMenuInfos);
     }
 
 }
