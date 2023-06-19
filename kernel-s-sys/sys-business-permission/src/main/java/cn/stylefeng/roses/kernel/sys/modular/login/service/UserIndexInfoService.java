@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.login.service;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
@@ -11,6 +12,7 @@ import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
+import cn.stylefeng.roses.kernel.sys.modular.login.expander.WebSocketConfigExpander;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserAppInfo;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserMenuInfo;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserOrgInfo;
@@ -93,9 +95,10 @@ public class UserIndexInfoService {
         this.fillMenuUrlAppIdMap(userIndexInfo, userMenuList);
 
         // 7. 构建websocket url
-
+        this.fillWebSocketUrl(loginUser, userIndexInfo);
 
         // 8. 更新用户的session信息，因为可能更新了loginUser中的值
+
 
         return userIndexInfo;
     }
@@ -309,4 +312,22 @@ public class UserIndexInfoService {
 
         userIndexInfo.setMenuUrlAppIdMap(menuUrlAppIdMap);
     }
+
+    /**
+     * 填充用户的websocket url
+     *
+     * @author fengshuonan
+     * @since 2023/6/19 23:13
+     */
+    private void fillWebSocketUrl(LoginUser loginUser, UserIndexInfo userIndexInfo) {
+
+        // 从sys_config中获取配置
+        String webSocketWsUrl = WebSocketConfigExpander.getWebSocketWsUrl();
+        Map<String, String> params = new HashMap<>(1);
+        params.put("token", loginUser.getToken());
+        webSocketWsUrl = StrUtil.format(webSocketWsUrl, params);
+
+        userIndexInfo.setWebsocketUrl(webSocketWsUrl);
+    }
+
 }

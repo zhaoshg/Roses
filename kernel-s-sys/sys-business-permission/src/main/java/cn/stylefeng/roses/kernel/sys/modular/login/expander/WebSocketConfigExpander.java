@@ -22,10 +22,9 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.message.api.expander;
+package cn.stylefeng.roses.kernel.sys.modular.login.expander;
 
 import cn.stylefeng.roses.kernel.config.api.context.ConfigContext;
-import cn.stylefeng.roses.kernel.message.api.constants.MessageConstants;
 
 /**
  * websocket相关配置快速获取
@@ -42,7 +41,7 @@ public class WebSocketConfigExpander {
      * @since 2021/1/25 20:34
      */
     public static String getWebSocketWsUrl() {
-        return ConfigContext.me().getSysConfigValueWithDefault("WEB_SOCKET_WS_URL", String.class, MessageConstants.DEFAULT_WS_URL);
+        return ConfigContext.me().getSysConfigValueWithDefault("WEB_SOCKET_WS_URL", String.class, "null");
     }
 
 }
