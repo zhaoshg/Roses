@@ -23,10 +23,7 @@ import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -92,9 +89,11 @@ public class UserIndexInfoService {
         // 5. 填充用户的菜单信息
         this.fillUserMenuList(loginUser, userIndexInfo, userMenuList);
 
-        // 6. 获取菜单和路由的appId映射关系
+        // 6. 获取菜单和路由的appId映射关系【用来给前端作为是否切换应用的依据】
+        this.fillMenuUrlAppIdMap(userIndexInfo, userMenuList);
 
         // 7. 构建websocket url
+
 
         // 8. 更新用户的session信息，因为可能更新了loginUser中的值
 
@@ -291,4 +290,23 @@ public class UserIndexInfoService {
         userIndexInfo.setMenuList(indexUserMenuInfos);
     }
 
+    /**
+     * 填充菜单和应用id的映射
+     *
+     * @author fengshuonan
+     * @since 2023/6/19 23:02
+     */
+    private void fillMenuUrlAppIdMap(UserIndexInfo userIndexInfo, List<SysMenu> userMenuList) {
+
+        // 菜单路由和appId的映射关系
+        HashMap<String, Long> menuUrlAppIdMap = new HashMap<>();
+
+        for (SysMenu sysMenu : userMenuList) {
+            String antdvRouter = sysMenu.getAntdvRouter();
+            Long appId = sysMenu.getAppId();
+            menuUrlAppIdMap.put(antdvRouter, appId);
+        }
+
+        userIndexInfo.setMenuUrlAppIdMap(menuUrlAppIdMap);
+    }
 }
