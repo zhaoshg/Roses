@@ -11,6 +11,7 @@ import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserOrgInfo;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.UserIndexInfo;
+import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
@@ -21,6 +22,8 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 获取用户首页信息的业务
@@ -189,7 +192,8 @@ public class UserIndexInfoService {
         HashSet<String> permissionCodeList = new HashSet<>();
 
         // 获取菜单对应的菜单编码集合
-        List<String> menuCodeList = sysMenuService.getMenuCodeList(menuIdList);
+        List<SysMenu> menuInfoList = sysMenuService.getMenuCodeList(menuIdList);
+        Set<String> menuCodeList = menuInfoList.stream().map(SysMenu::getMenuCode).collect(Collectors.toSet());
         permissionCodeList.addAll(menuCodeList);
 
         // 获取功能对应的功能编码集合

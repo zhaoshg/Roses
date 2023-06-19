@@ -178,22 +178,22 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public List<String> getMenuCodeList(List<Long> menuIdList) {
+    public List<SysMenu> getMenuCodeList(List<Long> menuIdList) {
 
         if (ObjectUtil.isEmpty(menuIdList)) {
             return new ArrayList<>();
         }
 
         LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+
         sysMenuLambdaQueryWrapper.in(SysMenu::getMenuId, menuIdList);
-        sysMenuLambdaQueryWrapper.select(SysMenu::getMenuCode);
-        List<SysMenu> list = this.list(sysMenuLambdaQueryWrapper);
 
-        if (ObjectUtil.isEmpty(list)) {
-            return new ArrayList<>();
-        }
+        // 查询指定的菜单内容
+        sysMenuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuCode, SysMenu::getMenuName, SysMenu::getAntdvIcon,
+                SysMenu::getAntdvVisible, SysMenu::getAntdvActiveUrl, SysMenu::getAntdvRouter, SysMenu::getAntdvComponent,
+                SysMenu::getMenuSort);
 
-        return list.stream().map(SysMenu::getMenuCode).collect(Collectors.toList());
+        return this.list(sysMenuLambdaQueryWrapper);
     }
 
     @Override
