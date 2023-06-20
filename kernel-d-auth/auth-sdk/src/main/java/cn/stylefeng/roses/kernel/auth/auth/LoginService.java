@@ -90,16 +90,9 @@ public class LoginService {
      * @since 2020/10/21 16:59
      */
     public LoginResponse loginAction(LoginRequest loginRequest, Boolean validatePassword, String caToken) {
+
         // 1.参数为空校验
-        if (validatePassword) {
-            if (loginRequest == null || StrUtil.hasBlank(loginRequest.getAccount(), loginRequest.getPassword())) {
-                throw new AuthException(AuthExceptionEnum.PARAM_EMPTY);
-            }
-        } else {
-            if (loginRequest == null || StrUtil.hasBlank(loginRequest.getAccount())) {
-                throw new AuthException(AuthExceptionEnum.ACCOUNT_IS_BLANK);
-            }
-        }
+        this.validateEmptyParams(loginRequest, validatePassword);
 
         // 1.2 判断账号是否密码重试次数过多被冻结
         Integer loginErrorCount = loginErrorCountCacheApi.get(loginRequest.getAccount());
@@ -209,6 +202,24 @@ public class LoginService {
 
         // 14. 组装返回结果
         return new LoginResponse(loginUser.getUserId(), jwtToken);
+    }
+
+    /**
+     * 登录接口，校验登录参数是否为空
+     *
+     * @author fengshuonan
+     * @since 2023/6/20 23:10
+     */
+    private static void validateEmptyParams(LoginRequest loginRequest, Boolean validatePassword) {
+        if (validatePassword) {
+            if (loginRequest == null || StrUtil.hasBlank(loginRequest.getAccount(), loginRequest.getPassword())) {
+                throw new AuthException(AuthExceptionEnum.PARAM_EMPTY);
+            }
+        } else {
+            if (loginRequest == null || StrUtil.hasBlank(loginRequest.getAccount())) {
+                throw new AuthException(AuthExceptionEnum.ACCOUNT_IS_BLANK);
+            }
+        }
     }
 
     /**
