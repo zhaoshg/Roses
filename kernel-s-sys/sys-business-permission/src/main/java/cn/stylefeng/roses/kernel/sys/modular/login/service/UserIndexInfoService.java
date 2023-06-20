@@ -91,16 +91,10 @@ public class UserIndexInfoService {
         // 4. 获取用户的当前登录App
         this.fillUserAppList(loginUser, userIndexInfo, userMenuList);
 
-        // 5. 填充用户的菜单信息
-        this.fillUserMenuList(loginUser, userIndexInfo, userMenuList);
-
-        // 6. 获取菜单和路由的appId映射关系【用来给前端作为是否切换应用的依据】
-        this.fillMenuUrlAppIdMap(userIndexInfo, userMenuList);
-
-        // 7. 构建websocket url
+        // 5. 构建websocket url
         this.fillWebSocketUrl(loginUser, userIndexInfo);
 
-        // 8. 更新用户的session信息，因为可能更新了loginUser中的值
+        // 6. 更新用户的session信息，因为可能更新了loginUser中的值
         sessionManagerApi.updateSession(loginUser.getToken(), loginUser);
 
         return userIndexInfo;
@@ -245,6 +239,7 @@ public class UserIndexInfoService {
             return;
         }
 
+        // 1. 统计用户有多少个应用，创建应用集合，并设置一个默认选中的应用
         // 先统计用户有多少个应用
         Set<Long> userAppIds = userMenuList.stream().map(SysMenu::getAppId).collect(Collectors.toSet());
 
@@ -265,6 +260,43 @@ public class UserIndexInfoService {
             }
         }
 
+        // 2. 给每个应用，添加应用下的菜单
+        for (IndexUserAppInfo indexUserAppInfo : indexUserAppList) {
+
+            // 初始化菜单列表
+            List<IndexUserMenuInfo> appMenuList = indexUserAppInfo.getMenuList();
+            if (ObjectUtil.isEmpty(appMenuList)) {
+                appMenuList = new ArrayList<>();
+            }
+
+            // 将用户用后的菜单统一分类
+            for (SysMenu userMenuItem : userMenuList) {
+                if (userMenuItem.getAppId().equals(indexUserAppInfo.getAppId())) {
+                    IndexUserMenuInfo indexUserMenuInfo = new IndexUserMenuInfo();
+                    indexUserMenuInfo.setMenuId(userMenuItem.getMenuId());
+                    indexUserMenuInfo.setMenuParentId(userMenuItem.getMenuParentId());
+                    indexUserMenuInfo.setTitle(userMenuItem.getMenuName());
+                    indexUserMenuInfo.setIcon(userMenuItem.getAntdvIcon());
+                    indexUserMenuInfo.setHide(YesOrNotEnum.N.getCode().equals(userMenuItem.getAntdvVisible()));
+                    indexUserMenuInfo.setActive(userMenuItem.getAntdvActiveUrl());
+                    indexUserMenuInfo.setPath(userMenuItem.getAntdvRouter());
+                    indexUserMenuInfo.setComponent(userMenuItem.getAntdvComponent());
+                    indexUserMenuInfo.setSortNumber(userMenuItem.getMenuSort());
+                    appMenuList.add(indexUserMenuInfo);
+                }
+            }
+
+            // 如果用户当前应用下没有菜单，则直接设置为空菜单
+            if (ObjectUtil.isEmpty(appMenuList)) {
+                indexUserAppInfo.setMenuList(appMenuList);
+            }
+            // 如果用户当前应用下有菜单，则构造树形结构
+            else {
+                List<IndexUserMenuInfo> appMenuTree = new DefaultTreeBuildFactory<IndexUserMenuInfo>().doTreeBuild(appMenuList);
+                indexUserAppInfo.setMenuList(appMenuTree);
+            }
+        }
+
         userIndexInfo.setUserAppInfoList(indexUserAppList);
     }
 
@@ -276,51 +308,7 @@ public class UserIndexInfoService {
      */
     private void fillUserMenuList(LoginUser loginUser, UserIndexInfo userIndexInfo, List<SysMenu> userMenuList) {
 
-        // 获取用户当前激活的应用
-        Long currentAppId = loginUser.getCurrentAppId();
 
-        // 从用户菜单中筛选这个应用下的所有菜单
-        List<SysMenu> sysUserMenus = userMenuList.stream().filter(i -> i.getAppId().equals(currentAppId)).collect(Collectors.toList());
-
-        // 菜单信息转化为首页需要的菜单信息
-        ArrayList<IndexUserMenuInfo> userIndexMenus = new ArrayList<>();
-        for (SysMenu menuItem : sysUserMenus) {
-            IndexUserMenuInfo indexUserMenuInfo = new IndexUserMenuInfo();
-            indexUserMenuInfo.setMenuId(menuItem.getMenuId());
-            indexUserMenuInfo.setMenuParentId(menuItem.getMenuParentId());
-            indexUserMenuInfo.setTitle(menuItem.getMenuName());
-            indexUserMenuInfo.setIcon(menuItem.getAntdvIcon());
-            indexUserMenuInfo.setHide(YesOrNotEnum.N.getCode().equals(menuItem.getAntdvVisible()));
-            indexUserMenuInfo.setActive(menuItem.getAntdvActiveUrl());
-            indexUserMenuInfo.setPath(menuItem.getAntdvRouter());
-            indexUserMenuInfo.setComponent(menuItem.getAntdvComponent());
-            indexUserMenuInfo.setSortNumber(menuItem.getMenuSort());
-            userIndexMenus.add(indexUserMenuInfo);
-        }
-
-        // 构造树形结构
-        List<IndexUserMenuInfo> indexUserMenuInfos = new DefaultTreeBuildFactory<IndexUserMenuInfo>().doTreeBuild(userIndexMenus);
-        userIndexInfo.setMenuList(indexUserMenuInfos);
-    }
-
-    /**
-     * 填充菜单和应用id的映射
-     *
-     * @author fengshuonan
-     * @since 2023/6/19 23:02
-     */
-    private void fillMenuUrlAppIdMap(UserIndexInfo userIndexInfo, List<SysMenu> userMenuList) {
-
-        // 菜单路由和appId的映射关系
-        HashMap<String, Long> menuUrlAppIdMap = new HashMap<>();
-
-        for (SysMenu sysMenu : userMenuList) {
-            String antdvRouter = sysMenu.getAntdvRouter();
-            Long appId = sysMenu.getAppId();
-            menuUrlAppIdMap.put(antdvRouter, appId);
-        }
-
-        userIndexInfo.setMenuUrlAppIdMap(menuUrlAppIdMap);
     }
 
     /**
