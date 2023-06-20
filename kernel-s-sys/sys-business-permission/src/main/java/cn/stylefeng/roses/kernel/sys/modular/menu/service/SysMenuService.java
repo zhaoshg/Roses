@@ -114,4 +114,12 @@ public interface SysMenuService extends IService<SysMenu> {
      */
     List<SysMenu> getIndexMenuInfoList(List<Long> menuIdList);
 
+    /**
+     * 通过菜单id，获取菜单的编码集合
+     *
+     * @author fengshuonan
+     * @since 2023/6/21 0:44
+     */
+    List<String> getMenuCodeList(List<Long> menuIdList);
+
 }

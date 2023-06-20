@@ -22,19 +22,22 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.auth.permission;
+package cn.stylefeng.roses.kernel.sys.modular.login.service;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.auth.api.PermissionServiceApi;
 import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
 import cn.stylefeng.roses.kernel.auth.api.exception.AuthException;
 import cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
+import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceDefinition;
+import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceUrlParam;
+import cn.stylefeng.roses.kernel.sys.api.ResourceServiceApi;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import static cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum.AUTH_EXPIRED_ERROR;
 import static cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum.PERMISSION_RES_VALIDATE_ERROR;
@@ -46,10 +49,16 @@ import static cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEn
  * @since 2020/10/22 15:49
  */
 @Service
-public class PermissionServiceImpl implements PermissionServiceApi {
+public class PermissionCheckServiceImpl implements PermissionServiceApi {
 
     @Resource
     private SessionManagerApi sessionManagerApi;
+
+    @Resource
+    private ResourceServiceApi resourceServiceApi;
+
+    @Resource
+    private UserPermissionService userPermissionService;
 
     @Override
     public void checkPermission(String token, String requestUrl) {
@@ -60,19 +69,36 @@ public class PermissionServiceImpl implements PermissionServiceApi {
         }
 
         // 2. 获取token对应的用户信息
-        LoginUser session = sessionManagerApi.getSession(token);
-        if (session == null) {
+        LoginUser loginUser = sessionManagerApi.getSession(token);
+        if (loginUser == null) {
             throw new AuthException(AUTH_EXPIRED_ERROR);
         }
 
-        // 3. 验证用户有没有当前url的权限 todo 校验方法重写
-        Set<String> resourceUrls = new HashSet<>();
-        if (resourceUrls == null || resourceUrls.size() == 0) {
-            throw new AuthException(PERMISSION_RES_VALIDATE_ERROR);
+        // 3. 获取url对应的资源信息
+        ResourceDefinition resourceDefinition = resourceServiceApi.getResourceByUrl(new ResourceUrlParam(requestUrl));
+
+        // 4. 如果资源找不到，则直接返回错误
+        if (resourceDefinition == null) {
+            throw new AuthException(AuthExceptionEnum.CANT_REQUEST_UN_OPEN_API, requestUrl);
+        }
+
+        // 5. 如果当前接口资源不需要权限校验，则直接返回成功
+        if (!resourceDefinition.getRequiredPermissionFlag()) {
+            return;
+        }
+
+        // 获取当前资源需要的权限编码
+        String permissionCode = resourceDefinition.getPermissionCode();
+        if (ObjectUtil.isEmpty(permissionCode)) {
+            return;
+        }
+
+        // 判断当前用户是否有该权限编码，如果有该权限编码，则返回成功
+        List<String> userPermissionCodeList = userPermissionService.getUserPermissionCodeList(loginUser);
+        if (ObjectUtil.isNotEmpty(userPermissionCodeList) && userPermissionCodeList.contains(permissionCode)) {
+            return;
         } else {
-            if (!resourceUrls.contains(requestUrl)) {
-                throw new AuthException(PERMISSION_RES_VALIDATE_ERROR);
-            }
+            throw new AuthException(PERMISSION_RES_VALIDATE_ERROR);
         }
     }
 

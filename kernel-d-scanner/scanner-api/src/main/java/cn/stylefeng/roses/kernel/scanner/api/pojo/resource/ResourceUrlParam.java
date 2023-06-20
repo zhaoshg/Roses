@@ -40,4 +40,11 @@ public class ResourceUrlParam extends BaseRequest {
 
     private String url;
 
+    public ResourceUrlParam() {
+    }
+
+    public ResourceUrlParam(String url) {
+        this.url = url;
+    }
+    
 }

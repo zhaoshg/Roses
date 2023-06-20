@@ -200,6 +200,21 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
+    public List<String> getMenuCodeList(List<Long> menuIdList) {
+
+        if (ObjectUtil.isEmpty(menuIdList)) {
+            return new ArrayList<>();
+        }
+
+        LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysMenuLambdaQueryWrapper.in(SysMenu::getMenuId, menuIdList);
+        sysMenuLambdaQueryWrapper.select(SysMenu::getMenuCode);
+        List<SysMenu> sysMenuList = this.list(sysMenuLambdaQueryWrapper);
+
+        return sysMenuList.stream().map(SysMenu::getMenuCode).collect(Collectors.toList());
+    }
+
+    @Override
     public List<AppGroupDetail> getAppMenuGroupDetail(SysMenuRequest sysMenuRequest) {
 
         // 1. 获取所有应用列表
