@@ -4,7 +4,6 @@ import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -42,6 +41,8 @@ public class UserIndexInfo {
 
     /**
      * 当前用户的权限编码集合，包括【菜单编码】和【菜单功能编码】
+     * <p>
+     * 一般用在前端用户鉴权，或者按钮的权限判断
      */
     @ChineseDescription("当前用户的权限编码集合，包括【菜单编码】和【菜单功能编码】")
     private Set<String> permissionCodeList;
@@ -51,20 +52,6 @@ public class UserIndexInfo {
      */
     @ChineseDescription("当前用户拥有的应用信息")
     private List<IndexUserAppInfo> userAppInfoList;
-
-    /**
-     * 用户菜单集合
-     */
-    @ChineseDescription("用户菜单集合")
-    private List<IndexUserMenuInfo> menuList;
-
-    /**
-     * 菜单路由和appId的映射关系
-     * <p>
-     * 用在提供前端应用切换的需要
-     */
-    @ChineseDescription("菜单路由和appId的映射关系")
-    private Map<String, Long> menuUrlAppIdMap;
 
     /**
      * 登录人的websocketUrl，用来获取右上角的实时消息

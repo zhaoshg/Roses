@@ -3,6 +3,8 @@ package cn.stylefeng.roses.kernel.sys.modular.login.pojo;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import lombok.Data;
 
+import java.util.List;
+
 
 /**
  * 用户的应用详情信息，用在首页获取用户信息
@@ -24,6 +26,12 @@ public class IndexUserAppInfo {
      */
     @ChineseDescription("应用名称")
     private String appName;
+
+    /**
+     * 应用菜单集合
+     */
+    @ChineseDescription("应用菜单集合")
+    private List<IndexUserMenuInfo> menuList;
 
     /**
      * 是否是当前登录用户激活的（选中的）
