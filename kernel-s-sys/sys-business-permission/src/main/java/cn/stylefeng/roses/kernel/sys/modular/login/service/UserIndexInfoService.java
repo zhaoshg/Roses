@@ -301,17 +301,6 @@ public class UserIndexInfoService {
     }
 
     /**
-     * 填充用户的当前菜单信息
-     *
-     * @author fengshuonan
-     * @since 2023/6/19 22:38
-     */
-    private void fillUserMenuList(LoginUser loginUser, UserIndexInfo userIndexInfo, List<SysMenu> userMenuList) {
-
-
-    }
-
-    /**
      * 填充用户的websocket url
      *
      * @author fengshuonan
