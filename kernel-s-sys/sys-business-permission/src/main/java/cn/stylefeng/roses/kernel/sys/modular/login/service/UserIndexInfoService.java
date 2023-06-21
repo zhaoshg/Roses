@@ -12,6 +12,7 @@ import cn.stylefeng.roses.kernel.sys.api.SysUserOrgServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
+import cn.stylefeng.roses.kernel.sys.api.exception.enums.RoleExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
@@ -124,11 +125,12 @@ public class UserIndexInfoService {
         if (updateUserOrgAppRequest.getNewAppId() != null) {
 
             // 判断当前用户是否有该应用id
-
+            this.validateUserHaveAppId(loginUser, updateUserOrgAppRequest.getNewAppId());
 
             loginUser.setCurrentAppId(updateUserOrgAppRequest.getNewAppId());
         }
 
+        // 更新用户会话信息
         sessionManagerApi.updateSession(loginUser.getToken(), loginUser);
     }
 
@@ -347,6 +349,29 @@ public class UserIndexInfoService {
         webSocketWsUrl = StrUtil.format(webSocketWsUrl, params);
 
         userIndexInfo.setWebsocketUrl(webSocketWsUrl);
+    }
+
+    /**
+     * 判断用户是否有对应appId的权限
+     *
+     * @param loginUser 登录用户
+     * @param appId     指定的应用id
+     * @return true-用户有该应用下的权限，false-用户没有该应用下的权限
+     * @author fengshuonan
+     * @since 2023/6/21 16:23
+     */
+    private void validateUserHaveAppId(LoginUser loginUser, Long appId) {
+
+        Long userId = loginUser.getUserId();
+
+        // 获取用户拥有的角色id集合
+        List<Long> userRoleIdList = this.sysUserRoleServiceApi.getUserRoleIdList(userId);
+
+        // 获取角色有没有对应应用下的菜单，如果有菜单则代表有该应用的权限
+        boolean permissionFlag = this.sysRoleMenuService.validateRoleHaveAppIdPermission(userRoleIdList, appId);
+        if (!permissionFlag) {
+            throw new ServiceException(RoleExceptionEnum.USER_HAVE_NO_APP_ID);
+        }
     }
 
 }

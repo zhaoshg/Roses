@@ -88,4 +88,15 @@ public interface SysRoleMenuService extends IService<SysRoleMenu> {
      */
     List<Long> getRoleBindMenuIdList(List<Long> roleIdList);
 
+    /**
+     * 判断指定角色集合，是否有对应应用的权限
+     *
+     * @param roleIdList 角色id集合，一般指的是用户拥有的角色id集合
+     * @param appId      应用id
+     * @return true-角色id集合中包含该应用的权限，false-角色id集合中不包含权限
+     * @author fengshuonan
+     * @since 2023/6/21 16:27
+     */
+    boolean validateRoleHaveAppIdPermission(List<Long> roleIdList, Long appId);
+
 }

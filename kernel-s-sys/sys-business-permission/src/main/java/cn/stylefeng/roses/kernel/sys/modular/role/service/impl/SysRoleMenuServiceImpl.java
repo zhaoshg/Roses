@@ -129,6 +129,14 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     }
 
     @Override
+    public boolean validateRoleHaveAppIdPermission(List<Long> roleIdList, Long appId) {
+        LambdaQueryWrapper<SysRoleMenu> sysRoleMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleMenuLambdaQueryWrapper.in(SysRoleMenu::getRoleId, roleIdList);
+        sysRoleMenuLambdaQueryWrapper.eq(SysRoleMenu::getAppId, appId);
+        return this.count(sysRoleMenuLambdaQueryWrapper) > 0;
+    }
+
+    @Override
     public List<SysRoleMenu> findList(SysRoleMenuRequest sysRoleMenuRequest) {
         LambdaQueryWrapper<SysRoleMenu> wrapper = this.createWrapper(sysRoleMenuRequest);
         return this.list(wrapper);
