@@ -6,18 +6,17 @@ import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
+import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import cn.stylefeng.roses.kernel.sys.api.SysUserOrgServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
 import cn.stylefeng.roses.kernel.sys.modular.login.expander.WebSocketConfigExpander;
-import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserAppInfo;
-import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserMenuInfo;
-import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserOrgInfo;
-import cn.stylefeng.roses.kernel.sys.modular.login.pojo.UserIndexInfo;
+import cn.stylefeng.roses.kernel.sys.modular.login.pojo.*;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
@@ -98,6 +97,39 @@ public class UserIndexInfoService {
         sessionManagerApi.updateSession(loginUser.getToken(), loginUser);
 
         return userIndexInfo;
+    }
+
+    /**
+     * 切换当前登录用户的组织机构id或者当前激活的appId
+     *
+     * @author fengshuonan
+     * @since 2023/6/21 16:04
+     */
+    public void updateUserOrgOrApp(UpdateUserOrgAppRequest updateUserOrgAppRequest) {
+
+        // 获取当前登录用户
+        LoginUser loginUser = LoginContext.me().getLoginUser();
+
+        if (updateUserOrgAppRequest.getNewOrgId() != null) {
+
+            // 判断当前用户是否有指定的组织机构id
+            boolean result = sysUserOrgServiceApi.validateUserOrgAuth(updateUserOrgAppRequest.getNewOrgId(), loginUser.getUserId());
+            if (!result) {
+                throw new ServiceException(OrgExceptionEnum.UPDATE_LOGIN_USER_ORG_ERROR);
+            }
+
+            loginUser.setCurrentOrgId(updateUserOrgAppRequest.getNewOrgId());
+        }
+
+        if (updateUserOrgAppRequest.getNewAppId() != null) {
+
+            // 判断当前用户是否有该应用id
+
+
+            loginUser.setCurrentAppId(updateUserOrgAppRequest.getNewAppId());
+        }
+
+        sessionManagerApi.updateSession(loginUser.getToken(), loginUser);
     }
 
     /**

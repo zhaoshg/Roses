@@ -21,7 +21,12 @@ public enum OrgExceptionEnum implements AbstractExceptionEnum {
     /**
      * 删除机构失败，该机构下有绑定员工
      */
-    DELETE_ORGANIZATION_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "删除机构失败，该机构下有绑定员工");
+    DELETE_ORGANIZATION_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "删除机构失败，该机构下有绑定员工"),
+
+    /**
+     * 用户没有该组织机构的权限，无法切换组织机构
+     */
+    UPDATE_LOGIN_USER_ORG_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10003", "用户没有该组织机构的权限，无法切换组织机构");
 
     /**
      * 错误编码

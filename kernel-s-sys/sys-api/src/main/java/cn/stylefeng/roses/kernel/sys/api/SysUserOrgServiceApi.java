@@ -40,4 +40,15 @@ public interface SysUserOrgServiceApi {
      */
     List<Long> getOrgUserIdList(Long orgId, Boolean containSubOrgFlag);
 
+    /**
+     * 判断用户是否有指定组织机构的权限
+     *
+     * @param orgId  组织机构id
+     * @param userId 用户id
+     * @return true-用户有所属该机构的权限，false-用户不属于该机构
+     * @author fengshuonan
+     * @since 2023/6/21 16:11
+     */
+    boolean validateUserOrgAuth(Long orgId, Long userId);
+
 }

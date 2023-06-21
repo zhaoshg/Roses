@@ -195,6 +195,14 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         return list.stream().map(SysUserOrg::getUserId).collect(Collectors.toList());
     }
 
+    @Override
+    public boolean validateUserOrgAuth(Long orgId, Long userId) {
+        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserOrg::getUserId, userId);
+        queryWrapper.eq(SysUserOrg::getOrgId, orgId);
+        return this.count(queryWrapper) > 0;
+    }
+
     /**
      * 获取信息
      *
