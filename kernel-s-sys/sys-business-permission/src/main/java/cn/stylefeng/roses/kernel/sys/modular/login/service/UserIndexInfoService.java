@@ -356,7 +356,6 @@ public class UserIndexInfoService {
      *
      * @param loginUser 登录用户
      * @param appId     指定的应用id
-     * @return true-用户有该应用下的权限，false-用户没有该应用下的权限
      * @author fengshuonan
      * @since 2023/6/21 16:23
      */
