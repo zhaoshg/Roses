@@ -54,8 +54,15 @@ public class HrOrganizationDTO {
 
     /**
      * 组织名称
+     * <p>
+     * 存公司名称
      */
     private String orgName;
+
+    /**
+     * 部门名称
+     */
+    private String deptName;
 
     /**
      * 组织编码

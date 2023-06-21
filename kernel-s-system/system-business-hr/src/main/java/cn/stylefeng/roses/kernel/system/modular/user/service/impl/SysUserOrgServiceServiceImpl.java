@@ -31,6 +31,7 @@ import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.system.api.OrganizationServiceApi;
+import cn.stylefeng.roses.kernel.system.api.enums.OrgTypeEnum;
 import cn.stylefeng.roses.kernel.system.api.exception.SystemModularException;
 import cn.stylefeng.roses.kernel.system.api.exception.enums.user.SysUserOrgExceptionEnum;
 import cn.stylefeng.roses.kernel.system.api.pojo.organization.HrOrganizationDTO;
@@ -235,10 +236,27 @@ public class SysUserOrgServiceServiceImpl extends ServiceImpl<SysUserOrgMapper, 
         userOrgResponse.setUserId(loginUser.getUserId());
         List<SysUserOrg> sysUserOrgList = this.findList(userOrgResponse);
         for (SysUserOrg sysUserOrg : sysUserOrgList) {
-            // 获取用户的公司信息
-            HrOrganizationDTO companyInfo = organizationServiceApi.getOrgCompanyInfo(sysUserOrg.getOrgId());
-            if (companyInfo == null) {
+
+            // 获取组织机构信息
+            Long orgId = sysUserOrg.getOrgId();
+            HrOrganizationDTO orgDetail = organizationServiceApi.getOrgDetail(orgId);
+            if (orgDetail == null) {
                 continue;
+            }
+
+            // 如果当前机构是公司，则直接填充公司信息
+            HrOrganizationDTO companyInfo = null;
+            if (OrgTypeEnum.COMPANY.getCode().equals(orgDetail.getOrgType())) {
+                companyInfo = orgDetail;
+            } else {
+                // 获取用户的公司信息
+                companyInfo = organizationServiceApi.getOrgCompanyInfo(sysUserOrg.getOrgId());
+                if (companyInfo == null) {
+                    continue;
+                }
+
+                // 设置部门名称
+                companyInfo.setDeptName(orgDetail.getOrgName());
             }
 
             // 填充用户的职务名称positionName
