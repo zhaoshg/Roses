@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.sys.api.SysRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author fengshuonan
  * @date 2023/06/10 21:29
  */
-public interface SysRoleService extends IService<SysRole> {
+public interface SysRoleService extends IService<SysRole>, SysRoleServiceApi {
 
     /**
      * 新增

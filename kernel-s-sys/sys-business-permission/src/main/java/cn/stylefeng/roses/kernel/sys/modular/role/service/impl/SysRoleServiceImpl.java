@@ -12,6 +12,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.exception.SysRoleExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleMapper;
@@ -117,6 +118,21 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         return this.list(wrapper);
     }
 
+    @Override
+    public Long getDefaultRoleId() {
+
+        LambdaQueryWrapper<SysRole> sysRoleLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleLambdaQueryWrapper.eq(SysRole::getRoleCode, SysConstants.DEFAULT_ROLE_CODE);
+        sysRoleLambdaQueryWrapper.select(SysRole::getRoleId);
+        SysRole sysRole = this.getOne(sysRoleLambdaQueryWrapper, false);
+
+        if (sysRole != null) {
+            return sysRole.getRoleId();
+        }
+
+        return null;
+    }
+
     /**
      * 获取信息
      *
@@ -174,5 +190,4 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         // 删除角色
         this.removeBatchByIds(roleIdList);
     }
-
 }

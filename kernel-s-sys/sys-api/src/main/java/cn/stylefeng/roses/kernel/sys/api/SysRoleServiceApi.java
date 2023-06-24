@@ -22,44 +22,24 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.api.constants;
+package cn.stylefeng.roses.kernel.sys.api;
 
 /**
- * 基础核心业务业务
+ * 角色信息相关的Api
  *
  * @author fengshuonan
- * @date 2023-06-10 20:50:43
+ * @since 2023/6/25 0:35
  */
-public interface SysConstants {
+public interface SysRoleServiceApi {
 
     /**
-     * 基础核心业务模块名称
+     * 获取系统默认角色id，查询方式为找到角色编码为employee的角色id
+     * <p>
+     * 一般在添加用户时用到
+     *
+     * @author fengshuonan
+     * @since 2023/6/25 0:35
      */
-    String SYS_MODULE_NAME = "kernel-s-sys";
-
-    /**
-     * 异常枚举的步进值
-     */
-    String SYS_EXCEPTION_STEP_CODE = "99";
-
-    /**
-     * 默认登录密码
-     */
-    String DEFAULT_LOGIN_PASSWORD = "Aa123456!";
-
-    /**
-     * 超级管理员的角色编码
-     */
-    String SUPER_ADMIN_ROLE_CODE = "superAdmin";
-
-    /**
-     * 默认用户的初始角色编码
-     */
-    String DEFAULT_ROLE_CODE = "employee";
-
-    /**
-     * 初始化超级管理员的监听器顺序
-     */
-    Integer SUPER_ADMIN_INIT_LISTENER_SORT = 400;
+    Long getDefaultRoleId();
 
 }

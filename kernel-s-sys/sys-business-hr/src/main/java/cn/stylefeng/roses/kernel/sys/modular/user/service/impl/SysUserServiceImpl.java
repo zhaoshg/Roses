@@ -70,8 +70,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 更新用户的任职信息
         sysUserOrgService.updateUserOrg(sysUser.getUserId(), sysUserRequest.getUserOrgList());
 
-        // 添加用户一个默认角色 todo
-
+        // 添加用户一个默认角色
+        sysUserRoleService.bindUserDefaultRole(sysUser.getUserId());
     }
 
     @Override
