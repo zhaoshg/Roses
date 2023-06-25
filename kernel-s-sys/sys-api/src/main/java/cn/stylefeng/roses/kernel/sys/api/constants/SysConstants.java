@@ -53,6 +53,11 @@ public interface SysConstants {
     String SUPER_ADMIN_ROLE_CODE = "superAdmin";
 
     /**
+     * 默认用户的初始角色编码
+     */
+    String DEFAULT_ROLE_CODE = "employee";
+
+    /**
      * 初始化超级管理员的监听器顺序
      */
     Integer SUPER_ADMIN_INIT_LISTENER_SORT = 400;

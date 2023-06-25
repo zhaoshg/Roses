@@ -80,4 +80,12 @@ public interface SysUserRoleService extends IService<SysUserRole>, SysUserRoleSe
      */
     void bindRoles(SysUserRoleRequest sysUserRoleRequest);
 
+    /**
+     * 给用户添加默认的角色
+     *
+     * @author fengshuonan
+     * @since 2023/6/25 0:34
+     */
+    void bindUserDefaultRole(Long userId);
+
 }

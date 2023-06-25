@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.SysRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
@@ -19,6 +20,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +35,9 @@ import java.util.stream.Collectors;
 @Service
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService,
         RemoveUserCallbackApi, RemoveRoleCallbackApi {
+
+    @Resource
+    private SysRoleServiceApi sysRoleServiceApi;
 
     @Override
     public void add(SysUserRoleRequest sysUserRoleRequest) {
@@ -84,6 +89,19 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
             newUserRoles.add(sysUserRole);
         }
         this.saveBatch(newUserRoles);
+    }
+
+    @Override
+    public void bindUserDefaultRole(Long userId) {
+
+        // 查询默认角色的角色id
+        Long defaultRoleId = sysRoleServiceApi.getDefaultRoleId();
+
+        // 给用户绑定默认角色
+        SysUserRole sysUserRole = new SysUserRole();
+        sysUserRole.setUserId(userId);
+        sysUserRole.setRoleId(defaultRoleId);
+        this.save(sysUserRole);
     }
 
     @Override

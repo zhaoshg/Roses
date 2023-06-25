@@ -58,11 +58,18 @@ public class SysUser extends BaseExpandFieldEntity {
     private String account;
 
     /**
-     * 密码，加密方式为BCrypt
+     * 密码，加密方式：md5+盐
      */
     @TableField("password")
-    @ChineseDescription("密码，加密方式为BCrypt")
+    @ChineseDescription("密码，加密方式：md5+盐")
     private String password;
+
+    /**
+     * 密码盐，加密方式：md5+盐
+     */
+    @TableField("password_salt")
+    @ChineseDescription("密码盐，加密方式：md5+盐")
+    private String passwordSalt;
 
     /**
      * 头像，存的为文件id

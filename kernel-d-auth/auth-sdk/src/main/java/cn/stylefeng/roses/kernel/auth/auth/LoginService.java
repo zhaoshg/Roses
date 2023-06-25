@@ -308,7 +308,8 @@ public class LoginService {
         }
 
         // 如果本次登录需要校验密码
-        Boolean checkResult = passwordStoredEncryptApi.checkPassword(loginRequest.getPassword(), userValidateInfo.getUserPasswordHexed());
+        Boolean checkResult = passwordStoredEncryptApi.checkPasswordWithSalt(loginRequest.getPassword(),
+                userValidateInfo.getUserPasswordSalt(), userValidateInfo.getUserPasswordHexed());
 
         // 校验用户表密码是否正确，如果正确则直接返回
         if (checkResult) {
@@ -323,7 +324,7 @@ public class LoginService {
                 String userTempSecretKey = tempSecretApi.getUserTempSecretKey(userValidateInfo.getUserId());
                 // 如果用户有临时秘钥，则校验秘钥是否正确
                 if (StrUtil.isNotBlank(userTempSecretKey)) {
-                    Boolean checkTempKeyResult = passwordStoredEncryptApi.checkPassword(loginRequest.getPassword(), userTempSecretKey);
+                    boolean checkTempKeyResult = loginRequest.getPassword().equals(userTempSecretKey);
                     if (checkTempKeyResult) {
                         return;
                     }

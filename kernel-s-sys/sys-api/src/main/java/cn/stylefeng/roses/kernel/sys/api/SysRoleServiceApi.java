@@ -22,52 +22,24 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.api.pojo.user;
-
-import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
-import lombok.Data;
+package cn.stylefeng.roses.kernel.sys.api;
 
 /**
- * 用在用户登录校验结果的包装
+ * 角色信息相关的Api
  *
  * @author fengshuonan
- * @since 2023/6/17 21:55
+ * @since 2023/6/25 0:35
  */
-@Data
-public class UserValidateDTO {
+public interface SysRoleServiceApi {
 
     /**
-     * 用户id
+     * 获取系统默认角色id，查询方式为找到角色编码为employee的角色id
+     * <p>
+     * 一般在添加用户时用到
+     *
+     * @author fengshuonan
+     * @since 2023/6/25 0:35
      */
-    @ChineseDescription("用户id")
-    private Long userId;
-
-    /**
-     * 加密后的密码，存在sys_user表的password字段
-     */
-    @ChineseDescription("加密后的密码")
-    private String userPasswordHexed;
-
-    /**
-     * 密码盐，存在sys_user表的password_salt字段
-     */
-    @ChineseDescription("加密后的密码")
-    private String userPasswordSalt;
-
-    /**
-     * 用户状态，状态在UserStatusEnum维护
-     */
-    @ChineseDescription("用户状态")
-    private Integer userStatus;
-
-    public UserValidateDTO() {
-    }
-
-    public UserValidateDTO(Long userId, String userPasswordHexed, String salt, Integer userStatus) {
-        this.userId = userId;
-        this.userPasswordHexed = userPasswordHexed;
-        this.userPasswordSalt = salt;
-        this.userStatus = userStatus;
-    }
+    Long getDefaultRoleId();
 
 }
