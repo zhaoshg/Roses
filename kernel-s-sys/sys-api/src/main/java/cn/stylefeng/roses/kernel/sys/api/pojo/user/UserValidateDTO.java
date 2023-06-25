@@ -49,6 +49,12 @@ public class UserValidateDTO {
     private String userPasswordHexed;
 
     /**
+     * 密码盐，存在sys_user表的password_salt字段
+     */
+    @ChineseDescription("加密后的密码")
+    private String userPasswordSalt;
+
+    /**
      * 用户状态，状态在UserStatusEnum维护
      */
     @ChineseDescription("用户状态")
@@ -57,9 +63,10 @@ public class UserValidateDTO {
     public UserValidateDTO() {
     }
 
-    public UserValidateDTO(Long userId, String userPasswordHexed, Integer userStatus) {
+    public UserValidateDTO(Long userId, String userPasswordHexed, String salt, Integer userStatus) {
         this.userId = userId;
         this.userPasswordHexed = userPasswordHexed;
+        this.userPasswordSalt = salt;
         this.userStatus = userStatus;
     }
 
