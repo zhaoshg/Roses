@@ -61,7 +61,7 @@ public class SysUserRequest extends BaseRequest {
     /**
      * 密码，加密方式为BCrypt
      */
-    @NotBlank(message = "密码，加密方式为BCrypt不能为空", groups = {add.class,updatePwd.class})
+    @NotBlank(message = "密码，加密方式为BCrypt不能为空", groups = {add.class, updatePwd.class})
     @ChineseDescription("密码，加密方式为BCrypt")
     private String password;
 
@@ -71,7 +71,7 @@ public class SysUserRequest extends BaseRequest {
     @NotBlank(message = "新密码不能为空", groups = {updatePwd.class})
     @ChineseDescription("新密码")
     private String newPassword;
-    
+
     /**
      * 头像，存的为文件id
      */
@@ -88,7 +88,7 @@ public class SysUserRequest extends BaseRequest {
     /**
      * 性别：M-男，F-女
      */
-    @NotBlank(message = "性别：M-男，F-女不能为空", groups = {add.class, edit.class,updateInfo.class})
+    @NotBlank(message = "性别：M-男，F-女不能为空", groups = {add.class, edit.class, updateInfo.class})
     @ChineseDescription("性别：M-男，F-女")
     private String sex;
 
@@ -173,13 +173,13 @@ public class SysUserRequest extends BaseRequest {
      */
     public @interface updateInfo {
     }
-    
+
     /**
      * 参数校验分组：修改密码
      */
     public @interface updatePwd {
     }
-    
+
     /**
      * 参数校验分组：修改头像
      */

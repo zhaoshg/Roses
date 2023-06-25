@@ -94,7 +94,7 @@ public interface SysUserService extends IService<SysUser> {
      * @since 2023/6/12 14:55
      */
     void resetPassword(SysUserRequest sysUserRequest);
-    
+
     /**
      * 更新用户信息（一般用于更新个人信息）
      *
@@ -103,7 +103,7 @@ public interface SysUserService extends IService<SysUser> {
      * @date 2020/11/21 12:32
      */
     void editInfo(SysUserRequest sysUserRequest);
-    
+
     /**
      * 修改密码
      *
@@ -112,7 +112,7 @@ public interface SysUserService extends IService<SysUser> {
      * @date 2020/11/21 14:26
      */
     void editPassword(SysUserRequest sysUserRequest);
-    
+
     /**
      * 修改头像
      *

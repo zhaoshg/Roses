@@ -146,6 +146,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
+    public List<SysUser> findList(SysUserRequest sysUserRequest) {
+        LambdaQueryWrapper<SysUser> wrapper = this.createWrapper(sysUserRequest);
+        return this.list(wrapper);
+    }
+
+    @Override
     public PageResult<SysUser> findPage(SysUserRequest sysUserRequest) {
         LambdaQueryWrapper<SysUser> wrapper = createWrapper(sysUserRequest);
 
@@ -195,9 +201,58 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public List<SysUser> findList(SysUserRequest sysUserRequest) {
-        LambdaQueryWrapper<SysUser> wrapper = this.createWrapper(sysUserRequest);
-        return this.list(wrapper);
+    public void editInfo(SysUserRequest sysUserRequest) {
+
+        // 获取当前登录用户的id
+        sysUserRequest.setUserId(LoginContext.me().getLoginUser().getUserId());
+        SysUser sysUser = this.querySysUser(sysUserRequest);
+
+        // 填充更新用户的信息
+        SysUserCreateFactory.fillUpdateInfo(sysUserRequest, sysUser);
+
+        this.updateById(sysUser);
+    }
+
+    @Override
+    public void editPassword(SysUserRequest sysUserRequest) {
+
+        // 新密码与原密码相同
+        if (sysUserRequest.getNewPassword().equals(sysUserRequest.getPassword())) {
+            throw new ServiceException(SysUserExceptionEnum.USER_PWD_REPEAT);
+        }
+
+        // 获取当前用户的userId
+        LoginUser loginUser = LoginContext.me().getLoginUser();
+        sysUserRequest.setUserId(loginUser.getUserId());
+        SysUser sysUser = this.querySysUser(sysUserRequest);
+
+        // 原密码错误
+        if (!passwordStoredEncryptApi.checkPasswordWithSalt(sysUserRequest.getPassword(), sysUser.getPasswordSalt(),
+                sysUser.getPassword())) {
+            throw new ServiceException(SysUserExceptionEnum.USER_PWD_ERROR);
+        }
+
+        // 设置新的加密后密码和盐
+        SaltedEncryptResult saltedEncryptResult = passwordStoredEncryptApi.encryptWithSalt(sysUserRequest.getNewPassword());
+        sysUser.setPassword(saltedEncryptResult.getEncryptPassword());
+        sysUser.setPasswordSalt(saltedEncryptResult.getPasswordSalt());
+
+        this.updateById(sysUser);
+    }
+
+    @Override
+    public void editAvatar(SysUserRequest sysUserRequest) {
+        // 新头像文件id
+        Long fileId = sysUserRequest.getAvatar();
+
+        // 从当前用户获取用户id
+        LoginUser loginUser = LoginContext.me().getLoginUser();
+
+        // 更新用户头像
+        LambdaUpdateWrapper<SysUser> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(SysUser::getUserId, loginUser.getUserId());
+        wrapper.set(SysUser::getAvatar, fileId);
+        this.update(wrapper);
     }
 
     /**
@@ -269,79 +324,5 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             removeUserCallbackApi.removeUserAction(userIdList);
         }
     }
-
-	@Override
-	public void editInfo(SysUserRequest sysUserRequest) {
-
-        // 获取当前登录用户的id
-        sysUserRequest.setUserId(LoginContext.me().getLoginUser().getUserId());
-        SysUser sysUser = this.querySysUser(sysUserRequest);
-
-        // 填充更新用户的信息
-        SysUserCreateFactory.fillUpdateInfo(sysUserRequest, sysUser);
-
-        this.updateById(sysUser);
-
-        // 清除缓存中的用户信息
-        //sysUserCacheOperatorApi.remove(String.valueOf(sysUser.getUserId()));
-    
-		
-	}
-
-	@Override
-	public void editPassword(SysUserRequest sysUserRequest) {
-
-
-        // 获取当前用户的userId
-        LoginUser loginUser = LoginContext.me().getLoginUser();
-        sysUserRequest.setUserId(loginUser.getUserId());
-
-        SysUser sysUser = this.querySysUser(sysUserRequest);
-
-        // 新密码与原密码相同
-        if (sysUserRequest.getNewPassword().equals(sysUserRequest.getPassword())) {
-        	throw new ServiceException(SysUserExceptionEnum.USER_PWD_REPEAT);
-        }
-
-        // 原密码错误
-        if (!passwordStoredEncryptApi.checkPassword(sysUserRequest.getPassword(), sysUser.getPassword())) {
-        	throw new ServiceException(SysUserExceptionEnum.USER_PWD_ERROR);
-        }
-
-        sysUser.setPassword(passwordStoredEncryptApi.encrypt(sysUserRequest.getNewPassword()));
-        this.updateById(sysUser);
-
-        // 清除缓存中的用户信息
-        //sysUserCacheOperatorApi.remove(String.valueOf(sysUser.getUserId()));
-    
-		
-	}
-
-	@Override
-	public void editAvatar(SysUserRequest sysUserRequest) {
-
-
-        // 新头像文件id
-        Long fileId = sysUserRequest.getAvatar();
-
-        // 从当前用户获取用户id
-        LoginUser loginUser = LoginContext.me().getLoginUser();
-        sysUserRequest.setUserId(loginUser.getUserId());
-
-        // 更新用户头像
-        SysUser sysUser = this.querySysUser(sysUserRequest);
-        sysUser.setAvatar(fileId);
-        this.updateById(sysUser);
-
-        // 更新当前用户的session信息
-        //SimpleUserInfo simpleUserInfo = loginUser.getSimpleUserInfo();
-        //simpleUserInfo.setAvatar(fileId);
-        //sessionManagerApi.updateSession(LoginContext.me().getToken(), loginUser);
-
-        // 清除缓存中的用户信息
-        //sysUserCacheOperatorApi.remove(String.valueOf(sysUser.getUserId()));
-    
-		
-	}
 
 }

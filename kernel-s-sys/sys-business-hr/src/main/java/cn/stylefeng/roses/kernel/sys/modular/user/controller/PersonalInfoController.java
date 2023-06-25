@@ -8,7 +8,6 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
-
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +33,7 @@ public class PersonalInfoController {
      * @author luojie
      * @date 2020/11/6 13:50
      */
-    @PostResource(name = "个人信息_更新个人信息", path = "/sysUser/updateInfo", requiredPermission = false)
+    @PostResource(name = "个人信息_更新个人信息", path = "/sysUser/updateInfo")
     @BusinessLog
     public ResponseData<?> updateInfo(@RequestBody @Validated(SysUserRequest.updateInfo.class) SysUserRequest sysUserRequest) {
         sysUserService.editInfo(sysUserRequest);
@@ -47,7 +46,7 @@ public class PersonalInfoController {
      * @author luojie
      * @date 2020/11/6 13:50
      */
-    @PostResource(name = "个人信息_修改密码", path = "/sysUser/updatePassword", requiredPermission = false)
+    @PostResource(name = "个人信息_修改密码", path = "/sysUser/updatePassword")
     @BusinessLog
     public ResponseData<?> updatePwd(@RequestBody @Validated(SysUserRequest.updatePwd.class) SysUserRequest sysUserRequest) {
         sysUserService.editPassword(sysUserRequest);
@@ -60,7 +59,7 @@ public class PersonalInfoController {
      * @author luojie
      * @date 2020/11/6 13:48
      */
-    @PostResource(name = "个人信息_修改头像", path = "/sysUser/updateAvatar", requiredPermission = false)
+    @PostResource(name = "个人信息_修改头像", path = "/sysUser/updateAvatar")
     @BusinessLog
     public ResponseData<?> updateAvatar(@RequestBody @Validated(SysUserRequest.updateAvatar.class) SysUserRequest sysUserRequest) {
         sysUserService.editAvatar(sysUserRequest);
