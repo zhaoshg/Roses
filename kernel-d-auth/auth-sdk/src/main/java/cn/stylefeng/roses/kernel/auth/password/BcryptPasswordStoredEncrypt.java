@@ -24,9 +24,12 @@
  */
 package cn.stylefeng.roses.kernel.auth.password;
 
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import cn.stylefeng.roses.kernel.auth.api.password.PasswordStoredEncryptApi;
+import cn.stylefeng.roses.kernel.auth.api.pojo.password.SaltedEncryptResult;
 
 /**
  * 基于BCrypt算法实现的密码加密解密器
@@ -46,8 +49,29 @@ public class BcryptPasswordStoredEncrypt implements PasswordStoredEncryptApi {
     }
 
     @Override
+    public SaltedEncryptResult encryptWithSalt(String originPassword) {
+
+        SaltedEncryptResult saltedEncryptResult = new SaltedEncryptResult();
+
+        // 创建密码盐
+        String salt = RandomUtil.randomString(8);
+        saltedEncryptResult.setPasswordSalt(salt);
+
+        // 将原密码进行md5加密
+        String encryptAfter = SecureUtil.md5(originPassword + salt);
+        saltedEncryptResult.setEncryptPassword(encryptAfter);
+
+        return saltedEncryptResult;
+    }
+
+    @Override
     public Boolean checkPassword(String encryptBefore, String encryptAfter) {
         return BCrypt.checkpw(encryptBefore, encryptAfter);
+    }
+
+    @Override
+    public Boolean checkPasswordWithSalt(String encryptBefore, String passwordSalt, String encryptAfter) {
+        return SecureUtil.md5(encryptBefore + passwordSalt).equals(encryptAfter);
     }
 
 }
