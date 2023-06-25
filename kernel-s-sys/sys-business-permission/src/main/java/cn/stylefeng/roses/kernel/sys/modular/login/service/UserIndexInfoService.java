@@ -309,6 +309,7 @@ public class UserIndexInfoService {
                     IndexUserMenuInfo indexUserMenuInfo = new IndexUserMenuInfo();
                     indexUserMenuInfo.setMenuId(userMenuItem.getMenuId());
                     indexUserMenuInfo.setMenuParentId(userMenuItem.getMenuParentId());
+                    indexUserMenuInfo.setMenuType(userMenuItem.getMenuType());
                     indexUserMenuInfo.setTitle(userMenuItem.getMenuName());
                     indexUserMenuInfo.setIcon(userMenuItem.getAntdvIcon());
                     indexUserMenuInfo.setHide(YesOrNotEnum.N.getCode().equals(userMenuItem.getAntdvVisible()));
