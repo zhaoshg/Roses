@@ -3,8 +3,9 @@ package cn.stylefeng.roses.kernel.sys.modular.user.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.crypto.SecureUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import cn.stylefeng.roses.kernel.auth.api.password.PasswordStoredEncryptApi;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
@@ -45,9 +46,6 @@ import java.util.Set;
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
     @Resource
-    private PasswordStoredEncryptApi passwordStoredEncryptApi;
-
-    @Resource
     private SysUserOrgService sysUserOrgService;
 
     @Resource
@@ -59,8 +57,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUser = new SysUser();
         BeanUtil.copyProperties(sysUserRequest, sysUser);
 
+        // 创建密码盐
+        String salt = RandomUtil.randomString(8);
+        sysUser.setPasswordSalt(salt);
+
         // 将密码加密存储到库中
-        sysUser.setPassword(passwordStoredEncryptApi.encrypt(sysUser.getPassword()));
+        sysUser.setPassword(SecureUtil.md5(sysUser.getPassword() + salt));
 
         // 设置用户默认头像
         sysUser.setAvatar(FileConstants.DEFAULT_AVATAR_FILE_ID);
@@ -144,8 +146,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         LambdaQueryWrapper<SysUser> wrapper = createWrapper(sysUserRequest);
 
         // 只查询需要的字段
-        wrapper.select(SysUser::getUserId, SysUser::getRealName, SysUser::getAccount, SysUser::getSex,
-                SysUser::getStatusFlag, BaseEntity::getCreateTime);
+        wrapper.select(SysUser::getUserId, SysUser::getRealName, SysUser::getAccount, SysUser::getSex, SysUser::getStatusFlag,
+                BaseEntity::getCreateTime);
 
         // 分页查询
         Page<SysUser> sysUserPage = this.page(PageFactory.defaultPage(), wrapper);
@@ -177,9 +179,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void resetPassword(SysUserRequest sysUserRequest) {
         SysUser sysUser = this.querySysUser(sysUserRequest);
 
+        // 创建密码盐
+        String salt = RandomUtil.randomString(8);
+
         // 获取系统配置的默认密码
         String password = SysConfigExpander.getDefaultPassWord();
-        sysUser.setPassword(passwordStoredEncryptApi.encrypt(password));
+        sysUser.setPassword(SecureUtil.md5(password + salt));
 
         this.updateById(sysUser);
     }
@@ -231,8 +236,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 如果传递了组织机构id查询条件，则查询对应机构id下有哪些用户，再拼接用户查询条件
         if (ObjectUtil.isNotEmpty(sysUserRequest.getOrgIdCondition())) {
-            List<Long> orgUserIdList = this.sysUserOrgService.getOrgUserIdList(sysUserRequest.getOrgIdCondition(),
-                    true);
+            List<Long> orgUserIdList = this.sysUserOrgService.getOrgUserIdList(sysUserRequest.getOrgIdCondition(), true);
             queryWrapper.in(SysUser::getUserId, orgUserIdList);
         }
 
@@ -247,8 +251,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     private void baseRemoveUser(Set<Long> userIdList) {
         // 校验是否有其他业务绑定了用户信息
-        Map<String, RemoveUserCallbackApi> removeUserCallbackApiMap = SpringUtil.getBeansOfType(
-                RemoveUserCallbackApi.class);
+        Map<String, RemoveUserCallbackApi> removeUserCallbackApiMap = SpringUtil.getBeansOfType(RemoveUserCallbackApi.class);
         for (RemoveUserCallbackApi removeUserCallbackApi : removeUserCallbackApiMap.values()) {
             removeUserCallbackApi.validateHaveUserBind(userIdList);
         }
