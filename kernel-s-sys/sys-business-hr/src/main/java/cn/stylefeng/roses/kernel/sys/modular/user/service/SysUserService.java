@@ -94,5 +94,32 @@ public interface SysUserService extends IService<SysUser> {
      * @since 2023/6/12 14:55
      */
     void resetPassword(SysUserRequest sysUserRequest);
+    
+    /**
+     * 更新用户信息（一般用于更新个人信息）
+     *
+     * @param sysUserRequest 请求参数封装
+     * @author fengshuonan
+     * @date 2020/11/21 12:32
+     */
+    void editInfo(SysUserRequest sysUserRequest);
+    
+    /**
+     * 修改密码
+     *
+     * @param sysUserRequest 请求参数封装
+     * @author fengshuonan
+     * @date 2020/11/21 14:26
+     */
+    void editPassword(SysUserRequest sysUserRequest);
+    
+    /**
+     * 修改头像
+     *
+     * @param sysUserRequest 修改头像参数
+     * @author luojie
+     * @date 2020/11/6 13:47
+     */
+    void editAvatar(SysUserRequest sysUserRequest);
 
 }

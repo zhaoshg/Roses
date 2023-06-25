@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -60,13 +61,21 @@ public class SysUserRequest extends BaseRequest {
     /**
      * 密码，加密方式为BCrypt
      */
-    @NotBlank(message = "密码，加密方式为BCrypt不能为空", groups = {add.class})
+    @NotBlank(message = "密码，加密方式为BCrypt不能为空", groups = {add.class,updatePwd.class})
     @ChineseDescription("密码，加密方式为BCrypt")
     private String password;
 
     /**
+     * 新密码
+     */
+    @NotBlank(message = "新密码不能为空", groups = {updatePwd.class})
+    @ChineseDescription("新密码")
+    private String newPassword;
+    
+    /**
      * 头像，存的为文件id
      */
+    @NotNull(message = "头像不能为空", groups = {updateAvatar.class})
     @ChineseDescription("头像，存的为文件id")
     private Long avatar;
 
@@ -79,13 +88,14 @@ public class SysUserRequest extends BaseRequest {
     /**
      * 性别：M-男，F-女
      */
-    @NotBlank(message = "性别：M-男，F-女不能为空", groups = {add.class, edit.class})
+    @NotBlank(message = "性别：M-男，F-女不能为空", groups = {add.class, edit.class,updateInfo.class})
     @ChineseDescription("性别：M-男，F-女")
     private String sex;
 
     /**
      * 邮箱
      */
+    @Email(message = "邮箱格式错误", groups = {updateInfo.class})
     @ChineseDescription("邮箱")
     private String email;
 
@@ -158,4 +168,21 @@ public class SysUserRequest extends BaseRequest {
     public @interface resetPassword {
     }
 
+    /**
+     * 参数校验分组：更新信息
+     */
+    public @interface updateInfo {
+    }
+    
+    /**
+     * 参数校验分组：修改密码
+     */
+    public @interface updatePwd {
+    }
+    
+    /**
+     * 参数校验分组：修改头像
+     */
+    public @interface updateAvatar {
+    }
 }

@@ -28,7 +28,17 @@ public enum SysUserExceptionEnum implements AbstractExceptionEnum {
      * <p>
      * 但是提示：用户账号或密码错误，请重新输入
      */
-    ACCOUNT_NOT_EXIST(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10003", "用户账号或密码错误，请重新输入");
+    ACCOUNT_NOT_EXIST(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10003", "用户账号或密码错误，请重新输入"),
+    
+    /**
+     * 原密码错误
+     */
+    USER_PWD_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10004", "原密码错误，请重新输入"),
+
+    /**
+     * 新密码与原密码相同
+     */
+    USER_PWD_REPEAT(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10005", "新密码与原密码相同，请更换新密码");
 
     /**
      * 错误编码
