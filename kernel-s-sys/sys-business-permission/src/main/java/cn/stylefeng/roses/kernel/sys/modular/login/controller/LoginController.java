@@ -10,6 +10,7 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -38,6 +39,18 @@ public class LoginController {
     public ResponseData<LoginResponse> loginApi(@RequestBody @Validated LoginRequest loginRequest) {
         LoginResponse loginResponse = authServiceApi.login(loginRequest);
         return new SuccessResponseData<>(loginResponse);
+    }
+
+    /**
+     * 用户登出
+     *
+     * @author fengshuonan
+     * @since 2023/6/25 16:43
+     */
+    @ApiResource(name = "登出", path = "/logoutAction", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResponseData<?> logoutAction() {
+        authServiceApi.logout();
+        return new SuccessResponseData<>();
     }
 
 }
