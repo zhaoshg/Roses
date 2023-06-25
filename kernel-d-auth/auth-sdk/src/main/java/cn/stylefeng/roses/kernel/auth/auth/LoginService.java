@@ -2,7 +2,6 @@ package cn.stylefeng.roses.kernel.auth.auth;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.SecureUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
@@ -309,8 +308,8 @@ public class LoginService {
         }
 
         // 如果本次登录需要校验密码
-        String encryptPassword = SecureUtil.md5(loginRequest.getPassword() + userValidateInfo.getUserPasswordSalt());
-        boolean checkResult = encryptPassword.equals(userValidateInfo.getUserPasswordHexed());
+        Boolean checkResult = passwordStoredEncryptApi.checkPasswordWithSalt(loginRequest.getPassword(),
+                userValidateInfo.getUserPasswordSalt(), userValidateInfo.getUserPasswordHexed());
 
         // 校验用户表密码是否正确，如果正确则直接返回
         if (checkResult) {
@@ -325,7 +324,7 @@ public class LoginService {
                 String userTempSecretKey = tempSecretApi.getUserTempSecretKey(userValidateInfo.getUserId());
                 // 如果用户有临时秘钥，则校验秘钥是否正确
                 if (StrUtil.isNotBlank(userTempSecretKey)) {
-                    Boolean checkTempKeyResult = loginRequest.getPassword().equals(userTempSecretKey);
+                    boolean checkTempKeyResult = loginRequest.getPassword().equals(userTempSecretKey);
                     if (checkTempKeyResult) {
                         return;
                     }
