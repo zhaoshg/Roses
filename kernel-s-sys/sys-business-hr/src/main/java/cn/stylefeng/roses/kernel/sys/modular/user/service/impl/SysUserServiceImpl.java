@@ -3,9 +3,9 @@ package cn.stylefeng.roses.kernel.sys.modular.user.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.RandomUtil;
-import cn.hutool.crypto.SecureUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import cn.stylefeng.roses.kernel.auth.api.password.PasswordStoredEncryptApi;
+import cn.stylefeng.roses.kernel.auth.api.pojo.password.SaltedEncryptResult;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
@@ -46,6 +46,9 @@ import java.util.Set;
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
     @Resource
+    private PasswordStoredEncryptApi passwordStoredEncryptApi;
+
+    @Resource
     private SysUserOrgService sysUserOrgService;
 
     @Resource
@@ -57,12 +60,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUser = new SysUser();
         BeanUtil.copyProperties(sysUserRequest, sysUser);
 
-        // 创建密码盐
-        String salt = RandomUtil.randomString(8);
-        sysUser.setPasswordSalt(salt);
-
         // 将密码加密存储到库中
-        sysUser.setPassword(SecureUtil.md5(sysUser.getPassword() + salt));
+        SaltedEncryptResult saltedEncryptResult = passwordStoredEncryptApi.encryptWithSalt(sysUser.getPassword());
+        sysUser.setPassword(saltedEncryptResult.getEncryptPassword());
+        sysUser.setPasswordSalt(saltedEncryptResult.getPasswordSalt());
 
         // 设置用户默认头像
         sysUser.setAvatar(FileConstants.DEFAULT_AVATAR_FILE_ID);
@@ -179,12 +180,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void resetPassword(SysUserRequest sysUserRequest) {
         SysUser sysUser = this.querySysUser(sysUserRequest);
 
-        // 创建密码盐
-        String salt = RandomUtil.randomString(8);
-
         // 获取系统配置的默认密码
         String password = SysConfigExpander.getDefaultPassWord();
-        sysUser.setPassword(SecureUtil.md5(password + salt));
+
+        // 密码加密后，存储到数据库中
+        SaltedEncryptResult saltedEncryptResult = passwordStoredEncryptApi.encryptWithSalt(password);
+        sysUser.setPassword(saltedEncryptResult.getEncryptPassword());
+        sysUser.setPasswordSalt(saltedEncryptResult.getPasswordSalt());
 
         this.updateById(sysUser);
     }
