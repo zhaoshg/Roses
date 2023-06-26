@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.factory;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
 
@@ -20,20 +21,24 @@ public class SysUserCreateFactory {
      */
     public static void fillUpdateInfo(SysUserRequest sysUserRequest, SysUser sysUser) {
 
+        // 姓名
+        sysUser.setRealName(sysUserRequest.getRealName());
+
         // 性别（M-男，F-女）
         sysUser.setSex(sysUserRequest.getSex());
 
         // 邮箱
         sysUser.setEmail(sysUserRequest.getEmail());
 
-        // 姓名
-        sysUser.setRealName(sysUserRequest.getRealName());
-
         // 生日
-        sysUser.setBirthday(DateUtil.parse(sysUserRequest.getBirthday()));
+        if (ObjectUtil.isNotEmpty(sysUserRequest.getBirthday())) {
+            sysUser.setBirthday(DateUtil.parse(sysUserRequest.getBirthday()));
+        }
 
         // 手机
-        sysUser.setPhone(sysUserRequest.getPhone());
+        if (ObjectUtil.isNotEmpty(sysUserRequest.getPhone())) {
+            sysUser.setPhone(sysUserRequest.getPhone());
+        }
     }
 
 }
