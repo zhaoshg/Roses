@@ -9,7 +9,6 @@ import cn.stylefeng.roses.kernel.rule.constants.SymbolConstant;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.tree.buildpids.PidStructureBuildUtil;
-import cn.stylefeng.roses.kernel.sys.api.SysMenuServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.pojo.menu.UserAppMenuInfo;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
@@ -28,10 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -41,7 +37,7 @@ import java.util.stream.Collectors;
  * @date 2023/06/10 21:28
  */
 @Service
-public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService, SysMenuServiceApi {
+public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
 
     @Resource
     private SysAppService sysAppService;
@@ -125,19 +121,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         long count = this.count(sysMenuLambdaQueryWrapper);
 
         return count > 0;
-    }
-
-    @Override
-    public Long getMenuAppId(Long menuId) {
-        LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(SysMenu::getMenuId, menuId);
-        queryWrapper.select(SysMenu::getAppId);
-        SysMenu one = this.getOne(queryWrapper, false);
-        if (one != null) {
-            return one.getAppId();
-        } else {
-            return null;
-        }
     }
 
     @Override
@@ -279,6 +262,34 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         }
 
         return result;
+    }
+
+    @Override
+    public Map<Long, Long> getMenuAppId(List<Long> menuIdList) {
+
+        // 定义返回结果
+        HashMap<Long, Long> menuIdAppIdMap = new HashMap<>();
+
+        if (ObjectUtil.isEmpty(menuIdList)) {
+            return menuIdAppIdMap;
+        }
+
+        // 查询数据库菜单id对应的应用id集合
+        LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysMenu::getMenuId, menuIdList);
+        queryWrapper.select(SysMenu::getAppId);
+        List<SysMenu> queryList = this.list(queryWrapper);
+
+        if (ObjectUtil.isEmpty(queryList)) {
+            return menuIdAppIdMap;
+        }
+
+        // 制作映射关系
+        for (SysMenu sysMenu : queryList) {
+            menuIdAppIdMap.put(sysMenu.getMenuId(), sysMenu.getAppId());
+        }
+
+        return menuIdAppIdMap;
     }
 
     /**

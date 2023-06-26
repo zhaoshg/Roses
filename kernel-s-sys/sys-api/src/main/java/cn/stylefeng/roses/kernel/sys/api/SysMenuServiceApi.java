@@ -27,6 +27,7 @@ package cn.stylefeng.roses.kernel.sys.api;
 import cn.stylefeng.roses.kernel.sys.api.pojo.menu.UserAppMenuInfo;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -46,5 +47,14 @@ public interface SysMenuServiceApi {
      * @since 2023/6/26 21:37
      */
     List<UserAppMenuInfo> getUserAppMenuDetailList(Set<Long> menuIdList);
+
+    /**
+     * 获取菜单对应的应用id（可以批量获取）
+     *
+     * @return key是菜单id，value是应用id
+     * @author fengshuonan
+     * @since 2023/6/26 21:47
+     */
+    Map<Long, Long> getMenuAppId(List<Long> menuIdList);
 
 }

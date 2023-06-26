@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
@@ -32,6 +33,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -169,7 +171,8 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         SysRoleMenu sysRoleMenu = new SysRoleMenu();
         sysRoleMenu.setRoleId(roleId);
         sysRoleMenu.setMenuId(menuId);
-        Long appId = sysMenuService.getMenuAppId(menuId);
+        Map<Long, Long> menuAppIdMap = sysMenuService.getMenuAppId(ListUtil.list(false, menuId));
+        Long appId = menuAppIdMap.get(menuId);
         sysRoleMenu.setAppId(appId);
 
         // 2. 查询菜单下所有的菜单功能

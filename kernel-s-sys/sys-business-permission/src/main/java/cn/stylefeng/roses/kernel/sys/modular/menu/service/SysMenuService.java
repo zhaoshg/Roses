@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.menu.service;
 
+import cn.stylefeng.roses.kernel.sys.api.SysMenuServiceApi;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.request.SysMenuRequest;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.response.AppGroupDetail;
@@ -14,7 +15,7 @@ import java.util.Set;
  * @author fengshuonan
  * @date 2023/06/10 21:28
  */
-public interface SysMenuService extends IService<SysMenu> {
+public interface SysMenuService extends IService<SysMenu>, SysMenuServiceApi {
 
     /**
      * 新增
@@ -68,14 +69,6 @@ public interface SysMenuService extends IService<SysMenu> {
      * @since 2023/6/12 19:23
      */
     boolean validateMenuBindApp(Set<Long> appIdList);
-
-    /**
-     * 获取菜单的所属appId
-     *
-     * @author fengshuonan
-     * @since 2023/6/13 22:49
-     */
-    Long getMenuAppId(Long menuId);
 
     /**
      * 获取所有的菜单信息，用在角色绑定权限界面

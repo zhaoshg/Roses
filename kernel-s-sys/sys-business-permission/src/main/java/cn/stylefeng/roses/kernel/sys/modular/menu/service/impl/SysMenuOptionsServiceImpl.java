@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.menu.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -53,7 +55,8 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
         BeanUtil.copyProperties(sysMenuOptionsRequest, sysMenuOptions);
 
         // 获取菜单的应用id
-        Long appId = sysMenuService.getMenuAppId(sysMenuOptionsRequest.getMenuId());
+        Map<Long, Long> menuAppId = sysMenuService.getMenuAppId(ListUtil.list(false, sysMenuOptionsRequest.getMenuId()));
+        Long appId = menuAppId.get(sysMenuOptionsRequest.getMenuId());
         sysMenuOptions.setAppId(appId);
 
         this.save(sysMenuOptions);
