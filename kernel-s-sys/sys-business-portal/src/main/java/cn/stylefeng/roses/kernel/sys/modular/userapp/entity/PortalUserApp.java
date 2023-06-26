@@ -28,6 +28,13 @@ public class PortalUserApp extends BaseEntity {
     private Long appLinkId;
 
     /**
+     * 所属用户id
+     */
+    @TableField("user_id")
+    @ChineseDescription("所属用户id")
+    private Long userId;
+
+    /**
      * 冗余字段，菜单所属的应用id
      */
     @TableField("app_id")
