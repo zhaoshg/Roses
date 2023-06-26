@@ -47,7 +47,7 @@ public class PortalUserAppController {
      * @author fengshuonan
      * @date 2023/06/26 21:25
      */
-    @PostResource(name = "添加", path = "/portalUserApp/updateUserAppList")
+    @PostResource(name = "更新用户的常用功能", path = "/portalUserApp/updateUserAppList")
     public ResponseData<PortalUserApp> updateUserAppList(
             @RequestBody @Validated(BaseRequest.edit.class) PortalUserAppRequest portalUserAppRequest) {
         portalUserAppService.updateUserAppList(portalUserAppRequest);
