@@ -17,6 +17,7 @@ import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.enums.org.OrgTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.factory.OrganizationFactory;
 import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrganizationMapper;
@@ -239,9 +240,9 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         homeCompanyInfo.setPositionNum(totalPositionCount);
 
         // 4. 当前公司下的机构数量
-        Long currentOrgId = LoginContext.me().getLoginUser().getCurrentOrgId();
-        CompanyDeptDTO companyDeptInfo = this.getCompanyDeptInfo(currentOrgId);
-        Long companyId = companyDeptInfo.getCompanyId();
+        Long userId = LoginContext.me().getLoginUser().getUserId();
+        UserOrgDTO userMainOrgInfo = sysUserOrgService.getUserMainOrgInfo(userId);
+        Long companyId = userMainOrgInfo.getCompanyId();
 
         // 获取当前公司的所有子公司数量(含当前公司)
         LambdaQueryWrapper<HrOrganization> wrapper = Wrappers.lambdaQuery(HrOrganization.class)
