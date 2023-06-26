@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.db.api.context.DbOperatorContext;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
@@ -22,16 +23,26 @@ import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrganizationMapper;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrganizationRequest;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.HomeCompanyInfo;
 import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrganizationService;
+import cn.stylefeng.roses.kernel.sys.modular.position.service.HrPositionService;
+import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
+import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
+import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import static cn.stylefeng.roses.kernel.rule.constants.SymbolConstant.LEFT_SQUARE_BRACKETS;
+import static cn.stylefeng.roses.kernel.rule.constants.SymbolConstant.RIGHT_SQUARE_BRACKETS;
 
 /**
  * 组织机构信息业务实现层
@@ -41,6 +52,15 @@ import java.util.Set;
  */
 @Service
 public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper, HrOrganization> implements HrOrganizationService {
+
+    @Resource
+    private SysUserService sysUserService;
+
+    @Resource
+    private HrPositionService hrPositionService;
+
+    @Resource
+    private SysUserOrgService sysUserOrgService;
 
     @Override
     public void add(HrOrganizationRequest hrOrganizationRequest) {
@@ -202,10 +222,44 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     @Override
     public HomeCompanyInfo orgStatInfo() {
 
+        // todo 加缓存
 
+        HomeCompanyInfo homeCompanyInfo = new HomeCompanyInfo();
 
+        // 1. 总机构数量
+        long totalOrgCount = this.count();
+        homeCompanyInfo.setOrganizationNum(totalOrgCount);
 
-        return null;
+        // 2. 总人员数量
+        long totalUserCount = sysUserService.count();
+        homeCompanyInfo.setEnterprisePersonNum(totalUserCount);
+
+        // 3. 总职位信息
+        long totalPositionCount = hrPositionService.count();
+        homeCompanyInfo.setPositionNum(totalPositionCount);
+
+        // 4. 当前公司下的机构数量
+        Long currentOrgId = LoginContext.me().getLoginUser().getCurrentOrgId();
+        CompanyDeptDTO companyDeptInfo = this.getCompanyDeptInfo(currentOrgId);
+        Long companyId = companyDeptInfo.getCompanyId();
+
+        // 获取当前公司的所有子公司数量(含当前公司)
+        LambdaQueryWrapper<HrOrganization> wrapper = Wrappers.lambdaQuery(HrOrganization.class)
+                .like(HrOrganization::getOrgPids, LEFT_SQUARE_BRACKETS + companyId + RIGHT_SQUARE_BRACKETS).or()
+                .eq(HrOrganization::getOrgId, companyId).select(HrOrganization::getOrgId);
+        List<HrOrganization> organizations = this.list(wrapper);
+        homeCompanyInfo.setCurrentDeptNum(organizations.size());
+
+        // 5. 当前机构下的人员数量
+        if (ObjectUtil.isEmpty(organizations)) {
+            homeCompanyInfo.setCurrentCompanyPersonNum(0L);
+        } else {
+            List<Long> orgIdList = organizations.stream().map(HrOrganization::getOrgId).collect(Collectors.toList());
+            long userCount = sysUserOrgService.count(new LambdaQueryWrapper<SysUserOrg>().in(SysUserOrg::getOrgId, orgIdList));
+            homeCompanyInfo.setCurrentCompanyPersonNum(userCount);
+        }
+
+        return homeCompanyInfo;
     }
 
     /**

@@ -14,17 +14,17 @@ public class HomeCompanyInfo {
     /**
      * 所有组织机构数
      */
-    private Integer organizationNum;
+    private Long organizationNum;
 
     /**
      * 所有企业人员总数
      */
-    private Integer enterprisePersonNum;
+    private Long enterprisePersonNum;
 
     /**
      * 所有职位总数
      */
-    private Integer positionNum;
+    private Long positionNum;
 
     /**
      * 当前登录用户，所在公司的部门数量
@@ -34,5 +34,5 @@ public class HomeCompanyInfo {
     /**
      * 当前登录用户，所在公司的总人数
      */
-    private Integer currentCompanyPersonNum;
+    private Long currentCompanyPersonNum;
 }
