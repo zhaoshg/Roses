@@ -28,12 +28,12 @@ public class PersonalInfoController {
     private SysUserService sysUserService;
 
     /**
-     * 更新用户个人信息
+     * 更新个人信息
      *
-     * @author luojie
-     * @date 2020/11/6 13:50
+     * @author fengshuonan
+     * @since 2023/6/26 22:24
      */
-    @PostResource(name = "个人信息_更新个人信息", path = "/sysUser/updateInfo")
+    @PostResource(name = "更新个人信息", path = "/personalInfo/updateInfo")
     @BusinessLog
     public ResponseData<?> updateInfo(@RequestBody @Validated(SysUserRequest.updateInfo.class) SysUserRequest sysUserRequest) {
         sysUserService.editInfo(sysUserRequest);
@@ -41,28 +41,28 @@ public class PersonalInfoController {
     }
 
     /**
-     * 修改密码
+     * 修改个人头像
      *
-     * @author luojie
-     * @date 2020/11/6 13:50
+     * @author fengshuonan
+     * @since 2023/6/26 22:24
      */
-    @PostResource(name = "个人信息_修改密码", path = "/sysUser/updatePassword")
+    @PostResource(name = "修改个人头像", path = "/personalInfo/updateAvatar")
     @BusinessLog
-    public ResponseData<?> updatePwd(@RequestBody @Validated(SysUserRequest.updatePwd.class) SysUserRequest sysUserRequest) {
-        sysUserService.editPassword(sysUserRequest);
+    public ResponseData<?> updateAvatar(@RequestBody @Validated(SysUserRequest.updateAvatar.class) SysUserRequest sysUserRequest) {
+        sysUserService.editAvatar(sysUserRequest);
         return new SuccessResponseData<>();
     }
 
     /**
-     * 修改头像
+     * 修改个人密码
      *
-     * @author luojie
-     * @date 2020/11/6 13:48
+     * @author fengshuonan
+     * @since 2023/6/26 22:24
      */
-    @PostResource(name = "个人信息_修改头像", path = "/sysUser/updateAvatar")
+    @PostResource(name = "修改个人密码", path = "/personalInfo/updatePassword")
     @BusinessLog
-    public ResponseData<?> updateAvatar(@RequestBody @Validated(SysUserRequest.updateAvatar.class) SysUserRequest sysUserRequest) {
-        sysUserService.editAvatar(sysUserRequest);
+    public ResponseData<?> updatePwd(@RequestBody @Validated(SysUserRequest.updatePwd.class) SysUserRequest sysUserRequest) {
+        sysUserService.editPassword(sysUserRequest);
         return new SuccessResponseData<>();
     }
 
