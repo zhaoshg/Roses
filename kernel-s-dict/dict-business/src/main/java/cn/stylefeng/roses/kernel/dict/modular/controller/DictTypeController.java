@@ -24,7 +24,6 @@
  */
 package cn.stylefeng.roses.kernel.dict.modular.controller;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.dict.api.constants.DictConstants;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDictType;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.request.DictTypeRequest;
@@ -97,19 +96,6 @@ public class DictTypeController {
     }
 
     /**
-     * 修改字典类型状态
-     *
-     * @author fengshuonan
-     * @since 2018/7/25 下午12:36
-     */
-    @PostResource(name = "修改字典类型状态", path = "/dictType/updateStatus")
-    @BusinessLog
-    public ResponseData<?> updateStatus(@RequestBody @Validated(BaseRequest.updateStatus.class) DictTypeRequest dictTypeRequest) {
-        this.dictTypeService.editStatus(dictTypeRequest);
-        return new SuccessResponseData<>();
-    }
-
-    /**
      * 获取字典类型详情
      *
      * @author fengshuonan
@@ -130,17 +116,6 @@ public class DictTypeController {
     @GetResource(name = "获取字典类型列表", path = "/dictType/list", requiredPermission = false)
     public ResponseData<List<SysDictType>> list(DictTypeRequest dictTypeRequest) {
         return new SuccessResponseData<>(dictTypeService.findList(dictTypeRequest));
-    }
-
-    /**
-     * 获取字典类型列表(分页)
-     *
-     * @author fengshuonan
-     * @since 2020/10/30 21:46
-     */
-    @GetResource(name = "获取字典类型列表(分页)", path = "/dictType/page", requiredPermission = false)
-    public ResponseData<PageResult<SysDictType>> page(DictTypeRequest dictTypeRequest) {
-        return new SuccessResponseData<>(dictTypeService.findPage(dictTypeRequest));
     }
 
     /**

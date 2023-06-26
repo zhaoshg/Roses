@@ -121,18 +121,6 @@ public class DictController {
     }
 
     /**
-     * 获取字典列表(分页)
-     *
-     * @author fengshuonan
-     * @since 2020/10/29 16:35
-     */
-    @GetResource(name = "获取字典列表", path = "/dict/page", requiredPermission = false)
-    public ResponseData<PageResult<SysDict>> page(DictRequest dictRequest) {
-        return new SuccessResponseData<>(this.dictService.findPage(dictRequest));
-    }
-
-
-    /**
      * 获取树形字典列表（antdv在用）
      *
      * @author fengshuonan
