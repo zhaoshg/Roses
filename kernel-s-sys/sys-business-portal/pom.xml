@@ -24,6 +24,14 @@
             <version>${roses.version}</version>
         </dependency>
 
+        <!--日志api-->
+        <!--用在获取首页的个人用户操作日志列表-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>log-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!--包装器模块-->
         <!--包装结果-->
         <dependency>
