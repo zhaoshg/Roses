@@ -320,7 +320,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 如果传递了组织机构id查询条件，则查询对应机构id下有哪些用户，再拼接用户查询条件
         if (ObjectUtil.isNotEmpty(sysUserRequest.getOrgIdCondition())) {
             List<Long> orgUserIdList = this.sysUserOrgService.getOrgUserIdList(sysUserRequest.getOrgIdCondition(), true);
-            queryWrapper.in(SysUser::getUserId, orgUserIdList);
+
+            // 指定部门下没人，则直接返回一个不成立条件
+            if (ObjectUtil.isEmpty(orgUserIdList)) {
+                queryWrapper.in(SysUser::getUserId, -1L);
+            } else {
+                queryWrapper.in(SysUser::getUserId, orgUserIdList);
+            }
+
         }
 
         return queryWrapper;
