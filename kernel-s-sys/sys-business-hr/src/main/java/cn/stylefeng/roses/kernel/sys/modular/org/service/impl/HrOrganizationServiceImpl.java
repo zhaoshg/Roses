@@ -20,6 +20,7 @@ import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.factory.OrganizationFactory;
 import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrganizationMapper;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrganizationRequest;
+import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.HomeCompanyInfo;
 import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrganizationService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -196,6 +197,15 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         Long orgParentId = hrOrganization.getOrgParentId();
         HrOrganization parentOrgInfo = this.getById(orgParentId);
         return this.getOrgCompanyInfo(parentOrgInfo);
+    }
+
+    @Override
+    public HomeCompanyInfo orgStatInfo() {
+
+
+
+
+        return null;
     }
 
     /**

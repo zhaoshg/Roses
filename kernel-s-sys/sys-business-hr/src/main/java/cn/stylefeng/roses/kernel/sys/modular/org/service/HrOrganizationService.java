@@ -4,6 +4,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrganizationRequest;
+import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.HomeCompanyInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -109,5 +110,15 @@ public interface HrOrganizationService extends IService<HrOrganization> {
      * @since 2023/6/12 16:09
      */
     CompanyDeptDTO getOrgCompanyInfo(HrOrganization hrOrganization);
+
+    /**
+     * 获取组织机构统计信息，包含系统的统计，包含当前用户公司的统计
+     * <p>
+     * 一般用在首页展示组织机构的统计信息界面
+     *
+     * @author fengshuonan
+     * @since 2023/6/26 22:53
+     */
+    HomeCompanyInfo orgStatInfo();
 
 }
