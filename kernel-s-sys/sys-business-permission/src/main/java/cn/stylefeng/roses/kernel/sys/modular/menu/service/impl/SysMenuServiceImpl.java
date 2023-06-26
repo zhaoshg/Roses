@@ -9,7 +9,9 @@ import cn.stylefeng.roses.kernel.rule.constants.SymbolConstant;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.tree.buildpids.PidStructureBuildUtil;
+import cn.stylefeng.roses.kernel.sys.api.SysMenuServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.pojo.menu.UserAppMenuInfo;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.enums.SysMenuExceptionEnum;
@@ -39,7 +41,7 @@ import java.util.stream.Collectors;
  * @date 2023/06/10 21:28
  */
 @Service
-public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
+public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService, SysMenuServiceApi {
 
     @Resource
     private SysAppService sysAppService;
@@ -190,9 +192,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
         // 查询指定的菜单内容
         sysMenuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuParentId, SysMenu::getAppId, SysMenu::getMenuCode,
-                SysMenu::getMenuName, SysMenu::getMenuType,
-                SysMenu::getAntdvIcon, SysMenu::getAntdvVisible, SysMenu::getAntdvActiveUrl, SysMenu::getAntdvRouter,
-                SysMenu::getAntdvComponent, SysMenu::getMenuSort);
+                SysMenu::getMenuName, SysMenu::getMenuType, SysMenu::getAntdvIcon, SysMenu::getAntdvVisible, SysMenu::getAntdvActiveUrl,
+                SysMenu::getAntdvRouter, SysMenu::getAntdvComponent, SysMenu::getMenuSort);
 
         sysMenuLambdaQueryWrapper.orderByAsc(SysMenu::getMenuSort);
 
@@ -252,6 +253,32 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
         // 3. 组装应用信息和菜单信息
         return MenuFactory.createAppGroupDetailResult(appList, sysMenuList);
+    }
+
+    @Override
+    public List<UserAppMenuInfo> getUserAppMenuDetailList(Set<Long> menuIdList) {
+
+        // 通过id查询菜单的详情信息
+        LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysMenuLambdaQueryWrapper.in(SysMenu::getMenuId, menuIdList);
+        sysMenuLambdaQueryWrapper.select(SysMenu::getMenuName, SysMenu::getAntdvRouter, SysMenu::getAntdvIcon);
+        List<SysMenu> sysMenuList = this.list(sysMenuLambdaQueryWrapper);
+
+        if (ObjectUtil.isEmpty(sysMenuList)) {
+            return new ArrayList<>();
+        }
+
+        // 转化成响应信息
+        List<UserAppMenuInfo> result = new ArrayList<>();
+        for (SysMenu sysMenu : sysMenuList) {
+            UserAppMenuInfo userAppMenuInfo = new UserAppMenuInfo();
+            userAppMenuInfo.setMenuName(sysMenu.getMenuName());
+            userAppMenuInfo.setMenuIcon(sysMenu.getAntdvIcon());
+            userAppMenuInfo.setMenuRouter(sysMenu.getAntdvRouter());
+            result.add(userAppMenuInfo);
+        }
+
+        return result;
     }
 
     /**
@@ -319,5 +346,4 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             }
         }
     }
-
 }
