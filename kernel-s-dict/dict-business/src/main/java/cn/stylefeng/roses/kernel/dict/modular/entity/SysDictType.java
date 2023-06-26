@@ -58,18 +58,18 @@ public class SysDictType extends BaseEntity {
     private Integer dictTypeClass;
 
     /**
-     * 字典类型编码
-     */
-    @TableField("dict_type_code")
-    @ChineseDescription("字典类型编码")
-    private String dictTypeCode;
-
-    /**
      * 字典类型业务编码
      */
     @TableField("dict_type_bus_code")
     @ChineseDescription("字典类型业务编码")
     private String dictTypeBusCode;
+
+    /**
+     * 字典类型编码
+     */
+    @TableField("dict_type_code")
+    @ChineseDescription("字典类型编码")
+    private String dictTypeCode;
 
     /**
      * 字典类型名称
@@ -100,17 +100,17 @@ public class SysDictType extends BaseEntity {
     private Integer statusFlag;
 
     /**
-     * 删除标记 Y-已删除，N-未删除，参考 YesOrNotEnum
-     */
-    @TableField(value = "del_flag", fill = FieldFill.INSERT)
-    @ChineseDescription("删除标记")
-    private String delFlag;
-
-    /**
      * 排序，带小数点
      */
     @TableField(value = "dict_type_sort")
     @ChineseDescription("排序")
     private BigDecimal dictTypeSort;
+
+    /**
+     * 删除标记 Y-已删除，N-未删除，参考 YesOrNotEnum
+     */
+    @TableField(value = "del_flag", fill = FieldFill.INSERT)
+    @ChineseDescription("删除标记")
+    private String delFlag;
 
 }
