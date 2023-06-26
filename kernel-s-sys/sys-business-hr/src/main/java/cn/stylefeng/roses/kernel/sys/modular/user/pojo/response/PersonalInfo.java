@@ -3,6 +3,7 @@ package cn.stylefeng.roses.kernel.sys.modular.user.pojo.response;
 import cn.stylefeng.roses.kernel.file.api.format.FileUrlFormatProcess;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -38,6 +39,7 @@ public class PersonalInfo {
      * 生日
      */
     @ChineseDescription("生日")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
     /**
