@@ -36,14 +36,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static cn.stylefeng.roses.kernel.rule.constants.SymbolConstant.LEFT_SQUARE_BRACKETS;
 import static cn.stylefeng.roses.kernel.rule.constants.SymbolConstant.RIGHT_SQUARE_BRACKETS;
+import static java.util.stream.Collectors.toCollection;
 
 /**
  * 组织机构信息业务实现层
@@ -164,8 +162,13 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         // 合并两个集合
         hrOrganizationList.addAll(parentOrgList);
 
+        // 去重
+        List<HrOrganization> newNotRepeatList = hrOrganizationList.stream().collect(
+                Collectors.collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(HrOrganization::getOrgId))),
+                        ArrayList::new));
+
         // 构建树形结构
-        return new DefaultTreeBuildFactory<HrOrganization>().doTreeBuild(hrOrganizationList);
+        return new DefaultTreeBuildFactory<HrOrganization>().doTreeBuild(newNotRepeatList);
     }
 
     @Override
