@@ -1,6 +1,5 @@
 package cn.stylefeng.roses.kernel.sys.modular.userapp.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.sys.api.SysMenuServiceApi;
@@ -12,10 +11,12 @@ import cn.stylefeng.roses.kernel.sys.modular.userapp.service.PortalUserAppServic
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,10 +33,29 @@ public class PortalUserAppServiceImpl extends ServiceImpl<PortalUserAppMapper, P
     private SysMenuServiceApi sysMenuServiceApi;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateUserAppList(PortalUserAppRequest portalUserAppRequest) {
-        PortalUserApp portalUserApp = new PortalUserApp();
-        BeanUtil.copyProperties(portalUserAppRequest, portalUserApp);
-        this.save(portalUserApp);
+
+        // 获取当前登录用户id
+        Long userId = LoginContext.me().getLoginUser().getUserId();
+
+        // 删除掉用户绑定的菜单集合
+        LambdaQueryWrapper<PortalUserApp> removeWrapper = new LambdaQueryWrapper<>();
+        removeWrapper.eq(PortalUserApp::getUserId, userId);
+        this.remove(removeWrapper);
+
+        // 获取菜单id集合对应的应用id集合，为了冗余字段，删除应用时，联动删除
+        Map<Long, Long> menuIdAppIdMap = sysMenuServiceApi.getMenuAppId(portalUserAppRequest.getMenuIdList());
+
+        List<PortalUserApp> portalUserApps = new ArrayList<>();
+        for (Long menuId : portalUserAppRequest.getMenuIdList()) {
+            PortalUserApp portalUserApp = new PortalUserApp();
+            portalUserApp.setUserId(userId);
+            portalUserApp.setAppId(menuIdAppIdMap.get(menuId));
+            portalUserApp.setMenuId(menuId);
+            portalUserApps.add(portalUserApp);
+        }
+        this.getBaseMapper().insertBatchSomeColumn(portalUserApps);
     }
 
     @Override

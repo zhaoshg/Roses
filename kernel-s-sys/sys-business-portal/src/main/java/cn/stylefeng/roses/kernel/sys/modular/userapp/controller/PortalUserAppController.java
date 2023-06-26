@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.userapp.controller;
 
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -48,7 +49,7 @@ public class PortalUserAppController {
      */
     @PostResource(name = "添加", path = "/portalUserApp/updateUserAppList")
     public ResponseData<PortalUserApp> updateUserAppList(
-            @RequestBody @Validated(PortalUserAppRequest.add.class) PortalUserAppRequest portalUserAppRequest) {
+            @RequestBody @Validated(BaseRequest.edit.class) PortalUserAppRequest portalUserAppRequest) {
         portalUserAppService.updateUserAppList(portalUserAppRequest);
         return new SuccessResponseData<>();
     }

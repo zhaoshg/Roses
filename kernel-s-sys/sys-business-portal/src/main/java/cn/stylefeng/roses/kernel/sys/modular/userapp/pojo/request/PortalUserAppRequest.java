@@ -5,7 +5,8 @@ import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  * 用户常用功能封装类
@@ -18,28 +19,10 @@ import javax.validation.constraints.NotNull;
 public class PortalUserAppRequest extends BaseRequest {
 
     /**
-     * 主键id
+     * 用户选择的关联的菜单id集合
      */
-    @NotNull(message = "主键id不能为空", groups = {edit.class, delete.class})
-    @ChineseDescription("主键id")
-    private Long appLinkId;
-
-    /**
-     * 冗余字段，菜单所属的应用id
-     */
-    @ChineseDescription("冗余字段，菜单所属的应用id")
-    private Long appId;
-
-    /**
-     * 关联的菜单id
-     */
-    @ChineseDescription("关联的菜单id")
-    private Long menuId;
-
-    /**
-     * 租户id
-     */
-    @ChineseDescription("租户id")
-    private Long tenantId;
+    @ChineseDescription("用户选择的关联的菜单id集合")
+    @NotEmpty(message = "菜单id集合不能为空", groups = edit.class)
+    private List<Long> menuIdList;
 
 }
