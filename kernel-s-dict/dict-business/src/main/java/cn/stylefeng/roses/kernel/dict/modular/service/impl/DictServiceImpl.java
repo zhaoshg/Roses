@@ -102,7 +102,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         this.updateById(sysDict);
 
         // 清除缓存中的字典值
-        defaultStringCacheOperator.remove(CACHE_PREFIX + sysDict.getDictTypeCode() + "|" + sysDict.getDictCode());
+        defaultStringCacheOperator.remove(CACHE_PREFIX + sysDict.getDictTypeId() + "|" + sysDict.getDictCode());
     }
 
     @Override
@@ -116,14 +116,14 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         BeanUtil.copyProperties(dictRequest, sysDict);
 
         // 不能修改字典类型和编码
-        sysDict.setDictTypeCode(null);
+        sysDict.setDictTypeId(null);
         sysDict.setDictCode(null);
         sysDict.setDictNamePinyin(pinYinApi.parseEveryPinyinFirstLetter(sysDict.getDictName()));
 
         this.updateById(sysDict);
 
         // 清除缓存中的字典值
-        defaultStringCacheOperator.remove(CACHE_PREFIX + sysDict.getDictTypeCode() + "|" + sysDict.getDictCode());
+        defaultStringCacheOperator.remove(CACHE_PREFIX + sysDict.getDictTypeId() + "|" + sysDict.getDictCode());
     }
 
     @Override
@@ -174,7 +174,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
             return dictName;
         }
         LambdaQueryWrapper<SysDict> sysDictLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        sysDictLambdaQueryWrapper.eq(SysDict::getDictTypeCode, dictTypeCode);
+        sysDictLambdaQueryWrapper.eq(SysDict::getDictTypeId, dictTypeCode);
         sysDictLambdaQueryWrapper.eq(SysDict::getDictCode, dictCode);
         sysDictLambdaQueryWrapper.ne(SysDict::getDelFlag, YesOrNotEnum.Y.getCode());
 
@@ -267,7 +267,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
 
         // SQL拼接
         queryWrapper.eq(ObjectUtil.isNotNull(dictRequest.getDictId()), SysDict::getDictId, dictRequest.getDictId());
-        queryWrapper.eq(StrUtil.isNotBlank(dictRequest.getDictTypeCode()), SysDict::getDictTypeCode, dictRequest.getDictTypeCode());
+        queryWrapper.eq(StrUtil.isNotBlank(dictRequest.getDictTypeCode()), SysDict::getDictTypeId, dictRequest.getDictTypeCode());
         queryWrapper.eq(StrUtil.isNotBlank(dictRequest.getDictCode()), SysDict::getDictCode, dictRequest.getDictCode());
         queryWrapper.like(StrUtil.isNotBlank(dictRequest.getDictName()), SysDict::getDictName, dictRequest.getDictName());
 
@@ -285,7 +285,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
 
         // 检验同字典类型下是否有一样的编码
         LambdaQueryWrapper<SysDict> sysDictLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        sysDictLambdaQueryWrapper.eq(SysDict::getDictTypeCode, dictRequest.getDictTypeCode());
+        sysDictLambdaQueryWrapper.eq(SysDict::getDictTypeId, dictRequest.getDictTypeCode());
         sysDictLambdaQueryWrapper.eq(SysDict::getDictCode, dictRequest.getDictCode());
         if (editFlag) {
             sysDictLambdaQueryWrapper.ne(SysDict::getDictId, dictRequest.getDictId());
@@ -298,7 +298,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
 
         // 检验同字典类型下是否有一样的名称
         LambdaQueryWrapper<SysDict> dictNameWrapper = new LambdaQueryWrapper<>();
-        dictNameWrapper.eq(SysDict::getDictTypeCode, dictRequest.getDictTypeCode());
+        dictNameWrapper.eq(SysDict::getDictTypeId, dictRequest.getDictTypeCode());
         dictNameWrapper.eq(SysDict::getDictName, dictRequest.getDictName());
         if (editFlag) {
             dictNameWrapper.ne(SysDict::getDictId, dictRequest.getDictId());

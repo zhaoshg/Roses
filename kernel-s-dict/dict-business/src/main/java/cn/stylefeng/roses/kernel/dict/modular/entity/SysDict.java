@@ -53,6 +53,13 @@ public class SysDict extends BaseEntity {
     private Long dictId;
 
     /**
+     * 字典类型的id
+     */
+    @TableField("dict_type_id")
+    @ChineseDescription("字典类型的id")
+    private String dictTypeId;
+
+    /**
      * 字典编码
      */
     @TableField("dict_code")
@@ -81,13 +88,6 @@ public class SysDict extends BaseEntity {
     private String dictEncode;
 
     /**
-     * 字典类型的编码
-     */
-    @TableField("dict_type_code")
-    @ChineseDescription("字典类型的编码")
-    private String dictTypeCode;
-
-    /**
      * 字典简称
      */
     @TableField("dict_short_name")
@@ -109,6 +109,13 @@ public class SysDict extends BaseEntity {
     private Long dictParentId;
 
     /**
+     * 父id集合
+     */
+    @TableField("dict_pids")
+    @ChineseDescription("父id集合")
+    private String dictPids;
+
+    /**
      * 状态：(1-启用,2-禁用),参考 StatusEnum
      */
     @TableField("status_flag")
@@ -121,13 +128,6 @@ public class SysDict extends BaseEntity {
     @TableField("dict_sort")
     @ChineseDescription("排序")
     private BigDecimal dictSort;
-
-    /**
-     * 父id集合
-     */
-    @TableField("dict_pids")
-    @ChineseDescription("父id集合")
-    private String dictPids;
 
     /**
      * 是否删除，Y-被删除，N-未删除
