@@ -5,8 +5,10 @@ import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
+import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
+import cn.stylefeng.roses.kernel.sys.modular.user.pojo.response.PersonalInfo;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +28,18 @@ public class PersonalInfoController {
 
     @Resource
     private SysUserService sysUserService;
+
+    /**
+     * 获取个人信息详情
+     *
+     * @author fengshuonan
+     * @since 2023/6/26 22:27
+     */
+    @GetResource(name = "获取个人信息详情", path = "/personalInfo/getUserInfo")
+    public ResponseData<PersonalInfo> getUserInfo() {
+        PersonalInfo personalInfo = sysUserService.getPersonalInfo();
+        return new SuccessResponseData<>(personalInfo);
+    }
 
     /**
      * 更新个人信息

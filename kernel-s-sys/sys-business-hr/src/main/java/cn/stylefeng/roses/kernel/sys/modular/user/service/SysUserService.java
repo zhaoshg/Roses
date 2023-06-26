@@ -3,6 +3,7 @@ package cn.stylefeng.roses.kernel.sys.modular.user.service;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
+import cn.stylefeng.roses.kernel.sys.modular.user.pojo.response.PersonalInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -94,6 +95,14 @@ public interface SysUserService extends IService<SysUser> {
      * @since 2023/6/12 14:55
      */
     void resetPassword(SysUserRequest sysUserRequest);
+
+    /**
+     * 获取当前用户的个人信息详情
+     *
+     * @author fengshuonan
+     * @since 2023/6/26 22:28
+     */
+    PersonalInfo getPersonalInfo();
 
     /**
      * 更新用户信息（一般用于更新个人信息）

@@ -24,6 +24,7 @@ import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.factory.SysUserCreateFactory;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserMapper;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
+import cn.stylefeng.roses.kernel.sys.modular.user.pojo.response.PersonalInfo;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
@@ -198,6 +199,28 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setPasswordSalt(saltedEncryptResult.getPasswordSalt());
 
         this.updateById(sysUser);
+    }
+
+    @Override
+    public PersonalInfo getPersonalInfo() {
+
+        // 获取当前登录用户id
+        Long userId = LoginContext.me().getLoginUser().getUserId();
+
+        // 查询用户的详细信息
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
+        sysUserLambdaQueryWrapper.select(SysUser::getRealName, SysUser::getAccount, SysUser::getAvatar, SysUser::getEmail,
+                SysUser::getPhone, SysUser::getSex, SysUser::getBirthday);
+        SysUser sysUser = this.getOne(sysUserLambdaQueryWrapper, false);
+
+        if (sysUser == null) {
+            return new PersonalInfo();
+        }
+
+        PersonalInfo personalInfo = new PersonalInfo();
+        BeanUtil.copyProperties(sysUser, personalInfo);
+        return personalInfo;
     }
 
     @Override
