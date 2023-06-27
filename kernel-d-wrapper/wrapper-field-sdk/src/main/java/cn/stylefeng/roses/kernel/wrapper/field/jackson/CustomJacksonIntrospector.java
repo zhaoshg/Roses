@@ -1,10 +1,12 @@
 package cn.stylefeng.roses.kernel.wrapper.field.jackson;
 
+import cn.stylefeng.roses.kernel.rule.annotation.DictCodeFieldFormat;
 import cn.stylefeng.roses.kernel.rule.annotation.EnumFieldFormat;
 import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
 import cn.stylefeng.roses.kernel.rule.base.ReadableEnum;
 import cn.stylefeng.roses.kernel.rule.base.SimpleFieldFormatProcess;
 import cn.stylefeng.roses.kernel.rule.enums.FormatTypeEnum;
+import cn.stylefeng.roses.kernel.wrapper.field.dict.DictCodeFormatSerializer;
 import cn.stylefeng.roses.kernel.wrapper.field.enums.EnumFieldFormatDeserializer;
 import cn.stylefeng.roses.kernel.wrapper.field.enums.EnumFieldFormatSerializer;
 import cn.stylefeng.roses.kernel.wrapper.field.simple.SimpleFieldFormatSerializer;
@@ -51,6 +53,19 @@ public class CustomJacksonIntrospector extends JacksonAnnotationIntrospector {
 
             // 创建对应的序列化模式
             return new EnumFieldFormatSerializer(formatTypeEnum, process);
+        }
+
+        // 字典编码的格式化转化过程
+        DictCodeFieldFormat dictCodeFieldFormat = annotated.getAnnotation(DictCodeFieldFormat.class);
+        if (dictCodeFieldFormat != null && dictCodeFieldFormat.dictTypeCode() != null) {
+            // 获取格式化处理的方式
+            FormatTypeEnum formatTypeEnum = dictCodeFieldFormat.formatType();
+
+            // 获取指定的字典类型的编码
+            String dictTypeCode = dictCodeFieldFormat.dictTypeCode();
+
+            // 创建对应的序列化模式
+            return new DictCodeFormatSerializer(formatTypeEnum, dictTypeCode);
         }
 
         return super.findSerializer(annotated);
