@@ -31,7 +31,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.config.api.ConfigInitCallbackApi;
 import cn.stylefeng.roses.kernel.config.api.ConfigInitStrategyApi;
-import cn.stylefeng.roses.kernel.config.api.constants.ConfigConstants;
 import cn.stylefeng.roses.kernel.config.api.context.ConfigContext;
 import cn.stylefeng.roses.kernel.config.api.exception.ConfigException;
 import cn.stylefeng.roses.kernel.config.api.exception.enums.ConfigExceptionEnum;
@@ -250,21 +249,6 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         initConfigResponse.setInitConfigGroupList(configGroupList);
 
         return initConfigResponse;
-    }
-
-    @Override
-    public String getServerDeployHost() {
-
-        // 获取后端部署的服务器
-        LambdaQueryWrapper<SysConfig> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(SysConfig::getConfigCode, ConfigConstants.SYS_SERVER_DEPLOY_HOST);
-        SysConfig sysConfig = this.getOne(wrapper, false);
-
-        if (sysConfig != null) {
-            return sysConfig.getConfigValue();
-        } else {
-            return RuleConstants.DEFAULT_SERVER_DEPLOY_HOST;
-        }
     }
 
     /**

@@ -60,16 +60,4 @@ public class SystemConfigController {
         return new SuccessResponseData<>(sysConfigService.getInitConfigs());
     }
 
-    /**
-     * 获取后端服务部署的地址
-     *
-     * @author fengshuonan
-     * @since 2021/7/8 16:36
-     */
-    @GetResource(name = "获取后端服务部署的地址", path = "/sysConfig/getBackendDeployUrl", requiredLogin = false)
-    public ResponseData<String> getBackendDeployUrl() {
-        String serverDeployHost = sysConfigService.getServerDeployHost();
-        return new SuccessResponseData<>(serverDeployHost);
-    }
-
 }
