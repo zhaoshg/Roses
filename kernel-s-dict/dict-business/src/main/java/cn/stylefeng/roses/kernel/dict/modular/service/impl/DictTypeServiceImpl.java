@@ -101,9 +101,13 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, SysDictType
         // 更新数据
         SysDictType sysDictType = this.querySysDictType(dictTypeRequest);
         BeanUtil.copyProperties(dictTypeRequest, sysDictType);
+
+        // 字典类型编码不能修改
         sysDictType.setDictTypeCode(null);
+
         // 设置首字母拼音
         sysDictType.setDictTypeNamePinyin(pinYinApi.parseEveryPinyinFirstLetter(sysDictType.getDictTypeName()));
+
         this.updateById(sysDictType);
     }
 
