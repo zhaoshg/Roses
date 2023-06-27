@@ -52,6 +52,7 @@ import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -150,6 +151,11 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     @Override
     public PageResult<SysConfig> findPage(SysConfigParam sysConfigParam) {
         LambdaQueryWrapper<SysConfig> wrapper = this.createWrapper(sysConfigParam);
+
+        // 只查询列表显示的数据
+        wrapper.select(SysConfig::getConfigId, SysConfig::getConfigName, SysConfig::getConfigCode, SysConfig::getConfigValue,
+                SysConfig::getSysFlag);
+
         Page<SysConfig> page = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(page);
     }
@@ -163,11 +169,8 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         }
 
         // 如果当前已经初始化过配置，则不能初始化
-        LambdaQueryWrapper<SysConfig> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(SysConfig::getConfigCode, RuleConstants.SYSTEM_CONFIG_INIT_FLAG_NAME);
-        SysConfig tempSysConfig = this.getOne(lambdaQueryWrapper, false);
-        String alreadyInit = tempSysConfig.getConfigValue();
-        if (Convert.toBool(alreadyInit)) {
+        Boolean alreadyInit = this.getInitConfigFlag();
+        if (alreadyInit) {
             throw new ConfigException(ConfigExceptionEnum.CONFIG_INIT_ALREADY);
         }
 
@@ -190,15 +193,11 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
             String configCode = entry.getKey();
             String configValue = entry.getValue();
 
-            // 获取库数据库这条记录
-            LambdaQueryWrapper<SysConfig> wrapper = new LambdaQueryWrapper<>();
-            wrapper.eq(SysConfig::getConfigCode, configCode);
-            SysConfig sysConfig = this.getOne(wrapper, false);
-            if (sysConfig == null) {
-                continue;
-            }
-            sysConfig.setConfigValue(configValue);
-            this.updateById(sysConfig);
+            // 更新数据库的这条配置记录
+            LambdaUpdateWrapper<SysConfig> sysConfigLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+            sysConfigLambdaUpdateWrapper.eq(SysConfig::getConfigCode, configCode);
+            sysConfigLambdaUpdateWrapper.set(SysConfig::getConfigValue, configValue);
+            this.update(sysConfigLambdaUpdateWrapper);
 
             // 更新缓存
             ConfigContext.me().putConfig(configCode, configValue);
@@ -216,6 +215,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     public Boolean getInitConfigFlag() {
         LambdaQueryWrapper<SysConfig> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(SysConfig::getConfigCode, RuleConstants.SYSTEM_CONFIG_INIT_FLAG_NAME);
+        wrapper.select(SysConfig::getConfigValue);
         SysConfig sysConfig = this.getOne(wrapper, false);
 
         // 配置为空，还没初始化
