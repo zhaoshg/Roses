@@ -24,7 +24,6 @@
  */
 package cn.stylefeng.roses.kernel.dict.modular.controller;
 
-import cn.stylefeng.roses.kernel.dict.api.constants.DictConstants;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDictType;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.request.DictTypeRequest;
 import cn.stylefeng.roses.kernel.dict.modular.service.DictTypeService;
@@ -116,32 +115,6 @@ public class DictTypeController {
     @GetResource(name = "获取字典类型列表", path = "/dictType/list")
     public ResponseData<List<SysDictType>> list(DictTypeRequest dictTypeRequest) {
         return new SuccessResponseData<>(dictTypeService.findList(dictTypeRequest));
-    }
-
-    /**
-     * 获取字典类型详情
-     *
-     * @author fengshuonan
-     * @since 2021/1/13 11:25
-     */
-    @GetResource(name = "获取系统配置字典类型详情", path = "/dictType/getConfigDictTypeDetail")
-    public ResponseData<SysDictType> getConfigDictTypeDetail(DictTypeRequest dictTypeRequest) {
-        dictTypeRequest.setDictTypeCode(DictConstants.CONFIG_GROUP_DICT_TYPE_CODE);
-        SysDictType detail = this.dictTypeService.detail(dictTypeRequest);
-        return new SuccessResponseData<>(detail);
-    }
-
-    /**
-     * 获取字典类型详情
-     *
-     * @author fengshuonan
-     * @since 2021/1/13 11:25
-     */
-    @GetResource(name = "获取语种字典类型型详情", path = "/dictType/getTranslationDetail")
-    public ResponseData<SysDictType> getTranslationDetail(DictTypeRequest dictTypeRequest) {
-        dictTypeRequest.setDictTypeCode(DictConstants.LANGUAGES_DICT_TYPE_CODE);
-        SysDictType detail = this.dictTypeService.detail(dictTypeRequest);
-        return new SuccessResponseData<>(detail);
     }
 
 }

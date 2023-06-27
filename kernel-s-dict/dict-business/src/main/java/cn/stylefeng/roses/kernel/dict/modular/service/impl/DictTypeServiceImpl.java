@@ -113,7 +113,13 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, SysDictType
 
     @Override
     public List<SysDictType> findList(DictTypeRequest dictTypeRequest) {
-        return this.list(this.createWrapper(dictTypeRequest));
+
+        LambdaQueryWrapper<SysDictType> wrapper = this.createWrapper(dictTypeRequest);
+
+        // 只查询字典类型id和字典类型名称
+        wrapper.select(SysDictType::getDictTypeName, SysDictType::getDictTypeId);
+
+        return this.list(wrapper);
     }
 
     /**
