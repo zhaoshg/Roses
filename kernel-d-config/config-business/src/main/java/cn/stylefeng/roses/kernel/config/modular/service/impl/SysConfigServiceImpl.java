@@ -45,6 +45,7 @@ import cn.stylefeng.roses.kernel.config.modular.pojo.param.SysConfigParam;
 import cn.stylefeng.roses.kernel.config.modular.service.SysConfigService;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.callback.ConfigUpdateCallback;
 import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
@@ -148,15 +149,9 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
 
     @Override
     public PageResult<SysConfig> findPage(SysConfigParam sysConfigParam) {
-        LambdaQueryWrapper<SysConfig> wrapper = createWrapper(sysConfigParam);
+        LambdaQueryWrapper<SysConfig> wrapper = this.createWrapper(sysConfigParam);
         Page<SysConfig> page = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(page);
-    }
-
-    @Override
-    public List<SysConfig> findList(SysConfigParam sysConfigParam) {
-        LambdaQueryWrapper<SysConfig> wrapper = createWrapper(sysConfigParam);
-        return this.list(wrapper);
     }
 
     @Override
@@ -295,28 +290,21 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     private LambdaQueryWrapper<SysConfig> createWrapper(SysConfigParam sysConfigParam) {
         LambdaQueryWrapper<SysConfig> queryWrapper = new LambdaQueryWrapper<>();
 
-        // 查询未删除的
-        queryWrapper.ne(SysConfig::getDelFlag, YesOrNotEnum.Y.getCode());
-
-        // 按类型升序排列，同类型的排在一起
-        queryWrapper.orderByDesc(SysConfig::getGroupCode);
-
-        if (ObjectUtil.isEmpty(sysConfigParam)) {
-            return queryWrapper;
+        // 根据查询名称搜索
+        String searchText = sysConfigParam.getSearchText();
+        if (ObjectUtil.isNotEmpty(searchText)) {
+            queryWrapper.like(SysConfig::getConfigName, searchText);
+            queryWrapper.or().like(SysConfig::getConfigCode, searchText);
+            queryWrapper.or().like(SysConfig::getConfigValue, searchText);
+            queryWrapper.or().like(SysConfig::getRemark, searchText);
         }
 
-        String configName = sysConfigParam.getConfigName();
-        String configCode = sysConfigParam.getConfigCode();
-        String groupCode = sysConfigParam.getGroupCode();
-
-        // 如果名称不为空，则带上名称搜素搜条件
-        queryWrapper.like(ObjectUtil.isNotEmpty(configName), SysConfig::getConfigName, configName);
-
-        // 如果常量编码不为空，则带上常量编码搜素搜条件
-        queryWrapper.like(ObjectUtil.isNotEmpty(configCode), SysConfig::getConfigCode, configCode);
-
         // 如果分类编码不为空，则带上分类编码
+        String groupCode = sysConfigParam.getGroupCode();
         queryWrapper.eq(ObjectUtil.isNotEmpty(groupCode), SysConfig::getGroupCode, groupCode);
+
+        // 根据时间排序
+        queryWrapper.orderByDesc(BaseEntity::getCreateTime);
 
         return queryWrapper;
     }

@@ -28,6 +28,7 @@ import cn.stylefeng.roses.kernel.config.modular.entity.SysConfig;
 import cn.stylefeng.roses.kernel.config.modular.pojo.param.SysConfigParam;
 import cn.stylefeng.roses.kernel.config.modular.service.SysConfigService;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -100,13 +101,13 @@ public class SysConfigController {
     }
 
     /**
-     * 分页查询配置列表
+     * 分页查询配置列表，查询配置列表时候，必须带上配置分类的标识
      *
      * @author fengshuonan
      * @since 2020/4/14 11:10
      */
     @GetResource(name = "分页查询配置列表", path = "/sysConfig/page")
-    public ResponseData<PageResult<SysConfig>> page(SysConfigParam sysConfigParam) {
+    public ResponseData<PageResult<SysConfig>> page(@Validated(value = BaseRequest.page.class) SysConfigParam sysConfigParam) {
         return new SuccessResponseData<>(sysConfigService.findPage(sysConfigParam));
     }
 

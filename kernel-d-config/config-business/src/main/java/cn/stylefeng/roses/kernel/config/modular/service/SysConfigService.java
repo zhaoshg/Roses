@@ -32,8 +32,6 @@ import cn.stylefeng.roses.kernel.config.modular.pojo.param.SysConfigParam;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.List;
-
 /**
  * 系统参数配置service接口
  *
@@ -88,16 +86,6 @@ public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
      * @since 2020/4/14 11:14
      */
     PageResult<SysConfig> findPage(SysConfigParam sysConfigParam);
-
-    /**
-     * 查询系统参数配置
-     *
-     * @param sysConfigParam 查询参数
-     * @return 系统参数配置列表
-     * @author fengshuonan
-     * @since 2020/4/14 11:14
-     */
-    List<SysConfig> findList(SysConfigParam sysConfigParam);
 
     /**
      * 初始化配置参数
