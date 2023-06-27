@@ -135,7 +135,13 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         // 不能修改字典类型和编码
         sysDict.setDictTypeId(null);
         sysDict.setDictCode(null);
+
+        // 填充拼音
         sysDict.setDictNamePinyin(pinYinApi.parseEveryPinyinFirstLetter(sysDict.getDictName()));
+
+        // 填充pids
+        String pids = this.createPids(sysDict.getDictParentId());
+        sysDict.setDictPids(pids);
 
         this.updateById(sysDict);
     }
