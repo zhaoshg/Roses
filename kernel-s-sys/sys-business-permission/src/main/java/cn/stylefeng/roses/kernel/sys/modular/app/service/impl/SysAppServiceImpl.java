@@ -137,7 +137,7 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
 
         LambdaQueryWrapper<SysApp> sysAppLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysAppLambdaQueryWrapper.in(SysApp::getAppId, appIds);
-        sysAppLambdaQueryWrapper.select(SysApp::getAppId, SysApp::getAppName);
+        sysAppLambdaQueryWrapper.select(SysApp::getAppId, SysApp::getAppName, SysApp::getAppIcon, SysApp::getRemark);
         sysAppLambdaQueryWrapper.orderByAsc(SysApp::getAppSort);
 
         List<SysApp> sysAppList = this.list(sysAppLambdaQueryWrapper);
@@ -148,6 +148,8 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
             IndexUserAppInfo indexUserAppInfo = new IndexUserAppInfo();
             indexUserAppInfo.setAppId(sysApp.getAppId());
             indexUserAppInfo.setAppName(sysApp.getAppName());
+            indexUserAppInfo.setAppIcon(sysApp.getAppIcon());
+            indexUserAppInfo.setRemark(sysApp.getRemark());
             indexUserAppInfo.setCurrentSelectFlag(false);
             indexUserAppInfos.add(indexUserAppInfo);
         }

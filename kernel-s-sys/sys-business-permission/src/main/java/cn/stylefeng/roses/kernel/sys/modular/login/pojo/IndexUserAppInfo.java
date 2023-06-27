@@ -1,6 +1,8 @@
 package cn.stylefeng.roses.kernel.sys.modular.login.pojo;
 
+import cn.stylefeng.roses.kernel.file.api.format.FileUrlFormatProcess;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
 import lombok.Data;
 
 import java.util.List;
@@ -26,6 +28,19 @@ public class IndexUserAppInfo {
      */
     @ChineseDescription("应用名称")
     private String appName;
+
+    /**
+     * 应用图标的文件id
+     */
+    @ChineseDescription("应用图标的文件id")
+    @SimpleFieldFormat(processClass = FileUrlFormatProcess.class)
+    private Long appIcon;
+
+    /**
+     * 应用描述
+     */
+    @ChineseDescription("应用描述")
+    private String remark;
 
     /**
      * 应用菜单集合
