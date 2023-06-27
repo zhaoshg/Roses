@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
+import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.context.DbOperatorContext;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
@@ -60,6 +61,9 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
     @Resource
     private SysUserOrgService sysUserOrgService;
+
+    @Resource
+    private DbOperatorApi dbOperatorApi;
 
     @Override
     public void add(HrOrganizationRequest hrOrganizationRequest) {
@@ -302,6 +306,15 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         // 根据机构状态查询
         Integer statusFlag = hrOrganizationRequest.getStatusFlag();
         queryWrapper.eq(ObjectUtil.isNotNull(statusFlag), HrOrganization::getStatusFlag, statusFlag);
+
+        // 如果查询条件有orgId，则查询指定机构下的子机构
+        Long orgId = hrOrganizationRequest.getOrgId();
+        if (orgId != null) {
+            // 查询orgId对应的所有子机构，包含本orgId
+            Set<Long> subOrgIdList = dbOperatorApi.findSubListByParentId("hr_organization", "org_pids", "org_id", orgId);
+            subOrgIdList.add(orgId);
+            queryWrapper.nested(i -> i.in(HrOrganization::getOrgId, subOrgIdList));
+        }
 
         // 根据排序正序查询
         queryWrapper.orderByAsc(HrOrganization::getOrgSort);
