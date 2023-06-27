@@ -27,9 +27,6 @@ package cn.stylefeng.roses.kernel.dict.modular.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
-import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
-import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
-import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.dict.api.enums.DictTypeClassEnum;
 import cn.stylefeng.roses.kernel.dict.api.exception.DictException;
 import cn.stylefeng.roses.kernel.dict.api.exception.enums.DictExceptionEnum;
@@ -40,9 +37,7 @@ import cn.stylefeng.roses.kernel.dict.modular.service.DictService;
 import cn.stylefeng.roses.kernel.dict.modular.service.DictTypeService;
 import cn.stylefeng.roses.kernel.pinyin.api.PinYinApi;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
-import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -112,32 +107,13 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, SysDictType
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void editStatus(DictTypeRequest dictTypeRequest) {
-
-        // 如果是系统级字典，只允许管理员操作
-        validateSystemTypeClassOperate(dictTypeRequest);
-
-        // 更新数据
-        SysDictType oldSysDictType = this.querySysDictType(dictTypeRequest);
-        oldSysDictType.setStatusFlag(dictTypeRequest.getStatusFlag());
-        this.updateById(oldSysDictType);
-    }
-
-    @Override
     public SysDictType detail(DictTypeRequest dictTypeRequest) {
-        return this.getOne(this.createWrapper(dictTypeRequest), false);
+        return this.querySysDictType(dictTypeRequest);
     }
 
     @Override
     public List<SysDictType> findList(DictTypeRequest dictTypeRequest) {
         return this.list(this.createWrapper(dictTypeRequest));
-    }
-
-    @Override
-    public PageResult<SysDictType> findPage(DictTypeRequest dictTypeRequest) {
-        Page<SysDictType> page = this.page(PageFactory.defaultPage(), this.createWrapper(dictTypeRequest));
-        return PageResultFactory.createPageResult(page);
     }
 
     /**
@@ -177,17 +153,13 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, SysDictType
     private LambdaQueryWrapper<SysDictType> createWrapper(DictTypeRequest dictTypeRequest) {
         LambdaQueryWrapper<SysDictType> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long dictTypeId = dictTypeRequest.getDictTypeId();
-        String dictTypeCode = dictTypeRequest.getDictTypeCode();
-        String dictTypeName = dictTypeRequest.getDictTypeName();
-
-        // SQL拼接
-        queryWrapper.eq(ObjectUtil.isNotNull(dictTypeId), SysDictType::getDictTypeId, dictTypeId);
-        queryWrapper.eq(ObjectUtil.isNotNull(dictTypeCode), SysDictType::getDictTypeCode, dictTypeCode);
-        queryWrapper.like(ObjectUtil.isNotNull(dictTypeName), SysDictType::getDictTypeName, dictTypeName);
-
-        // 查询未删除的
-        queryWrapper.eq(SysDictType::getDelFlag, YesOrNotEnum.N.getCode());
+        // 根据搜索的名称进行查询字典分类
+        String searchText = dictTypeRequest.getSearchText();
+        if (ObjectUtil.isNotEmpty(searchText)) {
+            queryWrapper.like(SysDictType::getDictTypeName, searchText);
+            queryWrapper.or().like(SysDictType::getDictTypeCode, searchText);
+            queryWrapper.or().like(SysDictType::getDictTypeNamePinyin, searchText);
+        }
 
         return queryWrapper;
     }

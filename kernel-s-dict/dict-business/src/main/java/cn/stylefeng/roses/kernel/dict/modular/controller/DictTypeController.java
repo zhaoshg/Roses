@@ -101,7 +101,7 @@ public class DictTypeController {
      * @author fengshuonan
      * @since 2021/1/13 11:25
      */
-    @GetResource(name = "获取字典类型详情", path = "/dictType/detail", requiredPermission = false)
+    @GetResource(name = "获取字典类型详情", path = "/dictType/detail")
     public ResponseData<SysDictType> detail(@Validated(BaseRequest.detail.class) DictTypeRequest dictTypeRequest) {
         SysDictType detail = this.dictTypeService.detail(dictTypeRequest);
         return new SuccessResponseData<>(detail);
@@ -113,7 +113,7 @@ public class DictTypeController {
      * @author fengshuonan
      * @since 2020/10/30 21:46
      */
-    @GetResource(name = "获取字典类型列表", path = "/dictType/list", requiredPermission = false)
+    @GetResource(name = "获取字典类型列表", path = "/dictType/list")
     public ResponseData<List<SysDictType>> list(DictTypeRequest dictTypeRequest) {
         return new SuccessResponseData<>(dictTypeService.findList(dictTypeRequest));
     }
@@ -124,7 +124,7 @@ public class DictTypeController {
      * @author fengshuonan
      * @since 2021/1/13 11:25
      */
-    @GetResource(name = "获取系统配置字典类型详情", path = "/dictType/getConfigDictTypeDetail", requiredPermission = false)
+    @GetResource(name = "获取系统配置字典类型详情", path = "/dictType/getConfigDictTypeDetail")
     public ResponseData<SysDictType> getConfigDictTypeDetail(DictTypeRequest dictTypeRequest) {
         dictTypeRequest.setDictTypeCode(DictConstants.CONFIG_GROUP_DICT_TYPE_CODE);
         SysDictType detail = this.dictTypeService.detail(dictTypeRequest);
@@ -137,7 +137,7 @@ public class DictTypeController {
      * @author fengshuonan
      * @since 2021/1/13 11:25
      */
-    @GetResource(name = "获取语种字典类型型详情", path = "/dictType/getTranslationDetail", requiredPermission = false)
+    @GetResource(name = "获取语种字典类型型详情", path = "/dictType/getTranslationDetail")
     public ResponseData<SysDictType> getTranslationDetail(DictTypeRequest dictTypeRequest) {
         dictTypeRequest.setDictTypeCode(DictConstants.LANGUAGES_DICT_TYPE_CODE);
         SysDictType detail = this.dictTypeService.detail(dictTypeRequest);
