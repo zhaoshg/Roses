@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 /**
- * 业务中表的宽度控制器
+ * 通用表格列控制配置接口
  *
  * @author fengshuonan
- * @date 2023/02/23 22:21
+ * @since 2023/6/27 23:19
  */
 @RestController
-@ApiResource(name = "业务中表的宽度")
+@ApiResource(name = "通用表格列控制配置接口")
 public class SysTableWidthController {
 
     @Resource
@@ -31,7 +31,7 @@ public class SysTableWidthController {
      * 获取用户针对某个业务的table的列宽配置
      *
      * @author fengshuonan
-     * @date 2023/02/23 22:21
+     * @since 2023/6/27 23:19
      */
     @GetResource(name = "获取用户针对某个业务的table的列宽配置", path = "/sysTableWidth/getUserConfig")
     public ResponseData<SysTableWidth> getUserConfig(
@@ -40,12 +40,12 @@ public class SysTableWidthController {
     }
 
     /**
-     * 添加
+     * 添加用户针对某个table的列属性配置
      *
      * @author fengshuonan
-     * @date 2023/02/23 22:21
+     * @since 2023/6/27 23:23
      */
-    @PostResource(name = "添加", path = "/sysTableWidth/setTableWidth")
+    @PostResource(name = "添加用户针对某个table的列属性配置", path = "/sysTableWidth/setTableWidth")
     public ResponseData<SysTableWidth> setTableWidth(
             @RequestBody @Validated(SysTableWidthRequest.add.class) SysTableWidthRequest sysTableWidthRequest) {
         sysTableWidthService.setTableWidth(sysTableWidthRequest);

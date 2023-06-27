@@ -25,10 +25,10 @@ public class SysTableWidthRequest extends BaseRequest {
     private Long tableWidthId;
 
     /**
-     * 业务标识的编码，例如：PROJECT_TABLE
+     * 业务标识的编码，可以前端自定义，例如：PROJECT_TABLE
      */
     @NotBlank(message = "业务标识的编码不能为空", groups = {detail.class, add.class})
-    @ChineseDescription("业务标识的编码，例如：PROJECT_TABLE")
+    @ChineseDescription("业务标识的编码，可以前端自定义，例如：PROJECT_TABLE")
     private String fieldBusinessCode;
 
     /**
