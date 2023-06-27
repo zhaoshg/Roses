@@ -32,6 +32,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
@@ -142,12 +143,20 @@ public class DictRequest extends BaseRequest {
      * 一般用在更新字典树接口中作为参数
      */
     @ChineseDescription("字典树的整个结构，一般用在更新字典树接口中作为参数")
+    @NotEmpty(message = "字典树的整个结构不能为空", groups = updateTree.class)
     private List<SysDict> totalDictStructure;
 
     /**
      * 获取树形列表
      */
     public @interface treeList {
+
+    }
+
+    /**
+     * 更新树结构
+     */
+    public @interface updateTree {
 
     }
 
