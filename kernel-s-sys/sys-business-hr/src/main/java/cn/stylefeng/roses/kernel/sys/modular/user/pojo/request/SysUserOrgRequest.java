@@ -65,12 +65,6 @@ public class SysUserOrgRequest extends BaseRequest {
     private String mainFlag;
 
     /**
-     * 拓展字段
-     */
-    @ChineseDescription("拓展字段")
-    private String expandField;
-
-    /**
      * 租户id
      */
     @ChineseDescription("租户id")
