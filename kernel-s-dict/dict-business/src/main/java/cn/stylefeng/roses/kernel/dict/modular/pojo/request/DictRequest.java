@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.dict.modular.pojo.request;
 
+import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.validator.api.validators.status.StatusValue;
@@ -33,6 +34,7 @@ import lombok.EqualsAndHashCode;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 字典请求参数封装
@@ -133,6 +135,14 @@ public class DictRequest extends BaseRequest {
      */
     @ChineseDescription("搜索条件：字典类型编码")
     private String dictTypeCode;
+
+    /**
+     * 字典树的整个结构
+     * <p>
+     * 一般用在更新字典树接口中作为参数
+     */
+    @ChineseDescription("字典树的整个结构，一般用在更新字典树接口中作为参数")
+    private List<SysDict> totalDictStructure;
 
     /**
      * 获取树形列表

@@ -132,4 +132,16 @@ public class DictController {
         return new SuccessResponseData<>(this.dictService.findList(dictRequest));
     }
 
+    /**
+     * 更新整个字典树结构，用来更新上下级结构和顺序
+     *
+     * @author fengshuonan
+     * @since 2023/6/27 18:23
+     */
+    @GetResource(name = "更新整个字典树结构，用来更新上下级结构和顺序", path = "/dict/updateDictTree")
+    public ResponseData<List<SysDict>> updateDictTree(DictRequest dictRequest) {
+        this.dictService.updateDictTree(dictRequest);
+        return new SuccessResponseData<>();
+    }
+
 }

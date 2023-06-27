@@ -30,6 +30,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.dict.api.exception.DictException;
 import cn.stylefeng.roses.kernel.dict.api.exception.enums.DictExceptionEnum;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
+import cn.stylefeng.roses.kernel.dict.modular.factory.DictFactory;
 import cn.stylefeng.roses.kernel.dict.modular.mapper.DictMapper;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.TreeDictInfo;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.request.DictRequest;
@@ -39,6 +40,7 @@ import cn.stylefeng.roses.kernel.pinyin.api.PinYinApi;
 import cn.stylefeng.roses.kernel.rule.constants.SymbolConstant;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
+import cn.stylefeng.roses.kernel.rule.tree.buildpids.PidStructureBuildUtil;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -163,6 +165,30 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         LambdaQueryWrapper<SysDict> sysDictLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysDictLambdaQueryWrapper.eq(SysDict::getDictTypeId, dictTypeId);
         this.remove(sysDictLambdaQueryWrapper);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateDictTree(DictRequest dictRequest) {
+
+        // 获取字典树的结构
+        List<SysDict> totalDictStructure = dictRequest.getTotalDictStructure();
+
+        // 调整字典的顺序
+        DictFactory.updateSort(totalDictStructure, 1);
+
+        // 填充树节点的parentId字段
+        DictFactory.fillParentId(-1L, totalDictStructure);
+
+        // 平行展开树形结构，准备从新整理pids
+        List<SysDict> totalDictList = new ArrayList<>();
+        DictFactory.collectTreeTasks(totalDictStructure, totalDictList);
+
+        // 从新整理上下级结构，整理id和pid关系
+        PidStructureBuildUtil.createPidStructure(totalDictList);
+
+        // 更新菜单的sort字段、pid字段和pids字段这3个字段
+        this.updateBatchById(totalDictList);
     }
 
     @Override

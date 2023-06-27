@@ -24,8 +24,10 @@
  */
 package cn.stylefeng.roses.kernel.dict.modular.entity;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseBusinessEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.tree.buildpids.BasePidBuildModel;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -34,6 +36,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 字典实体
@@ -44,7 +47,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "sys_dict", autoResultMap = true)
 @Data
-public class SysDict extends BaseBusinessEntity {
+public class SysDict extends BaseBusinessEntity implements BasePidBuildModel {
 
     private static final long serialVersionUID = 1L;
 
@@ -145,5 +148,33 @@ public class SysDict extends BaseBusinessEntity {
     @TableField(exist = false)
     @ChineseDescription("字典上级的名称（字典有上下级，字典类型没有上下级）")
     private String parentName;
+
+    /**
+     * 字典的下级结构
+     */
+    @TableField(exist = false)
+    @ChineseDescription("字典的下级结构")
+    private List<SysDict> children;
+
+    @Override
+    public String pidBuildNodeId() {
+        if (ObjectUtil.isEmpty(dictId)) {
+            return null;
+        }
+        return dictId.toString();
+    }
+
+    @Override
+    public String pidBuildParentId() {
+        if (ObjectUtil.isEmpty(dictParentId)) {
+            return null;
+        }
+        return dictParentId.toString();
+    }
+
+    @Override
+    public void setPidBuildPidStructure(String pids) {
+        this.dictPids = pids;
+    }
 
 }

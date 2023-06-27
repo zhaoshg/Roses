@@ -103,4 +103,12 @@ public interface DictService extends IService<SysDict>, DictApi {
      */
     void removeByDictTypeId(Long dictTypeId);
 
+    /**
+     * 更新整个字典树结构，用来更新上下级结构和顺序
+     *
+     * @author fengshuonan
+     * @since 2023/6/27 18:24
+     */
+    void updateDictTree(DictRequest dictRequest);
+
 }
