@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -270,6 +271,23 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         return homeCompanyInfo;
     }
 
+    @Override
+    public List<Long> getSubOrgIdListOneLevel(Long orgId) {
+        LambdaQueryWrapper<HrOrganization> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(HrOrganization::getOrgParentId, orgId);
+        wrapper.select(HrOrganization::getOrgId);
+        List<HrOrganization> subOrgList = this.list(wrapper);
+
+        if (ObjectUtil.isEmpty(subOrgList)) {
+            return ListUtil.list(false, orgId);
+        }
+
+        List<Long> subOrgIdList = subOrgList.stream().map(HrOrganization::getOrgId).collect(Collectors.toList());
+        subOrgIdList.add(orgId);
+
+        return subOrgIdList;
+    }
+
     /**
      * 获取信息
      *
@@ -311,9 +329,8 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         Long orgId = hrOrganizationRequest.getOrgId();
         if (orgId != null) {
             // 查询orgId对应的所有子机构，包含本orgId
-            Set<Long> subOrgIdList = dbOperatorApi.findSubListByParentId("hr_organization", "org_pids", "org_id", orgId);
-            subOrgIdList.add(orgId);
-            queryWrapper.nested(i -> i.in(HrOrganization::getOrgId, subOrgIdList));
+            List<Long> subOrgIdListOneLevel = this.getSubOrgIdListOneLevel(orgId);
+            queryWrapper.nested(i -> i.in(HrOrganization::getOrgId, subOrgIdListOneLevel));
         }
 
         // 根据排序正序查询

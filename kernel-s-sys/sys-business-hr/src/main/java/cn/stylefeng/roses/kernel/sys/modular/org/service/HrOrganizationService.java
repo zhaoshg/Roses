@@ -121,4 +121,13 @@ public interface HrOrganizationService extends IService<HrOrganization> {
      */
     HomeCompanyInfo orgStatInfo();
 
+    /**
+     * 获取指定组织机构id的所有子一级的机构
+     *
+     * @return 返回结果包含参数orgId
+     * @author fengshuonan
+     * @since 2023/6/27 14:33
+     */
+    List<Long> getSubOrgIdListOneLevel(Long orgId);
+
 }
