@@ -87,10 +87,10 @@ public class SysDict extends BaseBusinessEntity implements BasePidBuildModel {
     private String dictNamePinyin;
 
     /**
-     * 字典编码
+     * 字典英文编码
      */
     @TableField("dict_encode")
-    @ChineseDescription("字典编码")
+    @ChineseDescription("字典英文编码")
     private String dictEncode;
 
     /**
