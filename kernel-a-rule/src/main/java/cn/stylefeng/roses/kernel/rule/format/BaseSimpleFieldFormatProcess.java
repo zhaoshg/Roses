@@ -20,7 +20,7 @@ public abstract class BaseSimpleFieldFormatProcess implements SimpleFieldFormatP
 
     @Override
     public boolean canFormat(Object originValue) {
-        return MixFieldTypeUtil.whetherAssignClass(originValue, Long.class);
+        return MixFieldTypeUtil.whetherAssignClass(originValue, this.getItemClass());
     }
 
     @Override
