@@ -28,9 +28,9 @@ import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.dict.api.DictApi;
-import cn.stylefeng.roses.kernel.dict.api.constants.DictConstants;
 import cn.stylefeng.roses.kernel.i18n.api.context.TranslationContext;
 import cn.stylefeng.roses.kernel.i18n.api.pojo.request.TranslationRequest;
+import cn.stylefeng.roses.kernel.i18n.modular.constants.I18nConstants;
 import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
@@ -70,7 +70,7 @@ public class UserTranslationController {
      */
     @GetResource(name = "获取所有的多语言类型编码", path = "/i18n/getAllLanguages", requiredPermission = false)
     public ResponseData<List<SimpleDict>> getAllLanguages() {
-        List<SimpleDict> dictDetailsByDictTypeCode = dictApi.getDictDetailsByDictTypeCode(DictConstants.LANGUAGES_DICT_TYPE_CODE);
+        List<SimpleDict> dictDetailsByDictTypeCode = dictApi.getDictDetailsByDictTypeCode(I18nConstants.LANGUAGES_DICT_TYPE_CODE);
         return new SuccessResponseData<>(dictDetailsByDictTypeCode);
     }
 

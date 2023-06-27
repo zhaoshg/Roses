@@ -43,18 +43,8 @@ public interface DictConstants {
     String DICT_EXCEPTION_STEP_CODE = "13";
 
     /**
-     * 默认字典根节点的id
-     */
-    Long DEFAULT_DICT_PARENT_ID = -1L;
-
-    /**
      * 系统配置分组code
      */
     String CONFIG_GROUP_DICT_TYPE_CODE = "config_group";
-
-    /**
-     * 多语言
-     */
-    String LANGUAGES_DICT_TYPE_CODE = "languages";
 
 }
