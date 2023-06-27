@@ -119,7 +119,6 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
 
     @Override
     public void del(DictRequest dictRequest) {
-        // 删除字典
         this.removeById(dictRequest.getDictId());
     }
 
