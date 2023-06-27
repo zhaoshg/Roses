@@ -117,8 +117,12 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
 
         // 2.请求参数转化为实体
         BeanUtil.copyProperties(sysConfigParam, sysConfig);
+
         // 不能修改状态，用修改状态接口修改状态
+        // 不能修改配置的分组和配置的编码
         sysConfig.setStatusFlag(null);
+        sysConfig.setGroupCode(null);
+        sysConfig.setConfigCode(null);
 
         // 3.更新记录
         this.updateById(sysConfig);

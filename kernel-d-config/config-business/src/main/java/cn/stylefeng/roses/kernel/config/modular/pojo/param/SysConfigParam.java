@@ -60,7 +60,7 @@ public class SysConfigParam extends BaseRequest {
     /**
      * 编码
      */
-    @NotBlank(message = "编码不能为空", groups = {add.class, edit.class})
+    @NotBlank(message = "编码不能为空", groups = {add.class})
     @ChineseDescription("编码")
     private String configCode;
 
@@ -94,7 +94,7 @@ public class SysConfigParam extends BaseRequest {
     /**
      * 配置所属分类的编码，来自于字典编码“config_group”字典
      */
-    @NotBlank(message = "配置所属分类的编码不能为空", groups = {add.class, edit.class})
+    @NotBlank(message = "配置所属分类的编码不能为空", groups = {add.class})
     @ChineseDescription("配置所属分类的编码")
     private String groupCode;
 
