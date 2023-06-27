@@ -148,7 +148,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
 
     @Override
     public SysDict detail(DictRequest dictRequest) {
-        return this.getOne(this.createWrapper(dictRequest), false);
+        return this.querySysDict(dictRequest);
     }
 
     @Override
