@@ -35,7 +35,6 @@ import cn.stylefeng.roses.kernel.dict.api.constants.DictConstants;
 import cn.stylefeng.roses.kernel.dict.api.exception.DictException;
 import cn.stylefeng.roses.kernel.dict.api.exception.enums.DictExceptionEnum;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
-import cn.stylefeng.roses.kernel.dict.modular.entity.SysDictType;
 import cn.stylefeng.roses.kernel.dict.modular.mapper.DictMapper;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.TreeDictInfo;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.request.DictRequest;
@@ -78,6 +77,31 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
     private CacheOperatorApi<String> defaultStringCacheOperator;
 
     private static final String CACHE_PREFIX = "dict:";
+
+    @Override
+    public List<TreeDictInfo> getTreeDictList(DictRequest dictRequest) {
+
+        // 获取字典类型下所有的字典
+        List<SysDict> sysDictList = this.findList(dictRequest);
+        if (ObjectUtil.isEmpty(sysDictList)) {
+            return new ArrayList<>();
+        }
+
+        // 构造树节点信息
+        ArrayList<TreeDictInfo> treeDictInfos = new ArrayList<>();
+        for (SysDict sysDict : sysDictList) {
+            TreeDictInfo treeDictInfo = new TreeDictInfo();
+            treeDictInfo.setDictId(sysDict.getDictId());
+            treeDictInfo.setDictParentId(sysDict.getDictParentId());
+            treeDictInfo.setDictCode(sysDict.getDictCode());
+            treeDictInfo.setDictName(sysDict.getDictName());
+            treeDictInfo.setDictSort(sysDict.getDictSort());
+            treeDictInfos.add(treeDictInfo);
+        }
+
+        // 构建菜单树
+        return new DefaultTreeBuildFactory<TreeDictInfo>().doTreeBuild(treeDictInfos);
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -133,38 +157,19 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
 
     @Override
     public List<SysDict> findList(DictRequest dictRequest) {
-        return this.list(this.createWrapper(dictRequest));
+
+        LambdaQueryWrapper<SysDict> wrapper = this.createWrapper(dictRequest);
+
+        // 只查询有用字段
+        wrapper.select(SysDict::getDictName, SysDict::getDictCode, SysDict::getDictSort, SysDict::getDictId, SysDict::getDictParentId);
+
+        return this.list(wrapper);
     }
 
     @Override
     public PageResult<SysDict> findPage(DictRequest dictRequest) {
         Page<SysDict> page = this.page(PageFactory.defaultPage(), this.createWrapper(dictRequest));
         return PageResultFactory.createPageResult(page);
-    }
-
-
-    @Override
-    public List<TreeDictInfo> getTreeDictList(DictRequest dictRequest) {
-
-        // 获取字典类型下所有的字典
-        List<SysDict> sysDictList = this.findList(dictRequest);
-        if (sysDictList == null || sysDictList.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        // 构造树节点信息
-        ArrayList<TreeDictInfo> treeDictInfos = new ArrayList<>();
-        for (SysDict sysDict : sysDictList) {
-            TreeDictInfo treeDictInfo = new TreeDictInfo();
-            treeDictInfo.setDictId(sysDict.getDictId());
-            treeDictInfo.setDictCode(sysDict.getDictCode());
-            treeDictInfo.setDictParentId(sysDict.getDictParentId());
-            treeDictInfo.setDictName(sysDict.getDictName());
-            treeDictInfos.add(treeDictInfo);
-        }
-
-        // 构建菜单树
-        return new DefaultTreeBuildFactory<TreeDictInfo>().doTreeBuild(treeDictInfos);
     }
 
     @Override
@@ -210,7 +215,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
     @Override
     public List<SimpleDict> getDictDetailsByDictTypeCode(String dictTypeCode) {
         DictRequest dictRequest = new DictRequest();
-        dictRequest.setDictTypeCode(dictTypeCode);
+        dictRequest.setDictTypeId(dictTypeCode);
         LambdaQueryWrapper<SysDict> wrapper = createWrapper(dictRequest);
         List<SysDict> dictList = this.list(wrapper);
         if (dictList.isEmpty()) {
@@ -264,21 +269,17 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
     private LambdaQueryWrapper<SysDict> createWrapper(DictRequest dictRequest) {
         LambdaQueryWrapper<SysDict> queryWrapper = new LambdaQueryWrapper<>();
 
-        // 如果传递了dictTypeId，先把dictTypeId转化为字典类型编码
-        if (ObjectUtil.isNotEmpty(dictRequest.getDictTypeId())) {
-            SysDictType sysDictType = dictTypeService.getById(dictRequest.getDictTypeId());
-            if (sysDictType != null) {
-                dictRequest.setDictTypeCode(sysDictType.getDictTypeCode());
-            }
+        // 根据名称或者编码进行查询
+        String searchText = dictRequest.getSearchText();
+        if (ObjectUtil.isNotEmpty(searchText)) {
+            queryWrapper.like(SysDict::getDictName, searchText);
+            queryWrapper.or().like(SysDict::getDictCode, searchText);
+            queryWrapper.or().like(SysDict::getDictNamePinyin, searchText);
         }
 
-        // SQL拼接
-        queryWrapper.eq(ObjectUtil.isNotNull(dictRequest.getDictId()), SysDict::getDictId, dictRequest.getDictId());
-        queryWrapper.eq(StrUtil.isNotBlank(dictRequest.getDictTypeCode()), SysDict::getDictTypeId, dictRequest.getDictTypeCode());
-        queryWrapper.eq(StrUtil.isNotBlank(dictRequest.getDictCode()), SysDict::getDictCode, dictRequest.getDictCode());
-        queryWrapper.like(StrUtil.isNotBlank(dictRequest.getDictName()), SysDict::getDictName, dictRequest.getDictName());
+        // 根据字典类型id查询字典
+        queryWrapper.eq(StrUtil.isNotBlank(dictRequest.getDictTypeId()), SysDict::getDictTypeId, dictRequest.getDictTypeId());
 
-        queryWrapper.ne(SysDict::getDelFlag, YesOrNotEnum.Y.getCode());
         return queryWrapper;
     }
 
@@ -292,7 +293,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
 
         // 检验同字典类型下是否有一样的编码
         LambdaQueryWrapper<SysDict> sysDictLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        sysDictLambdaQueryWrapper.eq(SysDict::getDictTypeId, dictRequest.getDictTypeCode());
+        sysDictLambdaQueryWrapper.eq(SysDict::getDictTypeId, dictRequest.getDictTypeId());
         sysDictLambdaQueryWrapper.eq(SysDict::getDictCode, dictRequest.getDictCode());
         if (editFlag) {
             sysDictLambdaQueryWrapper.ne(SysDict::getDictId, dictRequest.getDictId());
@@ -300,12 +301,12 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         sysDictLambdaQueryWrapper.ne(SysDict::getDelFlag, YesOrNotEnum.Y.getCode());
         long count = this.count(sysDictLambdaQueryWrapper);
         if (count > 0) {
-            throw new DictException(DictExceptionEnum.DICT_CODE_REPEAT, dictRequest.getDictTypeCode(), dictRequest.getDictCode());
+            throw new DictException(DictExceptionEnum.DICT_CODE_REPEAT, dictRequest.getDictTypeId(), dictRequest.getDictCode());
         }
 
         // 检验同字典类型下是否有一样的名称
         LambdaQueryWrapper<SysDict> dictNameWrapper = new LambdaQueryWrapper<>();
-        dictNameWrapper.eq(SysDict::getDictTypeId, dictRequest.getDictTypeCode());
+        dictNameWrapper.eq(SysDict::getDictTypeId, dictRequest.getDictTypeId());
         dictNameWrapper.eq(SysDict::getDictName, dictRequest.getDictName());
         if (editFlag) {
             dictNameWrapper.ne(SysDict::getDictId, dictRequest.getDictId());
@@ -313,7 +314,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         dictNameWrapper.ne(SysDict::getDelFlag, YesOrNotEnum.Y.getCode());
         long dictNameCount = this.count(dictNameWrapper);
         if (dictNameCount > 0) {
-            throw new DictException(DictExceptionEnum.DICT_NAME_REPEAT, dictRequest.getDictTypeCode(), dictRequest.getDictCode());
+            throw new DictException(DictExceptionEnum.DICT_NAME_REPEAT, dictRequest.getDictTypeId(), dictRequest.getDictCode());
         }
 
     }

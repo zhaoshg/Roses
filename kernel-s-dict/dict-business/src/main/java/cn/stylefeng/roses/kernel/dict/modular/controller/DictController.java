@@ -24,8 +24,6 @@
  */
 package cn.stylefeng.roses.kernel.dict.modular.controller;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.dict.api.constants.DictConstants;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.TreeDictInfo;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.request.DictRequest;
@@ -57,6 +55,18 @@ public class DictController {
 
     @Resource
     private DictService dictService;
+
+    /**
+     * 获取树形字典列表
+     *
+     * @author fengshuonan
+     * @since 2023/6/27 16:52
+     */
+    @GetResource(name = "获取树形字典列表", path = "/dict/getDictTreeList")
+    public ResponseData<List<TreeDictInfo>> getDictTreeList(@Validated(DictRequest.treeList.class) DictRequest dictRequest) {
+        List<TreeDictInfo> treeDictList = this.dictService.getTreeDictList(dictRequest);
+        return new SuccessResponseData<>(treeDictList);
+    }
 
     /**
      * 添加字典条目
@@ -103,7 +113,7 @@ public class DictController {
      * @author fengshuonan
      * @since 2020/10/29 16:35
      */
-    @GetResource(name = "获取字典详情", path = "/dict/detail", requiredPermission = false)
+    @GetResource(name = "获取字典详情", path = "/dict/detail")
     public ResponseData<SysDict> detail(@Validated(BaseRequest.detail.class) DictRequest dictRequest) {
         SysDict detail = this.dictService.detail(dictRequest);
         return new SuccessResponseData<>(detail);
@@ -115,47 +125,9 @@ public class DictController {
      * @author fengshuonan
      * @since 2020/10/29 16:35
      */
-    @GetResource(name = "获取字典列表", path = "/dict/list", requiredPermission = false)
+    @GetResource(name = "获取字典列表", path = "/dict/list")
     public ResponseData<List<SysDict>> list(DictRequest dictRequest) {
         return new SuccessResponseData<>(this.dictService.findList(dictRequest));
-    }
-
-    /**
-     * 获取树形字典列表（antdv在用）
-     *
-     * @author fengshuonan
-     * @since 2020/10/29 16:36
-     */
-    @GetResource(name = "获取树形字典列表", path = "/dict/getDictTreeList", requiredPermission = false)
-    public ResponseData<List<TreeDictInfo>> getDictTreeList(@Validated(DictRequest.treeList.class) DictRequest dictRequest) {
-        List<TreeDictInfo> treeDictList = this.dictService.getTreeDictList(dictRequest);
-        return new SuccessResponseData<>(treeDictList);
-    }
-
-    /**
-     * 获取系统配置分组字典列表(分页)（给系统配置界面，左侧获取配置的分类用）
-     *
-     * @author chenjinlong
-     * @since 2021/1/25 11:47
-     */
-    @GetResource(name = "获取系统配置分组字典列表", path = "/dict/getConfigGroupPage", requiredPermission = false)
-    public ResponseData<PageResult<SysDict>> getConfigGroupPage(DictRequest dictRequest) {
-        dictRequest.setDictTypeCode(DictConstants.CONFIG_GROUP_DICT_TYPE_CODE);
-        PageResult<SysDict> page = this.dictService.findPage(dictRequest);
-        return new SuccessResponseData<>(page);
-    }
-
-    /**
-     * 获取多语言字典列表(分页)（给多语言界面，左侧获取多语言的分类用）
-     *
-     * @author chenjinlong
-     * @since 2021/1/25 11:47
-     */
-    @GetResource(name = "获取多语言字典列表", path = "/dict/getLanguagesPage", requiredPermission = false)
-    public ResponseData<PageResult<SysDict>> getLanguagesPage(DictRequest dictRequest) {
-        dictRequest.setDictTypeCode(DictConstants.LANGUAGES_DICT_TYPE_CODE);
-        PageResult<SysDict> page = this.dictService.findPage(dictRequest);
-        return new SuccessResponseData<>(page);
     }
 
 }

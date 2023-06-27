@@ -28,6 +28,7 @@ import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.tree.factory.base.AbstractTreeNode;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -58,6 +59,12 @@ public class TreeDictInfo implements AbstractTreeNode<TreeDictInfo> {
      */
     @ChineseDescription("字典名称")
     private String dictName;
+
+    /**
+     * 排序，带小数点
+     */
+    @ChineseDescription("排序")
+    private BigDecimal dictSort;
 
     /**
      * 上级字典id

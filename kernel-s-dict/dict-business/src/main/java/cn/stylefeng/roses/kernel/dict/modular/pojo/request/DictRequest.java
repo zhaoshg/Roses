@@ -47,14 +47,14 @@ public class DictRequest extends BaseRequest {
     /**
      * 字典id
      */
-    @NotNull(message = "id不能为空", groups = {edit.class, delete.class, detail.class, updateStatus.class})
+    @NotNull(message = "id不能为空", groups = {edit.class, delete.class, detail.class})
     @ChineseDescription("字典id")
     private Long dictId;
 
     /**
      * 字典编码
      */
-    @NotBlank(message = "字典编码不能为空", groups = {add.class, edit.class, validateAvailable.class})
+    @NotBlank(message = "字典编码不能为空", groups = {add.class, edit.class})
     @ChineseDescription("字典编码")
     private String dictCode;
 
@@ -78,11 +78,11 @@ public class DictRequest extends BaseRequest {
     private String dictEncode;
 
     /**
-     * 字典类型编码
+     * 字典类型id
      */
-    @NotBlank(message = "字典类型编码不能为空", groups = {add.class, edit.class, treeList.class, dictZTree.class})
-    @ChineseDescription("字典类型编码")
-    private String dictTypeCode;
+    @NotBlank(message = "字典类型id不能为空", groups = {add.class, edit.class, treeList.class})
+    @ChineseDescription("字典类型id")
+    private String dictTypeId;
 
     /**
      * 字典简称
@@ -109,8 +109,8 @@ public class DictRequest extends BaseRequest {
     /**
      * 状态(1:启用,2:禁用)，参考 StatusEnum
      */
-    @NotNull(message = "状态不能为空", groups = {updateStatus.class})
-    @StatusValue(groups = updateStatus.class)
+    @NotNull(message = "状态不能为空", groups = {add.class, edit.class})
+    @StatusValue(groups = {add.class, edit.class})
     @ChineseDescription("状态")
     private Integer statusFlag;
 
@@ -128,29 +128,9 @@ public class DictRequest extends BaseRequest {
     private String dictPids;
 
     /**
-     * 字典类型id，用在作为查询条件
-     */
-    @ChineseDescription("字典类型id")
-    private Long dictTypeId;
-
-    /**
      * 获取树形列表
      */
     public @interface treeList {
-
-    }
-
-    /**
-     * 校验编码是否重复
-     */
-    public @interface validateAvailable {
-
-    }
-
-    /**
-     * 校验ztree必备参数
-     */
-    public @interface dictZTree {
 
     }
 

@@ -42,6 +42,14 @@ import java.util.List;
 public interface DictService extends IService<SysDict>, DictApi {
 
     /**
+     * 获取树形字典列表
+     *
+     * @author fengshuonan
+     * @since 2023/6/27 16:58
+     */
+    List<TreeDictInfo> getTreeDictList(DictRequest dictRequest);
+
+    /**
      * 新增字典
      *
      * @param dictRequest 字典对象
@@ -97,16 +105,6 @@ public interface DictService extends IService<SysDict>, DictApi {
      * @since 2020/10/29 18:48
      */
     PageResult<SysDict> findPage(DictRequest dictRequest);
-
-    /**
-     * 获取树形字典列表（antdv在用）
-     *
-     * @param dictRequest 查询条件
-     * @return 字典信息列表
-     * @author fengshuonan
-     * @since 2020/10/29 18:50
-     */
-    List<TreeDictInfo> getTreeDictList(DictRequest dictRequest);
 
     /**
      * 删除字典类型下的所有字典
