@@ -25,15 +25,14 @@
 package cn.stylefeng.roses.kernel.sys.modular.notice.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
-import cn.stylefeng.roses.kernel.dict.api.serializer.DictValueSerializer;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.annotation.DictCodeFieldFormat;
 import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
 import cn.stylefeng.roses.kernel.sys.api.format.UserNameFormatProcess;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -76,6 +75,7 @@ public class SysNotice extends BaseEntity {
      */
     @TableField(value = "priority_level")
     @ChineseDescription("通知优先级")
+    @DictCodeFieldFormat(dictTypeCode = "priority_level")
     private String priorityLevel;
 
     /**
@@ -112,14 +112,6 @@ public class SysNotice extends BaseEntity {
     @TableField(value = "del_flag", fill = FieldFill.INSERT)
     @ChineseDescription("是否删除：Y-已删除，N-未删除")
     private String delFlag;
-
-    /**
-     * 通知优先级的名称
-     */
-    @JsonSerialize(using = DictValueSerializer.class)
-    public String getPriorityLevelValue() {
-        return "priority_level|" + this.priorityLevel;
-    }
 
     @Override
     @SimpleFieldFormat(processClass = UserNameFormatProcess.class)
