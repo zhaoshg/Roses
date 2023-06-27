@@ -43,7 +43,7 @@ import java.math.BigDecimal;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("sys_dict_type")
+@TableName(value = "sys_dict_type", autoResultMap = true)
 public class SysDictType extends BaseBusinessEntity {
 
     /**

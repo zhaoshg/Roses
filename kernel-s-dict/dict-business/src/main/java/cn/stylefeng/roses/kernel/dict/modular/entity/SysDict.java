@@ -24,9 +24,12 @@
  */
 package cn.stylefeng.roses.kernel.dict.modular.entity;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseBusinessEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -39,9 +42,9 @@ import java.math.BigDecimal;
  * @since 2020/12/26 22:37
  */
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_dict")
+@TableName(value = "sys_dict", autoResultMap = true)
 @Data
-public class SysDict extends BaseEntity {
+public class SysDict extends BaseBusinessEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -130,22 +133,17 @@ public class SysDict extends BaseEntity {
     private BigDecimal dictSort;
 
     /**
-     * 是否删除，Y-被删除，N-未删除
-     */
-    @TableField(value = "del_flag", fill = FieldFill.INSERT)
-    @ChineseDescription("是否删除，Y-被删除，N-未删除")
-    private String delFlag;
-
-    /**
      * 字典类型的名称
      */
+    @TableField(exist = false)
     @ChineseDescription("字典类型的名称")
-    private transient String dictTypeName;
+    private String dictTypeName;
 
     /**
      * 字典上级的名称（字典有上下级，字典类型没有上下级）
      */
+    @TableField(exist = false)
     @ChineseDescription("字典上级的名称（字典有上下级，字典类型没有上下级）")
-    private transient String parentName;
+    private String parentName;
 
 }
