@@ -6,8 +6,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.Map;
 
 /**
  * 用户组织机构关联实例类
@@ -15,7 +18,7 @@ import lombok.EqualsAndHashCode;
  * @author fengshuonan
  * @date 2023/06/10 21:26
  */
-@TableName("sys_user_org")
+@TableName(value = "sys_user_org", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SysUserOrg extends BaseEntity {
@@ -72,10 +75,9 @@ public class SysUserOrg extends BaseEntity {
     /**
      * 拓展字段
      */
-    @TableField("expand_field")
+    @TableField(value = "expand_field", typeHandler = JacksonTypeHandler.class)
     @ChineseDescription("拓展字段")
-    private String expandField;
-
+    private Map<String, Object> expandField;
     /**
      * 租户id
      */
