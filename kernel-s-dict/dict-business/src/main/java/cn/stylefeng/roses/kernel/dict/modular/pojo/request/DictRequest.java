@@ -104,6 +104,7 @@ public class DictRequest extends BaseRequest {
      * 如果没有上级字典id，则为-1
      */
     @ChineseDescription("上级字典的id")
+    @NotNull(message = "上级字典的id不能为空", groups = {edit.class, add.class})
     private Long dictParentId;
 
     /**
@@ -117,8 +118,8 @@ public class DictRequest extends BaseRequest {
     /**
      * 排序，带小数点
      */
-    @ChineseDescription("排序")
     @NotNull(message = "排序不能为空", groups = {add.class, edit.class})
+    @ChineseDescription("排序")
     private BigDecimal dictSort;
 
     /**

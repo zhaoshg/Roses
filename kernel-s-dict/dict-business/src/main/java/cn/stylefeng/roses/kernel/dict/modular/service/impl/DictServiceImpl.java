@@ -27,11 +27,9 @@ package cn.stylefeng.roses.kernel.dict.modular.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.dict.api.constants.DictConstants;
 import cn.stylefeng.roses.kernel.dict.api.exception.DictException;
 import cn.stylefeng.roses.kernel.dict.api.exception.enums.DictExceptionEnum;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
@@ -41,7 +39,8 @@ import cn.stylefeng.roses.kernel.dict.modular.pojo.request.DictRequest;
 import cn.stylefeng.roses.kernel.dict.modular.service.DictService;
 import cn.stylefeng.roses.kernel.dict.modular.service.DictTypeService;
 import cn.stylefeng.roses.kernel.pinyin.api.PinYinApi;
-import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
+import cn.stylefeng.roses.kernel.rule.constants.SymbolConstant;
+import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
@@ -73,11 +72,6 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
     @Resource
     private DictTypeService dictTypeService;
 
-    @Resource(name = "defaultStringCacheOperator")
-    private CacheOperatorApi<String> defaultStringCacheOperator;
-
-    private static final String CACHE_PREFIX = "dict:";
-
     @Override
     public List<TreeDictInfo> getTreeDictList(DictRequest dictRequest) {
 
@@ -107,26 +101,26 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
     @Transactional(rollbackFor = Exception.class)
     public void add(DictRequest dictRequest) {
 
-        // 校验字典重复
+        // 校验字典重复，同一个字典类型下不能有重复的字典编码或者字典名称
         this.validateRepeat(dictRequest, false);
 
         SysDict sysDict = new SysDict();
         BeanUtil.copyProperties(dictRequest, sysDict);
-        sysDict.setDictParentId(DictConstants.DEFAULT_DICT_PARENT_ID);
-        sysDict.setDictPids(StrUtil.BRACKET_START + DictConstants.DEFAULT_DICT_PARENT_ID + StrUtil.BRACKET_END + StrUtil.COMMA);
-        sysDict.setStatusFlag(StatusEnum.ENABLE.getCode());
+
+        // 填充字典的拼音
         sysDict.setDictNamePinyin(pinYinApi.parseEveryPinyinFirstLetter(sysDict.getDictName()));
+
+        // 填充字典的pids
+        String pids = this.createPids(sysDict.getDictParentId());
+        sysDict.setDictPids(pids);
+
         this.save(sysDict);
     }
 
     @Override
     public void del(DictRequest dictRequest) {
-        SysDict sysDict = this.querySysDict(dictRequest);
-        sysDict.setDelFlag(YesOrNotEnum.Y.getCode());
-        this.updateById(sysDict);
-
-        // 清除缓存中的字典值
-        defaultStringCacheOperator.remove(CACHE_PREFIX + sysDict.getDictTypeId() + "|" + sysDict.getDictCode());
+        // 删除字典
+        this.removeById(dictRequest.getDictId());
     }
 
     @Override
@@ -145,9 +139,6 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         sysDict.setDictNamePinyin(pinYinApi.parseEveryPinyinFirstLetter(sysDict.getDictName()));
 
         this.updateById(sysDict);
-
-        // 清除缓存中的字典值
-        defaultStringCacheOperator.remove(CACHE_PREFIX + sysDict.getDictTypeId() + "|" + sysDict.getDictCode());
     }
 
     @Override
@@ -181,10 +172,6 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
 
     @Override
     public String getDictName(String dictTypeCode, String dictCode) {
-        String dictName = defaultStringCacheOperator.get(CACHE_PREFIX + dictTypeCode + "|" + dictCode);
-        if (StrUtil.isNotEmpty(dictName)) {
-            return dictName;
-        }
         LambdaQueryWrapper<SysDict> sysDictLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysDictLambdaQueryWrapper.eq(SysDict::getDictTypeId, dictTypeCode);
         sysDictLambdaQueryWrapper.eq(SysDict::getDictCode, dictCode);
@@ -203,13 +190,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
             return StrUtil.EMPTY;
         }
 
-        dictName = list.get(0).getDictName();
-        defaultStringCacheOperator.put(CACHE_PREFIX + dictTypeCode + "|" + dictCode, dictName);
-        if (dictName != null) {
-            return dictName;
-        } else {
-            return StrUtil.EMPTY;
-        }
+        return list.get(0).getDictName();
     }
 
     @Override
@@ -298,7 +279,6 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         if (editFlag) {
             sysDictLambdaQueryWrapper.ne(SysDict::getDictId, dictRequest.getDictId());
         }
-        sysDictLambdaQueryWrapper.ne(SysDict::getDelFlag, YesOrNotEnum.Y.getCode());
         long count = this.count(sysDictLambdaQueryWrapper);
         if (count > 0) {
             throw new DictException(DictExceptionEnum.DICT_CODE_REPEAT, dictRequest.getDictTypeId(), dictRequest.getDictCode());
@@ -311,12 +291,38 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         if (editFlag) {
             dictNameWrapper.ne(SysDict::getDictId, dictRequest.getDictId());
         }
-        dictNameWrapper.ne(SysDict::getDelFlag, YesOrNotEnum.Y.getCode());
         long dictNameCount = this.count(dictNameWrapper);
         if (dictNameCount > 0) {
             throw new DictException(DictExceptionEnum.DICT_NAME_REPEAT, dictRequest.getDictTypeId(), dictRequest.getDictCode());
         }
+    }
 
+    /**
+     * 创建字典的pids的值
+     * <p>
+     * 如果pid是顶级节点，pids = 【[-1],】
+     * <p>
+     * 如果pid不是顶级节点，pids = 【父菜单的pids,[pid],】
+     *
+     * @author fengshuonan
+     * @since 2023/6/27 17:24
+     */
+    private String createPids(Long dictParentId) {
+        if (dictParentId.equals(TreeConstants.DEFAULT_PARENT_ID)) {
+            return SymbolConstant.LEFT_SQUARE_BRACKETS + TreeConstants.DEFAULT_PARENT_ID + SymbolConstant.RIGHT_SQUARE_BRACKETS + SymbolConstant.COMMA;
+        } else {
+            //获取父字典
+            LambdaQueryWrapper<SysDict> dictWrapper = new LambdaQueryWrapper<>();
+            dictWrapper.eq(SysDict::getDictId, dictParentId);
+            dictWrapper.select(SysDict::getDictPids);
+            SysDict parentDictInfo = this.getOne(dictWrapper, false);
+            if (parentDictInfo == null) {
+                return SymbolConstant.LEFT_SQUARE_BRACKETS + TreeConstants.DEFAULT_PARENT_ID + SymbolConstant.RIGHT_SQUARE_BRACKETS + SymbolConstant.COMMA;
+            } else {
+                // 组装pids
+                return parentDictInfo.getDictPids() + SymbolConstant.LEFT_SQUARE_BRACKETS + dictParentId + SymbolConstant.RIGHT_SQUARE_BRACKETS + SymbolConstant.COMMA;
+            }
+        }
     }
 
 }
