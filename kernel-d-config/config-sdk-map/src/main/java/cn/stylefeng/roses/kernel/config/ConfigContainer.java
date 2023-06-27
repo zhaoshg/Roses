@@ -83,16 +83,12 @@ public class ConfigContainer implements ConfigApi {
     public <T> T getConfigValue(String configCode, Class<T> clazz) throws ConfigException {
         String configValue = CONFIG_CONTAINER.getStr(configCode);
         if (ObjectUtil.isEmpty(configValue)) {
-            String format = StrUtil.format(ConfigExceptionEnum.CONFIG_NOT_EXIST.getUserTip(), configCode);
-            log.warn(format);
-            throw new ConfigException(ConfigExceptionEnum.CONFIG_NOT_EXIST.getErrorCode(), format);
+            throw new ConfigException(ConfigExceptionEnum.CONFIG_NOT_EXIST, configCode);
         } else {
             try {
                 return Convert.convert(clazz, configValue);
             } catch (Exception e) {
-                String format = StrUtil.format(ConfigExceptionEnum.CONVERT_ERROR.getUserTip(), configCode, configValue, clazz.toString());
-                log.warn(format);
-                throw new ConfigException(ConfigExceptionEnum.CONVERT_ERROR.getErrorCode(), format);
+                throw new ConfigException(ConfigExceptionEnum.CONVERT_ERROR, configCode, configValue, clazz.toString());
             }
         }
     }

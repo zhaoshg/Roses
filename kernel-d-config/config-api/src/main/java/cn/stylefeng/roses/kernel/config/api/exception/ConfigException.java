@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.config.api.exception;
 
+import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.config.api.constants.ConfigConstants;
 import cn.stylefeng.roses.kernel.rule.exception.AbstractExceptionEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
@@ -36,16 +37,12 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
  */
 public class ConfigException extends ServiceException {
 
-    public ConfigException(String errorCode, String userTip) {
-        super(ConfigConstants.CONFIG_MODULE_NAME, errorCode, userTip);
+    public ConfigException(AbstractExceptionEnum exception, Object... params) {
+        super(ConfigConstants.CONFIG_MODULE_NAME, exception.getErrorCode(), StrUtil.format(exception.getUserTip(), params));
     }
 
     public ConfigException(AbstractExceptionEnum exception) {
         super(ConfigConstants.CONFIG_MODULE_NAME, exception);
-    }
-
-    public ConfigException(AbstractExceptionEnum exception, String userTip) {
-        super(ConfigConstants.CONFIG_MODULE_NAME, exception.getErrorCode(), userTip);
     }
 
 }

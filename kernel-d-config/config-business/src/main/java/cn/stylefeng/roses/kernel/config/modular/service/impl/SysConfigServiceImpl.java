@@ -93,8 +93,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         // 1.根据id获取常量
         SysConfig sysConfig = this.querySysConfig(sysConfigParam);
         if (sysConfig == null) {
-            String userTip = StrUtil.format(ConfigExceptionEnum.CONFIG_NOT_EXIST.getUserTip(), "id: " + sysConfigParam.getConfigId());
-            throw new ConfigException(ConfigExceptionEnum.CONFIG_NOT_EXIST, userTip);
+            throw new ConfigException(ConfigExceptionEnum.CONFIG_NOT_EXIST, "id: " + sysConfigParam.getConfigId());
         }
 
         // 2.不能删除系统参数
@@ -102,10 +101,8 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
             throw new ConfigException(ConfigExceptionEnum.CONFIG_SYS_CAN_NOT_DELETE);
         }
 
-        // 3.设置状态为已删除
-        sysConfig.setStatusFlag(StatusEnum.DISABLE.getCode());
-        sysConfig.setDelFlag(YesOrNotEnum.Y.getCode());
-        this.updateById(sysConfig);
+        // 3.逻辑删除
+        this.removeById(sysConfig.getConfigId());
 
         // 4.删除对应context
         ConfigContext.me().deleteConfig(sysConfigParam.getConfigCode());
@@ -280,8 +277,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     public SysConfig querySysConfig(SysConfigParam sysConfigParam) {
         SysConfig sysConfig = this.getById(sysConfigParam.getConfigId());
         if (ObjectUtil.isEmpty(sysConfig) || sysConfig.getDelFlag().equals(YesOrNotEnum.Y.getCode())) {
-            String userTip = StrUtil.format(ConfigExceptionEnum.CONFIG_NOT_EXIST.getUserTip(), "id: " + sysConfigParam.getConfigId());
-            throw new ConfigException(ConfigExceptionEnum.CONFIG_NOT_EXIST, userTip);
+            throw new ConfigException(ConfigExceptionEnum.CONFIG_NOT_EXIST, "id: " + sysConfigParam.getConfigId());
         }
         return sysConfig;
     }
