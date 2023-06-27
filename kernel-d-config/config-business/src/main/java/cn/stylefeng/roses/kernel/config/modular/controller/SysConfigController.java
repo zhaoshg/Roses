@@ -30,7 +30,6 @@ import cn.stylefeng.roses.kernel.config.modular.pojo.InitConfigResponse;
 import cn.stylefeng.roses.kernel.config.modular.pojo.param.SysConfigParam;
 import cn.stylefeng.roses.kernel.config.modular.service.SysConfigService;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -50,7 +49,7 @@ import java.util.List;
  * @since 2020/4/13 22:46
  */
 @RestController
-@ApiResource(name = "参数配置控制器", resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "参数配置控制器")
 public class SysConfigController {
 
     @Resource
@@ -132,7 +131,7 @@ public class SysConfigController {
      * @author fengshuonan
      * @since 2021/7/8 17:20
      */
-    @GetResource(name = "获取系统配置是否初始化的标志", path = "/sysConfig/getInitConfigFlag", requiredPermission = false)
+    @GetResource(name = "获取系统配置是否初始化的标志", path = "/sysConfig/getInitConfigFlag")
     public ResponseData<Boolean> getInitConfigFlag() {
         return new SuccessResponseData<>(sysConfigService.getInitConfigFlag());
     }
@@ -143,7 +142,7 @@ public class SysConfigController {
      * @author fengshuonan
      * @since 2021/7/8 16:36
      */
-    @PostResource(name = "初始化系统配置参数，用在系统第一次登录时", path = "/sysConfig/initConfig", requiredPermission = false)
+    @PostResource(name = "初始化系统配置参数，用在系统第一次登录时", path = "/sysConfig/initConfig")
     public ResponseData<?> initConfig(@RequestBody ConfigInitRequest configInitRequest) {
         sysConfigService.initConfig(configInitRequest);
         return new SuccessResponseData<>();
@@ -166,7 +165,7 @@ public class SysConfigController {
      * @author fengshuonan
      * @since 2021/7/8 16:36
      */
-    @GetResource(name = "获取后端服务部署的地址", path = "/sysConfig/getBackendDeployUrl", requiredLogin = false, requiredPermission = false)
+    @GetResource(name = "获取后端服务部署的地址", path = "/sysConfig/getBackendDeployUrl", requiredLogin = false)
     public ResponseData<String> getBackendDeployUrl() {
         String serverDeployHost = sysConfigService.getServerDeployHost();
         return new SuccessResponseData<>(serverDeployHost);

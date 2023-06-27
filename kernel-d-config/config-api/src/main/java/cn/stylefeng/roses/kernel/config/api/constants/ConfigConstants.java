@@ -47,4 +47,9 @@ public interface ConfigConstants {
      */
     String SYS_SERVER_DEPLOY_HOST = "SYS_SERVER_DEPLOY_HOST";
 
+    /**
+     * 系统配置分组code，字典类型编码
+     */
+    String CONFIG_GROUP_DICT_TYPE_CODE = "config_group";
+
 }

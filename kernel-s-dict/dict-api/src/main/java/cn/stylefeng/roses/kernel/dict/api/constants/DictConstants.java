@@ -42,9 +42,4 @@ public interface DictConstants {
      */
     String DICT_EXCEPTION_STEP_CODE = "13";
 
-    /**
-     * 系统配置分组code
-     */
-    String CONFIG_GROUP_DICT_TYPE_CODE = "config_group";
-
 }
