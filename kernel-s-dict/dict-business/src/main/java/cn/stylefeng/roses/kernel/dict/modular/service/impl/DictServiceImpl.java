@@ -38,7 +38,6 @@ import cn.stylefeng.roses.kernel.dict.modular.service.DictTypeService;
 import cn.stylefeng.roses.kernel.pinyin.api.PinYinApi;
 import cn.stylefeng.roses.kernel.rule.constants.SymbolConstant;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
-import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -128,9 +127,10 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         SysDict sysDict = this.querySysDict(dictRequest);
         BeanUtil.copyProperties(dictRequest, sysDict);
 
-        // 不能修改字典类型和编码
+        // 不能修改字典类型、编码和字典的上下级关系（上下级关系和顺序，通过更新字典树接口更方便）
         sysDict.setDictTypeId(null);
         sysDict.setDictCode(null);
+        sysDict.setDictParentId(null);
 
         // 填充拼音
         sysDict.setDictNamePinyin(pinYinApi.parseEveryPinyinFirstLetter(sysDict.getDictName()));
@@ -167,11 +167,15 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
 
     @Override
     public String getDictName(String dictTypeCode, String dictCode) {
-        LambdaQueryWrapper<SysDict> sysDictLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        sysDictLambdaQueryWrapper.eq(SysDict::getDictTypeId, dictTypeCode);
-        sysDictLambdaQueryWrapper.eq(SysDict::getDictCode, dictCode);
-        sysDictLambdaQueryWrapper.ne(SysDict::getDelFlag, YesOrNotEnum.Y.getCode());
 
+        // 获取字典类型编码对应的字典类型id
+        Long dictTypeId = dictTypeService.getDictTypeIdByDictTypeCode(dictTypeCode);
+
+        // 查询字典类型下有哪些字典
+        LambdaQueryWrapper<SysDict> sysDictLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysDictLambdaQueryWrapper.eq(SysDict::getDictTypeId, dictTypeId);
+        sysDictLambdaQueryWrapper.eq(SysDict::getDictCode, dictCode);
+        sysDictLambdaQueryWrapper.select(SysDict::getDictName);
         List<SysDict> list = this.list(sysDictLambdaQueryWrapper);
 
         // 如果查询不到字典，则返回空串
@@ -190,13 +194,26 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
 
     @Override
     public List<SimpleDict> getDictDetailsByDictTypeCode(String dictTypeCode) {
+
+        // 获取字典类型编码对应的字典类型id
+        Long dictTypeId = dictTypeService.getDictTypeIdByDictTypeCode(dictTypeCode);
+
+        if (dictTypeId == null) {
+            return new ArrayList<>();
+        }
+
+        // 查询字典的列表
         DictRequest dictRequest = new DictRequest();
-        dictRequest.setDictTypeId(dictTypeCode);
-        LambdaQueryWrapper<SysDict> wrapper = createWrapper(dictRequest);
+        dictRequest.setDictTypeId(dictTypeId);
+        LambdaQueryWrapper<SysDict> wrapper = this.createWrapper(dictRequest);
+        wrapper.select(SysDict::getDictId, SysDict::getDictName, SysDict::getDictCode);
         List<SysDict> dictList = this.list(wrapper);
+
         if (dictList.isEmpty()) {
             return new ArrayList<>();
         }
+
+        // 转化成响应结果
         ArrayList<SimpleDict> simpleDictList = new ArrayList<>();
         for (SysDict sysDict : dictList) {
             SimpleDict simpleDict = new SimpleDict();
@@ -204,6 +221,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
             simpleDict.setName(sysDict.getDictName());
             simpleDictList.add(simpleDict);
         }
+
         return simpleDictList;
     }
 
@@ -214,7 +232,15 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
 
     @Override
     public String getDictNameByDictId(Long dictId) {
-        SysDict sysDict = this.getById(dictId);
+        if (dictId == null) {
+            return "";
+        }
+
+        LambdaQueryWrapper<SysDict> sysDictLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysDictLambdaQueryWrapper.eq(SysDict::getDictId, dictId);
+        sysDictLambdaQueryWrapper.select(SysDict::getDictName);
+        SysDict sysDict = this.getOne(sysDictLambdaQueryWrapper, false);
+
         if (sysDict == null) {
             return "";
         } else {
@@ -254,7 +280,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         }
 
         // 根据字典类型id查询字典
-        queryWrapper.eq(StrUtil.isNotBlank(dictRequest.getDictTypeId()), SysDict::getDictTypeId, dictRequest.getDictTypeId());
+        queryWrapper.eq(ObjectUtil.isNotEmpty(dictRequest.getDictTypeId()), SysDict::getDictTypeId, dictRequest.getDictTypeId());
 
         // 根据字典类型编码查询
         if (StrUtil.isNotBlank(dictRequest.getDictTypeCode())) {
@@ -268,6 +294,9 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
                 queryWrapper.eq(SysDict::getDictTypeId, -1L);
             }
         }
+
+        // 排序
+        queryWrapper.orderByAsc(SysDict::getDictSort);
 
         return queryWrapper;
     }

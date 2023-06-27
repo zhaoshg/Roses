@@ -82,7 +82,7 @@ public class DictRequest extends BaseRequest {
      */
     @NotBlank(message = "字典类型id不能为空", groups = {add.class, edit.class, treeList.class})
     @ChineseDescription("字典类型id")
-    private String dictTypeId;
+    private Long dictTypeId;
 
     /**
      * 字典简称
