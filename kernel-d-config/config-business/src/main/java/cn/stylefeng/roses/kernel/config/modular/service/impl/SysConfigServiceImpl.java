@@ -76,6 +76,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         // 1.构造实体
         SysConfig sysConfig = new SysConfig();
         BeanUtil.copyProperties(sysConfigParam, sysConfig);
+
         sysConfig.setStatusFlag(StatusEnum.ENABLE.getCode());
 
         // 2.保存到库中

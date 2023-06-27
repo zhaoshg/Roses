@@ -92,10 +92,10 @@ public class SysConfigParam extends BaseRequest {
     private Integer statusFlag;
 
     /**
-     * 常量所属分类的编码，来自于“常量的分类”字典
+     * 配置所属分类的编码，来自于字典编码“config_group”字典
      */
-    @NotBlank(message = "量所属分类的编码不能为空", groups = {add.class, edit.class})
-    @ChineseDescription("常量所属分类的编码")
+    @NotBlank(message = "配置所属分类的编码不能为空", groups = {add.class, edit.class})
+    @ChineseDescription("配置所属分类的编码")
     private String groupCode;
 
 }
