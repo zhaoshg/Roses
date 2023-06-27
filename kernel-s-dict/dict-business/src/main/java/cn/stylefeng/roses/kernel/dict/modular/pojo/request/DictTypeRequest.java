@@ -48,7 +48,7 @@ public class DictTypeRequest extends BaseRequest {
     /**
      * 字典类型id
      */
-    @NotNull(message = "id不能为空", groups = {edit.class, delete.class, detail.class, updateStatus.class})
+    @NotNull(message = "id不能为空", groups = {edit.class, delete.class, detail.class})
     @ChineseDescription("字典类型id")
     private Long dictTypeId;
 
@@ -56,7 +56,7 @@ public class DictTypeRequest extends BaseRequest {
      * 字典类型： 1-业务类型，2-系统类型，参考 DictTypeClassEnum
      */
     @NotNull(message = "字典类型不能为空", groups = {add.class, edit.class})
-    @ChineseDescription("字典类型")
+    @ChineseDescription("字典类型： 1-业务类型，2-系统类型")
     private Integer dictTypeClass;
 
     /**
@@ -101,8 +101,8 @@ public class DictTypeRequest extends BaseRequest {
     /**
      * 字典类型的状态：1-启用，2-禁用，参考 StatusEnum
      */
-    @NotNull(message = "状态不能为空", groups = {updateStatus.class})
-    @StatusValue(groups = updateStatus.class)
+    @StatusValue(groups = {add.class, edit.class})
+    @NotNull(message = "状态不能为空", groups = {add.class, edit.class})
     @ChineseDescription("字典类型的状态：1-启用，2-禁用")
     private Integer statusFlag;
 

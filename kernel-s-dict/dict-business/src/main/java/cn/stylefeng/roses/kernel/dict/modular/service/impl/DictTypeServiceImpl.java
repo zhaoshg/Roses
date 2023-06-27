@@ -36,6 +36,7 @@ import cn.stylefeng.roses.kernel.dict.api.exception.enums.DictExceptionEnum;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDictType;
 import cn.stylefeng.roses.kernel.dict.modular.mapper.DictTypeMapper;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.request.DictTypeRequest;
+import cn.stylefeng.roses.kernel.dict.modular.service.DictService;
 import cn.stylefeng.roses.kernel.dict.modular.service.DictTypeService;
 import cn.stylefeng.roses.kernel.pinyin.api.PinYinApi;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
@@ -61,6 +62,9 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, SysDictType
     @Resource
     private PinYinApi pinYinApi;
 
+    @Resource
+    private DictService dictService;
+
     @Override
     public void add(DictTypeRequest dictTypeRequest) {
 
@@ -81,10 +85,11 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, SysDictType
         // 如果是系统级字典，只允许管理员操作
         validateSystemTypeClassOperate(dictTypeRequest);
 
-        SysDictType sysDictType = this.querySysDictType(dictTypeRequest);
-        sysDictType.setDelFlag(YesOrNotEnum.Y.getCode());
-        this.updateById(sysDictType);
+        // 删除字典类型
+        this.removeById(dictTypeRequest.getDictTypeId());
 
+        // 删除字典类型下的所有字典
+        dictService.removeByDictTypeId(dictTypeRequest.getDictTypeId());
     }
 
     @Override

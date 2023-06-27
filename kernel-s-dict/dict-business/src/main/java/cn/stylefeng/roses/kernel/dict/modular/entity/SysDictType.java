@@ -24,9 +24,12 @@
  */
 package cn.stylefeng.roses.kernel.dict.modular.entity;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseBusinessEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -41,7 +44,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("sys_dict_type")
-public class SysDictType extends BaseEntity {
+public class SysDictType extends BaseBusinessEntity {
 
     /**
      * 字典类型id
@@ -105,12 +108,5 @@ public class SysDictType extends BaseEntity {
     @TableField(value = "dict_type_sort")
     @ChineseDescription("排序")
     private BigDecimal dictTypeSort;
-
-    /**
-     * 删除标记 Y-已删除，N-未删除，参考 YesOrNotEnum
-     */
-    @TableField(value = "del_flag", fill = FieldFill.INSERT)
-    @ChineseDescription("删除标记")
-    private String delFlag;
 
 }

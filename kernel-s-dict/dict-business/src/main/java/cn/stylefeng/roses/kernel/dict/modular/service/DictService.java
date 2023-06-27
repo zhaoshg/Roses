@@ -108,5 +108,12 @@ public interface DictService extends IService<SysDict>, DictApi {
      */
     List<TreeDictInfo> getTreeDictList(DictRequest dictRequest);
 
+    /**
+     * 删除字典类型下的所有字典
+     *
+     * @author fengshuonan
+     * @since 2023/6/27 16:24
+     */
+    void removeByDictTypeId(Long dictTypeId);
 
 }

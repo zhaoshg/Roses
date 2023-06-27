@@ -168,6 +168,13 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
     }
 
     @Override
+    public void removeByDictTypeId(Long dictTypeId) {
+        LambdaQueryWrapper<SysDict> sysDictLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysDictLambdaQueryWrapper.eq(SysDict::getDictTypeId, dictTypeId);
+        this.remove(sysDictLambdaQueryWrapper);
+    }
+
+    @Override
     public String getDictName(String dictTypeCode, String dictCode) {
         String dictName = defaultStringCacheOperator.get(CACHE_PREFIX + dictTypeCode + "|" + dictCode);
         if (StrUtil.isNotEmpty(dictName)) {
