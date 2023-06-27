@@ -122,6 +122,25 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, SysDictType
         return this.list(wrapper);
     }
 
+    @Override
+    public Long getDictTypeIdByDictTypeCode(String dictTypeCode) {
+
+        if (ObjectUtil.isEmpty(dictTypeCode)) {
+            return null;
+        }
+
+        LambdaQueryWrapper<SysDictType> sysDictTypeLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysDictTypeLambdaQueryWrapper.eq(SysDictType::getDictTypeCode, dictTypeCode);
+        sysDictTypeLambdaQueryWrapper.select(SysDictType::getDictTypeId);
+        SysDictType sysDictType = this.getOne(sysDictTypeLambdaQueryWrapper);
+
+        if (sysDictType == null) {
+            return null;
+        }
+
+        return sysDictType.getDictTypeId();
+    }
+
     /**
      * 校验dictTypeClass是否是系统字典，如果是系统字典只能超级管理员操作
      *

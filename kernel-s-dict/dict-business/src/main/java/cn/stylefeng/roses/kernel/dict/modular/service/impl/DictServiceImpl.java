@@ -27,9 +27,6 @@ package cn.stylefeng.roses.kernel.dict.modular.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
-import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
-import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.dict.api.exception.DictException;
 import cn.stylefeng.roses.kernel.dict.api.exception.enums.DictExceptionEnum;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
@@ -45,7 +42,6 @@ import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -163,12 +159,6 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
     }
 
     @Override
-    public PageResult<SysDict> findPage(DictRequest dictRequest) {
-        Page<SysDict> page = this.page(PageFactory.defaultPage(), this.createWrapper(dictRequest));
-        return PageResultFactory.createPageResult(page);
-    }
-
-    @Override
     public void removeByDictTypeId(Long dictTypeId) {
         LambdaQueryWrapper<SysDict> sysDictLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysDictLambdaQueryWrapper.eq(SysDict::getDictTypeId, dictTypeId);
@@ -265,6 +255,19 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
 
         // 根据字典类型id查询字典
         queryWrapper.eq(StrUtil.isNotBlank(dictRequest.getDictTypeId()), SysDict::getDictTypeId, dictRequest.getDictTypeId());
+
+        // 根据字典类型编码查询
+        if (StrUtil.isNotBlank(dictRequest.getDictTypeCode())) {
+
+            // 根据字典类型编码，获取字典类型的id
+            Long dictTypeId = dictTypeService.getDictTypeIdByDictTypeCode(dictRequest.getDictTypeCode());
+            if (dictTypeId != null) {
+                queryWrapper.eq(SysDict::getDictTypeId, dictTypeId);
+            } else {
+                // 字典类型不存在，则查询一个不存在的字典类型id
+                queryWrapper.eq(SysDict::getDictTypeId, -1L);
+            }
+        }
 
         return queryWrapper;
     }

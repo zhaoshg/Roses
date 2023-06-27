@@ -120,10 +120,12 @@ public class DictController {
     }
 
     /**
-     * 获取字典列表
+     * 获取平铺（展开）结构的字典列表
+     * <p>
+     * 本接口可能会传字典类型id，或者字典类型编码，或者searchText
      *
      * @author fengshuonan
-     * @since 2020/10/29 16:35
+     * @since 2023/6/27 17:36
      */
     @GetResource(name = "获取字典列表", path = "/dict/list")
     public ResponseData<List<SysDict>> list(DictRequest dictRequest) {

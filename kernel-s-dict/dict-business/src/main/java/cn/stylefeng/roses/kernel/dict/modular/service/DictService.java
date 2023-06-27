@@ -24,7 +24,6 @@
  */
 package cn.stylefeng.roses.kernel.dict.modular.service;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.dict.api.DictApi;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.TreeDictInfo;
@@ -87,24 +86,14 @@ public interface DictService extends IService<SysDict>, DictApi {
     SysDict detail(DictRequest dictRequest);
 
     /**
-     * 获取字典列表
+     * 获取平铺（展开）结构的字典列表
+     * <p>
+     * 本接口可能会传字典类型id，或者字典类型编码，或者searchText
      *
-     * @param dictRequest 字典对象
-     * @return 字典列表
      * @author fengshuonan
-     * @since 2020/10/29 18:48
+     * @since 2023/6/27 17:43
      */
     List<SysDict> findList(DictRequest dictRequest);
-
-    /**
-     * 获取字典列表（带分页）
-     *
-     * @param dictRequest 查询条件
-     * @return 带分页的列表
-     * @author fengshuonan
-     * @since 2020/10/29 18:48
-     */
-    PageResult<SysDict> findPage(DictRequest dictRequest);
 
     /**
      * 删除字典类型下的所有字典

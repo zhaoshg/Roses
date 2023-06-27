@@ -85,4 +85,12 @@ public interface DictTypeService extends IService<SysDictType> {
      */
     List<SysDictType> findList(DictTypeRequest dictTypeRequest);
 
+    /**
+     * 通过字典类型的编码，获取到字典类型的id
+     *
+     * @author fengshuonan
+     * @since 2023/6/27 17:39
+     */
+    Long getDictTypeIdByDictTypeCode(String dictTypeCode);
+
 }

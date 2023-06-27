@@ -129,6 +129,12 @@ public class DictRequest extends BaseRequest {
     private String dictPids;
 
     /**
+     * 搜索条件：字典类型编码
+     */
+    @ChineseDescription("搜索条件：字典类型编码")
+    private String dictTypeCode;
+
+    /**
      * 获取树形列表
      */
     public @interface treeList {
