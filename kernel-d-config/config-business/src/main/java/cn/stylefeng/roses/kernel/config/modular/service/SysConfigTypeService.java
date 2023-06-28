@@ -3,6 +3,8 @@ package cn.stylefeng.roses.kernel.config.modular.service;
 import cn.stylefeng.roses.kernel.config.api.constants.ConfigConstants;
 import cn.stylefeng.roses.kernel.config.modular.pojo.param.SysConfigTypeParam;
 import cn.stylefeng.roses.kernel.dict.api.DictApi;
+import cn.stylefeng.roses.kernel.dict.api.DictTypeApi;
+import cn.stylefeng.roses.kernel.dict.api.pojo.SimpleDictAddParam;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,9 @@ public class SysConfigTypeService {
 
     @Resource
     private DictApi dictApi;
+
+    @Resource
+    private DictTypeApi dictTypeApi;
 
     /**
      * 查询系统配置类型列表
@@ -43,6 +48,18 @@ public class SysConfigTypeService {
      */
     public void add(SysConfigTypeParam sysConfigTypeParam) {
 
+        // 查询字典类型
+        Long dictTypeId = dictTypeApi.getDictTypeIdByDictTypeCode(ConfigConstants.CONFIG_GROUP_DICT_TYPE_CODE);
+
+        // 配置类型信息转化为新增字典的参数信息
+        SimpleDictAddParam simpleDictAddParam = new SimpleDictAddParam();
+        simpleDictAddParam.setDictTypeId(dictTypeId);
+        simpleDictAddParam.setDictName(sysConfigTypeParam.getConfigTypeName());
+        simpleDictAddParam.setDictCode(sysConfigTypeParam.getConfigTypeCode());
+        simpleDictAddParam.setDictSort(sysConfigTypeParam.getConfigTypeSort());
+
+        // 新增一个字典
+        dictApi.simpleAddDict(simpleDictAddParam);
     }
 
 }

@@ -29,6 +29,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.dict.api.exception.DictException;
 import cn.stylefeng.roses.kernel.dict.api.exception.enums.DictExceptionEnum;
+import cn.stylefeng.roses.kernel.dict.api.pojo.SimpleDictAddParam;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
 import cn.stylefeng.roses.kernel.dict.modular.factory.DictFactory;
 import cn.stylefeng.roses.kernel.dict.modular.mapper.DictMapper;
@@ -39,6 +40,7 @@ import cn.stylefeng.roses.kernel.dict.modular.service.DictTypeService;
 import cn.stylefeng.roses.kernel.pinyin.api.PinYinApi;
 import cn.stylefeng.roses.kernel.rule.constants.SymbolConstant;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
+import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.rule.tree.buildpids.PidStructureBuildUtil;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
@@ -273,6 +275,20 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         } else {
             return sysDict.getDictName();
         }
+    }
+
+    @Override
+    public void simpleAddDict(SimpleDictAddParam simpleDictAddParam) {
+
+        // 组装添加字典的参数
+        DictRequest dictRequest = new DictRequest();
+        BeanUtil.copyProperties(simpleDictAddParam, dictRequest);
+
+        // 设置为启用
+        dictRequest.setStatusFlag(StatusEnum.ENABLE.getCode());
+
+        // 添加字典
+        this.add(dictRequest);
     }
 
     /**

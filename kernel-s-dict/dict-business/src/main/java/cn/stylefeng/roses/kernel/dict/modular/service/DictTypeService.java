@@ -25,6 +25,7 @@
 package cn.stylefeng.roses.kernel.dict.modular.service;
 
 
+import cn.stylefeng.roses.kernel.dict.api.DictTypeApi;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDictType;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.request.DictTypeRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -37,7 +38,7 @@ import java.util.List;
  * @author fengshuonan
  * @since 2020/10/29 18:54
  */
-public interface DictTypeService extends IService<SysDictType> {
+public interface DictTypeService extends IService<SysDictType>, DictTypeApi {
 
     /**
      * 添加字典类型
@@ -84,13 +85,5 @@ public interface DictTypeService extends IService<SysDictType> {
      * @since 2020/10/29 18:55
      */
     List<SysDictType> findList(DictTypeRequest dictTypeRequest);
-
-    /**
-     * 通过字典类型的编码，获取到字典类型的id
-     *
-     * @author fengshuonan
-     * @since 2023/6/27 17:39
-     */
-    Long getDictTypeIdByDictTypeCode(String dictTypeCode);
 
 }
