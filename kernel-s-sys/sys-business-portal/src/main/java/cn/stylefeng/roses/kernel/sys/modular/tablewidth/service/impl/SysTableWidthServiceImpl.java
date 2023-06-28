@@ -88,12 +88,11 @@ public class SysTableWidthServiceImpl extends ServiceImpl<SysTableWidthMapper, S
         // 先删除用户的配置再保存
         String fieldBusinessCode = sysTableWidthRequest.getFieldBusinessCode();
         Integer fieldType = sysTableWidthRequest.getFieldType();
-        Long userId = sysTableWidthRequest.getUserId();
 
         LambdaQueryWrapper<SysTableWidth> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysTableWidth::getFieldBusinessCode, fieldBusinessCode);
         queryWrapper.eq(SysTableWidth::getFieldType, fieldType);
-        queryWrapper.eq(SysTableWidth::getUserId, userId);
+        queryWrapper.eq(SysTableWidth::getUserId, currentUserId);
         this.remove(queryWrapper);
 
         this.save(sysTableWidth);
