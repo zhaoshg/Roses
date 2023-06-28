@@ -90,6 +90,18 @@ public class SysConfigTypeController {
         return new SuccessResponseData<>();
     }
 
+    /**
+     * 删除配置类型
+     *
+     * @author fengshuonan
+     * @since 2023/6/28 17:00
+     */
+    @PostResource(name = "删除配置类型", path = "/sysConfigType/delete")
+    public ResponseData<?> delete(@RequestBody @Validated(BaseRequest.delete.class) SysConfigTypeParam sysConfigTypeParam) {
+        sysConfigTypeService.delete(sysConfigTypeParam);
+        return new SuccessResponseData<>();
+    }
+
 }
 
 

@@ -102,4 +102,25 @@ public class SysConfigTypeService {
 
     }
 
+    /**
+     * 删除配置类型
+     * <p>
+     * 针对字典类型编码为config_group的字典删除一个条目
+     *
+     * @author fengshuonan
+     * @since 2023/6/28 18:13
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(SysConfigTypeParam sysConfigTypeParam) {
+
+        // 获取字典的编码
+        SimpleDict originDictInfo = dictApi.getDictByDictId(sysConfigTypeParam.getConfigTypeId());
+
+        // 删除字典
+        this.dictApi.deleteByDictId(sysConfigTypeParam.getConfigTypeId());
+
+        // 删除配置类型对应的所有配置
+        this.sysConfigService.delByConfigCode(originDictInfo.getCode());
+    }
+
 }

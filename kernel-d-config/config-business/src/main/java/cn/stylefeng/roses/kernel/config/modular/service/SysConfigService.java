@@ -59,6 +59,15 @@ public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
     void del(SysConfigParam sysConfigParam);
 
     /**
+     * 删除系统参数配置
+     *
+     * @param configGroupCode 字典分类编码
+     * @author fengshuonan
+     * @since 2023/6/28 18:21
+     */
+    void delByConfigCode(String configGroupCode);
+
+    /**
      * 编辑系统参数配置
      *
      * @param sysConfigParam 编辑参数

@@ -110,6 +110,18 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     }
 
     @Override
+    public void delByConfigCode(String configGroupCode) {
+
+        if (ObjectUtil.isEmpty(configGroupCode)) {
+            return;
+        }
+
+        LambdaUpdateWrapper<SysConfig> sysConfigLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        sysConfigLambdaUpdateWrapper.eq(SysConfig::getGroupCode, configGroupCode);
+        this.remove(sysConfigLambdaUpdateWrapper);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void edit(SysConfigParam sysConfigParam) {
 
