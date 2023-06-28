@@ -34,7 +34,8 @@ import java.util.stream.Collectors;
  * @date 2023/06/10 21:23
  */
 @Service
-public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, HrOrgApprover> implements HrOrgApproverService, RemoveOrgCallbackApi {
+public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, HrOrgApprover> implements HrOrgApproverService,
+        RemoveOrgCallbackApi {
 
     @Resource
     private DictApi dictApi;
@@ -47,7 +48,7 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
 
     @Override
     public List<SimpleDict> getApproverTypeList() {
-        return dictApi.getDictDetailsByDictTypeCode(ApproverConstants.APPROVER_TYPE_DICT_TYPE_CODE);
+        return dictApi.getDictDetailsByDictTypeCode(ApproverConstants.APPROVER_TYPE_DICT_TYPE_CODE, null);
     }
 
     @Override
@@ -65,7 +66,8 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
         }
 
         // 将每个类型的用户分组，key是审批组类型，value是该组下的用户
-        Map<Integer, List<HrOrgApprover>> groupingByUsers = orgTotalBindingList.stream().collect(Collectors.groupingBy(HrOrgApprover::getOrgApproverType));
+        Map<Integer, List<HrOrgApprover>> groupingByUsers = orgTotalBindingList.stream()
+                .collect(Collectors.groupingBy(HrOrgApprover::getOrgApproverType));
 
         // 先初始化空的绑定情况列表
         ArrayList<HrOrgApprover> resultList = new ArrayList<>();

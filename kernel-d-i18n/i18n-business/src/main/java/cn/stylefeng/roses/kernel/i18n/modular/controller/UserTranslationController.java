@@ -70,7 +70,7 @@ public class UserTranslationController {
      */
     @GetResource(name = "获取所有的多语言类型编码", path = "/i18n/getAllLanguages", requiredPermission = false)
     public ResponseData<List<SimpleDict>> getAllLanguages() {
-        List<SimpleDict> dictDetailsByDictTypeCode = dictApi.getDictDetailsByDictTypeCode(I18nConstants.LANGUAGES_DICT_TYPE_CODE);
+        List<SimpleDict> dictDetailsByDictTypeCode = dictApi.getDictDetailsByDictTypeCode(I18nConstants.LANGUAGES_DICT_TYPE_CODE, null);
         return new SuccessResponseData<>(dictDetailsByDictTypeCode);
     }
 
@@ -94,7 +94,8 @@ public class UserTranslationController {
      * @since 2021/1/27 22:04
      */
     @PostResource(name = "修改当前用户的多语言配置", path = "/i18n/changeUserTranslation", requiredPermission = false)
-    public ResponseData<?> changeUserTranslation(@RequestBody @Validated(TranslationRequest.changeUserLanguage.class) TranslationRequest translationRequest) {
+    public ResponseData<?> changeUserTranslation(
+            @RequestBody @Validated(TranslationRequest.changeUserLanguage.class) TranslationRequest translationRequest) {
 
         String token = LoginContext.me().getToken();
         LoginUser loginUser = LoginContext.me().getLoginUser();

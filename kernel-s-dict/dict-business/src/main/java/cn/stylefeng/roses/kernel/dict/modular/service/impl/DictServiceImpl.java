@@ -219,7 +219,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
     }
 
     @Override
-    public List<SimpleDict> getDictDetailsByDictTypeCode(String dictTypeCode) {
+    public List<SimpleDict> getDictDetailsByDictTypeCode(String dictTypeCode, String searchText) {
 
         // 获取字典类型编码对应的字典类型id
         Long dictTypeId = dictTypeService.getDictTypeIdByDictTypeCode(dictTypeCode);
@@ -231,6 +231,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         // 查询字典的列表
         DictRequest dictRequest = new DictRequest();
         dictRequest.setDictTypeId(dictTypeId);
+        dictRequest.setSearchText(searchText);
         LambdaQueryWrapper<SysDict> wrapper = this.createWrapper(dictRequest);
         wrapper.select(SysDict::getDictId, SysDict::getDictName, SysDict::getDictCode);
         List<SysDict> dictList = this.list(wrapper);

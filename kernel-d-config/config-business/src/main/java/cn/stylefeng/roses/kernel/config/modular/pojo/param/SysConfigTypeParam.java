@@ -22,57 +22,52 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.dict.api;
+package cn.stylefeng.roses.kernel.config.modular.pojo.param;
 
-import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
+import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.util.List;
+import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
 
 /**
- * 字典模块对外提供的api，方便其他模块直接调用
+ * 系统配置类型请求参数
  *
  * @author fengshuonan
- * @since 2020/10/29 14:45
+ * @since 2023/6/28 17:02
  */
-public interface DictApi {
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class SysConfigTypeParam extends BaseRequest {
 
     /**
-     * 通过字典类型编码和字典编码获取名称
-     *
-     * @param dictTypeCode 字典类型编码
-     * @param dictCode     字典编码
-     * @return 字典名称
-     * @author liuhanqing
-     * @since 2021/1/16 23:18
+     * 配置类型id
      */
-    String getDictName(String dictTypeCode, String dictCode);
+    @NotBlank(message = "配置类型id不能为空", groups = {edit.class, detail.class})
+    @ChineseDescription("配置类型id")
+    private Long configTypeId;
 
     /**
-     * 根据字典类型编码获取所有的字典
-     *
-     * @param dictTypeCode 字典类型编码
-     * @param searchText   查询条件，筛选字典类型下指定字符串的字典，可为空
-     * @return 字典的集合
-     * @author fengshuonan
-     * @since 2021/1/27 22:13
+     * 配置类型名称
      */
-    List<SimpleDict> getDictDetailsByDictTypeCode(String dictTypeCode, String searchText);
+    @NotBlank(message = "配置类型名称不能为空", groups = {add.class, edit.class})
+    @ChineseDescription("配置类型名称")
+    private String configTypeName;
 
     /**
-     * 删除字典，通过dictId
-     *
-     * @param dictId 字典id
-     * @author fengshuonan
-     * @since 2021/1/30 10:03
+     * 配置类型编码
      */
-    void deleteByDictId(Long dictId);
+    @NotBlank(message = "配置类型编码不能为空", groups = {add.class, edit.class})
+    @ChineseDescription("配置类型编码")
+    private String configTypeCode;
 
     /**
-     * 通过字典id获取字典的名称
-     *
-     * @author fengshuonan
-     * @since 2023/5/4 21:25
+     * 配置类型顺序
      */
-    String getDictNameByDictId(Long dictId);
+    @NotBlank(message = "配置类型顺序不能为空", groups = {add.class, edit.class})
+    @ChineseDescription("配置类型顺序")
+    private BigDecimal configTypeSort;
 
 }

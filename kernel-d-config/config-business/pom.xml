@@ -17,6 +17,14 @@
 
     <dependencies>
 
+        <!--字典相关的api-->
+        <!--配置分类需要调用字典相关的接口-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>dict-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!--资源api模块-->
         <!--用在资源控制器，资源扫描上-->
         <dependency>
