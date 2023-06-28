@@ -1,8 +1,10 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
+import cn.stylefeng.roses.kernel.file.api.format.FileUrlFormatProcess;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.annotation.EnumFieldFormat;
+import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
 import cn.stylefeng.roses.kernel.rule.enums.SexEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
@@ -76,6 +78,7 @@ public class SysUser extends BaseExpandFieldEntity {
      */
     @TableField("avatar")
     @ChineseDescription("头像，存的为文件id")
+    @SimpleFieldFormat(processClass = FileUrlFormatProcess.class)
     private Long avatar;
 
     /**
