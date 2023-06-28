@@ -21,7 +21,12 @@ public enum UserExceptionEnum implements AbstractExceptionEnum {
     /**
      * 请求状值为非正确状态值
      */
-    REQUEST_USER_STATUS_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "请求状态值不合法，用户状态参数不合法，参数值：{}");
+    REQUEST_USER_STATUS_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "请求状态值不合法，用户状态参数不合法，参数值：{}"),
+
+    /**
+     * 无法操作，只有超级管理员可以重置密码！
+     */
+    RESET_PASSWORD_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10003", "无法操作，只有超级管理员可以重置密码！");
 
     /**
      * 错误编码
