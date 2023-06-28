@@ -62,4 +62,9 @@ public interface SysConstants {
      */
     Integer SUPER_ADMIN_INIT_LISTENER_SORT = 400;
 
+    /**
+     * 管理员角色的账号
+     */
+    String ADMIN_USER_ACCOUNT = "admin";
+
 }

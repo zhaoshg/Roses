@@ -17,6 +17,7 @@ import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.UserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.expander.SysConfigExpander;
@@ -125,6 +126,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public void edit(SysUserRequest sysUserRequest) {
         SysUser sysUser = this.querySysUser(sysUserRequest);
+
+        // 不能修改admin账号的超级管理员标识和账号
+        if (SysConstants.ADMIN_USER_ACCOUNT.equals(sysUser.getAccount())) {
+            if (!sysUser.getAccount().equals(sysUserRequest.getAccount())) {
+                throw new ServiceException(SysUserExceptionEnum.CANT_CHANGE_ADMIN_ACCOUNT);
+            }
+            if (YesOrNotEnum.N.getCode().equals(sysUserRequest.getSuperAdminFlag())) {
+                throw new ServiceException(SysUserExceptionEnum.CANT_CHANGE_ADMIN_FLAG);
+            }
+        }
+
+        // copy属性
         BeanUtil.copyProperties(sysUserRequest, sysUser);
 
         // 编辑不能修改密码

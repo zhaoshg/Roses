@@ -48,7 +48,17 @@ public enum SysUserExceptionEnum implements AbstractExceptionEnum {
     /**
      * 不能修改超级管理员的角色
      */
-    CANT_CHANGE_ADMIN_ROLE(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10007", "不能修改超级管理员的角色");
+    CANT_CHANGE_ADMIN_ROLE(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10007", "不能修改超级管理员的角色"),
+
+    /**
+     * 不能修改管理员admin的账号
+     */
+    CANT_CHANGE_ADMIN_ACCOUNT(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10008", "不能修改管理员admin的账号"),
+
+    /**
+     * 不能修改管理员admin的超级管理员标识
+     */
+    CANT_CHANGE_ADMIN_FLAG(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10009", "不能修改管理员admin的超级管理员标识");
 
     /**
      * 错误编码
