@@ -4,7 +4,7 @@ import cn.stylefeng.roses.kernel.config.api.constants.ConfigConstants;
 import cn.stylefeng.roses.kernel.config.modular.pojo.param.SysConfigTypeParam;
 import cn.stylefeng.roses.kernel.dict.api.DictApi;
 import cn.stylefeng.roses.kernel.dict.api.DictTypeApi;
-import cn.stylefeng.roses.kernel.dict.api.pojo.SimpleDictAddParam;
+import cn.stylefeng.roses.kernel.dict.api.pojo.SimpleDictUpdateParam;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +25,9 @@ public class SysConfigTypeService {
 
     @Resource
     private DictTypeApi dictTypeApi;
+
+    @Resource
+    private SysConfigService sysConfigService;
 
     /**
      * 查询系统配置类型列表
@@ -52,7 +55,7 @@ public class SysConfigTypeService {
         Long dictTypeId = dictTypeApi.getDictTypeIdByDictTypeCode(ConfigConstants.CONFIG_GROUP_DICT_TYPE_CODE);
 
         // 配置类型信息转化为新增字典的参数信息
-        SimpleDictAddParam simpleDictAddParam = new SimpleDictAddParam();
+        SimpleDictUpdateParam simpleDictAddParam = new SimpleDictUpdateParam();
         simpleDictAddParam.setDictTypeId(dictTypeId);
         simpleDictAddParam.setDictName(sysConfigTypeParam.getConfigTypeName());
         simpleDictAddParam.setDictCode(sysConfigTypeParam.getConfigTypeCode());
@@ -60,6 +63,29 @@ public class SysConfigTypeService {
 
         // 新增一个字典
         dictApi.simpleAddDict(simpleDictAddParam);
+    }
+
+    /**
+     * 更新字典类型
+     *
+     * @author fengshuonan
+     * @since 2023/6/28 17:32
+     */
+    public void edit(SysConfigTypeParam sysConfigTypeParam) {
+
+        // 查询字典类型
+        Long dictTypeId = dictTypeApi.getDictTypeIdByDictTypeCode(ConfigConstants.CONFIG_GROUP_DICT_TYPE_CODE);
+
+        // 配置类型信息转化为编辑字典的参数信息
+        SimpleDictUpdateParam simpleDictAddParam = new SimpleDictUpdateParam();
+        simpleDictAddParam.setDictId(sysConfigTypeParam.getConfigTypeId());
+        simpleDictAddParam.setDictTypeId(dictTypeId);
+        simpleDictAddParam.setDictName(sysConfigTypeParam.getConfigTypeName());
+        simpleDictAddParam.setDictCode(sysConfigTypeParam.getConfigTypeCode());
+        simpleDictAddParam.setDictSort(sysConfigTypeParam.getConfigTypeSort());
+
+        // 编辑字典
+        dictApi.simpleEditDict(simpleDictAddParam);
     }
 
 }

@@ -29,7 +29,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.dict.api.exception.DictException;
 import cn.stylefeng.roses.kernel.dict.api.exception.enums.DictExceptionEnum;
-import cn.stylefeng.roses.kernel.dict.api.pojo.SimpleDictAddParam;
+import cn.stylefeng.roses.kernel.dict.api.pojo.SimpleDictUpdateParam;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
 import cn.stylefeng.roses.kernel.dict.modular.factory.DictFactory;
 import cn.stylefeng.roses.kernel.dict.modular.mapper.DictMapper;
@@ -278,17 +278,28 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
     }
 
     @Override
-    public void simpleAddDict(SimpleDictAddParam simpleDictAddParam) {
+    public void simpleAddDict(SimpleDictUpdateParam simpleDictUpdateParam) {
 
         // 组装添加字典的参数
         DictRequest dictRequest = new DictRequest();
-        BeanUtil.copyProperties(simpleDictAddParam, dictRequest);
+        BeanUtil.copyProperties(simpleDictUpdateParam, dictRequest);
 
         // 设置为启用
         dictRequest.setStatusFlag(StatusEnum.ENABLE.getCode());
 
         // 添加字典
         this.add(dictRequest);
+    }
+
+    @Override
+    public void simpleEditDict(SimpleDictUpdateParam simpleDictUpdateParam) {
+
+        // 组装编辑字典的参数
+        DictRequest dictRequest = new DictRequest();
+        BeanUtil.copyProperties(simpleDictUpdateParam, dictRequest);
+
+        // 更新字典
+        this.edit(dictRequest);
     }
 
     /**

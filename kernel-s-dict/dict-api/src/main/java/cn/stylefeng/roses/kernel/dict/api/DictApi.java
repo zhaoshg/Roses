@@ -24,7 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.dict.api;
 
-import cn.stylefeng.roses.kernel.dict.api.pojo.SimpleDictAddParam;
+import cn.stylefeng.roses.kernel.dict.api.pojo.SimpleDictUpdateParam;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 
 import java.util.List;
@@ -82,6 +82,14 @@ public interface DictApi {
      * @author fengshuonan
      * @since 2023/6/28 17:26
      */
-    void simpleAddDict(SimpleDictAddParam simpleDictAddParam);
+    void simpleAddDict(SimpleDictUpdateParam simpleDictUpdateParam);
+
+    /**
+     * 外部系统调用本模块进行更新字典
+     *
+     * @author fengshuonan
+     * @since 2023/6/28 17:26
+     */
+    void simpleEditDict(SimpleDictUpdateParam simpleDictUpdateParam);
 
 }

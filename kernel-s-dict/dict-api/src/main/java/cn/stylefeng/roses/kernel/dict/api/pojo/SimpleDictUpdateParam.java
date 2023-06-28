@@ -36,7 +36,7 @@ import java.math.BigDecimal;
  * @since 2023/6/28 17:21
  */
 @Data
-public class SimpleDictAddParam {
+public class SimpleDictUpdateParam {
 
     /**
      * 字典id

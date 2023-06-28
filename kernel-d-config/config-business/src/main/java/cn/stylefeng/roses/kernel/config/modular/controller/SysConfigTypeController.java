@@ -27,6 +27,7 @@ package cn.stylefeng.roses.kernel.config.modular.controller;
 import cn.stylefeng.roses.kernel.config.modular.pojo.param.SysConfigTypeParam;
 import cn.stylefeng.roses.kernel.config.modular.service.SysConfigTypeService;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -74,6 +75,18 @@ public class SysConfigTypeController {
     @PostResource(name = "新增配置类型", path = "/sysConfigType/add")
     public ResponseData<?> add(@RequestBody @Validated(SysConfigTypeParam.add.class) SysConfigTypeParam sysConfigTypeParam) {
         sysConfigTypeService.add(sysConfigTypeParam);
+        return new SuccessResponseData<>();
+    }
+
+    /**
+     * 编辑配置类型
+     *
+     * @author fengshuonan
+     * @since 2023/6/28 17:00
+     */
+    @PostResource(name = "编辑配置类型", path = "/sysConfigType/edit")
+    public ResponseData<?> edit(@RequestBody @Validated(BaseRequest.edit.class) SysConfigTypeParam sysConfigTypeParam) {
+        sysConfigTypeService.edit(sysConfigTypeParam);
         return new SuccessResponseData<>();
     }
 
