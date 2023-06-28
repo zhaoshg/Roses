@@ -10,10 +10,12 @@ import cn.stylefeng.roses.kernel.sys.api.SysRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
+import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserRoleExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserRoleMapper;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRoleRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
+import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -38,6 +40,9 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
     @Resource
     private SysRoleServiceApi sysRoleServiceApi;
+
+    @Resource
+    private SysUserService sysUserService;
 
     @Override
     public void add(SysUserRoleRequest sysUserRoleRequest) {
@@ -74,6 +79,12 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void bindRoles(SysUserRoleRequest sysUserRoleRequest) {
+
+        // 不能修改超级管理员用户的角色
+        boolean userSuperAdminFlag = sysUserService.getUserSuperAdminFlag(sysUserRoleRequest.getUserId());
+        if (userSuperAdminFlag) {
+            throw new ServiceException(SysUserExceptionEnum.CANT_CHANGE_ADMIN_ROLE);
+        }
 
         // 清空已有的用户角色绑定
         LambdaQueryWrapper<SysUserRole> wrapper = this.createWrapper(sysUserRoleRequest);

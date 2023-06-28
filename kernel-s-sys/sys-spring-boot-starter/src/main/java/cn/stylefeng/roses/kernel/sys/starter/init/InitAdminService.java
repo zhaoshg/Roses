@@ -65,7 +65,7 @@ public class InitAdminService {
     private SysRoleMenuOptionsService sysRoleMenuOptionsService;
 
     /**
-     * 初始化超级管理员，超级管理员拥有最高权限
+     * 初始化后台管理员，后台管理员拥有最高权限
      *
      * @author fengshuonan
      * @since 2020/12/17 21:57
@@ -73,9 +73,9 @@ public class InitAdminService {
     @Transactional(rollbackFor = Exception.class)
     public void initSuperAdmin() {
 
-        // 找到超级管理员的角色id
+        // 找到后台管理员角色id
         LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(SysRole::getRoleCode, SysConstants.SUPER_ADMIN_ROLE_CODE);
+        queryWrapper.eq(SysRole::getRoleCode, SysConstants.BACKEND_ADMIN_ROLE_CODE);
         queryWrapper.select(SysRole::getRoleId);
         SysRole superAdminRole = sysRoleService.getOne(queryWrapper);
 
@@ -83,7 +83,7 @@ public class InitAdminService {
         List<SysMenu> totalMenuList = sysMenuService.getTotalMenuList();
         List<SysMenuOptions> totalMenuOptionsList = sysMenuOptionsService.getTotalMenuOptionsList();
 
-        // 超级管理员绑定所有的菜单和菜单功能
+        // 后台管理员绑定所有的菜单和菜单功能
         sysRoleMenuService.bindRoleMenus(superAdminRole.getRoleId(), totalMenuList);
         sysRoleMenuOptionsService.bindRoleMenuOptions(superAdminRole.getRoleId(), totalMenuOptionsList);
     }

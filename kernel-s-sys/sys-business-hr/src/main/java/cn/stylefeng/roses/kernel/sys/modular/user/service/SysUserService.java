@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.response.PersonalInfo;
@@ -14,7 +15,7 @@ import java.util.List;
  * @author fengshuonan
  * @date 2023/06/10 21:26
  */
-public interface SysUserService extends IService<SysUser> {
+public interface SysUserService extends IService<SysUser>, SysUserServiceApi {
 
     /**
      * 新增

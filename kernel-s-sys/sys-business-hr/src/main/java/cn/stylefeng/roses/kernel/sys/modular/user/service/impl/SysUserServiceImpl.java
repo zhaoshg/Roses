@@ -12,6 +12,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
 import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
@@ -19,7 +20,9 @@ import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.UserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.expander.SysConfigExpander;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserValidateDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.factory.SysUserCreateFactory;
@@ -37,9 +40,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 系统用户业务实现层
@@ -58,6 +63,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Resource
     private SysUserRoleService sysUserRoleService;
+
+    @Resource
+    private FileInfoApi fileInfoApi;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -180,6 +188,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public void updateStatus(SysUserRequest sysUserRequest) {
 
+        // 如果是将用户禁用，检测判断不能禁用超级管理员用户
+        boolean userSuperAdminFlag = this.getUserSuperAdminFlag(sysUserRequest.getUserId());
+        if (userSuperAdminFlag) {
+            throw new ServiceException(SysUserExceptionEnum.CANT_UPDATE_STATUS);
+        }
+
         // 校验状态传值是否正确
         Integer statusFlag = sysUserRequest.getStatusFlag();
         UserStatusEnum.validateUserStatus(statusFlag);
@@ -288,6 +302,114 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         wrapper.eq(SysUser::getUserId, loginUser.getUserId());
         wrapper.set(SysUser::getAvatar, fileId);
         this.update(wrapper);
+    }
+
+    @Override
+    public SimpleUserDTO getUserInfoByUserId(Long userId) {
+
+        if (ObjectUtil.isEmpty(userId)) {
+            return null;
+        }
+
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
+        sysUserLambdaQueryWrapper.select(SysUser::getRealName, SysUser::getAvatar);
+        SysUser sysUser = this.getOne(sysUserLambdaQueryWrapper);
+        if (sysUser == null) {
+            return null;
+        }
+
+        SimpleUserDTO simpleUserDTO = new SimpleUserDTO();
+        simpleUserDTO.setUserId(userId);
+        simpleUserDTO.setRealName(sysUser.getRealName());
+
+        // 获取头像文件id信息，转化为头像URL
+        Long avatarFileId = sysUser.getAvatar();
+        if (avatarFileId == null) {
+            return null;
+        }
+
+        // 获取头像的访问地址
+        String fileAuthUrl = fileInfoApi.getFileAuthUrl(avatarFileId);
+        simpleUserDTO.setAvatarUrl(fileAuthUrl);
+
+        return simpleUserDTO;
+    }
+
+    @Override
+    public String getUserRealName(Long userId) {
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper.select(SysUser::getRealName);
+        sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
+        SysUser sysUser = this.getOne(sysUserLambdaQueryWrapper);
+        if (sysUser == null) {
+            return "";
+        }
+        return sysUser.getRealName();
+    }
+
+    @Override
+    public UserValidateDTO getUserLoginValidateDTO(String account) {
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper.eq(SysUser::getAccount, account);
+        sysUserLambdaQueryWrapper.select(SysUser::getPassword, SysUser::getPasswordSalt, SysUser::getStatusFlag, SysUser::getUserId);
+        SysUser sysUserServiceOne = this.getOne(sysUserLambdaQueryWrapper, false);
+
+        if (sysUserServiceOne == null) {
+            throw new ServiceException(SysUserExceptionEnum.ACCOUNT_NOT_EXIST);
+        }
+
+        return new UserValidateDTO(sysUserServiceOne.getUserId(), sysUserServiceOne.getPassword(), sysUserServiceOne.getPasswordSalt(),
+                sysUserServiceOne.getStatusFlag());
+    }
+
+    @Override
+    public void updateUserLoginInfo(Long userId, String ip) {
+
+        if (ObjectUtil.isEmpty(userId) || ObjectUtil.isEmpty(ip)) {
+            return;
+        }
+
+        LambdaUpdateWrapper<SysUser> sysUserLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        sysUserLambdaUpdateWrapper.eq(SysUser::getUserId, userId);
+        sysUserLambdaUpdateWrapper.set(SysUser::getLastLoginTime, new Date());
+        sysUserLambdaUpdateWrapper.set(SysUser::getLastLoginIp, ip);
+        this.update(sysUserLambdaUpdateWrapper);
+    }
+
+    @Override
+    public boolean getUserSuperAdminFlag(Long userId) {
+
+        if (ObjectUtil.isEmpty(userId)) {
+            return false;
+        }
+
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
+        sysUserLambdaQueryWrapper.select(SysUser::getSuperAdminFlag);
+        SysUser result = this.getOne(sysUserLambdaQueryWrapper, false);
+
+        if (result == null) {
+            return false;
+        }
+
+        return YesOrNotEnum.Y.getCode().equals(result.getSuperAdminFlag());
+    }
+
+    @Override
+    public List<Long> queryAllUserIdList() {
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper.select(SysUser::getUserId);
+        List<SysUser> list = this.list(sysUserLambdaQueryWrapper);
+        return list.stream().map(SysUser::getUserId).collect(Collectors.toList());
+    }
+
+    @Override
+    public Boolean userExist(Long userId) {
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysUser::getUserId, userId);
+        long count = this.count(wrapper);
+        return count > 0;
     }
 
     /**

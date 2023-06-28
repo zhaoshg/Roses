@@ -48,9 +48,9 @@ public interface SysConstants {
     String DEFAULT_LOGIN_PASSWORD = "Aa123456!";
 
     /**
-     * 超级管理员的角色编码
+     * 后台管理员的角色编码
      */
-    String SUPER_ADMIN_ROLE_CODE = "superAdmin";
+    String BACKEND_ADMIN_ROLE_CODE = "backendAdmin";
 
     /**
      * 默认用户的初始角色编码

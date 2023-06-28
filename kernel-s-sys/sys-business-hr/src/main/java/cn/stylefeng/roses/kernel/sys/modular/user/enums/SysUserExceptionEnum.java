@@ -38,7 +38,17 @@ public enum SysUserExceptionEnum implements AbstractExceptionEnum {
     /**
      * 新密码与原密码相同
      */
-    USER_PWD_REPEAT(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10005", "新密码与原密码相同，请更换新密码");
+    USER_PWD_REPEAT(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10005", "新密码与原密码相同，请更换新密码"),
+
+    /**
+     * 不能修改超级管理员状态
+     */
+    CANT_UPDATE_STATUS(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10006", "不能修改超级管理员状态"),
+
+    /**
+     * 不能修改超级管理员的角色
+     */
+    CANT_CHANGE_ADMIN_ROLE(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10007", "不能修改超级管理员的角色");
 
     /**
      * 错误编码
