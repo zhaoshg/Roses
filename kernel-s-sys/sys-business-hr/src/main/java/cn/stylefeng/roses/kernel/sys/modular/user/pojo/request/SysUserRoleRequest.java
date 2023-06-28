@@ -39,10 +39,10 @@ public class SysUserRoleRequest extends BaseRequest {
     private Long roleId;
 
     /**
-     * 用户id集合，用在批量删除用户的参数
+     * 角色id集合，用在绑定用户角色
      */
-    @ChineseDescription("用户id集合，用在批量删除用户的参数")
-    @NotEmpty(message = "用户id集合不能为空", groups = bindRoles.class)
+    @ChineseDescription("角色id集合，用在绑定用户角色")
+    @NotEmpty(message = "角色id集合不能为空", groups = bindRoles.class)
     private Set<Long> roleIdList;
 
     /**
