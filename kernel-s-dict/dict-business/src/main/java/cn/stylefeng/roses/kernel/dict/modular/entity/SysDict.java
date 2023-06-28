@@ -63,7 +63,7 @@ public class SysDict extends BaseBusinessEntity implements BasePidBuildModel {
      */
     @TableField("dict_type_id")
     @ChineseDescription("字典类型的id")
-    private String dictTypeId;
+    private Long dictTypeId;
 
     /**
      * 字典编码
