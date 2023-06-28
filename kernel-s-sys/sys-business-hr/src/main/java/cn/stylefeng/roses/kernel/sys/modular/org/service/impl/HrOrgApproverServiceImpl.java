@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -61,13 +62,14 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
         LambdaQueryWrapper<HrOrgApprover> hrOrgApproverLambdaQueryWrapper = new LambdaQueryWrapper<>();
         hrOrgApproverLambdaQueryWrapper.eq(HrOrgApprover::getOrgId, hrOrgApproverRequest.getOrgId());
         List<HrOrgApprover> orgTotalBindingList = this.list(hrOrgApproverLambdaQueryWrapper);
-        if (ObjectUtil.isEmpty(orgTotalBindingList)) {
-            return new ArrayList<>();
-        }
-
+        
         // 将每个类型的用户分组，key是审批组类型，value是该组下的用户
-        Map<Integer, List<HrOrgApprover>> groupingByUsers = orgTotalBindingList.stream()
-                .collect(Collectors.groupingBy(HrOrgApprover::getOrgApproverType));
+        Map<Integer, List<HrOrgApprover>> groupingByUsers=new HashMap<>();
+        if (ObjectUtil.isNotEmpty(orgTotalBindingList)) {
+        	 groupingByUsers = orgTotalBindingList.stream()
+                     .collect(Collectors.groupingBy(HrOrgApprover::getOrgApproverType));
+        }
+       
 
         // 先初始化空的绑定情况列表
         ArrayList<HrOrgApprover> resultList = new ArrayList<>();
@@ -77,12 +79,15 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
             // 设置类型
             hrOrgApprover.setOrgApproverType(Convert.toInt(orgApproverType.getCode()));
 
-            // 设置该类型下的审批人列表
-            List<HrOrgApprover> userList = groupingByUsers.get(hrOrgApprover.getOrgApproverType());
-            if (ObjectUtil.isNotEmpty(userList)) {
-                List<ApproverBindUserItem> bindUserItems = OrgApproverFactory.convertUserItem(userList);
-                hrOrgApprover.setBindUserItemList(bindUserItems);
+            if (ObjectUtil.isNotEmpty(orgTotalBindingList)) {
+            	 // 设置该类型下的审批人列表
+                List<HrOrgApprover> userList = groupingByUsers.get(hrOrgApprover.getOrgApproverType());
+                if (ObjectUtil.isNotEmpty(userList)) {
+                    List<ApproverBindUserItem> bindUserItems = OrgApproverFactory.convertUserItem(userList);
+                    hrOrgApprover.setBindUserItemList(bindUserItems);
+                }
             }
+           
 
             resultList.add(hrOrgApprover);
         }
