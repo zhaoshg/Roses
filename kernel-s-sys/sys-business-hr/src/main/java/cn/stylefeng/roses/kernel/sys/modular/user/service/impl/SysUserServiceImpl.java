@@ -134,10 +134,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 查询用户个人信息
         LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysUserLambdaQueryWrapper.eq(SysUser::getUserId, sysUserRequest.getUserId());
-        sysUserLambdaQueryWrapper.select(SysUser::getUserId, SysUser::getAvatar, SysUser::getSuperAdminFlag, SysUser::getRealName,
-                SysUser::getSex, SysUser::getBirthday, SysUser::getEmail, SysUser::getPhone, SysUser::getLastLoginIp,
-                SysUser::getLoginCount, SysUser::getLastLoginTime, SysUser::getStatusFlag, BaseEntity::getCreateTime,
-                BaseEntity::getUpdateTime);
+        sysUserLambdaQueryWrapper.select(SysUser::getUserId, SysUser::getAvatar, SysUser::getAccount, SysUser::getUserSort,
+                SysUser::getSuperAdminFlag, SysUser::getRealName, SysUser::getSex, SysUser::getBirthday, SysUser::getEmail,
+                SysUser::getPhone, SysUser::getLastLoginIp, SysUser::getLoginCount, SysUser::getLastLoginTime, SysUser::getStatusFlag,
+                BaseEntity::getCreateTime, BaseEntity::getUpdateTime);
         SysUser sysUser = this.getOne(sysUserLambdaQueryWrapper, false);
 
         // 获取用户的组织机构信息
