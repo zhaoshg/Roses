@@ -6,7 +6,6 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
-import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.context.DbOperatorContext;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
@@ -20,6 +19,7 @@ import cn.stylefeng.roses.kernel.sys.api.enums.org.OrgTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
+import cn.stylefeng.roses.kernel.sys.modular.org.constants.OrgConstants;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.factory.OrganizationFactory;
 import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrganizationMapper;
@@ -62,9 +62,6 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
     @Resource
     private SysUserOrgService sysUserOrgService;
-
-    @Resource
-    private DbOperatorApi dbOperatorApi;
 
     @Override
     public void add(HrOrganizationRequest hrOrganizationRequest) {
@@ -120,7 +117,35 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
     @Override
     public HrOrganization detail(HrOrganizationRequest hrOrganizationRequest) {
-        return this.queryHrOrganization(hrOrganizationRequest);
+
+        LambdaQueryWrapper<HrOrganization> wrapper = new LambdaQueryWrapper<>();
+
+        wrapper.eq(HrOrganization::getOrgId, hrOrganizationRequest.getOrgId());
+        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgName, HrOrganization::getOrgShortName, HrOrganization::getOrgCode,
+                HrOrganization::getOrgParentId, HrOrganization::getOrgSort, HrOrganization::getOrgType, HrOrganization::getStatusFlag,
+                HrOrganization::getTaxNo, HrOrganization::getRemark);
+
+        HrOrganization hrOrganization = this.getOne(wrapper, false);
+        if (ObjectUtil.isEmpty(hrOrganization)) {
+            throw new ServiceException(OrgExceptionEnum.HR_ORGANIZATION_NOT_EXISTED);
+        }
+
+        // 获取机构的上级机构名称
+        if (TreeConstants.DEFAULT_PARENT_ID.equals(hrOrganization.getOrgParentId())) {
+            hrOrganization.setParentOrgName(OrgConstants.NONE_PARENT_ORG);
+        } else {
+            LambdaQueryWrapper<HrOrganization> parentWrapper = new LambdaQueryWrapper<>();
+            parentWrapper.eq(HrOrganization::getOrgId, hrOrganization.getOrgParentId());
+            parentWrapper.select(HrOrganization::getOrgName);
+            HrOrganization parentInfo = this.getOne(parentWrapper, false);
+            if (parentInfo == null) {
+                hrOrganization.setParentOrgName(OrgConstants.NONE_PARENT_ORG);
+            } else {
+                hrOrganization.setParentOrgName(parentInfo.getOrgName());
+            }
+        }
+
+        return hrOrganization;
     }
 
     @Override

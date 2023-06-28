@@ -133,6 +133,13 @@ public class HrOrganization extends BaseExpandFieldEntity implements AbstractTre
     @ChineseDescription("子节点的集合")
     private List<HrOrganization> children;
 
+    /**
+     * 父级id的名称
+     */
+    @TableField(exist = false)
+    @ChineseDescription("父级id的名称")
+    private String parentOrgName;
+
     @Override
     public String getNodeId() {
         if (this.orgId == null) {
