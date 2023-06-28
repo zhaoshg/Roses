@@ -60,4 +60,12 @@ public class SimpleDict {
     @ChineseDescription("编码")
     private String code;
 
+    public SimpleDict() {
+    }
+
+    public SimpleDict(Long id, String name, String code) {
+        this.id = id;
+        this.name = name;
+        this.code = code;
+    }
 }

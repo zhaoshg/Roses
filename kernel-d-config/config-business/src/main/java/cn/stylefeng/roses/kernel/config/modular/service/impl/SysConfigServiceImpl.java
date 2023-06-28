@@ -251,6 +251,14 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         return initConfigResponse;
     }
 
+    @Override
+    public void updateSysConfigTypeCode(String originTypeCode, String destTypeCode) {
+        LambdaUpdateWrapper<SysConfig> sysConfigLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        sysConfigLambdaUpdateWrapper.eq(SysConfig::getGroupCode, originTypeCode);
+        sysConfigLambdaUpdateWrapper.set(SysConfig::getGroupCode, destTypeCode);
+        this.update(sysConfigLambdaUpdateWrapper);
+    }
+
     /**
      * 获取系统参数配置
      *

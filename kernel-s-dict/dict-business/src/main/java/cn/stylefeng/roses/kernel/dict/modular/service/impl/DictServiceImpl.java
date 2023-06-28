@@ -260,6 +260,24 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
     }
 
     @Override
+    public SimpleDict getDictByDictId(Long dictId) {
+        if (dictId == null) {
+            return new SimpleDict();
+        }
+
+        LambdaQueryWrapper<SysDict> sysDictLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysDictLambdaQueryWrapper.eq(SysDict::getDictId, dictId);
+        sysDictLambdaQueryWrapper.select(SysDict::getDictName, SysDict::getDictCode, SysDict::getDictId);
+        SysDict sysDict = this.getOne(sysDictLambdaQueryWrapper, false);
+
+        if (sysDict == null) {
+            return new SimpleDict();
+        } else {
+            return new SimpleDict(sysDict.getDictId(), sysDict.getDictName(), sysDict.getDictCode());
+        }
+    }
+
+    @Override
     public String getDictNameByDictId(Long dictId) {
         if (dictId == null) {
             return "";

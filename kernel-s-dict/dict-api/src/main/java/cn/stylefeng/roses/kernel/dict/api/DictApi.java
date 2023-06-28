@@ -69,6 +69,14 @@ public interface DictApi {
     void deleteByDictId(Long dictId);
 
     /**
+     * 通过字典id获取字典的名称和编码信息
+     *
+     * @author fengshuonan
+     * @since 2023/5/4 21:25
+     */
+    SimpleDict getDictByDictId(Long dictId);
+
+    /**
      * 通过字典id获取字典的名称
      *
      * @author fengshuonan

@@ -7,6 +7,7 @@ import cn.stylefeng.roses.kernel.dict.api.DictTypeApi;
 import cn.stylefeng.roses.kernel.dict.api.pojo.SimpleDictUpdateParam;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -49,6 +50,7 @@ public class SysConfigTypeService {
      * @author fengshuonan
      * @since 2023/6/28 17:07
      */
+    @Transactional(rollbackFor = Exception.class)
     public void add(SysConfigTypeParam sysConfigTypeParam) {
 
         // 查询字典类型
@@ -66,12 +68,18 @@ public class SysConfigTypeService {
     }
 
     /**
-     * 更新字典类型
+     * 新增系统配置类型
+     * <p>
+     * 针对字典类型编码为config_group的字典修改一个条目
      *
      * @author fengshuonan
      * @since 2023/6/28 17:32
      */
+    @Transactional(rollbackFor = Exception.class)
     public void edit(SysConfigTypeParam sysConfigTypeParam) {
+
+        // 查询旧的字典编码
+        SimpleDict originDictInfo = dictApi.getDictByDictId(sysConfigTypeParam.getConfigTypeId());
 
         // 查询字典类型
         Long dictTypeId = dictTypeApi.getDictTypeIdByDictTypeCode(ConfigConstants.CONFIG_GROUP_DICT_TYPE_CODE);
@@ -86,6 +94,12 @@ public class SysConfigTypeService {
 
         // 编辑字典
         dictApi.simpleEditDict(simpleDictAddParam);
+
+        // 如果更新了字典的编码，则属于该类型下的字典配置编码也都修改
+        if (!originDictInfo.getCode().equals(sysConfigTypeParam.getConfigTypeCode())) {
+            sysConfigService.updateSysConfigTypeCode(originDictInfo.getCode(), sysConfigTypeParam.getConfigTypeCode());
+        }
+
     }
 
 }

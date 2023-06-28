@@ -103,4 +103,14 @@ public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
      */
     InitConfigResponse getInitConfigs();
 
+    /**
+     * 更新所有config所属的字典类型编码
+     *
+     * @param originTypeCode 原有的typeCode
+     * @param destTypeCode   更新后的typeCode
+     * @author fengshuonan
+     * @since 2023/6/28 18:02
+     */
+    void updateSysConfigTypeCode(String originTypeCode, String destTypeCode);
+
 }
