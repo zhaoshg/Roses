@@ -4,6 +4,7 @@ import cn.stylefeng.roses.kernel.config.api.constants.ConfigConstants;
 import cn.stylefeng.roses.kernel.config.modular.pojo.param.SysConfigTypeParam;
 import cn.stylefeng.roses.kernel.dict.api.DictApi;
 import cn.stylefeng.roses.kernel.dict.api.DictTypeApi;
+import cn.stylefeng.roses.kernel.dict.api.pojo.DictDetail;
 import cn.stylefeng.roses.kernel.dict.api.pojo.SimpleDictUpdateParam;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import org.springframework.stereotype.Service;
@@ -79,7 +80,7 @@ public class SysConfigTypeService {
     public void edit(SysConfigTypeParam sysConfigTypeParam) {
 
         // 查询旧的字典编码
-        SimpleDict originDictInfo = dictApi.getDictByDictId(sysConfigTypeParam.getConfigTypeId());
+        DictDetail originDictInfo = dictApi.getDictByDictId(sysConfigTypeParam.getConfigTypeId());
 
         // 查询字典类型
         Long dictTypeId = dictTypeApi.getDictTypeIdByDictTypeCode(ConfigConstants.CONFIG_GROUP_DICT_TYPE_CODE);
@@ -96,8 +97,8 @@ public class SysConfigTypeService {
         dictApi.simpleEditDict(simpleDictAddParam);
 
         // 如果更新了字典的编码，则属于该类型下的字典配置编码也都修改
-        if (!originDictInfo.getCode().equals(sysConfigTypeParam.getConfigTypeCode())) {
-            sysConfigService.updateSysConfigTypeCode(originDictInfo.getCode(), sysConfigTypeParam.getConfigTypeCode());
+        if (!originDictInfo.getDictCode().equals(sysConfigTypeParam.getConfigTypeCode())) {
+            sysConfigService.updateSysConfigTypeCode(originDictInfo.getDictCode(), sysConfigTypeParam.getConfigTypeCode());
         }
 
     }
@@ -114,13 +115,25 @@ public class SysConfigTypeService {
     public void delete(SysConfigTypeParam sysConfigTypeParam) {
 
         // 获取字典的编码
-        SimpleDict originDictInfo = dictApi.getDictByDictId(sysConfigTypeParam.getConfigTypeId());
+        DictDetail originDictInfo = dictApi.getDictByDictId(sysConfigTypeParam.getConfigTypeId());
 
         // 删除字典
         this.dictApi.deleteByDictId(sysConfigTypeParam.getConfigTypeId());
 
         // 删除配置类型对应的所有配置
-        this.sysConfigService.delByConfigCode(originDictInfo.getCode());
+        this.sysConfigService.delByConfigCode(originDictInfo.getDictCode());
+    }
+
+    /**
+     * 获取配置类型详情
+     * <p>
+     * 本质是直接获取字典的详情
+     *
+     * @author fengshuonan
+     * @since 2023/6/28 18:45
+     */
+    public DictDetail detail(SysConfigTypeParam sysConfigTypeParam) {
+        return this.dictApi.getDictByDictId(sysConfigTypeParam.getConfigTypeId());
     }
 
 }

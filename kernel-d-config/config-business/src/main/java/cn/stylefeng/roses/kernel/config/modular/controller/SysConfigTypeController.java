@@ -26,6 +26,7 @@ package cn.stylefeng.roses.kernel.config.modular.controller;
 
 import cn.stylefeng.roses.kernel.config.modular.pojo.param.SysConfigTypeParam;
 import cn.stylefeng.roses.kernel.config.modular.service.SysConfigTypeService;
+import cn.stylefeng.roses.kernel.dict.api.pojo.DictDetail;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
@@ -100,6 +101,18 @@ public class SysConfigTypeController {
     public ResponseData<?> delete(@RequestBody @Validated(BaseRequest.delete.class) SysConfigTypeParam sysConfigTypeParam) {
         sysConfigTypeService.delete(sysConfigTypeParam);
         return new SuccessResponseData<>();
+    }
+
+    /**
+     * 获取配置类型的详情
+     *
+     * @author fengshuonan
+     * @since 2023/6/28 17:00
+     */
+    @GetResource(name = "获取配置类型的详情", path = "/sysConfigType/detail")
+    public ResponseData<DictDetail> detail(@RequestBody @Validated(BaseRequest.detail.class) SysConfigTypeParam sysConfigTypeParam) {
+        DictDetail detail = sysConfigTypeService.detail(sysConfigTypeParam);
+        return new SuccessResponseData<>(detail);
     }
 
 }

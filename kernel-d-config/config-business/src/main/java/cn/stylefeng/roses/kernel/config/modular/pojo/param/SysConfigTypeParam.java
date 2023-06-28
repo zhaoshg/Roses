@@ -45,7 +45,7 @@ public class SysConfigTypeParam extends BaseRequest {
     /**
      * 配置类型id
      */
-    @NotBlank(message = "配置类型id不能为空", groups = {edit.class, delete.class})
+    @NotBlank(message = "配置类型id不能为空", groups = {edit.class, delete.class, detail.class})
     @ChineseDescription("配置类型id")
     private Long configTypeId;
 

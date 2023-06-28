@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.dict.api;
 
+import cn.stylefeng.roses.kernel.dict.api.pojo.DictDetail;
 import cn.stylefeng.roses.kernel.dict.api.pojo.SimpleDictUpdateParam;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 
@@ -74,7 +75,7 @@ public interface DictApi {
      * @author fengshuonan
      * @since 2023/5/4 21:25
      */
-    SimpleDict getDictByDictId(Long dictId);
+    DictDetail getDictByDictId(Long dictId);
 
     /**
      * 通过字典id获取字典的名称

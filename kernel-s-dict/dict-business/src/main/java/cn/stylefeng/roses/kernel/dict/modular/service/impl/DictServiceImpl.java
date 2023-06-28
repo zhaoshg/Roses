@@ -29,6 +29,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.dict.api.exception.DictException;
 import cn.stylefeng.roses.kernel.dict.api.exception.enums.DictExceptionEnum;
+import cn.stylefeng.roses.kernel.dict.api.pojo.DictDetail;
 import cn.stylefeng.roses.kernel.dict.api.pojo.SimpleDictUpdateParam;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
 import cn.stylefeng.roses.kernel.dict.modular.factory.DictFactory;
@@ -260,20 +261,20 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
     }
 
     @Override
-    public SimpleDict getDictByDictId(Long dictId) {
+    public DictDetail getDictByDictId(Long dictId) {
         if (dictId == null) {
-            return new SimpleDict();
+            return new DictDetail();
         }
 
         LambdaQueryWrapper<SysDict> sysDictLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysDictLambdaQueryWrapper.eq(SysDict::getDictId, dictId);
-        sysDictLambdaQueryWrapper.select(SysDict::getDictName, SysDict::getDictCode, SysDict::getDictId);
+        sysDictLambdaQueryWrapper.select(SysDict::getDictName, SysDict::getDictCode, SysDict::getDictId, SysDict::getDictSort);
         SysDict sysDict = this.getOne(sysDictLambdaQueryWrapper, false);
 
         if (sysDict == null) {
-            return new SimpleDict();
+            return new DictDetail();
         } else {
-            return new SimpleDict(sysDict.getDictId(), sysDict.getDictName(), sysDict.getDictCode());
+            return new DictDetail(sysDict.getDictId(), sysDict.getDictName(), sysDict.getDictCode(), sysDict.getDictSort());
         }
     }
 
