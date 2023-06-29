@@ -1,9 +1,9 @@
 package cn.stylefeng.roses.kernel.wrapper.field.dict;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.dict.api.context.DictContext;
 import cn.stylefeng.roses.kernel.rule.enums.FormatTypeEnum;
-import cn.stylefeng.roses.kernel.rule.util.MixFieldTypeUtil;
 import cn.stylefeng.roses.kernel.wrapper.field.util.CommonFormatUtil;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -63,14 +63,10 @@ public class DictCodeFormatSerializer extends JsonSerializer<Object> {
         }
 
         // 判断当前字段类型是否是String类型，如果不是String类型则直接跳过，因为字典编码是String类型的
-        boolean stringFlag = MixFieldTypeUtil.whetherAssignClass(originValue, String.class);
-        if (!stringFlag) {
-            jsonGenerator.writeObject(originValue);
-            return;
-        }
+        String dictCode = StrUtil.toString(originValue);
 
         // 执行转化，根据字典类型编码，以及字典的编码，获取指定字典的中文名称
-        String dictName = DictContext.me().getDictName(this.dictTypeCode, originValue.toString());
+        String dictName = DictContext.me().getDictName(this.dictTypeCode, dictCode);
 
         // 将转化的值，根据策略，进行写入到渲染的json中
         CommonFormatUtil.writeField(formatTypeEnum, originValue, dictName, jsonGenerator);
