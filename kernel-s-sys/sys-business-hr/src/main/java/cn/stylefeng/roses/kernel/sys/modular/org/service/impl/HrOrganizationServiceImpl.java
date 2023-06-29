@@ -215,7 +215,10 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         // 去重
         List<HrOrganization> newNotRepeatList = hrOrganizationList.stream().collect(
                 Collectors.collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(HrOrganization::getOrgId))),
-                        ArrayList::new));
+                        LinkedList::new));
+
+        // 从新排序，根据sort字段排序
+        newNotRepeatList.sort(Comparator.comparing(HrOrganization::getOrgSort));
 
         // 构建树形结构
         return new DefaultTreeBuildFactory<HrOrganization>().doTreeBuild(newNotRepeatList);
@@ -367,11 +370,13 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         // 如果按文本查询条件不为空，则判断组织机构名称、简称、税号、备注是否有匹配
         String searchText = hrOrganizationRequest.getSearchText();
         if (StrUtil.isNotEmpty(searchText)) {
-            queryWrapper.like(HrOrganization::getOrgName, searchText);
-            queryWrapper.or().like(HrOrganization::getOrgShortName, searchText);
-            queryWrapper.or().like(HrOrganization::getTaxNo, searchText);
-            queryWrapper.or().like(HrOrganization::getOrgCode, searchText);
-            queryWrapper.or().like(HrOrganization::getRemark, searchText);
+            queryWrapper.nested(wrap -> {
+                wrap.like(HrOrganization::getOrgName, searchText);
+                wrap.or().like(HrOrganization::getOrgShortName, searchText);
+                wrap.or().like(HrOrganization::getTaxNo, searchText);
+                wrap.or().like(HrOrganization::getOrgCode, searchText);
+                wrap.or().like(HrOrganization::getRemark, searchText);
+            });
         }
 
         // 根据机构状态查询
@@ -383,7 +388,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         if (orgId != null) {
             // 查询orgId对应的所有子机构，包含本orgId
             List<Long> subOrgIdListOneLevel = this.getSubOrgIdListOneLevel(orgId);
-            queryWrapper.nested(i -> i.in(HrOrganization::getOrgId, subOrgIdListOneLevel));
+            queryWrapper.in(HrOrganization::getOrgId, subOrgIdListOneLevel);
         }
 
         // 根据排序正序查询
