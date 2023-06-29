@@ -29,10 +29,7 @@ import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.annotation.DictCodeFieldFormat;
 import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
 import cn.stylefeng.roses.kernel.sys.api.format.UserNameFormatProcess;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -111,6 +108,7 @@ public class SysNotice extends BaseEntity {
      */
     @TableField(value = "del_flag", fill = FieldFill.INSERT)
     @ChineseDescription("是否删除：Y-已删除，N-未删除")
+    @TableLogic
     private String delFlag;
 
     @Override

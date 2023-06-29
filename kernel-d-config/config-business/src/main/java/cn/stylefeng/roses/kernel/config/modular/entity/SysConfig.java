@@ -104,6 +104,7 @@ public class SysConfig extends BaseEntity {
      */
     @TableField(value = "del_flag", fill = FieldFill.INSERT)
     @ChineseDescription("是否删除：Y-被删除，N-未删除")
+    @TableLogic
     private String delFlag;
 
 }

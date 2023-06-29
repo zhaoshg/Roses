@@ -27,6 +27,7 @@ package cn.stylefeng.roses.kernel.db.api.pojo.entity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -56,6 +57,7 @@ public class BaseBusinessEntity extends BaseEntity {
      */
     @TableField(value = "del_flag", fill = FieldFill.INSERT)
     @ChineseDescription("删除标记：Y-已删除，N-未删除")
+    @TableLogic
     private String delFlag;
 
     /**
