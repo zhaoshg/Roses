@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.controller;
 
+import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -36,6 +37,17 @@ public class CommonOrgController {
     @GetResource(name = "通用获取组织机构树", path = "/common/org/tree")
     public ResponseData<List<HrOrganization>> commonOrgTree(HrOrganizationRequest hrOrganizationRequest) {
         return new SuccessResponseData<>(hrOrganizationService.commonOrgTree(hrOrganizationRequest));
+    }
+
+    /**
+     * 分页获取组织机构信息（用在通用选择机构组件中）
+     *
+     * @author fengshuonan
+     * @since 2023/6/29 9:24
+     */
+    @GetResource(name = "分页获取组织机构信息（用在通用选择机构组件中）", path = "/common/org/pageList")
+    public ResponseData<PageResult<HrOrganization>> commonOrgPage(HrOrganizationRequest hrOrganizationRequest) {
+        return new SuccessResponseData<>(hrOrganizationService.commonOrgPage(hrOrganizationRequest));
     }
 
 }

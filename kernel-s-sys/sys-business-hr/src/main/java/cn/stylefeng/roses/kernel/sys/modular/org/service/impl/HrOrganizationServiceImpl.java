@@ -167,6 +167,25 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     @Override
+    public PageResult<HrOrganization> commonOrgPage(HrOrganizationRequest hrOrganizationRequest) {
+
+        LambdaQueryWrapper<HrOrganization> wrapper = createWrapper(hrOrganizationRequest);
+
+        // 只查询需要的字段
+        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgName, HrOrganization::getOrgCode, HrOrganization::getOrgType);
+
+        Page<HrOrganization> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
+
+        // 将每个机构的公司名称返回
+        for (HrOrganization hrOrganization : sysRolePage.getRecords()) {
+            CompanyDeptDTO companyInfo = this.getOrgCompanyInfo(hrOrganization);
+            hrOrganization.setCompanyName(companyInfo.getCompanyName());
+        }
+
+        return PageResultFactory.createPageResult(sysRolePage);
+    }
+
+    @Override
     public List<HrOrganization> commonOrgTree(HrOrganizationRequest hrOrganizationRequest) {
 
         // 根据条件查询组织机构列表

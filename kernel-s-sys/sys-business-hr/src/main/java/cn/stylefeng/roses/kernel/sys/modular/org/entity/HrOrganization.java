@@ -140,6 +140,13 @@ public class HrOrganization extends BaseExpandFieldEntity implements AbstractTre
     @ChineseDescription("父级id的名称")
     private String parentOrgName;
 
+    /**
+     * 组织机构所属公司的名称
+     */
+    @TableField(exist = false)
+    @ChineseDescription("组织机构所属公司的名称")
+    private String companyName;
+
     @Override
     public String getNodeId() {
         if (this.orgId == null) {

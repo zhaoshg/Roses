@@ -82,6 +82,16 @@ public interface HrOrganizationService extends IService<HrOrganization> {
     PageResult<HrOrganization> findPage(HrOrganizationRequest hrOrganizationRequest);
 
     /**
+     * 分页获取组织机构信息（用在通用选择机构组件中）
+     *
+     * @param hrOrganizationRequest 请求参数
+     * @return PageResult<HrOrganization>   返回结果
+     * @author fengshuonan
+     * @date 2023/06/10 21:23
+     */
+    PageResult<HrOrganization> commonOrgPage(HrOrganizationRequest hrOrganizationRequest);
+
+    /**
      * 通用获取组织机构树
      * <p>
      * ps：用在获取用户管理和组织机构管理界面左侧树
