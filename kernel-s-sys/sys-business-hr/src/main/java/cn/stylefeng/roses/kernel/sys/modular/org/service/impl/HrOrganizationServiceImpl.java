@@ -295,6 +295,14 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         // 4. 当前公司下的机构数量
         Long userId = LoginContext.me().getLoginUser().getUserId();
         UserOrgDTO userMainOrgInfo = sysUserOrgService.getUserMainOrgInfo(userId);
+
+        // 当前用户没公司，则直接设置为0
+        if (userMainOrgInfo == null) {
+            homeCompanyInfo.setCurrentCompanyPersonNum(0L);
+            homeCompanyInfo.setCurrentCompanyPersonNum(0L);
+            return homeCompanyInfo;
+        }
+
         Long companyId = userMainOrgInfo.getCompanyId();
 
         // 获取当前公司的所有子公司数量(含当前公司)

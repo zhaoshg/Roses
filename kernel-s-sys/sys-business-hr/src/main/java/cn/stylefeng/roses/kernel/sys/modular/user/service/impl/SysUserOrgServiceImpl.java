@@ -140,6 +140,12 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         queryWrapper.eq(SysUserOrg::getUserId, userId);
         queryWrapper.eq(SysUserOrg::getMainFlag, YesOrNotEnum.Y.getCode());
         List<SysUserOrg> sysUserOrgList = this.list(queryWrapper);
+
+        // 部门为空，直接返回null
+        if (ObjectUtil.isEmpty(sysUserOrgList)) {
+            return null;
+        }
+
         if (sysUserOrgList.size() > 1) {
             throw new SysException(MAIN_FLAG_COUNT_ERROR, userId);
         }
