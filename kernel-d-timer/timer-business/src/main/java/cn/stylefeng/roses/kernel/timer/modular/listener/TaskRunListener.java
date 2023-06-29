@@ -57,14 +57,14 @@ public class TaskRunListener extends ApplicationStartedListener implements Order
 
         // 获取数据库所有开启状态的任务
         SysTimersParam sysTimersParam = new SysTimersParam();
-        sysTimersParam.setDelFlag("N");
         sysTimersParam.setJobStatus(TimerJobStatusEnum.RUNNING.getCode());
         List<SysTimers> list = sysTimersService.findList(sysTimersParam);
 
         // 添加定时任务到调度器
         for (SysTimers sysTimers : list) {
             try {
-                timerExeService.startTimer(String.valueOf(sysTimers.getTimerId()), sysTimers.getCron(), sysTimers.getActionClass(), sysTimers.getParams());
+                timerExeService.startTimer(String.valueOf(sysTimers.getTimerId()), sysTimers.getCron(), sysTimers.getActionClass(),
+                        sysTimers.getParams());
             } catch (Exception exception) {
                 // 遇到错误直接略过这个定时器（可能多个项目公用库）
                 log.error("定时器初始化遇到错误，略过该定时器！", exception);
