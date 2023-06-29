@@ -451,18 +451,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 根据输入内容进行查询
         String searchText = sysUserRequest.getSearchText();
         if (ObjectUtil.isNotEmpty(searchText)) {
-            queryWrapper.like(SysUser::getRealName, searchText);
-            queryWrapper.or().like(SysUser::getAccount, searchText);
-            queryWrapper.or().like(SysUser::getPhone, searchText);
-            queryWrapper.or().like(SysUser::getTel, searchText);
+            queryWrapper.nested(wrap -> {
+                wrap.like(SysUser::getRealName, searchText);
+                wrap.or().like(SysUser::getAccount, searchText);
+                wrap.or().like(SysUser::getPhone, searchText);
+                wrap.or().like(SysUser::getTel, searchText);
+            });
         }
 
         // 根据状态进行查询
         Integer statusFlag = sysUserRequest.getStatusFlag();
         queryWrapper.eq(ObjectUtil.isNotEmpty(statusFlag), SysUser::getStatusFlag, statusFlag);
-
-        // 按用户排序字段排序
-        queryWrapper.orderByAsc(SysUser::getUserSort);
 
         // 如果传递了组织机构id查询条件，则查询对应机构id下有哪些用户，再拼接用户查询条件
         if (ObjectUtil.isNotEmpty(sysUserRequest.getOrgIdCondition())) {
@@ -474,8 +473,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             } else {
                 queryWrapper.in(SysUser::getUserId, orgUserIdList);
             }
-
         }
+
+        // 按用户排序字段排序
+        queryWrapper.orderByAsc(SysUser::getUserSort);
 
         return queryWrapper;
     }
