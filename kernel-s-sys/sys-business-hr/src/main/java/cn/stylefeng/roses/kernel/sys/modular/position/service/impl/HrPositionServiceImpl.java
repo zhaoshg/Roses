@@ -87,7 +87,8 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
         LambdaQueryWrapper<HrPosition> wrapper = this.createWrapper(hrPositionRequest);
 
         // 筛选主要属性
-        wrapper.select(HrPosition::getPositionId, HrPosition::getPositionName, HrPosition::getPositionCode, HrPosition::getRemark, BaseEntity::getCreateTime);
+        wrapper.select(HrPosition::getPositionId, HrPosition::getPositionName, HrPosition::getPositionCode, HrPosition::getRemark,
+                HrPosition::getPositionSort, BaseEntity::getCreateTime);
 
         Page<HrPosition> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
@@ -115,7 +116,8 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
         LambdaQueryWrapper<HrPosition> wrapper = this.createWrapper(hrPositionRequest);
 
         // 筛选主要属性
-        wrapper.select(HrPosition::getPositionId, HrPosition::getPositionName, HrPosition::getPositionCode, HrPosition::getRemark, BaseEntity::getCreateTime);
+        wrapper.select(HrPosition::getPositionId, HrPosition::getPositionName, HrPosition::getPositionCode, HrPosition::getRemark,
+                BaseEntity::getCreateTime);
 
         return this.list(wrapper);
     }
