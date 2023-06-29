@@ -170,8 +170,10 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
         // 根据查询文本查询
         String searchText = sysMenuOptionsRequest.getSearchText();
         if (ObjectUtil.isNotEmpty(searchText)) {
-            queryWrapper.like(SysMenuOptions::getOptionCode, searchText);
-            queryWrapper.or().like(SysMenuOptions::getOptionName, searchText);
+            queryWrapper.nested(wrap -> {
+                wrap.like(SysMenuOptions::getOptionCode, searchText);
+                wrap.or().like(SysMenuOptions::getOptionName, searchText);
+            });
         }
 
         return queryWrapper;
