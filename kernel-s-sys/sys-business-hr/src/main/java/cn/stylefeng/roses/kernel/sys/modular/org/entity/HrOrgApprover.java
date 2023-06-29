@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.org.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.annotation.DictCodeFieldFormat;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.ApproverBindUserItem;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -34,7 +35,9 @@ public class HrOrgApprover extends BaseEntity {
      * 组织审批类型：1-负责人，2-部长，3-体系负责人，4-部门助理，5-资产助理（专员），6-考勤专员，7-HRBP，8-门禁员，9-办公账号员，10-转岗须知员
      */
     @TableField("org_approver_type")
-    @ChineseDescription("组织审批类型：1-负责人，2-部长，3-体系负责人，4-部门助理，5-资产助理（专员），6-考勤专员，7-HRBP，8-门禁员，9-办公账号员，10-转岗须知员")
+    @ChineseDescription(
+            "组织审批类型：1-负责人，2-部长，3-体系负责人，4-部门助理，5-资产助理（专员），6-考勤专员，7-HRBP，8-门禁员，9-办公账号员，10-转岗须知员")
+    @DictCodeFieldFormat(dictTypeCode = "org_approver_type")
     private Integer orgApproverType;
 
     /**
