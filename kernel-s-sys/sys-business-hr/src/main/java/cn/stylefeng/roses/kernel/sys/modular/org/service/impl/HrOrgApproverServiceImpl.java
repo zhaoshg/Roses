@@ -83,6 +83,10 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
                 }
             }
 
+            // 如果没设置上审批人列表，返回空数组
+            if (ObjectUtil.isEmpty(hrOrgApprover.getBindUserItemList())) {
+                hrOrgApprover.setBindUserItemList(new ArrayList<>());
+            }
 
             resultList.add(hrOrgApprover);
         }
