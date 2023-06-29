@@ -97,7 +97,6 @@ public class DatabaseInfo extends BaseEntity {
      */
     @TableField("status_flag")
     @ChineseDescription("状态标识：1-正常，2-无法连接")
-    @TableLogic
     private Integer statusFlag;
 
     /**
