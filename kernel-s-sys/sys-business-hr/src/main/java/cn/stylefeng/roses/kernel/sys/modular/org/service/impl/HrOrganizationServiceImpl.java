@@ -172,7 +172,8 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         LambdaQueryWrapper<HrOrganization> wrapper = createWrapper(hrOrganizationRequest);
 
         // 只查询需要的字段
-        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgName, HrOrganization::getOrgCode, HrOrganization::getOrgType);
+        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgName, HrOrganization::getOrgCode, HrOrganization::getOrgType,
+                HrOrganization::getStatusFlag);
 
         Page<HrOrganization> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
 
