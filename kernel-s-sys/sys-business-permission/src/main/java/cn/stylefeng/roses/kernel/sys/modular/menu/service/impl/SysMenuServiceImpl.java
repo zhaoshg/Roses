@@ -277,7 +277,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         // 查询数据库菜单id对应的应用id集合
         LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(SysMenu::getMenuId, menuIdList);
-        queryWrapper.select(SysMenu::getAppId);
+        queryWrapper.select(SysMenu::getAppId,SysMenu::getMenuId);
         List<SysMenu> queryList = this.list(queryWrapper);
 
         if (ObjectUtil.isEmpty(queryList)) {

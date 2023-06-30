@@ -181,12 +181,15 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         queryWrapper.select(SysMenuOptions::getMenuOptionId, SysMenuOptions::getOptionName);
         List<SysMenuOptions> totalMenuOptions = sysMenuOptionsService.list(queryWrapper);
 
-        // 3. 先删除已经绑定的所有角色和功能的绑定
-        LambdaQueryWrapper<SysRoleMenuOptions> roleMenuOptionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        roleMenuOptionsLambdaQueryWrapper.eq(SysRoleMenuOptions::getRoleId, roleId);
-        roleMenuOptionsLambdaQueryWrapper.in(SysRoleMenuOptions::getMenuOptionId,
-                totalMenuOptions.stream().map(SysMenuOptions::getMenuOptionId).collect(Collectors.toSet()));
-        sysRoleMenuOptionsService.remove(roleMenuOptionsLambdaQueryWrapper);
+        if(ObjectUtil.isNotEmpty(totalMenuOptions)) {
+            // 3. 先删除已经绑定的所有角色和功能的绑定
+            LambdaQueryWrapper<SysRoleMenuOptions> roleMenuOptionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            roleMenuOptionsLambdaQueryWrapper.eq(SysRoleMenuOptions::getRoleId, roleId);
+            roleMenuOptionsLambdaQueryWrapper.in(SysRoleMenuOptions::getMenuOptionId,
+                    totalMenuOptions.stream().map(SysMenuOptions::getMenuOptionId).collect(Collectors.toSet()));
+            sysRoleMenuOptionsService.remove(roleMenuOptionsLambdaQueryWrapper);
+        }
+
 
         // 4. 如果是选中状态，则从新进行这些角色和功能的绑定
         if (roleBindPermissionRequest.getChecked()) {
@@ -200,6 +203,12 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
                 sysRoleMenuOptions.add(roleMenuOptions);
             }
             this.sysRoleMenuOptionsService.saveBatch(sysRoleMenuOptions);
+            this.save(sysRoleMenu);
+        }else {
+        	 LambdaQueryWrapper<SysRoleMenu> roleMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        	 roleMenuLambdaQueryWrapper.eq(SysRoleMenu::getRoleId, sysRoleMenu.getRoleId());
+        	 roleMenuLambdaQueryWrapper.eq(SysRoleMenu::getMenuId, sysRoleMenu.getMenuId());
+             this.remove(roleMenuLambdaQueryWrapper);
         }
 
         // 5. 根据菜单下的资源信息，封装返回结果
