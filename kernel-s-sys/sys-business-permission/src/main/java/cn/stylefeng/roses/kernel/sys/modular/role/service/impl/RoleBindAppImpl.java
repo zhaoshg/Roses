@@ -17,6 +17,9 @@ import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
 import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -28,6 +31,7 @@ import java.util.stream.Collectors;
  * @author fengshuonan
  * @since 2023/6/14 14:13
  */
+@Service
 public class RoleBindAppImpl implements RoleAssignOperateAction {
 
     @Resource
