@@ -99,4 +99,15 @@ public class SysAppController {
         return new SuccessResponseData<>(sysAppService.findPage(sysAppRequest));
     }
 
+    /**
+     * 修改应用状态
+     *
+     * @author liyanjun
+     * @since 2023/6/30 10:58
+     */
+    @PostResource(name = "修改应用状态", path = "/sysApp/updateStatus")
+    public ResponseData<?> updateStatus(@RequestBody @Validated(SysAppRequest.updateStatus.class) SysAppRequest sysAppRequest) {
+    	sysAppService.updateStatus(sysAppRequest);
+        return new SuccessResponseData<>();
+    }
 }

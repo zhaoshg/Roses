@@ -99,5 +99,13 @@ public interface SysAppService extends IService<SysApp> {
      * @since 2023/6/19 22:30
      */
     List<IndexUserAppInfo> getIndexUserAppList(Set<Long> appIds);
+    
+    /**
+     * 修改用户状态
+     *
+     * @author liyanjun
+     * @since 2023/6/30 10:59
+     */
+    void updateStatus(SysAppRequest sysUserRequest);
 
 }

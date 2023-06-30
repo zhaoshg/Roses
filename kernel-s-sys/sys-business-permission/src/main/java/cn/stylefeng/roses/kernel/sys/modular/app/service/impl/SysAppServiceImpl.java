@@ -18,6 +18,7 @@ import cn.stylefeng.roses.kernel.sys.modular.login.pojo.IndexUserAppInfo;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.response.AppGroupDetail;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -199,5 +200,16 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
 
         return queryWrapper;
     }
+
+	@Override
+	public void updateStatus(SysAppRequest sysUserRequest) {
+
+        // 更新应用状态
+        LambdaUpdateWrapper<SysApp> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.set(SysApp::getStatusFlag, sysUserRequest.getStatusFlag());
+        updateWrapper.eq(SysApp::getAppId, sysUserRequest.getAppId());
+        this.update(updateWrapper);
+		
+	}
 
 }
