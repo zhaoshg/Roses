@@ -130,6 +130,11 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
     @Override
     public List<SysMenuOptions> findList(SysMenuOptionsRequest sysMenuOptionsRequest) {
         LambdaQueryWrapper<SysMenuOptions> wrapper = this.createWrapper(sysMenuOptionsRequest);
+
+        // 只查询有用字段
+        wrapper.select(SysMenuOptions::getOptionName, SysMenuOptions::getOptionCode, SysMenuOptions::getMenuId,
+                SysMenuOptions::getMenuOptionId);
+
         return this.list(wrapper);
     }
 

@@ -13,9 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 菜单下的功能操作接口
@@ -37,7 +36,8 @@ public class SysMenuOptionsController {
      * @date 2023/06/15 23:04
      */
     @PostResource(name = "添加菜单功能", path = "/sysMenuOptions/add")
-    public ResponseData<SysMenuOptions> add(@RequestBody @Validated(SysMenuOptionsRequest.add.class) SysMenuOptionsRequest sysMenuOptionsRequest) {
+    public ResponseData<SysMenuOptions> add(
+            @RequestBody @Validated(SysMenuOptionsRequest.add.class) SysMenuOptionsRequest sysMenuOptionsRequest) {
         sysMenuOptionsService.add(sysMenuOptionsRequest);
         return new SuccessResponseData<>();
     }
@@ -79,7 +79,6 @@ public class SysMenuOptionsController {
 
     /**
      * 获取所有功能列表
-     * <p>
      *
      * @author liyanjun
      * @since 2023/7/01 21:23
