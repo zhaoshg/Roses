@@ -201,15 +201,15 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
         return queryWrapper;
     }
 
-	@Override
-	public void updateStatus(SysAppRequest sysUserRequest) {
+    @Override
+    public void updateStatus(SysAppRequest sysUserRequest) {
 
         // 更新应用状态
         LambdaUpdateWrapper<SysApp> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.set(SysApp::getStatusFlag, sysUserRequest.getStatusFlag());
         updateWrapper.eq(SysApp::getAppId, sysUserRequest.getAppId());
         this.update(updateWrapper);
-		
-	}
+
+    }
 
 }

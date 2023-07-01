@@ -107,7 +107,7 @@ public class SysAppController {
      */
     @PostResource(name = "修改应用状态", path = "/sysApp/updateStatus")
     public ResponseData<?> updateStatus(@RequestBody @Validated(SysAppRequest.updateStatus.class) SysAppRequest sysAppRequest) {
-    	sysAppService.updateStatus(sysAppRequest);
+        sysAppService.updateStatus(sysAppRequest);
         return new SuccessResponseData<>();
     }
 }

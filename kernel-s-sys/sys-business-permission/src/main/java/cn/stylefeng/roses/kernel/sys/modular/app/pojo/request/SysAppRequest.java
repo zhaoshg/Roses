@@ -25,7 +25,7 @@ public class SysAppRequest extends BaseRequest {
     /**
      * 主键id
      */
-    @NotNull(message = "主键id不能为空", groups = {edit.class, delete.class,updateStatus.class})
+    @NotNull(message = "主键id不能为空", groups = {edit.class, delete.class, updateStatus.class})
     @ChineseDescription("主键id")
     private Long appId;
 
@@ -67,7 +67,7 @@ public class SysAppRequest extends BaseRequest {
     /**
      * 状态：1-启用，2-禁用
      */
-    @NotNull(message = "状态：1-启用，2-禁用不能为空", groups = {add.class, edit.class,updateStatus.class})
+    @NotNull(message = "状态：1-启用，2-禁用不能为空", groups = {add.class, edit.class, updateStatus.class})
     @ChineseDescription("状态：1-启用，2-禁用")
     private Integer statusFlag;
 
