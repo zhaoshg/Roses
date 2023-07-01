@@ -144,4 +144,15 @@ public class DictController {
         return new SuccessResponseData<>();
     }
 
+    /**
+     * 通用获取中文拼音
+     * <p>
+     *
+     * @author liyanjun
+     * @since 2023/7/01 10:31
+     */
+    @GetResource(name = "通用获取中文拼音", path = "/common/getPinyin")
+    public ResponseData<String> getPinyin(String name) {
+        return new SuccessResponseData<>( this.dictService.getPinyin(name));
+    }
 }

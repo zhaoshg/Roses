@@ -435,4 +435,12 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         }
     }
 
+	@Override
+	public String getPinyin(String name) {
+		if(ObjectUtil.isNotEmpty(name)) {
+			name=pinYinApi.parseEveryPinyinFirstLetter(name);
+		} 
+		return name;
+	}
+
 }
