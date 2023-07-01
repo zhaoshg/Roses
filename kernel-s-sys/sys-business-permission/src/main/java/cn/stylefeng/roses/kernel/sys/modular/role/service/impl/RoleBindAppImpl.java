@@ -9,9 +9,7 @@ import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleAssignOperateAction
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenu;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.PermissionNodeTypeEnum;
-import cn.stylefeng.roses.kernel.sys.modular.role.factory.PermissionAssignResultFactory;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
-import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionItem;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -50,7 +48,7 @@ public class RoleBindAppImpl implements RoleAssignOperateAction {
     }
 
     @Override
-    public List<RoleBindPermissionItem> doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest) {
+    public void doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest) {
 
         Long roleId = roleBindPermissionRequest.getRoleId();
         Long appId = roleBindPermissionRequest.getNodeId();
@@ -63,7 +61,7 @@ public class RoleBindAppImpl implements RoleAssignOperateAction {
         Set<Long> totalMenuIds = totalMenus.stream().map(SysMenu::getMenuId).collect(Collectors.toSet());
 
         if (ObjectUtil.isEmpty(totalMenus)) {
-            return new ArrayList<>();
+            return;
         }
 
         // 找到所选应用的对应的所有菜单功能
@@ -110,9 +108,6 @@ public class RoleBindAppImpl implements RoleAssignOperateAction {
             }
             this.sysRoleMenuOptionsService.saveBatch(sysRoleMenuOptionsList);
         }
-
-        // 组装返回结果
-        return PermissionAssignResultFactory.createRoleBindAppResult(totalMenus, totalMenuOptions, roleBindPermissionRequest.getChecked());
     }
 
 }

@@ -9,7 +9,6 @@ import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenu;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.PermissionNodeTypeEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
-import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionItem;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -46,11 +45,11 @@ public class RoleBindTotalImpl implements RoleAssignOperateAction {
     }
 
     @Override
-    public List<RoleBindPermissionItem> doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest) {
+    public void doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest) {
 
         Long roleId = roleBindPermissionRequest.getRoleId();
 
-        // 清空用户绑定的所有菜单和功能
+        // 清空角色绑定的所有菜单和功能
         LambdaQueryWrapper<SysRoleMenu> sysRoleMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysRoleMenuLambdaQueryWrapper.eq(SysRoleMenu::getRoleId, roleId);
         this.sysRoleMenuService.remove(sysRoleMenuLambdaQueryWrapper);
@@ -94,9 +93,6 @@ public class RoleBindTotalImpl implements RoleAssignOperateAction {
             }
             this.sysRoleMenuOptionsService.saveBatch(sysRoleMenuOptionsList);
         }
-
-        // 返回空数组，前端处理渲染逻辑
-        return new ArrayList<>();
     }
 
 }

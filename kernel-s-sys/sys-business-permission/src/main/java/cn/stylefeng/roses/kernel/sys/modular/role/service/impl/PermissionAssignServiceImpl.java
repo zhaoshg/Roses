@@ -21,7 +21,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -62,14 +65,14 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
     }
 
     @Override
-    public List<RoleBindPermissionItem> updateRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest) {
+    public void updateRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest) {
         Map<String, RoleAssignOperateAction> operateActionMap = SpringUtil.getBeansOfType(RoleAssignOperateAction.class);
         for (RoleAssignOperateAction roleAssignOperateAction : operateActionMap.values()) {
             if (roleAssignOperateAction.getNodeType().getCode().equals(roleBindPermissionRequest.getPermissionNodeType())) {
-                return roleAssignOperateAction.doOperateAction(roleBindPermissionRequest);
+                roleAssignOperateAction.doOperateAction(roleBindPermissionRequest);
+                return;
             }
         }
-        return new ArrayList<>();
     }
 
     @Override

@@ -16,7 +16,6 @@ import cn.stylefeng.roses.kernel.sys.modular.role.enums.exception.SysRoleMenuOpt
 import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleMenuOptionsMapper;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleMenuOptionsRequest;
-import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionItem;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -146,7 +145,7 @@ public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOption
     }
 
     @Override
-    public List<RoleBindPermissionItem> doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest) {
+    public void doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest) {
 
         Long roleId = roleBindPermissionRequest.getRoleId();
         Long menuOptionId = roleBindPermissionRequest.getNodeId();
@@ -162,8 +161,6 @@ public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOption
             wrapper.eq(SysRoleMenuOptions::getMenuOptionId, menuOptionId);
             this.remove(wrapper);
         }
-
-        return null;
     }
 
     @Override

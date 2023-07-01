@@ -1,10 +1,8 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service;
 
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
-import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionItem;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionResponse;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -48,6 +46,6 @@ public interface PermissionAssignService {
      * @author fengshuonan
      * @since 2023/6/13 19:48
      */
-    List<RoleBindPermissionItem> updateRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest);
+    void updateRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest);
 
 }

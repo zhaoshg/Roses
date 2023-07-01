@@ -9,7 +9,6 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleRequest;
-import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionItem;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionResponse;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.PermissionAssignService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleService;
@@ -59,7 +58,8 @@ public class PermissionAssignController {
      * @since 2023/6/12 21:23
      */
     @GetResource(name = "获取角色绑定的权限列表", path = "/permission/getRoleBindPermission")
-    public ResponseData<RoleBindPermissionResponse> getRoleBindPermission(@Validated(BaseRequest.detail.class) RoleBindPermissionRequest roleBindPermissionRequest) {
+    public ResponseData<RoleBindPermissionResponse> getRoleBindPermission(
+            @Validated(BaseRequest.detail.class) RoleBindPermissionRequest roleBindPermissionRequest) {
         RoleBindPermissionResponse roleBindPermission = permissionAssignService.getRoleBindPermission(roleBindPermissionRequest);
         return new SuccessResponseData<>(roleBindPermission);
     }
@@ -73,11 +73,10 @@ public class PermissionAssignController {
      * @since 2023/6/13 19:45
      */
     @PostResource(name = "更新角色绑定权限", path = "/permission/updateRoleBindPermission")
-    public ResponseData<List<RoleBindPermissionItem>> updateRoleBindPermission(
-            @RequestBody @Validated(RoleBindPermissionRequest.roleBindPermission.class) RoleBindPermissionRequest roleBindPermissionRequest) {
-        List<RoleBindPermissionItem> result = permissionAssignService.updateRoleBindPermission(roleBindPermissionRequest);
-        return new SuccessResponseData<>(result);
+    public ResponseData<?> updateRoleBindPermission(@RequestBody @Validated(RoleBindPermissionRequest.roleBindPermission.class)
+                                                    RoleBindPermissionRequest roleBindPermissionRequest) {
+        permissionAssignService.updateRoleBindPermission(roleBindPermissionRequest);
+        return new SuccessResponseData<>();
     }
-
 
 }
