@@ -321,6 +321,14 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         this.edit(dictRequest);
     }
 
+    @Override
+    public String getPinyin(String name) {
+        if (ObjectUtil.isNotEmpty(name)) {
+            name = pinYinApi.parsePinyinString(name);
+        }
+        return name;
+    }
+
     /**
      * 获取详细信息
      *
@@ -434,13 +442,5 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
             }
         }
     }
-
-	@Override
-	public String getPinyin(String name) {
-		if(ObjectUtil.isNotEmpty(name)) {
-			name=pinYinApi.parsePinyinString(name);
-		} 
-		return name;
-	}
 
 }

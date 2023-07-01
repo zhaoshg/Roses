@@ -113,10 +113,10 @@ public interface DictService extends IService<SysDict>, DictApi {
 
     /**
      * 通用获取中文拼音
-     * <p>
      *
      * @author liyanjun
      * @since 2023/7/01 10:31
      */
-    String getPinyin(String name) ;
+    String getPinyin(String name);
+
 }
