@@ -15,6 +15,12 @@ import lombok.Data;
 public class UserAppMenuInfo {
 
     /**
+     * 菜单id
+     */
+    @ChineseDescription("菜单id")
+    private Long menuId;
+
+    /**
      * 菜单名称
      */
     @ChineseDescription("菜单名称")

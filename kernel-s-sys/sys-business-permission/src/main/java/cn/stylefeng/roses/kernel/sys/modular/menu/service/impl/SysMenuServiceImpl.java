@@ -244,7 +244,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         // 通过id查询菜单的详情信息
         LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysMenuLambdaQueryWrapper.in(SysMenu::getMenuId, menuIdList);
-        sysMenuLambdaQueryWrapper.select(SysMenu::getMenuName, SysMenu::getAntdvRouter, SysMenu::getAntdvIcon);
+        sysMenuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuName, SysMenu::getAntdvRouter, SysMenu::getAntdvIcon);
         List<SysMenu> sysMenuList = this.list(sysMenuLambdaQueryWrapper);
 
         if (ObjectUtil.isEmpty(sysMenuList)) {
@@ -255,6 +255,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         List<UserAppMenuInfo> result = new ArrayList<>();
         for (SysMenu sysMenu : sysMenuList) {
             UserAppMenuInfo userAppMenuInfo = new UserAppMenuInfo();
+            userAppMenuInfo.setMenuId(sysMenu.getMenuId());
             userAppMenuInfo.setMenuName(sysMenu.getMenuName());
             userAppMenuInfo.setMenuIcon(sysMenu.getAntdvIcon());
             userAppMenuInfo.setMenuRouter(sysMenu.getAntdvRouter());
@@ -277,7 +278,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         // 查询数据库菜单id对应的应用id集合
         LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(SysMenu::getMenuId, menuIdList);
-        queryWrapper.select(SysMenu::getAppId,SysMenu::getMenuId);
+        queryWrapper.select(SysMenu::getAppId, SysMenu::getMenuId);
         List<SysMenu> queryList = this.list(queryWrapper);
 
         if (ObjectUtil.isEmpty(queryList)) {
