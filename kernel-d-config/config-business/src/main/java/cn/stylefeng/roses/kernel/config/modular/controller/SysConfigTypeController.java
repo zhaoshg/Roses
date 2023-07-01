@@ -86,7 +86,7 @@ public class SysConfigTypeController {
      * @since 2023/6/28 17:00
      */
     @PostResource(name = "编辑配置类型", path = "/sysConfigType/edit")
-    public ResponseData<?> edit(@RequestBody @Validated(BaseRequest.edit.class) SysConfigTypeParam sysConfigTypeParam) {
+    public ResponseData<?> edit(@RequestBody @Validated(SysConfigTypeParam.edit.class) SysConfigTypeParam sysConfigTypeParam) {
         sysConfigTypeService.edit(sysConfigTypeParam);
         return new SuccessResponseData<>();
     }
@@ -98,7 +98,7 @@ public class SysConfigTypeController {
      * @since 2023/6/28 17:00
      */
     @PostResource(name = "删除配置类型", path = "/sysConfigType/delete")
-    public ResponseData<?> delete(@RequestBody @Validated(BaseRequest.delete.class) SysConfigTypeParam sysConfigTypeParam) {
+    public ResponseData<?> delete(@RequestBody @Validated(SysConfigTypeParam.delete.class) SysConfigTypeParam sysConfigTypeParam) {
         sysConfigTypeService.delete(sysConfigTypeParam);
         return new SuccessResponseData<>();
     }
@@ -110,7 +110,7 @@ public class SysConfigTypeController {
      * @since 2023/6/28 17:00
      */
     @GetResource(name = "获取配置类型的详情", path = "/sysConfigType/detail")
-    public ResponseData<DictDetail> detail(@RequestBody @Validated(BaseRequest.detail.class) SysConfigTypeParam sysConfigTypeParam) {
+    public ResponseData<DictDetail> detail(@RequestBody @Validated(SysConfigTypeParam.detail.class) SysConfigTypeParam sysConfigTypeParam) {
         DictDetail detail = sysConfigTypeService.detail(sysConfigTypeParam);
         return new SuccessResponseData<>(detail);
     }
