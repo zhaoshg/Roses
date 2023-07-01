@@ -13,6 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 /**
@@ -75,4 +77,15 @@ public class SysMenuOptionsController {
         return new SuccessResponseData<>(sysMenuOptionsService.findPage(sysMenuOptionsRequest));
     }
 
+    /**
+     * 获取所有功能列表
+     * <p>
+     *
+     * @author liyanjun
+     * @since 2023/7/01 21:23
+     */
+    @GetResource(name = "获取菜单的功能列表", path = "/sysMenuOptions/list")
+    public ResponseData<List<SysMenuOptions>> getRoleList(SysMenuOptionsRequest sysMenuOptionsRequest) {
+        return new SuccessResponseData<>(sysMenuOptionsService.findList(sysMenuOptionsRequest));
+    }
 }
