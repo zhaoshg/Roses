@@ -102,6 +102,8 @@ public class SysAppController {
 
     /**
      * 应用列表，查询全部
+     * <p>
+     * 一般用在新增菜单界面的选择应用界面
      *
      * @author liyanjun
      * @date 2023/07/02 18:28

@@ -161,6 +161,10 @@ public class SysAppServiceImpl extends ServiceImpl<SysAppMapper, SysApp> impleme
     @Override
     public List<SysApp> findList(SysAppRequest sysAppRequest) {
         LambdaQueryWrapper<SysApp> wrapper = this.createWrapper(sysAppRequest);
+
+        // 查询名称、图标和id
+        wrapper.select(SysApp::getAppId, SysApp::getAppName, SysApp::getAppIcon);
+
         return this.list(wrapper);
     }
 
