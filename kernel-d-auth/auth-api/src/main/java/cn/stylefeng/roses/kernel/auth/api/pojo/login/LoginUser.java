@@ -29,6 +29,7 @@ import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 登录用户信息
@@ -80,6 +81,18 @@ public class LoginUser implements Serializable {
      */
     @ChineseDescription("当前用户语种的标识")
     private String tranLanguageCode = RuleConstants.CHINESE_TRAN_LANGUAGE_CODE;
+
+    /**
+     * 登录时候的IP
+     */
+    @ChineseDescription("登录时候的IP")
+    private String loginIp;
+
+    /**
+     * 登录时间
+     */
+    @ChineseDescription("登录时间")
+    private Date loginTime;
 
     public LoginUser() {
     }

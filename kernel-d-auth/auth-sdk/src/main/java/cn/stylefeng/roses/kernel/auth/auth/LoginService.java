@@ -43,6 +43,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * 登录相关的逻辑封装
@@ -147,6 +148,11 @@ public class LoginService {
         // 9. 创建loginUser对象
         LoginUser loginUser = new LoginUser(userValidateInfo.getUserId(), userLoginToken);
 
+        // 9.1 记录用户登录时间和ip
+        String ip = HttpServletUtil.getRequestClientIp(HttpServletUtil.getRequest());
+        loginUser.setLoginIp(ip);
+        loginUser.setLoginTime(new Date());
+
         synchronized (loginRequest.getAccount().intern()) {
 
             // 10. 缓存用户信息，创建会话
@@ -161,7 +167,6 @@ public class LoginService {
         // 演示环境，跳过记录日志，非演示环境则记录登录日志
         if (!DemoConfigExpander.getDemoEnvFlag()) {
             // 12. 更新用户登录时间和ip
-            String ip = HttpServletUtil.getRequestClientIp(HttpServletUtil.getRequest());
             sysUserServiceApi.updateUserLoginInfo(loginUser.getUserId(), ip);
 
             // 13.登录成功日志
