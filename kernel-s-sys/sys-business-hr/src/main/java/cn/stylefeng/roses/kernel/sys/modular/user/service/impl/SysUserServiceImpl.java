@@ -383,10 +383,23 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             return;
         }
 
+        // 获取原来的登录次数
+        long loginCount = 0;
+        LambdaQueryWrapper<SysUser> sysUserOriginLoginCountWrapper = new LambdaQueryWrapper<>();
+        sysUserOriginLoginCountWrapper.eq(SysUser::getUserId, userId);
+        sysUserOriginLoginCountWrapper.select(SysUser::getLoginCount);
+        SysUser originUser = this.getOne(sysUserOriginLoginCountWrapper, false);
+        if (originUser == null || originUser.getLoginCount() == null) {
+            loginCount = 1;
+        } else {
+            loginCount = originUser.getLoginCount() + 1;
+        }
+
         LambdaUpdateWrapper<SysUser> sysUserLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
         sysUserLambdaUpdateWrapper.eq(SysUser::getUserId, userId);
         sysUserLambdaUpdateWrapper.set(SysUser::getLastLoginTime, new Date());
         sysUserLambdaUpdateWrapper.set(SysUser::getLastLoginIp, ip);
+        sysUserLambdaUpdateWrapper.set(SysUser::getLoginCount, loginCount);
         this.update(sysUserLambdaUpdateWrapper);
     }
 
