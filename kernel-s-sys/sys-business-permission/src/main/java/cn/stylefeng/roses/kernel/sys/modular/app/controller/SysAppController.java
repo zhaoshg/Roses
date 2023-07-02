@@ -109,7 +109,7 @@ public class SysAppController {
      * @author liyanjun
      * @date 2023/07/02 18:28
      */
-    @GetResource(name = "分页查询-应用列表", path = "/sysApp/list")
+    @GetResource(name = "应用列表查询", path = "/sysApp/list")
     public ResponseData<List<SysApp>> list(SysAppRequest sysAppRequest) {
         return new SuccessResponseData<>(sysAppService.findList(sysAppRequest));
     }
