@@ -122,6 +122,16 @@ public interface HrOrganizationService extends IService<HrOrganization> {
     CompanyDeptDTO getOrgCompanyInfo(HrOrganization hrOrganization);
 
     /**
+     * 根据组织机构id，获取这个组织机构id对应的公司部门信息
+     *
+     * @param orgId 组织机构id
+     * @return 单独返回公司信息
+     * @author fengshuonan
+     * @since 2023/7/2 8:38
+     */
+    CompanyDeptDTO getOrgCompanyInfo(Long orgId);
+
+    /**
      * 获取组织机构统计信息，包含系统的统计，包含当前用户公司的统计
      * <p>
      * 一般用在首页展示组织机构的统计信息界面

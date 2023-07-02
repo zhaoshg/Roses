@@ -19,7 +19,6 @@ import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.enums.org.OrgTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
-import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.constants.OrgConstants;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.factory.OrganizationFactory;
@@ -278,6 +277,27 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     @Override
+    public CompanyDeptDTO getOrgCompanyInfo(Long orgId) {
+
+        if (orgId == null) {
+            return null;
+        }
+
+        // 查询组织机构对应的信息
+        LambdaQueryWrapper<HrOrganization> hrOrganizationLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        hrOrganizationLambdaQueryWrapper.eq(HrOrganization::getOrgId, orgId);
+        hrOrganizationLambdaQueryWrapper.select(HrOrganization::getOrgType, HrOrganization::getOrgId, HrOrganization::getOrgParentId);
+        HrOrganization hrOrganization = this.getOne(hrOrganizationLambdaQueryWrapper, false);
+
+        if (hrOrganization == null) {
+            return null;
+        }
+
+        // 查询机构对应的公司部门信息
+        return this.getOrgCompanyInfo(hrOrganization);
+    }
+
+    @Override
     public HomeCompanyInfo orgStatInfo() {
 
         // todo 加缓存
@@ -297,17 +317,17 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         homeCompanyInfo.setPositionNum(totalPositionCount);
 
         // 4. 当前公司下的机构数量
-        Long userId = LoginContext.me().getLoginUser().getUserId();
-        UserOrgDTO userMainOrgInfo = sysUserOrgService.getUserMainOrgInfo(userId);
+        Long currentOrgId = LoginContext.me().getLoginUser().getCurrentOrgId();
+        CompanyDeptDTO orgCompanyInfo = this.getOrgCompanyInfo(currentOrgId);
 
         // 当前用户没公司，则直接设置为0
-        if (userMainOrgInfo == null) {
+        if (currentOrgId == null || orgCompanyInfo == null) {
             homeCompanyInfo.setCurrentCompanyPersonNum(0L);
             homeCompanyInfo.setCurrentCompanyPersonNum(0L);
             return homeCompanyInfo;
         }
 
-        Long companyId = userMainOrgInfo.getCompanyId();
+        Long companyId = orgCompanyInfo.getCompanyId();
 
         // 获取当前公司的所有子公司数量(含当前公司)
         LambdaQueryWrapper<HrOrganization> wrapper = Wrappers.lambdaQuery(HrOrganization.class)
