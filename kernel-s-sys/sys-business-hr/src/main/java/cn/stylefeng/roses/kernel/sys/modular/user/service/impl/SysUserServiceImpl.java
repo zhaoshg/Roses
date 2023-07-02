@@ -479,7 +479,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 从在线用户中查找包含这些key的元素
         for (OnlineUserItem onlineUserItem : onlineUserItems) {
-            if (userMap.containsKey(onlineUserItem.getUserId())) {
+            SysUser sysUser = userMap.get(onlineUserItem.getUserId());
+            if (sysUser != null) {
+                onlineUserItem.setRealName(sysUser.getRealName());
+                onlineUserItem.setAccount(sysUser.getAccount());
                 resultList.add(onlineUserItem);
             }
         }
