@@ -10,15 +10,12 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.sys.modular.app.entity.SysApp;
 import cn.stylefeng.roses.kernel.sys.modular.app.pojo.request.SysAppRequest;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
-import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.response.AppGroupDetail;
-
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 系统应用控制器
@@ -104,7 +101,7 @@ public class SysAppController {
     }
 
     /**
-     * 分页查询-应用列表
+     * 应用列表，查询全部
      *
      * @author liyanjun
      * @date 2023/07/02 18:28
@@ -113,6 +110,7 @@ public class SysAppController {
     public ResponseData<List<SysApp>> list(SysAppRequest sysAppRequest) {
         return new SuccessResponseData<>(sysAppService.findList(sysAppRequest));
     }
+
     /**
      * 修改应用状态
      *

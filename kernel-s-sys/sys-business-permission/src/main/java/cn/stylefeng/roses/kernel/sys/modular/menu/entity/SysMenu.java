@@ -148,10 +148,10 @@ public class SysMenu extends BaseExpandFieldEntity implements BasePidBuildModel 
     /**
      * 父级菜单名称
      */
-    @TableField("exist = false")
+    @TableField(exist = false)
     @ChineseDescription("父级菜单名称")
     private String menuParentName;
-    
+
     @Override
     public String pidBuildNodeId() {
         if (ObjectUtil.isEmpty(menuId)) {
