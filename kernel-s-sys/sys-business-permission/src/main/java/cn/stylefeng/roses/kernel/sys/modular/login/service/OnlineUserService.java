@@ -57,6 +57,8 @@ public class OnlineUserService {
             OnlineUserItem onlineUserInfo = new OnlineUserItem();
             onlineUserInfo.setUserId(loginUser.getUserId());
             onlineUserInfo.setToken(loginUser.getToken());
+            onlineUserInfo.setLoginIp(loginUser.getLoginIp());
+            onlineUserInfo.setLoginTime(loginUser.getLoginTime());
             onlineUserInfos.add(onlineUserInfo);
         }
 
