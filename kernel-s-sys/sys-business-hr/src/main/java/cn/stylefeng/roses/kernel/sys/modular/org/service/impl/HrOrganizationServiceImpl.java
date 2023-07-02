@@ -173,7 +173,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 只查询需要的字段
         wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgName, HrOrganization::getOrgCode, HrOrganization::getOrgType,
-                HrOrganization::getStatusFlag);
+                HrOrganization::getStatusFlag, HrOrganization::getOrgParentId);
 
         Page<HrOrganization> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
 
