@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.org.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -320,8 +321,11 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
             homeCompanyInfo.setCurrentCompanyPersonNum(0L);
         } else {
             List<Long> orgIdList = organizations.stream().map(HrOrganization::getOrgId).collect(Collectors.toList());
-            long userCount = sysUserOrgService.count(new LambdaQueryWrapper<SysUserOrg>().in(SysUserOrg::getOrgId, orgIdList));
-            homeCompanyInfo.setCurrentCompanyPersonNum(userCount);
+            LambdaQueryWrapper<SysUserOrg> userWrapper = new LambdaQueryWrapper<SysUserOrg>().in(SysUserOrg::getOrgId, orgIdList);
+            userWrapper.select(SysUserOrg::getUserId);
+            List<SysUserOrg> list = sysUserOrgService.list(userWrapper);
+            Set<Long> currentOrgUserSize = list.stream().map(SysUserOrg::getUserId).collect(Collectors.toSet());
+            homeCompanyInfo.setCurrentCompanyPersonNum(Convert.toLong(currentOrgUserSize.size()));
         }
 
         return homeCompanyInfo;
