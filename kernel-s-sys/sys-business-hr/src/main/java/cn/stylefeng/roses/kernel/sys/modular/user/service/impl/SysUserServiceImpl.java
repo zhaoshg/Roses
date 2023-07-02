@@ -21,6 +21,7 @@ import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.UserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.expander.SysConfigExpander;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.OnlineUserItem;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserValidateDTO;
@@ -41,10 +42,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -436,6 +434,57 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         wrapper.eq(SysUser::getUserId, userId);
         long count = this.count(wrapper);
         return count > 0;
+    }
+
+    @Override
+    public OnlineUserItem getUserNameAccountInfo(Long userId) {
+
+        if (userId == null) {
+            return new OnlineUserItem();
+        }
+
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysUser::getUserId, userId);
+        wrapper.select(SysUser::getRealName, SysUser::getAccount);
+        SysUser sysUser = this.getOne(wrapper, false);
+
+        return new OnlineUserItem(userId, sysUser.getRealName(), sysUser.getAccount());
+    }
+
+    @Override
+    public List<OnlineUserItem> getUserNameAccountInfoListByCondition(List<OnlineUserItem> onlineUserItems, String searchText) {
+
+        if (ObjectUtil.isEmpty(onlineUserItems) || ObjectUtil.isEmpty(searchText)) {
+            return new ArrayList<>();
+        }
+
+        // 在线用户列表的id集合
+        Set<Long> userIdList = onlineUserItems.stream().map(OnlineUserItem::getUserId).collect(Collectors.toSet());
+
+        // 在这些id集合和查询条件中筛选符合条件的用户，并组装上他们的姓名和账号
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(SysUser::getUserId, userIdList);
+        wrapper.nested(wrap -> {
+            wrap.like(SysUser::getRealName, searchText).or().like(SysUser::getAccount, searchText);
+        });
+        wrapper.select(SysUser::getUserId, SysUser::getRealName, SysUser::getAccount);
+        List<SysUser> sysUserList = this.list(wrapper);
+
+        List<OnlineUserItem> resultList = new ArrayList<>();
+        if (ObjectUtil.isEmpty(sysUserList)) {
+            return resultList;
+        }
+
+        Map<Long, SysUser> userMap = sysUserList.stream().collect(Collectors.toMap(SysUser::getUserId, item -> item));
+
+        // 从在线用户中查找包含这些key的元素
+        for (OnlineUserItem onlineUserItem : onlineUserItems) {
+            if (userMap.containsKey(onlineUserItem.getUserId())) {
+                resultList.add(onlineUserItem);
+            }
+        }
+
+        return resultList;
     }
 
     /**

@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.sys.api;
 
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.OnlineUserItem;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserValidateDTO;
 
@@ -93,5 +94,27 @@ public interface SysUserServiceApi {
      * @since 2023/6/18 9:06
      */
     Boolean userExist(Long userId);
+
+    /**
+     * 获取用户的账号和姓名信息
+     * <p>
+     * 一般用在获取在线用户列表
+     *
+     * @author fengshuonan
+     * @since 2023/7/2 13:22
+     */
+    OnlineUserItem getUserNameAccountInfo(Long userId);
+
+    /**
+     * 获取用户账号和姓名信息
+     * <p>
+     * 一般用在获取在线用户列表
+     *
+     * @param onlineUserItems 查询条件，在此用户id列表中查询
+     * @param searchText      查询条件，查询账号或姓名包含此字符串的结果
+     * @author fengshuonan
+     * @since 2023/7/2 13:36
+     */
+    List<OnlineUserItem> getUserNameAccountInfoListByCondition(List<OnlineUserItem> onlineUserItems, String searchText);
 
 }

@@ -26,7 +26,12 @@ public enum UserExceptionEnum implements AbstractExceptionEnum {
     /**
      * 无法操作，只有超级管理员可以重置密码！
      */
-    RESET_PASSWORD_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10003", "无法操作，只有超级管理员可以重置密码！");
+    RESET_PASSWORD_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10003", "无法操作，只有超级管理员可以重置密码！"),
+
+    /**
+     * 无法操作，只有超级管理员可以踢下线用户
+     */
+    KICK_OFF_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10004", "无法操作，只有超级管理员可以踢下线用户");
 
     /**
      * 错误编码
