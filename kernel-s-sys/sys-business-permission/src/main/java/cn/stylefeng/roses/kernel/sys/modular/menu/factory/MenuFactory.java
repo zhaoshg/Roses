@@ -83,13 +83,27 @@ public class MenuFactory {
             // 将菜单信息转化为响应类型
             List<MenuItemDetail> appMenuItems = new ArrayList<>();
             for (SysMenu appMenu : appMenus) {
-                MenuItemDetail menuItemDetail = new MenuItemDetail(appMenu.getMenuId(), appMenu.getMenuParentId(), appMenu.getMenuName(), appMenu.getMenuType());
+                MenuItemDetail menuItemDetail = new MenuItemDetail(appMenu.getMenuId(), appMenu.getMenuParentId(), appMenu.getMenuName(),
+                        appMenu.getMenuType());
                 appMenuItems.add(menuItemDetail);
             }
 
             // 将应用下的菜单组装成树
             List<MenuItemDetail> menuItemDetailList = new DefaultTreeBuildFactory<MenuItemDetail>().doTreeBuild(appMenuItems);
             appGroupDetail.setMenuList(menuItemDetailList);
+
+            // 将一级菜单展开
+            List<Long> openMenuIdList = new ArrayList<>();
+            if (ObjectUtil.isEmpty(menuItemDetailList)) {
+                appGroupDetail.setOpenMenuIdList(openMenuIdList);
+            } else {
+                for (MenuItemDetail menuItemDetail : menuItemDetailList) {
+                    if (ObjectUtil.isNotEmpty(menuItemDetail.getChildren())) {
+                        openMenuIdList.add(menuItemDetail.getMenuId());
+                    }
+                }
+                appGroupDetail.setOpenMenuIdList(openMenuIdList);
+            }
         }
 
         return appGroupDetails;

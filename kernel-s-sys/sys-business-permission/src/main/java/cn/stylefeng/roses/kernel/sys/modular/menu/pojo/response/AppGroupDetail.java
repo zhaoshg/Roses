@@ -1,5 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.menu.pojo.response;
 
+import cn.stylefeng.roses.kernel.file.api.format.FileUrlFormatProcess;
+import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
 import lombok.Data;
 
 import java.util.List;
@@ -28,6 +30,7 @@ public class AppGroupDetail {
     /**
      * 应用图标的文件id
      */
+    @SimpleFieldFormat(processClass = FileUrlFormatProcess.class)
     private Long appIcon;
 
     /**
@@ -39,6 +42,11 @@ public class AppGroupDetail {
      * 应用下的菜单列表
      */
     private List<MenuItemDetail> menuList;
+
+    /**
+     * 展开的菜单id列表
+     */
+    private List<Long> openMenuIdList;
 
     public AppGroupDetail() {
     }
