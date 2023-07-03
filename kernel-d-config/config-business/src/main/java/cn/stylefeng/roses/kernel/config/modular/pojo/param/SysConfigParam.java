@@ -26,11 +26,15 @@ package cn.stylefeng.roses.kernel.config.modular.pojo.param;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest.batchDelete;
 import cn.stylefeng.roses.kernel.validator.api.validators.flag.FlagValue;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Set;
+
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -98,4 +102,10 @@ public class SysConfigParam extends BaseRequest {
     @ChineseDescription("配置所属分类的编码")
     private String groupCode;
 
+    /**
+     * 角色id集合，用在批量删除
+     */
+    @NotEmpty(message = "configId集合不能为空", groups = batchDelete.class)
+    @ChineseDescription("configId集合，用在批量删除")
+    private Set<Long> configIdList;
 }

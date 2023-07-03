@@ -76,7 +76,18 @@ public class SysConfigController {
         sysConfigService.del(sysConfigParam);
         return new SuccessResponseData<>();
     }
-
+    
+    /**
+     * 批量删除系统参数配置
+     *
+     * @author liyanjun
+     * @date 2023/07/03 21:29
+     */
+    @PostResource(name = "批量删除系统参数配置", path = "/sysConfig/batchDelete")
+    public ResponseData<?> batchDelete(@RequestBody @Validated(SysConfigParam.delete.class) SysConfigParam sysConfigParam) {
+    	sysConfigService.batchDelete(sysConfigParam);
+        return new SuccessResponseData<>();
+    }
     /**
      * 编辑系统参数配置
      *

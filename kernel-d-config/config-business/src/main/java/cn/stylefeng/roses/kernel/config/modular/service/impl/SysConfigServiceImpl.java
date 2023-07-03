@@ -313,4 +313,27 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         return queryWrapper;
     }
 
+	@Override
+	public void batchDelete(SysConfigParam sysConfigParam) {
+
+		for(Long configId:sysConfigParam.getConfigIdList()){
+			 // 1.根据id获取常量
+			SysConfig sysConfig = this.getById(configId);
+	        if (ObjectUtil.isEmpty(sysConfig) || sysConfig.getDelFlag().equals(YesOrNotEnum.Y.getCode())) {
+	            throw new ConfigException(ConfigExceptionEnum.CONFIG_NOT_EXIST, "id: " + sysConfigParam.getConfigId());
+	        }
+
+	        // 2.不能删除系统参数
+	        if (YesOrNotEnum.Y.getCode().equals(configId)) {
+	            throw new ConfigException(ConfigExceptionEnum.CONFIG_SYS_CAN_NOT_DELETE);
+	        }
+
+	        // 3.逻辑删除
+	        this.removeById(configId);
+
+	        // 4.删除对应context
+	        ConfigContext.me().deleteConfig(sysConfig.getConfigCode());
+		}
+	}
+
 }
