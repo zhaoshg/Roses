@@ -249,6 +249,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
             SimpleDict simpleDict = new SimpleDict();
             simpleDict.setCode(sysDict.getDictCode());
             simpleDict.setName(sysDict.getDictName());
+            simpleDict.setId(sysDict.getDictId());
             simpleDictList.add(simpleDict);
         }
 
