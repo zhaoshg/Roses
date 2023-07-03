@@ -30,6 +30,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 
 /**
@@ -66,7 +68,7 @@ public class SysConfigTypeParam extends BaseRequest {
     /**
      * 配置类型顺序
      */
-    @NotBlank(message = "配置类型顺序不能为空", groups = {add.class, edit.class})
+    @NotNull(message = "配置类型顺序不能为空", groups = {add.class, edit.class})
     @ChineseDescription("配置类型顺序")
     private BigDecimal configTypeSort;
 
