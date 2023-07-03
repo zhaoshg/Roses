@@ -110,7 +110,7 @@ public class SysConfigTypeController {
      * @since 2023/6/28 17:00
      */
     @GetResource(name = "获取配置类型的详情", path = "/sysConfigType/detail")
-    public ResponseData<DictDetail> detail(@RequestBody @Validated(SysConfigTypeParam.detail.class) SysConfigTypeParam sysConfigTypeParam) {
+    public ResponseData<DictDetail> detail( @Validated(SysConfigTypeParam.detail.class) SysConfigTypeParam sysConfigTypeParam) {
         DictDetail detail = sysConfigTypeService.detail(sysConfigTypeParam);
         return new SuccessResponseData<>(detail);
     }
