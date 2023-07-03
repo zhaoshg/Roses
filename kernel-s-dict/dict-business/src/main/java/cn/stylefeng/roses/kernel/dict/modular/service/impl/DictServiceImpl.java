@@ -141,8 +141,8 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         sysDict.setDictNamePinyin(pinYinApi.parseEveryPinyinFirstLetter(sysDict.getDictName()));
 
         // 填充pids
-        String pids = this.createPids(sysDict.getDictParentId());
-        sysDict.setDictPids(pids);
+        //String pids = this.createPids(sysDict.getDictParentId());
+        //sysDict.setDictPids(pids);
 
         this.updateById(sysDict);
     }
