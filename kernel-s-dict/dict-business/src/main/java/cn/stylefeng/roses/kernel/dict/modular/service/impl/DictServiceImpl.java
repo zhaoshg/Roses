@@ -275,7 +275,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         if (sysDict == null) {
             return new DictDetail();
         } else {
-            return new DictDetail(sysDict.getDictId(), sysDict.getDictName(), sysDict.getDictCode(), sysDict.getDictSort());
+            return new DictDetail(sysDict.getDictId(), sysDict.getDictCode(), sysDict.getDictName(), sysDict.getDictSort());
         }
     }
 
