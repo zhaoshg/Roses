@@ -84,7 +84,7 @@ public class SysConfigController {
      * @date 2023/07/03 21:29
      */
     @PostResource(name = "批量删除系统参数配置", path = "/sysConfig/batchDelete")
-    public ResponseData<?> batchDelete(@RequestBody @Validated(SysConfigParam.delete.class) SysConfigParam sysConfigParam) {
+    public ResponseData<?> batchDelete(@RequestBody @Validated(SysConfigParam.batchDelete.class) SysConfigParam sysConfigParam) {
     	sysConfigService.batchDelete(sysConfigParam);
         return new SuccessResponseData<>();
     }
