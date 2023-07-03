@@ -43,6 +43,11 @@ public class AppGroupDetail {
      */
     private List<MenuItemDetail> menuList;
 
+    /**
+     * 展开的菜单id列表
+     */
+    private List<Long> openMenuIdList;
+
     public AppGroupDetail() {
     }
 
