@@ -362,9 +362,11 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         // 根据名称或者编码进行查询
         String searchText = dictRequest.getSearchText();
         if (ObjectUtil.isNotEmpty(searchText)) {
-            queryWrapper.like(SysDict::getDictName, searchText);
-            queryWrapper.or().like(SysDict::getDictCode, searchText);
-            queryWrapper.or().like(SysDict::getDictNamePinyin, searchText);
+        	queryWrapper.and(wq -> {
+                wq.like(SysDict::getDictName, searchText)
+                   .or().like(SysDict::getDictCode, searchText)
+                   .or().like(SysDict::getDictNamePinyin, searchText);
+                });
         }
 
         // 根据字典类型id查询字典
