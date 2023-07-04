@@ -32,6 +32,7 @@ import cn.stylefeng.roses.kernel.dict.api.exception.enums.DictExceptionEnum;
 import cn.stylefeng.roses.kernel.dict.api.pojo.DictDetail;
 import cn.stylefeng.roses.kernel.dict.api.pojo.SimpleDictUpdateParam;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
+import cn.stylefeng.roses.kernel.dict.modular.entity.SysDictType;
 import cn.stylefeng.roses.kernel.dict.modular.factory.DictFactory;
 import cn.stylefeng.roses.kernel.dict.modular.mapper.DictMapper;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.TreeDictInfo;
@@ -149,7 +150,12 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
 
     @Override
     public SysDict detail(DictRequest dictRequest) {
-        return this.querySysDict(dictRequest);
+    	SysDict sysDict= this.querySysDict(dictRequest);
+    	if(ObjectUtil.isNotEmpty(sysDict.getDictTypeId())) {
+    		SysDictType sysDictType=dictTypeService.getById(sysDict.getDictTypeId());
+    		sysDict.setDictTypeName(sysDictType.getDictTypeName());
+    	}
+    	return sysDict;
     }
 
     @Override
