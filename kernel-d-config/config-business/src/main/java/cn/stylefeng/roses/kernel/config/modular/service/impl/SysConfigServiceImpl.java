@@ -297,10 +297,12 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         // 根据查询名称搜索
         String searchText = sysConfigParam.getSearchText();
         if (ObjectUtil.isNotEmpty(searchText)) {
-            queryWrapper.like(SysConfig::getConfigName, searchText);
-            queryWrapper.or().like(SysConfig::getConfigCode, searchText);
-            queryWrapper.or().like(SysConfig::getConfigValue, searchText);
-            queryWrapper.or().like(SysConfig::getRemark, searchText);
+            queryWrapper.and(wq -> {
+            	wq.like(SysConfig::getConfigName, searchText)
+            	  .or().like(SysConfig::getConfigCode, searchText)
+            	  .or().like(SysConfig::getConfigValue, searchText)
+            	  .or().like(SysConfig::getRemark, searchText);
+            });
         }
 
         // 如果分类编码不为空，则带上分类编码
