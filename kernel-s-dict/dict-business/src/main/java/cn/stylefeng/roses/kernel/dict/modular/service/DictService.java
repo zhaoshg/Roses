@@ -66,6 +66,16 @@ public interface DictService extends IService<SysDict>, DictApi {
      */
     void del(DictRequest dictRequest);
 
+    
+    /**
+     * 批量删除字典
+     *
+     * @author liyanjun
+     * @date 2023/07/04 10:29
+     */
+    void batchDelete(DictRequest dictRequest);
+    
+    
     /**
      * 修改字典
      *

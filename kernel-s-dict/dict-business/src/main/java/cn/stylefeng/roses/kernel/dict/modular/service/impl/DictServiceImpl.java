@@ -444,4 +444,9 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         }
     }
 
+	@Override
+	public void batchDelete(DictRequest dictRequest) {
+		this.removeBatchByIds(dictRequest.getDictIdList());
+	}
+
 }

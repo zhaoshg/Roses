@@ -27,6 +27,7 @@ package cn.stylefeng.roses.kernel.dict.modular.pojo.request;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest.batchDelete;
 import cn.stylefeng.roses.kernel.validator.api.validators.status.StatusValue;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,6 +37,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 字典请求参数封装
@@ -146,6 +148,13 @@ public class DictRequest extends BaseRequest {
     @NotEmpty(message = "字典树的整个结构不能为空", groups = updateTree.class)
     private List<SysDict> totalDictStructure;
 
+    /**
+     * 字典id集合，用在批量删除
+     */
+    @NotEmpty(message = "dictId集合不能为空", groups = batchDelete.class)
+    @ChineseDescription("dictId集合，用在批量删除")
+    private Set<Long> dictIdList;
+    
     /**
      * 获取树形列表
      */

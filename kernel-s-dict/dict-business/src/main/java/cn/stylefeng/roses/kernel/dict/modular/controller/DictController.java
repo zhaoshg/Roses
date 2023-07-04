@@ -82,6 +82,18 @@ public class DictController {
     }
 
     /**
+     * 批量删除字典条目
+     *
+     * @author liyanjun
+     * @date 2023/07/04 10:29
+     */
+    @PostResource(name = "批量删除字典条目", path = "/dict/batchDelete")
+    public ResponseData<?> batchDelete(@RequestBody @Validated(DictRequest.batchDelete.class) DictRequest dictRequest) {
+    	dictService.batchDelete(dictRequest);
+        return new SuccessResponseData<>();
+    }
+    
+    /**
      * 删除字典条目
      *
      * @author fengshuonan
