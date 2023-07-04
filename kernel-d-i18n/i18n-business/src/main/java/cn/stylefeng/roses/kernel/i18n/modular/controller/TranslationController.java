@@ -108,7 +108,7 @@ public class TranslationController {
      * @author fengshuonan
      * @since 2021/1/24 19:20
      */
-    @GetResource(name = "新增多语言配置", path = "/i18n/detail")
+    @GetResource(name = "查看多语言详情", path = "/i18n/detail")
     public ResponseData<Translation> detail(@Validated(BaseRequest.detail.class) TranslationRequest translationRequest) {
         Translation detail = this.translationService.detail(translationRequest);
         return new SuccessResponseData<>(detail);
