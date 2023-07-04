@@ -85,7 +85,7 @@ public class DictRequest extends BaseRequest {
     /**
      * 字典类型id
      */
-    @NotBlank(message = "字典类型id不能为空", groups = {add.class, edit.class, treeList.class})
+    @NotNull(message = "字典类型id不能为空", groups = {add.class, edit.class, treeList.class})
     @ChineseDescription("字典类型id")
     private Long dictTypeId;
 
