@@ -4,6 +4,7 @@ import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
+import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.OnlineUserItem;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.OnlineUserResult;
 import cn.stylefeng.roses.kernel.sys.modular.login.service.OnlineUserService;
@@ -49,7 +50,7 @@ public class OnlineUserController {
      * @author fengshuonan
      * @since 2023/7/2 11:26
      */
-    @GetResource(name = "踢下线某个用户", path = "/offlineUser")
+    @PostResource(name = "踢下线某个用户", path = "/offlineUser")
     public ResponseData<?> offlineUser(@RequestBody @Validated(OnlineUserItem.offlineUser.class) OnlineUserItem onlineUserInfo) {
         onlineUserService.offlineUser(onlineUserInfo);
         return new SuccessResponseData<>();
