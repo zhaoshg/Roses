@@ -1,0 +1,76 @@
+package cn.stylefeng.roses.kernel.dict.modular.pojo.request;
+
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
+import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import java.util.Date;
+import java.math.BigDecimal;
+
+/**
+ * 【系统基础】-【行政区域表】封装类
+ *
+ * @author LiYanJun
+ * @date 2023/07/05 18:12
+ */
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class AreaRequest extends BaseRequest {
+
+    /**
+     * 区域id
+     */
+    @NotNull(message = "区域id不能为空", groups = {edit.class, delete.class})
+    @ChineseDescription("区域id")
+    private Long areaId;
+
+    /**
+     * 区域编码
+     */
+    @NotBlank(message = "区域编码不能为空", groups = {add.class, edit.class})
+    @ChineseDescription("区域编码")
+    private String areaCode;
+
+    /**
+     * 区域全称
+     */
+    @NotBlank(message = "区域全称不能为空", groups = {add.class, edit.class})
+    @ChineseDescription("区域全称")
+    private String areaName;
+
+    /**
+     * 上级区域编码
+     */
+    @NotBlank(message = "上级区域编码不能为空", groups = {add.class, edit.class})
+    @ChineseDescription("上级区域编码")
+    private String parentId;
+
+    /**
+     * 区域级别
+     */
+    @ChineseDescription("区域级别")
+    private Integer areaLevel;
+
+    /**
+     * 排序码
+     */
+    @ChineseDescription("排序码")
+    private BigDecimal areaSort;
+
+    /**
+     * 是否删除
+     */
+    @ChineseDescription("是否删除")
+    private String delFlag;
+
+    /**
+     * 所有的上级区域编码,用逗号分隔
+     */
+    @ChineseDescription("所有的上级区域编码,用逗号分隔")
+    private String areaPids;
+
+}
