@@ -18,7 +18,7 @@
   <result column="update_user" property="updateUser" />
  </resultMap>
 
-    <resultMap id="customResultMap" type="cn.stylefeng.roses.kernel.dict.modular.pojo.vo.AreaVo" extends="BaseResultMap">
+    <resultMap id="customResultMap" type="cn.stylefeng.roses.kernel.dict.modular.pojo.AreaVo" extends="BaseResultMap">
     </resultMap>
 
  <sql id="Base_Column_List">
