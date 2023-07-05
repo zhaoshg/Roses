@@ -8,6 +8,7 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import org.springframework.validation.annotation.Validated;
@@ -24,7 +25,7 @@ import java.util.List;
  * @date 2023/07/05 18:12
  */
 @RestController
-@ApiResource(name = "行政区域表")
+@ApiResource(name = "行政区域", resBizType = ResBizTypeEnum.SYSTEM)
 public class AreaController {
 
     @Resource
