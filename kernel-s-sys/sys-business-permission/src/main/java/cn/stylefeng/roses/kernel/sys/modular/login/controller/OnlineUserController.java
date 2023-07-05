@@ -49,7 +49,7 @@ public class OnlineUserController {
      * @author fengshuonan
      * @since 2023/7/2 11:26
      */
-    @GetResource(name = "获取在线用户列表", path = "/offlineUser")
+    @GetResource(name = "踢下线某个用户", path = "/offlineUser")
     public ResponseData<?> offlineUser(@RequestBody @Validated(OnlineUserItem.offlineUser.class) OnlineUserItem onlineUserInfo) {
         onlineUserService.offlineUser(onlineUserInfo);
         return new SuccessResponseData<>();
