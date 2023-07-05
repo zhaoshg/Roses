@@ -73,6 +73,7 @@ public class AreaServiceImpl extends ServiceImpl<AreaMapper, Area> implements Ar
 		if(ObjectUtil.isEmpty(parentId)) {
 			parentId=TreeConstants.DEFAULT_PARENT_ID.toString();
 		} 
+		queryWrapper.select(Area::getAreaId,Area::getAreaName,Area::getAreaCode);
 		queryWrapper.eq(Area::getParentId, parentId);
 		queryWrapper.orderByAsc(Area::getAreaSort);
 		return this.list(queryWrapper);
