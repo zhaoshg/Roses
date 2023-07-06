@@ -55,6 +55,9 @@ public class MenuValidateFactory {
             if (ObjectUtil.isEmpty(sysMenuRequest.getAntdvRouter())) {
                 throw new ServiceException(SysMenuExceptionEnum.URL_CANT_EMPTY);
             }
+            if (ObjectUtil.isEmpty(sysMenuRequest.getAntdvComponent())) {
+                throw new ServiceException(SysMenuExceptionEnum.COMPONENT_PATH_CANT_EMPTY);
+            }
             if (ObjectUtil.isEmpty(sysMenuRequest.getAntdvVisible())) {
                 throw new ServiceException(SysMenuExceptionEnum.HIDDEN_FLAG_CANT_EMPTY);
             }
@@ -75,15 +78,15 @@ public class MenuValidateFactory {
             if (ObjectUtil.isEmpty(sysMenuRequest.getAntdvRouter())) {
                 throw new ServiceException(SysMenuExceptionEnum.URL_CANT_EMPTY);
             }
-            if (ObjectUtil.isEmpty(sysMenuRequest.getAntdvLinkUrl())) {
-                throw new ServiceException(SysMenuExceptionEnum.LINK_URL_CANT_EMPTY);
+            if (ObjectUtil.isEmpty(sysMenuRequest.getAntdvComponent())) {
+                throw new ServiceException(SysMenuExceptionEnum.COMPONENT_PATH_CANT_EMPTY);
             }
         }
 
         // 2.4 如果是外部链接，则判断外部链接地址
         else if (MenuTypeEnum.OUT_URL.getKey().equals(menuType)) {
-            if (ObjectUtil.isEmpty(sysMenuRequest.getAntdvComponent())) {
-                throw new ServiceException(SysMenuExceptionEnum.COMPONENT_PATH_CANT_EMPTY);
+            if (ObjectUtil.isEmpty(sysMenuRequest.getAntdvRouter())) {
+                throw new ServiceException(SysMenuExceptionEnum.URL_CANT_EMPTY);
             }
         }
     }
