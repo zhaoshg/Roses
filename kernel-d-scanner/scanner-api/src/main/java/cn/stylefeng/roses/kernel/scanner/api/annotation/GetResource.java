@@ -72,7 +72,7 @@ public @interface GetResource {
     /**
      * 当前接口是否需要鉴权(true-需要鉴权,false-不需要鉴权)
      * <p>
-     * 【7.6.0】修改，默认改为false不需要权限校验
+     * 【8.0.0】修改，默认改为false不需要权限校验
      */
     boolean requiredPermission() default false;
 
