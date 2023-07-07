@@ -14,33 +14,49 @@ public interface PermissionCodeConstants {
     String COMPANY_STAT_INFO = "COMPANY_STAT_INFO";
 
     /**
-     * 人员_新增人员
+     * 人员管理界面-新增人员
      */
     String ADD_USER = "ADD_USER";
 
     /**
-     * 人员_修改人员
+     * 人员管理界面-修改人员
      */
     String EDIT_USER = "EDIT_USER";
 
     /**
-     * 人员_删除人员
+     * 人员管理界面-删除人员
      */
     String DELETE_USER = "DELETE_USER";
 
     /**
-     * 人员_分配角色
+     * 人员管理界面-分配角色
      */
     String ASSIGN_USER_ROLE = "ASSIGN_USER_ROLE";
 
     /**
-     * 人员_重置密码
+     * 人员管理界面-重置密码
      */
     String RESET_PASSWORD = "RESET_PASSWORD";
 
     /**
-     * 人员_修改状态
+     * 人员管理界面-修改状态
      */
     String UPDATE_USER_STATUS = "UPDATE_USER_STATUS";
+
+    /**
+     * 职位管理界面-新增职位
+     */
+    String ADD_POSITION = "ADD_POSITION";
+
+    /**
+     * 职位管理界面-修改职位
+     */
+    String EDIT_POSITION = "EDIT_POSITION";
+
+    /**
+     * 职位管理界面-删除职位
+     */
+    String DELETE_POSITION = "DELETE_POSITION";
+
 
 }
