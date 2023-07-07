@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
+import cn.stylefeng.roses.kernel.sys.api.constants.PermissionCodeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleService;
@@ -35,7 +36,8 @@ public class SysRoleController {
      * @author fengshuonan
      * @date 2023/06/10 21:29
      */
-    @PostResource(name = "添加角色", path = "/sysRole/add")
+    @PostResource(name = "添加角色", path = "/sysRole/add", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.ADD_ROLE)
     public ResponseData<SysRole> add(@RequestBody @Validated(SysRoleRequest.add.class) SysRoleRequest sysRoleRequest) {
         sysRoleService.add(sysRoleRequest);
         return new SuccessResponseData<>();
@@ -47,7 +49,8 @@ public class SysRoleController {
      * @author fengshuonan
      * @date 2023/06/10 21:29
      */
-    @PostResource(name = "删除角色", path = "/sysRole/delete")
+    @PostResource(name = "删除角色", path = "/sysRole/delete", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.DELETE_ROLE)
     public ResponseData<?> delete(@RequestBody @Validated(SysRoleRequest.delete.class) SysRoleRequest sysRoleRequest) {
         sysRoleService.del(sysRoleRequest);
         return new SuccessResponseData<>();
@@ -59,7 +62,8 @@ public class SysRoleController {
      * @author fengshuonan
      * @date 2023/06/10 21:29
      */
-    @PostResource(name = "批量删除角色", path = "/sysRole/batchDelete")
+    @PostResource(name = "批量删除角色", path = "/sysRole/batchDelete", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.DELETE_ROLE)
     public ResponseData<?> batchDelete(@RequestBody @Validated(SysRoleRequest.batchDelete.class) SysRoleRequest sysRoleRequest) {
         sysRoleService.batchDelete(sysRoleRequest);
         return new SuccessResponseData<>();
@@ -71,7 +75,8 @@ public class SysRoleController {
      * @author fengshuonan
      * @date 2023/06/10 21:29
      */
-    @PostResource(name = "编辑角色", path = "/sysRole/edit")
+    @PostResource(name = "编辑角色", path = "/sysRole/edit", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.EDIT_ROLE)
     public ResponseData<?> edit(@RequestBody @Validated(SysRoleRequest.edit.class) SysRoleRequest sysRoleRequest) {
         sysRoleService.edit(sysRoleRequest);
         return new SuccessResponseData<>();

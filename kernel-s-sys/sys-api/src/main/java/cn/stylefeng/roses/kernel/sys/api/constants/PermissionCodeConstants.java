@@ -98,4 +98,19 @@ public interface PermissionCodeConstants {
      */
     String UPDATE_APP_STATUS = "UPDATE_APP_STATUS";
 
+    /**
+     * 角色管理界面-新增角色
+     */
+    String ADD_ROLE = "ADD_ROLE";
+
+    /**
+     * 角色管理界面-删除角色
+     */
+    String DELETE_ROLE = "DELETE_ROLE";
+
+    /**
+     * 角色管理界面-修改角色
+     */
+    String EDIT_ROLE = "EDIT_ROLE";
+
 }
