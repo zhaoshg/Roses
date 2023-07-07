@@ -429,29 +429,31 @@ public class ApiResourceScanner implements BeanPostProcessor {
     private void processPermissionWithParentCondition(ApiResource classApiAnnotation, Annotation methodApiResource,
                                                       ResourceDefinition resourceDefinition) {
 
-        // 获取控制器当前方法上的配置
+        // 设置是否认证的开关，这个开关只以方法上的注解为准
         Boolean requiredLogin = invokeAnnotationMethod(methodApiResource, "requiredLogin", Boolean.class);
+        resourceDefinition.setRequiredLoginFlag(requiredLogin);
+
+        // 设置是否鉴权的开关，如果方法没有则判断控制器上，如果控制器有权限校验编码设置，则以控制器为准
         Boolean requiredPermission = invokeAnnotationMethod(methodApiResource, "requiredPermission", Boolean.class);
         String requirePermissionCode = invokeAnnotationMethod(methodApiResource, "requirePermissionCode", String.class);
 
-        // 如果鉴权开关为空，但是鉴权的编码不为空，则直接打开权限校验开关
-        if ((requiredPermission == null || !requiredPermission) && ObjectUtil.isNotEmpty(requirePermissionCode)) {
-            requiredPermission = true;
-        }
+        if ((requiredPermission == null || !requiredPermission)) {
 
-        // 如果方法上的接口注解，配置的不需要登录，则以类上整体配置的为准
-        if (requiredLogin == null || !requiredLogin) {
-            requiredLogin = classApiAnnotation.requiredLogin();
-        }
+            // 鉴权开关为空，但是方法上的鉴权编码不为空，则直接设置鉴权开关为true并返回
+            if (ObjectUtil.isNotEmpty(requirePermissionCode)) {
+                requiredPermission = true;
+            }
 
-        // 如果方法上配置的权限校验为空，则以类上的配置为准
-        if (requiredPermission == null || !requiredPermission) {
-            requiredPermission = classApiAnnotation.requiredPermission();
-            requirePermissionCode = classApiAnnotation.requirePermissionCode();
+            // 鉴权开关为空，鉴权编码也为空，则此时去查询类上是否配置了鉴权编码
+            else {
+                if (ObjectUtil.isNotEmpty(classApiAnnotation.requirePermissionCode())) {
+                    requiredPermission = true;
+                    requirePermissionCode = classApiAnnotation.requirePermissionCode();
+                }
+            }
         }
 
         // 设置权限校验标识
-        resourceDefinition.setRequiredLoginFlag(requiredLogin);
         resourceDefinition.setRequiredPermissionFlag(requiredPermission);
         resourceDefinition.setPermissionCode(requirePermissionCode);
     }
