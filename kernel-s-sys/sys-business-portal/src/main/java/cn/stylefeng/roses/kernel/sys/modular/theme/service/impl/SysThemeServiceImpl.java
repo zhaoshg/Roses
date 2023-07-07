@@ -191,7 +191,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
         HashMap<String, AntdvFileInfo[]> tempFileList = new HashMap<>();
         for (Map.Entry<String, Object> keyValues : jsonObject.entrySet()) {
             String key = keyValues.getKey();
-            String value = (String) jsonObject.get(key);
+            String value = String.valueOf(jsonObject.get(key));
             // 判断是否是文件类型
             boolean keyFileFlag = sysThemeTemplateFieldService.getKeyFileFlag(key);
             if (keyFileFlag) {
