@@ -58,5 +58,25 @@ public interface PermissionCodeConstants {
      */
     String DELETE_POSITION = "DELETE_POSITION";
 
+    /**
+     * 组织机构界面-新增机构
+     */
+    String ADD_ORG = "ADD_ORG";
+
+    /**
+     * 组织机构界面-修改机构
+     */
+    String EDIT_ORG = "EDIT_ORG";
+
+    /**
+     * 组织机构界面-删除机构
+     */
+    String DELETE_ORG = "DELETE_ORG";
+
+    /**
+     * 组织机构界面-设置审批人
+     */
+    String ASSIGN_APPROVER = "ASSIGN_APPROVER";
+
 
 }

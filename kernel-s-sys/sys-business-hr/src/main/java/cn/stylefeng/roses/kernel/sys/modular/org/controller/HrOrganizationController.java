@@ -7,6 +7,7 @@ import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
+import cn.stylefeng.roses.kernel.sys.api.constants.PermissionCodeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrganizationRequest;
 import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrganizationService;
@@ -35,8 +36,10 @@ public class HrOrganizationController {
      * @author fengshuonan
      * @date 2023/06/10 21:23
      */
-    @PostResource(name = "添加组织机构", path = "/hrOrganization/add")
-    public ResponseData<HrOrganization> add(@RequestBody @Validated(HrOrganizationRequest.add.class) HrOrganizationRequest hrOrganizationRequest) {
+    @PostResource(name = "添加组织机构", path = "/hrOrganization/add", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.ADD_ORG)
+    public ResponseData<HrOrganization> add(
+            @RequestBody @Validated(HrOrganizationRequest.add.class) HrOrganizationRequest hrOrganizationRequest) {
         hrOrganizationService.add(hrOrganizationRequest);
         return new SuccessResponseData<>();
     }
@@ -47,7 +50,8 @@ public class HrOrganizationController {
      * @author fengshuonan
      * @date 2023/06/10 21:23
      */
-    @PostResource(name = "删除组织机构", path = "/hrOrganization/delete")
+    @PostResource(name = "删除组织机构", path = "/hrOrganization/delete", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.DELETE_ORG)
     public ResponseData<?> delete(@RequestBody @Validated(HrOrganizationRequest.delete.class) HrOrganizationRequest hrOrganizationRequest) {
         hrOrganizationService.del(hrOrganizationRequest);
         return new SuccessResponseData<>();
@@ -59,7 +63,8 @@ public class HrOrganizationController {
      * @author fengshuonan
      * @date 2023/06/10 21:23
      */
-    @PostResource(name = "批量删除组织机构", path = "/hrOrganization/batchDelete")
+    @PostResource(name = "批量删除组织机构", path = "/hrOrganization/batchDelete", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.DELETE_ORG)
     public ResponseData<?> batchDelete(@RequestBody @Validated(BaseRequest.batchDelete.class) HrOrganizationRequest hrOrganizationRequest) {
         hrOrganizationService.batchDelete(hrOrganizationRequest);
         return new SuccessResponseData<>();
@@ -71,7 +76,8 @@ public class HrOrganizationController {
      * @author fengshuonan
      * @date 2023/06/10 21:23
      */
-    @PostResource(name = "编辑组织机构", path = "/hrOrganization/edit")
+    @PostResource(name = "编辑组织机构", path = "/hrOrganization/edit", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.EDIT_ORG)
     public ResponseData<?> edit(@RequestBody @Validated(HrOrganizationRequest.edit.class) HrOrganizationRequest hrOrganizationRequest) {
         hrOrganizationService.edit(hrOrganizationRequest);
         return new SuccessResponseData<>();
