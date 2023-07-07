@@ -4,6 +4,7 @@ import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
+import cn.stylefeng.roses.kernel.sys.api.constants.PermissionCodeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.HomeCompanyInfo;
 import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrganizationService;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +32,8 @@ public class HomeOrgStatController {
      * @author fengshuonan
      * @since 2023/6/26 22:51
      */
-    @GetResource(name = "获取组织机构统计信息", path = "/org/statInfo")
+    @GetResource(name = "获取组织机构统计信息", path = "/org/statInfo", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.STAT_INFO_OPTION_CODE)
     public ResponseData<HomeCompanyInfo> orgStatInfo() {
         return new SuccessResponseData<>(hrOrganizationService.orgStatInfo());
     }
