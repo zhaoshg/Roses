@@ -12,6 +12,7 @@ import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissi
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionResponse;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -42,8 +43,8 @@ public class PermissionAssignFactory {
         Set<Long> totalParentMenuId = sysMenus.stream().map(SysMenu::getMenuParentId).collect(Collectors.toSet());
 
         // 通过父级菜单，筛选出来所有的叶子节点（如果菜单不存在父级菜单里，则代表是叶子节点）
-        Set<SysMenu> leafMenus = sysMenus.stream().filter(item -> !totalParentMenuId.contains(item))
-                .collect(Collectors.toSet());
+        Set<SysMenu> leafMenus = sysMenus.stream().filter(item -> !totalParentMenuId.contains(item.getMenuId()))
+                .collect(Collectors.toCollection(LinkedHashSet::new));
 
         // 叶子节点转化为RoleBindPermissionItem结构
         ArrayList<RoleBindPermissionItem> roleBindPermissionItems = new ArrayList<>();
