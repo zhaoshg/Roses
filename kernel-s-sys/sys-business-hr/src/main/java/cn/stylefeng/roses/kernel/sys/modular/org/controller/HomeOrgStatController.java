@@ -33,7 +33,7 @@ public class HomeOrgStatController {
      * @since 2023/6/26 22:51
      */
     @GetResource(name = "获取组织机构统计信息", path = "/org/statInfo", requiredPermission = true,
-            requirePermissionCode = PermissionCodeConstants.STAT_INFO_OPTION_CODE)
+            requirePermissionCode = PermissionCodeConstants.COMPANY_STAT_INFO)
     public ResponseData<HomeCompanyInfo> orgStatInfo() {
         return new SuccessResponseData<>(hrOrganizationService.orgStatInfo());
     }
