@@ -26,6 +26,7 @@ package cn.stylefeng.roses.kernel.scanner;
 
 import cn.hutool.core.exceptions.UtilException;
 import cn.hutool.core.net.NetUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
@@ -234,25 +235,26 @@ public class ApiResourceScanner implements BeanPostProcessor {
         // 如果没有填写code则用"模块名称_方法名称"为默认的标识
         String code = invokeAnnotationMethod(apiResource, "code", String.class);
         if (StrUtil.isEmpty(code)) {
-            resourceDefinition.setResourceCode(resourceDefinition.getAppCode() + scannerProperties.getLinkSymbol() + StrUtil.toUnderlineCase(modular) + scannerProperties.getLinkSymbol() + StrUtil.toUnderlineCase(method.getName()));
+            resourceDefinition.setResourceCode(
+                    resourceDefinition.getAppCode() + scannerProperties.getLinkSymbol() + StrUtil.toUnderlineCase(
+                            modular) + scannerProperties.getLinkSymbol() + StrUtil.toUnderlineCase(method.getName()));
         } else {
-            resourceDefinition.setResourceCode(resourceDefinition.getAppCode() + scannerProperties.getLinkSymbol() + StrUtil.toUnderlineCase(modular) + scannerProperties.getLinkSymbol() + StrUtil.toUnderlineCase(code));
+            resourceDefinition.setResourceCode(
+                    resourceDefinition.getAppCode() + scannerProperties.getLinkSymbol() + StrUtil.toUnderlineCase(
+                            modular) + scannerProperties.getLinkSymbol() + StrUtil.toUnderlineCase(code));
         }
 
         // 填充其他属性
         String name = invokeAnnotationMethod(apiResource, "name", String.class);
         String[] methodPath = invokeAnnotationMethod(apiResource, "path", String[].class);
         RequestMethod[] requestMethods = invokeAnnotationMethod(apiResource, "method", RequestMethod[].class);
-        Boolean requiredLogin = invokeAnnotationMethod(apiResource, "requiredLogin", Boolean.class);
-        Boolean requiredPermission = invokeAnnotationMethod(apiResource, "requiredPermission", Boolean.class);
-        String requirePermissionCode = invokeAnnotationMethod(apiResource, "requirePermissionCode", String.class);
         Boolean viewFlag = invokeAnnotationMethod(apiResource, "viewFlag", Boolean.class);
         ResBizTypeEnum methodResBizType = invokeAnnotationMethod(apiResource, "resBizType", ResBizTypeEnum.class);
 
-        resourceDefinition.setRequiredLoginFlag(requiredLogin);
-        resourceDefinition.setRequiredPermissionFlag(requiredPermission);
-        resourceDefinition.setPermissionCode(requirePermissionCode);
         resourceDefinition.setResourceName(name);
+
+        // 填充权限校验标识
+        this.processPermissionWithParentCondition(classApiAnnotation, apiResource, resourceDefinition);
 
         // 填充资源的业务类型
         if (!methodResBizType.equals(ResBizTypeEnum.DEFAULT)) {
@@ -322,7 +324,8 @@ public class ApiResourceScanner implements BeanPostProcessor {
                 // 将当前参数的类型加到context中，后边会用到
                 MetadataContext.addParamTypeMetadata(parameterContextUuid, parameterMetadata.getParamTypeEnum());
                 MetadataContext.addParameterName(parameterContextUuid, parameterMetadata.getParameterName());
-                fieldMetadataLinkedHashSet.add(ClassMetadataFactory.beginCreateFieldMetadata(parameterMetadata.getParameterizedType(), parameterContextUuid));
+                fieldMetadataLinkedHashSet.add(
+                        ClassMetadataFactory.beginCreateFieldMetadata(parameterMetadata.getParameterizedType(), parameterContextUuid));
                 MetadataContext.cleanContext(parameterContextUuid);
             }
             resourceDefinition.setParamFieldDescriptions(fieldMetadataLinkedHashSet);
@@ -409,6 +412,48 @@ public class ApiResourceScanner implements BeanPostProcessor {
             log.error("扫描api资源时出错!", e);
         }
         throw new RuntimeException("扫描api资源时出错!");
+    }
+
+    /**
+     * 【7月7日新增逻辑】处理当前接口的认证和鉴权标识
+     * <p>
+     * 如果class类上有标识，但是本接口没有，则以class类上为准
+     * 如果本接口有权限标识，则以本接口为准
+     *
+     * @param classApiAnnotation 类上的@ApiResource注解的配置
+     * @param methodApiResource  方法上的api注解
+     * @param resourceDefinition 把最终信息汇总到此资源定义
+     * @author fengshuonan
+     * @since 2023/7/7 17:57
+     */
+    private void processPermissionWithParentCondition(ApiResource classApiAnnotation, Annotation methodApiResource,
+                                                      ResourceDefinition resourceDefinition) {
+
+        // 获取控制器当前方法上的配置
+        Boolean requiredLogin = invokeAnnotationMethod(methodApiResource, "requiredLogin", Boolean.class);
+        Boolean requiredPermission = invokeAnnotationMethod(methodApiResource, "requiredPermission", Boolean.class);
+        String requirePermissionCode = invokeAnnotationMethod(methodApiResource, "requirePermissionCode", String.class);
+
+        // 如果鉴权开关为空，但是鉴权的编码不为空，则直接打开权限校验开关
+        if ((requiredPermission == null || !requiredPermission) && ObjectUtil.isNotEmpty(requirePermissionCode)) {
+            requiredPermission = true;
+        }
+
+        // 如果方法上的接口注解，配置的不需要登录，则以类上整体配置的为准
+        if (requiredLogin == null || !requiredLogin) {
+            requiredLogin = classApiAnnotation.requiredLogin();
+        }
+
+        // 如果方法上配置的权限校验为空，则以类上的配置为准
+        if (requiredPermission == null || !requiredPermission) {
+            requiredPermission = classApiAnnotation.requiredPermission();
+            requirePermissionCode = classApiAnnotation.requirePermissionCode();
+        }
+
+        // 设置权限校验标识
+        resourceDefinition.setRequiredLoginFlag(requiredLogin);
+        resourceDefinition.setRequiredPermissionFlag(requiredPermission);
+        resourceDefinition.setPermissionCode(requirePermissionCode);
     }
 
 }
