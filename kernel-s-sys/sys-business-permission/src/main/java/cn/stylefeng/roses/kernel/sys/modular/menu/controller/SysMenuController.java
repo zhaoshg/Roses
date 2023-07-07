@@ -5,6 +5,7 @@ import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
+import cn.stylefeng.roses.kernel.sys.api.constants.PermissionCodeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.request.SysMenuRequest;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.response.AppGroupDetail;
@@ -23,7 +24,7 @@ import java.util.List;
  * @since 2023/6/14 21:29
  */
 @RestController
-@ApiResource(name = "菜单管理界面的接口")
+@ApiResource(name = "菜单管理界面的接口", requiredPermission = true, requirePermissionCode = PermissionCodeConstants.AUTH_MENU)
 public class SysMenuController {
 
     @Resource

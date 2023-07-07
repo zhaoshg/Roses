@@ -118,4 +118,9 @@ public interface PermissionCodeConstants {
      */
     String CHANGE_ROLE_PERMISSION = "CHANGE_ROLE_PERMISSION";
 
+    /**
+     * 菜单管理整个界面的权限标识
+     */
+    String AUTH_MENU = "AUTH_MENU";
+
 }
