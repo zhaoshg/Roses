@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
+import cn.stylefeng.roses.kernel.sys.api.constants.PermissionCodeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleRequest;
@@ -72,7 +73,8 @@ public class PermissionAssignController {
      * @author fengshuonan
      * @since 2023/6/13 19:45
      */
-    @PostResource(name = "更新角色绑定权限", path = "/permission/updateRoleBindPermission")
+    @PostResource(name = "更新角色绑定权限", path = "/permission/updateRoleBindPermission", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.CHANGE_ROLE_PERMISSION)
     public ResponseData<?> updateRoleBindPermission(@RequestBody @Validated(RoleBindPermissionRequest.roleBindPermission.class)
                                                     RoleBindPermissionRequest roleBindPermissionRequest) {
         permissionAssignService.updateRoleBindPermission(roleBindPermissionRequest);

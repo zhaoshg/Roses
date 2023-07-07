@@ -113,4 +113,9 @@ public interface PermissionCodeConstants {
      */
     String EDIT_ROLE = "EDIT_ROLE";
 
+    /**
+     * 权限管理界面-修改权限
+     */
+    String CHANGE_ROLE_PERMISSION = "CHANGE_ROLE_PERMISSION";
+
 }
