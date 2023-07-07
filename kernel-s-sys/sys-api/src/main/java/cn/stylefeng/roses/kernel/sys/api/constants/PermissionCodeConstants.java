@@ -78,5 +78,24 @@ public interface PermissionCodeConstants {
      */
     String ASSIGN_APPROVER = "ASSIGN_APPROVER";
 
+    /**
+     * 应用管理界面-新增应用
+     */
+    String ADD_APP = "ADD_APP";
+
+    /**
+     * 应用管理界面-修改应用
+     */
+    String EDIT_APP = "EDIT_APP";
+
+    /**
+     * 应用管理界面-删除应用
+     */
+    String DELETE_APP = "DELETE_APP";
+
+    /**
+     * 应用管理界面-更新应用状态
+     */
+    String UPDATE_APP_STATUS = "UPDATE_APP_STATUS";
 
 }

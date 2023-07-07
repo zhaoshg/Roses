@@ -7,6 +7,7 @@ import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
+import cn.stylefeng.roses.kernel.sys.api.constants.PermissionCodeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.app.entity.SysApp;
 import cn.stylefeng.roses.kernel.sys.modular.app.pojo.request.SysAppRequest;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
@@ -36,7 +37,8 @@ public class SysAppController {
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
-    @PostResource(name = "添加应用", path = "/sysApp/add")
+    @PostResource(name = "添加应用", path = "/sysApp/add", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.ADD_APP)
     public ResponseData<SysApp> add(@RequestBody @Validated(SysAppRequest.add.class) SysAppRequest sysAppRequest) {
         sysAppService.add(sysAppRequest);
         return new SuccessResponseData<>();
@@ -48,7 +50,8 @@ public class SysAppController {
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
-    @PostResource(name = "删除应用", path = "/sysApp/delete")
+    @PostResource(name = "删除应用", path = "/sysApp/delete", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.DELETE_APP)
     public ResponseData<?> delete(@RequestBody @Validated(SysAppRequest.delete.class) SysAppRequest sysAppRequest) {
         sysAppService.del(sysAppRequest);
         return new SuccessResponseData<>();
@@ -60,7 +63,8 @@ public class SysAppController {
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
-    @PostResource(name = "批量删除应用", path = "/sysApp/batchDelete")
+    @PostResource(name = "批量删除应用", path = "/sysApp/batchDelete", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.DELETE_APP)
     public ResponseData<?> batchDelete(@RequestBody @Validated(BaseRequest.batchDelete.class) SysAppRequest sysAppRequest) {
         sysAppService.batchDelete(sysAppRequest);
         return new SuccessResponseData<>();
@@ -72,7 +76,8 @@ public class SysAppController {
      * @author fengshuonan
      * @date 2023/06/10 21:28
      */
-    @PostResource(name = "编辑应用", path = "/sysApp/edit")
+    @PostResource(name = "编辑应用", path = "/sysApp/edit", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.EDIT_APP)
     public ResponseData<?> edit(@RequestBody @Validated(SysAppRequest.edit.class) SysAppRequest sysAppRequest) {
         sysAppService.edit(sysAppRequest);
         return new SuccessResponseData<>();
@@ -119,7 +124,8 @@ public class SysAppController {
      * @author liyanjun
      * @since 2023/6/30 10:58
      */
-    @PostResource(name = "修改应用状态", path = "/sysApp/updateStatus")
+    @PostResource(name = "修改应用状态", path = "/sysApp/updateStatus", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.UPDATE_APP_STATUS)
     public ResponseData<?> updateStatus(@RequestBody @Validated(SysAppRequest.updateStatus.class) SysAppRequest sysAppRequest) {
         sysAppService.updateStatus(sysAppRequest);
         return new SuccessResponseData<>();
