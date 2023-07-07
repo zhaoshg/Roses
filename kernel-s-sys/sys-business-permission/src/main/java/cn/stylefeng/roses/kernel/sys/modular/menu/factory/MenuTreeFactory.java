@@ -19,38 +19,34 @@ public class MenuTreeFactory {
     /**
      * 更新菜单的排序
      *
-     * @param tree  被更新的菜单树
-     * @param level 当前被更新的菜单的层级（level从1开始）
+     * @param tree       被更新的菜单树
+     * @param baseNumber 初值，整棵树基于这个初值进行计算顺序，可以传最小传1，如果传0，则当1处理
      * @author fengshuonan
      * @since 2023/6/15 14:30
      */
-    public static void updateSort(List<SysMenu> tree, Integer level) {
+    public static void updateSort(List<SysMenu> tree, Integer baseNumber) {
 
-        // 初始的排序值
-        int i = 1;
-
-        // 倍数，第1层级从100开始排列
-        // 第2层是1000开始
-        int beishu = 10;
-
-        for (int integer = 0; integer < level; integer++) {
-            beishu = beishu * 10;
+        if (baseNumber == null || baseNumber == 0) {
+            baseNumber = 1;
         }
 
-        // 第1层级是110，120，130
-        // 第2层级是1010，1020，1030
-        // 第3层级是10010，10020，10030
+        // 当前树的顺序计算逻辑：
+        // baseNumber * 100 + 1
+        // baseNumber * 100 + 2
+        // baseNumber * 100 + 3
+        // 以此类推...
+        BigDecimal newBaseNumber = new BigDecimal(baseNumber * 100);
+
         for (SysMenu sysMenu : tree) {
-            BigDecimal bigDecimal = new BigDecimal(1);
-            bigDecimal = bigDecimal.multiply(new BigDecimal(beishu));
-            bigDecimal = bigDecimal.add(new BigDecimal(i * 10));
-            sysMenu.setMenuSort(bigDecimal);
-            i++;
+
+            // 树形基础值 + 1
+            newBaseNumber = newBaseNumber.add(new BigDecimal(1));
+            sysMenu.setMenuSort(newBaseNumber);
 
             // 递归修改子树
             List<SysMenu> children = sysMenu.getChildren();
             if (children != null && children.size() > 0) {
-                updateSort(children, level + 1);
+                updateSort(children, newBaseNumber.intValue());
             }
         }
     }
