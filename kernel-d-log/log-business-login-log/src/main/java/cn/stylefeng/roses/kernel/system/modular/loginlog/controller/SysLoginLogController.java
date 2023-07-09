@@ -28,7 +28,6 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.log.api.pojo.loginlog.SysLoginLogDto;
 import cn.stylefeng.roses.kernel.log.api.pojo.loginlog.SysLoginLogRequest;
 import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
-import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -47,8 +46,13 @@ import javax.annotation.Resource;
  * @since 2021/1/13 17:51
  */
 @RestController
-@ApiResource(name = "登录日志", resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "登录日志", requiredPermission = true, requirePermissionCode = SysLoginLogController.LOG_LOGIN)
 public class SysLoginLogController {
+
+    /**
+     * 登录日志界面的权限标识
+     */
+    public static final String LOG_LOGIN = "LOG_LOGIN";
 
     @Resource
     private SysLoginLogService sysLoginLogService;
