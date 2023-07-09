@@ -2,12 +2,12 @@ package cn.stylefeng.roses.kernel.sys.modular.theme.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
-import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
+import cn.stylefeng.roses.kernel.sys.modular.theme.constants.ThemeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplate;
 import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeTemplateDataDTO;
 import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeTemplateRequest;
@@ -26,7 +26,7 @@ import java.util.List;
  * @since 2021/12/17 13:53
  */
 @RestController
-@ApiResource(name = "系统主题模板管理", resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "系统主题模板管理", requiredPermission = true, requirePermissionCode = ThemeConstants.THEME_MANAGER)
 public class SysThemeTemplateController {
 
     @Resource
@@ -66,7 +66,8 @@ public class SysThemeTemplateController {
      */
     @PostResource(name = "删除系统主题模板", path = "/sysThemeTemplate/del")
     @BusinessLog
-    public ResponseData<?> del(@RequestBody @Validated(SysThemeTemplateRequest.delete.class) SysThemeTemplateRequest sysThemeTemplateParam) {
+    public ResponseData<?> del(
+            @RequestBody @Validated(SysThemeTemplateRequest.delete.class) SysThemeTemplateRequest sysThemeTemplateParam) {
         sysThemeTemplateService.del(sysThemeTemplateParam);
         return new SuccessResponseData<>();
     }
@@ -101,7 +102,8 @@ public class SysThemeTemplateController {
      */
     @PostResource(name = "修改系统主题模板状态", path = "/sysThemeTemplate/updateStatus")
     @BusinessLog
-    public ResponseData<?> updateTemplateStatus(@RequestBody @Validated(SysThemeTemplateRequest.updateStatus.class) SysThemeTemplateRequest sysThemeTemplateParam) {
+    public ResponseData<?> updateTemplateStatus(
+            @RequestBody @Validated(SysThemeTemplateRequest.updateStatus.class) SysThemeTemplateRequest sysThemeTemplateParam) {
         sysThemeTemplateService.updateTemplateStatus(sysThemeTemplateParam);
         return new SuccessResponseData<>();
     }

@@ -23,4 +23,9 @@ public interface ThemeConstants {
      */
     String THEME_CODE_SYSTEM_PREFIX = "GUNS";
 
+    /**
+     * 主题管理界面的权限标识
+     */
+    String THEME_MANAGER = "THEME_MANAGER";
+
 }

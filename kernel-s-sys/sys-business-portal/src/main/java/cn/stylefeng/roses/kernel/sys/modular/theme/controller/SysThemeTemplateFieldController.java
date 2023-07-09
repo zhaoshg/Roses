@@ -2,12 +2,12 @@ package cn.stylefeng.roses.kernel.sys.modular.theme.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
-import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
+import cn.stylefeng.roses.kernel.sys.modular.theme.constants.ThemeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplateField;
 import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.SysThemeTemplateFieldRequest;
 import cn.stylefeng.roses.kernel.sys.modular.theme.service.SysThemeTemplateFieldService;
@@ -25,7 +25,7 @@ import java.util.List;
  * @since 2021/12/17 10:28
  */
 @RestController
-@ApiResource(name = "系统主题模板属性管理", resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "系统主题模板属性管理", requiredPermission = true, requirePermissionCode = ThemeConstants.THEME_MANAGER)
 public class SysThemeTemplateFieldController {
 
     @Resource
