@@ -123,4 +123,9 @@ public interface PermissionCodeConstants {
      */
     String AUTH_MENU = "AUTH_MENU";
 
+    /**
+     * 资源管理整个界面的权限标识
+     */
+    String AUTH_RESOURCE = "AUTH_RESOURCE";
+
 }

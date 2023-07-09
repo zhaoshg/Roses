@@ -28,7 +28,6 @@ import cn.stylefeng.roses.kernel.config.modular.pojo.param.SysConfigTypeParam;
 import cn.stylefeng.roses.kernel.config.modular.service.SysConfigTypeService;
 import cn.stylefeng.roses.kernel.dict.api.pojo.DictDetail;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
-import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -50,8 +49,13 @@ import java.util.List;
  * @since 2023/6/28 16:46
  */
 @RestController
-@ApiResource(name = "配置分类的接口")
+@ApiResource(name = "配置分类的接口", requiredPermission = true, requirePermissionCode = SysConfigTypeController.SYS_CONFIG)
 public class SysConfigTypeController {
+
+    /**
+     * 系统配置界面的权限标识
+     */
+    public static final String SYS_CONFIG = "SYS_CONFIG";
 
     @Resource
     private SysConfigTypeService sysConfigTypeService;
@@ -110,7 +114,7 @@ public class SysConfigTypeController {
      * @since 2023/6/28 17:00
      */
     @GetResource(name = "获取配置类型的详情", path = "/sysConfigType/detail")
-    public ResponseData<DictDetail> detail( @Validated(SysConfigTypeParam.detail.class) SysConfigTypeParam sysConfigTypeParam) {
+    public ResponseData<DictDetail> detail(@Validated(SysConfigTypeParam.detail.class) SysConfigTypeParam sysConfigTypeParam) {
         DictDetail detail = sysConfigTypeService.detail(sysConfigTypeParam);
         return new SuccessResponseData<>(detail);
     }

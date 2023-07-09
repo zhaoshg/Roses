@@ -25,11 +25,11 @@
 package cn.stylefeng.roses.kernel.sys.modular.resource.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
+import cn.stylefeng.roses.kernel.sys.api.constants.PermissionCodeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.resource.entity.SysResource;
 import cn.stylefeng.roses.kernel.sys.modular.resource.pojo.ResourceRequest;
 import cn.stylefeng.roses.kernel.sys.modular.resource.service.SysResourceService;
@@ -44,7 +44,7 @@ import javax.annotation.Resource;
  * @since 2020/11/24 19:47
  */
 @RestController
-@ApiResource(name = "资源管理", resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "资源管理", requiredPermission = true, requirePermissionCode = PermissionCodeConstants.AUTH_RESOURCE)
 public class ResourceController {
 
     @Resource
