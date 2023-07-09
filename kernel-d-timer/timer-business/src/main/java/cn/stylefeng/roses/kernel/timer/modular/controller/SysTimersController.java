@@ -26,7 +26,6 @@ package cn.stylefeng.roses.kernel.timer.modular.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
-import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -50,8 +49,13 @@ import java.util.List;
  * @since 2020/10/27 14:30
  */
 @RestController
-@ApiResource(name = "定时任务管理", resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "定时任务管理", requiredPermission = true, requirePermissionCode = SysTimersController.TIMER)
 public class SysTimersController {
+
+    /**
+     * 定时任务界面的权限控制标识
+     */
+    public static final String TIMER = "TIMER";
 
     @Resource
     private SysTimersService sysTimersService;
