@@ -24,12 +24,12 @@
  */
 package cn.stylefeng.roses.kernel.dict.modular.controller;
 
+import cn.stylefeng.roses.kernel.dict.api.constants.DictConstants;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.TreeDictInfo;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.request.DictRequest;
 import cn.stylefeng.roses.kernel.dict.modular.service.DictService;
 import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
-import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
@@ -50,7 +50,7 @@ import java.util.List;
  * @since 2020/10/29 14:45
  */
 @RestController
-@ApiResource(name = "字典详情管理", resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "字典详情管理")
 public class DictController {
 
     @Resource
@@ -74,7 +74,7 @@ public class DictController {
      * @author fengshuonan
      * @since 2020/10/29 16:35
      */
-    @PostResource(name = "添加字典", path = "/dict/add")
+    @PostResource(name = "添加字典", path = "/dict/add", requiredPermission = true, requirePermissionCode = DictConstants.ADD_DICT)
     @BusinessLog
     public ResponseData<?> add(@RequestBody @Validated(DictRequest.add.class) DictRequest dictRequest) {
         this.dictService.add(dictRequest);
@@ -87,19 +87,20 @@ public class DictController {
      * @author liyanjun
      * @date 2023/07/04 10:29
      */
-    @PostResource(name = "批量删除字典条目", path = "/dict/batchDelete")
+    @PostResource(name = "批量删除字典条目", path = "/dict/batchDelete", requiredPermission = true,
+            requirePermissionCode = DictConstants.DELETE_DICT)
     public ResponseData<?> batchDelete(@RequestBody @Validated(DictRequest.batchDelete.class) DictRequest dictRequest) {
-    	dictService.batchDelete(dictRequest);
+        dictService.batchDelete(dictRequest);
         return new SuccessResponseData<>();
     }
-    
+
     /**
      * 删除字典条目
      *
      * @author fengshuonan
      * @since 2020/10/29 16:35
      */
-    @PostResource(name = "删除字典", path = "/dict/delete")
+    @PostResource(name = "删除字典", path = "/dict/delete", requiredPermission = true, requirePermissionCode = DictConstants.DELETE_DICT)
     @BusinessLog
     public ResponseData<?> delete(@RequestBody @Validated(DictRequest.delete.class) DictRequest dictRequest) {
         this.dictService.del(dictRequest);
@@ -112,7 +113,7 @@ public class DictController {
      * @author fengshuonan
      * @since 2020/10/29 16:35
      */
-    @PostResource(name = "修改字典", path = "/dict/edit")
+    @PostResource(name = "修改字典", path = "/dict/edit", requiredPermission = true, requirePermissionCode = DictConstants.EDIT_DICT)
     @BusinessLog
     public ResponseData<?> edit(@RequestBody @Validated(DictRequest.edit.class) DictRequest dictRequest) {
         this.dictService.edit(dictRequest);
@@ -150,7 +151,8 @@ public class DictController {
      * @author fengshuonan
      * @since 2023/6/27 18:23
      */
-    @PostResource(name = "更新整个字典树结构，用来更新上下级结构和顺序", path = "/dict/updateDictTree")
+    @PostResource(name = "更新整个字典树结构，用来更新上下级结构和顺序", path = "/dict/updateDictTree", requiredPermission = true,
+            requirePermissionCode = DictConstants.EDIT_DICT)
     public ResponseData<List<SysDict>> updateDictTree(@RequestBody @Validated(DictRequest.updateTree.class) DictRequest dictRequest) {
         this.dictService.updateDictTree(dictRequest);
         return new SuccessResponseData<>();

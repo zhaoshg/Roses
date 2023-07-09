@@ -1,16 +1,16 @@
 package cn.stylefeng.roses.kernel.dict.modular.controller;
 
+import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.dict.modular.entity.Area;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.AreaVo;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.request.AreaRequest;
 import cn.stylefeng.roses.kernel.dict.modular.service.AreaService;
-import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
-import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
-import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
-import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
+import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
+import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
+import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

@@ -24,11 +24,11 @@
  */
 package cn.stylefeng.roses.kernel.dict.modular.controller;
 
+import cn.stylefeng.roses.kernel.dict.api.constants.DictConstants;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDictType;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.request.DictTypeRequest;
 import cn.stylefeng.roses.kernel.dict.modular.service.DictTypeService;
 import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
-import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
@@ -49,7 +49,7 @@ import java.util.List;
  * @since 2020/10/30 21:46
  */
 @RestController
-@ApiResource(name = "字典类型管理", resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "字典类型管理")
 public class DictTypeController {
 
     @Resource
@@ -61,7 +61,7 @@ public class DictTypeController {
      * @author fengshuonan
      * @since 2018/7/25 下午12:36
      */
-    @PostResource(name = "添加字典类型", path = "/dictType/add")
+    @PostResource(name = "添加字典类型", path = "/dictType/add", requiredPermission = true, requirePermissionCode = DictConstants.ADD_DICT)
     @BusinessLog
     public ResponseData<?> add(@RequestBody @Validated(DictTypeRequest.add.class) DictTypeRequest dictTypeRequest) {
         this.dictTypeService.add(dictTypeRequest);
@@ -74,7 +74,8 @@ public class DictTypeController {
      * @author fengshuonan
      * @since 2018/7/25 下午12:36
      */
-    @PostResource(name = "删除字典类型", path = "/dictType/delete")
+    @PostResource(name = "删除字典类型", path = "/dictType/delete", requiredPermission = true,
+            requirePermissionCode = DictConstants.DELETE_DICT)
     @BusinessLog
     public ResponseData<?> delete(@RequestBody @Validated(DictTypeRequest.delete.class) DictTypeRequest dictTypeRequest) {
         this.dictTypeService.del(dictTypeRequest);
@@ -87,7 +88,8 @@ public class DictTypeController {
      * @author fengshuonan
      * @since 2018/7/25 下午12:36
      */
-    @PostResource(name = "修改字典类型", path = "/dictType/edit")
+    @PostResource(name = "修改字典类型", path = "/dictType/edit", requiredPermission = true,
+            requirePermissionCode = DictConstants.EDIT_DICT)
     @BusinessLog
     public ResponseData<?> edit(@RequestBody @Validated(DictTypeRequest.edit.class) DictTypeRequest dictTypeRequest) {
         this.dictTypeService.edit(dictTypeRequest);

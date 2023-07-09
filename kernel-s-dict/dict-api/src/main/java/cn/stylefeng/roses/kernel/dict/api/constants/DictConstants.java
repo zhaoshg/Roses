@@ -42,4 +42,19 @@ public interface DictConstants {
      */
     String DICT_EXCEPTION_STEP_CODE = "13";
 
+    /**
+     * 添加字典的权限标识
+     */
+    String ADD_DICT = "ADD_DICT";
+
+    /**
+     * 修改字典的权限标识
+     */
+    String EDIT_DICT = "EDIT_DICT";
+
+    /**
+     * 删除字典的权限标识
+     */
+    String DELETE_DICT = "DELETE_DICT";
+
 }
