@@ -128,4 +128,9 @@ public interface PermissionCodeConstants {
      */
     String AUTH_RESOURCE = "AUTH_RESOURCE";
 
+    /**
+     * 在线用户界面的取消奶奶控制标识
+     */
+    String ONLINE_USER = "ONLINE_USER";
+
 }

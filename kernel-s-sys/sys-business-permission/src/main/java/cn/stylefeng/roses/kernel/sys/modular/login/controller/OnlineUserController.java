@@ -5,6 +5,7 @@ import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
+import cn.stylefeng.roses.kernel.sys.api.constants.PermissionCodeConstants;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.OnlineUserItem;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.OnlineUserResult;
 import cn.stylefeng.roses.kernel.sys.modular.login.service.OnlineUserService;
@@ -24,7 +25,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @Slf4j
-@ApiResource(name = "获取用户在线信息的接口")
+@ApiResource(name = "获取用户在线信息的接口", requiredPermission = true, requirePermissionCode = PermissionCodeConstants.ONLINE_USER)
 public class OnlineUserController {
 
     @Resource
