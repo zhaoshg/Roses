@@ -47,7 +47,7 @@ import javax.annotation.Resource;
  * @since 2023/6/27 21:33
  */
 @RestController
-@ApiResource(name = "配置管理界面的接口")
+@ApiResource(name = "配置管理界面的接口", requiredPermission = true, requirePermissionCode = SysConfigTypeController.SYS_CONFIG)
 public class SysConfigController {
 
     @Resource
@@ -76,7 +76,7 @@ public class SysConfigController {
         sysConfigService.del(sysConfigParam);
         return new SuccessResponseData<>();
     }
-    
+
     /**
      * 批量删除系统参数配置
      *
@@ -85,9 +85,10 @@ public class SysConfigController {
      */
     @PostResource(name = "批量删除系统参数配置", path = "/sysConfig/batchDelete")
     public ResponseData<?> batchDelete(@RequestBody @Validated(SysConfigParam.batchDelete.class) SysConfigParam sysConfigParam) {
-    	sysConfigService.batchDelete(sysConfigParam);
+        sysConfigService.batchDelete(sysConfigParam);
         return new SuccessResponseData<>();
     }
+
     /**
      * 编辑系统参数配置
      *

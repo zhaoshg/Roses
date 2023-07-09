@@ -43,7 +43,8 @@ public class SystemConfigController {
      * @author fengshuonan
      * @since 2021/7/8 16:36
      */
-    @PostResource(name = "初始化系统配置参数，用在系统第一次登录时", path = "/sysConfig/initConfig")
+    @PostResource(name = "初始化系统配置参数，用在系统第一次登录时", path = "/sysConfig/initConfig", requiredPermission = true,
+            requirePermissionCode = SysConfigTypeController.SYS_CONFIG)
     public ResponseData<?> initConfig(@RequestBody ConfigInitRequest configInitRequest) {
         sysConfigService.initConfig(configInitRequest);
         return new SuccessResponseData<>();
