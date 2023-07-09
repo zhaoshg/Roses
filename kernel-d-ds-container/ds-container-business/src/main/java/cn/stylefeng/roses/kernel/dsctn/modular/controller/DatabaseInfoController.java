@@ -29,7 +29,6 @@ import cn.stylefeng.roses.kernel.dsctn.api.pojo.request.DatabaseInfoRequest;
 import cn.stylefeng.roses.kernel.dsctn.modular.entity.DatabaseInfo;
 import cn.stylefeng.roses.kernel.dsctn.modular.service.DatabaseInfoService;
 import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
-import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
@@ -51,8 +50,13 @@ import java.util.List;
  * @since 2020/11/1 22:15
  */
 @RestController
-@ApiResource(name = "数据源信息管理", resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "数据源信息管理", requiredPermission = true, requirePermissionCode = DatabaseInfoController.MULTI_DS)
 public class DatabaseInfoController {
+
+    /**
+     * 多数据源管理界面的权限标识
+     */
+    public static final String MULTI_DS = "MULTI_DS";
 
     @Resource
     private DatabaseInfoService databaseInfoService;
