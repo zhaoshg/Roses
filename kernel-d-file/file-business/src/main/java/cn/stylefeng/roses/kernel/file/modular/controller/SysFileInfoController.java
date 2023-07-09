@@ -34,7 +34,6 @@ import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoResponse;
 import cn.stylefeng.roses.kernel.file.modular.entity.SysFileInfo;
 import cn.stylefeng.roses.kernel.file.modular.service.SysFileInfoService;
 import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
-import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
@@ -71,7 +70,7 @@ import java.util.Map;
  * @since 2020/12/27 13:39
  */
 @RestController
-@ApiResource(name = "文件信息相关接口", resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "文件信息相关接口")
 public class SysFileInfoController {
 
     @Resource
@@ -90,8 +89,9 @@ public class SysFileInfoController {
      * @author majianguo
      * @since 2020/12/27 13:17
      */
-    @PostResource(name = "上传文件", path = "/sysFileInfo/upload", requiredPermission = false)
-    public ResponseData<SysFileInfoResponse> upload(@RequestPart("file") MultipartFile file, @Validated(SysFileInfoRequest.add.class) SysFileInfoRequest sysFileInfoRequest) {
+    @PostResource(name = "上传文件", path = "/sysFileInfo/upload")
+    public ResponseData<SysFileInfoResponse> upload(@RequestPart("file") MultipartFile file,
+                                                    @Validated(SysFileInfoRequest.add.class) SysFileInfoRequest sysFileInfoRequest) {
         SysFileInfoResponse fileUploadInfoResult = this.sysFileInfoService.uploadFile(file, sysFileInfoRequest);
         return new SuccessResponseData<>(fileUploadInfoResult);
     }
@@ -105,7 +105,7 @@ public class SysFileInfoController {
      * @author liuhanqing
      * @since 2021/1/17 11:17
      */
-    @PostResource(name = "上传文件", path = "/sysFileInfo/tinymceUpload", requiredPermission = false)
+    @PostResource(name = "上传文件", path = "/sysFileInfo/tinymceUpload")
     public Map<String, String> tinymceUpload(@RequestPart("file") MultipartFile file, SysFileInfoRequest sysFileInfoRequest) {
         Map<String, String> resultMap = new HashMap<>(1);
         sysFileInfoRequest.setSecretFlag(YesOrNotEnum.N.getCode());
@@ -120,7 +120,7 @@ public class SysFileInfoController {
      * @author fengshuonan
      * @since 2020/11/29 11:29
      */
-    @GetResource(name = "私有文件预览", path = FileConstants.FILE_PRIVATE_PREVIEW_URL, requiredPermission = false)
+    @GetResource(name = "私有文件预览", path = FileConstants.FILE_PRIVATE_PREVIEW_URL)
     public void privatePreview(@Validated(SysFileInfoRequest.detail.class) SysFileInfoRequest sysFileInfoRequest) {
         HttpServletResponse response = HttpServletUtil.getResponse();
         sysFileInfoRequest.setSecretFlag(YesOrNotEnum.Y.getCode());
@@ -133,7 +133,7 @@ public class SysFileInfoController {
      * @author majianguo
      * @since 2020/12/27 13:17
      */
-    @GetResource(name = "公有文件预览", path = FileConstants.FILE_PUBLIC_PREVIEW_URL, requiredPermission = false, requiredLogin = false)
+    @GetResource(name = "公有文件预览", path = FileConstants.FILE_PUBLIC_PREVIEW_URL, requiredLogin = false)
     public void publicPreview(@Validated(SysFileInfoRequest.detail.class) SysFileInfoRequest sysFileInfoRequest) {
         HttpServletResponse response = HttpServletUtil.getResponse();
         sysFileInfoRequest.setSecretFlag(YesOrNotEnum.N.getCode());
@@ -146,8 +146,9 @@ public class SysFileInfoController {
      * @author fengshuonan
      * @since 2020/11/29 11:29
      */
-    @GetResource(name = "文件预览，通过bucketName和objectName", path = FileConstants.FILE_PREVIEW_BY_OBJECT_NAME, requiredPermission = false, requiredLogin = false)
-    public void previewByBucketNameObjectName(@Validated(SysFileInfoRequest.previewByObjectName.class) SysFileInfoRequest sysFileInfoRequest) {
+    @GetResource(name = "文件预览，通过bucketName和objectName", path = FileConstants.FILE_PREVIEW_BY_OBJECT_NAME, requiredLogin = false)
+    public void previewByBucketNameObjectName(
+            @Validated(SysFileInfoRequest.previewByObjectName.class) SysFileInfoRequest sysFileInfoRequest) {
         HttpServletResponse response = HttpServletUtil.getResponse();
         sysFileInfoService.previewByBucketAndObjName(sysFileInfoRequest, response);
     }
@@ -158,7 +159,7 @@ public class SysFileInfoController {
      * @author majianguo
      * @since 2020/12/27 13:17
      */
-    @GetResource(name = "私有文件下载", path = "/sysFileInfo/privateDownload", requiredPermission = false)
+    @GetResource(name = "私有文件下载", path = "/sysFileInfo/privateDownload")
     public void privateDownload(@Validated(SysFileInfoRequest.detail.class) SysFileInfoRequest sysFileInfoRequest) {
         HttpServletResponse response = HttpServletUtil.getResponse();
         sysFileInfoRequest.setSecretFlag(YesOrNotEnum.Y.getCode());
@@ -171,7 +172,7 @@ public class SysFileInfoController {
      * @author majianguo
      * @since 2020/12/27 13:17
      */
-    @GetResource(name = "公有文件下载", path = "/sysFileInfo/publicDownload", requiredLogin = false, requiredPermission = false)
+    @GetResource(name = "公有文件下载", path = "/sysFileInfo/publicDownload", requiredLogin = false)
     public void publicDownload(@Validated(SysFileInfoRequest.detail.class) SysFileInfoRequest sysFileInfoRequest) {
         HttpServletResponse response = HttpServletUtil.getResponse();
         sysFileInfoRequest.setSecretFlag(YesOrNotEnum.N.getCode());
@@ -186,8 +187,9 @@ public class SysFileInfoController {
      * @author majianguo
      * @since 2020/12/16 15:34
      */
-    @PostResource(name = "替换文件", path = "/sysFileInfo/update", requiredPermission = false)
-    public ResponseData<SysFileInfoResponse> update(@RequestPart("file") MultipartFile file, @Validated(SysFileInfoRequest.edit.class) SysFileInfoRequest sysFileInfoRequest) {
+    @PostResource(name = "替换文件", path = "/sysFileInfo/update")
+    public ResponseData<SysFileInfoResponse> update(@RequestPart("file") MultipartFile file,
+                                                    @Validated(SysFileInfoRequest.edit.class) SysFileInfoRequest sysFileInfoRequest) {
         SysFileInfoResponse fileUploadInfoResult = this.sysFileInfoService.updateFile(file, sysFileInfoRequest);
         return new SuccessResponseData<>(fileUploadInfoResult);
     }
@@ -198,8 +200,9 @@ public class SysFileInfoController {
      * @author majianguo
      * @since 2020/12/16 15:34
      */
-    @PostResource(name = "版本回退", path = "/sysFileInfo/versionBack", requiredPermission = false)
-    public ResponseData<SysFileInfoResponse> versionBack(@Validated(SysFileInfoRequest.versionBack.class) SysFileInfoRequest sysFileInfoRequest) {
+    @PostResource(name = "版本回退", path = "/sysFileInfo/versionBack")
+    public ResponseData<SysFileInfoResponse> versionBack(
+            @Validated(SysFileInfoRequest.versionBack.class) SysFileInfoRequest sysFileInfoRequest) {
         SysFileInfoResponse fileUploadInfoResult = this.sysFileInfoService.versionBack(sysFileInfoRequest);
         return new SuccessResponseData<>(fileUploadInfoResult);
     }
@@ -212,7 +215,7 @@ public class SysFileInfoController {
      * @author majianguo
      * @since 2020/12/27 13:17
      */
-    @GetResource(name = "根据附件IDS查询附件信息", path = "/sysFileInfo/getFileInfoListByFileIds", requiredPermission = false)
+    @GetResource(name = "根据附件IDS查询附件信息", path = "/sysFileInfo/getFileInfoListByFileIds")
     public ResponseData<List<SysFileInfoResponse>> getFileInfoListByFileIds(@RequestParam(value = "fileIds") String fileIds) {
         List<SysFileInfoResponse> list = this.sysFileInfoService.getFileInfoListByFileIds(fileIds);
         return new SuccessResponseData<>(list);
@@ -224,7 +227,7 @@ public class SysFileInfoController {
      * @author majianguo
      * @since 2020/12/27 13:17
      */
-    @GetResource(name = "公有打包下载文件", path = "/sysFileInfo/publicPackagingDownload", requiredPermission = false, requiredLogin = false)
+    @GetResource(name = "公有打包下载文件", path = "/sysFileInfo/publicPackagingDownload", requiredLogin = false)
     public void publicPackagingDownload(@RequestParam(value = "fileIds") String fileIds) {
         HttpServletResponse response = HttpServletUtil.getResponse();
         this.sysFileInfoService.packagingDownload(fileIds, YesOrNotEnum.N.getCode(), response);
@@ -236,7 +239,7 @@ public class SysFileInfoController {
      * @author majianguo
      * @since 2020/12/27 13:18
      */
-    @GetResource(name = "私有打包下载文件", path = "/sysFileInfo/privatePackagingDownload", requiredPermission = false)
+    @GetResource(name = "私有打包下载文件", path = "/sysFileInfo/privatePackagingDownload")
     public void privatePackagingDownload(@RequestParam(value = "fileIds") String fileIds) {
         HttpServletResponse response = HttpServletUtil.getResponse();
         this.sysFileInfoService.packagingDownload(fileIds, YesOrNotEnum.Y.getCode(), response);
@@ -248,7 +251,7 @@ public class SysFileInfoController {
      * @author fengshuonan
      * @since 2020/11/29 11:19
      */
-    @PostResource(name = "删除文件信息（真删除文件信息）", path = "/sysFileInfo/deleteReally", requiredPermission = false)
+    @PostResource(name = "删除文件信息（真删除文件信息）", path = "/sysFileInfo/deleteReally")
     @BusinessLog
     public ResponseData<?> deleteReally(@RequestBody @Validated(SysFileInfoRequest.delete.class) SysFileInfoRequest sysFileInfoRequest) {
         this.sysFileInfoService.deleteReally(sysFileInfoRequest);
@@ -261,7 +264,7 @@ public class SysFileInfoController {
      * @author fengshuonan
      * @since 2020/11/29 11:29
      */
-    @GetResource(name = "分页查询文件信息表", path = "/sysFileInfo/fileInfoListPage", requiredPermission = false)
+    @GetResource(name = "分页查询文件信息表", path = "/sysFileInfo/fileInfoListPage")
     public ResponseData<PageResult<SysFileInfoListResponse>> fileInfoListPage(SysFileInfoRequest sysFileInfoRequest) {
         return new SuccessResponseData<>(this.sysFileInfoService.fileInfoListPage(sysFileInfoRequest));
     }
@@ -272,7 +275,7 @@ public class SysFileInfoController {
      * @author fengshuonan
      * @since 2020/11/29 11:29
      */
-    @GetResource(name = "查看详情文件信息表", path = "/sysFileInfo/detail", requiredPermission = false)
+    @GetResource(name = "查看详情文件信息表", path = "/sysFileInfo/detail")
     public ResponseData<SysFileInfo> detail(@Validated(SysFileInfoRequest.detail.class) SysFileInfoRequest sysFileInfoRequest) {
         return new SuccessResponseData<>(sysFileInfoService.detail(sysFileInfoRequest));
     }

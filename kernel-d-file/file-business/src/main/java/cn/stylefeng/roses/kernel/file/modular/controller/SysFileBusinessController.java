@@ -62,8 +62,9 @@ public class SysFileBusinessController {
      * @author fengshuonan
      * @since 2023/3/31 15:31
      */
-    @PostResource(name = "增加文件下载次数", path = "/sysFileInfo/addFileDownloadCount", requiredPermission = false, requiredLogin = false)
-    public ResponseData<?> upload(@RequestBody @Validated(SysFileBusinessRequest.addFileDownloadCount.class) SysFileBusinessRequest sysFileBusinessRequest) {
+    @PostResource(name = "增加文件下载次数", path = "/sysFileInfo/addFileDownloadCount", requiredLogin = false)
+    public ResponseData<?> upload(
+            @RequestBody @Validated(SysFileBusinessRequest.addFileDownloadCount.class) SysFileBusinessRequest sysFileBusinessRequest) {
         sysFileBusinessService.addFileDownloadCount(sysFileBusinessRequest.getBusinessId(), sysFileBusinessRequest.getFileId());
         return new SuccessResponseData<>();
     }
@@ -75,7 +76,8 @@ public class SysFileBusinessController {
      * @since 2023/4/5 16:00
      */
     @GetResource(name = "获取业务关联的文件信息列表", path = "/sysFileInfo/getBusinessFileList")
-    public ResponseData<List<SysFileInfoRes>> getBusinessFileList(@Validated(SysFileBusinessRequest.getBusinessFileList.class) SysFileBusinessRequest sysFileBusinessRequest) {
+    public ResponseData<List<SysFileInfoRes>> getBusinessFileList(
+            @Validated(SysFileBusinessRequest.getBusinessFileList.class) SysFileBusinessRequest sysFileBusinessRequest) {
         List<SysFileInfoResponse> list = sysFileBusinessService.getBusinessFileInfoList(sysFileBusinessRequest.getBusinessId());
         List<SysFileInfoRes> sysFileInfoRes = BeanUtil.copyToList(list, SysFileInfoRes.class);
         return new SuccessResponseData<>(sysFileInfoRes);
@@ -88,10 +90,9 @@ public class SysFileBusinessController {
      * @since 2023/4/4 20:56
      */
     @PostResource(name = "新增绑定业务和文件", path = "/sysFileInfo/bindFile")
-    public ResponseData<?> bindFile(@RequestBody @Validated(SysFileBusinessRequest.bindFile.class) SysFileBusinessRequest sysFileBusinessRequest) {
-        sysFileBusinessService.addFileBusinessBind(
-                sysFileBusinessRequest.getBusinessCode(),
-                sysFileBusinessRequest.getBusinessId(),
+    public ResponseData<?> bindFile(
+            @RequestBody @Validated(SysFileBusinessRequest.bindFile.class) SysFileBusinessRequest sysFileBusinessRequest) {
+        sysFileBusinessService.addFileBusinessBind(sysFileBusinessRequest.getBusinessCode(), sysFileBusinessRequest.getBusinessId(),
                 ListUtil.list(false, sysFileBusinessRequest.getFileId()));
         return new SuccessResponseData<>();
     }
