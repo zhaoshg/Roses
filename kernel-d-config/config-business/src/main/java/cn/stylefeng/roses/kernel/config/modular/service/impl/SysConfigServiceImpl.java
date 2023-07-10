@@ -298,10 +298,10 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         String searchText = sysConfigParam.getSearchText();
         if (ObjectUtil.isNotEmpty(searchText)) {
             queryWrapper.and(wq -> {
-            	wq.like(SysConfig::getConfigName, searchText)
-            	  .or().like(SysConfig::getConfigCode, searchText)
-            	  .or().like(SysConfig::getConfigValue, searchText)
-            	  .or().like(SysConfig::getRemark, searchText);
+                wq.like(SysConfig::getConfigName, searchText)
+                        .or().like(SysConfig::getConfigCode, searchText)
+                        .or().like(SysConfig::getConfigValue, searchText)
+                        .or().like(SysConfig::getRemark, searchText);
             });
         }
 
@@ -315,27 +315,27 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         return queryWrapper;
     }
 
-	@Override
-	public void batchDelete(SysConfigParam sysConfigParam) {
+    @Override
+    public void batchDelete(SysConfigParam sysConfigParam) {
 
-		for(Long configId:sysConfigParam.getConfigIdList()){
-			 // 1.根据id获取常量
-			SysConfig sysConfig = this.getById(configId);
-	        if (ObjectUtil.isEmpty(sysConfig) || sysConfig.getDelFlag().equals(YesOrNotEnum.Y.getCode())) {
-	            throw new ConfigException(ConfigExceptionEnum.CONFIG_NOT_EXIST, "id: " + sysConfigParam.getConfigId());
-	        }
+        for (Long configId : sysConfigParam.getConfigIdList()) {
+            // 1.根据id获取常量
+            SysConfig sysConfig = this.getById(configId);
+            if (ObjectUtil.isEmpty(sysConfig) || sysConfig.getDelFlag().equals(YesOrNotEnum.Y.getCode())) {
+                throw new ConfigException(ConfigExceptionEnum.CONFIG_NOT_EXIST, "id: " + sysConfigParam.getConfigId());
+            }
 
-	        // 2.不能删除系统参数
-	        if (YesOrNotEnum.Y.getCode().equals(configId)) {
-	            throw new ConfigException(ConfigExceptionEnum.CONFIG_SYS_CAN_NOT_DELETE);
-	        }
+            // 2.不能删除系统参数
+            if (YesOrNotEnum.Y.getCode().equals(sysConfig.getSysFlag())) {
+                throw new ConfigException(ConfigExceptionEnum.CONFIG_SYS_CAN_NOT_DELETE);
+            }
 
-	        // 3.逻辑删除
-	        this.removeById(configId);
+            // 3.逻辑删除
+            this.removeById(configId);
 
-	        // 4.删除对应context
-	        ConfigContext.me().deleteConfig(sysConfig.getConfigCode());
-		}
-	}
+            // 4.删除对应context
+            ConfigContext.me().deleteConfig(sysConfig.getConfigCode());
+        }
+    }
 
 }
