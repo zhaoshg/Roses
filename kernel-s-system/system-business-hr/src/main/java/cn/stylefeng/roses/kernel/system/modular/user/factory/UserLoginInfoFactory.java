@@ -64,13 +64,9 @@ public class UserLoginInfoFactory {
      * @author fengshuonan
      * @since 2020/12/26 17:53
      */
-    public static UserLoginInfoDTO userLoginInfoDTO(SysUser sysUser,
-                                                    List<SysRoleDTO> roleResponseList,
-                                                    DataScopeDTO dataScopeResponse,
-                                                    SysUserOrgDTO userOrgInfo,
-                                                    Set<String> resourceUrlsListByCodes,
-                                                    Set<String> roleButtonCodes,
-                                                    AntdvFrontTypeEnum userMenuType) {
+    public static UserLoginInfoDTO userLoginInfoDTO(SysUser sysUser, List<SysRoleDTO> roleResponseList, DataScopeDTO dataScopeResponse,
+                                                    SysUserOrgDTO userOrgInfo, Set<String> resourceUrlsListByCodes,
+                                                    Set<String> roleButtonCodes, AntdvFrontTypeEnum userMenuType) {
 
         UserLoginInfoDTO userLoginInfoDTO = new UserLoginInfoDTO();
 
@@ -134,6 +130,9 @@ public class UserLoginInfoFactory {
 
         // 设置登录用户的菜单类型
         loginUser.setMenuType(userMenuType.getCode());
+
+        // 设置外部用户id
+        loginUser.setMasterUserId(sysUser.getMasterUserId());
 
         // 响应dto
         userLoginInfoDTO.setLoginUser(loginUser);

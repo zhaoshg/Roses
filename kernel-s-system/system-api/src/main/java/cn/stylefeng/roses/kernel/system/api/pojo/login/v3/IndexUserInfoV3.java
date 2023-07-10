@@ -149,4 +149,10 @@ public class IndexUserInfoV3 {
     @ChineseDescription("权限标识编码")
     private Set<String> authCodes;
 
+    /**
+     * 主数据的用户id
+     */
+    @ChineseDescription("主数据的用户id")
+    private String masterUserId;
+
 }

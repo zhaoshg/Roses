@@ -180,6 +180,12 @@ public class LoginUser implements Serializable {
     @ChineseDescription("用户拥有的菜单类型：1-前台 ，2-后台，3-所有")
     private Integer menuType;
 
+    /**
+     * 主数据的用户id
+     */
+    @ChineseDescription("主数据的用户id")
+    private String masterUserId;
+
     public String getWsUrl() {
         if (ObjectUtil.isEmpty(this.wsUrl)) {
             return "";

@@ -130,6 +130,9 @@ public class IndexUserInfoServiceImpl implements IndexUserInfoService {
         // 权限编码
         indexUserInfoV3.setAuthCodes(loginUser.getButtonCodes());
 
+        // 设置外部id
+        indexUserInfoV3.setMasterUserId(loginUser.getMasterUserId());
+
         return indexUserInfoV3;
     }
 
