@@ -18,6 +18,7 @@
     <modules>
         <module>dict-api</module>
         <module>dict-business</module>
+        <module>dict-city-business</module>
         <module>dict-spring-boot-starter</module>
     </modules>
 

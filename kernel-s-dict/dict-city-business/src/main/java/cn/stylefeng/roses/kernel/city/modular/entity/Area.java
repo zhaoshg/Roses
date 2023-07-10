@@ -1,4 +1,4 @@
-package cn.stylefeng.roses.kernel.dict.modular.entity;
+package cn.stylefeng.roses.kernel.city.modular.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
@@ -9,11 +9,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Date;
 import java.math.BigDecimal;
 
 /**
- * 【系统基础】-【行政区域表】实例类
+ * 行政区域实例类
  *
  * @author LiYanJun
  * @date 2023/07/05 18:12

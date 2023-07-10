@@ -1,11 +1,11 @@
-package cn.stylefeng.roses.kernel.dict.modular.enums;
+package cn.stylefeng.roses.kernel.city.modular.enums;
 
 import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
 import cn.stylefeng.roses.kernel.rule.exception.AbstractExceptionEnum;
 import lombok.Getter;
 
 /**
- * 【系统基础】-【行政区域表】异常相关枚举
+ * 行政区域异常相关枚举
  *
  * @author LiYanJun
  * @date 2023/07/05 18:12
@@ -16,7 +16,7 @@ public enum AreaExceptionEnum implements AbstractExceptionEnum {
     /**
      * 查询结果不存在
      */
-    AREA_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE +  "10001", "查询结果不存在");
+    AREA_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10001", "查询结果不存在");
 
     /**
      * 错误编码

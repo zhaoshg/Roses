@@ -1,18 +1,16 @@
-package cn.stylefeng.roses.kernel.dict.modular.pojo.request;
+package cn.stylefeng.roses.kernel.city.modular.pojo.request;
 
-import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import java.util.Date;
 import java.math.BigDecimal;
 
 /**
- * 【系统基础】-【行政区域表】封装类
+ * 行政区域封装类
  *
  * @author LiYanJun
  * @date 2023/07/05 18:12

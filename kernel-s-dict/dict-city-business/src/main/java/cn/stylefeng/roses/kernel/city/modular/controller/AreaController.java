@@ -1,11 +1,10 @@
-package cn.stylefeng.roses.kernel.dict.modular.controller;
+package cn.stylefeng.roses.kernel.city.modular.controller;
 
+import cn.stylefeng.roses.kernel.city.modular.entity.Area;
+import cn.stylefeng.roses.kernel.city.modular.pojo.AreaVo;
+import cn.stylefeng.roses.kernel.city.modular.pojo.request.AreaRequest;
+import cn.stylefeng.roses.kernel.city.modular.service.AreaService;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.dict.modular.entity.Area;
-import cn.stylefeng.roses.kernel.dict.modular.pojo.AreaVo;
-import cn.stylefeng.roses.kernel.dict.modular.pojo.request.AreaRequest;
-import cn.stylefeng.roses.kernel.dict.modular.service.AreaService;
-import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -19,13 +18,13 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 【系统基础】-【行政区域表】控制器
+ * 行政区域控制器
  *
  * @author LiYanJun
  * @date 2023/07/05 18:12
  */
 @RestController
-@ApiResource(name = "行政区域", resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "行政区域")
 public class AreaController {
 
     @Resource
