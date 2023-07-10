@@ -1,7 +1,6 @@
 package cn.stylefeng.roses.kernel.city.modular.controller;
 
 import cn.stylefeng.roses.kernel.city.modular.entity.Area;
-import cn.stylefeng.roses.kernel.city.modular.pojo.AreaVo;
 import cn.stylefeng.roses.kernel.city.modular.pojo.request.AreaRequest;
 import cn.stylefeng.roses.kernel.city.modular.service.AreaService;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
@@ -95,7 +94,7 @@ public class AreaController {
      * @date 2023/07/05 18:12
      */
     @GetResource(name = "分页查询行政区域", path = "/area/page")
-    public ResponseData<PageResult<AreaVo>> page(AreaRequest areaRequest) {
+    public ResponseData<PageResult<Area>> page(AreaRequest areaRequest) {
         return new SuccessResponseData<>(areaService.findPage(areaRequest));
     }
 

@@ -1,7 +1,6 @@
 package cn.stylefeng.roses.kernel.city.modular.service;
 
 import cn.stylefeng.roses.kernel.city.modular.entity.Area;
-import cn.stylefeng.roses.kernel.city.modular.pojo.AreaVo;
 import cn.stylefeng.roses.kernel.city.modular.pojo.request.AreaRequest;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -70,6 +69,6 @@ public interface AreaService extends IService<Area> {
      * @author LiYanJun
      * @date 2023/07/05 18:12
      */
-    PageResult<AreaVo> findPage(AreaRequest areaRequest);
+    PageResult<Area> findPage(AreaRequest areaRequest);
 
 }

@@ -5,7 +5,6 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.city.modular.entity.Area;
 import cn.stylefeng.roses.kernel.city.modular.enums.AreaExceptionEnum;
 import cn.stylefeng.roses.kernel.city.modular.mapper.AreaMapper;
-import cn.stylefeng.roses.kernel.city.modular.pojo.AreaVo;
 import cn.stylefeng.roses.kernel.city.modular.pojo.request.AreaRequest;
 import cn.stylefeng.roses.kernel.city.modular.service.AreaService;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
@@ -18,7 +17,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -29,6 +27,7 @@ import java.util.List;
  */
 @Service
 public class AreaServiceImpl extends ServiceImpl<AreaMapper, Area> implements AreaService {
+
     @Override
     public void add(AreaRequest areaRequest) {
         Area area = new Area();
@@ -55,25 +54,25 @@ public class AreaServiceImpl extends ServiceImpl<AreaMapper, Area> implements Ar
     }
 
     @Override
-    public PageResult<AreaVo> findPage(AreaRequest areaRequest) {
-        Page<AreaVo> page = PageFactory.defaultPage();
-        List<AreaVo> list = baseMapper.customFindList(page, areaRequest);
-        PageResult<AreaVo> pageResult = PageResultFactory.createPageResult(page.setRecords(list));
-        return pageResult;
+    public PageResult<Area> findPage(AreaRequest areaRequest) {
+        LambdaQueryWrapper<Area> wrapper = this.createWrapper(areaRequest);
+        Page<Area> page = this.page(PageFactory.defaultPage(), wrapper);
+        return PageResultFactory.createPageResult(page);
     }
 
     @Override
     public List<Area> findList(AreaRequest areaRequest) {
 
-        LambdaQueryWrapper<Area> queryWrapper = new LambdaQueryWrapper<>();
         String parentId = areaRequest.getParentId();
         if (ObjectUtil.isEmpty(parentId)) {
-            parentId = TreeConstants.DEFAULT_PARENT_ID.toString();
+            areaRequest.setParentId(TreeConstants.DEFAULT_PARENT_ID.toString());
         }
-        queryWrapper.select(Area::getAreaId, Area::getAreaName, Area::getAreaCode);
-        queryWrapper.eq(Area::getParentId, parentId);
-        queryWrapper.orderByAsc(Area::getAreaSort);
-        return this.list(queryWrapper);
+
+        LambdaQueryWrapper<Area> wrapper = this.createWrapper(areaRequest);
+
+        wrapper.select(Area::getAreaId, Area::getAreaName, Area::getAreaCode);
+
+        return this.list(wrapper);
     }
 
     /**
@@ -99,23 +98,11 @@ public class AreaServiceImpl extends ServiceImpl<AreaMapper, Area> implements Ar
     private LambdaQueryWrapper<Area> createWrapper(AreaRequest areaRequest) {
         LambdaQueryWrapper<Area> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long areaId = areaRequest.getAreaId();
-        String areaCode = areaRequest.getAreaCode();
-        String areaName = areaRequest.getAreaName();
         String parentId = areaRequest.getParentId();
-        Integer areaLevel = areaRequest.getAreaLevel();
-        BigDecimal areaSort = areaRequest.getAreaSort();
-        String delFlag = areaRequest.getDelFlag();
-        String areaPids = areaRequest.getAreaPids();
+        queryWrapper.eq(ObjectUtil.isNotEmpty(parentId), Area::getParentId, parentId);
 
-        queryWrapper.eq(ObjectUtil.isNotNull(areaId), Area::getAreaId, areaId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(areaCode), Area::getAreaCode, areaCode);
-        queryWrapper.like(ObjectUtil.isNotEmpty(areaName), Area::getAreaName, areaName);
-        queryWrapper.like(ObjectUtil.isNotEmpty(parentId), Area::getParentId, parentId);
-        queryWrapper.eq(ObjectUtil.isNotNull(areaLevel), Area::getAreaLevel, areaLevel);
-        queryWrapper.eq(ObjectUtil.isNotNull(areaSort), Area::getAreaSort, areaSort);
-        queryWrapper.like(ObjectUtil.isNotEmpty(delFlag), Area::getDelFlag, delFlag);
-        queryWrapper.like(ObjectUtil.isNotEmpty(areaPids), Area::getAreaPids, areaPids);
+        // 排序字段排序
+        queryWrapper.orderByAsc(Area::getAreaSort);
 
         return queryWrapper;
     }
