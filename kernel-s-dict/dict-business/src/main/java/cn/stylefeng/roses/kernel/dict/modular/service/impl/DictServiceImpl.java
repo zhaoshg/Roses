@@ -141,21 +141,17 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         // 填充拼音
         sysDict.setDictNamePinyin(pinYinApi.parseEveryPinyinFirstLetter(sysDict.getDictName()));
 
-        // 填充pids
-        //String pids = this.createPids(sysDict.getDictParentId());
-        //sysDict.setDictPids(pids);
-
         this.updateById(sysDict);
     }
 
     @Override
     public SysDict detail(DictRequest dictRequest) {
-    	SysDict sysDict= this.querySysDict(dictRequest);
-    	if(ObjectUtil.isNotEmpty(sysDict.getDictTypeId())) {
-    		SysDictType sysDictType=dictTypeService.getById(sysDict.getDictTypeId());
-    		sysDict.setDictTypeName(sysDictType.getDictTypeName());
-    	}
-    	return sysDict;
+        SysDict sysDict = this.querySysDict(dictRequest);
+        if (ObjectUtil.isNotEmpty(sysDict.getDictTypeId())) {
+            SysDictType sysDictType = dictTypeService.getById(sysDict.getDictTypeId());
+            sysDict.setDictTypeName(sysDictType.getDictTypeName());
+        }
+        return sysDict;
     }
 
     @Override
@@ -362,11 +358,10 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         // 根据名称或者编码进行查询
         String searchText = dictRequest.getSearchText();
         if (ObjectUtil.isNotEmpty(searchText)) {
-        	queryWrapper.and(wq -> {
-                wq.like(SysDict::getDictName, searchText)
-                   .or().like(SysDict::getDictCode, searchText)
-                   .or().like(SysDict::getDictNamePinyin, searchText);
-                });
+            queryWrapper.and(wq -> {
+                wq.like(SysDict::getDictName, searchText).or().like(SysDict::getDictCode, searchText).or()
+                        .like(SysDict::getDictNamePinyin, searchText);
+            });
         }
 
         // 根据字典类型id查询字典
@@ -452,9 +447,9 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
         }
     }
 
-	@Override
-	public void batchDelete(DictRequest dictRequest) {
-		this.removeBatchByIds(dictRequest.getDictIdList());
-	}
+    @Override
+    public void batchDelete(DictRequest dictRequest) {
+        this.removeBatchByIds(dictRequest.getDictIdList());
+    }
 
 }

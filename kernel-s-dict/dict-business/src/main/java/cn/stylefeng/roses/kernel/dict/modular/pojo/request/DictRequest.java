@@ -27,7 +27,6 @@ package cn.stylefeng.roses.kernel.dict.modular.pojo.request;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
-import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest.batchDelete;
 import cn.stylefeng.roses.kernel.validator.api.validators.status.StatusValue;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -154,7 +153,7 @@ public class DictRequest extends BaseRequest {
     @NotEmpty(message = "dictId集合不能为空", groups = batchDelete.class)
     @ChineseDescription("dictId集合，用在批量删除")
     private Set<Long> dictIdList;
-    
+
     /**
      * 获取树形列表
      */

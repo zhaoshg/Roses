@@ -298,10 +298,8 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         String searchText = sysConfigParam.getSearchText();
         if (ObjectUtil.isNotEmpty(searchText)) {
             queryWrapper.and(wq -> {
-                wq.like(SysConfig::getConfigName, searchText)
-                        .or().like(SysConfig::getConfigCode, searchText)
-                        .or().like(SysConfig::getConfigValue, searchText)
-                        .or().like(SysConfig::getRemark, searchText);
+                wq.like(SysConfig::getConfigName, searchText).or().like(SysConfig::getConfigCode, searchText).or()
+                        .like(SysConfig::getConfigValue, searchText).or().like(SysConfig::getRemark, searchText);
             });
         }
 

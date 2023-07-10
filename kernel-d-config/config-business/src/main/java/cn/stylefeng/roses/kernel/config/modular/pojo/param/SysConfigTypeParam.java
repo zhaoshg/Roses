@@ -31,7 +31,6 @@ import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
 import java.math.BigDecimal;
 
 /**
@@ -47,7 +46,7 @@ public class SysConfigTypeParam extends BaseRequest {
     /**
      * 配置类型id
      */
-	@NotNull(message = "配置类型id不能为空", groups = {edit.class, delete.class, detail.class})
+    @NotNull(message = "配置类型id不能为空", groups = {edit.class, delete.class, detail.class})
     @ChineseDescription("配置类型id")
     private Long configTypeId;
 
