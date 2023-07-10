@@ -30,39 +30,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 文件类型识别工具
+ * svg文件类型工具类
  *
  * @author fengshuonan
- * @since 2020/11/29 14:00
+ * @since 2023/7/10 11:41
  */
-public class PicFileTypeUtil {
+public class SvgFileTypeUtil {
 
-    private static final List<String> PIC_TYPES;
+    /**
+     * svg的响应头的content type类型
+     */
+    public static final String SVG_RESPONSE_CONTENT_TYPE = "image/svg+xml";
+
+    private static final List<String> SVG_TYPES;
 
     static {
-        PIC_TYPES = new ArrayList<>();
-        PIC_TYPES.add("jpg");
-        PIC_TYPES.add("png");
-        PIC_TYPES.add("jpeg");
-        PIC_TYPES.add("tif");
-        PIC_TYPES.add("gif");
-        PIC_TYPES.add("bmp");
+        SVG_TYPES = new ArrayList<>();
+        SVG_TYPES.add("svg");
     }
 
     /**
-     * 根据文件名称获取文件是否为图片类型
+     * 根据文件名称获取文件是否为svg类型
      *
      * @param fileName 文件名称
-     * @return boolean true-是图片类型，false-不是图片类型
+     * @return boolean true-是svg类型，false-不是svg类型
      * @author fengshuonan
-     * @since 2020/11/29 14:04
+     * @since 2023/7/10 11:41
      */
-    public static boolean getFileImgTypeFlag(String fileName) {
+    public static boolean getFileSvgTypeFlag(String fileName) {
         if (StrUtil.isEmpty(fileName)) {
             return false;
         }
 
-        for (String picType : PIC_TYPES) {
+        for (String picType : SVG_TYPES) {
             if (fileName.toLowerCase().endsWith(picType)) {
                 return true;
             }
