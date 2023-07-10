@@ -48,6 +48,7 @@ import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoResponse;
 import cn.stylefeng.roses.kernel.file.api.util.DownloadUtil;
 import cn.stylefeng.roses.kernel.file.api.util.PdfFileTypeUtil;
 import cn.stylefeng.roses.kernel.file.api.util.PicFileTypeUtil;
+import cn.stylefeng.roses.kernel.file.api.util.SvgFileTypeUtil;
 import cn.stylefeng.roses.kernel.file.modular.entity.SysFileInfo;
 import cn.stylefeng.roses.kernel.file.modular.entity.SysFileStorage;
 import cn.stylefeng.roses.kernel.file.modular.factory.FileInfoFactory;
@@ -158,7 +159,8 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
         // 拼接文件可直接访问的url
         String fileAuthUrl;
         if (YesOrNotEnum.Y.getCode().equals(sysFileInfoRequest.getSecretFlag())) {
-            fileAuthUrl = fileOperatorApi.getFileAuthUrl(sysFileInfo.getFileBucket(), sysFileInfo.getFileObjectName(), FileConfigExpander.getDefaultFileTimeoutSeconds() * 1000);
+            fileAuthUrl = fileOperatorApi.getFileAuthUrl(sysFileInfo.getFileBucket(), sysFileInfo.getFileObjectName(),
+                    FileConfigExpander.getDefaultFileTimeoutSeconds() * 1000);
         } else {
             fileAuthUrl = fileOperatorApi.getFileUnAuthUrl(sysFileInfo.getFileBucket(), sysFileInfo.getFileObjectName());
         }
@@ -253,7 +255,8 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
         List<SysFileInfoListResponse> list = this.baseMapper.fileInfoList(page, sysFileInfoRequest);
 
         // 排除defaultAvatar.png这个图片,这个是默认头像
-        List<SysFileInfoListResponse> newList = list.stream().filter(i -> !i.getFileOriginName().equals(FileConstants.DEFAULT_AVATAR_FILE_OBJ_NAME)).collect(Collectors.toList());
+        List<SysFileInfoListResponse> newList = list.stream()
+                .filter(i -> !i.getFileOriginName().equals(FileConstants.DEFAULT_AVATAR_FILE_OBJ_NAME)).collect(Collectors.toList());
 
         // 拼接图片url地址
         for (SysFileInfoListResponse sysFileInfoListResponse : newList) {
@@ -466,7 +469,8 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
             return this.sysFileStorageService.getFileAuthUrl(String.valueOf(fileId));
         } else {
             // 返回第三方存储文件url
-            return fileOperatorApi.getFileAuthUrl(sysFileInfo.getFileBucket(), sysFileInfo.getFileObjectName(), FileConfigExpander.getDefaultFileTimeoutSeconds());
+            return fileOperatorApi.getFileAuthUrl(sysFileInfo.getFileBucket(), sysFileInfo.getFileObjectName(),
+                    FileConfigExpander.getDefaultFileTimeoutSeconds());
         }
     }
 
@@ -544,13 +548,16 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
     private void renderPreviewFile(HttpServletResponse response, String fileSuffix, byte[] fileBytes) {
 
         // 如果文件后缀是图片或者pdf，则直接输出流
-        if (PicFileTypeUtil.getFileImgTypeFlag(fileSuffix) || PdfFileTypeUtil.getFilePdfTypeFlag(fileSuffix)) {
+        if (PicFileTypeUtil.getFileImgTypeFlag(fileSuffix) || PdfFileTypeUtil.getFilePdfTypeFlag(
+                fileSuffix) || SvgFileTypeUtil.getFileSvgTypeFlag(fileSuffix)) {
             try {
                 // 设置contentType
                 if (PicFileTypeUtil.getFileImgTypeFlag(fileSuffix)) {
                     response.setContentType(MediaType.IMAGE_PNG_VALUE);
                 } else if (PdfFileTypeUtil.getFilePdfTypeFlag(fileSuffix)) {
                     response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+                } else if (SvgFileTypeUtil.getFileSvgTypeFlag(fileSuffix)) {
+                    response.setContentType(SvgFileTypeUtil.SVG_RESPONSE_CONTENT_TYPE);
                 }
 
                 // 获取outputStream
