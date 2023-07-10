@@ -47,6 +47,7 @@ public class PicFileTypeUtil {
         PIC_TYPES.add("tif");
         PIC_TYPES.add("gif");
         PIC_TYPES.add("bmp");
+        PIC_TYPES.add("svg");
     }
 
     /**
