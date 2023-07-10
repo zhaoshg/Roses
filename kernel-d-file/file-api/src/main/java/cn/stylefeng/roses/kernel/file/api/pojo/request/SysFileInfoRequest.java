@@ -85,9 +85,9 @@ public class SysFileInfoRequest extends BaseRequest {
     private String token;
 
     /**
-     * 文件存储位置：1-阿里云，2-腾讯云，3-minio，4-本地
+     * 文件存储位置：1-阿里云，2-腾讯云，3-minio，4-本地，5-数据库
      */
-    @ChineseDescription("文件存储位置：1-阿里云，2-腾讯云，3-minio，4-本地")
+    @ChineseDescription("文件存储位置：1-阿里云，2-腾讯云，3-minio，4-本地，5-数据库")
     private Integer fileLocation;
 
     /**
