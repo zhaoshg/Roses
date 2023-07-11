@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.group.modular.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
@@ -31,26 +32,44 @@ public class SysGroupServiceImpl extends ServiceImpl<SysGroupMapper, SysGroup> i
 
     @Override
     public List<SysGroupDTO> findGroupList(SysGroupRequest sysGroupRequest, boolean getTotal) {
+
+        // 定义返回结果
+        List<SysGroupDTO> sysGroupDTOS = new ArrayList<>();
+
         String groupBizCode = sysGroupRequest.getGroupBizCode();
         Long userId = LoginContext.me().getLoginUser().getUserId();
-        List<SysGroupDTO> userGroupList = this.baseMapper.getUserGroupList(groupBizCode, userId, getTotal);
+
+        LambdaQueryWrapper<SysGroup> wrapper = this.createWrapper(groupBizCode, userId, getTotal);
+        List<SysGroup> list = this.list(wrapper);
+        if (ObjectUtil.isNotEmpty(list)) {
+            sysGroupDTOS = BeanUtil.copyToList(list, SysGroupDTO.class);
+        }
 
         // 增加两个固定的选中和取消选项
-        addAllGroup(groupBizCode, userGroupList);
+        addAllGroup(groupBizCode, sysGroupDTOS);
 
-        return userGroupList;
+        return sysGroupDTOS;
     }
 
     @Override
     public List<SysGroupDTO> addSelect(SysGroupRequest sysGroupRequest) {
+
+        // 定义返回结果
+        List<SysGroupDTO> sysGroupDTOS = new ArrayList<>();
+
         String groupBizCode = sysGroupRequest.getGroupBizCode();
         Long userId = LoginContext.me().getLoginUser().getUserId();
-        List<SysGroupDTO> userGroupList = this.baseMapper.getUserGroupList(groupBizCode, userId, false);
+
+        LambdaQueryWrapper<SysGroup> wrapper = this.createWrapper(groupBizCode, userId, false);
+        List<SysGroup> list = this.list(wrapper);
+        if (ObjectUtil.isNotEmpty(list)) {
+            sysGroupDTOS = BeanUtil.copyToList(list, SysGroupDTO.class);
+        }
 
         // 增加两个固定的选中和取消选项
-        addCommonGroup(groupBizCode, userGroupList);
+        addCommonGroup(groupBizCode, sysGroupDTOS);
 
-        return userGroupList;
+        return sysGroupDTOS;
     }
 
     @Override
@@ -102,7 +121,8 @@ public class SysGroupServiceImpl extends ServiceImpl<SysGroupMapper, SysGroup> i
         LambdaQueryWrapper<SysGroup> sysGroupLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysGroupLambdaQueryWrapper.eq(SysGroup::getUserId, userId);
         sysGroupLambdaQueryWrapper.eq(SysGroup::getGroupBizCode, sysGroupRequest.getGroupBizCode());
-        sysGroupLambdaQueryWrapper.eq(StrUtil.isNotBlank(sysGroupRequest.getGroupName()), SysGroup::getGroupName, sysGroupRequest.getGroupName());
+        sysGroupLambdaQueryWrapper.eq(StrUtil.isNotBlank(sysGroupRequest.getGroupName()), SysGroup::getGroupName,
+                sysGroupRequest.getGroupName());
 
         List<SysGroup> list = this.list(sysGroupLambdaQueryWrapper);
         if (list == null || list.size() == 0) {
@@ -219,6 +239,28 @@ public class SysGroupServiceImpl extends ServiceImpl<SysGroupMapper, SysGroup> i
 
         result.add(0, noneGroup);
         result.add(0, addGroup);
+    }
+
+    /**
+     * 创建通用wrapper
+     *
+     * @author fengshuonan
+     * @since 2023/7/11 16:23
+     */
+    private LambdaQueryWrapper<SysGroup> createWrapper(String groupBizCode, Long userId, Boolean getTotal) {
+
+        LambdaQueryWrapper<SysGroup> sysGroupLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysGroupLambdaQueryWrapper.eq(SysGroup::getGroupBizCode, groupBizCode);
+        sysGroupLambdaQueryWrapper.eq(SysGroup::getUserId, userId);
+
+        if (getTotal != null && !getTotal) {
+            sysGroupLambdaQueryWrapper.groupBy(SysGroup::getGroupName);
+        }
+
+        sysGroupLambdaQueryWrapper.select(SysGroup::getGroupName, SysGroup::getGroupId, SysGroup::getGroupBizCode, SysGroup::getBusinessId,
+                SysGroup::getUserId);
+
+        return sysGroupLambdaQueryWrapper;
     }
 
 }
