@@ -145,13 +145,6 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!--字段拓展信息-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>expand-spring-boot-starter</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
     </dependencies>
 
 </project>
