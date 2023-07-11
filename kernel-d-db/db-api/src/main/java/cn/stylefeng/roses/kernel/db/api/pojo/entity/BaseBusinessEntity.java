@@ -28,6 +28,7 @@ import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -50,6 +51,7 @@ public class BaseBusinessEntity extends BaseEntity {
      */
     @TableField(value = "version_flag", fill = FieldFill.INSERT)
     @ChineseDescription("乐观锁")
+    @Version
     private Long versionFlag;
 
     /**
