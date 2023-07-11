@@ -24,7 +24,6 @@
  */
 package cn.stylefeng.roses.kernel.file.api.expander;
 
-import cn.hutool.core.util.RandomUtil;
 import cn.stylefeng.roses.kernel.config.api.context.ConfigContext;
 import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
 import cn.stylefeng.roses.kernel.file.api.pojo.props.LocalFileProperties;
@@ -68,23 +67,6 @@ public class FileConfigExpander {
      */
     public static Long getDefaultFileTimeoutSeconds() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_DEFAULT_FILE_TIMEOUT_SECONDS", Long.class, FileConstants.DEFAULT_FILE_TIMEOUT_SECONDS);
-    }
-
-    /**
-     * 用于专门给文件鉴权用的jwt的密钥，没配置的话会自动随机生成
-     * <p>
-     * 默认不写死，防止漏洞
-     *
-     * @author fengshuonan
-     * @since 2020/11/29 16:13
-     */
-    public static String getFileAuthJwtSecret() {
-        String defaultFileTimeoutSeconds = ConfigContext.me().getConfigValueNullable("SYS_DEFAULT_FILE_AUTH_JWT_SECRET", String.class);
-        if (defaultFileTimeoutSeconds == null) {
-            return RandomUtil.randomString(20);
-        } else {
-            return defaultFileTimeoutSeconds;
-        }
     }
 
     /**
