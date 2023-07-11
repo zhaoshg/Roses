@@ -29,7 +29,6 @@ import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
 import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
 import cn.stylefeng.roses.kernel.file.api.pojo.AntdvFileInfo;
 import cn.stylefeng.roses.kernel.file.api.pojo.request.SysFileInfoRequest;
-import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoListResponse;
 import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoResponse;
 import cn.stylefeng.roses.kernel.file.modular.entity.SysFileInfo;
 import cn.stylefeng.roses.kernel.file.modular.service.SysFileInfoService;
@@ -265,7 +264,7 @@ public class SysFileInfoController {
      * @since 2020/11/29 11:29
      */
     @GetResource(name = "分页查询文件信息表", path = "/sysFileInfo/fileInfoListPage")
-    public ResponseData<PageResult<SysFileInfoListResponse>> fileInfoListPage(SysFileInfoRequest sysFileInfoRequest) {
+    public ResponseData<PageResult<SysFileInfo>> fileInfoListPage(SysFileInfoRequest sysFileInfoRequest) {
         return new SuccessResponseData<>(this.sysFileInfoService.fileInfoListPage(sysFileInfoRequest));
     }
 

@@ -144,4 +144,15 @@ public class SysFileInfo extends BaseEntity {
     @TableLogic
     private String delFlag;
 
+    //-------------------------------非实体字段-------------------------------
+    //-------------------------------非实体字段-------------------------------
+    //-------------------------------非实体字段-------------------------------
+
+    /**
+     * 文件访问的url
+     */
+    @TableField(exist = false)
+    @ChineseDescription("文件访问的url")
+    private String fileUrl;
+
 }

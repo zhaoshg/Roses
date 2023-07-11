@@ -27,7 +27,6 @@ package cn.stylefeng.roses.kernel.file.modular.service;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
 import cn.stylefeng.roses.kernel.file.api.pojo.request.SysFileInfoRequest;
-import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoListResponse;
 import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoResponse;
 import cn.stylefeng.roses.kernel.file.modular.entity.SysFileInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -93,7 +92,7 @@ public interface SysFileInfoService extends IService<SysFileInfo>, FileInfoApi {
      * @author fengshuonan
      * @since 2020/11/29 14:09
      */
-    PageResult<SysFileInfoListResponse> fileInfoListPage(SysFileInfoRequest sysFileInfoRequest);
+    PageResult<SysFileInfo> fileInfoListPage(SysFileInfoRequest sysFileInfoRequest);
 
     /**
      * 打包下载文件

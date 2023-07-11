@@ -33,6 +33,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.file.api.FileOperatorApi;
 import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
@@ -43,7 +44,6 @@ import cn.stylefeng.roses.kernel.file.api.exception.enums.FileExceptionEnum;
 import cn.stylefeng.roses.kernel.file.api.expander.FileConfigExpander;
 import cn.stylefeng.roses.kernel.file.api.pojo.AntdvFileInfo;
 import cn.stylefeng.roses.kernel.file.api.pojo.request.SysFileInfoRequest;
-import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoListResponse;
 import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoResponse;
 import cn.stylefeng.roses.kernel.file.api.util.DownloadUtil;
 import cn.stylefeng.roses.kernel.file.api.util.PdfFileTypeUtil;
@@ -250,19 +250,36 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
     }
 
     @Override
-    public PageResult<SysFileInfoListResponse> fileInfoListPage(SysFileInfoRequest sysFileInfoRequest) {
-        Page<SysFileInfoListResponse> page = PageFactory.defaultPage();
-        List<SysFileInfoListResponse> list = this.baseMapper.fileInfoList(page, sysFileInfoRequest);
+    public PageResult<SysFileInfo> fileInfoListPage(SysFileInfoRequest sysFileInfoRequest) {
+
+        LambdaQueryWrapper<SysFileInfo> fileWrapper = new LambdaQueryWrapper<>();
+
+        // 根据文件名进行查询
+        if (ObjectUtil.isNotEmpty(sysFileInfoRequest.getFileOriginName())) {
+            fileWrapper.like(SysFileInfo::getFileOriginName, sysFileInfoRequest.getFileOriginName());
+        }
+        // 根据文件存储路径进行查询
+        if (ObjectUtil.isNotEmpty(sysFileInfoRequest.getFileLocation())) {
+            fileWrapper.eq(SysFileInfo::getFileLocation, sysFileInfoRequest.getFileLocation());
+        }
+
+        // 查询必要字段
+        fileWrapper.select(SysFileInfo::getFileId, SysFileInfo::getFileCode, SysFileInfo::getSecretFlag, SysFileInfo::getFileBucket,
+                SysFileInfo::getFileObjectName, SysFileInfo::getFileLocation, SysFileInfo::getFileOriginName, SysFileInfo::getFileSuffix,
+                SysFileInfo::getFileSizeInfo, SysFileInfo::getFileVersion, BaseEntity::getCreateTime);
+
+        Page<SysFileInfo> page = this.page(PageFactory.defaultPage(), fileWrapper);
+        List<SysFileInfo> records = page.getRecords();
 
         // 排除defaultAvatar.png这个图片,这个是默认头像
-        List<SysFileInfoListResponse> newList = list.stream()
+        List<SysFileInfo> newList = records.stream()
                 .filter(i -> !i.getFileOriginName().equals(FileConstants.DEFAULT_AVATAR_FILE_OBJ_NAME)).collect(Collectors.toList());
 
         // 拼接图片url地址
-        for (SysFileInfoListResponse sysFileInfoListResponse : newList) {
+        for (SysFileInfo sysFileInfo : newList) {
             // 判断是否是可以预览的文件
-            if (PicFileTypeUtil.getFileImgTypeFlag(sysFileInfoListResponse.getFileSuffix())) {
-                sysFileInfoListResponse.setFileUrl(this.getFileAuthUrl(sysFileInfoListResponse.getFileId()));
+            if (PicFileTypeUtil.getFileImgTypeFlag(sysFileInfo.getFileSuffix())) {
+                sysFileInfo.setFileUrl(this.getFileAuthUrl(sysFileInfo.getFileId()));
             }
         }
 
@@ -582,7 +599,7 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
      */
     private SysFileInfo querySysFileInfo(SysFileInfoRequest sysFileInfoRequest) {
         SysFileInfo sysFileInfo = this.getById(sysFileInfoRequest.getFileId());
-        if (ObjectUtil.isEmpty(sysFileInfo) || sysFileInfo.getDelFlag().equals(YesOrNotEnum.Y.getCode())) {
+        if (ObjectUtil.isEmpty(sysFileInfo)) {
             throw new FileException(FileExceptionEnum.NOT_EXISTED, sysFileInfoRequest.getFileId());
         }
         return sysFileInfo;
