@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.theme.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
 import cn.stylefeng.roses.kernel.sys.modular.theme.entity.SysThemeTemplate;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 系统主题模板属性关系service接口实现类
@@ -25,7 +27,8 @@ import java.util.List;
  * @since 2021/12/17 16:14
  */
 @Service
-public class SysThemeTemplateRelServiceImpl extends ServiceImpl<SysThemeTemplateRelMapper, SysThemeTemplateRel> implements SysThemeTemplateRelService {
+public class SysThemeTemplateRelServiceImpl extends ServiceImpl<SysThemeTemplateRelMapper, SysThemeTemplateRel> implements
+        SysThemeTemplateRelService {
 
     @Resource
     private SysThemeTemplateService sysThemeTemplateService;
@@ -85,4 +88,26 @@ public class SysThemeTemplateRelServiceImpl extends ServiceImpl<SysThemeTemplate
 
         this.remove(queryWrapper);
     }
+
+    @Override
+    public List<String> getThemeTemplateFieldCodeList(Long templateId) {
+
+        if (ObjectUtil.isEmpty(templateId)) {
+            return new ArrayList<>();
+        }
+
+        LambdaQueryWrapper<SysThemeTemplateRel> queryWrapper = new LambdaQueryWrapper<>();
+
+        // 根据模板id查询
+        queryWrapper.eq(SysThemeTemplateRel::getTemplateId, templateId);
+
+        // 只查询字段的编码信息
+        queryWrapper.select(SysThemeTemplateRel::getFieldCode);
+
+        List<SysThemeTemplateRel> list = this.list(queryWrapper);
+
+        return list.stream().map(SysThemeTemplateRel::getFieldCode).collect(Collectors.toList());
+    }
+
+
 }

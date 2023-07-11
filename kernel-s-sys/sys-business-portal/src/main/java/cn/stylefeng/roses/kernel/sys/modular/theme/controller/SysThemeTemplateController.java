@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.theme.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -115,7 +116,8 @@ public class SysThemeTemplateController {
      * @since 2021/12/17 16:09
      */
     @GetResource(name = "查询系统主题模板详情", path = "/sysThemeTemplate/detail")
-    public ResponseData<List<SysThemeTemplateDataDTO>> detail(SysThemeTemplateRequest sysThemeTemplateParam) {
+    public ResponseData<List<SysThemeTemplateDataDTO>> detail(
+            @Validated(BaseRequest.detail.class) SysThemeTemplateRequest sysThemeTemplateParam) {
         return new SuccessResponseData<>(sysThemeTemplateService.detail(sysThemeTemplateParam));
     }
 }

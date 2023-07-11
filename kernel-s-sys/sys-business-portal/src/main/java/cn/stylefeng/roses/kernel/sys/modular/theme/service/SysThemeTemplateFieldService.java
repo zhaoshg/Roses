@@ -81,4 +81,12 @@ public interface SysThemeTemplateFieldService extends IService<SysThemeTemplateF
      */
     boolean getKeyFileFlag(String code);
 
+    /**
+     * 获取主题字段列表，通过字段编码的结合
+     *
+     * @author fengshuonan
+     * @since 2023/7/11 17:07
+     */
+    List<SysThemeTemplateField> getFieldListByFieldCode(List<String> fieldCodeList);
+
 }

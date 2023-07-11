@@ -151,9 +151,7 @@ public class SysThemeTemplateFieldServiceImpl extends ServiceImpl<SysThemeTempla
         List<SysThemeTemplateRel> sysThemeTemplateRels = sysThemeTemplateRelService.list(queryWrapper);
 
         // 过滤出所有的属性编码
-        List<String> fieldCodes = sysThemeTemplateRels.stream().map(SysThemeTemplateRel::getFieldCode).collect(Collectors.toList());
-
-        return fieldCodes;
+        return sysThemeTemplateRels.stream().map(SysThemeTemplateRel::getFieldCode).collect(Collectors.toList());
     }
 
     @Override
@@ -188,6 +186,20 @@ public class SysThemeTemplateFieldServiceImpl extends ServiceImpl<SysThemeTempla
         }
 
         return ThemeFieldTypeEnum.FILE.getCode().equals(sysThemeTemplateField.getFieldType());
+    }
+
+    @Override
+    public List<SysThemeTemplateField> getFieldListByFieldCode(List<String> fieldCodeList) {
+
+        LambdaQueryWrapper<SysThemeTemplateField> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(SysThemeTemplateField::getFieldCode, fieldCodeList);
+
+        // 只查询关键字段
+        wrapper.select(SysThemeTemplateField::getFieldId, SysThemeTemplateField::getFieldCode, SysThemeTemplateField::getFieldName,
+                SysThemeTemplateField::getFieldType, SysThemeTemplateField::getFieldLength, SysThemeTemplateField::getFieldRequired,
+                SysThemeTemplateField::getFieldDescription);
+
+        return this.list(wrapper);
     }
 
     /**
