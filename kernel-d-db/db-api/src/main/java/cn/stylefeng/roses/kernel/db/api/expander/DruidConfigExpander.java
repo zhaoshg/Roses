@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.db.api.expander;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.stylefeng.roses.kernel.config.api.context.ConfigContext;
 import cn.stylefeng.roses.kernel.db.api.constants.DbConstants;
@@ -68,7 +69,7 @@ public class DruidConfigExpander {
         String sysDruidPassword = ConfigContext.me().getConfigValueNullable("SYS_DRUID_PASSWORD", String.class);
 
         // 没配置就返回一个随机密码
-        if (sysDruidPassword == null) {
+        if (ObjectUtil.isEmpty(sysDruidPassword)) {
             String randomString = RandomUtil.randomString(20);
             log.info("Druid密码未在系统配置表设置，Druid密码为：{}", randomString);
             return randomString;
