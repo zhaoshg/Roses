@@ -123,7 +123,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         wrapper.eq(HrOrganization::getOrgId, hrOrganizationRequest.getOrgId());
         wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgName, HrOrganization::getOrgShortName, HrOrganization::getOrgCode,
                 HrOrganization::getOrgParentId, HrOrganization::getOrgSort, HrOrganization::getOrgType, HrOrganization::getStatusFlag,
-                HrOrganization::getTaxNo, HrOrganization::getRemark);
+                HrOrganization::getTaxNo, HrOrganization::getRemark, HrOrganization::getOrgPids);
 
         HrOrganization hrOrganization = this.getOne(wrapper, false);
         if (ObjectUtil.isEmpty(hrOrganization)) {
