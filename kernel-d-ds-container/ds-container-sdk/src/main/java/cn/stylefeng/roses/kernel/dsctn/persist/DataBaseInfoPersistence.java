@@ -24,6 +24,8 @@
  */
 package cn.stylefeng.roses.kernel.dsctn.persist;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
@@ -163,23 +165,21 @@ public class DataBaseInfoPersistence {
      */
     private DruidProperties createDruidProperties(ResultSet resultSet) {
 
-        DruidProperties druidProperties = new DruidProperties();
-
-        druidProperties.setTestOnBorrow(true);
-        druidProperties.setTestOnReturn(true);
+        DruidProperties newDruidProperties = new DruidProperties();
+        BeanUtil.copyProperties(this.druidProperties, newDruidProperties, CopyOptions.create().ignoreError());
 
         try {
-            druidProperties.setDriverClassName(resultSet.getString("jdbc_driver"));
-            druidProperties.setUrl(resultSet.getString("jdbc_url"));
-            druidProperties.setUsername(resultSet.getString("username"));
-            druidProperties.setPassword(resultSet.getString("password"));
+            newDruidProperties.setDriverClassName(resultSet.getString("jdbc_driver"));
+            newDruidProperties.setUrl(resultSet.getString("jdbc_url"));
+            newDruidProperties.setUsername(resultSet.getString("username"));
+            newDruidProperties.setPassword(resultSet.getString("password"));
         } catch (SQLException exception) {
             log.info("根据数据库查询结果，创建DruidProperties失败！", exception);
             String userTip = StrUtil.format(DatasourceContainerExceptionEnum.CREATE_PROP_DAO_ERROR.getUserTip(), exception.getMessage());
             throw new DatasourceContainerException(DatasourceContainerExceptionEnum.CREATE_PROP_DAO_ERROR, userTip);
         }
 
-        return druidProperties;
+        return newDruidProperties;
     }
 
 }
