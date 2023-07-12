@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.user.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
@@ -10,7 +11,6 @@ import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
-import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
@@ -22,6 +22,7 @@ import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +41,7 @@ import static cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExcepti
  * @date 2023/06/10 21:26
  */
 @Service
+@Slf4j
 public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUserOrg> implements SysUserOrgService, RemoveOrgCallbackApi,
         RemoveUserCallbackApi {
 
@@ -147,7 +149,7 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         }
 
         if (sysUserOrgList.size() > 1) {
-            throw new SysException(MAIN_FLAG_COUNT_ERROR, userId);
+            log.warn(StrUtil.format(MAIN_FLAG_COUNT_ERROR.getUserTip(), userId));
         }
 
         // 获取到用户的主部门信息
