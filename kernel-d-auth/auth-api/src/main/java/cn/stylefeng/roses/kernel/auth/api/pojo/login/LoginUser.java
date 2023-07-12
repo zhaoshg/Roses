@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.auth.api.pojo.login;
 
+import cn.hutool.core.lang.Dict;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
 import lombok.Data;
@@ -47,6 +48,12 @@ public class LoginUser implements Serializable {
      */
     @ChineseDescription("用户主键id")
     private Long userId;
+
+    /**
+     * 账号
+     */
+    @ChineseDescription("账号")
+    private String account;
 
     /**
      * 用户的token
@@ -93,6 +100,12 @@ public class LoginUser implements Serializable {
      */
     @ChineseDescription("登录时间")
     private Date loginTime;
+
+    /**
+     * 登录用户的其他信息
+     */
+    @ChineseDescription("登录用户的其他信息")
+    private Dict otherInfos;
 
     public LoginUser() {
     }
