@@ -27,7 +27,7 @@
         <!--应用权限管理模块-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>sys-business-permission</artifactId>
+            <artifactId>system-business-permission</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
