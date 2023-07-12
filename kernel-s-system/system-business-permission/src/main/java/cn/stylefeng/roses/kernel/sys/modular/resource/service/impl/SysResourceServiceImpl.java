@@ -35,13 +35,16 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
 import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
+import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceDefinition;
 import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceUrlParam;
 import cn.stylefeng.roses.kernel.sys.modular.resource.entity.SysResource;
 import cn.stylefeng.roses.kernel.sys.modular.resource.mapper.SysResourceMapper;
 import cn.stylefeng.roses.kernel.sys.modular.resource.pojo.ResourceRequest;
+import cn.stylefeng.roses.kernel.sys.modular.resource.pojo.ResourceTreeNode;
 import cn.stylefeng.roses.kernel.sys.modular.resource.service.SysResourceService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +52,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 资源表 服务实现类
@@ -95,6 +101,92 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
             }
         } else {
             this.saveBatch(sysResourceList, sysResourceList.size());
+        }
+    }
+
+    @Override
+    public List<ResourceTreeNode> getResourceList(List<String> resourceCodes, Boolean treeBuildFlag, Integer resourceBizType) {
+        List<ResourceTreeNode> res = new ArrayList<>();
+
+        // 获取所有的资源
+        LambdaQueryWrapper<SysResource> sysResourceLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysResourceLambdaQueryWrapper.select(SysResource::getAppCode, SysResource::getModularCode, SysResource::getModularName, SysResource::getResourceCode, SysResource::getUrl,
+                SysResource::getResourceName);
+
+        // 只查询需要授权的接口
+        sysResourceLambdaQueryWrapper.eq(SysResource::getRequiredPermissionFlag, YesOrNotEnum.Y.getCode());
+
+        // 查询指定范围的资源
+        sysResourceLambdaQueryWrapper.eq(ObjectUtil.isNotEmpty(resourceBizType), SysResource::getResourceBizType, resourceBizType);
+
+        List<SysResource> allResource = this.list(sysResourceLambdaQueryWrapper);
+
+        // 根据模块名称把资源分类
+        Map<String, List<SysResource>> modularMap = new HashMap<>();
+        for (SysResource sysResource : allResource) {
+            List<SysResource> sysResources = modularMap.get(sysResource.getModularName());
+
+            // 没有就新建一个
+            if (ObjectUtil.isEmpty(sysResources)) {
+                sysResources = new ArrayList<>();
+                modularMap.put(sysResource.getModularName(), sysResources);
+            }
+            // 把自己加入进去
+            sysResources.add(sysResource);
+        }
+
+        // 创建一级节点
+        for (Map.Entry<String, List<SysResource>> entry : modularMap.entrySet()) {
+            ResourceTreeNode item = new ResourceTreeNode();
+            item.setResourceFlag(false);
+            String id = IdWorker.get32UUID();
+            item.setCode(id);
+            item.setParentCode(RuleConstants.TREE_ROOT_ID.toString());
+            item.setNodeName(entry.getKey());
+
+            // 设置临时变量，统计半开状态
+            int checkedNumber = 0;
+
+            //创建二级节点
+            for (SysResource resource : entry.getValue()) {
+                ResourceTreeNode subItem = new ResourceTreeNode();
+                // 判断是否已经拥有
+                if (!resourceCodes.contains(resource.getResourceCode())) {
+                    subItem.setChecked(false);
+                } else {
+                    checkedNumber++;
+
+                    // 让父类也选择
+                    item.setChecked(true);
+                    subItem.setChecked(true);
+                }
+                subItem.setResourceFlag(true);
+                subItem.setNodeName(resource.getResourceName());
+                subItem.setCode(resource.getResourceCode());
+                subItem.setParentCode(id);
+                res.add(subItem);
+            }
+
+            // 统计选中的数量
+            if (checkedNumber == 0) {
+                item.setChecked(false);
+                item.setIndeterminate(false);
+            } else if (checkedNumber == entry.getValue().size()) {
+                item.setChecked(true);
+                item.setIndeterminate(false);
+            } else {
+                item.setChecked(false);
+                item.setIndeterminate(true);
+            }
+
+            res.add(item);
+        }
+
+        // 根据map组装资源树
+        if (treeBuildFlag) {
+            return new DefaultTreeBuildFactory<ResourceTreeNode>().doTreeBuild(res);
+        } else {
+            return res;
         }
     }
 

@@ -28,6 +28,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.sys.api.ResourceServiceApi;
 import cn.stylefeng.roses.kernel.sys.modular.resource.entity.SysResource;
 import cn.stylefeng.roses.kernel.sys.modular.resource.pojo.ResourceRequest;
+import cn.stylefeng.roses.kernel.sys.modular.resource.pojo.ResourceTreeNode;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -66,5 +67,19 @@ public interface SysResourceService extends IService<SysResource>, ResourceServi
      * @since 2023/6/18 10:37
      */
     void batchSaveResourceList(List<SysResource> sysResourceList);
+
+    /**
+     * 获取资源绑定列表（业务通用）
+     * <p>
+     * 一般用在api认证模块，勾选客户端的api接口绑定
+     *
+     * @param resourceCodes   业务已经绑定的资源的编码集合
+     * @param treeBuildFlag   是否要构建成树
+     * @param resourceBizType 资源的类型，1-业务类，2-系统类
+     * @author fengshuonan
+     * @since 2021/8/8 22:24
+     */
+    List<ResourceTreeNode> getResourceList(List<String> resourceCodes, Boolean treeBuildFlag, Integer resourceBizType);
+
 
 }
