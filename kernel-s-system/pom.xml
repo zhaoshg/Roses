@@ -16,7 +16,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>sys-api</module>
+        <module>system-api</module>
         <module>sys-business-hr</module>
         <module>sys-business-permission</module>
         <module>sys-business-portal</module>

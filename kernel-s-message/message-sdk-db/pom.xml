@@ -33,7 +33,7 @@
         <!--发送消息需要用到用户相关的接口-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>sys-api</artifactId>
+            <artifactId>system-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 

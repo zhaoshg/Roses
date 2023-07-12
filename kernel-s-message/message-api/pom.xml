@@ -47,7 +47,7 @@
         <!--用来做id转化-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>sys-api</artifactId>
+            <artifactId>system-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
