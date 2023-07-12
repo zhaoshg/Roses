@@ -153,6 +153,9 @@ public class LoginService {
         loginUser.setLoginIp(ip);
         loginUser.setLoginTime(new Date());
 
+        // 9.2 设置当前登录用户的账号
+        loginUser.setAccount(loginRequest.getAccount());
+
         synchronized (loginRequest.getAccount().intern()) {
 
             // 10. 缓存用户信息，创建会话
