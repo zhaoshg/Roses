@@ -11,7 +11,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>sys-business-portal</artifactId>
+    <artifactId>system-business-portal</artifactId>
 
     <packaging>jar</packaging>
 

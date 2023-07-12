@@ -19,7 +19,7 @@
         <module>system-api</module>
         <module>system-business-hr</module>
         <module>system-business-permission</module>
-        <module>sys-business-portal</module>
+        <module>system-business-portal</module>
         <module>sys-spring-boot-starter</module>
     </modules>
 

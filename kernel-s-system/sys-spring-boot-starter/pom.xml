@@ -34,7 +34,7 @@
         <!--门户业务-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>sys-business-portal</artifactId>
+            <artifactId>system-business-portal</artifactId>
             <version>${roses.version}</version>
         </dependency>
 
