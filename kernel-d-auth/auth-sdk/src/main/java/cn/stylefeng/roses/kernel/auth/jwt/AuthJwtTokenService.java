@@ -7,7 +7,9 @@ import cn.hutool.core.date.DateUtil;
 import cn.stylefeng.roses.kernel.auth.api.AuthJwtTokenApi;
 import cn.stylefeng.roses.kernel.auth.api.expander.AuthConfigExpander;
 import cn.stylefeng.roses.kernel.auth.api.pojo.payload.DefaultJwtPayload;
+import cn.stylefeng.roses.kernel.config.api.ConfigInitCallbackApi;
 import cn.stylefeng.roses.kernel.jwt.api.JwtApi;
+import cn.stylefeng.roses.kernel.jwt.api.pojo.config.JwtConfig;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,7 @@ import java.util.Map;
  * @since 2023/5/9 10:05
  */
 @Service
-public class AuthJwtTokenService implements AuthJwtTokenApi {
+public class AuthJwtTokenService implements AuthJwtTokenApi, ConfigInitCallbackApi {
 
     @Resource
     private JwtApi jwtApi;
@@ -51,6 +53,19 @@ public class AuthJwtTokenService implements AuthJwtTokenApi {
     public DefaultJwtPayload getDefaultPayload(String token) {
         Map<String, Object> jwtPayload = jwtApi.getJwtPayloadClaims(token);
         return BeanUtil.toBeanIgnoreError(jwtPayload, DefaultJwtPayload.class);
+    }
+
+    @Override
+    public void initBefore() {
+
+    }
+
+    @Override
+    public void initAfter() {
+        JwtConfig jwtConfig = new JwtConfig();
+        jwtConfig.setJwtSecret(AuthConfigExpander.getAuthJwtSecret());
+        jwtConfig.setExpiredSeconds(AuthConfigExpander.getAuthJwtTimeoutSeconds());
+        jwtApi.updateJwtConfig(jwtConfig);
     }
 
 }

@@ -25,6 +25,7 @@
 package cn.stylefeng.roses.kernel.jwt.api;
 
 import cn.stylefeng.roses.kernel.jwt.api.exception.JwtException;
+import cn.stylefeng.roses.kernel.jwt.api.pojo.config.JwtConfig;
 
 import java.util.Map;
 
@@ -97,5 +98,13 @@ public interface JwtApi {
      * @since 2020/10/21 11:56
      */
     boolean validateTokenIsExpired(String token);
+
+    /**
+     * 更新jwt的配置
+     *
+     * @author fengshuonan
+     * @since 2023/7/12 11:34
+     */
+    void updateJwtConfig(JwtConfig jwtConfig);
 
 }

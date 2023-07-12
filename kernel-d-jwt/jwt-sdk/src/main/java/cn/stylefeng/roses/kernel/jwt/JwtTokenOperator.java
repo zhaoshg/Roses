@@ -49,7 +49,7 @@ import static cn.stylefeng.roses.kernel.jwt.api.exception.enums.JwtExceptionEnum
  */
 public class JwtTokenOperator implements JwtApi {
 
-    private final JwtConfig jwtConfig;
+    private JwtConfig jwtConfig;
 
     public JwtTokenOperator(JwtConfig jwtConfig) {
         this.jwtConfig = jwtConfig;
@@ -114,6 +114,11 @@ public class JwtTokenOperator implements JwtApi {
         } catch (ExpiredJwtException expiredJwtException) {
             return true;
         }
+    }
+
+    @Override
+    public void updateJwtConfig(JwtConfig jwtConfig) {
+        this.jwtConfig = jwtConfig;
     }
 
 }
