@@ -324,7 +324,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
-        sysUserLambdaQueryWrapper.select(SysUser::getRealName, SysUser::getAvatar);
+        sysUserLambdaQueryWrapper.select(SysUser::getRealName, SysUser::getAvatar, SysUser::getAccount);
         SysUser sysUser = this.getOne(sysUserLambdaQueryWrapper);
         if (sysUser == null) {
             return null;
@@ -333,6 +333,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SimpleUserDTO simpleUserDTO = new SimpleUserDTO();
         simpleUserDTO.setUserId(userId);
         simpleUserDTO.setRealName(sysUser.getRealName());
+        simpleUserDTO.setAccount(sysUser.getAccount());
 
         // 获取头像文件id信息，转化为头像URL
         Long avatarFileId = sysUser.getAvatar();

@@ -43,6 +43,12 @@ public class SimpleUserDTO {
     private Long userId;
 
     /**
+     * 账号
+     */
+    @ChineseDescription("账号")
+    private String account;
+
+    /**
      * 姓名
      */
     @ChineseDescription("姓名")
