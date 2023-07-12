@@ -52,10 +52,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 资源表 服务实现类
@@ -228,6 +226,22 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
         resourceCache.put(resourceDefinition.getUrl(), resourceDefinition);
 
         return resourceDefinition;
+    }
+
+    @Override
+    public Set<String> getResourceUrlsListByCodes(Set<String> resourceCodes) {
+        if (resourceCodes == null || resourceCodes.isEmpty()) {
+            return new HashSet<>();
+        }
+
+        // 拼接in条件
+        LambdaQueryWrapper<SysResource> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysResource::getResourceCode, resourceCodes);
+        queryWrapper.select(SysResource::getUrl);
+
+        // 获取资源详情
+        List<SysResource> list = this.list(queryWrapper);
+        return list.stream().map(SysResource::getUrl).collect(Collectors.toSet());
     }
 
     /**

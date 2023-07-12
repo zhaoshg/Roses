@@ -27,6 +27,8 @@ package cn.stylefeng.roses.kernel.sys.api;
 import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceDefinition;
 import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceUrlParam;
 
+import java.util.Set;
+
 /**
  * 资源服务相关接口
  *
@@ -46,5 +48,17 @@ public interface ResourceServiceApi {
      * @since 2020/10/19 22:06
      */
     ResourceDefinition getResourceByUrl(ResourceUrlParam resourceUrlReq);
+
+    /**
+     * 获取资源的url列表，根据资源code集合查询
+     * <p>
+     * 一般用在api认证模块，获取api客户端的url范围
+     *
+     * @param resourceCodes 资源编码集合
+     * @return 资源url列表
+     * @author fengshuonan
+     * @since 2020/11/29 19:49
+     */
+    Set<String> getResourceUrlsListByCodes(Set<String> resourceCodes);
 
 }
