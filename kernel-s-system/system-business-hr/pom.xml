@@ -11,7 +11,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>sys-business-hr</artifactId>
+    <artifactId>system-business-hr</artifactId>
 
     <packaging>jar</packaging>
 
