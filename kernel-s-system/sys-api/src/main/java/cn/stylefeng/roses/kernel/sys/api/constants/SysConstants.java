@@ -35,7 +35,7 @@ public interface SysConstants {
     /**
      * 基础核心业务模块名称
      */
-    String SYS_MODULE_NAME = "kernel-s-sys";
+    String SYS_MODULE_NAME = "kernel-s-system";
 
     /**
      * 异常枚举的步进值
