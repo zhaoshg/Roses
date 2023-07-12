@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>cn.stylefeng.roses</groupId>
-        <artifactId>kernel-s-sys</artifactId>
+        <artifactId>kernel-s-system</artifactId>
         <version>8.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>

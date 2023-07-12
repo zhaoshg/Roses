@@ -104,7 +104,7 @@
         <module>kernel-s-stat</module>
 
         <!--系统管理基础业务-->
-        <module>kernel-s-sys</module>
+        <module>kernel-s-system</module>
 
     </modules>
 

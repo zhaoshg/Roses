@@ -11,7 +11,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>kernel-s-sys</artifactId>
+    <artifactId>kernel-s-system</artifactId>
 
     <packaging>pom</packaging>
 
