@@ -20,7 +20,7 @@
         <module>system-business-hr</module>
         <module>system-business-permission</module>
         <module>system-business-portal</module>
-        <module>sys-spring-boot-starter</module>
+        <module>system-spring-boot-starter</module>
     </modules>
 
     <dependencies>
