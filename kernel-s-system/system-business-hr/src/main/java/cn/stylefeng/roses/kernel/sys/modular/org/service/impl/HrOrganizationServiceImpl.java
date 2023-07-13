@@ -221,12 +221,15 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         newNotRepeatList.sort(Comparator.comparing(HrOrganization::getOrgSort));
 
         // 构建树形结构
-        List<HrOrganization> hrOrganizations = new DefaultTreeBuildFactory<HrOrganization>().doTreeBuild(newNotRepeatList);
+        if (commonOrgTreeRequest.getOrgParentId() != null && !TreeConstants.DEFAULT_PARENT_ID.equals(
+                commonOrgTreeRequest.getOrgParentId())) {
+            newNotRepeatList = new DefaultTreeBuildFactory<HrOrganization>().doTreeBuild(newNotRepeatList);
+        }
 
         // 遍历所有节点，查询这些节点有没有子级，填充haveSubOrgFlag
-        this.fillHaveSubFlag(hrOrganizations);
+        this.fillHaveSubFlag(newNotRepeatList);
 
-        return hrOrganizations;
+        return newNotRepeatList;
     }
 
     @Override
