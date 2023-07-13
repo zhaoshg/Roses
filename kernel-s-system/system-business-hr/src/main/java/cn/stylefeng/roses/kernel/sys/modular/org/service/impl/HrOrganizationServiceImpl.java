@@ -191,7 +191,8 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 根据条件查询组织机构列表
         LambdaQueryWrapper<HrOrganization> wrapper = this.createCommonTreeWrapper(commonOrgTreeRequest);
-        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgParentId, HrOrganization::getOrgName, HrOrganization::getOrgSort,
+        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgPids,
+                HrOrganization::getOrgParentId, HrOrganization::getOrgName, HrOrganization::getOrgSort,
                 HrOrganization::getOrgType);
         List<HrOrganization> hrOrganizationList = this.list(wrapper);
 
