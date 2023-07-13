@@ -60,7 +60,8 @@ public class HrOrganizationRequest extends BaseRequest {
      */
     @NotBlank(message = "组织编码不能为空", groups = {add.class, edit.class})
     @ChineseDescription("组织编码")
-    @TableUniqueValue(message = "组织编码存在重复", groups = {add.class, edit.class}, tableName = "hr_organization", columnName = "org_code", idFieldName = "org_id", excludeLogicDeleteItems = true)
+    @TableUniqueValue(message = "组织编码存在重复", groups = {add.class, edit.class}, tableName = "hr_organization",
+            columnName = "org_code", idFieldName = "org_id", excludeLogicDeleteItems = true)
     private String orgCode;
 
     /**
@@ -122,5 +123,13 @@ public class HrOrganizationRequest extends BaseRequest {
     @NotEmpty(message = "组织机构id集合不能为空", groups = {batchDelete.class})
     @ChineseDescription("组织机构id集合")
     private Set<Long> orgIdList;
+
+    /**
+     * 是否只查询公司列表
+     * <p>
+     * true-查询结果只返回公司，false-查询结果返回公司或部门，如果没传这个参数，则都返回
+     */
+    @ChineseDescription("是否只查询公司列表")
+    private Boolean companySearchFlag;
 
 }

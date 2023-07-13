@@ -415,6 +415,12 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
             queryWrapper.in(HrOrganization::getOrgId, subOrgIdListOneLevel);
         }
 
+        // 如果有筛选公司的标识，则只查询公司列表
+        Boolean companySearchFlag = hrOrganizationRequest.getCompanySearchFlag();
+        if (ObjectUtil.isNotEmpty(companySearchFlag) && companySearchFlag) {
+            queryWrapper.eq(HrOrganization::getOrgType, OrgTypeEnum.COMPANY.getCode());
+        }
+
         // 根据排序正序查询
         queryWrapper.orderByAsc(HrOrganization::getOrgSort);
 
