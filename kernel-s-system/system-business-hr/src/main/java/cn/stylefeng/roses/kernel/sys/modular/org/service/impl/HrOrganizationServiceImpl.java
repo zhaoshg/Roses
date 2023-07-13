@@ -1,7 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -23,6 +22,7 @@ import cn.stylefeng.roses.kernel.sys.modular.org.constants.OrgConstants;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.factory.OrganizationFactory;
 import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrganizationMapper;
+import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.CommonOrgTreeRequest;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrganizationRequest;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.HomeCompanyInfo;
 import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrganizationService;
@@ -187,12 +187,12 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     @Override
-    public List<HrOrganization> commonOrgTree(HrOrganizationRequest hrOrganizationRequest) {
+    public List<HrOrganization> commonOrgTree(CommonOrgTreeRequest commonOrgTreeRequest) {
 
         // 根据条件查询组织机构列表
-        LambdaQueryWrapper<HrOrganization> wrapper = this.createWrapper(hrOrganizationRequest);
-        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgParentId, HrOrganization::getOrgPids, HrOrganization::getOrgName,
-                HrOrganization::getOrgSort, HrOrganization::getOrgType);
+        LambdaQueryWrapper<HrOrganization> wrapper = this.createCommonTreeWrapper(commonOrgTreeRequest);
+        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgParentId, HrOrganization::getOrgName, HrOrganization::getOrgSort,
+                HrOrganization::getOrgType);
         List<HrOrganization> hrOrganizationList = this.list(wrapper);
 
         if (ObjectUtil.isEmpty(hrOrganizationList)) {
@@ -200,7 +200,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         }
 
         // 如果查询条件不为空，则把相关的查询结果的父级也查询出来，组成一颗完整树
-        String searchText = hrOrganizationRequest.getSearchText();
+        String searchText = commonOrgTreeRequest.getSearchText();
         List<HrOrganization> parentOrgList = new ArrayList<>();
         if (ObjectUtil.isNotEmpty(searchText)) {
             Set<Long> orgParentIdList = OrganizationFactory.getOrgParentIdList(hrOrganizationList);
@@ -352,20 +352,35 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     @Override
-    public List<Long> getSubOrgIdListOneLevel(Long orgId) {
-        LambdaQueryWrapper<HrOrganization> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(HrOrganization::getOrgParentId, orgId);
-        wrapper.select(HrOrganization::getOrgId);
-        List<HrOrganization> subOrgList = this.list(wrapper);
+    public Set<Long> queryOrgIdParentIdList(Set<Long> orgIdList) {
 
-        if (ObjectUtil.isEmpty(subOrgList)) {
-            return ListUtil.list(false, orgId);
+        Set<Long> parentIdListTotal = new HashSet<>();
+
+        if (ObjectUtil.isEmpty(orgIdList)) {
+            return parentIdListTotal;
         }
 
-        List<Long> subOrgIdList = subOrgList.stream().map(HrOrganization::getOrgId).collect(Collectors.toList());
-        subOrgIdList.add(orgId);
+        LambdaQueryWrapper<HrOrganization> hrOrganizationLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        hrOrganizationLambdaQueryWrapper.in(HrOrganization::getOrgId, orgIdList);
+        hrOrganizationLambdaQueryWrapper.select(HrOrganization::getOrgPids);
+        List<HrOrganization> hrOrganizationList = this.list(hrOrganizationLambdaQueryWrapper);
 
-        return subOrgIdList;
+        for (HrOrganization hrOrganization : hrOrganizationList) {
+            String orgPids = hrOrganization.getOrgPids();
+            if (ObjectUtil.isEmpty(orgPids)) {
+                continue;
+            }
+
+            orgPids = orgPids.replaceAll(LEFT_SQUARE_BRACKETS, "");
+            orgPids = orgPids.replaceAll(RIGHT_SQUARE_BRACKETS, "");
+
+            String[] split = orgPids.split(",");
+            for (String pidString : split) {
+                parentIdListTotal.add(Convert.toLong(pidString));
+            }
+        }
+
+        return parentIdListTotal;
     }
 
     /**
@@ -411,18 +426,48 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         Long orgId = hrOrganizationRequest.getOrgId();
         if (orgId != null) {
             // 查询orgId对应的所有子机构，包含本orgId
-            List<Long> subOrgIdListOneLevel = this.getSubOrgIdListOneLevel(orgId);
-            queryWrapper.in(HrOrganization::getOrgId, subOrgIdListOneLevel);
-        }
-
-        // 如果有筛选公司的标识，则只查询公司列表
-        Boolean companySearchFlag = hrOrganizationRequest.getCompanySearchFlag();
-        if (ObjectUtil.isNotEmpty(companySearchFlag) && companySearchFlag) {
-            queryWrapper.eq(HrOrganization::getOrgType, OrgTypeEnum.COMPANY.getCode());
+            queryWrapper.eq(HrOrganization::getOrgParentId, orgId);
         }
 
         // 根据排序正序查询
         queryWrapper.orderByAsc(HrOrganization::getOrgSort);
+
+        return queryWrapper;
+    }
+
+    /**
+     * 创建查询wrapper
+     *
+     * @author fengshuonan
+     * @date 2023/06/10 21:23
+     */
+    private LambdaQueryWrapper<HrOrganization> createCommonTreeWrapper(CommonOrgTreeRequest commonOrgTreeRequest) {
+
+        // 创建基本的wrapper
+        HrOrganizationRequest hrOrganizationRequest = new HrOrganizationRequest();
+        hrOrganizationRequest.setSearchText(commonOrgTreeRequest.getSearchText());
+        LambdaQueryWrapper<HrOrganization> queryWrapper = this.createWrapper(hrOrganizationRequest);
+
+        // 如果查询条件有orgId，则查询指定机构下的子机构
+        Long parentId = commonOrgTreeRequest.getOrgParentId();
+        if (parentId != null) {
+            queryWrapper.eq(HrOrganization::getOrgParentId, parentId);
+        }
+
+        // 如果有定位状态的组织机构，则需要查询到定位的组织机构的所有子一级
+        Set<Long> indexOrgIdList = commonOrgTreeRequest.getIndexOrgIdList();
+        if (ObjectUtil.isNotEmpty(indexOrgIdList)) {
+            Set<Long> parentIdListTotal = this.queryOrgIdParentIdList(indexOrgIdList);
+            if (ObjectUtil.isNotEmpty(parentIdListTotal)) {
+                queryWrapper.in(HrOrganization::getOrgParentId, parentIdListTotal);
+            }
+        }
+
+        // 如果有筛选公司的标识，则只查询公司列表
+        Boolean companySearchFlag = commonOrgTreeRequest.getCompanySearchFlag();
+        if (ObjectUtil.isNotEmpty(companySearchFlag) && companySearchFlag) {
+            queryWrapper.eq(HrOrganization::getOrgType, OrgTypeEnum.COMPANY.getCode());
+        }
 
         return queryWrapper;
     }

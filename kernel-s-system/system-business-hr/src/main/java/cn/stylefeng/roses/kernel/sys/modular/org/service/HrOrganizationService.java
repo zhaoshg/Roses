@@ -3,11 +3,13 @@ package cn.stylefeng.roses.kernel.sys.modular.org.service;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
+import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.CommonOrgTreeRequest;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrganizationRequest;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.HomeCompanyInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 组织机构信息 服务类
@@ -99,7 +101,7 @@ public interface HrOrganizationService extends IService<HrOrganization> {
      * @author fengshuonan
      * @since 2023/6/11 10:40
      */
-    List<HrOrganization> commonOrgTree(HrOrganizationRequest hrOrganizationRequest);
+    List<HrOrganization> commonOrgTree(CommonOrgTreeRequest commonOrgTreeRequest);
 
     /**
      * 根据组织机构id，获取对应的具体的公司和部门信息
@@ -142,12 +144,11 @@ public interface HrOrganizationService extends IService<HrOrganization> {
     HomeCompanyInfo orgStatInfo();
 
     /**
-     * 获取指定组织机构id的所有子一级的机构
+     * 查询组织机构的所有上级，包括上级的上级组织机构
      *
-     * @return 返回结果包含参数orgId
      * @author fengshuonan
-     * @since 2023/6/27 14:33
+     * @since 2023/7/13 20:50
      */
-    List<Long> getSubOrgIdListOneLevel(Long orgId);
+    Set<Long> queryOrgIdParentIdList(Set<Long> orgIdList);
 
 }
