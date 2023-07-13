@@ -67,4 +67,9 @@ public interface SysConstants {
      */
     String ADMIN_USER_ACCOUNT = "admin";
 
+    /**
+     * 缓存前缀：组织机构是否包含下级的标识
+     */
+    String SYS_ORG_SUB_FLAG_CACHE_PREFIX = "SYS:ORG:HAVE_SUB_FLAG:";
+
 }
