@@ -386,8 +386,8 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
                 continue;
             }
 
-            orgPids = orgPids.replaceAll(LEFT_SQUARE_BRACKETS, "");
-            orgPids = orgPids.replaceAll(RIGHT_SQUARE_BRACKETS, "");
+            orgPids = orgPids.replaceAll("\\[", "");
+            orgPids = orgPids.replaceAll("]", "");
 
             String[] split = orgPids.split(",");
             for (String pidString : split) {
