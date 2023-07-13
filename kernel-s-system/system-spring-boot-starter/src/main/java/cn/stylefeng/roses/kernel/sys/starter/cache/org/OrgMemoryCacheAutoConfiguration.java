@@ -22,38 +22,36 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.starter.cache;
+package cn.stylefeng.roses.kernel.sys.starter.cache.org;
 
 import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.TimedCache;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
-import cn.stylefeng.roses.kernel.cache.api.constants.CacheConstants;
-import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceDefinition;
-import cn.stylefeng.roses.kernel.sys.modular.resource.cache.MemoryResourceCache;
+import cn.stylefeng.roses.kernel.sys.modular.org.cache.SysOrgSubFlagMemoryCache;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 资源缓存自动配置
+ * 组织机构的内存缓存
  *
  * @author fengshuonan
- * @since 2021/5/17 16:44
+ * @since 2023/7/14 1:16
  */
 @Configuration
 @ConditionalOnMissingClass("org.springframework.data.redis.connection.RedisConnectionFactory")
-public class ResourceMemoryCacheAutoConfiguration {
+public class OrgMemoryCacheAutoConfiguration {
 
     /**
-     * 资源缓存
+     * 组织机构是否有下级层级的标识
      *
      * @author fengshuonan
-     * @since 2021/5/17 16:44
+     * @since 2023/7/14 1:17
      */
     @Bean
-    public CacheOperatorApi<ResourceDefinition> resourceCache() {
-        TimedCache<String, ResourceDefinition> timedCache = CacheUtil.newTimedCache(CacheConstants.NONE_EXPIRED_TIME);
-        return new MemoryResourceCache(timedCache);
+    public CacheOperatorApi<Boolean> sysOrgSubFlagCache() {
+        TimedCache<String, Boolean> themeCache = CacheUtil.newTimedCache(Long.MAX_VALUE);
+        return new SysOrgSubFlagMemoryCache(themeCache);
     }
 
 }

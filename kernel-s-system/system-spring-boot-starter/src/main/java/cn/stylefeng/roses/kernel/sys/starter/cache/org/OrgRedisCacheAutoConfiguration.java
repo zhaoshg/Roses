@@ -22,37 +22,37 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.starter.cache;
+package cn.stylefeng.roses.kernel.sys.starter.cache.org;
 
-import cn.hutool.cache.CacheUtil;
-import cn.hutool.cache.impl.TimedCache;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
-import cn.stylefeng.roses.kernel.sys.modular.theme.cache.ThemeMemoryCache;
-import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.DefaultTheme;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
+import cn.stylefeng.roses.kernel.cache.redis.util.CreateRedisTemplateUtil;
+import cn.stylefeng.roses.kernel.sys.modular.org.cache.SysOrgSubFlagRedisCache;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 
 /**
- * 系统管理缓存的自动配置（默认内存缓存）
+ * 组织机构的Redis缓存
  *
  * @author fengshuonan
- * @since 2021/2/28 10:29
+ * @since 2023/7/14 1:16
  */
 @Configuration
-@ConditionalOnMissingClass("org.springframework.data.redis.connection.RedisConnectionFactory")
-public class SystemMemoryCacheAutoConfiguration {
+@ConditionalOnClass(name = "org.springframework.data.redis.connection.RedisConnectionFactory")
+public class OrgRedisCacheAutoConfiguration {
 
     /**
-     * 主题的缓存
+     * 组织机构是否有下级层级的标识
      *
      * @author fengshuonan
-     * @since 2021/7/31 17:59
+     * @since 2023/7/14 1:17
      */
     @Bean
-    public CacheOperatorApi<DefaultTheme> themeCacheApi() {
-        TimedCache<String, DefaultTheme> themeCache = CacheUtil.newTimedCache(Long.MAX_VALUE);
-        return new ThemeMemoryCache(themeCache);
+    public CacheOperatorApi<Boolean> sysOrgSubFlagCache(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Boolean> redisTemplate = CreateRedisTemplateUtil.createObject(redisConnectionFactory);
+        return new SysOrgSubFlagRedisCache(redisTemplate);
     }
 
 }

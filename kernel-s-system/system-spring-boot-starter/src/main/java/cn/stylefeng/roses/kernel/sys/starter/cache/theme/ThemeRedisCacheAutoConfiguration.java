@@ -22,7 +22,7 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.starter.cache;
+package cn.stylefeng.roses.kernel.sys.starter.cache.theme;
 
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.cache.redis.util.CreateRedisTemplateUtil;
@@ -42,7 +42,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  */
 @Configuration
 @ConditionalOnClass(name = "org.springframework.data.redis.connection.RedisConnectionFactory")
-public class SystemRedisCacheAutoConfiguration {
+public class ThemeRedisCacheAutoConfiguration {
 
     /**
      * 主题的缓存

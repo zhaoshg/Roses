@@ -22,38 +22,37 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.starter.cache;
+package cn.stylefeng.roses.kernel.sys.starter.cache.theme;
 
+import cn.hutool.cache.CacheUtil;
+import cn.hutool.cache.impl.TimedCache;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
-import cn.stylefeng.roses.kernel.cache.redis.util.CreateRedisTemplateUtil;
-import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceDefinition;
-import cn.stylefeng.roses.kernel.sys.modular.resource.cache.RedisResourceCache;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import cn.stylefeng.roses.kernel.sys.modular.theme.cache.ThemeMemoryCache;
+import cn.stylefeng.roses.kernel.sys.modular.theme.pojo.DefaultTheme;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 
 /**
- * 资源缓存自动配置，Redis配置
+ * 系统管理缓存的自动配置（默认内存缓存）
  *
  * @author fengshuonan
- * @since 2022/11/8 23:26
+ * @since 2021/2/28 10:29
  */
 @Configuration
-@ConditionalOnClass(name = "org.springframework.data.redis.connection.RedisConnectionFactory")
-public class ResourceRedisCacheAutoConfiguration {
+@ConditionalOnMissingClass("org.springframework.data.redis.connection.RedisConnectionFactory")
+public class ThemeMemoryCacheAutoConfiguration {
 
     /**
-     * 资源缓存
+     * 主题的缓存
      *
      * @author fengshuonan
-     * @since 2022/11/8 23:27
+     * @since 2021/7/31 17:59
      */
     @Bean
-    public CacheOperatorApi<ResourceDefinition> resourceCache(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<String, ResourceDefinition> redisTemplate = CreateRedisTemplateUtil.createObject(redisConnectionFactory);
-        return new RedisResourceCache(redisTemplate);
+    public CacheOperatorApi<DefaultTheme> themeCacheApi() {
+        TimedCache<String, DefaultTheme> themeCache = CacheUtil.newTimedCache(Long.MAX_VALUE);
+        return new ThemeMemoryCache(themeCache);
     }
 
 }

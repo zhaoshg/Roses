@@ -151,4 +151,14 @@ public interface HrOrganizationService extends IService<HrOrganization> {
      */
     Set<Long> queryOrgIdParentIdList(Set<Long> orgIdList);
 
+    /**
+     * 获取组织机构是否包含下级的标识
+     *
+     * @param orgId 被查询的组织机构id
+     * @return true-包含下级，false-不含下级
+     * @author fengshuonan
+     * @since 2023/7/14 1:09
+     */
+    Boolean getOrgHaveSubFlag(Long orgId);
+
 }

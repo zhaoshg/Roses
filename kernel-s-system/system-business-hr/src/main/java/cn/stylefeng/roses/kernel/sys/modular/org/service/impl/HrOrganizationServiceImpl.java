@@ -6,6 +6,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
+import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.context.DbOperatorContext;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
@@ -62,6 +63,9 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
     @Resource
     private SysUserOrgService sysUserOrgService;
+
+    @Resource(name = "sysOrgSubFlagCache")
+    private CacheOperatorApi<Boolean> sysOrgSubFlagCache;
 
     @Override
     public void add(HrOrganizationRequest hrOrganizationRequest) {
@@ -401,6 +405,34 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         return parentIdListTotal;
     }
 
+    @Override
+    public Boolean getOrgHaveSubFlag(Long orgId) {
+
+        if (ObjectUtil.isEmpty(orgId)) {
+            return false;
+        }
+
+        Boolean cacheResult = sysOrgSubFlagCache.get(orgId.toString());
+        if (cacheResult != null) {
+            return cacheResult;
+        }
+
+        // 查询库中是否有上级包含了本orgId
+        LambdaQueryWrapper<HrOrganization> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(HrOrganization::getOrgParentId, orgId);
+        wrapper.select(HrOrganization::getOrgId);
+        List<HrOrganization> hrOrganizationList = this.list(wrapper);
+
+        // 查询结果加到缓存中
+        if (hrOrganizationList.size() > 0) {
+            sysOrgSubFlagCache.put(orgId.toString(), true);
+            return true;
+        } else {
+            sysOrgSubFlagCache.put(orgId.toString(), false);
+            return false;
+        }
+    }
+
     /**
      * 获取信息
      *
@@ -528,15 +560,9 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
             Long orgId = organization.getOrgId();
 
-            // 查询库中是否有上级包含了本orgId
-            LambdaQueryWrapper<HrOrganization> wrapper = new LambdaQueryWrapper<>();
-            wrapper.eq(HrOrganization::getOrgParentId, orgId);
-            wrapper.select(HrOrganization::getOrgId);
-            List<HrOrganization> hrOrganizationList = this.list(wrapper);
-
-            if (hrOrganizationList.size() > 0) {
-                organization.setHaveSubOrgFlag(true);
-            }
+            // 查询是否包含下级，并设置标识
+            Boolean orgHaveSubFlag = this.getOrgHaveSubFlag(orgId);
+            organization.setHaveSubOrgFlag(orgHaveSubFlag);
 
             // 如果有children则将展开标识填充，并继续向下递归填充
             if (ObjectUtil.isNotEmpty(organization.getChildren())) {
