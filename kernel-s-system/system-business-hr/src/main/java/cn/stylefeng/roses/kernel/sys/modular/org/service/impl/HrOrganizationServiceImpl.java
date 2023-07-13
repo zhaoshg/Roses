@@ -189,6 +189,12 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     @Override
     public List<HrOrganization> commonOrgTree(CommonOrgTreeRequest commonOrgTreeRequest) {
 
+        // 如果查询带组织机构名称的搜索，则清空其他条件
+        if (ObjectUtil.isNotEmpty(commonOrgTreeRequest.getSearchText())) {
+            commonOrgTreeRequest.setOrgParentId(null);
+            commonOrgTreeRequest.setIndexOrgIdList(null);
+        }
+
         // 根据条件查询组织机构列表
         LambdaQueryWrapper<HrOrganization> wrapper = this.createCommonTreeWrapper(commonOrgTreeRequest);
         wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgPids,
