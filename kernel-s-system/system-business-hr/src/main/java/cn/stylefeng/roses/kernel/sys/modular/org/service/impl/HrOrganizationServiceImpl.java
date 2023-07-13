@@ -221,8 +221,8 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         newNotRepeatList.sort(Comparator.comparing(HrOrganization::getOrgSort));
 
         // 构建树形结构
-        if (commonOrgTreeRequest.getOrgParentId() != null && !TreeConstants.DEFAULT_PARENT_ID.equals(
-                commonOrgTreeRequest.getOrgParentId())) {
+        if (ObjectUtil.isNotEmpty(commonOrgTreeRequest.getSearchText()) || ObjectUtil.isNotEmpty(
+                commonOrgTreeRequest.getIndexOrgIdList())) {
             newNotRepeatList = new DefaultTreeBuildFactory<HrOrganization>().doTreeBuild(newNotRepeatList);
         }
 
