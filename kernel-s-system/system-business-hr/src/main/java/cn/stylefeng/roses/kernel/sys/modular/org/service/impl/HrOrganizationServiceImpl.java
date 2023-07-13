@@ -375,6 +375,9 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
             return parentIdListTotal;
         }
 
+        // 首先加上参数的机构集合
+        parentIdListTotal.addAll(orgIdList);
+
         LambdaQueryWrapper<HrOrganization> hrOrganizationLambdaQueryWrapper = new LambdaQueryWrapper<>();
         hrOrganizationLambdaQueryWrapper.in(HrOrganization::getOrgId, orgIdList);
         hrOrganizationLambdaQueryWrapper.select(HrOrganization::getOrgPids);
