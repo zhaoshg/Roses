@@ -147,6 +147,20 @@ public class HrOrganization extends BaseExpandFieldEntity implements AbstractTre
     @ChineseDescription("组织机构所属公司的名称")
     private String companyName;
 
+    /**
+     * 是否有子级：true-有子级，false-无子级
+     */
+    @TableField(exist = false)
+    @ChineseDescription("是否有子级：true-有子级，false-无子级")
+    private Boolean haveSubOrgFlag = false;
+
+    /**
+     * 是否要展开显示：true-展开本节点显示，false-不展开显示
+     */
+    @TableField(exist = false)
+    @ChineseDescription("是否要展开显示：true-展开本节点显示，false-不展开显示")
+    private Boolean expandShowFlag = false;
+
     @Override
     public String getNodeId() {
         if (this.orgId == null) {

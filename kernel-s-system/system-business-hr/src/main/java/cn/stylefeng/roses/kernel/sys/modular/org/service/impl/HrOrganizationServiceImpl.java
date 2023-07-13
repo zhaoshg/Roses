@@ -221,7 +221,12 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         newNotRepeatList.sort(Comparator.comparing(HrOrganization::getOrgSort));
 
         // 构建树形结构
-        return new DefaultTreeBuildFactory<HrOrganization>().doTreeBuild(newNotRepeatList);
+        List<HrOrganization> hrOrganizations = new DefaultTreeBuildFactory<HrOrganization>().doTreeBuild(newNotRepeatList);
+
+        // 遍历所有节点，查询这些节点有没有子级，填充haveSubOrgFlag
+        this.fillHaveSubFlag(hrOrganizations);
+
+        return hrOrganizations;
     }
 
     @Override
@@ -436,6 +441,28 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     /**
+     * 批量删除组织机构
+     *
+     * @author fengshuonan
+     * @since 2023/6/11 17:00
+     */
+    private void baseDelete(Set<Long> totalOrgIdSet) {
+        // 判断业务是否和组织机构有绑定关系
+        Map<String, RemoveOrgCallbackApi> callbackApiMap = SpringUtil.getBeansOfType(RemoveOrgCallbackApi.class);
+        for (RemoveOrgCallbackApi removeOrgCallbackApi : callbackApiMap.values()) {
+            removeOrgCallbackApi.validateHaveOrgBind(totalOrgIdSet);
+        }
+
+        // 联动删除所有和本组织机构相关其他业务数据
+        for (RemoveOrgCallbackApi removeOrgCallbackApi : callbackApiMap.values()) {
+            removeOrgCallbackApi.removeOrgAction(totalOrgIdSet);
+        }
+
+        // 批量删除所有相关节点
+        this.removeBatchByIds(totalOrgIdSet);
+    }
+
+    /**
      * 创建查询wrapper
      *
      * @author fengshuonan
@@ -473,25 +500,40 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     /**
-     * 批量删除组织机构
+     * 填充是否含有下级的标识
      *
      * @author fengshuonan
-     * @since 2023/6/11 17:00
+     * @since 2023/7/13 21:30
      */
-    private void baseDelete(Set<Long> totalOrgIdSet) {
-        // 判断业务是否和组织机构有绑定关系
-        Map<String, RemoveOrgCallbackApi> callbackApiMap = SpringUtil.getBeansOfType(RemoveOrgCallbackApi.class);
-        for (RemoveOrgCallbackApi removeOrgCallbackApi : callbackApiMap.values()) {
-            removeOrgCallbackApi.validateHaveOrgBind(totalOrgIdSet);
+    private void fillHaveSubFlag(List<HrOrganization> organizations) {
+
+        if (ObjectUtil.isEmpty(organizations)) {
+            return;
         }
 
-        // 联动删除所有和本组织机构相关其他业务数据
-        for (RemoveOrgCallbackApi removeOrgCallbackApi : callbackApiMap.values()) {
-            removeOrgCallbackApi.removeOrgAction(totalOrgIdSet);
+        for (HrOrganization organization : organizations) {
+
+            Long orgId = organization.getOrgId();
+
+            // 查询库中是否有上级包含了本orgId
+            LambdaQueryWrapper<HrOrganization> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(HrOrganization::getOrgParentId, orgId);
+            wrapper.select(HrOrganization::getOrgId);
+            List<HrOrganization> hrOrganizationList = this.list(wrapper);
+
+            if (hrOrganizationList.size() > 0) {
+                organization.setHaveSubOrgFlag(true);
+            }
+
+            // 如果有children则将展开标识填充，并继续向下递归填充
+            if (ObjectUtil.isNotEmpty(organization.getChildren())) {
+                organization.setExpandShowFlag(true);
+
+                fillHaveSubFlag(organization.getChildren());
+            }
+
         }
 
-        // 批量删除所有相关节点
-        this.removeBatchByIds(totalOrgIdSet);
     }
 
 }
