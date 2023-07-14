@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.login.service;
 
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
@@ -19,6 +20,7 @@ import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
 import cn.stylefeng.roses.kernel.sys.modular.login.expander.WebSocketConfigExpander;
 import cn.stylefeng.roses.kernel.sys.modular.login.pojo.*;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
+import cn.stylefeng.roses.kernel.sys.modular.menu.factory.MenuFactory;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
@@ -246,6 +248,15 @@ public class UserIndexInfoService {
         List<SysMenu> userMenuList = sysMenuService.getIndexMenuInfoList(menuIdList);
         Set<String> menuCodeList = userMenuList.stream().map(SysMenu::getMenuCode).collect(Collectors.toSet());
         permissionCodeList.addAll(menuCodeList);
+
+        // 获取菜单的上级，查询这些菜单的父级集合，获取缺失的父级菜单，否则组不成一棵树
+        Set<Long> needToAddMenuIds = MenuFactory.getMenuParentIds(userMenuList);
+        if (ObjectUtil.isNotEmpty(needToAddMenuIds)) {
+            List<SysMenu> needToAddMenuList = sysMenuService.getIndexMenuInfoList(ListUtil.list(true, needToAddMenuIds));
+            userMenuList.addAll(needToAddMenuList);
+            Set<String> needToAddCodes = needToAddMenuList.stream().map(SysMenu::getMenuCode).collect(Collectors.toSet());
+            permissionCodeList.addAll(needToAddCodes);
+        }
 
         // 获取功能对应的功能编码集合
         List<String> optionsCodeList = sysMenuOptionsService.getOptionsCodeList(menuOptionsIdList);
