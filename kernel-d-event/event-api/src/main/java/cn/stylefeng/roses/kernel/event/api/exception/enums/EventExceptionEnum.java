@@ -22,24 +22,40 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.modular.org.constants;
+package cn.stylefeng.roses.kernel.event.api.exception.enums;
+
+import cn.stylefeng.roses.kernel.event.api.constants.EventConstants;
+import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
+import cn.stylefeng.roses.kernel.rule.exception.AbstractExceptionEnum;
+import lombok.Getter;
 
 /**
- * 组织机构的常量
+ * 业务事件的异常枚举
  *
  * @author fengshuonan
- * @since 2023/6/28 22:44
+ * @date 2023-07-14 15:05:54
  */
-public interface OrgConstants {
+@Getter
+public enum EventExceptionEnum implements AbstractExceptionEnum {
 
     /**
-     * 没有上级机构时候的上级机构名称
+     * 查询不到对应业务事件
      */
-    String NONE_PARENT_ORG = "无上级机构";
+    CANT_FIND_EVENT(RuleConstants.BUSINESS_ERROR_TYPE_CODE + EventConstants.EVENT_EXCEPTION_STEP_CODE + "01", "查询不到对应业务事件，具体信息：{}");
 
     /**
-     * 添加组织机构的事件监听
+     * 错误编码
      */
-    String ADD_ORG_EVENT = "ADD_ORG_EVENT";
+    private final String errorCode;
+
+    /**
+     * 提示用户信息
+     */
+    private final String userTip;
+
+    EventExceptionEnum(String errorCode, String userTip) {
+        this.errorCode = errorCode;
+        this.userTip = userTip;
+    }
 
 }

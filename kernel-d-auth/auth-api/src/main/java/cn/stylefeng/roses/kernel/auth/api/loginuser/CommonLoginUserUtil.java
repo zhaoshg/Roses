@@ -6,7 +6,6 @@ import cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum;
 import cn.stylefeng.roses.kernel.auth.api.expander.AuthConfigExpander;
 import cn.stylefeng.roses.kernel.rule.util.HttpServletUtil;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -40,20 +39,6 @@ public class CommonLoginUserUtil {
         String authToken = request.getHeader(AuthConfigExpander.getAuthTokenHeaderName());
         if (StrUtil.isNotBlank(authToken)) {
             return authToken;
-        }
-
-        // 3. 从cookie中获取token
-        String sessionCookieName = AuthConfigExpander.getSessionCookieName();
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length > 0) {
-            for (Cookie cookie : cookies) {
-
-                // 如果cookie有对应的值，并且不为空
-                if (sessionCookieName.equals(cookie.getName())
-                        && StrUtil.isNotBlank(cookie.getValue())) {
-                    return cookie.getValue();
-                }
-            }
         }
 
         // 获取不到token，直接告诉用户

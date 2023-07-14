@@ -22,24 +22,30 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.modular.org.constants;
+package cn.stylefeng.roses.kernel.event.starter;
+
+import cn.stylefeng.roses.kernel.event.sdk.EventAnnotationScanner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * 组织机构的常量
+ * 业务事件自动装配
  *
  * @author fengshuonan
- * @since 2023/6/28 22:44
+ * @date 2023-07-14 15:05:54
  */
-public interface OrgConstants {
+@Configuration
+public class EventAutoConfiguration {
 
     /**
-     * 没有上级机构时候的上级机构名称
+     * 创建事件的扫描
+     *
+     * @author fengshuonan
+     * @since 2023/7/14 16:00
      */
-    String NONE_PARENT_ORG = "无上级机构";
-
-    /**
-     * 添加组织机构的事件监听
-     */
-    String ADD_ORG_EVENT = "ADD_ORG_EVENT";
+    @Bean
+    public EventAnnotationScanner eventAnnotationScanner() {
+        return new EventAnnotationScanner();
+    }
 
 }

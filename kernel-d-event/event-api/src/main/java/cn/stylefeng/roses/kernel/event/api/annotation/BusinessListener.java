@@ -22,24 +22,24 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.modular.org.constants;
+package cn.stylefeng.roses.kernel.event.api.annotation;
+
+import java.lang.annotation.*;
 
 /**
- * 组织机构的常量
+ * 业务事件监听的注解
  *
  * @author fengshuonan
- * @since 2023/6/28 22:44
+ * @since 2023/7/14 15:12
  */
-public interface OrgConstants {
+@Inherited
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD})
+public @interface BusinessListener {
 
     /**
-     * 没有上级机构时候的上级机构名称
+     * 监听业务的编码或者标识
      */
-    String NONE_PARENT_ORG = "无上级机构";
-
-    /**
-     * 添加组织机构的事件监听
-     */
-    String ADD_ORG_EVENT = "ADD_ORG_EVENT";
+    String businessCode() default "";
 
 }

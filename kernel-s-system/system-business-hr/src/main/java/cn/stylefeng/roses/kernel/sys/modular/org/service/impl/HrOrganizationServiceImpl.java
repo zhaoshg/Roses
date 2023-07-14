@@ -12,6 +12,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
@@ -76,6 +77,9 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         OrganizationFactory.fillParentIds(hrOrganization);
 
         this.save(hrOrganization);
+
+        // 发布一个新增组织机构的事件
+        BusinessEventPublisher.publishEvent(OrgConstants.ADD_ORG_EVENT, hrOrganization);
     }
 
     @Override

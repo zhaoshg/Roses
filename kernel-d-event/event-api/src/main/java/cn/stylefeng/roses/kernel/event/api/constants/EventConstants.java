@@ -22,24 +22,24 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.modular.org.constants;
+package cn.stylefeng.roses.kernel.event.api.constants;
 
 /**
- * 组织机构的常量
+ * 业务事件业务
  *
  * @author fengshuonan
- * @since 2023/6/28 22:44
+ * @date 2023-07-14 15:05:54
  */
-public interface OrgConstants {
+public interface EventConstants {
 
     /**
-     * 没有上级机构时候的上级机构名称
+     * 业务事件模块名称
      */
-    String NONE_PARENT_ORG = "无上级机构";
+    String EVENT_MODULE_NAME = "kernel-s-event";
 
     /**
-     * 添加组织机构的事件监听
+     * 异常枚举的步进值
      */
-    String ADD_ORG_EVENT = "ADD_ORG_EVENT";
+    String EVENT_EXCEPTION_STEP_CODE = "99";
 
 }

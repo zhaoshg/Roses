@@ -40,6 +40,9 @@
         <!--邮件发送模块-->
         <module>kernel-d-email</module>
 
+        <!--业务事件模块-->
+        <module>kernel-d-event</module>
+
         <!--文件操作模块-->
         <module>kernel-d-file</module>
 
