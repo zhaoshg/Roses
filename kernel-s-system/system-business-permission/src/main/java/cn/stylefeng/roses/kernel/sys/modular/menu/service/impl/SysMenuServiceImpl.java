@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
+import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
 import cn.stylefeng.roses.kernel.rule.constants.SymbolConstant;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
@@ -14,6 +15,7 @@ import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.pojo.menu.UserAppMenuInfo;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
+import cn.stylefeng.roses.kernel.sys.modular.menu.constants.MenuConstants;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.enums.SysMenuExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.menu.factory.MenuFactory;
@@ -84,6 +86,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         for (RemoveMenuCallbackApi removeMenuCallbackApi : removeMenuCallbackApiMap.values()) {
             removeMenuCallbackApi.removeMenuAction(totalMenuIds);
         }
+
+        // 发布菜单删除事件
+        BusinessEventPublisher.publishEvent(MenuConstants.MENU_UPDATE_EVENT, menuId);
+
     }
 
     @Override
@@ -102,6 +108,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         BeanUtil.copyProperties(sysMenuRequest, sysMenu);
 
         this.updateById(sysMenu);
+
+        // 发布菜单删除事件
+        BusinessEventPublisher.publishEvent(MenuConstants.MENU_UPDATE_EVENT, sysMenu.getMenuId());
+
     }
 
     @Override

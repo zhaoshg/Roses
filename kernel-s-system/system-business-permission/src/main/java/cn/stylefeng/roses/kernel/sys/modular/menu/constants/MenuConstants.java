@@ -13,4 +13,9 @@ public interface MenuConstants {
      */
     String MENU_CODE_CACHE_PREFIX = "MENU:CODE:";
 
+    /**
+     * 菜单更新的事件
+     */
+    String MENU_UPDATE_EVENT = "MENU_UPDATE_EVENT";
+
 }
