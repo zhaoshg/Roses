@@ -1,14 +1,11 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
-import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
-import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
@@ -17,14 +14,11 @@ import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleAssignOperateAction
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenu;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.PermissionNodeTypeEnum;
-import cn.stylefeng.roses.kernel.sys.modular.role.enums.exception.SysRoleMenuExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleMenuMapper;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
-import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleMenuRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -54,37 +48,8 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     @Resource
     private SysMenuService sysMenuService;
 
-    @Override
-    public void add(SysRoleMenuRequest sysRoleMenuRequest) {
-        SysRoleMenu sysRoleMenu = new SysRoleMenu();
-        BeanUtil.copyProperties(sysRoleMenuRequest, sysRoleMenu);
-        this.save(sysRoleMenu);
-    }
-
-    @Override
-    public void del(SysRoleMenuRequest sysRoleMenuRequest) {
-        SysRoleMenu sysRoleMenu = this.querySysRoleMenu(sysRoleMenuRequest);
-        this.removeById(sysRoleMenu.getRoleMenuId());
-    }
-
-    @Override
-    public void edit(SysRoleMenuRequest sysRoleMenuRequest) {
-        SysRoleMenu sysRoleMenu = this.querySysRoleMenu(sysRoleMenuRequest);
-        BeanUtil.copyProperties(sysRoleMenuRequest, sysRoleMenu);
-        this.updateById(sysRoleMenu);
-    }
-
-    @Override
-    public SysRoleMenu detail(SysRoleMenuRequest sysRoleMenuRequest) {
-        return this.querySysRoleMenu(sysRoleMenuRequest);
-    }
-
-    @Override
-    public PageResult<SysRoleMenu> findPage(SysRoleMenuRequest sysRoleMenuRequest) {
-        LambdaQueryWrapper<SysRoleMenu> wrapper = createWrapper(sysRoleMenuRequest);
-        Page<SysRoleMenu> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
-        return PageResultFactory.createPageResult(sysRolePage);
-    }
+    @Resource(name = "roleMenuCache")
+    private CacheOperatorApi<List<Long>> roleMenuCache;
 
     @Override
     public void bindRoleMenus(Long roleId, List<SysMenu> menuList) {
@@ -113,19 +78,40 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     @Override
     public List<Long> getRoleBindMenuIdList(List<Long> roleIdList) {
 
+        List<Long> result = new ArrayList<>();
+
         if (ObjectUtil.isEmpty(roleIdList)) {
-            return new ArrayList<>();
+            return result;
         }
 
-        LambdaQueryWrapper<SysRoleMenu> sysRoleMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        sysRoleMenuLambdaQueryWrapper.in(SysRoleMenu::getRoleId, roleIdList);
-        sysRoleMenuLambdaQueryWrapper.select(SysRoleMenu::getMenuId);
-        List<SysRoleMenu> sysRoleMenuList = this.list(sysRoleMenuLambdaQueryWrapper);
-        if (ObjectUtil.isEmpty(sysRoleMenuList)) {
-            return new ArrayList<>();
+        for (Long roleId : roleIdList) {
+
+            String roleIdKey = String.valueOf(roleId);
+
+            // 先从缓存中获取，是否有绑定的菜单
+            List<Long> cacheMenuIdList = roleMenuCache.get(roleIdKey);
+
+            if (ObjectUtil.isNotEmpty(cacheMenuIdList)) {
+                result.addAll(cacheMenuIdList);
+                continue;
+            }
+
+            // 缓存中没有，则从数据库中查询
+            LambdaQueryWrapper<SysRoleMenu> sysRoleMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            sysRoleMenuLambdaQueryWrapper.eq(SysRoleMenu::getRoleId, roleId);
+            sysRoleMenuLambdaQueryWrapper.select(SysRoleMenu::getMenuId);
+            List<SysRoleMenu> sysRoleMenuList = this.list(sysRoleMenuLambdaQueryWrapper);
+            if (ObjectUtil.isNotEmpty(sysRoleMenuList)) {
+
+                List<Long> menuIdListQueryResult = sysRoleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
+                result.addAll(menuIdListQueryResult);
+
+                // 将查询结果加入到缓存中
+                roleMenuCache.put(roleIdKey, menuIdListQueryResult, SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
+            }
         }
 
-        return sysRoleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
+        return result;
     }
 
     @Override
@@ -134,12 +120,6 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         sysRoleMenuLambdaQueryWrapper.in(SysRoleMenu::getRoleId, roleIdList);
         sysRoleMenuLambdaQueryWrapper.eq(SysRoleMenu::getAppId, appId);
         return this.count(sysRoleMenuLambdaQueryWrapper) > 0;
-    }
-
-    @Override
-    public List<SysRoleMenu> findList(SysRoleMenuRequest sysRoleMenuRequest) {
-        LambdaQueryWrapper<SysRoleMenu> wrapper = this.createWrapper(sysRoleMenuRequest);
-        return this.list(wrapper);
     }
 
     @Override
@@ -222,38 +202,6 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         LambdaQueryWrapper<SysRoleMenu> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(SysRoleMenu::getMenuId, beRemovedMenuIdList);
         this.remove(queryWrapper);
-    }
-
-    /**
-     * 获取信息
-     *
-     * @author fengshuonan
-     * @date 2023/06/10 21:29
-     */
-    private SysRoleMenu querySysRoleMenu(SysRoleMenuRequest sysRoleMenuRequest) {
-        SysRoleMenu sysRoleMenu = this.getById(sysRoleMenuRequest.getRoleMenuId());
-        if (ObjectUtil.isEmpty(sysRoleMenu)) {
-            throw new ServiceException(SysRoleMenuExceptionEnum.SYS_ROLE_MENU_NOT_EXISTED);
-        }
-        return sysRoleMenu;
-    }
-
-    /**
-     * 创建查询wrapper
-     *
-     * @author fengshuonan
-     * @date 2023/06/10 21:29
-     */
-    private LambdaQueryWrapper<SysRoleMenu> createWrapper(SysRoleMenuRequest sysRoleMenuRequest) {
-        LambdaQueryWrapper<SysRoleMenu> queryWrapper = new LambdaQueryWrapper<>();
-
-        Long roleId = sysRoleMenuRequest.getRoleId();
-        queryWrapper.eq(ObjectUtil.isNotNull(roleId), SysRoleMenu::getRoleId, roleId);
-
-        Long menuId = sysRoleMenuRequest.getMenuId();
-        queryWrapper.eq(ObjectUtil.isNotNull(menuId), SysRoleMenu::getMenuId, menuId);
-
-        return queryWrapper;
     }
 
 }
