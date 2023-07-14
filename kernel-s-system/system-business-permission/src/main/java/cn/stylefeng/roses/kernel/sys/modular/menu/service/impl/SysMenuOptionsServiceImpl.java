@@ -7,9 +7,11 @@ import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
+import cn.stylefeng.roses.kernel.sys.modular.menu.constants.MenuConstants;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.menu.enums.SysMenuOptionsExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.menu.factory.MenuOptionsValidateFactory;
@@ -75,6 +77,10 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
 
         // 删除角色绑定的功能关联
         sysRoleMenuOptionsService.removeRoleBindOptions(sysMenuOptionsRequest.getMenuOptionId());
+
+        // 发布菜单功能的更新事件
+        BusinessEventPublisher.publishEvent(MenuConstants.MENU_OPTIONS_UPDATE_EVENT, sysMenuOptions.getMenuOptionId());
+
     }
 
     @Override
@@ -86,6 +92,10 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
         SysMenuOptions sysMenuOptions = this.querySysMenuOptions(sysMenuOptionsRequest);
         BeanUtil.copyProperties(sysMenuOptionsRequest, sysMenuOptions);
         this.updateById(sysMenuOptions);
+
+        // 发布菜单功能的更新事件
+        BusinessEventPublisher.publishEvent(MenuConstants.MENU_OPTIONS_UPDATE_EVENT, sysMenuOptions.getMenuOptionId());
+
     }
 
     @Override
