@@ -8,6 +8,7 @@ import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 
 /**
  * 添加组织机构的事件监听器
@@ -22,21 +23,53 @@ public class OrgOperateListener {
     private CacheOperatorApi<Boolean> sysOrgSubFlagCache;
 
     /**
-     * 监听新增组织机构，删除相关的缓存
+     * 监听添加组织机构
+     * <p>
+     * 清空组织机构下级标识
      *
      * @author fengshuonan
-     * @since 2023/7/14 16:22
+     * @since 2023/7/14 18:38
      */
     @BusinessListener(businessCode = OrgConstants.ADD_ORG_EVENT)
     public void addOrgCallback(HrOrganization businessObject) {
-
         if (ObjectUtil.isNotEmpty(businessObject.getOrgId())) {
             sysOrgSubFlagCache.remove(String.valueOf(businessObject.getOrgId()));
         }
-
         if (ObjectUtil.isNotEmpty(businessObject.getOrgParentId())) {
             sysOrgSubFlagCache.remove(String.valueOf(businessObject.getOrgParentId()));
         }
+    }
+
+    /**
+     * 监听编辑组织机构
+     *
+     * @author fengshuonan
+     * @since 2023/7/14 18:40
+     */
+    @BusinessListener(businessCode = OrgConstants.EDIT_ORG_EVENT)
+    public void editOrgCallback(HrOrganization businessObject) {
+        if (ObjectUtil.isNotEmpty(businessObject.getOrgId())) {
+            sysOrgSubFlagCache.remove(String.valueOf(businessObject.getOrgId()));
+        }
+        if (ObjectUtil.isNotEmpty(businessObject.getOrgParentId())) {
+            sysOrgSubFlagCache.remove(String.valueOf(businessObject.getOrgParentId()));
+        }
+    }
+
+    /**
+     * 监听删除组织机构的事件
+     *
+     * @author fengshuonan
+     * @since 2023/7/14 18:40
+     */
+    @BusinessListener(businessCode = OrgConstants.DELETE_ORG_EVENT)
+    public void deleteOrgCallback() {
+
+        // 获取所有主键
+        Collection<String> allKeys = sysOrgSubFlagCache.getAllKeys();
+
+        // 删除所有子集标识
+        sysOrgSubFlagCache.remove(allKeys);
 
     }
 

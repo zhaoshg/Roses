@@ -50,7 +50,8 @@ public class OrgMemoryCacheAutoConfiguration {
      */
     @Bean
     public CacheOperatorApi<Boolean> sysOrgSubFlagCache() {
-        TimedCache<String, Boolean> themeCache = CacheUtil.newTimedCache(Long.MAX_VALUE);
+        // 1小时过期
+        TimedCache<String, Boolean> themeCache = CacheUtil.newTimedCache(1000 * 3600);
         return new SysOrgSubFlagMemoryCache(themeCache);
     }
 

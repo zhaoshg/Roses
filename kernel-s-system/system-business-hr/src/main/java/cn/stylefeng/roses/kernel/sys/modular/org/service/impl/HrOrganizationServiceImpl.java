@@ -93,6 +93,9 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 执行删除操作
         this.baseDelete(totalOrgIdSet);
+
+        // 发布删除机构的事件
+        BusinessEventPublisher.publishEvent(OrgConstants.DELETE_ORG_EVENT, null);
     }
 
     @Override
@@ -110,6 +113,9 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 执行删除操作
         this.baseDelete(orgIdList);
+
+        // 发布删除机构的事件
+        BusinessEventPublisher.publishEvent(OrgConstants.DELETE_ORG_EVENT, null);
     }
 
     @Override
@@ -121,6 +127,10 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         OrganizationFactory.fillParentIds(hrOrganization);
 
         this.updateById(hrOrganization);
+
+        // 发布编辑机构事件
+        BusinessEventPublisher.publishEvent(OrgConstants.EDIT_ORG_EVENT, hrOrganization);
+
     }
 
     @Override
@@ -422,10 +432,12 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 查询结果加到缓存中
         if (hrOrganizationList.size() > 0) {
-            sysOrgSubFlagCache.put(orgId.toString(), true);
+            // 过期时间3600秒
+            sysOrgSubFlagCache.put(orgId.toString(), true, 3600L);
             return true;
         } else {
-            sysOrgSubFlagCache.put(orgId.toString(), false);
+            // 过期时间3600秒
+            sysOrgSubFlagCache.put(orgId.toString(), false, 3600L);
             return false;
         }
     }

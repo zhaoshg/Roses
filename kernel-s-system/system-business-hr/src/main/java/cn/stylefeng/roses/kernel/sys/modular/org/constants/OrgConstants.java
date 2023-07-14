@@ -42,4 +42,14 @@ public interface OrgConstants {
      */
     String ADD_ORG_EVENT = "ADD_ORG_EVENT";
 
+    /**
+     * 修改组织机构的事件监听
+     */
+    String EDIT_ORG_EVENT = "EDIT_ORG_EVENT";
+
+    /**
+     * 删除组织机构的事件监听
+     */
+    String DELETE_ORG_EVENT = "DELETE_ORG_EVENT";
+
 }
