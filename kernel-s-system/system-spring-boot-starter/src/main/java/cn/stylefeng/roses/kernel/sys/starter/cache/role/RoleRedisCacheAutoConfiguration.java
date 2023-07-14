@@ -27,6 +27,7 @@ package cn.stylefeng.roses.kernel.sys.starter.cache.role;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.cache.redis.util.CreateRedisTemplateUtil;
 import cn.stylefeng.roses.kernel.sys.modular.role.cache.rolemenu.RoleMenuRedisCache;
+import cn.stylefeng.roses.kernel.sys.modular.role.cache.roleoptions.RoleMenuOptionsRedisCache;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,6 +56,18 @@ public class RoleRedisCacheAutoConfiguration {
     public CacheOperatorApi<List<Long>> roleMenuCache(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, List<Long>> redisTemplate = CreateRedisTemplateUtil.createObject(redisConnectionFactory);
         return new RoleMenuRedisCache(redisTemplate);
+    }
+
+    /**
+     * 角色绑定菜单功能的缓存
+     *
+     * @author fengshuonan
+     * @since 2023/7/14 23:57
+     */
+    @Bean
+    public CacheOperatorApi<List<Long>> roleMenuOptionsCache(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, List<Long>> redisTemplate = CreateRedisTemplateUtil.createObject(redisConnectionFactory);
+        return new RoleMenuOptionsRedisCache(redisTemplate);
     }
 
 }

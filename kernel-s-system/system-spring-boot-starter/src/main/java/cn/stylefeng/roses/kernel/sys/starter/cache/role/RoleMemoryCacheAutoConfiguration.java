@@ -29,6 +29,7 @@ import cn.hutool.cache.impl.TimedCache;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.modular.role.cache.rolemenu.RoleMenuMemoryCache;
+import cn.stylefeng.roses.kernel.sys.modular.role.cache.roleoptions.RoleMenuOptionsMemoryCache;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -56,6 +57,19 @@ public class RoleMemoryCacheAutoConfiguration {
         // 1小时过期
         TimedCache<String, List<Long>> cache = CacheUtil.newTimedCache(1000 * SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
         return new RoleMenuMemoryCache(cache);
+    }
+
+    /**
+     * 角色绑定菜单功能的缓存
+     *
+     * @author fengshuonan
+     * @since 2023/7/14 23:56
+     */
+    @Bean
+    public CacheOperatorApi<List<Long>> roleMenuOptionsCache() {
+        // 1小时过期
+        TimedCache<String, List<Long>> cache = CacheUtil.newTimedCache(1000 * SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
+        return new RoleMenuOptionsMemoryCache(cache);
     }
 
 }
