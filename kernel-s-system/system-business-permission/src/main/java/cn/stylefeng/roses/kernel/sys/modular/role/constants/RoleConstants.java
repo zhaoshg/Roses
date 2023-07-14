@@ -13,4 +13,9 @@ public interface RoleConstants {
      */
     String ROLE_MENU_CACHE_PREFIX = "ROLE:MENU:";
 
+    /**
+     * 角色绑定菜单的事件
+     */
+    String ROLE_BIND_MENU_EVENT = "ROLE_BIND_MENU_EVENT";
+
 }
