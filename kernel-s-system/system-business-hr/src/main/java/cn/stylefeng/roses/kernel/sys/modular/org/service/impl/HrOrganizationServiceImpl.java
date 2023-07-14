@@ -17,6 +17,7 @@ import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.enums.org.OrgTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
@@ -433,11 +434,11 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         // 查询结果加到缓存中
         if (hrOrganizationList.size() > 0) {
             // 过期时间3600秒
-            sysOrgSubFlagCache.put(orgId.toString(), true, 3600L);
+            sysOrgSubFlagCache.put(orgId.toString(), true, SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
             return true;
         } else {
             // 过期时间3600秒
-            sysOrgSubFlagCache.put(orgId.toString(), false, 3600L);
+            sysOrgSubFlagCache.put(orgId.toString(), false, SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
             return false;
         }
     }

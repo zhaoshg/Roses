@@ -27,6 +27,7 @@ package cn.stylefeng.roses.kernel.sys.starter.cache.user;
 import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.TimedCache;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
+import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.modular.user.cache.userrole.UserRoleMemoryCache;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
@@ -53,7 +54,7 @@ public class UserMemoryCacheAutoConfiguration {
     @Bean
     public CacheOperatorApi<List<Long>> userRoleCache() {
         // 1小时过期
-        TimedCache<String, List<Long>> cache = CacheUtil.newTimedCache(1000 * 3600);
+        TimedCache<String, List<Long>> cache = CacheUtil.newTimedCache(1000 * SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
         return new UserRoleMemoryCache(cache);
     }
 

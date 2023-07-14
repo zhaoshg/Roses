@@ -27,6 +27,7 @@ package cn.stylefeng.roses.kernel.sys.starter.cache.org;
 import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.TimedCache;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
+import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.modular.org.cache.subflag.SysOrgSubFlagMemoryCache;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
@@ -51,7 +52,7 @@ public class OrgMemoryCacheAutoConfiguration {
     @Bean
     public CacheOperatorApi<Boolean> sysOrgSubFlagCache() {
         // 1小时过期
-        TimedCache<String, Boolean> themeCache = CacheUtil.newTimedCache(1000 * 3600);
+        TimedCache<String, Boolean> themeCache = CacheUtil.newTimedCache(1000 * SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
         return new SysOrgSubFlagMemoryCache(themeCache);
     }
 

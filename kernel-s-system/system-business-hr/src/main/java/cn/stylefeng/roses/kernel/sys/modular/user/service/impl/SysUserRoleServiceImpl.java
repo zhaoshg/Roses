@@ -7,6 +7,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserRoleMapper;
@@ -137,7 +138,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
         // 查询结果缓存起来
         if (ObjectUtil.isNotEmpty(userRoleQueryResult)) {
-            userRoleCache.put(userId.toString(), userRoleQueryResult);
+            userRoleCache.put(userId.toString(), userRoleQueryResult, SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
             return userRoleQueryResult;
         }
 
