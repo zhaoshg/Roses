@@ -41,7 +41,12 @@ public enum EventExceptionEnum implements AbstractExceptionEnum {
     /**
      * 查询不到对应业务事件
      */
-    CANT_FIND_EVENT(RuleConstants.BUSINESS_ERROR_TYPE_CODE + EventConstants.EVENT_EXCEPTION_STEP_CODE + "01", "查询不到对应业务事件，具体信息：{}");
+    CANT_FIND_EVENT(RuleConstants.BUSINESS_ERROR_TYPE_CODE + EventConstants.EVENT_EXCEPTION_STEP_CODE + "01", "查询不到对应业务事件，具体信息：{}"),
+
+    /**
+     * 事件调用，方法调用失败
+     */
+    ERROR_INVOKE(RuleConstants.BUSINESS_ERROR_TYPE_CODE + EventConstants.EVENT_EXCEPTION_STEP_CODE + "02", "事件调用，方法调用失败");
 
     /**
      * 错误编码

@@ -2,8 +2,11 @@ package cn.stylefeng.roses.kernel.event.sdk.publish;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import cn.stylefeng.roses.kernel.event.api.exception.enums.EventExceptionEnum;
 import cn.stylefeng.roses.kernel.event.sdk.container.EventContainer;
 import cn.stylefeng.roses.kernel.event.sdk.pojo.BusinessListenerDetail;
+import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -15,6 +18,7 @@ import java.util.List;
  * @author fengshuonan
  * @since 2023/7/14 16:21
  */
+@Slf4j
 public class BusinessEventPublisher {
 
     /**
@@ -54,7 +58,8 @@ public class BusinessEventPublisher {
                     try {
                         listenerMethod.invoke(businessObject);
                     } catch (IllegalAccessException | InvocationTargetException e) {
-                        throw new RuntimeException(e);
+                        log.error("方法调用失败，反射调用异常", e);
+                        throw new ServiceException(EventExceptionEnum.ERROR_INVOKE);
                     }
                 }
 
@@ -66,7 +71,8 @@ public class BusinessEventPublisher {
                     try {
                         listenerMethod.invoke(bean, businessObject);
                     } catch (IllegalAccessException | InvocationTargetException e) {
-                        throw new RuntimeException(e);
+                        log.error("方法调用失败，反射调用异常", e);
+                        throw new ServiceException(EventExceptionEnum.ERROR_INVOKE);
                     }
                 }
             }
