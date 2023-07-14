@@ -72,13 +72,14 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
         for (RoleAssignOperateAction roleAssignOperateAction : operateActionMap.values()) {
             if (roleAssignOperateAction.getNodeType().getCode().equals(roleBindPermissionRequest.getPermissionNodeType())) {
                 roleAssignOperateAction.doOperateAction(roleBindPermissionRequest);
+
+                // 更新角色绑定权限的缓存
+                BusinessEventPublisher.publishEvent(RoleConstants.ROLE_BIND_MENU_EVENT, roleBindPermissionRequest.getRoleId());
+                BusinessEventPublisher.publishEvent(RoleConstants.ROLE_BIND_MENU_OPTIONS_EVENT, roleBindPermissionRequest.getRoleId());
+
                 return;
             }
         }
-
-        // 更新角色绑定权限的缓存
-        BusinessEventPublisher.publishEvent(RoleConstants.ROLE_BIND_MENU_EVENT, roleBindPermissionRequest.getRoleId());
-        BusinessEventPublisher.publishEvent(RoleConstants.ROLE_BIND_MENU_OPTIONS_EVENT, roleBindPermissionRequest.getRoleId());
     }
 
     @Override
