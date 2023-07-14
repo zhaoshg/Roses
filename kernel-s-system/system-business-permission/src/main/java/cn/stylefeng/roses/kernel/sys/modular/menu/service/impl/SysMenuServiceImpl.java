@@ -232,7 +232,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
             // 查询库中的菜单编码
             LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
-            sysMenuLambdaQueryWrapper.eq(SysMenu::getMenuId, menuIdList);
+            sysMenuLambdaQueryWrapper.eq(SysMenu::getMenuId, menuId);
             sysMenuLambdaQueryWrapper.select(SysMenu::getMenuCode);
             SysMenu sysMenu = this.getOne(sysMenuLambdaQueryWrapper, false);
 
