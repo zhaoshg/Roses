@@ -1,4 +1,4 @@
-package cn.stylefeng.roses.kernel.sys.modular.org.cache;
+package cn.stylefeng.roses.kernel.sys.modular.org.cache.subflag;
 
 import cn.stylefeng.roses.kernel.cache.redis.AbstractRedisCacheOperator;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;

@@ -26,7 +26,7 @@ package cn.stylefeng.roses.kernel.sys.starter.cache.org;
 
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.cache.redis.util.CreateRedisTemplateUtil;
-import cn.stylefeng.roses.kernel.sys.modular.org.cache.SysOrgSubFlagRedisCache;
+import cn.stylefeng.roses.kernel.sys.modular.org.cache.subflag.SysOrgSubFlagRedisCache;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

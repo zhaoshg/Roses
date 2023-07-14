@@ -1,4 +1,4 @@
-package cn.stylefeng.roses.kernel.sys.modular.org.listener;
+package cn.stylefeng.roses.kernel.sys.modular.org.cache.subflag.clear;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
@@ -11,13 +11,13 @@ import javax.annotation.Resource;
 import java.util.Collection;
 
 /**
- * 添加组织机构的事件监听器
+ * 监听组织机构相关的事件，从而进行清空子级标识，保障缓存同步
  *
  * @author fengshuonan
- * @since 2023/7/14 14:19
+ * @since 2023/7/14 21:45
  */
 @Service
-public class OrgOperateListener {
+public class OrgSubFlagClearListener {
 
     @Resource(name = "sysOrgSubFlagCache")
     private CacheOperatorApi<Boolean> sysOrgSubFlagCache;
