@@ -129,7 +129,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         this.updateById(hrOrganization);
 
         // 发布编辑机构事件
-        BusinessEventPublisher.publishEvent(OrgConstants.EDIT_ORG_EVENT, hrOrganization);
+        BusinessEventPublisher.publishEvent(OrgConstants.EDIT_ORG_EVENT, null);
 
     }
 

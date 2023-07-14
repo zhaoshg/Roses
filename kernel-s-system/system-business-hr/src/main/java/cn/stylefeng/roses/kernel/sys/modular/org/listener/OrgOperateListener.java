@@ -47,13 +47,12 @@ public class OrgOperateListener {
      * @since 2023/7/14 18:40
      */
     @BusinessListener(businessCode = OrgConstants.EDIT_ORG_EVENT)
-    public void editOrgCallback(HrOrganization businessObject) {
-        if (ObjectUtil.isNotEmpty(businessObject.getOrgId())) {
-            sysOrgSubFlagCache.remove(String.valueOf(businessObject.getOrgId()));
-        }
-        if (ObjectUtil.isNotEmpty(businessObject.getOrgParentId())) {
-            sysOrgSubFlagCache.remove(String.valueOf(businessObject.getOrgParentId()));
-        }
+    public void editOrgCallback() {
+        // 获取所有主键
+        Collection<String> allKeys = sysOrgSubFlagCache.getAllKeys();
+
+        // 删除所有子集标识
+        sysOrgSubFlagCache.remove(allKeys);
     }
 
     /**

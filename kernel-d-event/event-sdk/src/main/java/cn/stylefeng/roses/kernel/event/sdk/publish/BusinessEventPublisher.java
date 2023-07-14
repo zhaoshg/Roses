@@ -56,7 +56,7 @@ public class BusinessEventPublisher {
                 // 如果方法的参数数量为0，则直接调用，如果不为0，则跳过执行下个
                 if (parameterClassType == null) {
                     try {
-                        listenerMethod.invoke(businessObject);
+                        listenerMethod.invoke(bean);
                     } catch (IllegalAccessException | InvocationTargetException e) {
                         log.error("方法调用失败，反射调用异常", e);
                         throw new ServiceException(EventExceptionEnum.ERROR_INVOKE);
