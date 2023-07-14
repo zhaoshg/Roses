@@ -4,12 +4,14 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.rule.constants.SymbolConstant;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.tree.buildpids.PidStructureBuildUtil;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.pojo.menu.UserAppMenuInfo;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
@@ -44,6 +46,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Resource
     private DbOperatorApi dbOperatorApi;
+
+    @Resource(name = "menuCodeCache")
+    private CacheOperatorApi<String> menuCodeCache;
 
     @Override
     public void add(SysMenuRequest sysMenuRequest) {
@@ -197,16 +202,43 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public List<String> getMenuCodeList(List<Long> menuIdList) {
 
+        List<String> result = new ArrayList<>();
+
         if (ObjectUtil.isEmpty(menuIdList)) {
-            return new ArrayList<>();
+            return result;
         }
 
-        LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        sysMenuLambdaQueryWrapper.in(SysMenu::getMenuId, menuIdList);
-        sysMenuLambdaQueryWrapper.select(SysMenu::getMenuCode);
-        List<SysMenu> sysMenuList = this.list(sysMenuLambdaQueryWrapper);
+        for (Long menuId : menuIdList) {
 
-        return sysMenuList.stream().map(SysMenu::getMenuCode).collect(Collectors.toList());
+            String menuIdKey = menuId.toString();
+
+            // 先从缓存查询，是否有菜单编码
+            String menuCode = menuCodeCache.get(menuIdKey);
+
+            if (ObjectUtil.isNotEmpty(menuCode)) {
+                result.add(menuCode);
+                continue;
+            }
+
+            // 查询库中的菜单编码
+            LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            sysMenuLambdaQueryWrapper.eq(SysMenu::getMenuId, menuIdList);
+            sysMenuLambdaQueryWrapper.select(SysMenu::getMenuCode);
+            SysMenu sysMenu = this.getOne(sysMenuLambdaQueryWrapper, false);
+
+            if (sysMenu != null) {
+                String menuCodeQueryResult = sysMenu.getMenuCode();
+                if (ObjectUtil.isNotEmpty(menuCodeQueryResult)) {
+
+                    result.add(menuCodeQueryResult);
+
+                    // 添加到缓存一份
+                    menuCodeCache.put(menuIdKey, menuCodeQueryResult, SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
+                }
+            }
+        }
+
+        return result;
     }
 
     @Override
