@@ -33,6 +33,11 @@ package cn.stylefeng.roses.kernel.sys.modular.org.constants;
 public interface OrgConstants {
 
     /**
+     * 缓存前缀：组织机构是否包含下级的标识
+     */
+    String SYS_ORG_SUB_FLAG_CACHE_PREFIX = "SYS:ORG:HAVE_SUB_FLAG:";
+
+    /**
      * 没有上级机构时候的上级机构名称
      */
     String NONE_PARENT_ORG = "无上级机构";

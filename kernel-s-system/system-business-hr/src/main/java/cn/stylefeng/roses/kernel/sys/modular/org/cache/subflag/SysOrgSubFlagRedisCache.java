@@ -1,7 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.cache.subflag;
 
 import cn.stylefeng.roses.kernel.cache.redis.AbstractRedisCacheOperator;
-import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
+import cn.stylefeng.roses.kernel.sys.modular.org.constants.OrgConstants;
 import org.springframework.data.redis.core.RedisTemplate;
 
 /**
@@ -18,7 +18,7 @@ public class SysOrgSubFlagRedisCache extends AbstractRedisCacheOperator<Boolean>
 
     @Override
     public String getCommonKeyPrefix() {
-        return SysConstants.SYS_ORG_SUB_FLAG_CACHE_PREFIX;
+        return OrgConstants.SYS_ORG_SUB_FLAG_CACHE_PREFIX;
     }
 
 }
