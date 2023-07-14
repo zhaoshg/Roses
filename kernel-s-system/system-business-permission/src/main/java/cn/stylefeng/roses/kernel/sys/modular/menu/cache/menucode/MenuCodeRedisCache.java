@@ -6,6 +6,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * 菜单编码的缓存
+ * <p>
+ * 同时用在，菜单功能编码缓存
  *
  * @author fengshuonan
  * @since 2023/7/15 0:11

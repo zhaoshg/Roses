@@ -33,4 +33,17 @@ public class MenuClearListener {
         }
     }
 
+    /**
+     * 监听菜单功能的更新
+     *
+     * @author fengshuonan
+     * @since 2023/7/15 0:37
+     */
+    @BusinessListener(businessCode = MenuConstants.MENU_OPTIONS_UPDATE_EVENT)
+    public void updateMenuOptionsCodeCache(Long optionsId) {
+        if (ObjectUtil.isNotEmpty(optionsId)) {
+            menuCodeCache.remove(optionsId.toString());
+        }
+    }
+
 }

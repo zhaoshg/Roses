@@ -3,11 +3,13 @@ package cn.stylefeng.roses.kernel.sys.modular.menu.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.menu.enums.SysMenuOptionsExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.menu.factory.MenuOptionsValidateFactory;
@@ -27,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 菜单下的功能操作业务实现层
@@ -44,6 +45,9 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
 
     @Resource
     private SysRoleMenuOptionsService sysRoleMenuOptionsService;
+
+    @Resource(name = "menuCodeCache")
+    private CacheOperatorApi<String> menuCodeCache;
 
     @Override
     public void add(SysMenuOptionsRequest sysMenuOptionsRequest) {
@@ -111,20 +115,40 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
     @Override
     public List<String> getOptionsCodeList(List<Long> optionsIdList) {
 
+        List<String> result = new ArrayList<>();
+
         if (ObjectUtil.isEmpty(optionsIdList)) {
-            return new ArrayList<>();
+            return result;
         }
 
-        LambdaQueryWrapper<SysMenuOptions> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.in(SysMenuOptions::getMenuOptionId, optionsIdList);
-        queryWrapper.select(SysMenuOptions::getOptionCode);
-        List<SysMenuOptions> sysMenuOptionsList = this.list(queryWrapper);
+        for (Long optionsId : optionsIdList) {
 
-        if (ObjectUtil.isEmpty(sysMenuOptionsList)) {
-            return new ArrayList<>();
+            String optionsIdKey = optionsId.toString();
+
+            // 先从缓存获取是否有对应的编码
+            String cachedCode = menuCodeCache.get(optionsIdKey);
+
+            if (ObjectUtil.isNotEmpty(cachedCode)) {
+                result.add(cachedCode);
+                continue;
+            }
+
+            // 缓存没有，从数据库查询功能的编码
+            LambdaQueryWrapper<SysMenuOptions> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(SysMenuOptions::getMenuOptionId, optionsId);
+            queryWrapper.select(SysMenuOptions::getOptionCode);
+            SysMenuOptions sysMenuOptions = this.getOne(queryWrapper, false);
+
+            if (sysMenuOptions != null) {
+                String optionCodeQueryResult = sysMenuOptions.getOptionCode();
+                result.add(optionCodeQueryResult);
+
+                // 添加到缓存中一份
+                menuCodeCache.put(optionsIdKey, optionCodeQueryResult, SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
+            }
         }
 
-        return sysMenuOptionsList.stream().map(SysMenuOptions::getOptionCode).collect(Collectors.toList());
+        return result;
     }
 
     @Override

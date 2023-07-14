@@ -18,4 +18,9 @@ public interface MenuConstants {
      */
     String MENU_UPDATE_EVENT = "MENU_UPDATE_EVENT";
 
+    /**
+     * 菜单功能更新的事件
+     */
+    String MENU_OPTIONS_UPDATE_EVENT = "MENU_OPTIONS_UPDATE_EVENT";
+
 }
