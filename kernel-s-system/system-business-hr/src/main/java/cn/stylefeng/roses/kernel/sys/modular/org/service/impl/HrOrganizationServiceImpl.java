@@ -12,6 +12,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
@@ -21,7 +22,6 @@ import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.constants.OrgConstants;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
-import cn.stylefeng.roses.kernel.sys.modular.org.enums.OrgEventEnums;
 import cn.stylefeng.roses.kernel.sys.modular.org.factory.OrganizationFactory;
 import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrganizationMapper;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.CommonOrgTreeRequest;
@@ -79,7 +79,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         this.save(hrOrganization);
 
         // 发布一个新增组织机构的事件
-        BusinessEventPublisher.publishEvent(OrgEventEnums.ADD_ORG_EVENT.name(), hrOrganization);
+        BusinessEventPublisher.publishEvent(OrgConstants.ADD_ORG_EVENT, hrOrganization);
     }
 
     @Override
@@ -205,9 +205,8 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 根据条件查询组织机构列表
         LambdaQueryWrapper<HrOrganization> wrapper = this.createCommonTreeWrapper(commonOrgTreeRequest);
-        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgPids,
-                HrOrganization::getOrgParentId, HrOrganization::getOrgName, HrOrganization::getOrgSort,
-                HrOrganization::getOrgType);
+        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgPids, HrOrganization::getOrgParentId, HrOrganization::getOrgName,
+                HrOrganization::getOrgSort, HrOrganization::getOrgType);
         List<HrOrganization> hrOrganizationList = this.list(wrapper);
 
         if (ObjectUtil.isEmpty(hrOrganizationList)) {

@@ -37,4 +37,9 @@ public interface OrgConstants {
      */
     String NONE_PARENT_ORG = "无上级机构";
 
+    /**
+     * 添加组织机构的事件监听
+     */
+    String ADD_ORG_EVENT = "ADD_ORG_EVENT";
+
 }

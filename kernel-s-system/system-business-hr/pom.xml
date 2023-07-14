@@ -21,6 +21,7 @@
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>event-spring-boot-starter</artifactId>
+            <version>${roses.version}</version>
         </dependency>
 
         <!--基础核心业务api-->
