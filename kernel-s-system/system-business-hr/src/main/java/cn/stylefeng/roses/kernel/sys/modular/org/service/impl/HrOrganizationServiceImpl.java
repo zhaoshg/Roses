@@ -508,7 +508,9 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         Long orgId = hrOrganizationRequest.getOrgId();
         if (orgId != null) {
             // 查询orgId对应的所有子机构，包含本orgId
-            queryWrapper.eq(HrOrganization::getOrgParentId, orgId);
+            queryWrapper.nested(wrap -> {
+                wrap.eq(HrOrganization::getOrgParentId, orgId).or().eq(HrOrganization::getOrgId, orgId);
+            });
         }
 
         // 根据排序正序查询
