@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.sys.api.OrganizationServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.CommonOrgTreeRequest;
@@ -17,7 +18,7 @@ import java.util.Set;
  * @author fengshuonan
  * @date 2023/06/10 21:23
  */
-public interface HrOrganizationService extends IService<HrOrganization> {
+public interface HrOrganizationService extends IService<HrOrganization>, OrganizationServiceApi {
 
     /**
      * 新增

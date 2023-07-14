@@ -139,19 +139,8 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         }
 
         // 获取机构的上级机构名称
-        if (TreeConstants.DEFAULT_PARENT_ID.equals(hrOrganization.getOrgParentId())) {
-            hrOrganization.setParentOrgName(OrgConstants.NONE_PARENT_ORG);
-        } else {
-            LambdaQueryWrapper<HrOrganization> parentWrapper = new LambdaQueryWrapper<>();
-            parentWrapper.eq(HrOrganization::getOrgId, hrOrganization.getOrgParentId());
-            parentWrapper.select(HrOrganization::getOrgName);
-            HrOrganization parentInfo = this.getOne(parentWrapper, false);
-            if (parentInfo == null) {
-                hrOrganization.setParentOrgName(OrgConstants.NONE_PARENT_ORG);
-            } else {
-                hrOrganization.setParentOrgName(parentInfo.getOrgName());
-            }
-        }
+        String parentOrgName = this.getOrgNameById(hrOrganization.getOrgParentId());
+        hrOrganization.setParentOrgName(parentOrgName);
 
         return hrOrganization;
     }
@@ -441,6 +430,29 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         }
     }
 
+    @Override
+    public String getOrgNameById(Long orgId) {
+
+        if (TreeConstants.DEFAULT_PARENT_ID.equals(orgId)) {
+            return OrgConstants.NONE_PARENT_ORG;
+        }
+
+        if (ObjectUtil.isEmpty(orgId)) {
+            return OrgConstants.NONE_PARENT_ORG;
+        }
+
+        LambdaQueryWrapper<HrOrganization> hrOrganizationLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        hrOrganizationLambdaQueryWrapper.eq(HrOrganization::getOrgId, orgId);
+        hrOrganizationLambdaQueryWrapper.select(HrOrganization::getOrgName);
+        HrOrganization one = this.getOne(hrOrganizationLambdaQueryWrapper);
+
+        if (one != null) {
+            return one.getOrgName();
+        }
+
+        return OrgConstants.NONE_PARENT_ORG;
+    }
+
     /**
      * 获取信息
      *
@@ -582,5 +594,4 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         }
 
     }
-
 }
