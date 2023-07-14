@@ -21,6 +21,9 @@ public class RoleMenuClearListener {
     @Resource(name = "roleMenuCache")
     private CacheOperatorApi<List<Long>> roleMenuCache;
 
+    @Resource(name = "roleMenuOptionsCache")
+    private CacheOperatorApi<List<Long>> roleMenuOptionsCache;
+
     /**
      * 监听角色绑定权限的事件
      *
@@ -31,6 +34,19 @@ public class RoleMenuClearListener {
     public void roleBindMenuEvent(Long roleId) {
         if (ObjectUtil.isNotEmpty(roleId)) {
             roleMenuCache.remove(roleId.toString());
+        }
+    }
+
+    /**
+     * 角色绑定功能的事件
+     *
+     * @author fengshuonan
+     * @since 2023/7/14 23:44
+     */
+    @BusinessListener(businessCode = RoleConstants.ROLE_BIND_MENU_OPTIONS_EVENT)
+    public void roleBindMenuOptionsEvent(Long roleId) {
+        if (ObjectUtil.isNotEmpty(roleId)) {
+            roleMenuOptionsCache.remove(roleId.toString());
         }
     }
 

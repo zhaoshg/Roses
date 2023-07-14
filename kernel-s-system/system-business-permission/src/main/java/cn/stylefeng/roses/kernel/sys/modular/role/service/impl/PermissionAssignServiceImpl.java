@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
 import cn.hutool.extra.spring.SpringUtil;
+import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
 import cn.stylefeng.roses.kernel.sys.modular.app.entity.SysApp;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
@@ -8,6 +9,7 @@ import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleAssignOperateAction;
+import cn.stylefeng.roses.kernel.sys.modular.role.constants.RoleConstants;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenu;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.factory.PermissionAssignFactory;
@@ -73,6 +75,10 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
                 return;
             }
         }
+
+        // 更新角色绑定权限的缓存
+        BusinessEventPublisher.publishEvent(RoleConstants.ROLE_BIND_MENU_EVENT, roleBindPermissionRequest.getRoleId());
+        BusinessEventPublisher.publishEvent(RoleConstants.ROLE_BIND_MENU_OPTIONS_EVENT, roleBindPermissionRequest.getRoleId());
     }
 
     @Override

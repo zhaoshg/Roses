@@ -3,7 +3,6 @@ package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
-import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
@@ -12,7 +11,6 @@ import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleAssignOperateAction;
-import cn.stylefeng.roses.kernel.sys.modular.role.constants.RoleConstants;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenu;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.PermissionNodeTypeEnum;
@@ -197,9 +195,6 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
             }
             this.sysRoleMenuOptionsService.saveBatch(sysRoleMenuOptions);
         }
-
-        // 6. 发布角色更新绑定菜单的事件
-        BusinessEventPublisher.publishEvent(RoleConstants.ROLE_BIND_MENU_EVENT, roleId);
     }
 
     @Override
