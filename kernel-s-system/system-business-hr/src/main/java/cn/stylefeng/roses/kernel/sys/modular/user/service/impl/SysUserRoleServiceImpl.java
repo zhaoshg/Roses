@@ -1,23 +1,19 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
-import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
-import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
+import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
-import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserRoleExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserRoleMapper;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRoleRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static cn.stylefeng.roses.kernel.sys.modular.user.constants.UserConstants.UPDATE_USER_ROLE_EVENT;
 
 /**
  * 用户角色关联业务实现层
@@ -44,37 +42,8 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     @Resource
     private SysUserService sysUserService;
 
-    @Override
-    public void add(SysUserRoleRequest sysUserRoleRequest) {
-        SysUserRole sysUserRole = new SysUserRole();
-        BeanUtil.copyProperties(sysUserRoleRequest, sysUserRole);
-        this.save(sysUserRole);
-    }
-
-    @Override
-    public void del(SysUserRoleRequest sysUserRoleRequest) {
-        SysUserRole sysUserRole = this.querySysUserRole(sysUserRoleRequest);
-        this.removeById(sysUserRole.getUserRoleId());
-    }
-
-    @Override
-    public void edit(SysUserRoleRequest sysUserRoleRequest) {
-        SysUserRole sysUserRole = this.querySysUserRole(sysUserRoleRequest);
-        BeanUtil.copyProperties(sysUserRoleRequest, sysUserRole);
-        this.updateById(sysUserRole);
-    }
-
-    @Override
-    public SysUserRole detail(SysUserRoleRequest sysUserRoleRequest) {
-        return this.querySysUserRole(sysUserRoleRequest);
-    }
-
-    @Override
-    public PageResult<SysUserRole> findPage(SysUserRoleRequest sysUserRoleRequest) {
-        LambdaQueryWrapper<SysUserRole> wrapper = createWrapper(sysUserRoleRequest);
-        Page<SysUserRole> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
-        return PageResultFactory.createPageResult(sysRolePage);
-    }
+    @Resource(name = "userRoleCache")
+    private CacheOperatorApi<List<Long>> userRoleCache;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -100,6 +69,10 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
             newUserRoles.add(sysUserRole);
         }
         this.saveBatch(newUserRoles);
+
+        // 发布修改用户绑定角色的事件
+        BusinessEventPublisher.publishEvent(UPDATE_USER_ROLE_EVENT, sysUserRoleRequest.getUserId());
+
     }
 
     @Override
@@ -113,12 +86,10 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         sysUserRole.setUserId(userId);
         sysUserRole.setRoleId(defaultRoleId);
         this.save(sysUserRole);
-    }
 
-    @Override
-    public List<SysUserRole> findList(SysUserRoleRequest sysUserRoleRequest) {
-        LambdaQueryWrapper<SysUserRole> wrapper = this.createWrapper(sysUserRoleRequest);
-        return this.list(wrapper);
+        // 发布修改用户绑定角色的事件
+        BusinessEventPublisher.publishEvent(UPDATE_USER_ROLE_EVENT, userId);
+
     }
 
     @Override
@@ -151,26 +122,26 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
             return new ArrayList<>();
         }
 
+        // 先从缓存查找用户的角色
+        List<Long> cachedRoleIds = userRoleCache.get(userId.toString());
+        if (cachedRoleIds != null) {
+            return cachedRoleIds;
+        }
+
         LambdaQueryWrapper<SysUserRole> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(SysUserRole::getUserId, userId);
         wrapper.select(SysUserRole::getRoleId);
         List<SysUserRole> sysUserRoleList = this.list(wrapper);
 
-        return sysUserRoleList.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
-    }
+        List<Long> userRoleQueryResult = sysUserRoleList.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
 
-    /**
-     * 获取信息
-     *
-     * @author fengshuonan
-     * @date 2023/06/10 21:26
-     */
-    private SysUserRole querySysUserRole(SysUserRoleRequest sysUserRoleRequest) {
-        SysUserRole sysUserRole = this.getById(sysUserRoleRequest.getUserRoleId());
-        if (ObjectUtil.isEmpty(sysUserRole)) {
-            throw new ServiceException(SysUserRoleExceptionEnum.SYS_USER_ROLE_NOT_EXISTED);
+        // 查询结果缓存起来
+        if (ObjectUtil.isNotEmpty(userRoleQueryResult)) {
+            userRoleCache.put(userId.toString(), userRoleQueryResult);
+            return userRoleQueryResult;
         }
-        return sysUserRole;
+
+        return userRoleQueryResult;
     }
 
     /**
