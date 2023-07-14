@@ -21,6 +21,7 @@ import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.constants.OrgConstants;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
+import cn.stylefeng.roses.kernel.sys.modular.org.enums.OrgEventEnums;
 import cn.stylefeng.roses.kernel.sys.modular.org.factory.OrganizationFactory;
 import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrganizationMapper;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.CommonOrgTreeRequest;
@@ -76,6 +77,9 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         OrganizationFactory.fillParentIds(hrOrganization);
 
         this.save(hrOrganization);
+
+        // 发布一个新增组织机构的事件
+        BusinessEventPublisher.publishEvent(OrgEventEnums.ADD_ORG_EVENT.name(), hrOrganization);
     }
 
     @Override
