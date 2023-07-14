@@ -199,11 +199,15 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
             commonOrgTreeRequest.setIndexOrgIdList(null);
         }
 
+        // 如果查询待组织机构的状态信息，则清空parentId
+        if (ObjectUtil.isNotEmpty(commonOrgTreeRequest.getIndexOrgIdList())) {
+            commonOrgTreeRequest.setOrgParentId(null);
+        }
+
         // 根据条件查询组织机构列表
         LambdaQueryWrapper<HrOrganization> wrapper = this.createCommonTreeWrapper(commonOrgTreeRequest);
-        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgPids,
-                HrOrganization::getOrgParentId, HrOrganization::getOrgName, HrOrganization::getOrgSort,
-                HrOrganization::getOrgType);
+        wrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgPids, HrOrganization::getOrgParentId, HrOrganization::getOrgName,
+                HrOrganization::getOrgSort, HrOrganization::getOrgType);
         List<HrOrganization> hrOrganizationList = this.list(wrapper);
 
         if (ObjectUtil.isEmpty(hrOrganizationList)) {
