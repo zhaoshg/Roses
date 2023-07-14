@@ -23,4 +23,11 @@ public class BusinessListenerDetail {
      */
     private Method listenerMethod;
 
+    /**
+     * 方法参数的类型，如果方法有多个参数，这里只获取第一个参数的类型
+     * <p>
+     * 如果方法没参数，则这里为null
+     */
+    private Class<?> parameterClassType;
+
 }

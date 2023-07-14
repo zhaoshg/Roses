@@ -24,7 +24,9 @@
  */
 package cn.stylefeng.roses.kernel.event.sdk;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.event.api.annotation.BusinessListener;
+import cn.stylefeng.roses.kernel.event.sdk.container.EventContainer;
 import cn.stylefeng.roses.kernel.event.sdk.pojo.BusinessListenerDetail;
 import cn.stylefeng.roses.kernel.rule.util.AopTargetUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +35,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 扫描所有的业务监听事件，最终汇总到Event容器中
@@ -73,21 +76,14 @@ public class EventAnnotationScanner implements BeanPostProcessor {
      * @since 2023/7/14 15:24
      */
     private void doScan(Class<?> clazz, String beanName) {
-
-        ArrayList<BusinessListenerDetail> businessListenerDetails = new ArrayList<>();
-
         Method[] declaredMethods = clazz.getDeclaredMethods();
         for (Method declaredMethod : declaredMethods) {
             BusinessListener businessListener = declaredMethod.getAnnotation(BusinessListener.class);
 
+            log.debug("扫描到业务事件监听: " + businessListener);
+
             if (businessListener != null) {
-                BusinessListenerDetail businessListenerDetail = createDefinition(beanName, declaredMethod, businessListener);
-
-                if (businessListenerDetail != null) {
-                    businessListenerDetails.add(businessListenerDetail);
-                }
-
-                log.debug("扫描到资源: " + businessListenerDetail);
+                createEventDetail(beanName, declaredMethod, businessListener);
             }
         }
     }
@@ -98,10 +94,35 @@ public class EventAnnotationScanner implements BeanPostProcessor {
      * @author fengshuonan
      * @since 2023/7/14 15:27
      */
-    private BusinessListenerDetail createDefinition(String beanName, Method method, BusinessListener businessListener) {
+    private void createEventDetail(String beanName, Method method, BusinessListener businessListener) {
+
+        // 获取注解上的业务编码标识
+        String businessCode = businessListener.businessCode();
+
+        // 从容器中获取本业务标识是否创建
+        List<BusinessListenerDetail> listener = EventContainer.getListener(businessCode);
+        if (ObjectUtil.isEmpty(listener)) {
+            listener = new ArrayList<>();
+        }
 
 
-        return new BusinessListenerDetail();
+        // 创建当前方法的调用信息
+        BusinessListenerDetail businessListenerDetail = new BusinessListenerDetail();
+        businessListenerDetail.setBeanName(beanName);
+        businessListenerDetail.setListenerMethod(method);
+
+        // 获取方法参数信息
+        int parameterCount = method.getParameterCount();
+        if (parameterCount == 0) {
+            businessListenerDetail.setParameterClassType(null);
+        } else {
+            businessListenerDetail.setParameterClassType(method.getParameterTypes()[0]);
+        }
+
+        listener.add(businessListenerDetail);
+
+        // 放到事件容器中
+        EventContainer.addListenerList(businessCode, listener);
     }
 
 }

@@ -42,9 +42,4 @@ public @interface BusinessListener {
      */
     String businessCode() default "";
 
-    /**
-     * 业务数据的参数类型
-     */
-    Class<?> clazz();
-
 }

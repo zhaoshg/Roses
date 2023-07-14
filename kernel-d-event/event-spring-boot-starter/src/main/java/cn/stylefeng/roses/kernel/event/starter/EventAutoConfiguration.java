@@ -24,6 +24,8 @@
  */
 package cn.stylefeng.roses.kernel.event.starter;
 
+import cn.stylefeng.roses.kernel.event.sdk.EventAnnotationScanner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -34,5 +36,16 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class EventAutoConfiguration {
+
+    /**
+     * 创建事件的扫描
+     *
+     * @author fengshuonan
+     * @since 2023/7/14 16:00
+     */
+    @Bean
+    public EventAnnotationScanner eventAnnotationScanner() {
+        return new EventAnnotationScanner();
+    }
 
 }
