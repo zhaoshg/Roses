@@ -70,6 +70,12 @@ public abstract class AbstractRedisCacheOperator<T> implements CacheOperatorApi<
     }
 
     @Override
+    public void remove(Collection<String> keys) {
+        List<String> withPrefixKeys = keys.stream().map(this::calcKey).collect(Collectors.toList());
+        redisTemplate.delete(withPrefixKeys);
+    }
+
+    @Override
     public void expire(String key, Long expiredSeconds) {
         redisTemplate.boundValueOps(calcKey(key)).expire(expiredSeconds, TimeUnit.SECONDS);
     }

@@ -88,6 +88,15 @@ public interface CacheOperatorApi<T> {
     /**
      * 删除缓存
      *
+     * @param keys 多个键集合
+     * @author fengshuonan
+     * @since 2023/7/14 17:35
+     */
+    void remove(Collection<String> keys);
+
+    /**
+     * 删除缓存
+     *
      * @param key 键，多个
      * @author stylefeng
      * @since 2020/7/8 22:09

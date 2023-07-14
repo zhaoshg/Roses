@@ -26,6 +26,7 @@ package cn.stylefeng.roses.kernel.cache.redis;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -68,6 +69,14 @@ public abstract class AbstractRedisHashCacheOperator<T> implements CacheOperator
     @Override
     public void remove(String... key) {
         redisTemplate.boundHashOps(getCommonKeyPrefix()).delete(key);
+    }
+
+    @Override
+    public void remove(Collection<String> keys) {
+        if (ObjectUtil.isEmpty(keys)) {
+            return;
+        }
+        redisTemplate.boundHashOps(getCommonKeyPrefix()).delete(keys.toArray());
     }
 
     @Override

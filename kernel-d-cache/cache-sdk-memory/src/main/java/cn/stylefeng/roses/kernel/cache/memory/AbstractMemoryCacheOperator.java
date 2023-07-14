@@ -28,6 +28,7 @@ import cn.hutool.cache.impl.CacheObj;
 import cn.hutool.cache.impl.TimedCache;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 
 import java.util.*;
@@ -68,6 +69,17 @@ public abstract class AbstractMemoryCacheOperator<T> implements CacheOperatorApi
             for (String itemKey : key) {
                 timedCache.remove(calcKey(itemKey));
             }
+        }
+    }
+
+    @Override
+    public void remove(Collection<String> keys) {
+        if (ObjectUtil.isEmpty(keys)) {
+            return;
+        }
+
+        for (String key : keys) {
+            timedCache.remove(calcKey(key));
         }
     }
 
