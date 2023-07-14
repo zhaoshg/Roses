@@ -1,8 +1,10 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleAssignOperateAction;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenuOptions;
@@ -15,6 +17,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +32,9 @@ import java.util.stream.Collectors;
 @Service
 public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOptionsMapper, SysRoleMenuOptions> implements
         SysRoleMenuOptionsService, RemoveRoleCallbackApi, RoleAssignOperateAction, RemoveMenuCallbackApi {
+
+    @Resource(name = "roleMenuOptionsCache")
+    private CacheOperatorApi<List<Long>> roleMenuOptionsCache;
 
     @Override
     public void removeRoleBindOptions(Long optionsId) {
@@ -65,20 +71,41 @@ public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOption
     @Override
     public List<Long> getRoleBindMenuOptionsIdList(List<Long> roleIdList) {
 
+        List<Long> result = new ArrayList<>();
+
         if (ObjectUtil.isEmpty(roleIdList)) {
-            return new ArrayList<>();
+            return result;
         }
 
-        LambdaQueryWrapper<SysRoleMenuOptions> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.in(SysRoleMenuOptions::getRoleId, roleIdList);
-        queryWrapper.select(SysRoleMenuOptions::getMenuOptionId);
-        List<SysRoleMenuOptions> roleMenuOptions = this.list(queryWrapper);
+        for (Long roleId : roleIdList) {
 
-        if (ObjectUtil.isEmpty(roleMenuOptions)) {
-            return new ArrayList<>();
+            String roleIdKey = roleId.toString();
+
+            // 先从缓存找到角色绑定的功能
+            List<Long> optionsCached = roleMenuOptionsCache.get(roleIdKey);
+
+            if (ObjectUtil.isNotEmpty(optionsCached)) {
+                result.addAll(optionsCached);
+                continue;
+            }
+
+            // 查询数据库角色对应的菜单功能
+            LambdaQueryWrapper<SysRoleMenuOptions> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(SysRoleMenuOptions::getRoleId, roleId);
+            queryWrapper.select(SysRoleMenuOptions::getMenuOptionId);
+            List<SysRoleMenuOptions> roleMenuOptions = this.list(queryWrapper);
+            if (ObjectUtil.isNotEmpty(roleMenuOptions)) {
+
+                List<Long> menuOptionsIdQueryResult = roleMenuOptions.stream().map(SysRoleMenuOptions::getMenuOptionId)
+                        .collect(Collectors.toList());
+                result.addAll(menuOptionsIdQueryResult);
+
+                // 添加到缓存中
+                roleMenuOptionsCache.put(roleIdKey, menuOptionsIdQueryResult, SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
+            }
         }
 
-        return roleMenuOptions.stream().map(SysRoleMenuOptions::getMenuOptionId).collect(Collectors.toList());
+        return result;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package cn.stylefeng.roses.kernel.sys.modular.role.cache.rolemenu.clear;
+package cn.stylefeng.roses.kernel.sys.modular.role.cache;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
