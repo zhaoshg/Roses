@@ -26,6 +26,8 @@
         left join hr_position hpos on suorg.position_id = hpos.position_id
         left join hr_organization hrorg on suorg.org_id = hrorg.org_id
         <where>
+
+
             <if test="sysUserRequest.realName != null and sysUserRequest.realName != ''">
                 and suser.real_name like concat('%',#{sysUserRequest.realName},'%')
             </if>
@@ -35,9 +37,14 @@
             <if test="sysUserRequest.statusFlag != null and sysUserRequest.statusFlag != ''">
                 and suser.status_flag like concat('%',#{sysUserRequest.statusFlag},'%')
             </if>
+
             <if test="sysUserRequest.orgId != null and sysUserRequest.orgId != ''">
                 and suorg.org_id in (select org_id from hr_organization where org_pids like CONCAT('%$[',#{sysUserRequest.orgId},'$]%') escape '$' or org_id=#{sysUserRequest.orgId} )
             </if>
+            <if test="sysUserRequest.orgId == null or sysUserRequest.orgId == ''">
+                and suorg.main_flag = 'Y'
+            </if>
+
             <if test="sysUserRequest.scopeOrgIds != null and sysUserRequest.scopeOrgIds.size() > 0">
                 and suorg.org_id in
                 <foreach  item="item" collection="sysUserRequest.scopeOrgIds" index="index"  open="(" separator="," close=")">
