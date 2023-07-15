@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.position.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.sys.api.PositionServiceApi;
 import cn.stylefeng.roses.kernel.sys.modular.position.entity.HrPosition;
 import cn.stylefeng.roses.kernel.sys.modular.position.pojo.request.HrPositionRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author fengshuonan
  * @date 2023/06/10 21:25
  */
-public interface HrPositionService extends IService<HrPosition> {
+public interface HrPositionService extends IService<HrPosition>, PositionServiceApi {
 
     /**
      * 新增
@@ -78,13 +79,5 @@ public interface HrPositionService extends IService<HrPosition> {
      * @date 2023/06/10 21:25
      */
     PageResult<HrPosition> findPage(HrPositionRequest hrPositionRequest);
-
-    /**
-     * 获取职务的名称
-     *
-     * @author fengshuonan
-     * @since 2023/6/12 16:38
-     */
-    String getPositionName(Long positionId);
 
 }
