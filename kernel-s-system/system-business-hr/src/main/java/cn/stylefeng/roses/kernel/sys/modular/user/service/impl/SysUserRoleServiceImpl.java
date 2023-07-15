@@ -145,6 +145,16 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         return userRoleQueryResult;
     }
 
+    @Override
+    public List<Long> findUserIdsByRoleId(Long roleId) {
+        SysUserRoleRequest userRoleRequest = new SysUserRoleRequest();
+        userRoleRequest.setRoleId(roleId);
+        LambdaQueryWrapper<SysUserRole> queryWrapper = this.createWrapper(userRoleRequest);
+        queryWrapper.select(SysUserRole::getUserId);
+        List<SysUserRole> list = this.list(queryWrapper);
+        return list.stream().map(SysUserRole::getUserId).collect(Collectors.toList());
+    }
+
     /**
      * 创建查询wrapper
      *
@@ -156,6 +166,9 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
         Long userId = sysUserRoleRequest.getUserId();
         queryWrapper.eq(ObjectUtil.isNotNull(userId), SysUserRole::getUserId, userId);
+
+        Long roleId = sysUserRoleRequest.getRoleId();
+        queryWrapper.eq(ObjectUtil.isNotNull(roleId), SysUserRole::getRoleId, roleId);
 
         return queryWrapper;
     }
