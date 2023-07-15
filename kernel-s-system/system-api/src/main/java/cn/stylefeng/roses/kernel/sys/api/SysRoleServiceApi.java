@@ -42,4 +42,12 @@ public interface SysRoleServiceApi {
      */
     Long getDefaultRoleId();
 
+    /**
+     * 通过角色id获取角色名称
+     *
+     * @author fengshuonan
+     * @since 2023/7/15 21:54
+     */
+    String getRoleNameByRoleId(Long roleId);
+
 }

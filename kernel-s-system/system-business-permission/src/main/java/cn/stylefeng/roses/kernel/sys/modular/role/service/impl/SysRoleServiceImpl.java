@@ -133,6 +133,24 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         return null;
     }
 
+    @Override
+    public String getRoleNameByRoleId(Long roleId) {
+
+        if (ObjectUtil.isEmpty(roleId)) {
+            return "";
+        }
+
+        LambdaQueryWrapper<SysRole> sysRoleLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleLambdaQueryWrapper.eq(SysRole::getRoleId, roleId);
+        sysRoleLambdaQueryWrapper.select(SysRole::getRoleName);
+        SysRole sysRole = this.getOne(sysRoleLambdaQueryWrapper, false);
+        if (sysRole != null) {
+            return sysRole.getRoleName();
+        }
+
+        return "";
+    }
+
     /**
      * 获取信息
      *
