@@ -121,7 +121,13 @@ public class UserIndexInfoService {
                 throw new ServiceException(OrgExceptionEnum.UPDATE_LOGIN_USER_ORG_ERROR);
             }
 
+            // 设置用户的当前组织机构id
             loginUser.setCurrentOrgId(updateUserOrgAppRequest.getNewOrgId());
+
+            // 设置用户在当前机构下的职位id
+            Long positionId = sysUserOrgServiceApi.getUserOrgPositionId(loginUser.getUserId(),
+                    updateUserOrgAppRequest.getNewOrgId());
+            loginUser.setCurrentPositionId(positionId);
         }
 
         if (updateUserOrgAppRequest.getNewAppId() != null) {
@@ -189,6 +195,8 @@ public class UserIndexInfoService {
 
             indexUserOrgInfo.setCompanyName(userOrgItem.getCompanyName());
             indexUserOrgInfo.setDeptName(userOrgItem.getDeptName());
+
+            indexUserOrgInfo.setPositionId(userOrgItem.getPositionId());
             indexUserOrgInfo.setPositionName(userOrgItem.getPositionName());
 
             // 设置是否是主要任职部门
@@ -206,6 +214,7 @@ public class UserIndexInfoService {
                 // 更新用户的当前组织机构id
                 if (indexUserOrgInfo.getMainFlag()) {
                     loginUser.setCurrentOrgId(indexUserOrgInfo.getOrgId());
+                    loginUser.setCurrentPositionId(indexUserOrgInfo.getPositionId());
                 }
             }
         }

@@ -74,6 +74,12 @@ public class LoginUser implements Serializable {
     private Long currentOrgId;
 
     /**
+     * 当前用户激活的职务id（正在以哪个身份访问系统）
+     */
+    @ChineseDescription("当前用户激活的职务id（正在以哪个身份访问系统）")
+    private Long currentPositionId;
+
+    /**
      * 当前登录租户编码
      */
     @ChineseDescription("当前登录租户编码")

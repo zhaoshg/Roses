@@ -59,4 +59,12 @@ public interface SysUserOrgServiceApi {
      */
     List<Long> getPositionUserList(Long orgId, Long positionId);
 
+    /**
+     * 获取用户在指定机构下的职务
+     *
+     * @author fengshuonan
+     * @since 2023/7/15 23:04
+     */
+    Long getUserOrgPositionId(Long userId, Long orgId);
+
 }

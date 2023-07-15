@@ -229,6 +229,27 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         }
     }
 
+    @Override
+    public Long getUserOrgPositionId(Long userId, Long orgId) {
+
+        if (ObjectUtil.isEmpty(userId) || ObjectUtil.isEmpty(orgId)) {
+            return null;
+        }
+
+        SysUserOrgRequest sysUserOrgRequest = new SysUserOrgRequest();
+        sysUserOrgRequest.setUserId(userId);
+        sysUserOrgRequest.setOrgId(orgId);
+        LambdaQueryWrapper<SysUserOrg> wrapper = this.createWrapper(sysUserOrgRequest);
+        wrapper.select(SysUserOrg::getPositionId);
+        SysUserOrg sysUserOrg = this.getOne(wrapper, false);
+
+        if (sysUserOrg != null) {
+            return sysUserOrg.getPositionId();
+        }
+
+        return null;
+    }
+
     /**
      * 获取信息
      *
@@ -251,6 +272,9 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
      */
     private LambdaQueryWrapper<SysUserOrg> createWrapper(SysUserOrgRequest sysUserOrgRequest) {
         LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+
+        Long userId = sysUserOrgRequest.getUserId();
+        queryWrapper.eq(ObjectUtil.isNotNull(userId), SysUserOrg::getUserId, userId);
 
         Long orgId = sysUserOrgRequest.getOrgId();
         queryWrapper.eq(ObjectUtil.isNotNull(orgId), SysUserOrg::getOrgId, orgId);
