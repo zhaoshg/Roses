@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.service;
 
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
+import cn.stylefeng.roses.kernel.sys.api.OrgApproverServiceApi;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrgApprover;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrgApproverRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author fengshuonan
  * @date 2023/06/10 21:23
  */
-public interface HrOrgApproverService extends IService<HrOrgApprover> {
+public interface HrOrgApproverService extends IService<HrOrgApprover>, OrgApproverServiceApi {
 
     /**
      * 删除

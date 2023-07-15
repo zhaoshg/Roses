@@ -5,7 +5,11 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.dict.api.DictApi;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
+import cn.stylefeng.roses.kernel.sys.api.OrganizationServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.SysUserOrgServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
+import cn.stylefeng.roses.kernel.sys.api.enums.org.DetectModeEnum;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.constants.ApproverConstants;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrgApprover;
 import cn.stylefeng.roses.kernel.sys.modular.org.enums.HrOrgApproverExceptionEnum;
@@ -36,6 +40,12 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
 
     @Resource
     private DictApi dictApi;
+
+    @Resource
+    private OrganizationServiceApi organizationServiceApi;
+
+    @Resource
+    private SysUserOrgServiceApi sysUserOrgServiceApi;
 
     @Override
     public void del(HrOrgApproverRequest hrOrgApproverRequest) {
@@ -136,6 +146,46 @@ public class HrOrgApproverServiceImpl extends ServiceImpl<HrOrgApproverMapper, H
             }
             this.saveBatch(tempApprovers);
         }
+    }
+
+    @Override
+    public List<Long> getUserMainOrgApprover(Long userId, Integer orgApproverType, Integer parentLevel, DetectModeEnum detectModeEnum) {
+
+        // 获取用户的所属机构id
+        UserOrgDTO userMainOrgInfo = sysUserOrgServiceApi.getUserMainOrgInfo(userId);
+        Long orgId = userMainOrgInfo.getDeptId();
+
+        if (ObjectUtil.isEmpty(orgId)) {
+            orgId = userMainOrgInfo.getCompanyId();
+        }
+
+        // 用户没有机构，则返回空
+        if (ObjectUtil.isEmpty(orgId)) {
+            return new ArrayList<>();
+        }
+
+        // 获取指定部门的负责人id信息
+        return getDeptOrgApprover(orgId, orgApproverType, parentLevel, detectModeEnum);
+    }
+
+    @Override
+    public List<Long> getDeptOrgApprover(Long deptId, Integer orgApproverType, Integer parentLevel, DetectModeEnum detectModeEnum) {
+
+        // 根据参数的级别，获取组织机构的父级机构
+        Long parentLevelOrgId = this.organizationServiceApi.getParentLevelOrgId(deptId, parentLevel, detectModeEnum);
+
+        // 如果没有上级组织机构，则直接返回为空
+        if (ObjectUtil.isEmpty(parentLevelOrgId)) {
+            return new ArrayList<>();
+        }
+
+        // 获取该组织机构的指定类型的负责人
+        LambdaQueryWrapper<HrOrgApprover> hrOrgApproverLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        hrOrgApproverLambdaQueryWrapper.eq(HrOrgApprover::getOrgId, parentLevelOrgId);
+        hrOrgApproverLambdaQueryWrapper.eq(HrOrgApprover::getOrgApproverType, orgApproverType);
+        List<HrOrgApprover> userList = this.list(hrOrgApproverLambdaQueryWrapper);
+
+        return userList.stream().map(HrOrgApprover::getUserId).collect(Collectors.toList());
     }
 
     @Override

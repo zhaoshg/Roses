@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.org.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -18,6 +19,7 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
+import cn.stylefeng.roses.kernel.sys.api.enums.org.DetectModeEnum;
 import cn.stylefeng.roses.kernel.sys.api.enums.org.OrgTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
@@ -466,6 +468,15 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         return OrgConstants.NONE_PARENT_ORG;
     }
 
+    @Override
+    public Long getParentLevelOrgId(Long orgId, Integer parentLevelNum, DetectModeEnum detectModeEnum) {
+        if (DetectModeEnum.TO_TOP.equals(detectModeEnum)) {
+            return calcParentOrgId(orgId, parentLevelNum, true);
+        } else {
+            return calcParentOrgId(orgId, parentLevelNum, false);
+        }
+    }
+
     /**
      * 获取信息
      *
@@ -609,4 +620,76 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         }
 
     }
+
+    /**
+     * 计算获取上级组织机构id
+     *
+     * @param orgId          指定机构id
+     * @param parentLevelNum 上级机构的层级数，从0开始，0代表不计算直接返回本身
+     * @param reverse        是否反转，true-代表自下而上计算，false-代表自上而下计算
+     * @author fengshuonan
+     * @since 2022/10/1 11:45
+     */
+    private Long calcParentOrgId(Long orgId, Integer parentLevelNum, boolean reverse) {
+
+        if (ObjectUtil.isEmpty(orgId) || ObjectUtil.isEmpty(parentLevelNum)) {
+            return null;
+        }
+
+        // 如果上级层数为0，则直接返回参数的orgId，代表同级别组织机构
+        if (parentLevelNum == 0) {
+            return orgId;
+        }
+
+        // 获取当前部门的所有父级id
+        HrOrganization hrOrganization = this.getById(orgId);
+        if (hrOrganization == null || StrUtil.isEmpty(hrOrganization.getOrgPids())) {
+            return null;
+        }
+        String orgParentIdListStr = hrOrganization.getOrgPids();
+
+        // 去掉中括号符号
+        orgParentIdListStr = orgParentIdListStr.replaceAll("\\[", "");
+        orgParentIdListStr = orgParentIdListStr.replaceAll("]", "");
+
+        // 获取所有上级id列表
+        String[] orgParentIdList = orgParentIdListStr.split(",");
+        if (reverse) {
+            orgParentIdList = ArrayUtil.reverse(orgParentIdList);
+        }
+
+        // 先删掉id为-1的机构，因为-1是不存在的
+        ArrayList<String> parentOrgIdList = new ArrayList<>();
+        for (String orgIdItem : orgParentIdList) {
+            if (!TreeConstants.DEFAULT_PARENT_ID.toString().equals(orgIdItem)) {
+                parentOrgIdList.add(orgIdItem);
+            }
+        }
+
+        // 根据请求参数，需要从parentOrgIdList获取的下标
+        int needGetArrayIndex = parentLevelNum - 1;
+
+        // parentOrgIdList最大能提供的下标
+        int maxCanGetIndex = parentOrgIdList.size() - 1;
+
+        // 如果没有最顶级的上级，则他本身就是最顶级上级
+        if (maxCanGetIndex < 0) {
+            return orgId;
+        }
+
+        // 根据参数传参，进行获取上级的操作
+        String orgIdString;
+        if (needGetArrayIndex <= (maxCanGetIndex)) {
+            orgIdString = parentOrgIdList.get(needGetArrayIndex);
+        } else {
+            // 如果需要获取的下标，大于了最大下标
+            if (reverse) {
+                orgIdString = parentOrgIdList.get(maxCanGetIndex);
+            } else {
+                return orgId;
+            }
+        }
+        return Long.valueOf(orgIdString);
+    }
+
 }
