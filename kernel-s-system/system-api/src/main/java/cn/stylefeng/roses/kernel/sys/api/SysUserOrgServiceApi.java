@@ -51,4 +51,12 @@ public interface SysUserOrgServiceApi {
      */
     boolean validateUserOrgAuth(Long orgId, Long userId);
 
+    /**
+     * 获取某个机构某个职务下的所有用户id列表
+     *
+     * @author fengshuonan
+     * @since 2023/7/15 22:24
+     */
+    List<Long> getPositionUserList(Long orgId, Long positionId);
+
 }

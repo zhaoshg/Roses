@@ -211,6 +211,24 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         return this.count(queryWrapper) > 0;
     }
 
+    @Override
+    public List<Long> getPositionUserList(Long orgId, Long positionId) {
+
+        SysUserOrgRequest sysUserOrgRequest = new SysUserOrgRequest();
+        sysUserOrgRequest.setOrgId(orgId);
+        sysUserOrgRequest.setPositionId(positionId);
+
+        LambdaQueryWrapper<SysUserOrg> wrapper = this.createWrapper(sysUserOrgRequest);
+        wrapper.select(SysUserOrg::getUserId);
+        List<SysUserOrg> list = this.list(wrapper);
+
+        if (ObjectUtil.isNotEmpty(list)) {
+            return list.stream().map(SysUserOrg::getUserId).collect(Collectors.toList());
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
     /**
      * 获取信息
      *
@@ -236,6 +254,9 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
 
         Long orgId = sysUserOrgRequest.getOrgId();
         queryWrapper.eq(ObjectUtil.isNotNull(orgId), SysUserOrg::getOrgId, orgId);
+
+        Long positionId = sysUserOrgRequest.getPositionId();
+        queryWrapper.eq(ObjectUtil.isNotNull(positionId), SysUserOrg::getPositionId, positionId);
 
         return queryWrapper;
     }
