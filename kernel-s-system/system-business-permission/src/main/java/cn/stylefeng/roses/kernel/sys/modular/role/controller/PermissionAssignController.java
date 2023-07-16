@@ -100,4 +100,18 @@ public class PermissionAssignController {
         return new SuccessResponseData<>(roleBindDataScopeResponse);
     }
 
+    /**
+     * 角色绑定数据权限的配置
+     *
+     * @author fengshuonan
+     * @since 2023/7/16 23:40
+     */
+    @PostResource(name = "角色绑定数据权限的配置", path = "/permission/updateRoleBindDataScope", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.CHANGE_ROLE_DATA_SCOPE)
+    public ResponseData<?> updateRoleBindDataScope(
+            @RequestBody @Validated(RoleBindDataScopeRequest.roleBindDataScope.class) RoleBindDataScopeRequest roleBindDataScopeRequest) {
+        sysRoleDataScopeService.updateRoleBindDataScope(roleBindDataScopeRequest);
+        return new SuccessResponseData<>();
+    }
+
 }

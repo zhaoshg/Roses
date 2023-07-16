@@ -81,4 +81,12 @@ public interface SysRoleDataScopeService extends IService<SysRoleDataScope> {
      */
     RoleBindDataScopeResponse getRoleBindDataScope(RoleBindDataScopeRequest roleBindDataScopeRequest);
 
+    /**
+     * 角色绑定数据范围
+     *
+     * @author fengshuonan
+     * @since 2023/7/16 23:42
+     */
+    void updateRoleBindDataScope(RoleBindDataScopeRequest roleBindDataScopeRequest);
+
 }

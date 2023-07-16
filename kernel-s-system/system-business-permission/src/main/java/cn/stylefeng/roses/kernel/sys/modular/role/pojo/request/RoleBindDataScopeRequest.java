@@ -45,13 +45,14 @@ public class RoleBindDataScopeRequest extends BaseRequest {
     /**
      * 角色id
      */
-    @NotNull(message = "角色id不能为空", groups = {detail.class})
+    @NotNull(message = "角色id不能为空", groups = {detail.class, roleBindDataScope.class})
     @ChineseDescription("角色id")
     private Long roleId;
 
     /**
      * 数据范围类型：10-仅本人数据，20-本部门数据，30-本部门及以下数据，40-指定部门数据，50-全部数据
      */
+    @NotNull(message = "数据范围类型不能为空", groups = {roleBindDataScope.class})
     @ChineseDescription("数据范围类型：10-仅本人数据，20-本部门数据，30-本部门及以下数据，40-指定部门数据，50-全部数据")
     private Integer dataScopeType;
 
@@ -60,5 +61,12 @@ public class RoleBindDataScopeRequest extends BaseRequest {
      */
     @ChineseDescription("用户拥有的指定部门的组织机构信息id集合")
     private List<Long> orgIdList;
+
+    /**
+     * 角色绑定数据范围
+     */
+    public @interface roleBindDataScope {
+
+    }
 
 }

@@ -90,4 +90,14 @@ public interface SysRoleService extends IService<SysRole>, SysRoleServiceApi {
      */
     Integer getRoleDataScopeType(Long roleId);
 
+    /**
+     * 更新角色的数据范围类型
+     *
+     * @param roleId        角色id
+     * @param dataScopeType 数据范围类型
+     * @author fengshuonan
+     * @since 2023/7/16 23:28
+     */
+    void updateRoleDataScopeType(Long roleId, Integer dataScopeType);
+
 }

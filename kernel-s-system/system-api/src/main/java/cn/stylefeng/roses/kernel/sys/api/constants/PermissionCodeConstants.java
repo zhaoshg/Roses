@@ -119,6 +119,11 @@ public interface PermissionCodeConstants {
     String CHANGE_ROLE_PERMISSION = "CHANGE_ROLE_PERMISSION";
 
     /**
+     * 权限管理界面-修改数据范围
+     */
+    String CHANGE_ROLE_DATA_SCOPE = "CHANGE_ROLE_DATA_SCOPE";
+
+    /**
      * 菜单管理整个界面的权限标识
      */
     String AUTH_MENU = "AUTH_MENU";

@@ -19,6 +19,7 @@ import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleMapper;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -129,6 +130,19 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
 
         return DataScopeTypeEnum.SELF.getCode();
+    }
+
+    @Override
+    public void updateRoleDataScopeType(Long roleId, Integer dataScopeType) {
+
+        if (ObjectUtil.isEmpty(roleId) || ObjectUtil.isEmpty(dataScopeType)) {
+            return;
+        }
+
+        LambdaUpdateWrapper<SysRole> sysRoleLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        sysRoleLambdaUpdateWrapper.eq(SysRole::getRoleId, roleId);
+        sysRoleLambdaUpdateWrapper.set(SysRole::getDataScopeType, dataScopeType);
+        this.update(sysRoleLambdaUpdateWrapper);
     }
 
     @Override

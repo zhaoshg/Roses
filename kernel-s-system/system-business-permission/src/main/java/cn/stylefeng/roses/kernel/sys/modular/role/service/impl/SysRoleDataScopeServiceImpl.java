@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -88,21 +89,56 @@ public class SysRoleDataScopeServiceImpl extends ServiceImpl<SysRoleDataScopeMap
         Integer dataScopeType = sysRoleService.getRoleDataScopeType(roleBindDataScopeRequest.getRoleId());
         roleBindDataScopeResponse.setDataScopeType(dataScopeType);
 
+        if (!DataScopeTypeEnum.DEFINE.getCode().equals(dataScopeType)) {
+            return roleBindDataScopeResponse;
+        }
+
         // 如果是指定部门，则获取指定部门的orgId集合
-        if (DataScopeTypeEnum.DEFINE.getCode().equals(dataScopeType)) {
+        LambdaQueryWrapper<SysRoleDataScope> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysRoleDataScope::getRoleId, roleBindDataScopeRequest.getRoleId());
+        wrapper.select(SysRoleDataScope::getOrganizationId);
+        List<SysRoleDataScope> sysRoleDataScopes = this.list(wrapper);
 
-            LambdaQueryWrapper<SysRoleDataScope> wrapper = new LambdaQueryWrapper<>();
-            wrapper.eq(SysRoleDataScope::getRoleId, roleBindDataScopeRequest.getRoleId());
-            wrapper.select(SysRoleDataScope::getOrganizationId);
-            List<SysRoleDataScope> sysRoleDataScopes = this.list(wrapper);
-
-            if (ObjectUtil.isNotEmpty(sysRoleDataScopes)) {
-                List<Long> scopeOrgIdList = sysRoleDataScopes.stream().map(SysRoleDataScope::getOrganizationId).collect(Collectors.toList());
-                roleBindDataScopeResponse.setOrgIdList(scopeOrgIdList);
-            }
+        if (ObjectUtil.isNotEmpty(sysRoleDataScopes)) {
+            List<Long> scopeOrgIdList = sysRoleDataScopes.stream().map(SysRoleDataScope::getOrganizationId).collect(Collectors.toList());
+            roleBindDataScopeResponse.setOrgIdList(scopeOrgIdList);
         }
 
         return roleBindDataScopeResponse;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateRoleBindDataScope(RoleBindDataScopeRequest roleBindDataScopeRequest) {
+
+        // 更新角色的数据权限类型
+        Integer dataScopeType = roleBindDataScopeRequest.getDataScopeType();
+        this.sysRoleService.updateRoleDataScopeType(roleBindDataScopeRequest.getRoleId(), dataScopeType);
+
+        // 非指定部门，直接返回
+        if (!DataScopeTypeEnum.DEFINE.getCode().equals(dataScopeType)) {
+            return;
+        }
+
+        // 如果是指定部门的话，则更新角色关联的指定部门的信息
+        List<Long> orgIdList = roleBindDataScopeRequest.getOrgIdList();
+        if (ObjectUtil.isEmpty(orgIdList)) {
+            return;
+        }
+
+        // 先清空所有绑定，再添加所有绑定
+        LambdaQueryWrapper<SysRoleDataScope> removeWrapper = new LambdaQueryWrapper<>();
+        removeWrapper.eq(SysRoleDataScope::getRoleId, roleBindDataScopeRequest.getRoleId());
+        this.remove(removeWrapper);
+
+        ArrayList<SysRoleDataScope> bindRoleDataScopeList = new ArrayList<>();
+        for (Long orgId : orgIdList) {
+            SysRoleDataScope sysRoleDataScope = new SysRoleDataScope();
+            sysRoleDataScope.setRoleId(roleBindDataScopeRequest.getRoleId());
+            sysRoleDataScope.setOrganizationId(orgId);
+            bindRoleDataScopeList.add(sysRoleDataScope);
+        }
+        this.saveBatch(bindRoleDataScopeList);
     }
 
     @Override
