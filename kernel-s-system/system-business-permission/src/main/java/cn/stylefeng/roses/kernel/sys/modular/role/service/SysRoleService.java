@@ -80,4 +80,14 @@ public interface SysRoleService extends IService<SysRole>, SysRoleServiceApi {
      */
     PageResult<SysRole> findPage(SysRoleRequest sysRoleRequest);
 
+    /**
+     * 获取角色的数据范围类型
+     *
+     * @param roleId 角色id
+     * @return 数据范围类型
+     * @author fengshuonan
+     * @since 2023/7/16 23:28
+     */
+    Integer getRoleDataScopeType(Long roleId);
+
 }

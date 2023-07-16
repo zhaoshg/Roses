@@ -8,10 +8,13 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.sys.api.constants.PermissionCodeConstants;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
+import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindDataScopeRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleRequest;
+import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindDataScopeResponse;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionResponse;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.PermissionAssignService;
+import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleDataScopeService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,6 +38,9 @@ public class PermissionAssignController {
 
     @Resource
     private PermissionAssignService permissionAssignService;
+
+    @Resource
+    private SysRoleDataScopeService sysRoleDataScopeService;
 
     /**
      * 获取所有角色列表
@@ -79,6 +85,19 @@ public class PermissionAssignController {
                                                     RoleBindPermissionRequest roleBindPermissionRequest) {
         permissionAssignService.updateRoleBindPermission(roleBindPermissionRequest);
         return new SuccessResponseData<>();
+    }
+
+    /**
+     * 获取角色的数据权限详情
+     *
+     * @author fengshuonan
+     * @since 2023/7/16 23:15
+     */
+    @GetResource(name = "获取角色的数据权限详情", path = "/permission/getRoleBindDataScope")
+    public ResponseData<RoleBindDataScopeResponse> getRoleBindDataScope(
+            @Validated(BaseRequest.detail.class) RoleBindDataScopeRequest roleBindDataScopeRequest) {
+        RoleBindDataScopeResponse roleBindDataScopeResponse = sysRoleDataScopeService.getRoleBindDataScope(roleBindDataScopeRequest);
+        return new SuccessResponseData<>(roleBindDataScopeResponse);
     }
 
 }
