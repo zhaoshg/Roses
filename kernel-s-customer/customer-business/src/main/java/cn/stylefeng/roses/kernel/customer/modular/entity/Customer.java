@@ -17,7 +17,7 @@ import java.util.Date;
  * @author fengshuonan
  * @since 2021/06/07 11:40
  */
-@TableName("toc_customer")
+@TableName("sys_toc_customer")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Customer extends BaseEntity {

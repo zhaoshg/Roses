@@ -19,7 +19,7 @@ import java.util.List;
  * @author fengshuonan
  * @date 2023/06/10 21:23
  */
-@TableName("hr_org_approver")
+@TableName("sys_hr_org_approver")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class HrOrgApprover extends BaseEntity {

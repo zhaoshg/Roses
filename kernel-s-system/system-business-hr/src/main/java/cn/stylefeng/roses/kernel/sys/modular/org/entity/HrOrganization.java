@@ -19,7 +19,7 @@ import java.util.List;
  * @author fengshuonan
  * @date 2023/06/10 21:23
  */
-@TableName(value = "hr_organization", autoResultMap = true)
+@TableName(value = "sys_hr_organization", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class HrOrganization extends BaseExpandFieldEntity implements AbstractTreeNode<HrOrganization> {

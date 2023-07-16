@@ -60,7 +60,7 @@ public class HrOrganizationRequest extends BaseRequest {
      */
     @NotBlank(message = "组织编码不能为空", groups = {add.class, edit.class})
     @ChineseDescription("组织编码")
-    @TableUniqueValue(message = "组织编码存在重复", groups = {add.class, edit.class}, tableName = "hr_organization",
+    @TableUniqueValue(message = "组织编码存在重复", groups = {add.class, edit.class}, tableName = "sys_hr_organization",
             columnName = "org_code", idFieldName = "org_id", excludeLogicDeleteItems = true)
     private String orgCode;
 

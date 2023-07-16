@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
  * @author fengshuonan
  * @date 2023/06/26 21:25
  */
-@TableName("portal_user_app")
+@TableName("sys_portal_user_app")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class PortalUserApp extends BaseEntity {

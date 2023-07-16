@@ -17,7 +17,7 @@ import java.math.BigDecimal;
  * @author fengshuonan
  * @date 2023/06/10 21:25
  */
-@TableName(value = "hr_position", autoResultMap = true)
+@TableName(value = "sys_hr_position", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class HrPosition extends BaseExpandFieldEntity {

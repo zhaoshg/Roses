@@ -91,7 +91,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 查询被删除组织机构的所有子级节点
         Set<Long> totalOrgIdSet = DbOperatorContext.me()
-                .findSubListByParentId("hr_organization", "org_pids", "org_id", hrOrganizationRequest.getOrgId());
+                .findSubListByParentId("sys_hr_organization", "org_pids", "org_id", hrOrganizationRequest.getOrgId());
         totalOrgIdSet.add(hrOrganizationRequest.getOrgId());
 
         // 执行删除操作
@@ -110,7 +110,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         // 批量查询组织机构下的下属机构
         for (Long orgId : orgIdList) {
             // 查询被删除组织机构的所有子级节点
-            Set<Long> tempSubOrgIdList = DbOperatorContext.me().findSubListByParentId("hr_organization", "org_pids", "org_id", orgId);
+            Set<Long> tempSubOrgIdList = DbOperatorContext.me().findSubListByParentId("sys_hr_organization", "org_pids", "org_id", orgId);
             orgIdList.addAll(tempSubOrgIdList);
         }
 
