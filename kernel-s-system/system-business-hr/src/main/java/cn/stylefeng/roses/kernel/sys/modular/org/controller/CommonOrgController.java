@@ -9,12 +9,12 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.CommonOrgTreeRequest;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrganizationRequest;
+import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.CommonOrgTreeResponse;
 import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrganizationService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * 通用组织机构接口
@@ -40,7 +40,7 @@ public class CommonOrgController {
      * @since 2023/6/11 10:31
      */
     @PostResource(name = "通用获取组织机构树", path = "/common/org/tree")
-    public ResponseData<List<HrOrganization>> commonOrgTree(@RequestBody CommonOrgTreeRequest commonOrgTreeRequest) {
+    public ResponseData<CommonOrgTreeResponse> commonOrgTree(@RequestBody CommonOrgTreeRequest commonOrgTreeRequest) {
         return new SuccessResponseData<>(hrOrganizationService.commonOrgTree(commonOrgTreeRequest));
     }
 

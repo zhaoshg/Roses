@@ -29,6 +29,7 @@ import cn.stylefeng.roses.kernel.sys.modular.org.factory.OrganizationFactory;
 import cn.stylefeng.roses.kernel.sys.modular.org.mapper.HrOrganizationMapper;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.CommonOrgTreeRequest;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrganizationRequest;
+import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.CommonOrgTreeResponse;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.HomeCompanyInfo;
 import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrganizationService;
 import cn.stylefeng.roses.kernel.sys.modular.position.service.HrPositionService;
@@ -197,7 +198,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     @Override
-    public List<HrOrganization> commonOrgTree(CommonOrgTreeRequest commonOrgTreeRequest) {
+    public CommonOrgTreeResponse commonOrgTree(CommonOrgTreeRequest commonOrgTreeRequest) {
 
         // 如果查询带组织机构名称的搜索，则清空其他条件
         if (ObjectUtil.isNotEmpty(commonOrgTreeRequest.getSearchText())) {
@@ -217,7 +218,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         List<HrOrganization> hrOrganizationList = this.list(wrapper);
 
         if (ObjectUtil.isEmpty(hrOrganizationList)) {
-            return hrOrganizationList;
+            return new CommonOrgTreeResponse(hrOrganizationList, new ArrayList<>());
         }
 
         // 如果查询条件不为空，则把相关的查询结果的父级也查询出来，组成一颗完整树
@@ -250,7 +251,11 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         // 遍历所有节点，查询这些节点有没有子级，填充haveSubOrgFlag
         this.fillHaveSubFlag(newNotRepeatList);
 
-        return newNotRepeatList;
+        // 遍历这些节点，如果有children的，都展开，并搜集到数组里
+        List<Long> expandOrgIds = new ArrayList<>();
+        this.fillExpandFlag(newNotRepeatList, expandOrgIds);
+
+        return new CommonOrgTreeResponse(newNotRepeatList, expandOrgIds);
     }
 
     @Override
@@ -612,13 +617,39 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
             // 如果有children则将展开标识填充，并继续向下递归填充
             if (ObjectUtil.isNotEmpty(organization.getChildren())) {
-                organization.setExpandShowFlag(true);
-
                 fillHaveSubFlag(organization.getChildren());
             }
 
         }
 
+    }
+
+    /**
+     * 填充是否展开的标识
+     * <p>
+     * 判定是否展开，如果有children则展开
+     *
+     * @author fengshuonan
+     * @since 2023/7/17 11:11
+     */
+    private void fillExpandFlag(List<HrOrganization> organizations, List<Long> expandOrgIds) {
+
+        if (ObjectUtil.isEmpty(organizations)) {
+            return;
+        }
+
+        for (HrOrganization organization : organizations) {
+
+            Long orgId = organization.getOrgId();
+
+            // 如果有children则将展开标识填充，并继续向下递归填充
+            if (ObjectUtil.isNotEmpty(organization.getChildren())) {
+                expandOrgIds.add(orgId);
+
+                // 搜集子集的children的展开标识
+                fillExpandFlag(organization.getChildren(), expandOrgIds);
+            }
+        }
     }
 
     /**
