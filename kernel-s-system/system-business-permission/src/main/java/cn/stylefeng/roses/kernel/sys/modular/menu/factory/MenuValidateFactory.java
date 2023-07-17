@@ -55,9 +55,6 @@ public class MenuValidateFactory {
             if (ObjectUtil.isEmpty(sysMenuRequest.getAntdvRouter())) {
                 throw new ServiceException(SysMenuExceptionEnum.URL_CANT_EMPTY);
             }
-            if (ObjectUtil.isEmpty(sysMenuRequest.getAntdvComponent())) {
-                throw new ServiceException(SysMenuExceptionEnum.COMPONENT_PATH_CANT_EMPTY);
-            }
             if (ObjectUtil.isEmpty(sysMenuRequest.getAntdvVisible())) {
                 throw new ServiceException(SysMenuExceptionEnum.HIDDEN_FLAG_CANT_EMPTY);
             }
