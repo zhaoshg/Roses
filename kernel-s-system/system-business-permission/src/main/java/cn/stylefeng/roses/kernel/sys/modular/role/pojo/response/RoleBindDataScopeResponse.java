@@ -26,7 +26,7 @@ package cn.stylefeng.roses.kernel.sys.modular.role.pojo.response;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
-import cn.stylefeng.roses.kernel.sys.api.format.OrgNameFormatProcess;
+import cn.stylefeng.roses.kernel.sys.api.format.OrgDetailFormatProcess;
 import lombok.Data;
 
 import java.util.List;
@@ -50,7 +50,7 @@ public class RoleBindDataScopeResponse {
      * 用户拥有的指定部门的组织机构信息id集合
      */
     @ChineseDescription("用户拥有的指定部门的组织机构信息id集合")
-    @SimpleFieldFormat(processClass = OrgNameFormatProcess.class)
+    @SimpleFieldFormat(processClass = OrgDetailFormatProcess.class)
     private List<Long> orgIdList;
 
 }
