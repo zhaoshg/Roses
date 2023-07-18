@@ -107,6 +107,11 @@ public class SysRoleDataScopeServiceImpl extends ServiceImpl<SysRoleDataScopeMap
     @Transactional(rollbackFor = Exception.class)
     public void updateRoleBindDataScope(RoleBindDataScopeRequest roleBindDataScopeRequest) {
 
+        // 无论角色是否绑定的是指定部门，清空掉角色绑定的数据范围
+        LambdaQueryWrapper<SysRoleDataScope> removeWrapper = new LambdaQueryWrapper<>();
+        removeWrapper.eq(SysRoleDataScope::getRoleId, roleBindDataScopeRequest.getRoleId());
+        this.remove(removeWrapper);
+
         // 更新角色的数据权限类型
         Integer dataScopeType = roleBindDataScopeRequest.getDataScopeType();
         this.sysRoleService.updateRoleDataScopeType(roleBindDataScopeRequest.getRoleId(), dataScopeType);
@@ -122,11 +127,6 @@ public class SysRoleDataScopeServiceImpl extends ServiceImpl<SysRoleDataScopeMap
             return;
         }
 
-        // 先清空所有绑定，再添加所有绑定
-        LambdaQueryWrapper<SysRoleDataScope> removeWrapper = new LambdaQueryWrapper<>();
-        removeWrapper.eq(SysRoleDataScope::getRoleId, roleBindDataScopeRequest.getRoleId());
-        this.remove(removeWrapper);
-
         ArrayList<SysRoleDataScope> bindRoleDataScopeList = new ArrayList<>();
         for (Long orgId : orgIdList) {
             SysRoleDataScope sysRoleDataScope = new SysRoleDataScope();
@@ -140,7 +140,7 @@ public class SysRoleDataScopeServiceImpl extends ServiceImpl<SysRoleDataScopeMap
     @Override
     public Set<Long> getRoleBindOrgIdList(List<Long> roleIdList) {
 
-        if(ObjectUtil.isEmpty(roleIdList)){
+        if (ObjectUtil.isEmpty(roleIdList)) {
             return new HashSet<>();
         }
 
