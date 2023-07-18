@@ -38,6 +38,11 @@ import lombok.Getter;
 public enum DataScopeTypeEnum {
 
     /**
+     * 仅本人数据
+     */
+    SELF(10, "仅本人数据"),
+
+    /**
      * 本部门数据
      */
     DEPT(20, "本部门数据"),
