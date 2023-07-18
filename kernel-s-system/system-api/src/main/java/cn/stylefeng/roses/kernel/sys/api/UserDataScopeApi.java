@@ -1,24 +1,24 @@
 package cn.stylefeng.roses.kernel.sys.api;
 
+import cn.stylefeng.roses.kernel.sys.api.enums.permission.DataScopeTypeEnum;
+
 import java.util.Set;
 
 /**
- * 用户权限的Api
+ * 用户数据范围权限的Api
  *
  * @author fengshuonan
  * @since 2023/7/18 22:51
  */
-public interface UserPermissionApi {
+public interface UserDataScopeApi {
 
     /**
      * 获取当前用户拥有的数据范围类型
      *
-     * 枚举值在
-     *
      * @author fengshuonan
      * @since 2023/7/18 22:58
      */
-    Integer currentUserDataScopeType();
+    DataScopeTypeEnum currentUserDataScopeType();
 
     /**
      * 获取当前用户拥有的所有组织机构id列表
