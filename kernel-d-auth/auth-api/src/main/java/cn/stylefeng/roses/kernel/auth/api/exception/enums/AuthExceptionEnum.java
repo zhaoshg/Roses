@@ -84,11 +84,6 @@ public enum AuthExceptionEnum implements AbstractExceptionEnum {
     PERMISSION_RES_VALIDATE_ERROR(RuleConstants.BUSINESS_ERROR_TYPE_CODE + AuthConstants.AUTH_EXCEPTION_STEP_CODE + "09", "权限校验失败，请检查用户是否有该资源的权限"),
 
     /**
-     * 数据范围类型转化异常
-     */
-    DATA_SCOPE_ERROR(RuleConstants.BUSINESS_ERROR_TYPE_CODE + AuthConstants.AUTH_EXCEPTION_STEP_CODE + "10", "数据范围类型转化异常，数据范围类型为：{}"),
-
-    /**
      * 权限校验失败，只有超级管理员可以授权所有数据
      */
     ONLY_SUPER_ERROR(RuleConstants.BUSINESS_ERROR_TYPE_CODE + AuthConstants.AUTH_EXCEPTION_STEP_CODE + "11", "权限校验失败，只有超级管理员可以授权所有数据"),

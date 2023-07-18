@@ -22,12 +22,11 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.auth.api.enums;
+package cn.stylefeng.roses.kernel.sys.api.constants;
 
-import cn.stylefeng.roses.kernel.auth.api.exception.AuthException;
+import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
+import cn.stylefeng.roses.kernel.sys.api.exception.enums.RoleExceptionEnum;
 import lombok.Getter;
-
-import static cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum.DATA_SCOPE_ERROR;
 
 /**
  * 数据范围类型枚举，数据范围的值越小，数据权限越小
@@ -37,11 +36,6 @@ import static cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEn
  */
 @Getter
 public enum DataScopeTypeEnum {
-
-    /**
-     * 仅本人数据
-     */
-    SELF(10, "仅本人数据"),
 
     /**
      * 本部门数据
@@ -86,7 +80,7 @@ public enum DataScopeTypeEnum {
                 }
             }
         }
-        throw new AuthException(DATA_SCOPE_ERROR, code);
+        throw new SysException(RoleExceptionEnum.DATA_SCOPE_ERROR, code);
     }
 
 }
