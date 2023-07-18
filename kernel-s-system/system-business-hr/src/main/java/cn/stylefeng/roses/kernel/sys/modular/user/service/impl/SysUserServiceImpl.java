@@ -18,6 +18,7 @@ import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
+import cn.stylefeng.roses.kernel.sys.api.context.DataScopeContext;
 import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.UserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.expander.SysConfigExpander;
@@ -539,6 +540,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             } else {
                 queryWrapper.in(SysUser::getUserId, orgUserIdList);
             }
+        }
+
+        // 数据权限范围控制
+        Set<Long> dataScope = DataScopeContext.me().currentUserOrgScopeList();
+        if (ObjectUtil.isNotEmpty(dataScope)) {
+            Set<Long> userIdList = this.sysUserOrgService.getOrgUserIdList(dataScope);
+            queryWrapper.in(SysUser::getUserId, userIdList);
         }
 
         // 按用户排序字段排序

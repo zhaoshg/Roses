@@ -250,6 +250,15 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         return null;
     }
 
+    @Override
+    public Set<Long> getOrgUserIdList(Set<Long> orgIdList) {
+        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SysUserOrg::getOrgId, orgIdList);
+        queryWrapper.select(SysUserOrg::getUserId);
+        List<SysUserOrg> list = this.list(queryWrapper);
+        return list.stream().map(SysUserOrg::getUserId).collect(Collectors.toSet());
+    }
+
     /**
      * 获取信息
      *

@@ -3,6 +3,7 @@ package cn.stylefeng.roses.kernel.sys.api;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 单独编写用户和组织机构关系的Api
@@ -66,5 +67,14 @@ public interface SysUserOrgServiceApi {
      * @since 2023/7/15 23:04
      */
     Long getUserOrgPositionId(Long userId, Long orgId);
+
+    /**
+     * 查询某些组织机构下，有哪些用户
+     *
+     * @param orgIdList 组织机构id集合
+     * @author fengshuonan
+     * @since 2023/7/19 0:18
+     */
+    Set<Long> getOrgUserIdList(Set<Long> orgIdList);
 
 }

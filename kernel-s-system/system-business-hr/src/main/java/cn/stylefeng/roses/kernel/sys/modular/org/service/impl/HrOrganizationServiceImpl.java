@@ -19,7 +19,6 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
-import cn.stylefeng.roses.kernel.sys.api.context.DataScopeContext;
 import cn.stylefeng.roses.kernel.sys.api.enums.org.DetectModeEnum;
 import cn.stylefeng.roses.kernel.sys.api.enums.org.OrgTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
@@ -531,12 +530,6 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
             });
         }
 
-        // 更新数据范围的筛选条件
-        Set<Long> dataScope = DataScopeContext.me().currentUserOrgScopeList();
-        if (ObjectUtil.isNotEmpty(dataScope)) {
-            queryWrapper.in(HrOrganization::getOrgId, dataScope);
-        }
-
         // 根据排序正序查询
         queryWrapper.orderByAsc(HrOrganization::getOrgSort);
 
@@ -597,12 +590,6 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         Boolean companySearchFlag = commonOrgTreeRequest.getCompanySearchFlag();
         if (ObjectUtil.isNotEmpty(companySearchFlag) && companySearchFlag) {
             queryWrapper.eq(HrOrganization::getOrgType, OrgTypeEnum.COMPANY.getCode());
-        }
-
-        // 更新数据范围的筛选条件
-        Set<Long> dataScope = DataScopeContext.me().currentUserOrgScopeList();
-        if (ObjectUtil.isNotEmpty(dataScope)) {
-            queryWrapper.in(HrOrganization::getOrgId, dataScope);
         }
 
         return queryWrapper;
