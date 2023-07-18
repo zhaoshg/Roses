@@ -1,7 +1,10 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
+import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
 import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.enums.permission.DataScopeTypeEnum;
@@ -19,10 +22,7 @@ import cn.stylefeng.roses.kernel.sys.modular.role.factory.PermissionAssignFactor
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionItem;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionResponse;
-import cn.stylefeng.roses.kernel.sys.modular.role.service.PermissionAssignService;
-import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
-import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
-import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleService;
+import cn.stylefeng.roses.kernel.sys.modular.role.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +62,12 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
 
     @Resource
     private SysRoleService sysRoleService;
+
+    @Resource
+    private DbOperatorApi dbOperatorApi;
+
+    @Resource
+    private SysRoleDataScopeService sysRoleDataScopeService;
 
     @Override
     public RoleBindPermissionResponse getRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest) {
@@ -165,7 +171,56 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
 
     @Override
     public Set<Long> currentUserOrgScopeList() {
-        return null;
+
+        // 获取当前用户id
+        Long userId = LoginContext.me().getLoginUser().getUserId();
+
+        // 用户当前组织机构id
+        Long currentOrgId = LoginContext.me().getLoginUser().getCurrentOrgId();
+
+        // 获取当前用户的数据范围类型
+        DataScopeTypeEnum dataScopeTypeEnum = this.currentUserDataScopeType();
+
+        // 如果是只有本人数据
+        if (DataScopeTypeEnum.SELF.equals(dataScopeTypeEnum)) {
+            return CollectionUtil.set(false, userId);
+        }
+
+        // 如果是本部门数据
+        else if (DataScopeTypeEnum.DEPT.equals(dataScopeTypeEnum)) {
+            return CollectionUtil.set(false, currentOrgId);
+        }
+
+        // 如果是本部门及以下部门
+        else if (DataScopeTypeEnum.DEPT_WITH_CHILD.equals(dataScopeTypeEnum)) {
+
+            // 获取指定组织机构下的所有机构id
+            Set<Long> subOrgIdList = dbOperatorApi.findSubListByParentId("sys_hr_organization", "org_pids", "org_id", currentOrgId);
+            if (ObjectUtil.isEmpty(subOrgIdList)) {
+                subOrgIdList = new HashSet<>();
+            }
+            subOrgIdList.add(currentOrgId);
+            return subOrgIdList;
+        }
+
+        // 如果是指定部门数据
+        else if (DataScopeTypeEnum.DEFINE.equals(dataScopeTypeEnum)) {
+
+            // 获取用户的角色列表
+            List<Long> userHaveRoleIds = sysUserRoleServiceApi.getUserRoleIdList(userId);
+
+            // 获取角色指定的所有部门范围
+            return sysRoleDataScopeService.getRoleBindOrgIdList(userHaveRoleIds);
+        }
+
+        // 如果是全部数据
+        else if (DataScopeTypeEnum.ALL.equals(dataScopeTypeEnum)) {
+
+            return null;
+        }
+
+        // 默认返回只有本人数据
+        return CollectionUtil.set(false, userId);
     }
 
 }

@@ -1,6 +1,8 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
@@ -24,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -94,15 +97,8 @@ public class SysRoleDataScopeServiceImpl extends ServiceImpl<SysRoleDataScopeMap
         }
 
         // 如果是指定部门，则获取指定部门的orgId集合
-        LambdaQueryWrapper<SysRoleDataScope> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(SysRoleDataScope::getRoleId, roleBindDataScopeRequest.getRoleId());
-        wrapper.select(SysRoleDataScope::getOrganizationId);
-        List<SysRoleDataScope> sysRoleDataScopes = this.list(wrapper);
-
-        if (ObjectUtil.isNotEmpty(sysRoleDataScopes)) {
-            List<Long> scopeOrgIdList = sysRoleDataScopes.stream().map(SysRoleDataScope::getOrganizationId).collect(Collectors.toList());
-            roleBindDataScopeResponse.setOrgIdList(scopeOrgIdList);
-        }
+        Set<Long> roleBindOrgIdList = this.getRoleBindOrgIdList(ListUtil.list(false, roleBindDataScopeRequest.getRoleId()));
+        roleBindDataScopeResponse.setOrgIdList(CollectionUtil.list(false, roleBindOrgIdList));
 
         return roleBindDataScopeResponse;
     }
@@ -139,6 +135,25 @@ public class SysRoleDataScopeServiceImpl extends ServiceImpl<SysRoleDataScopeMap
             bindRoleDataScopeList.add(sysRoleDataScope);
         }
         this.saveBatch(bindRoleDataScopeList);
+    }
+
+    @Override
+    public Set<Long> getRoleBindOrgIdList(List<Long> roleIdList) {
+
+        if(ObjectUtil.isEmpty(roleIdList)){
+            return new HashSet<>();
+        }
+
+        LambdaQueryWrapper<SysRoleDataScope> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(SysRoleDataScope::getRoleId, roleIdList);
+        wrapper.select(SysRoleDataScope::getOrganizationId);
+        List<SysRoleDataScope> sysRoleDataScopes = this.list(wrapper);
+
+        if (ObjectUtil.isNotEmpty(sysRoleDataScopes)) {
+            return sysRoleDataScopes.stream().map(SysRoleDataScope::getOrganizationId).collect(Collectors.toSet());
+        }
+
+        return new HashSet<>();
     }
 
     @Override

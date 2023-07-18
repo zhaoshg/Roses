@@ -8,6 +8,7 @@ import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindDataScop
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 角色数据范围 服务类
@@ -88,5 +89,13 @@ public interface SysRoleDataScopeService extends IService<SysRoleDataScope> {
      * @since 2023/7/16 23:42
      */
     void updateRoleBindDataScope(RoleBindDataScopeRequest roleBindDataScopeRequest);
+
+    /**
+     * 获取角色绑定的组织机构id列表
+     *
+     * @author fengshuonan
+     * @since 2023/7/18 23:37
+     */
+    Set<Long> getRoleBindOrgIdList(List<Long> roleIdList);
 
 }
