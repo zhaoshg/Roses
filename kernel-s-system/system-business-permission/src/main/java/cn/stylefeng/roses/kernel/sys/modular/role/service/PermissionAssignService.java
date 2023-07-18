@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service;
 
+import cn.stylefeng.roses.kernel.sys.api.UserDataScopeApi;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionResponse;
 
@@ -11,7 +12,7 @@ import java.util.Set;
  * @author fengshuonan
  * @since 2023/6/13 16:13
  */
-public interface PermissionAssignService {
+public interface PermissionAssignService extends UserDataScopeApi {
 
     /**
      * 获取角色绑定的权限列表

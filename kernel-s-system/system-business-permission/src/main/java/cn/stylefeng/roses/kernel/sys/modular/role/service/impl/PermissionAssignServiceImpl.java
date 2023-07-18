@@ -1,7 +1,10 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
 import cn.hutool.extra.spring.SpringUtil;
+import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
+import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.enums.permission.DataScopeTypeEnum;
 import cn.stylefeng.roses.kernel.sys.modular.app.entity.SysApp;
 import cn.stylefeng.roses.kernel.sys.modular.app.service.SysAppService;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
@@ -19,6 +22,7 @@ import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissi
 import cn.stylefeng.roses.kernel.sys.modular.role.service.PermissionAssignService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
+import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +56,12 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
 
     @Resource
     private SysRoleMenuService sysRoleMenuService;
+
+    @Resource
+    private SysUserRoleServiceApi sysUserRoleServiceApi;
+
+    @Resource
+    private SysRoleService sysRoleService;
 
     @Override
     public RoleBindPermissionResponse getRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest) {
@@ -138,6 +148,24 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
         resultPermissions.addAll(optionsIds);
 
         return resultPermissions;
+    }
+
+    @Override
+    public DataScopeTypeEnum currentUserDataScopeType() {
+
+        // 获取当前用户id
+        Long userId = LoginContext.me().getLoginUser().getUserId();
+
+        // 获取用户的角色列表
+        List<Long> userHaveRoleIds = sysUserRoleServiceApi.getUserRoleIdList(userId);
+
+        // 获取这些角色对应的数据范围
+        return sysRoleService.getRoleDataScope(userHaveRoleIds);
+    }
+
+    @Override
+    public Set<Long> currentUserOrgScopeList() {
+        return null;
     }
 
 }
