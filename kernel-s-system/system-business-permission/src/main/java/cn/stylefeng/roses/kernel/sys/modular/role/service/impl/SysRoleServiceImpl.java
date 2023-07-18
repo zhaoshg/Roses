@@ -146,6 +146,27 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
+    public DataScopeTypeEnum getRoleDataScope(List<Long> roleIds) {
+
+        LambdaQueryWrapper<SysRole> sysRoleLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleLambdaQueryWrapper.in(SysRole::getRoleId, roleIds);
+        sysRoleLambdaQueryWrapper.select(SysRole::getDataScopeType);
+
+        // 按数据范围降序排列，50-全部数据最大
+        sysRoleLambdaQueryWrapper.orderByDesc(SysRole::getDataScopeType);
+
+        SysRole sysRole = this.getOne(sysRoleLambdaQueryWrapper, false);
+        if (sysRole != null) {
+            if (sysRole.getDataScopeType() != null) {
+                return DataScopeTypeEnum.codeToEnum(sysRole.getDataScopeType());
+            }
+        }
+
+        // 如果是查询不到，则直接返回仅本人数据
+        return DataScopeTypeEnum.SELF;
+    }
+
+    @Override
     public List<SysRole> findList(SysRoleRequest sysRoleRequest) {
         LambdaQueryWrapper<SysRole> wrapper = this.createWrapper(sysRoleRequest);
 

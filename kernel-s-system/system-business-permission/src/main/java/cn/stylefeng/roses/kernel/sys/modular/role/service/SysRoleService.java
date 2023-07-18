@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.role.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.sys.api.SysRoleServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.enums.permission.DataScopeTypeEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -99,5 +100,13 @@ public interface SysRoleService extends IService<SysRole>, SysRoleServiceApi {
      * @since 2023/7/16 23:28
      */
     void updateRoleDataScopeType(Long roleId, Integer dataScopeType);
+
+    /**
+     * 获取角色对应的数据范围，如果是多个角色，则取最大类型的数据范围
+     *
+     * @author fengshuonan
+     * @since 2023/7/18 23:19
+     */
+    DataScopeTypeEnum getRoleDataScope(List<Long> roleIds);
 
 }
