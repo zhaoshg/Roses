@@ -181,6 +181,21 @@ public class UserIndexInfoService {
             return;
         }
 
+        // 判断用户是否被改过机构，判断currentOrgId是否失效
+        if (currentOrgId != null) {
+            boolean haveChangeDept = true;
+            for (UserOrgDTO userOrgDTO : userOrgList) {
+                Long companyId = userOrgDTO.getCompanyId();
+                Long deptId = userOrgDTO.getDeptId();
+                if (currentOrgId.equals(companyId) || currentOrgId.equals(deptId)) {
+                    haveChangeDept = false;
+                }
+            }
+            if (haveChangeDept) {
+                currentOrgId = null;
+            }
+        }
+
         // 将查询结果转化为前端需要的信息
         for (UserOrgDTO userOrgItem : userOrgList) {
             IndexUserOrgInfo indexUserOrgInfo = new IndexUserOrgInfo();
