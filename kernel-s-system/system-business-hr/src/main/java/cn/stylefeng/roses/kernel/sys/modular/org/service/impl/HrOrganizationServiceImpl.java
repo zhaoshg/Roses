@@ -531,6 +531,12 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
             });
         }
 
+        // 更新数据范围的筛选条件
+        Set<Long> dataScope = DataScopeContext.me().currentUserOrgScopeList();
+        if (ObjectUtil.isNotEmpty(dataScope)) {
+            queryWrapper.in(HrOrganization::getOrgId, dataScope);
+        }
+
         // 根据排序正序查询
         queryWrapper.orderByAsc(HrOrganization::getOrgSort);
 
