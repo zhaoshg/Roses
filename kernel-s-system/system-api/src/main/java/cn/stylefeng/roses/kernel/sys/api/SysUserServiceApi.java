@@ -26,6 +26,7 @@ package cn.stylefeng.roses.kernel.sys.api;
 
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.OnlineUserItem;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserInfoDetailDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserValidateDTO;
 
 import java.util.List;
@@ -116,5 +117,13 @@ public interface SysUserServiceApi {
      * @since 2023/7/2 13:36
      */
     List<OnlineUserItem> getUserNameAccountInfoListByCondition(List<OnlineUserItem> onlineUserItems, String searchText);
+
+    /**
+     * 获取用户基本信息通过用户id
+     *
+     * @author fengshuonan
+     * @since 2023/7/19 11:08
+     */
+    UserInfoDetailDTO getUserDetail(Long userId);
 
 }

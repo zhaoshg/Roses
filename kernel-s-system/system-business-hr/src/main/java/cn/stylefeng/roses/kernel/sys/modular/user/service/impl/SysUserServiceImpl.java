@@ -22,10 +22,7 @@ import cn.stylefeng.roses.kernel.sys.api.context.DataScopeContext;
 import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.UserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.expander.SysConfigExpander;
-import cn.stylefeng.roses.kernel.sys.api.pojo.user.OnlineUserItem;
-import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
-import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
-import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserValidateDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.*;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.factory.SysUserCreateFactory;
@@ -490,6 +487,30 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
 
         return resultList;
+    }
+
+    @Override
+    public UserInfoDetailDTO getUserDetail(Long userId) {
+
+        UserInfoDetailDTO result = new UserInfoDetailDTO();
+
+        if (ObjectUtil.isEmpty(userId)) {
+            return result;
+        }
+
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
+        sysUserLambdaQueryWrapper.select(SysUser::getUserId, SysUser::getRealName, SysUser::getNickName, SysUser::getAccount,
+                SysUser::getBirthday, SysUser::getSex, SysUser::getPhone, SysUser::getTel, SysUser::getSuperAdminFlag,
+                SysUser::getStatusFlag, SysUser::getUserSort, SysUser::getMasterUserId);
+        SysUser userInfo = this.getOne(sysUserLambdaQueryWrapper);
+
+        if (userInfo != null) {
+            BeanUtil.copyProperties(userInfo, result);
+            return result;
+        }
+
+        return result;
     }
 
     /**
