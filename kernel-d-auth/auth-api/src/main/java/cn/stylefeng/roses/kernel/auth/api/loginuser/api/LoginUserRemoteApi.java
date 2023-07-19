@@ -58,14 +58,5 @@ public interface LoginUserRemoteApi {
     @RequestMapping(value = "/loginUserRemote/haveSession", method = RequestMethod.GET)
     SessionValidateResponse haveSession(@RequestParam("token") String token);
 
-    /**
-     * 通过loginUser获取刷新后的LoginUser对象
-     *
-     * @author fengshuonan
-     * @since 2021/9/29 11:39
-     */
-    @RequestMapping(value = "/loginUserRemote/getEffectiveLoginUser", method = RequestMethod.POST)
-    LoginUser getEffectiveLoginUser(@RequestBody LoginUser loginUser);
-
 }
 
