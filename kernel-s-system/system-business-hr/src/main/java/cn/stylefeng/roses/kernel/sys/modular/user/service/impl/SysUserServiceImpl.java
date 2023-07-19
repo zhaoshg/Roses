@@ -501,7 +501,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
         sysUserLambdaQueryWrapper.select(SysUser::getUserId, SysUser::getRealName, SysUser::getNickName, SysUser::getAccount,
-                SysUser::getBirthday, SysUser::getSex, SysUser::getPhone, SysUser::getTel, SysUser::getSuperAdminFlag,
+                SysUser::getBirthday, SysUser::getSex, SysUser::getPhone, SysUser::getTel, SysUser::getEmail, SysUser::getSuperAdminFlag,
                 SysUser::getStatusFlag, SysUser::getUserSort, SysUser::getMasterUserId);
         SysUser userInfo = this.getOne(sysUserLambdaQueryWrapper);
 
