@@ -191,6 +191,9 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         // 将每个机构的公司名称返回
         for (HrOrganization hrOrganization : sysRolePage.getRecords()) {
             CompanyDeptDTO companyInfo = this.getOrgCompanyInfo(hrOrganization);
+            if (companyInfo == null) {
+                continue;
+            }
             hrOrganization.setCompanyName(companyInfo.getCompanyName());
         }
 
