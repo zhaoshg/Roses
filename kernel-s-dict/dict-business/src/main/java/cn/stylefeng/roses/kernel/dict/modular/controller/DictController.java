@@ -29,7 +29,7 @@ import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.TreeDictInfo;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.request.DictRequest;
 import cn.stylefeng.roses.kernel.dict.modular.service.DictService;
-import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
+import cn.stylefeng.roses.kernel.rule.annotation.ApiLog;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
@@ -75,7 +75,7 @@ public class DictController {
      * @since 2020/10/29 16:35
      */
     @PostResource(name = "添加字典", path = "/dict/add", requiredPermission = true, requirePermissionCode = DictConstants.ADD_DICT)
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> add(@RequestBody @Validated(DictRequest.add.class) DictRequest dictRequest) {
         this.dictService.add(dictRequest);
         return new SuccessResponseData<>();
@@ -101,7 +101,7 @@ public class DictController {
      * @since 2020/10/29 16:35
      */
     @PostResource(name = "删除字典", path = "/dict/delete", requiredPermission = true, requirePermissionCode = DictConstants.DELETE_DICT)
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> delete(@RequestBody @Validated(DictRequest.delete.class) DictRequest dictRequest) {
         this.dictService.del(dictRequest);
         return new SuccessResponseData<>();
@@ -114,7 +114,7 @@ public class DictController {
      * @since 2020/10/29 16:35
      */
     @PostResource(name = "修改字典", path = "/dict/edit", requiredPermission = true, requirePermissionCode = DictConstants.EDIT_DICT)
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> edit(@RequestBody @Validated(DictRequest.edit.class) DictRequest dictRequest) {
         this.dictService.edit(dictRequest);
         return new SuccessResponseData<>();

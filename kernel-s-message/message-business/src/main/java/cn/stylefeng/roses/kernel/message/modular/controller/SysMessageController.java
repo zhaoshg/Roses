@@ -31,7 +31,7 @@ import cn.stylefeng.roses.kernel.message.api.enums.MessageReadFlagEnum;
 import cn.stylefeng.roses.kernel.message.api.pojo.request.MessageRequest;
 import cn.stylefeng.roses.kernel.message.api.pojo.request.MessageSendRequest;
 import cn.stylefeng.roses.kernel.message.api.pojo.response.MessageResponse;
-import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
+import cn.stylefeng.roses.kernel.rule.annotation.ApiLog;
 import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
@@ -69,7 +69,7 @@ public class SysMessageController {
      * @since 2021/1/8 13:50
      */
     @PostResource(name = "发送系统消息", path = "/sysMessage/sendMessage")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> sendMessage(@RequestBody @Validated(MessageSendRequest.add.class) MessageSendRequest messageSendRequest) {
         messageSendRequest.setMessageSendTime(new Date());
         messageApi.sendMessage(messageSendRequest);
@@ -83,7 +83,7 @@ public class SysMessageController {
      * @since 2021/1/8 13:50
      */
     @PostResource(name = "批量更新系统消息状态", path = "/sysMessage/batchUpdateReadFlag")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> batchUpdateReadFlag(@RequestBody @Validated(MessageRequest.updateReadFlag.class) MessageRequest messageRequest) {
         List<Long> messageIdList = messageRequest.getMessageIdList();
         messageApi.batchReadFlagByMessageIds(StrUtil.join(",", messageIdList), MessageReadFlagEnum.READ);
@@ -109,7 +109,7 @@ public class SysMessageController {
      * @since 2021/1/8 13:50
      */
     @PostResource(name = "删除系统消息", path = "/sysMessage/delete")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> delete(@RequestBody @Validated(MessageRequest.delete.class) MessageRequest messageRequest) {
         messageApi.deleteByMessageId(messageRequest.getMessageId());
         return new SuccessResponseData<>();

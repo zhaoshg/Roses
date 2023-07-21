@@ -32,7 +32,7 @@ import cn.stylefeng.roses.kernel.file.api.pojo.request.SysFileInfoRequest;
 import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoResponse;
 import cn.stylefeng.roses.kernel.file.modular.entity.SysFileInfo;
 import cn.stylefeng.roses.kernel.file.modular.service.SysFileInfoService;
-import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
+import cn.stylefeng.roses.kernel.rule.annotation.ApiLog;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
@@ -251,7 +251,7 @@ public class SysFileInfoController {
      * @since 2020/11/29 11:19
      */
     @PostResource(name = "删除文件信息（真删除文件信息）", path = "/sysFileInfo/deleteReally")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> deleteReally(@RequestBody @Validated(SysFileInfoRequest.delete.class) SysFileInfoRequest sysFileInfoRequest) {
         this.sysFileInfoService.deleteReally(sysFileInfoRequest);
         return new SuccessResponseData<>();

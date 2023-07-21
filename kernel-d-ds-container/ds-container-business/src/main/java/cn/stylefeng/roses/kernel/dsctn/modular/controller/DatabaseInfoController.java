@@ -28,7 +28,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.dsctn.api.pojo.request.DatabaseInfoRequest;
 import cn.stylefeng.roses.kernel.dsctn.modular.entity.DatabaseInfo;
 import cn.stylefeng.roses.kernel.dsctn.modular.service.DatabaseInfoService;
-import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
+import cn.stylefeng.roses.kernel.rule.annotation.ApiLog;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
@@ -68,7 +68,7 @@ public class DatabaseInfoController {
      * @since 2020/11/1 22:16
      */
     @PostResource(name = "新增数据源", path = "/databaseInfo/add")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> add(@RequestBody @Validated(BaseRequest.add.class) DatabaseInfoRequest databaseInfoRequest) {
         databaseInfoService.add(databaseInfoRequest);
         return new SuccessResponseData<>();
@@ -81,7 +81,7 @@ public class DatabaseInfoController {
      * @since 2020/11/1 22:18
      */
     @PostResource(name = "删除数据源", path = "/databaseInfo/delete")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> del(@RequestBody @Validated(DatabaseInfoRequest.delete.class) DatabaseInfoRequest databaseInfoRequest) {
         databaseInfoService.del(databaseInfoRequest);
         return new SuccessResponseData<>();
@@ -94,7 +94,7 @@ public class DatabaseInfoController {
      * @since 2020/11/1 22:16
      */
     @PostResource(name = "编辑数据源", path = "/databaseInfo/edit")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> edit(@RequestBody @Validated(DatabaseInfoRequest.edit.class) DatabaseInfoRequest databaseInfoRequest) {
         databaseInfoService.edit(databaseInfoRequest);
         return new SuccessResponseData<>();

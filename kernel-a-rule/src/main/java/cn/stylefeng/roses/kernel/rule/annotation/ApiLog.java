@@ -35,7 +35,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface BusinessLog {
+public @interface ApiLog {
 
     /**
      * 是否进行日志记录，默认是开启

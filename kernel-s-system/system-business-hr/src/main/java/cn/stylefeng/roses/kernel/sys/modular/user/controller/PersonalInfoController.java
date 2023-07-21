@@ -1,6 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.controller;
 
-import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
+import cn.stylefeng.roses.kernel.rule.annotation.ApiLog;
 import cn.stylefeng.roses.kernel.rule.enums.ResBizTypeEnum;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
@@ -48,7 +48,7 @@ public class PersonalInfoController {
      * @since 2023/6/26 22:24
      */
     @PostResource(name = "更新个人信息", path = "/personalInfo/updateInfo")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> updateInfo(@RequestBody @Validated(SysUserRequest.updateInfo.class) SysUserRequest sysUserRequest) {
         sysUserService.editInfo(sysUserRequest);
         return new SuccessResponseData<>();
@@ -61,7 +61,7 @@ public class PersonalInfoController {
      * @since 2023/6/26 22:24
      */
     @PostResource(name = "修改个人头像", path = "/personalInfo/updateAvatar")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> updateAvatar(@RequestBody @Validated(SysUserRequest.updateAvatar.class) SysUserRequest sysUserRequest) {
         sysUserService.editAvatar(sysUserRequest);
         return new SuccessResponseData<>();
@@ -74,7 +74,7 @@ public class PersonalInfoController {
      * @since 2023/6/26 22:24
      */
     @PostResource(name = "修改个人密码", path = "/personalInfo/updatePassword")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> updatePwd(@RequestBody @Validated(SysUserRequest.updatePwd.class) SysUserRequest sysUserRequest) {
         sysUserService.editPassword(sysUserRequest);
         return new SuccessResponseData<>();

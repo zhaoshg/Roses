@@ -1,7 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.theme.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
+import cn.stylefeng.roses.kernel.rule.annotation.ApiLog;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -38,7 +38,7 @@ public class SysThemeController {
      * @since 2021/12/17 16:43
      */
     @PostResource(name = "增加系统主题", path = "/sysTheme/add")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> add(@RequestBody @Validated(SysThemeRequest.add.class) SysThemeRequest sysThemeParam) {
         sysThemeService.add(sysThemeParam);
         return new SuccessResponseData<>();
@@ -51,7 +51,7 @@ public class SysThemeController {
      * @since 2021/12/17 16:45
      */
     @PostResource(name = "删除系统主题", path = "/sysTheme/del")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> del(@RequestBody @Validated(SysThemeRequest.delete.class) SysThemeRequest sysThemeParam) {
         sysThemeService.del(sysThemeParam);
         return new SuccessResponseData<>();
@@ -64,7 +64,7 @@ public class SysThemeController {
      * @since 2021/12/17 16:50
      */
     @PostResource(name = "修改系统主题", path = "/sysTheme/edit")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> edit(@RequestBody @Validated(SysThemeRequest.edit.class) SysThemeRequest sysThemeParam) {
         sysThemeService.edit(sysThemeParam);
         return new SuccessResponseData<>();
@@ -99,7 +99,7 @@ public class SysThemeController {
      * @since 2021/12/17 17:32
      */
     @PostResource(name = "修改系统主题启用状态", path = "/sysTheme/updateStatus")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> updateThemeStatus(@RequestBody @Validated(SysThemeRequest.updateStatus.class) SysThemeRequest sysThemeParam) {
         sysThemeService.updateThemeStatus(sysThemeParam);
         return new SuccessResponseData<>();

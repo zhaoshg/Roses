@@ -29,7 +29,7 @@ import cn.stylefeng.roses.kernel.log.api.pojo.loginlog.SysLoginLogDto;
 import cn.stylefeng.roses.kernel.log.api.pojo.loginlog.SysLoginLogRequest;
 import cn.stylefeng.roses.kernel.log.loginlog.entity.SysLoginLog;
 import cn.stylefeng.roses.kernel.log.loginlog.service.SysLoginLogService;
-import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
+import cn.stylefeng.roses.kernel.rule.annotation.ApiLog;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -64,7 +64,7 @@ public class SysLoginLogController {
      * @since 2021/1/13 17:51
      */
     @GetResource(name = "清空登录日志", path = "/loginLog/deleteAll")
-    @BusinessLog
+    @ApiLog
     public ResponseData<?> deleteAll() {
         sysLoginLogService.delAll();
         return new SuccessResponseData<>();

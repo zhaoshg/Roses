@@ -35,7 +35,7 @@ import cn.stylefeng.roses.kernel.log.api.factory.appender.HttpLogAppender;
 import cn.stylefeng.roses.kernel.log.api.factory.appender.ParamsLogAppender;
 import cn.stylefeng.roses.kernel.log.api.pojo.record.LogRecordDTO;
 import cn.stylefeng.roses.kernel.log.requestapi.LogRecordApi;
-import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
+import cn.stylefeng.roses.kernel.rule.annotation.ApiLog;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
@@ -284,10 +284,10 @@ public class RequestApiLogRecordAop implements Ordered {
 
         // 获取类上的业务日志开关注解
         Class<?> controllerClass = point.getTarget().getClass();
-        BusinessLog businessLog = controllerClass.getAnnotation(BusinessLog.class);
+        ApiLog businessLog = controllerClass.getAnnotation(ApiLog.class);
 
         // 获取方法上的业务日志开关注解
-        BusinessLog methodBusinessLog = null;
+        ApiLog methodBusinessLog = null;
         MethodSignature methodSignature = null;
         if (!(point.getSignature() instanceof MethodSignature)) {
             return false;
@@ -296,7 +296,7 @@ public class RequestApiLogRecordAop implements Ordered {
         Object target = point.getTarget();
         try {
             Method currentMethod = target.getClass().getMethod(methodSignature.getName(), methodSignature.getParameterTypes());
-            methodBusinessLog = currentMethod.getAnnotation(BusinessLog.class);
+            methodBusinessLog = currentMethod.getAnnotation(ApiLog.class);
         } catch (NoSuchMethodException e) {
             return false;
         }
