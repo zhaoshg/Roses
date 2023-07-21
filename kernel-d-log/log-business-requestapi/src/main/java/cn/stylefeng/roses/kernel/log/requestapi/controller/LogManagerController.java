@@ -25,11 +25,10 @@
 package cn.stylefeng.roses.kernel.log.requestapi.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.log.api.LogManagerApi;
 import cn.stylefeng.roses.kernel.log.api.pojo.manage.LogManagerRequest;
 import cn.stylefeng.roses.kernel.log.api.pojo.record.LogRecordDTO;
+import cn.stylefeng.roses.kernel.log.requestapi.entity.SysLog;
 import cn.stylefeng.roses.kernel.log.requestapi.service.SysLogService;
-import cn.stylefeng.roses.kernel.rule.annotation.BusinessLog;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -40,16 +39,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
- * 日志管理控制器
+ * API日志管理
  *
- * @author luojie
- * @since 2020/11/3 12:44
+ * @author fengshuonan
+ * @since 2023/7/21 11:22
  */
 @RestController
-@ApiResource(name = "日志管理控制器", requiredPermission = true, requirePermissionCode = LogManagerController.OPERATE_LOG)
+@ApiResource(name = "API日志管理控制器", requiredPermission = true, requirePermissionCode = LogManagerController.OPERATE_LOG)
 public class LogManagerController {
 
     /**
@@ -57,38 +55,18 @@ public class LogManagerController {
      */
     public static final String OPERATE_LOG = "OPERATE_LOG";
 
-    /**
-     * 日志管理api
-     */
-    @Resource
-    private LogManagerApi logManagerApi;
-
-    /**
-     * 日志管理service
-     */
     @Resource
     private SysLogService sysLogService;
 
     /**
-     * 查询日志列表
+     * 分页查询API日志列表
      *
-     * @author luojie
-     * @since 2020/11/3 12:58
+     * @author fengshuonan
+     * @since 2023/7/21 11:34
      */
-    @GetResource(name = "查询日志列表", path = "/logManager/list")
-    public ResponseData<List<LogRecordDTO>> list(@RequestBody LogManagerRequest logManagerRequest) {
-        return new SuccessResponseData<>(logManagerApi.findList(logManagerRequest));
-    }
-
-    /**
-     * 查询日志
-     *
-     * @author tengshuqi
-     * @since 2021/1/8 17:36
-     */
-    @GetResource(name = "查询日志列表", path = "/logManager/page")
+    @GetResource(name = "分页查询API日志列表", path = "/logManager/page")
     public ResponseData<PageResult<LogRecordDTO>> page(LogManagerRequest logManagerRequest) {
-        return new SuccessResponseData<>(logManagerApi.findPage(logManagerRequest));
+        return new SuccessResponseData<>(sysLogService.apiLogPageQuery(logManagerRequest));
     }
 
     /**
@@ -98,7 +76,6 @@ public class LogManagerController {
      * @since 2020/11/3 13:47
      */
     @PostResource(name = "删除日志", path = "/logManager/delete")
-    @BusinessLog
     public ResponseData<?> delete(@RequestBody @Validated(LogManagerRequest.delete.class) LogManagerRequest logManagerRequest) {
         sysLogService.delAll(logManagerRequest);
         return new SuccessResponseData<>();
@@ -111,8 +88,8 @@ public class LogManagerController {
      * @since 2021/1/11 17:36
      */
     @GetResource(name = "查看日志详情", path = "/logManager/detail")
-    public ResponseData<LogRecordDTO> detail(@Validated(LogManagerRequest.detail.class) LogManagerRequest logManagerRequest) {
-        return new SuccessResponseData<>(logManagerApi.detail(logManagerRequest));
+    public ResponseData<SysLog> detail(@Validated(LogManagerRequest.detail.class) LogManagerRequest logManagerRequest) {
+        return new SuccessResponseData<>(sysLogService.detail(logManagerRequest));
     }
 
 }

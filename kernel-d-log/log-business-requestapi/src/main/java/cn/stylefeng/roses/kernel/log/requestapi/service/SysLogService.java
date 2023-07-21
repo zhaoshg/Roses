@@ -24,12 +24,10 @@
  */
 package cn.stylefeng.roses.kernel.log.requestapi.service;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.log.api.LogManagerApi;
 import cn.stylefeng.roses.kernel.log.api.pojo.manage.LogManagerRequest;
 import cn.stylefeng.roses.kernel.log.requestapi.entity.SysLog;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
 
 /**
  * 日志记录 service接口
@@ -37,7 +35,7 @@ import java.util.List;
  * @author luojie
  * @since 2020/11/2 17:44
  */
-public interface SysLogService extends IService<SysLog> {
+public interface SysLogService extends IService<SysLog>, LogManagerApi {
 
     /**
      * 新增
@@ -47,15 +45,6 @@ public interface SysLogService extends IService<SysLog> {
      * @since 2021/1/26 12:52
      */
     void add(LogManagerRequest logManagerRequest);
-
-    /**
-     * 删除
-     *
-     * @param logManagerRequest 参数对象
-     * @author chenjinlong
-     * @since 2021/1/26 12:52
-     */
-    void del(LogManagerRequest logManagerRequest);
 
     /**
      * 删除所有数据
@@ -73,23 +62,5 @@ public interface SysLogService extends IService<SysLog> {
      * @since 2021/1/11 17:51
      */
     SysLog detail(LogManagerRequest logManagerParam);
-
-    /**
-     * 查询-列表-按实体对象
-     *
-     * @param logManagerParam 参数对象
-     * @author chenjinlong
-     * @since 2021/1/26 12:52
-     */
-    List<SysLog> findList(LogManagerRequest logManagerParam);
-
-    /**
-     * 查询-列表-分页-按实体对象
-     *
-     * @param logManagerParam 参数对象
-     * @author chenjinlong
-     * @since 2021/1/26 12:52
-     */
-    PageResult<SysLog> findPage(LogManagerRequest logManagerParam);
 
 }

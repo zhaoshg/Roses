@@ -41,7 +41,7 @@ public class HomeLogController {
         logManagerRequest.setUserId(LoginContext.me().getLoginUser().getUserId());
 
         // 默认查询20条记录
-        PageResult<LogRecordDTO> page = logManagerApi.findPage(logManagerRequest);
+        PageResult<LogRecordDTO> page = logManagerApi.apiLogPageQuery(logManagerRequest);
 
         return new SuccessResponseData<>(page.getRows());
     }

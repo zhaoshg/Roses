@@ -25,15 +25,19 @@
 package cn.stylefeng.roses.kernel.log.requestapi.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.log.api.exception.LogException;
 import cn.stylefeng.roses.kernel.log.api.exception.enums.LogExceptionEnum;
 import cn.stylefeng.roses.kernel.log.api.pojo.manage.LogManagerRequest;
+import cn.stylefeng.roses.kernel.log.api.pojo.record.LogRecordDTO;
 import cn.stylefeng.roses.kernel.log.requestapi.entity.SysLog;
 import cn.stylefeng.roses.kernel.log.requestapi.mapper.SysLogMapper;
 import cn.stylefeng.roses.kernel.log.requestapi.service.SysLogService;
@@ -56,7 +60,6 @@ import java.util.List;
 @Service
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements SysLogService {
 
-
     @Override
     public void add(LogManagerRequest logManagerRequest) {
         SysLog sysLog = new SysLog();
@@ -65,16 +68,11 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     }
 
     @Override
-    public void del(LogManagerRequest logManagerRequest) {
-        SysLog sysLog = this.querySysLogById(logManagerRequest);
-        this.removeById(sysLog.getLogId());
-    }
-
-    @Override
     public void delAll(LogManagerRequest logManagerRequest) {
         LambdaUpdateWrapper<SysLog> queryWrapper = new LambdaUpdateWrapper<>();
 
-        queryWrapper.between(SysLog::getCreateTime, logManagerRequest.getBeginDate() + " 00:00:00", logManagerRequest.getEndDate() + " 23:59:59");
+        queryWrapper.between(SysLog::getCreateTime, logManagerRequest.getBeginDate() + " 00:00:00",
+                logManagerRequest.getEndDate() + " 23:59:59");
         queryWrapper.eq(SysLog::getAppName, logManagerRequest.getAppName());
 
         this.remove(queryWrapper);
@@ -82,21 +80,25 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
 
     @Override
     public SysLog detail(LogManagerRequest logManagerRequest) {
-        LambdaQueryWrapper<SysLog> queryWrapper = this.createWrapper(logManagerRequest);
-        return this.getOne(queryWrapper, false);
+        return this.querySysLogById(logManagerRequest);
     }
 
     @Override
-    public List<SysLog> findList(LogManagerRequest logManagerRequest) {
-        LambdaQueryWrapper<SysLog> wrapper = this.createWrapper(logManagerRequest);
-        return this.list(wrapper);
-    }
+    public PageResult<LogRecordDTO> apiLogPageQuery(LogManagerRequest logManagerRequest) {
 
-    @Override
-    public PageResult<SysLog> findPage(LogManagerRequest logManagerRequest) {
         LambdaQueryWrapper<SysLog> wrapper = createWrapper(logManagerRequest);
+
+        // 只查询需要字段
+        wrapper.select(SysLog::getLogId, SysLog::getRequestUrl, SysLog::getLogContent, SysLog::getUserId, SysLog::getAppName,
+                BaseEntity::getCreateTime);
+
+        // 转化实体
         Page<SysLog> page = this.page(PageFactory.defaultPage(), wrapper);
-        return PageResultFactory.createPageResult(page);
+        List<SysLog> records = page.getRecords();
+        List<LogRecordDTO> logRecordDTOS = BeanUtil.copyToList(records, LogRecordDTO.class, CopyOptions.create().ignoreError());
+
+        return PageResultFactory.createPageResult(logRecordDTOS, page.getTotal(), Convert.toInt(page.getSize()),
+                Convert.toInt(page.getCurrent()));
     }
 
     /**
@@ -132,6 +134,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         String beginDateTime = logManagerRequest.getBeginDate();
         String endDateTime = logManagerRequest.getEndDate();
 
+        // 根据时间段查询
         Date beginDate = null;
         Date endDate = null;
         if (StrUtil.isNotBlank(beginDateTime)) {
@@ -140,25 +143,26 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         if (StrUtil.isNotBlank(endDateTime)) {
             endDate = DateUtil.parseDateTime(endDateTime + " 23:59:59").toJdkDate();
         }
-
-        // SQL条件拼接
-        String appName = logManagerRequest.getAppName();
-        String serverIp = logManagerRequest.getServerIp();
-        Long userId = logManagerRequest.getUserId();
-        String clientIp = logManagerRequest.getClientIp();
-        String url = logManagerRequest.getRequestUrl();
-        Long logId = logManagerRequest.getLogId();
-
-        queryWrapper.eq(ObjectUtil.isNotEmpty(logId), SysLog::getLogId, logId);
         queryWrapper.between(ObjectUtil.isAllNotEmpty(beginDate, endDate), SysLog::getCreateTime, beginDate, endDate);
+
+        // 根据应用名称查询
+        String appName = logManagerRequest.getAppName();
         queryWrapper.like(StrUtil.isNotEmpty(appName), SysLog::getAppName, appName);
-        queryWrapper.like(StrUtil.isNotEmpty(serverIp), SysLog::getServerIp, serverIp);
-        queryWrapper.eq(ObjectUtil.isNotNull(userId), SysLog::getUserId, userId);
-        queryWrapper.eq(StrUtil.isNotEmpty(clientIp), SysLog::getClientIp, clientIp);
-        queryWrapper.eq(StrUtil.isNotEmpty(url), SysLog::getRequestUrl, url);
+
+        // 根据内容查询
+        String searchText = logManagerRequest.getSearchText();
+        if (StrUtil.isNotEmpty(searchText)) {
+            queryWrapper.nested(wrap -> {
+                queryWrapper.likeRight(SysLog::getRequestUrl, searchText).or().likeRight(SysLog::getLogContent, searchText);
+            });
+        }
+
+        // 根据用户id查询
+        Long userId = logManagerRequest.getUserId();
+        if (ObjectUtil.isNotEmpty(userId)) {
+            queryWrapper.eq(SysLog::getUserId, userId);
+        }
 
         return queryWrapper;
     }
-
-
 }

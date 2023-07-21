@@ -24,15 +24,12 @@
  */
 package cn.stylefeng.roses.kernel.log.starter;
 
-import cn.stylefeng.roses.kernel.log.api.LogManagerApi;
 import cn.stylefeng.roses.kernel.log.api.LogRecordApi;
 import cn.stylefeng.roses.kernel.log.api.threadpool.LogManagerThreadPool;
-import cn.stylefeng.roses.kernel.log.requestapi.DbLogManagerServiceImpl;
 import cn.stylefeng.roses.kernel.log.requestapi.DbLogRecordServiceImpl;
 import cn.stylefeng.roses.kernel.log.requestapi.aop.RequestApiLogRecordAop;
 import cn.stylefeng.roses.kernel.log.requestapi.service.SysLogService;
 import cn.stylefeng.roses.kernel.log.requestapi.service.impl.SysLogServiceImpl;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -52,7 +49,6 @@ public class ProjectLogAutoConfiguration {
      * @since 2020/12/28 22:09
      */
     @Bean
-    @ConditionalOnMissingBean(SysLogService.class)
     public SysLogService sysLogService() {
         return new SysLogServiceImpl();
     }
@@ -69,17 +65,6 @@ public class ProjectLogAutoConfiguration {
     @Bean
     public RequestApiLogRecordAop requestApiLogRecordAop(SysLogService sysLogService) {
         return new RequestApiLogRecordAop(new DbLogRecordServiceImpl(new LogManagerThreadPool(), sysLogService));
-    }
-
-    /**
-     * 日志管理器
-     *
-     * @author liuhanqing
-     * @since 2020/12/20 18:53
-     */
-    @Bean
-    public LogManagerApi logManagerApi() {
-        return new DbLogManagerServiceImpl();
     }
 
     /**
