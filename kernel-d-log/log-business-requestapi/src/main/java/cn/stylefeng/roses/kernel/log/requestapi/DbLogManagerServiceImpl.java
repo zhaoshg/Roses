@@ -22,7 +22,7 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.log.db;
+package cn.stylefeng.roses.kernel.log.requestapi;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
@@ -30,8 +30,8 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.log.api.LogManagerApi;
 import cn.stylefeng.roses.kernel.log.api.pojo.manage.LogManagerRequest;
 import cn.stylefeng.roses.kernel.log.api.pojo.record.LogRecordDTO;
-import cn.stylefeng.roses.kernel.log.db.entity.SysLog;
-import cn.stylefeng.roses.kernel.log.db.service.SysLogService;
+import cn.stylefeng.roses.kernel.log.requestapi.entity.SysLog;
+import cn.stylefeng.roses.kernel.log.requestapi.service.SysLogService;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;

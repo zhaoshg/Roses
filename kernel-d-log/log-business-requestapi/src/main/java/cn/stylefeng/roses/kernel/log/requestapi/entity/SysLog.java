@@ -22,7 +22,7 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.log.db.entity;
+package cn.stylefeng.roses.kernel.log.requestapi.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -33,7 +33,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 日志记录
+ * API接口日志记录
  *
  * @author luojie
  * @since 2020/11/2 15:59

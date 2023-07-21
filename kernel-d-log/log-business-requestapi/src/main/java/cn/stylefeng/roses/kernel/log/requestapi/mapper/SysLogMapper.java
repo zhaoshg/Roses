@@ -22,9 +22,9 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.log.db.mapper;
+package cn.stylefeng.roses.kernel.log.requestapi.mapper;
 
-import cn.stylefeng.roses.kernel.log.db.entity.SysLog;
+import cn.stylefeng.roses.kernel.log.requestapi.entity.SysLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
