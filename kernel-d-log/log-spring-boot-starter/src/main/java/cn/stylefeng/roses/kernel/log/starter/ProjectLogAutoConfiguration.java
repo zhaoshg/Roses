@@ -25,6 +25,7 @@
 package cn.stylefeng.roses.kernel.log.starter;
 
 import cn.stylefeng.roses.kernel.log.api.threadpool.LogManagerThreadPool;
+import cn.stylefeng.roses.kernel.log.business.aop.BusinessLogRecordAop;
 import cn.stylefeng.roses.kernel.log.requestapi.DbLogRecordServiceImpl;
 import cn.stylefeng.roses.kernel.log.requestapi.LogRecordApi;
 import cn.stylefeng.roses.kernel.log.requestapi.aop.RequestApiLogRecordAop;
@@ -76,6 +77,17 @@ public class ProjectLogAutoConfiguration {
     @Bean
     public LogRecordApi logRecordApi(SysLogService sysLogService) {
         return new DbLogRecordServiceImpl(new LogManagerThreadPool(), sysLogService);
+    }
+
+    /**
+     * 业务日志的AOP
+     *
+     * @author fengshuonan
+     * @since 2023/7/21 18:28
+     */
+    @Bean
+    public BusinessLogRecordAop businessLogRecordAop() {
+        return new BusinessLogRecordAop();
     }
 
 }

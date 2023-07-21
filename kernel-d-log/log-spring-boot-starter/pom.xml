@@ -17,6 +17,13 @@
 
     <dependencies>
 
+        <!--业务日志记录-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>log-business</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!--接口请求日志记录-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
