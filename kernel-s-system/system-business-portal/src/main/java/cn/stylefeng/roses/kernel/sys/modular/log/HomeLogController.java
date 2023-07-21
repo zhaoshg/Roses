@@ -2,7 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.log;
 
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.log.api.LogManagerApi;
+import cn.stylefeng.roses.kernel.log.api.ApiLogManagerApi;
 import cn.stylefeng.roses.kernel.log.api.pojo.manage.LogManagerRequest;
 import cn.stylefeng.roses.kernel.log.api.pojo.record.LogRecordDTO;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
@@ -25,7 +25,7 @@ import java.util.List;
 public class HomeLogController {
 
     @Resource
-    private LogManagerApi logManagerApi;
+    private ApiLogManagerApi logManagerApi;
 
     /**
      * 查询最近操作日志列表

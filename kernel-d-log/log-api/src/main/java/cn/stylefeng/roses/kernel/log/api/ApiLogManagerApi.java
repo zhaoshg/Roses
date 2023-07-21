@@ -29,14 +29,12 @@ import cn.stylefeng.roses.kernel.log.api.pojo.manage.LogManagerRequest;
 import cn.stylefeng.roses.kernel.log.api.pojo.record.LogRecordDTO;
 
 /**
- * 日志管理相关的接口
- * <p>
- * 接口有多种实现，例如基于文件存储的日志，基于数据库存储的日志，基于es存储的日志
+ * API日志管理相关的接口
  *
  * @author fengshuonan
  * @since 2020/10/27 16:19
  */
-public interface LogManagerApi {
+public interface ApiLogManagerApi {
 
     /**
      * 日志管理 分页查询api日志记录

@@ -24,9 +24,9 @@
  */
 package cn.stylefeng.roses.kernel.log.starter;
 
-import cn.stylefeng.roses.kernel.log.api.LogRecordApi;
 import cn.stylefeng.roses.kernel.log.api.threadpool.LogManagerThreadPool;
 import cn.stylefeng.roses.kernel.log.requestapi.DbLogRecordServiceImpl;
+import cn.stylefeng.roses.kernel.log.requestapi.LogRecordApi;
 import cn.stylefeng.roses.kernel.log.requestapi.aop.RequestApiLogRecordAop;
 import cn.stylefeng.roses.kernel.log.requestapi.service.SysLogService;
 import cn.stylefeng.roses.kernel.log.requestapi.service.impl.SysLogServiceImpl;

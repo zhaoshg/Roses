@@ -24,7 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.log.requestapi.service;
 
-import cn.stylefeng.roses.kernel.log.api.LogManagerApi;
+import cn.stylefeng.roses.kernel.log.api.ApiLogManagerApi;
 import cn.stylefeng.roses.kernel.log.api.pojo.manage.LogManagerRequest;
 import cn.stylefeng.roses.kernel.log.requestapi.entity.SysLog;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -35,7 +35,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author luojie
  * @since 2020/11/2 17:44
  */
-public interface SysLogService extends IService<SysLog>, LogManagerApi {
+public interface SysLogService extends IService<SysLog>, ApiLogManagerApi {
 
     /**
      * 新增
