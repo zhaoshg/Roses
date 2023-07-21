@@ -17,6 +17,7 @@
 
     <modules>
         <module>log-api</module>
+        <module>log-business</module>
         <module>log-business-login-log</module>
         <module>log-business-requestapi</module>
         <module>log-spring-boot-starter</module>
