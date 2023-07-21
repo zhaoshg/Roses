@@ -22,7 +22,7 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.system.modular.loginlog.service.impl;
+package cn.stylefeng.roses.kernel.log.loginlog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
@@ -37,13 +37,13 @@ import cn.stylefeng.roses.kernel.log.api.exception.LogException;
 import cn.stylefeng.roses.kernel.log.api.exception.enums.LogExceptionEnum;
 import cn.stylefeng.roses.kernel.log.api.pojo.loginlog.SysLoginLogDto;
 import cn.stylefeng.roses.kernel.log.api.pojo.loginlog.SysLoginLogRequest;
+import cn.stylefeng.roses.kernel.log.loginlog.constants.LoginLogConstant;
+import cn.stylefeng.roses.kernel.log.loginlog.entity.SysLoginLog;
+import cn.stylefeng.roses.kernel.log.loginlog.mapper.SysLoginLogMapper;
+import cn.stylefeng.roses.kernel.log.loginlog.service.SysLoginLogService;
 import cn.stylefeng.roses.kernel.rule.util.HttpServletUtil;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
-import cn.stylefeng.roses.kernel.system.modular.loginlog.constants.LoginLogConstant;
-import cn.stylefeng.roses.kernel.system.modular.loginlog.entity.SysLoginLog;
-import cn.stylefeng.roses.kernel.system.modular.loginlog.mapper.SysLoginLogMapper;
-import cn.stylefeng.roses.kernel.system.modular.loginlog.service.SysLoginLogService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
