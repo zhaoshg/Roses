@@ -107,11 +107,6 @@ public class DbLogRecordServiceImpl implements LogRecordApi {
             // 复制logRecordDTO对象属性到sysLog
             BeanUtil.copyProperties(logRecordDTO, sysLog);
 
-            // 日志名称为空的话则获取默认日志名称
-            if (StrUtil.isEmpty(sysLog.getLogName())) {
-                sysLog.setLogName(LogConstants.LOG_DEFAULT_NAME);
-            }
-
             // 服务名称为空的话则获取默认服务名称
             if (StrUtil.isEmpty(sysLog.getAppName())) {
                 sysLog.setAppName(LogConstants.LOG_DEFAULT_APP_NAME);

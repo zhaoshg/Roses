@@ -48,14 +48,11 @@ public class LogRecordFactory {
      * @author fengshuonan
      * @since 2020/10/28 17:31
      */
-    public static LogRecordDTO createLogRecord(String name, Object content) {
+    public static LogRecordDTO createLogRecord(Object content) {
         LogRecordDTO logRecordDTO = new LogRecordDTO();
 
         //设置全局id
         logRecordDTO.setLogId(IdUtil.getSnowflake(1, 1).nextId());
-
-        // 设置日志名称
-        logRecordDTO.setLogName(name);
 
         // 设置日志内容
         logRecordDTO.setLogContent(content);

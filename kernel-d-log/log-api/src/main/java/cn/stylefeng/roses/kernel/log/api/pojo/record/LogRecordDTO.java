@@ -47,12 +47,6 @@ public class LogRecordDTO {
     private Long logId;
 
     /**
-     * 日志的名称，一般为业务名称
-     */
-    @ChineseDescription("日志名称")
-    private String logName;
-
-    /**
      * 日志记录的内容
      */
     @ChineseDescription("日志记录内容")

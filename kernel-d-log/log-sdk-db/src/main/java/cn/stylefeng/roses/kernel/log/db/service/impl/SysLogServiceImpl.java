@@ -142,7 +142,6 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         }
 
         // SQL条件拼接
-        String name = logManagerRequest.getLogName();
         String appName = logManagerRequest.getAppName();
         String serverIp = logManagerRequest.getServerIp();
         Long userId = logManagerRequest.getUserId();
@@ -152,7 +151,6 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
 
         queryWrapper.eq(ObjectUtil.isNotEmpty(logId), SysLog::getLogId, logId);
         queryWrapper.between(ObjectUtil.isAllNotEmpty(beginDate, endDate), SysLog::getCreateTime, beginDate, endDate);
-        queryWrapper.like(StrUtil.isNotEmpty(name), SysLog::getLogName, name);
         queryWrapper.like(StrUtil.isNotEmpty(appName), SysLog::getAppName, appName);
         queryWrapper.like(StrUtil.isNotEmpty(serverIp), SysLog::getServerIp, serverIp);
         queryWrapper.eq(ObjectUtil.isNotNull(userId), SysLog::getUserId, userId);

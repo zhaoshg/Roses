@@ -40,7 +40,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("sys_log")
+@TableName("sys_log_api")
 public class SysLog extends BaseEntity {
 
     /**
@@ -48,12 +48,6 @@ public class SysLog extends BaseEntity {
      */
     @TableId(value = "log_id", type = IdType.ASSIGN_ID)
     private Long logId;
-
-    /**
-     * 日志的名称，一般为业务名称
-     */
-    @TableField(value = "log_name")
-    private String logName;
 
     /**
      * 日志记录的内容

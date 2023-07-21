@@ -64,12 +64,6 @@ public class LogManagerRequest extends BaseRequest {
     private String endDate;
 
     /**
-     * 日志的名称，一般为业务名称
-     */
-    @ChineseDescription("日志名称")
-    private String logName;
-
-    /**
      * 服务名称，一般为spring.application.name
      */
     @NotBlank(message = "服务名称不能为空", groups = {delete.class})

@@ -28,7 +28,6 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.log.api.LogRecordApi;
-import cn.stylefeng.roses.kernel.log.api.constants.LogConstants;
 import cn.stylefeng.roses.kernel.log.api.constants.LogFileConstants;
 import cn.stylefeng.roses.kernel.log.api.expander.LogConfigExpander;
 import cn.stylefeng.roses.kernel.log.api.factory.LogRecordFactory;
@@ -171,7 +170,7 @@ public class RequestApiLogRecordAop implements Ordered {
         Object actionName = annotationProp.get("name");
 
         // 创建日志对象
-        LogRecordDTO logRecordDTO = LogRecordFactory.createLogRecord(LogConstants.LOG_DEFAULT_NAME, actionName);
+        LogRecordDTO logRecordDTO = LogRecordFactory.createLogRecord(actionName);
 
         // 填充用户登录信息
         LoginUser loginUserNullable = LoginContext.me().getLoginUserNullable();
