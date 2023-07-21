@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  * 业务日志记录实例类
  *
  * @author fengshuonan
- * @date 2023/07/21 15:00
+ * @date 2023/07/21 19:02
  */
 @TableName("sys_log_business")
 @Data
@@ -40,20 +40,6 @@ public class SysLogBusiness extends BaseEntity {
     @TableField("log_title")
     @ChineseDescription("日志的标题，摘要信息")
     private String logTitle;
-
-    /**
-     * 日志记录的内容
-     */
-    @TableField("log_content")
-    @ChineseDescription("日志记录的内容")
-    private String logContent;
-
-    /**
-     * 调用链唯一id，一个id代表一次接口调用
-     */
-    @TableField("trace_id")
-    @ChineseDescription("调用链唯一id，一个id代表一次接口调用")
-    private Long traceId;
 
     /**
      * 当前用户请求的url

@@ -11,12 +11,12 @@ import lombok.Getter;
  * @date 2023/07/21 19:02
  */
 @Getter
-public enum SysLogBusinessExceptionEnum implements AbstractExceptionEnum {
+public enum SysLogBusinessContentExceptionEnum implements AbstractExceptionEnum {
 
     /**
      * 查询结果不存在
      */
-    SYS_LOG_BUSINESS_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE +  "10001", "查询结果不存在");
+    SYS_LOG_BUSINESS_CONTENT_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE +  "10001", "查询结果不存在");
 
     /**
      * 错误编码
@@ -28,7 +28,7 @@ public enum SysLogBusinessExceptionEnum implements AbstractExceptionEnum {
      */
     private final String userTip;
 
-    SysLogBusinessExceptionEnum(String errorCode, String userTip) {
+    SysLogBusinessContentExceptionEnum(String errorCode, String userTip) {
         this.errorCode = errorCode;
         this.userTip = userTip;
     }

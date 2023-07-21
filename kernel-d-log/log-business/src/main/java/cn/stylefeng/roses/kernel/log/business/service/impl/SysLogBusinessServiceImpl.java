@@ -6,9 +6,11 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.log.business.entity.SysLogBusiness;
+import cn.stylefeng.roses.kernel.log.business.entity.SysLogBusinessContent;
 import cn.stylefeng.roses.kernel.log.business.enums.SysLogBusinessExceptionEnum;
 import cn.stylefeng.roses.kernel.log.business.mapper.SysLogBusinessMapper;
 import cn.stylefeng.roses.kernel.log.business.pojo.request.SysLogBusinessRequest;
+import cn.stylefeng.roses.kernel.log.business.service.SysLogBusinessContentService;
 import cn.stylefeng.roses.kernel.log.business.service.SysLogBusinessService;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -16,6 +18,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +26,13 @@ import java.util.List;
  * 业务日志记录业务实现层
  *
  * @author fengshuonan
- * @date 2023/07/21 15:00
+ * @date 2023/07/21 19:02
  */
 @Service
 public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper, SysLogBusiness> implements SysLogBusinessService {
+
+    @Resource
+    private SysLogBusinessContentService sysLogBusinessContentService;
 
     @Override
     public void add(SysLogBusinessRequest sysLogBusinessRequest) {
@@ -67,15 +73,18 @@ public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper,
             return;
         }
 
-        List<SysLogBusiness> sysLogBusinesses = new ArrayList<>();
-        for (String content : batchContentList) {
-            SysLogBusiness sysLogBusiness = new SysLogBusiness();
-            BeanUtil.copyProperties(context, sysLogBusiness);
-            sysLogBusiness.setLogContent(content);
-            sysLogBusinesses.add(sysLogBusiness);
-        }
+        // 先保存基础的日志信息
+        this.save(context);
 
-        this.getBaseMapper().insertBatchSomeColumn(sysLogBusinesses);
+        // 再保存详细的日志信息
+        List<SysLogBusinessContent> sysLogBusinessContentList = new ArrayList<>();
+        for (String content : batchContentList) {
+            SysLogBusinessContent sysLogBusinessContent = new SysLogBusinessContent();
+            sysLogBusinessContent.setBusinessLogId(context.getBusinessLogId());
+            sysLogBusinessContent.setLogContent(content);
+            sysLogBusinessContentList.add(sysLogBusinessContent);
+        }
+        this.sysLogBusinessContentService.batchSaveContent(sysLogBusinessContentList);
     }
 
     @Override
@@ -88,7 +97,7 @@ public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper,
      * 获取信息
      *
      * @author fengshuonan
-     * @date 2023/07/21 15:00
+     * @date 2023/07/21 19:02
      */
     private SysLogBusiness querySysLogBusiness(SysLogBusinessRequest sysLogBusinessRequest) {
         SysLogBusiness sysLogBusiness = this.getById(sysLogBusinessRequest.getBusinessLogId());
@@ -111,15 +120,11 @@ public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper,
         String logTypeCode = sysLogBusinessRequest.getLogTypeCode();
         queryWrapper.eq(ObjectUtil.isNotEmpty(logTypeCode), SysLogBusiness::getLogTypeCode, logTypeCode);
 
-        // 根据调用链日志信息查询
-        Long traceId = sysLogBusinessRequest.getTraceId();
-        queryWrapper.eq(ObjectUtil.isNotNull(traceId), SysLogBusiness::getTraceId, traceId);
-
         // 根据文本检索内容查询
         String searchText = sysLogBusinessRequest.getSearchText();
         if (ObjectUtil.isNotEmpty(searchText)) {
             queryWrapper.nested(wrap -> {
-                wrap.like(SysLogBusiness::getLogTitle, searchText).or().like(SysLogBusiness::getLogContent, searchText);
+                wrap.like(SysLogBusiness::getLogTitle, searchText).or().like(SysLogBusiness::getRequestUrl, searchText);
             });
         }
 

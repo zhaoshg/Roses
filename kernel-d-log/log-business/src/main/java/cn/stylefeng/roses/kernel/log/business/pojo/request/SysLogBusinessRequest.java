@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  * 业务日志记录封装类
  *
  * @author fengshuonan
- * @date 2023/07/21 15:00
+ * @date 2023/07/21 19:02
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -35,18 +35,6 @@ public class SysLogBusinessRequest extends BaseRequest {
      */
     @ChineseDescription("日志的标题，摘要信息")
     private String logTitle;
-
-    /**
-     * 日志记录的内容
-     */
-    @ChineseDescription("日志记录的内容")
-    private String logContent;
-
-    /**
-     * 调用链唯一id，一个id代表一次接口调用
-     */
-    @ChineseDescription("调用链唯一id，一个id代表一次接口调用")
-    private Long traceId;
 
     /**
      * 当前用户请求的url

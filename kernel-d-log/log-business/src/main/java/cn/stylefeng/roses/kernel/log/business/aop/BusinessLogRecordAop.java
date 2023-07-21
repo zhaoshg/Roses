@@ -32,7 +32,6 @@ import cn.stylefeng.roses.kernel.log.business.entity.SysLogBusiness;
 import cn.stylefeng.roses.kernel.log.business.service.SysLogBusinessService;
 import cn.stylefeng.roses.kernel.rule.annotation.BizLog;
 import cn.stylefeng.roses.kernel.rule.util.HttpServletUtil;
-import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -115,9 +114,6 @@ public class BusinessLogRecordAop implements Ordered {
 
         // 设置业务日志的类型编码
         sysLogBusiness.setLogTypeCode(bizLog.logTypeCode());
-
-        // 设置调用链id
-        sysLogBusiness.setTraceId(IdWorker.getId());
 
         // 设置请求的URL
         String servletPath = HttpServletUtil.getRequest().getServletPath();
