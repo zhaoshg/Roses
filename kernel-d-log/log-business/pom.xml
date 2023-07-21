@@ -40,6 +40,13 @@
             <version>${roses.version}</version>
         </dependency>
 
+        <!--数据库操作-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>db-sdk-mp</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!-- web -->
         <!-- 用于本模块中对controller的拦截器 -->
         <dependency>

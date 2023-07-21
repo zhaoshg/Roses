@@ -22,29 +22,16 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.log.api.constants;
+package cn.stylefeng.roses.kernel.log.api;
 
 /**
- * 日志文件的常量
+ * 业务日志service
  *
  * @author fengshuonan
- * @since 2020/10/28 15:56
+ * @since 2023/7/21 15:42
  */
-public interface LogFileConstants {
+public interface BizLogServiceApi {
 
-    /**
-     * 默认api日志记录的aop的顺序
-     */
-    Integer DEFAULT_API_LOG_AOP_SORT = 500;
 
-    /**
-     * 默认业务日志记录的aop的顺序
-     */
-    Integer DEFAULT_BUSINESS_LOG_AOP_SORT = 400;
-
-    /**
-     * 默认全局记录日志的开关
-     */
-    Boolean DEFAULT_GLOBAL_LOG_FLAG = false;
 
 }

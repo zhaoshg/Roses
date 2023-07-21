@@ -1,3 +1,4 @@
+
 /*
  * Copyright [2020-2030] [https://www.stylefeng.cn]
  *
@@ -22,29 +23,26 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.log.api.constants;
+package cn.stylefeng.roses.kernel.rule.annotation;
+
+import cn.hutool.core.util.StrUtil;
+
+import java.lang.annotation.*;
 
 /**
- * 日志文件的常量
+ * 用来标记在方法上，进行开启业务日志记录
  *
  * @author fengshuonan
- * @since 2020/10/28 15:56
+ * @since 2023/7/21 15:37
  */
-public interface LogFileConstants {
+@Target({ElementType.METHOD, ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface BizLog {
 
     /**
-     * 默认api日志记录的aop的顺序
+     * 日志记录类型的编码
      */
-    Integer DEFAULT_API_LOG_AOP_SORT = 500;
-
-    /**
-     * 默认业务日志记录的aop的顺序
-     */
-    Integer DEFAULT_BUSINESS_LOG_AOP_SORT = 400;
-
-    /**
-     * 默认全局记录日志的开关
-     */
-    Boolean DEFAULT_GLOBAL_LOG_FLAG = false;
+    String logTypeCode() default StrUtil.EMPTY;
 
 }
