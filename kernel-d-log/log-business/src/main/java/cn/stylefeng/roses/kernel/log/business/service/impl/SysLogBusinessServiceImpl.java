@@ -128,6 +128,9 @@ public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper,
             });
         }
 
+        // 排序根据日志id排序
+        queryWrapper.orderByAsc(SysLogBusiness::getBusinessLogId);
+
         return queryWrapper;
     }
 

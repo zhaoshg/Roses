@@ -58,6 +58,9 @@ public class SysLogBusinessContentServiceImpl extends ServiceImpl<SysLogBusiness
         String searchText = sysLogBusinessContentRequest.getSearchText();
         queryWrapper.like(ObjectUtil.isNotEmpty(searchText), SysLogBusinessContent::getLogContent, searchText);
 
+        // 排序根据日志id排序
+        queryWrapper.orderByAsc(SysLogBusinessContent::getContentId);
+
         return queryWrapper;
     }
 
