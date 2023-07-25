@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.log.business.aop;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.log.api.constants.LogFileConstants;
@@ -82,7 +83,9 @@ public class BusinessLogRecordAop implements Ordered {
             // 业务日志进行保存
             SysLogBusiness logContext = BusinessLogHolder.getContext();
             List<String> contentList = BusinessLogHolder.getContent();
-            sysLogBusinessService.saveBatchLogs(logContext, contentList);
+            if (ObjectUtil.isNotEmpty(logContext) && ObjectUtil.isNotEmpty(contentList)) {
+                sysLogBusinessService.saveBatchLogs(logContext, contentList);
+            }
 
             return result;
 
@@ -119,16 +122,20 @@ public class BusinessLogRecordAop implements Ordered {
         // 设置业务日志的类型编码
         sysLogBusiness.setLogTypeCode(bizLog.logTypeCode());
 
-        // 设置请求的URL
-        String servletPath = HttpServletUtil.getRequest().getServletPath();
-        sysLogBusiness.setRequestUrl(servletPath);
+        // http相关的信息可以为空
+        try {
+            // 设置请求的URL
+            sysLogBusiness.setRequestUrl(HttpServletUtil.getRequest().getServletPath());
 
-        // 设置HTTP请求方式
-        sysLogBusiness.setHttpMethod(HttpServletUtil.getRequest().getMethod());
+            // 设置HTTP请求方式
+            sysLogBusiness.setHttpMethod(HttpServletUtil.getRequest().getMethod());
 
-        // 设置客户端IP
-        String requestClientIp = HttpServletUtil.getRequestClientIp(HttpServletUtil.getRequest());
-        sysLogBusiness.setClientIp(requestClientIp);
+            // 设置客户端IP
+            String requestClientIp = HttpServletUtil.getRequestClientIp(HttpServletUtil.getRequest());
+            sysLogBusiness.setClientIp(requestClientIp);
+        } catch (Exception e) {
+            // ignore
+        }
 
         // 设置当前登录用户id
         LoginUser loginUserNullable = LoginContext.me().getLoginUserNullable();
