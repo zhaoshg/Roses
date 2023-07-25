@@ -128,8 +128,8 @@ public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper,
             });
         }
 
-        // 排序根据日志id排序
-        queryWrapper.orderByAsc(SysLogBusiness::getBusinessLogId);
+        // 根据创建时间倒序排列
+        queryWrapper.orderByDesc(SysLogBusiness::getCreateTime);
 
         return queryWrapper;
     }
