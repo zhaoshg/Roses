@@ -447,7 +447,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         wrapper.select(SysUser::getRealName, SysUser::getAccount);
         SysUser sysUser = this.getOne(wrapper, false);
 
-        return new OnlineUserItem(userId, sysUser.getRealName(), sysUser.getAccount());
+        if (sysUser != null) {
+            return new OnlineUserItem(userId, sysUser.getRealName(), sysUser.getAccount());
+        } else {
+            return new OnlineUserItem();
+        }
     }
 
     @Override
