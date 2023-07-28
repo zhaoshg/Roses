@@ -36,15 +36,19 @@ public class BusinessLogUtil {
         if (ObjectUtil.isEmpty(contentObject)) {
             return;
         }
-        StringBuilder stringBuffer = new StringBuilder();
-        for (Object param : contentObject) {
-            if (param instanceof String) {
-                stringBuffer.append(param);
-            } else {
-                stringBuffer.append(JSON.toJSONString(param));
+        try {
+            StringBuilder stringBuffer = new StringBuilder();
+            for (Object param : contentObject) {
+                if (param instanceof String) {
+                    stringBuffer.append(param);
+                } else {
+                    stringBuffer.append(JSON.toJSONString(param));
+                }
             }
+            BusinessLogHolder.addContent(stringBuffer.toString());
+        } catch (Exception e) {
+            // ignore
         }
-        BusinessLogHolder.addContent(stringBuffer.toString());
     }
 
 }
