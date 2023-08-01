@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.api;
 
 import cn.stylefeng.roses.kernel.sys.api.enums.org.DetectModeEnum;
+import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
 
 /**
  * 组织机构信息的api
@@ -32,5 +33,25 @@ public interface OrganizationServiceApi {
      * @since 2022/9/18 15:02
      */
     Long getParentLevelOrgId(Long orgId, Integer parentLevelNum, DetectModeEnum detectModeEnum);
+
+    /**
+     * 根据组织机构id，获取对应的具体的公司和部门信息
+     *
+     * @param orgId 组织机构id
+     * @return 公司和部门信息
+     * @author fengshuonan
+     * @since 2023/6/12 15:42
+     */
+    CompanyDeptDTO getCompanyDeptInfo(Long orgId);
+
+    /**
+     * 根据组织机构id，获取这个组织机构id对应的公司部门信息
+     *
+     * @param orgId 组织机构id
+     * @return 单独返回公司信息
+     * @author fengshuonan
+     * @since 2023/7/2 8:38
+     */
+    CompanyDeptDTO getOrgCompanyInfo(Long orgId);
 
 }
