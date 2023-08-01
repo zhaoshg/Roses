@@ -26,12 +26,15 @@ package cn.stylefeng.roses.kernel.auth.auth;
 
 import cn.stylefeng.roses.kernel.auth.api.LoginUserApi;
 import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
+import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginUserHolder;
 import cn.stylefeng.roses.kernel.auth.api.exception.AuthException;
 import cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum;
 import cn.stylefeng.roses.kernel.auth.api.loginuser.CommonLoginUserUtil;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
+import cn.stylefeng.roses.kernel.sys.api.OrganizationServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -50,6 +53,9 @@ public class LoginUserImpl implements LoginUserApi {
 
     @Resource
     private SysUserServiceApi sysUserServiceApi;
+
+    @Resource
+    private OrganizationServiceApi organizationServiceApi;
 
     @Override
     public String getToken() {
@@ -120,6 +126,22 @@ public class LoginUserImpl implements LoginUserApi {
     public boolean getSuperAdminFlag() {
         LoginUser loginUser = getLoginUser();
         return sysUserServiceApi.getUserSuperAdminFlag(loginUser.getUserId());
+    }
+
+    @Override
+    public Long getCurrentUserCompanyId() {
+
+        Long currentOrgId = LoginContext.me().getLoginUser().getCurrentOrgId();
+        if (currentOrgId == null) {
+            return null;
+        }
+
+        CompanyDeptDTO orgCompanyInfo = organizationServiceApi.getOrgCompanyInfo(currentOrgId);
+        if (orgCompanyInfo == null) {
+            return null;
+        }
+
+        return orgCompanyInfo.getCompanyId();
     }
 
 }

@@ -87,4 +87,12 @@ public interface LoginUserApi {
      */
     boolean getSuperAdminFlag();
 
+    /**
+     * 获取当前登录用户当前机构对应的公司id
+     *
+     * @author fengshuonan
+     * @since 2023/8/1 14:03
+     */
+    Long getCurrentUserCompanyId();
+
 }
