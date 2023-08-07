@@ -31,7 +31,12 @@ public enum UserExceptionEnum implements AbstractExceptionEnum {
     /**
      * 无法操作，只有超级管理员可以踢下线用户
      */
-    KICK_OFF_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10004", "无法操作，只有超级管理员可以踢下线用户");
+    KICK_OFF_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10004", "无法操作，只有超级管理员可以踢下线用户"),
+
+    /**
+     * 获取用户失败，参数缺失：用户token
+     */
+    TOKEN_EMPTY_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10005", "获取用户失败，参数缺失：用户token");
 
     /**
      * 错误编码
