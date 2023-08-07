@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.sys.modular.login.provider;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
 import cn.stylefeng.roses.kernel.auth.api.loginuser.api.LoginUserRemoteApi;
@@ -52,7 +53,7 @@ public class LoginUserProvider implements LoginUserRemoteApi {
 
     @Override
     public LoginUser getLoginUserByToken(@RequestBody LoginUserRequest loginUserRequest) {
-        if (StrUtil.isBlank(loginUserRequest.getToken())) {
+        if (ObjectUtil.isEmpty(loginUserRequest) || StrUtil.isBlank(loginUserRequest.getToken())) {
             throw new ServiceException(UserExceptionEnum.TOKEN_EMPTY_ERROR);
         }
         return sessionManagerApi.getSession(loginUserRequest.getToken());
