@@ -485,6 +485,11 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         }
     }
 
+    @Override
+    public CompanyDeptDTO remoteGetOrgCompanyDept(Long orgId) {
+        return this.getOrgCompanyInfo(orgId);
+    }
+
     /**
      * 获取信息
      *

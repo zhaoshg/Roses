@@ -24,27 +24,27 @@
  */
 package cn.stylefeng.roses.kernel.sys.api.remote;
 
-import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserInfoDetailDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * 获取用户信息的远程调用
+ * 提供组织机构的远程调用接口
  *
  * @author fengshuonan
- * @since 2023/7/19 22:50
+ * @since 2023/8/7 21:45
  */
-public interface UserInfoRemoteApi {
+public interface OrgInfoRemoteApi {
 
     /**
-     * 通过用户id获取用户的详细信息
+     * 获取组织机构对应的公司部门信息
      *
      * @author fengshuonan
-     * @since 2023/7/19 22:50
+     * @since 2023/8/7 21:44
      */
-    @RequestMapping(value = "/userInfoRemote/getUserDetail", method = RequestMethod.GET)
-    UserInfoDetailDTO remoteGetUserDetail(@RequestParam("userId") Long userId);
+    @RequestMapping(value = "/orgInfoRemote/getOrgCompanyDept", method = RequestMethod.GET)
+    CompanyDeptDTO remoteGetOrgCompanyDept(@RequestParam("orgId") Long orgId);
 
 }
 
