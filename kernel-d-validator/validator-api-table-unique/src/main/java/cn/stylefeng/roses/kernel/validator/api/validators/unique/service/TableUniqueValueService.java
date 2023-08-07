@@ -160,7 +160,11 @@ public class TableUniqueValueService {
     private static String calcTenantTableName(String originTableName) {
 
         // 获取租户编码
-        LoginUser loginUser = LoginContext.me().getLoginUser();
+        LoginUser loginUser = LoginContext.me().getLoginUserNullable();
+        if (loginUser == null) {
+            return originTableName;
+        }
+
         String tenantCode = loginUser.getTenantCode();
 
         // 如果是主数据源可以忽略
