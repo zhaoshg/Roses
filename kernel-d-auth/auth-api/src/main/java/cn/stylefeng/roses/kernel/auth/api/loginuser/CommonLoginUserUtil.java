@@ -1,9 +1,9 @@
 package cn.stylefeng.roses.kernel.auth.api.loginuser;
 
 import cn.hutool.core.util.StrUtil;
+import cn.stylefeng.roses.kernel.auth.api.constants.AuthConstants;
 import cn.stylefeng.roses.kernel.auth.api.exception.AuthException;
 import cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum;
-import cn.stylefeng.roses.kernel.auth.api.expander.AuthConfigExpander;
 import cn.stylefeng.roses.kernel.rule.util.HttpServletUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ public class CommonLoginUserUtil {
         HttpServletRequest request = HttpServletUtil.getRequest();
 
         // 1. 优先从param参数中获取token
-        String parameterToken = request.getParameter(AuthConfigExpander.getAuthTokenParamName());
+        String parameterToken = request.getParameter(AuthConstants.DEFAULT_AUTH_PARAM_NAME);
 
         // 不为空则直接返回param的token
         if (StrUtil.isNotBlank(parameterToken)) {
@@ -36,7 +36,7 @@ public class CommonLoginUserUtil {
         }
 
         // 2. 从header中获取token
-        String authToken = request.getHeader(AuthConfigExpander.getAuthTokenHeaderName());
+        String authToken = request.getHeader(AuthConstants.DEFAULT_AUTH_HEADER_NAME);
         if (StrUtil.isNotBlank(authToken)) {
             return authToken;
         }

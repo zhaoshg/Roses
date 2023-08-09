@@ -115,36 +115,6 @@ public class AuthConfigExpander {
     }
 
     /**
-     * 获取携带token的header头的名称
-     *
-     * @author fengshuonan
-     * @since 2020/10/22 14:11
-     */
-    public static String getAuthTokenHeaderName() {
-        return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_HEADER_NAME", String.class, DEFAULT_AUTH_HEADER_NAME);
-    }
-
-    /**
-     * 获取携带token的param传参的名称
-     *
-     * @author fengshuonan
-     * @since 2020/10/22 14:11
-     */
-    public static String getAuthTokenParamName() {
-        return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_PARAM_NAME", String.class, DEFAULT_AUTH_PARAM_NAME);
-    }
-
-    /**
-     * 会话保存在cookie中时，cooke的name
-     *
-     * @author fengshuonan
-     * @since 2020/12/27 13:18
-     */
-    public static String getSessionCookieName() {
-        return ConfigContext.me().getSysConfigValueWithDefault("SYS_SESSION_COOKIE_NAME", String.class, DEFAULT_AUTH_HEADER_NAME);
-    }
-
-    /**
      * 默认解析jwt的秘钥（用于解析sso传过来的token）
      *
      * @author fengshuonan
