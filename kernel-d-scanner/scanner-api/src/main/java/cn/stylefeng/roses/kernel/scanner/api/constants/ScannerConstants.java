@@ -84,10 +84,22 @@ public interface ScannerConstants {
     /**
      * 不需要解析的字段
      */
-    List<String> DONT_PARSE_FIELD = ListUtil.list(false, "serialVersionUID", "delFlag", "createTime", "createUser", "updateTime", "updateUser");
+    List<String> DONT_PARSE_FIELD = ListUtil.list(false, "serialVersionUID", "delFlag", "createTime", "createUser", "updateTime",
+            "updateUser");
 
     /**
      * 用在为validateGroups字段的标识，@Validate注解，不带class类时候的标识
      */
     String DEFAULT_VALIDATED = "default-all";
+
+    /**
+     * 向资源中心汇报资源的接口
+     */
+    String REPORT_RES_URL = "/resourceService/reportResources";
+
+    /**
+     * 向资源中心汇报资源并获取结果的接口
+     */
+    String REPORT_RES_AND_GET_RESULT_URL = "/resourceService/reportResourcesAndGetResult";
+
 }

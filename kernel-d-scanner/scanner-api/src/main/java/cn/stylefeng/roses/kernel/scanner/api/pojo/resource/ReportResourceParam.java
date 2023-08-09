@@ -55,6 +55,9 @@ public class ReportResourceParam extends BaseRequest {
     @ChineseDescription("资源集合")
     private Map<String, Map<String, ResourceDefinition>> resourceDefinitions;
 
+    public ReportResourceParam() {
+    }
+
     public ReportResourceParam(String projectCode, Map<String, Map<String, ResourceDefinition>> resourceDefinitions) {
         this.projectCode = projectCode;
         this.resourceDefinitions = resourceDefinitions;

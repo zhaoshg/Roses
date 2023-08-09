@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.scanner.api;
 
+import cn.stylefeng.roses.kernel.scanner.api.constants.ScannerConstants;
 import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ReportResourceParam;
 import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.SysResourcePersistencePojo;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,7 +52,7 @@ public interface ResourceReportApi {
      * @author fengshuonan
      * @since 2020/10/19 22:02
      */
-    @RequestMapping(value = "/resourceService/reportResources", method = RequestMethod.POST)
+    @RequestMapping(value = ScannerConstants.REPORT_RES_URL, method = RequestMethod.POST)
     void reportResources(@RequestBody ReportResourceParam reportResourceReq);
 
     /**
@@ -65,7 +66,7 @@ public interface ResourceReportApi {
      * @author fengshuonan
      * @since 2020/10/19 22:02
      */
-    @RequestMapping(value = "/resourceService/reportResourcesAndGetResult", method = RequestMethod.POST)
+    @RequestMapping(value = ScannerConstants.REPORT_RES_AND_GET_RESULT_URL, method = RequestMethod.POST)
     List<SysResourcePersistencePojo> reportResourcesAndGetResult(@RequestBody ReportResourceParam reportResourceReq);
 
 }
