@@ -72,8 +72,7 @@ public class ConfigInitListener extends ContextInitializedListener implements Or
         ConfigurableEnvironment environment = event.getApplicationContext().getEnvironment();
 
         // 是否采用redis进行sys_config缓存的装载和读取（true/false）
-        String redisConfigCacheEnable = environment.getProperty("redis.config.cache.enable");
-        Boolean redisConfigCacheEnableFlag = Convert.toBool(redisConfigCacheEnable, false);
+        boolean redisConfigCacheEnableFlag = getRedisOpenFlag();
 
         if (redisConfigCacheEnableFlag) {
             // 获取Redis的相关配置
@@ -124,6 +123,21 @@ public class ConfigInitListener extends ContextInitializedListener implements Or
             throw new ConfigException(ConfigExceptionEnum.CONFIG_SQL_EXE_ERROR);
         } finally {
             DbUtil.close(conn);
+        }
+    }
+
+    /**
+     * 获取Redis的类标识，如果项目中有Redis的Class，则返回true
+     *
+     * @author fengshuonan
+     * @since 2023/8/9 22:40
+     */
+    private boolean getRedisOpenFlag() {
+        try {
+            Class.forName("org.springframework.data.redis.connection.RedisConnectionFactory");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
         }
     }
 
