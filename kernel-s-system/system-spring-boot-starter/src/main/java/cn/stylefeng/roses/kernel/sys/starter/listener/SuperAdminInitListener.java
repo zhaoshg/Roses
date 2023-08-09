@@ -28,7 +28,7 @@ import cn.stylefeng.roses.kernel.rule.listener.ApplicationReadyListener;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.starter.init.InitAdminService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +48,7 @@ public class SuperAdminInitListener extends ApplicationReadyListener implements 
     private InitAdminService initAdminService;
 
     @Override
-    public void eventCallback(ApplicationReadyEvent event) {
+    public void eventCallback(ApplicationStartedEvent event) {
         long startTime = System.currentTimeMillis();
         initAdminService.initSuperAdmin();
         log.info("初始化超级管理员权限完成，耗时：{}ms", (System.currentTimeMillis() - startTime));

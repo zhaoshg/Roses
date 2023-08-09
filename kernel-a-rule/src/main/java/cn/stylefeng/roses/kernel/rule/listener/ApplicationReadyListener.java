@@ -25,7 +25,7 @@
 package cn.stylefeng.roses.kernel.rule.listener;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -38,10 +38,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @since 2021/5/14 20:28
  */
 @Slf4j
-public abstract class ApplicationReadyListener implements ApplicationListener<ApplicationReadyEvent> {
+public abstract class ApplicationReadyListener implements ApplicationListener<ApplicationStartedEvent> {
 
     @Override
-    public void onApplicationEvent(ApplicationReadyEvent event) {
+    public void onApplicationEvent(ApplicationStartedEvent event) {
 
         // 如果是配置中心的上下文略过，spring cloud环境environment会读取不到
         ConfigurableApplicationContext applicationContext = event.getApplicationContext();
@@ -51,6 +51,7 @@ public abstract class ApplicationReadyListener implements ApplicationListener<Ap
 
         // 执行具体业务
         this.eventCallback(event);
+
     }
 
     /**
@@ -59,6 +60,6 @@ public abstract class ApplicationReadyListener implements ApplicationListener<Ap
      * @author fengshuonan
      * @since 2021/5/14 20:17
      */
-    public abstract void eventCallback(ApplicationReadyEvent event);
+    public abstract void eventCallback(ApplicationStartedEvent event);
 
 }

@@ -38,7 +38,7 @@ import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.ResourceDefinition;
 import cn.stylefeng.roses.kernel.scanner.api.pojo.resource.SysResourcePersistencePojo;
 import cn.stylefeng.roses.kernel.scanner.api.pojo.scanner.ScannerProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.Ordered;
 
@@ -55,7 +55,7 @@ import java.util.Map;
 public class ResourceReportListener extends ApplicationReadyListener implements Ordered {
 
     @Override
-    public void eventCallback(ApplicationReadyEvent event) {
+    public void eventCallback(ApplicationStartedEvent event) {
 
         ConfigurableApplicationContext applicationContext = event.getApplicationContext();
 
