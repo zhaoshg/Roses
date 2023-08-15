@@ -4,6 +4,7 @@ import cn.stylefeng.roses.kernel.dsctn.api.exception.DatasourceContainerExceptio
 import cn.stylefeng.roses.kernel.dsctn.api.pojo.DataBaseInfoDto;
 import cn.stylefeng.roses.kernel.dsctn.api.pojo.DataSourceDto;
 import cn.stylefeng.roses.kernel.dsctn.api.pojo.request.DatabaseInfoRequest;
+import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
 
 import java.util.List;
 
@@ -51,5 +52,13 @@ public interface DataSourceApi {
      * @since 2022/8/23 14:03
      */
     List<DataBaseInfoDto> getDatasourceList();
+
+    /**
+     * 获取当前运行环境下的数据库类型
+     *
+     * @author fengshuonan
+     * @since 2023/8/15 14:43
+     */
+    DbTypeEnum getCurrentDbType();
 
 }

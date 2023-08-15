@@ -32,6 +32,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.druid.DruidProperties;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.dsctn.api.context.CurrentDataSourceContext;
 import cn.stylefeng.roses.kernel.dsctn.api.exception.DatasourceContainerException;
 import cn.stylefeng.roses.kernel.dsctn.api.exception.enums.DatasourceContainerExceptionEnum;
 import cn.stylefeng.roses.kernel.dsctn.api.pojo.DataBaseInfoDto;
@@ -50,6 +51,7 @@ import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
 import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
+import cn.stylefeng.roses.kernel.rule.util.DatabaseTypeUtil;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -64,6 +66,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static cn.stylefeng.roses.kernel.dsctn.api.constants.DatasourceContainerConstants.DATASOURCE_GROUP_CODE;
@@ -129,6 +132,33 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
             dataBaseInfoDto.setDbType(type);
             return dataBaseInfoDto;
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public DbTypeEnum getCurrentDbType() {
+
+        // 获取当前上下文中的数据源名称
+        String dataSourceName = CurrentDataSourceContext.getDataSourceName();
+        if (StrUtil.isEmpty(dataSourceName)) {
+            return null;
+        }
+
+        // 获取数据源名称对应的datasource表中的url信息
+        Map<String, DruidProperties> dataSourcesProps = DataSourceContext.getDataSourcesConfs();
+        DruidProperties druidProperties = dataSourcesProps.get(dataSourceName);
+
+        // 如果查询不到当前环境的数据源信息，则返回空
+        if (druidProperties == null) {
+            return null;
+        }
+
+        String url = druidProperties.getUrl();
+        if (ObjectUtil.isNotEmpty(url)) {
+            return null;
+        }
+
+        // 根据url信息获取数据源的类型
+        return DatabaseTypeUtil.getDbType(url);
     }
 
     @Override
@@ -236,7 +266,8 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
             Class.forName(param.getJdbcDriver());
             conn = DriverManager.getConnection(param.getJdbcUrl(), param.getUsername(), param.getPassword());
         } catch (Exception e) {
-            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.VALIDATE_DATASOURCE_ERROR, param.getJdbcUrl(), e.getMessage());
+            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.VALIDATE_DATASOURCE_ERROR, param.getJdbcUrl(),
+                    e.getMessage());
         } finally {
             if (conn != null) {
                 try {
@@ -275,7 +306,8 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
             // 先判断context中是否有了这个数据源
             DataSource dataSource = DataSourceContext.getDataSources().get(databaseInfo.getDbName());
             if (dataSource != null) {
-                String userTip = StrUtil.format(DatasourceContainerExceptionEnum.DATASOURCE_NAME_REPEAT.getUserTip(), databaseInfo.getDbName());
+                String userTip = StrUtil.format(DatasourceContainerExceptionEnum.DATASOURCE_NAME_REPEAT.getUserTip(),
+                        databaseInfo.getDbName());
                 throw new DatasourceContainerException(DatasourceContainerExceptionEnum.DATASOURCE_NAME_REPEAT, userTip);
             }
         }
@@ -304,7 +336,8 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
     private DatabaseInfo queryDatabaseInfoById(DatabaseInfoRequest databaseInfoRequest) {
         DatabaseInfo databaseInfo = this.getById(databaseInfoRequest.getDbId());
         if (databaseInfo == null) {
-            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.DATASOURCE_INFO_NOT_EXISTED, databaseInfoRequest.getDbId());
+            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.DATASOURCE_INFO_NOT_EXISTED,
+                    databaseInfoRequest.getDbId());
         }
         return databaseInfo;
     }
@@ -332,7 +365,8 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
         queryWrapper.like(ObjectUtil.isNotEmpty(dbName), DatabaseInfo::getDbName, dbName);
 
         // 拼接状态条件
-        queryWrapper.eq(ObjectUtil.isNotEmpty(databaseInfoRequest.getStatusFlag()), DatabaseInfo::getStatusFlag, databaseInfoRequest.getStatusFlag());
+        queryWrapper.eq(ObjectUtil.isNotEmpty(databaseInfoRequest.getStatusFlag()), DatabaseInfo::getStatusFlag,
+                databaseInfoRequest.getStatusFlag());
 
         // 拼接分组相关的查询条件
         String conditionGroupName = databaseInfoRequest.getConditionGroupName();
