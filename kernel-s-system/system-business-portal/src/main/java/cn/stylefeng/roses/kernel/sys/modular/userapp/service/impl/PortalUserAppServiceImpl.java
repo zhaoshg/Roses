@@ -2,6 +2,8 @@ package cn.stylefeng.roses.kernel.sys.modular.userapp.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
+import cn.stylefeng.roses.kernel.dsctn.api.context.DataSourceContext;
+import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.SysMenuServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.pojo.menu.UserAppMenuInfo;
 import cn.stylefeng.roses.kernel.sys.modular.userapp.entity.PortalUserApp;
@@ -55,7 +57,12 @@ public class PortalUserAppServiceImpl extends ServiceImpl<PortalUserAppMapper, P
             portalUserApp.setMenuId(menuId);
             portalUserApps.add(portalUserApp);
         }
-        this.getBaseMapper().insertBatchSomeColumn(portalUserApps);
+
+        if (DbTypeEnum.MYSQL.equals(DataSourceContext.me().getCurrentDbType())) {
+            this.getBaseMapper().insertBatchSomeColumn(portalUserApps);
+        } else {
+            this.saveBatch(portalUserApps);
+        }
     }
 
     @Override

@@ -3,6 +3,8 @@ package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
+import cn.stylefeng.roses.kernel.dsctn.api.context.DataSourceContext;
+import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
@@ -72,7 +74,12 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
             sysRoleMenu.setMenuId(sysMenu.getMenuId());
             sysRoleMenus.add(sysRoleMenu);
         }
-        this.getBaseMapper().insertBatchSomeColumn(sysRoleMenus);
+
+        if (DbTypeEnum.MYSQL.equals(DataSourceContext.me().getCurrentDbType())) {
+            this.getBaseMapper().insertBatchSomeColumn(sysRoleMenus);
+        } else {
+            this.saveBatch(sysRoleMenus);
+        }
     }
 
     @Override

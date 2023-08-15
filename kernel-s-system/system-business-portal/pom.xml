@@ -17,6 +17,14 @@
 
     <dependencies>
 
+        <!-- 数据源容器 -->
+        <!-- 用来获取当前的数据源的类型 -->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>ds-container-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!--基础核心业务api-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>

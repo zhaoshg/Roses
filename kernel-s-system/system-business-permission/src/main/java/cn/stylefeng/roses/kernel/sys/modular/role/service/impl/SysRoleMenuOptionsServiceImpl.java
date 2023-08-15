@@ -2,6 +2,8 @@ package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
+import cn.stylefeng.roses.kernel.dsctn.api.context.DataSourceContext;
+import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
@@ -16,6 +18,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -44,6 +47,7 @@ public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOption
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void bindRoleMenuOptions(Long roleId, List<SysMenuOptions> sysMenuOptionsList) {
 
         if (ObjectUtil.isEmpty(roleId) || ObjectUtil.isEmpty(sysMenuOptionsList)) {
@@ -65,7 +69,12 @@ public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOption
             roleMenuOptionItem.setAppId(sysMenuOptions.getAppId());
             sysRoleMenuOptionList.add(roleMenuOptionItem);
         }
-        this.getBaseMapper().insertBatchSomeColumn(sysRoleMenuOptionList);
+
+        if (DbTypeEnum.MYSQL.equals(DataSourceContext.me().getCurrentDbType())) {
+            this.getBaseMapper().insertBatchSomeColumn(sysRoleMenuOptionList);
+        } else {
+            this.saveBatch(sysRoleMenuOptionList);
+        }
     }
 
     @Override
