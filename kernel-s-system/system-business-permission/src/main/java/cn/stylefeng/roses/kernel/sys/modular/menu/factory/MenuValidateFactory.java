@@ -28,14 +28,12 @@ public class MenuValidateFactory {
 
         SysMenuService sysMenuService = SpringUtil.getBean(SysMenuService.class);
 
-        // 1. 校验同应用下菜单编码不能重复
+        // 1. 校验菜单编码不能重复，全局唯一，因为菜单编码涉及到权限分配，如果不唯一则会权限分配错乱
         Long menuId = sysMenuRequest.getMenuId();
-
         String menuCode = sysMenuRequest.getMenuCode();
 
         LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysMenuLambdaQueryWrapper.eq(SysMenu::getMenuCode, menuCode);
-        sysMenuLambdaQueryWrapper.eq(SysMenu::getAppId, sysMenuRequest.getAppId());
 
         // 如果是编辑菜单，则排除当前这个菜单的查询
         if (menuId != null) {
