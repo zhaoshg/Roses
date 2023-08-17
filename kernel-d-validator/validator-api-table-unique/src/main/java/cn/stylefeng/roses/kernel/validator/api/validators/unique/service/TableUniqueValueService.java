@@ -26,11 +26,8 @@ package cn.stylefeng.roses.kernel.validator.api.validators.unique.service;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
-import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.context.DbOperatorContext;
-import cn.stylefeng.roses.kernel.rule.constants.TenantConstants;
 import cn.stylefeng.roses.kernel.validator.api.exception.ParamValidateException;
 import cn.stylefeng.roses.kernel.validator.api.exception.enums.ValidatorExceptionEnum;
 import cn.stylefeng.roses.kernel.validator.api.pojo.UniqueValidateParam;
@@ -158,17 +155,7 @@ public class TableUniqueValueService {
      * @since 2021/9/24 17:01
      */
     private static String calcTenantTableName(String originTableName) {
-
-        // 获取租户编码
-        LoginUser loginUser = LoginContext.me().getLoginUser();
-        String tenantCode = loginUser.getTenantCode();
-
-        // 如果是主数据源可以忽略
-        if (StrUtil.isBlank(tenantCode) || TenantConstants.MASTER_DATASOURCE_NAME.equals(tenantCode)) {
-            return originTableName;
-        }
-
-        return TenantConstants.TENANT_DB_PREFIX + tenantCode + "." + originTableName;
+        return originTableName;
     }
 
 }
