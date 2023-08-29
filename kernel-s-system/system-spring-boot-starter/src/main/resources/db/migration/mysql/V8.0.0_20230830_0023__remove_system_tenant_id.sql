@@ -11,3 +11,5 @@ ALTER TABLE `sys_table_width` DROP COLUMN `tenant_id`;
 ALTER TABLE `sys_user_org` DROP COLUMN `tenant_id`;
 
 ALTER TABLE `sys_user_role` DROP COLUMN `tenant_id`;
+
+ALTER TABLE `sys_role_menu_options` DROP COLUMN `tenant_id`;
