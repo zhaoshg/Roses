@@ -62,11 +62,4 @@ public class BaseBusinessEntity extends BaseEntity {
     @TableLogic
     private String delFlag;
 
-    /**
-     * 租户号
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户号")
-    private Long tenantId;
-
 }
