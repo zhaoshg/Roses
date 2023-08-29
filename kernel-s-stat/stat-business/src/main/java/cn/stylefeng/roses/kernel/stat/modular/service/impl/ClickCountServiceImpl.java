@@ -143,13 +143,11 @@ public class ClickCountServiceImpl extends ServiceImpl<ClickCountMapper, ClickCo
         String businessType = portalClickCountRequest.getBusinessType();
         Long businessKeyId = portalClickCountRequest.getBusinessKeyId();
         Long clickCount = portalClickCountRequest.getClickCount();
-        Long tenantId = portalClickCountRequest.getTenantId();
 
         queryWrapper.eq(ObjectUtil.isNotNull(clickCountId), ClickCount::getClickCountId, clickCountId);
         queryWrapper.like(ObjectUtil.isNotEmpty(businessType), ClickCount::getBusinessType, businessType);
         queryWrapper.eq(ObjectUtil.isNotNull(businessKeyId), ClickCount::getBusinessKeyId, businessKeyId);
         queryWrapper.eq(ObjectUtil.isNotNull(clickCount), ClickCount::getClickCount, clickCount);
-        queryWrapper.eq(ObjectUtil.isNotNull(tenantId), ClickCount::getTenantId, tenantId);
 
         return queryWrapper;
     }

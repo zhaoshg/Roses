@@ -55,11 +55,4 @@ public class SysFileBusiness extends BaseEntity {
     @ChineseDescription("下载次数")
     private Integer downloadCount;
 
-    /**
-     * 租户id
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户id")
-    private Long tenantId;
-
 }

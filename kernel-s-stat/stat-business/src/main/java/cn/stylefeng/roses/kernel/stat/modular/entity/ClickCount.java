@@ -48,11 +48,4 @@ public class ClickCount extends BaseEntity {
     @ChineseDescription("点击次数")
     private Long clickCount;
 
-    /**
-     * 租户id
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户id")
-    private Long tenantId;
-
 }

@@ -145,13 +145,11 @@ public class ClickStatusServiceImpl extends ServiceImpl<ClickStatusMapper, Click
         Long userId = portalClickStatusRequest.getUserId();
         Long businessKeyId = portalClickStatusRequest.getBusinessKeyId();
         String businessType = portalClickStatusRequest.getBusinessType();
-        Long tenantId = portalClickStatusRequest.getTenantId();
 
         queryWrapper.eq(ObjectUtil.isNotNull(clickStatusId), ClickStatus::getClickStatusId, clickStatusId);
         queryWrapper.eq(ObjectUtil.isNotNull(userId), ClickStatus::getUserId, userId);
         queryWrapper.eq(ObjectUtil.isNotNull(businessKeyId), ClickStatus::getBusinessKeyId, businessKeyId);
         queryWrapper.like(ObjectUtil.isNotEmpty(businessType), ClickStatus::getBusinessType, businessType);
-        queryWrapper.eq(ObjectUtil.isNotNull(tenantId), ClickStatus::getTenantId, tenantId);
 
         return queryWrapper;
     }

@@ -55,11 +55,4 @@ public class SysRoleMenuOptions extends BaseEntity {
     @ChineseDescription("菜单功能id，关联sys_menu_options主键id")
     private Long menuOptionId;
 
-    /**
-     * 租户号
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户号")
-    private Long tenantId;
-
 }

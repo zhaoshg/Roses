@@ -55,11 +55,4 @@ public class SysTableWidth extends BaseEntity {
     @ChineseDescription("自定义列是否显示、宽度、顺序和列的锁定，一段json")
     private String tableWidthJson;
 
-    /**
-     * 租户号
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户号")
-    private Long tenantId;
-
 }

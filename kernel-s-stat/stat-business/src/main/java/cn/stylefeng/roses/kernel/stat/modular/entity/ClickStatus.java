@@ -48,11 +48,4 @@ public class ClickStatus extends BaseEntity {
     @ChineseDescription("业务的分类标识")
     private String businessType;
 
-    /**
-     * 租户id
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户id")
-    private Long tenantId;
-
 }

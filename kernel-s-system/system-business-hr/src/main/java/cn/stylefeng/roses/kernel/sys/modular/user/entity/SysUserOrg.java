@@ -78,11 +78,5 @@ public class SysUserOrg extends BaseEntity {
     @TableField(value = "expand_field", typeHandler = JacksonTypeHandler.class)
     @ChineseDescription("拓展字段")
     private Map<String, Object> expandField;
-    /**
-     * 租户id
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户id")
-    private Long tenantId;
 
 }

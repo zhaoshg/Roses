@@ -55,11 +55,4 @@ public class SysMenuOptions extends BaseEntity {
     @ChineseDescription("功能或操作的编码")
     private String optionCode;
 
-    /**
-     * 租户号
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户号")
-    private Long tenantId;
-
 }

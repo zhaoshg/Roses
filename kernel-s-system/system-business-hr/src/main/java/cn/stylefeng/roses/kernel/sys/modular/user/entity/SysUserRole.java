@@ -41,11 +41,4 @@ public class SysUserRole extends BaseEntity {
     @ChineseDescription("角色id")
     private Long roleId;
 
-    /**
-     * 租户号
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户号")
-    private Long tenantId;
-
 }
