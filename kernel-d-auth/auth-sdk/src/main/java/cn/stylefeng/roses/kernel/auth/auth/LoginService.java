@@ -138,7 +138,7 @@ public class LoginService {
 
         // 8. 生成用户的token
         DefaultJwtPayload defaultJwtPayload = new DefaultJwtPayload(userValidateInfo.getUserId(), loginRequest.getAccount(),
-                loginRequest.getRememberMe(), caToken, loginRequest.getTenantCode());
+                loginRequest.getRememberMe(), caToken);
         String userLoginToken = AuthJwtContext.me().generateTokenDefaultPayload(defaultJwtPayload);
 
         // 9. 创建loginUser对象

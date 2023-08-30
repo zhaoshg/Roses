@@ -80,10 +80,10 @@ public class LoginUser implements Serializable {
     private Long currentPositionId;
 
     /**
-     * 当前登录租户编码
+     * 当前登录租户id
      */
-    @ChineseDescription("当前登录租户编码")
-    private String tenantCode;
+    @ChineseDescription("当前登录租户id")
+    private Long tenantId;
 
     /**
      * 当前用户语种的标识，例如：chinese，english

@@ -71,11 +71,6 @@ public class DefaultJwtPayload {
     private String caToken;
 
     /**
-     * 多租户编码
-     */
-    private String tenantCode;
-
-    /**
      * 其他载体信息
      */
     private Map<String, Object> others;
@@ -83,13 +78,12 @@ public class DefaultJwtPayload {
     public DefaultJwtPayload() {
     }
 
-    public DefaultJwtPayload(Long userId, String account, boolean rememberMe, String caToken, String tenantCode) {
+    public DefaultJwtPayload(Long userId, String account, boolean rememberMe, String caToken) {
         this.userId = userId;
         this.account = account;
         this.uuid = IdUtil.fastUUID();
         this.rememberMe = rememberMe;
         this.caToken = caToken;
-        this.tenantCode = tenantCode;
     }
 
 }
