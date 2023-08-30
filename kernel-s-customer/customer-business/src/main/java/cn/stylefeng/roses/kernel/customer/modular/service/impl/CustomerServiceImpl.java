@@ -202,7 +202,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
         // 生成用户的token
         DefaultJwtPayload defaultJwtPayload = new DefaultJwtPayload(loginUser.getUserId(), loginRequest.getAccount(),
-                loginRequest.getRememberMe(), null, null);
+                loginRequest.getRememberMe(), null);
         String jwtToken = AuthJwtContext.me().generateTokenDefaultPayload(defaultJwtPayload);
         loginUser.setToken(jwtToken);
 
