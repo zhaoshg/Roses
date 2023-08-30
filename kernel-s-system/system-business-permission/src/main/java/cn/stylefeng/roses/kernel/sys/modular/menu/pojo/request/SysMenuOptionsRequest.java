@@ -46,10 +46,4 @@ public class SysMenuOptionsRequest extends BaseRequest {
     @ChineseDescription("功能或操作的编码")
     private String optionCode;
 
-    /**
-     * 租户号
-     */
-    @ChineseDescription("租户号")
-    private Long tenantId;
-
 }

@@ -38,10 +38,4 @@ public class SysRoleMenuOptionsRequest extends BaseRequest {
     @ChineseDescription("菜单功能id，关联sys_menu_options主键id")
     private Long menuOptionId;
 
-    /**
-     * 租户号
-     */
-    @ChineseDescription("租户号")
-    private Long tenantId;
-
 }

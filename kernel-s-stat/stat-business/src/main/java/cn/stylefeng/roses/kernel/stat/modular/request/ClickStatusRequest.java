@@ -42,10 +42,4 @@ public class ClickStatusRequest extends BaseRequest {
     @ChineseDescription("业务的分类标识")
     private String businessType;
 
-    /**
-     * 租户id
-     */
-    @ChineseDescription("租户id")
-    private Long tenantId;
-
 }

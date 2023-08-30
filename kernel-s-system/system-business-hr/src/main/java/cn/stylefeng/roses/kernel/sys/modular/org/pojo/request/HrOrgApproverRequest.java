@@ -47,12 +47,6 @@ public class HrOrgApproverRequest extends BaseRequest {
     private Long userId;
 
     /**
-     * 租户id
-     */
-    @ChineseDescription("租户id")
-    private Long tenantId;
-
-    /**
      * 用户id集合，一般用在绑定多个用户
      */
     @ChineseDescription("用户id集合")

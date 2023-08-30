@@ -42,10 +42,4 @@ public class ClickCountRequest extends BaseRequest {
     @ChineseDescription("点击次数")
     private Long clickCount;
 
-    /**
-     * 租户id
-     */
-    @ChineseDescription("租户id")
-    private Long tenantId;
-
 }

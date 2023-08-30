@@ -46,10 +46,4 @@ public class SysMenuResourceRequest extends BaseRequest {
     @ChineseDescription("资源的编码")
     private String resourceCode;
 
-    /**
-     * 租户号
-     */
-    @ChineseDescription("租户号")
-    private Long tenantId;
-
 }

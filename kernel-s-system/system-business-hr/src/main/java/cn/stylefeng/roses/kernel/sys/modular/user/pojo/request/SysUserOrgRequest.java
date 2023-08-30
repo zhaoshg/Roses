@@ -64,10 +64,4 @@ public class SysUserOrgRequest extends BaseRequest {
     @ChineseDescription("是否是主部门：Y-是，N-不是")
     private String mainFlag;
 
-    /**
-     * 租户id
-     */
-    @ChineseDescription("租户id")
-    private Long tenantId;
-
 }

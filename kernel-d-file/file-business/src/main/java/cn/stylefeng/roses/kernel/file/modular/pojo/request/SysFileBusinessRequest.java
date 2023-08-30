@@ -53,12 +53,6 @@ public class SysFileBusinessRequest extends BaseRequest {
     private Integer downloadCount;
 
     /**
-     * 租户id
-     */
-    @ChineseDescription("租户id")
-    private Long tenantId;
-
-    /**
      * 添加文件下载次数
      */
     public @interface addFileDownloadCount {
