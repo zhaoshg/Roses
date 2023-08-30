@@ -24,15 +24,20 @@
  */
 package cn.stylefeng.roses.kernel.db.starter;
 
+import cn.stylefeng.roses.kernel.db.api.pojo.tenant.TenantTableProperties;
 import cn.stylefeng.roses.kernel.db.mp.dbid.CustomDatabaseIdProvider;
 import cn.stylefeng.roses.kernel.db.mp.fieldfill.CustomMetaObjectHandler;
 import cn.stylefeng.roses.kernel.db.mp.injector.CustomInsertBatchSqlInjector;
+import cn.stylefeng.roses.kernel.db.mp.tenant.ProjectTenantInterceptor;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -47,14 +52,30 @@ import org.springframework.context.annotation.Configuration;
 public class ProjectMyBatisPlusAutoConfiguration {
 
     /**
+     * 设置租户的表的集合，在yml配置中配置  tenant.businessTableList
+     *
+     * @author fengshuonan
+     * @since 2023/8/30 10:39
+     */
+    @Bean
+    @ConfigurationProperties(prefix = "tenant")
+    @ConditionalOnMissingBean(TenantTableProperties.class)
+    public TenantTableProperties tenantTableProperties() {
+        return new TenantTableProperties();
+    }
+
+    /**
      * 新的分页插件
      *
      * @author fengshuonan
      * @since 2020/12/24 13:13
      */
     @Bean
-    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+    public MybatisPlusInterceptor mybatisPlusInterceptor(TenantTableProperties tenantTableProperties) {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+
+        // 使用多租户插件
+        interceptor.addInnerInterceptor(tenantLineInnerInterceptor(tenantTableProperties));
 
         // 使用分页插插件
         interceptor.addInnerInterceptor(paginationInterceptor());
@@ -110,7 +131,7 @@ public class ProjectMyBatisPlusAutoConfiguration {
     }
 
     /**
-     * 自定义sqlInjector
+     * 自定义sqlInjector，针对批量插入优化
      *
      * @author fengshuonan
      * @since 2022/9/17 14:28
@@ -118,6 +139,17 @@ public class ProjectMyBatisPlusAutoConfiguration {
     @Bean
     public CustomInsertBatchSqlInjector customInsertBatchSqlInjector() {
         return new CustomInsertBatchSqlInjector();
+    }
+
+    /**
+     * 多租户插件
+     *
+     * @author fengshuonan
+     * @since 2023/8/30 10:17
+     */
+    @Bean
+    public TenantLineInnerInterceptor tenantLineInnerInterceptor(TenantTableProperties tenantTableProperties) {
+        return new TenantLineInnerInterceptor(new ProjectTenantInterceptor(tenantTableProperties));
     }
 
 }
