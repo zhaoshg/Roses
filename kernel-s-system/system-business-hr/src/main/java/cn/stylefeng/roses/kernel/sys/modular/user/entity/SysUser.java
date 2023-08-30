@@ -9,10 +9,7 @@ import cn.stylefeng.roses.kernel.rule.enums.SexEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -167,6 +164,13 @@ public class SysUser extends BaseExpandFieldEntity {
     @TableField("master_user_id")
     @ChineseDescription("对接外部主数据的用户id")
     private String masterUserId;
+
+    /**
+     * 租户id
+     */
+    @TableField(value = "tenant_id", fill = FieldFill.INSERT)
+    @ChineseDescription("租户id")
+    private Long tenantId;
 
     //-------------------------------非实体字段-------------------------------
     //-------------------------------非实体字段-------------------------------

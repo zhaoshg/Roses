@@ -3,10 +3,7 @@ package cn.stylefeng.roses.kernel.sys.modular.org.entity;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.tree.factory.base.AbstractTreeNode;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -121,6 +118,13 @@ public class HrOrganization extends BaseExpandFieldEntity implements AbstractTre
     @TableField("master_org_parent_id")
     @ChineseDescription("对接外部主数据的父级机构id")
     private String masterOrgParentId;
+
+    /**
+     * 租户id
+     */
+    @TableField(value = "tenant_id", fill = FieldFill.INSERT)
+    @ChineseDescription("租户id")
+    private Long tenantId;
 
     //-------------------------------非实体字段-------------------------------
     //-------------------------------非实体字段-------------------------------

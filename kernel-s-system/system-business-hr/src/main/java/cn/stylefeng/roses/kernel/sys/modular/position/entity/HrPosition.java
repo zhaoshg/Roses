@@ -2,10 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.position.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -63,5 +60,12 @@ public class HrPosition extends BaseExpandFieldEntity {
     @TableField("remark")
     @ChineseDescription("备注")
     private String remark;
+
+    /**
+     * 租户id
+     */
+    @TableField(value = "tenant_id", fill = FieldFill.INSERT)
+    @ChineseDescription("租户id")
+    private Long tenantId;
 
 }

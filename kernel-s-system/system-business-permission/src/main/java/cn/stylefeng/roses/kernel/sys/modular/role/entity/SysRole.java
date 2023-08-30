@@ -2,10 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.role.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -77,5 +74,12 @@ public class SysRole extends BaseExpandFieldEntity {
     @TableField("role_system_flag")
     @ChineseDescription("是否是系统角色：Y-是，N-否。系统角色不能删除")
     private String roleSystemFlag;
+
+    /**
+     * 租户id
+     */
+    @TableField(value = "tenant_id", fill = FieldFill.INSERT)
+    @ChineseDescription("租户id")
+    private Long tenantId;
 
 }
