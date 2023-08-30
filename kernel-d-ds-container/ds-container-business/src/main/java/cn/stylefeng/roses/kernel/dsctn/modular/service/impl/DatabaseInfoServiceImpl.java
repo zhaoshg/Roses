@@ -47,7 +47,6 @@ import cn.stylefeng.roses.kernel.group.api.GroupApi;
 import cn.stylefeng.roses.kernel.group.api.constants.GroupConstants;
 import cn.stylefeng.roses.kernel.group.api.pojo.SysGroupDTO;
 import cn.stylefeng.roses.kernel.group.api.pojo.SysGroupRequest;
-import cn.stylefeng.roses.kernel.rule.constants.RuleConstants;
 import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
@@ -166,11 +165,6 @@ public class DatabaseInfoServiceImpl extends ServiceImpl<DatabaseInfoMapper, Dat
     public void del(DatabaseInfoRequest databaseInfoRequest) {
 
         DatabaseInfo databaseInfo = this.queryDatabaseInfoById(databaseInfoRequest);
-
-        // 如果是租户数据库不能删除
-        if (databaseInfo.getDbName().startsWith(RuleConstants.TENANT_DB_PREFIX)) {
-            throw new DatasourceContainerException(DatasourceContainerExceptionEnum.TENANT_DATASOURCE_CANT_DELETE);
-        }
 
         // 不能删除主数据源
         if (MASTER_DATASOURCE_NAME.equals(databaseInfo.getDbName())) {

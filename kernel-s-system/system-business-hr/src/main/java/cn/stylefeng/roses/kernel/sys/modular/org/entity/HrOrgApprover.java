@@ -54,13 +54,6 @@ public class HrOrgApprover extends BaseEntity {
     @ChineseDescription("用户id")
     private Long userId;
 
-    /**
-     * 租户id
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户id")
-    private Long tenantId;
-
     //-------------------------------非实体字段-------------------------------
     //-------------------------------非实体字段-------------------------------
     //-------------------------------非实体字段-------------------------------

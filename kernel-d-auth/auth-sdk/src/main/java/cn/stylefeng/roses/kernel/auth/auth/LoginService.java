@@ -26,7 +26,6 @@ import cn.stylefeng.roses.kernel.auth.api.pojo.sso.SsoProperties;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.demo.expander.DemoConfigExpander;
 import cn.stylefeng.roses.kernel.log.api.LoginLogServiceApi;
-import cn.stylefeng.roses.kernel.rule.tenant.RequestTenantCodeHolder;
 import cn.stylefeng.roses.kernel.rule.util.HttpServletUtil;
 import cn.stylefeng.roses.kernel.scanner.api.exception.ScannerException;
 import cn.stylefeng.roses.kernel.scanner.api.exception.enums.ScannerExceptionEnum;
@@ -102,9 +101,6 @@ public class LoginService {
 
         // 1.2 判断账号是否密码重试次数过多被冻结
         Integer loginErrorCount = validatePasswordRetryTimes(loginRequest);
-
-        // 1.3 暂存多租户编码（v7.3.2增加，方便缓存调用过程中获取多租户的前缀）
-        RequestTenantCodeHolder.setTenantCode(loginRequest.getTenantCode());
 
         // 2. 如果开启了验证码校验，则验证当前请求的验证码是否正确
         validateCaptcha(loginRequest);

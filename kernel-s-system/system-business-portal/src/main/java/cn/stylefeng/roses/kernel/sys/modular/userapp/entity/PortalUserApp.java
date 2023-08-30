@@ -48,11 +48,4 @@ public class PortalUserApp extends BaseEntity {
     @ChineseDescription("关联的菜单id")
     private Long menuId;
 
-    /**
-     * 租户id
-     */
-    @TableField("tenant_id")
-    @ChineseDescription("租户id")
-    private Long tenantId;
-
 }

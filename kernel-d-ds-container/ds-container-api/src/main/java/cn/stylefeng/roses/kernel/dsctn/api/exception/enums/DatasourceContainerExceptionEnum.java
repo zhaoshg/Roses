@@ -89,11 +89,6 @@ public enum DatasourceContainerExceptionEnum implements AbstractExceptionEnum {
     EDIT_DATASOURCE_NAME_ERROR(RuleConstants.BUSINESS_ERROR_TYPE_CODE + DatasourceContainerConstants.DS_CTN_EXCEPTION_STEP_CODE + "10", "修改数据源失败，不能修改数据源名称，原名称为={}"),
 
     /**
-     * 租户数据源不能删除
-     */
-    TENANT_DATASOURCE_CANT_DELETE(RuleConstants.BUSINESS_ERROR_TYPE_CODE + DatasourceContainerConstants.DS_CTN_EXCEPTION_STEP_CODE + "11", "租户数据源不能删除"),
-
-    /**
      * 数据源信息不存在
      */
     DATASOURCE_INFO_NOT_EXISTED(RuleConstants.BUSINESS_ERROR_TYPE_CODE + DatasourceContainerConstants.DS_CTN_EXCEPTION_STEP_CODE + "12", "数据源信息不存在，数据源id为：{}"),
