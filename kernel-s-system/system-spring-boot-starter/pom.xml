@@ -145,6 +145,13 @@
             <version>${roses.version}</version>
         </dependency>
 
+        <!--点击状态设置-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>stat-spring-boot-starter</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>
