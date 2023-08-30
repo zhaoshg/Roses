@@ -72,4 +72,9 @@ public interface SysConstants {
      */
     Long DEFAULT_SYS_CACHE_TIMEOUT_SECONDS = 3600L;
 
+    /**
+     * 默认租户ID
+     */
+    Long DEFAULT_ROOT_TENANT_ID = 1L;
+
 }

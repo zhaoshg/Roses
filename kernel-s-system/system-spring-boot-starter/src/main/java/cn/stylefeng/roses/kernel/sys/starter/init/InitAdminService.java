@@ -25,6 +25,7 @@
 package cn.stylefeng.roses.kernel.sys.starter.init;
 
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
+import cn.stylefeng.roses.kernel.sys.api.expander.SysConfigExpander;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
@@ -73,9 +74,11 @@ public class InitAdminService {
     @Transactional(rollbackFor = Exception.class)
     public void initSuperAdmin() {
 
-        // 找到后台管理员角色id
+        // 找到默认系统租户下，后台管理员角色id
         LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysRole::getRoleCode, SysConstants.BACKEND_ADMIN_ROLE_CODE);
+        // 默认根租户
+        queryWrapper.eq(SysRole::getTenantId, SysConfigExpander.getDefaultRootTenantId());
         queryWrapper.select(SysRole::getRoleId);
         SysRole superAdminRole = sysRoleService.getOne(queryWrapper);
 

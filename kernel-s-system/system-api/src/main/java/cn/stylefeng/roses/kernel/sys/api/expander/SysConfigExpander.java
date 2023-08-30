@@ -46,4 +46,14 @@ public class SysConfigExpander {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_DEFAULT_PASSWORD", String.class, SysConstants.DEFAULT_LOGIN_PASSWORD);
     }
 
+    /**
+     * 获取默认租户的id
+     *
+     * @author fengshuonan
+     * @since 2023/8/31 0:55
+     */
+    public static Long getDefaultRootTenantId() {
+        return ConfigContext.me().getSysConfigValueWithDefault("DEFAULT_ROOT_TENANT_ID", Long.class, SysConstants.DEFAULT_ROOT_TENANT_ID);
+    }
+
 }
