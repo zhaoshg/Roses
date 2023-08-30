@@ -13,3 +13,7 @@ ALTER TABLE `sys_user_org` DROP COLUMN `tenant_id`;
 ALTER TABLE `sys_user_role` DROP COLUMN `tenant_id`;
 
 ALTER TABLE `sys_role_menu_options` DROP COLUMN `tenant_id`;
+
+ALTER TABLE `sys_hr_org_approver` DROP COLUMN `tenant_id`;
+
+ALTER TABLE `sys_portal_user_app` DROP COLUMN `tenant_id`;
