@@ -27,23 +27,22 @@ package cn.stylefeng.roses.kernel.sys.api.expander;
 import cn.stylefeng.roses.kernel.config.api.context.ConfigContext;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 
-
 /**
- * 系统的一些基础信息
+ * 获取租户的一些配置
  *
  * @author fengshuonan
- * @since 2020/12/27 17:13
+ * @since 2023/8/31 11:33
  */
-public class SysConfigExpander {
+public class TenantConfigExpander {
 
     /**
-     * 获取默认密码
+     * 获取默认租户的id
      *
-     * @author luojie
-     * @since 2020/11/6 10:05
+     * @author fengshuonan
+     * @since 2023/8/31 0:55
      */
-    public static String getDefaultPassWord() {
-        return ConfigContext.me().getSysConfigValueWithDefault("SYS_DEFAULT_PASSWORD", String.class, SysConstants.DEFAULT_LOGIN_PASSWORD);
+    public static Long getDefaultRootTenantId() {
+        return ConfigContext.me().getSysConfigValueWithDefault("DEFAULT_ROOT_TENANT_ID", Long.class, SysConstants.DEFAULT_ROOT_TENANT_ID);
     }
 
 }
