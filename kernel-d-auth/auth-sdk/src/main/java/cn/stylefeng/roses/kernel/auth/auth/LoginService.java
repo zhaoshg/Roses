@@ -125,6 +125,11 @@ public class LoginService {
             }
         }
 
+        // 4.1 通过租户编码获取租户id，如果租户参数没传，则默认填充根租户的id todo
+        String tenantCode = loginRequest.getTenantCode();
+
+
+
         // 5. 获取用户密码的加密值和用户的状态
         UserValidateDTO userValidateInfo = sysUserServiceApi.getUserLoginValidateDTO(loginRequest.getAccount());
 
