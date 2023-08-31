@@ -150,15 +150,12 @@ public class LoginService {
         String userLoginToken = AuthJwtContext.me().generateTokenDefaultPayload(defaultJwtPayload);
 
         // 9. 创建loginUser对象
-        LoginUser loginUser = new LoginUser(userValidateInfo.getUserId(), userLoginToken);
+        LoginUser loginUser = new LoginUser(userValidateInfo.getUserId(), loginRequest.getAccount(), userLoginToken, tenantId);
 
         // 9.1 记录用户登录时间和ip
         String ip = HttpServletUtil.getRequestClientIp(HttpServletUtil.getRequest());
         loginUser.setLoginIp(ip);
         loginUser.setLoginTime(new Date());
-
-        // 9.2 设置当前登录用户的账号
-        loginUser.setAccount(loginRequest.getAccount());
 
         synchronized (loginRequest.getAccount().intern()) {
 

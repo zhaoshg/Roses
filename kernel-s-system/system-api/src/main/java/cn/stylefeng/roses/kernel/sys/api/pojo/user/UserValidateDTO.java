@@ -60,14 +60,32 @@ public class UserValidateDTO {
     @ChineseDescription("用户状态")
     private Integer userStatus;
 
+    /**
+     * 账号
+     * <p>
+     * 2023年9月1日新增，用在createNewLoginInfo方法中，为指定token创建用户信息时候补全信息
+     */
+    @ChineseDescription("账号")
+    private String account;
+
+    /**
+     * 租户id
+     * <p>
+     * 2023年9月1日新增，用在createNewLoginInfo方法中，为指定token创建用户信息时候补全信息
+     */
+    @ChineseDescription("租户id")
+    private Long tenantId;
+
     public UserValidateDTO() {
     }
 
-    public UserValidateDTO(Long userId, String userPasswordHexed, String salt, Integer userStatus) {
+    public UserValidateDTO(Long userId, String userPasswordHexed, String salt, Integer userStatus, Long tenantId, String account) {
         this.userId = userId;
         this.userPasswordHexed = userPasswordHexed;
         this.userPasswordSalt = salt;
         this.userStatus = userStatus;
+        this.tenantId = tenantId;
+        this.account = account;
     }
 
 }

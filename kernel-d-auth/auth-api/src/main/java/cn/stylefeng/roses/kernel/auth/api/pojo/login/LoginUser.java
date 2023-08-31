@@ -62,6 +62,12 @@ public class LoginUser implements Serializable {
     private String token;
 
     /**
+     * 当前登录租户id
+     */
+    @ChineseDescription("当前登录租户id")
+    private Long tenantId;
+
+    /**
      * 当前用户正在访问的appId
      */
     @ChineseDescription("当前用户正在访问的appId")
@@ -78,12 +84,6 @@ public class LoginUser implements Serializable {
      */
     @ChineseDescription("当前用户激活的职务id（正在以哪个身份访问系统）")
     private Long currentPositionId;
-
-    /**
-     * 当前登录租户id
-     */
-    @ChineseDescription("当前登录租户id")
-    private Long tenantId;
 
     /**
      * 当前用户语种的标识，例如：chinese，english
@@ -116,9 +116,11 @@ public class LoginUser implements Serializable {
     public LoginUser() {
     }
 
-    public LoginUser(Long userId, String token) {
+    public LoginUser(Long userId, String account, String token, Long tenantId) {
         this.userId = userId;
+        this.account = account;
         this.token = token;
+        this.tenantId = tenantId;
     }
 
 }

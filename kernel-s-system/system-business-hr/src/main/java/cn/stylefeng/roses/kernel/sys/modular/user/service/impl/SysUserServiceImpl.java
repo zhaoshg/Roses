@@ -380,30 +380,31 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
 
         return new UserValidateDTO(sysUserServiceOne.getUserId(), sysUserServiceOne.getPassword(), sysUserServiceOne.getPasswordSalt(),
-                sysUserServiceOne.getStatusFlag());
+                sysUserServiceOne.getStatusFlag(), tenantId, account);
     }
 
     @Override
     public UserValidateDTO getUserLoginValidateDTO(Long userId) {
         LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
-        sysUserLambdaQueryWrapper.select(SysUser::getPassword, SysUser::getPasswordSalt, SysUser::getStatusFlag, SysUser::getUserId);
+        sysUserLambdaQueryWrapper.select(SysUser::getPassword, SysUser::getAccount, SysUser::getPasswordSalt, SysUser::getStatusFlag,
+                SysUser::getUserId, SysUser::getTenantId);
 
         // 单独填充租户id
-        SysUser sysUserServiceOne;
+        SysUser sysUser;
         try {
             TenantSwitchHolder.set(false);
-            sysUserServiceOne = this.getOne(sysUserLambdaQueryWrapper, false);
+            sysUser = this.getOne(sysUserLambdaQueryWrapper, false);
         } finally {
             TenantSwitchHolder.remove();
         }
 
-        if (sysUserServiceOne == null) {
+        if (sysUser == null) {
             throw new ServiceException(SysUserExceptionEnum.ACCOUNT_NOT_EXIST);
         }
 
-        return new UserValidateDTO(sysUserServiceOne.getUserId(), sysUserServiceOne.getPassword(), sysUserServiceOne.getPasswordSalt(),
-                sysUserServiceOne.getStatusFlag());
+        return new UserValidateDTO(sysUser.getUserId(), sysUser.getPassword(), sysUser.getPasswordSalt(),
+                sysUser.getStatusFlag(), sysUser.getTenantId(), sysUser.getAccount());
     }
 
     @Override
