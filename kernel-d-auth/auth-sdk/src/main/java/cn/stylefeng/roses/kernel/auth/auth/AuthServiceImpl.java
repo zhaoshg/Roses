@@ -246,7 +246,7 @@ public class AuthServiceImpl implements AuthServiceApi {
         UserValidateDTO userValidateDTO = sysUserServiceApi.getUserLoginValidateDTO(userId);
 
         // 创建登录用户
-        loginUser = new LoginUser(userValidateDTO.getUserId(), token);
+        loginUser = new LoginUser(userValidateDTO.getUserId(), userValidateDTO.getAccount(), token, userValidateDTO.getTenantId());
 
         // 创建用户会话信息
         sessionManagerApi.updateSession(token, loginUser);
