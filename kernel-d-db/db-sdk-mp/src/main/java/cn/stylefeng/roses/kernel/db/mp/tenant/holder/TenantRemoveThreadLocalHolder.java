@@ -15,6 +15,7 @@ public class TenantRemoveThreadLocalHolder implements RemoveThreadLocalApi {
     @Override
     public void removeThreadLocalAction() {
         TenantIdHolder.remove();
+        TenantSwitchHolder.remove();
     }
 
 }

@@ -25,11 +25,13 @@
 package cn.stylefeng.roses.kernel.auth.starter;
 
 import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
+import cn.stylefeng.roses.kernel.auth.api.TenantCodeGetApi;
 import cn.stylefeng.roses.kernel.auth.api.expander.AuthConfigExpander;
 import cn.stylefeng.roses.kernel.auth.api.password.PasswordStoredEncryptApi;
 import cn.stylefeng.roses.kernel.auth.api.password.PasswordTransferEncryptApi;
 import cn.stylefeng.roses.kernel.auth.api.pojo.auth.PwdRsaSecretProperties;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
+import cn.stylefeng.roses.kernel.auth.auth.DefaultTenantCodeProvider;
 import cn.stylefeng.roses.kernel.auth.password.BcryptPasswordStoredEncrypt;
 import cn.stylefeng.roses.kernel.auth.password.RsaPasswordTransferEncrypt;
 import cn.stylefeng.roses.kernel.auth.session.DefaultSessionManager;
@@ -111,7 +113,8 @@ public class AuthAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean(SessionManagerApi.class)
-    public SessionManagerApi sessionManagerApi(CacheOperatorApi<LoginUser> loginUserCache, CacheOperatorApi<Set<String>> allPlaceLoginTokenCache) {
+    public SessionManagerApi sessionManagerApi(CacheOperatorApi<LoginUser> loginUserCache,
+                                               CacheOperatorApi<Set<String>> allPlaceLoginTokenCache) {
         Long sessionExpiredSeconds = AuthConfigExpander.getSessionExpiredSeconds();
         return new DefaultSessionManager(loginUserCache, allPlaceLoginTokenCache, sessionExpiredSeconds);
     }
@@ -124,8 +127,21 @@ public class AuthAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean(ClearInvalidLoginUserCacheTimer.class)
-    public ClearInvalidLoginUserCacheTimer clearInvalidLoginUserCacheTimer(CacheOperatorApi<LoginUser> loginUserCache, CacheOperatorApi<Set<String>> allPlaceLoginTokenCache) {
+    public ClearInvalidLoginUserCacheTimer clearInvalidLoginUserCacheTimer(CacheOperatorApi<LoginUser> loginUserCache,
+                                                                           CacheOperatorApi<Set<String>> allPlaceLoginTokenCache) {
         return new ClearInvalidLoginUserCacheTimer(loginUserCache, allPlaceLoginTokenCache);
+    }
+
+    /**
+     * 通过租户编码获取租户id的查询接口
+     *
+     * @author fengshuonan
+     * @since 2023/9/1 0:52
+     */
+    @Bean
+    @ConditionalOnMissingBean(TenantCodeGetApi.class)
+    public TenantCodeGetApi tenantCodeGetApi() {
+        return new DefaultTenantCodeProvider();
     }
 
 }

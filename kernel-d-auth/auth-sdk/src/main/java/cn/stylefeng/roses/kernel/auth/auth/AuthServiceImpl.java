@@ -238,12 +238,12 @@ public class AuthServiceImpl implements AuthServiceApi {
     public LoginUser createNewLoginInfo(String token, DefaultJwtPayload defaultJwtPayload) {
 
         // 获取用户的信息
-        String account = defaultJwtPayload.getAccount();
+        Long userId = defaultJwtPayload.getUserId();
 
         LoginUser loginUser;
 
         // 获取用户信息
-        UserValidateDTO userValidateDTO = sysUserServiceApi.getUserLoginValidateDTO(account);
+        UserValidateDTO userValidateDTO = sysUserServiceApi.getUserLoginValidateDTO(userId);
 
         // 创建登录用户
         loginUser = new LoginUser(userValidateDTO.getUserId(), token);

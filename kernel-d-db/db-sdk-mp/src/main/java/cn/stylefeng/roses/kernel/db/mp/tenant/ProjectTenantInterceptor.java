@@ -5,6 +5,7 @@ import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.db.api.pojo.tenant.TenantTableProperties;
 import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantIdHolder;
+import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantSwitchHolder;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
@@ -52,6 +53,13 @@ public class ProjectTenantInterceptor implements TenantLineHandler {
     @Override
     public boolean ignoreTable(String tableName) {
 
+        // 1. 优先从线程变量中获取，这个优先级最高
+        Boolean openFlag = TenantSwitchHolder.get();
+        if (openFlag != null && !openFlag) {
+            return true;
+        }
+
+        // 2. 第2步，从系统配置中获取，是否开启此table的开关
         if (tenantTableProperties == null) {
             return true;
         }

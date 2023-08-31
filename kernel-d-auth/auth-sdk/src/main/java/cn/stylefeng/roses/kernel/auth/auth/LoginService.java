@@ -8,6 +8,7 @@ import cn.hutool.http.HttpResponse;
 import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
 import cn.stylefeng.roses.kernel.auth.api.SsoServerApi;
 import cn.stylefeng.roses.kernel.auth.api.TempSecretApi;
+import cn.stylefeng.roses.kernel.auth.api.TenantCodeGetApi;
 import cn.stylefeng.roses.kernel.auth.api.constants.AuthConstants;
 import cn.stylefeng.roses.kernel.auth.api.constants.LoginCacheConstants;
 import cn.stylefeng.roses.kernel.auth.api.context.AuthJwtContext;
@@ -80,6 +81,9 @@ public class LoginService {
     @Resource
     private PasswordStoredEncryptApi passwordStoredEncryptApi;
 
+    @Resource
+    private TenantCodeGetApi tenantCodeGetApi;
+
     /**
      * 登录的真正业务逻辑
      *
@@ -125,13 +129,12 @@ public class LoginService {
             }
         }
 
-        // 4.1 通过租户编码获取租户id，如果租户参数没传，则默认填充根租户的id todo
+        // 4.1 通过租户编码获取租户id，如果租户参数没传，则默认填充根租户的id
         String tenantCode = loginRequest.getTenantCode();
-
-
+        Long tenantId = tenantCodeGetApi.getTenantIdByCode(tenantCode);
 
         // 5. 获取用户密码的加密值和用户的状态
-        UserValidateDTO userValidateInfo = sysUserServiceApi.getUserLoginValidateDTO(loginRequest.getAccount());
+        UserValidateDTO userValidateInfo = sysUserServiceApi.getUserLoginValidateDTO(tenantId, loginRequest.getAccount());
 
         // 6. 校验用户密码是否正确
         validateUserPassword(validatePassword, loginErrorCount, loginRequest, userValidateInfo);

@@ -12,6 +12,8 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantIdHolder;
+import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantSwitchHolder;
 import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
 import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
@@ -359,11 +361,42 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public UserValidateDTO getUserLoginValidateDTO(String account) {
+    public UserValidateDTO getUserLoginValidateDTO(Long tenantId, String account) {
         LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysUserLambdaQueryWrapper.eq(SysUser::getAccount, account);
         sysUserLambdaQueryWrapper.select(SysUser::getPassword, SysUser::getPasswordSalt, SysUser::getStatusFlag, SysUser::getUserId);
-        SysUser sysUserServiceOne = this.getOne(sysUserLambdaQueryWrapper, false);
+
+        // 单独填充租户id
+        SysUser sysUserServiceOne;
+        try {
+            TenantIdHolder.set(tenantId);
+            sysUserServiceOne = this.getOne(sysUserLambdaQueryWrapper, false);
+        } finally {
+            TenantIdHolder.remove();
+        }
+
+        if (sysUserServiceOne == null) {
+            throw new ServiceException(SysUserExceptionEnum.ACCOUNT_NOT_EXIST);
+        }
+
+        return new UserValidateDTO(sysUserServiceOne.getUserId(), sysUserServiceOne.getPassword(), sysUserServiceOne.getPasswordSalt(),
+                sysUserServiceOne.getStatusFlag());
+    }
+
+    @Override
+    public UserValidateDTO getUserLoginValidateDTO(Long userId) {
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
+        sysUserLambdaQueryWrapper.select(SysUser::getPassword, SysUser::getPasswordSalt, SysUser::getStatusFlag, SysUser::getUserId);
+
+        // 单独填充租户id
+        SysUser sysUserServiceOne;
+        try {
+            TenantSwitchHolder.set(false);
+            sysUserServiceOne = this.getOne(sysUserLambdaQueryWrapper, false);
+        } finally {
+            TenantSwitchHolder.remove();
+        }
 
         if (sysUserServiceOne == null) {
             throw new ServiceException(SysUserExceptionEnum.ACCOUNT_NOT_EXIST);

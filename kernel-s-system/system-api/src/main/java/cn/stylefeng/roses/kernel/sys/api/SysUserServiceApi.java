@@ -58,11 +58,21 @@ public interface SysUserServiceApi {
     /**
      * 获取用于用户校验的
      *
-     * @param account 用户账号
+     * @param tenantId 指定租户id
+     * @param account  用户账号
      * @author fengshuonan
      * @since 2023/6/17 21:56
      */
-    UserValidateDTO getUserLoginValidateDTO(String account);
+    UserValidateDTO getUserLoginValidateDTO(Long tenantId, String account);
+
+    /**
+     * 通过用户id创建用户的校验信息
+     *
+     * @param userId 用户id
+     * @author fengshuonan
+     * @since 2023/6/17 21:56
+     */
+    UserValidateDTO getUserLoginValidateDTO(Long userId);
 
     /**
      * 更新用户的登录ip和最后登录时间
