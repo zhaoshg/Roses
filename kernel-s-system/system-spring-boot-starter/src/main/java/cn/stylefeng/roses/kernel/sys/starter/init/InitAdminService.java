@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.sys.starter.init;
 
+import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantIdHolder;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.expander.TenantConfigExpander;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
@@ -77,10 +78,15 @@ public class InitAdminService {
         // 找到默认系统租户下，后台管理员角色id
         LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysRole::getRoleCode, SysConstants.BACKEND_ADMIN_ROLE_CODE);
-        // 默认根租户
-        queryWrapper.eq(SysRole::getTenantId, TenantConfigExpander.getDefaultRootTenantId());
-        queryWrapper.select(SysRole::getRoleId);
-        SysRole superAdminRole = sysRoleService.getOne(queryWrapper);
+        SysRole superAdminRole;
+        try {
+            // 设置一个默认根租户
+            TenantIdHolder.set(TenantConfigExpander.getDefaultRootTenantId());
+            queryWrapper.select(SysRole::getRoleId);
+            superAdminRole = sysRoleService.getOne(queryWrapper);
+        } finally {
+            TenantIdHolder.remove();
+        }
 
         // 获取所有的菜单和功能
         List<SysMenu> totalMenuList = sysMenuService.getTotalMenuList();

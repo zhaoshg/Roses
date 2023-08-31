@@ -4,6 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.db.api.pojo.tenant.TenantTableProperties;
+import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantIdHolder;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
@@ -30,6 +31,14 @@ public class ProjectTenantInterceptor implements TenantLineHandler {
 
     @Override
     public Expression getTenantId() {
+
+        // 1. 优先从线程变量中获取，这个优先级最高
+        Long tenantId = TenantIdHolder.get();
+        if (ObjectUtil.isNotEmpty(tenantId)) {
+            return new LongValue(tenantId);
+        }
+
+        // 2. 从LoginUser中获取tenantId
         LoginUser loginUserNullable = LoginContext.me().getLoginUserNullable();
         if (loginUserNullable == null) {
             return null;
