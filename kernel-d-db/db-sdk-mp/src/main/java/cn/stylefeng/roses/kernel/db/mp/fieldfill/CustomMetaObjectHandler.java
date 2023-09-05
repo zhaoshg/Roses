@@ -71,6 +71,9 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
             // 设置组织id
             setValue(metaObject, DbFieldConstants.ORG_ID, this.getUserOrgId());
 
+            // 设置租户id
+            setValue(metaObject, DbFieldConstants.TENANT_ID, this.getTenantId());
+
         } catch (ReflectionException e) {
             log.warn("CustomMetaObjectHandler处理过程中无相关字段，不做处理");
         }
@@ -137,6 +140,21 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
             return -1L;
         }
 
+    }
+
+    /**
+     * 获取用户的租户id
+     *
+     * @author fengshuonan
+     * @since 2023/9/5 16:19
+     */
+    private Long getTenantId() {
+        try {
+            return LoginContext.me().getLoginUser().getTenantId();
+        } catch (Exception e) {
+            //如果获取不到就返回-1
+            return -1L;
+        }
     }
 
     /**

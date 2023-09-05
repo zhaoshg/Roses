@@ -77,4 +77,10 @@ public interface DbFieldConstants {
      * 组织id
      */
     String ORG_ID = "orgId";
+
+    /**
+     * 租户id
+     */
+    String TENANT_ID = "tenantId";
+
 }
