@@ -78,6 +78,9 @@ public class UserIndexInfoService {
         // 返回结果初始化
         UserIndexInfo userIndexInfo = new UserIndexInfo();
 
+        // 设置管理员用户表示
+        userIndexInfo.setSuperAdminFlag(LoginContext.me().getSuperAdminFlag());
+
         // 获取当前登录用户
         LoginUser loginUser = LoginContext.me().getLoginUser();
 

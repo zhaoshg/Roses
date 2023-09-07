@@ -59,4 +59,10 @@ public class UserIndexInfo {
     @ChineseDescription("登录人的websocketUrl，用来获取右上角的实时消息")
     private String websocketUrl;
 
+    /**
+     * 管理员用户表示
+     */
+    @ChineseDescription("管理员用户表示")
+    private Boolean superAdminFlag;
+
 }
