@@ -22,7 +22,6 @@ import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.context.DataScopeContext;
 import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
-import cn.stylefeng.roses.kernel.sys.api.exception.enums.UserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.expander.SysConfigExpander;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.*;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
@@ -220,11 +219,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public void resetPassword(SysUserRequest sysUserRequest) {
 
-        // 只有超级管理员能重置密码
-        if (!LoginContext.me().getSuperAdminFlag()) {
-            throw new ServiceException(UserExceptionEnum.RESET_PASSWORD_ERROR);
-        }
-
         SysUser sysUser = this.querySysUser(sysUserRequest);
 
         // 获取系统配置的默认密码
@@ -342,7 +336,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             String fileAuthUrl = fileInfoApi.getFileAuthUrl(avatarFileId);
             simpleUserDTO.setAvatarUrl(fileAuthUrl);
         }
-        
+
         return simpleUserDTO;
     }
 
