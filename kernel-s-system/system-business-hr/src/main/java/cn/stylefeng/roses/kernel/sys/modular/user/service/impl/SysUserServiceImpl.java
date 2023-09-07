@@ -337,14 +337,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 获取头像文件id信息，转化为头像URL
         Long avatarFileId = sysUser.getAvatar();
-        if (avatarFileId == null) {
-            return null;
+        if (avatarFileId != null) {
+            // 获取头像的访问地址
+            String fileAuthUrl = fileInfoApi.getFileAuthUrl(avatarFileId);
+            simpleUserDTO.setAvatarUrl(fileAuthUrl);
         }
-
-        // 获取头像的访问地址
-        String fileAuthUrl = fileInfoApi.getFileAuthUrl(avatarFileId);
-        simpleUserDTO.setAvatarUrl(fileAuthUrl);
-
+        
         return simpleUserDTO;
     }
 
