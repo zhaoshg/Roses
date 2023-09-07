@@ -50,7 +50,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     @Transactional(rollbackFor = Exception.class)
     public void bindRoles(SysUserRoleRequest sysUserRoleRequest) {
 
-        // 不能修改超级管理员用户的角色
+        // 不能修改超级管理员用户的角色，修改管理员角色可能登录会有问题
         boolean userSuperAdminFlag = sysUserService.getUserSuperAdminFlag(sysUserRoleRequest.getUserId());
         if (userSuperAdminFlag) {
             throw new ServiceException(SysUserExceptionEnum.CANT_CHANGE_ADMIN_ROLE);
