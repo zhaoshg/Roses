@@ -29,6 +29,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.db.api.constants.DbFieldConstants;
 import cn.stylefeng.roses.kernel.db.api.util.EntityFieldUtil;
+import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantIdHolder;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
@@ -150,6 +151,14 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
      */
     private Long getTenantId() {
         try {
+
+            // 1. 优先从线程变量中获取，这个优先级最高
+            Long tenantId = TenantIdHolder.get();
+            if (ObjectUtil.isNotEmpty(tenantId)) {
+                return tenantId;
+            }
+
+            // 2. 其次，从loginUser中获取
             return LoginContext.me().getLoginUser().getTenantId();
         } catch (Exception e) {
             //如果获取不到就返回-1
