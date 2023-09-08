@@ -158,6 +158,18 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
+    public List<SysMenu> getTotalMenus(List<Long> limitMenuIds) {
+        if (ObjectUtil.isEmpty(limitMenuIds)) {
+            return new ArrayList<>();
+        }
+        LambdaQueryWrapper<SysMenu> menuLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        menuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuName, SysMenu::getMenuParentId, SysMenu::getAppId);
+        menuLambdaQueryWrapper.in(SysMenu::getMenuId, limitMenuIds);
+        menuLambdaQueryWrapper.orderByAsc(SysMenu::getMenuSort);
+        return this.list(menuLambdaQueryWrapper);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateMenuTree(SysMenuRequest sysMenuRequest) {
 
@@ -201,9 +213,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
         // 查询指定的菜单内容
         sysMenuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuParentId, SysMenu::getMenuPids, SysMenu::getAppId,
-                SysMenu::getMenuCode,
-                SysMenu::getMenuName, SysMenu::getMenuType, SysMenu::getAntdvIcon, SysMenu::getAntdvVisible, SysMenu::getAntdvActiveUrl,
-                SysMenu::getAntdvRouter, SysMenu::getAntdvComponent, SysMenu::getMenuSort);
+                SysMenu::getMenuCode, SysMenu::getMenuName, SysMenu::getMenuType, SysMenu::getAntdvIcon, SysMenu::getAntdvVisible,
+                SysMenu::getAntdvActiveUrl, SysMenu::getAntdvRouter, SysMenu::getAntdvComponent, SysMenu::getMenuSort);
 
         sysMenuLambdaQueryWrapper.orderByAsc(SysMenu::getMenuSort);
 

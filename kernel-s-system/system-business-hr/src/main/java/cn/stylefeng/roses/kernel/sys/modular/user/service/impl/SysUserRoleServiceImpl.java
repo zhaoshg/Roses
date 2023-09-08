@@ -1,9 +1,11 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.SysRoleLimitServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SysRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
@@ -45,6 +47,9 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
     @Resource(name = "userRoleCache")
     private CacheOperatorApi<List<Long>> userRoleCache;
+
+    @Resource
+    private SysRoleLimitServiceApi sysRoleLimitServiceApi;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -153,6 +158,24 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         queryWrapper.select(SysUserRole::getUserId);
         List<SysUserRole> list = this.list(queryWrapper);
         return list.stream().map(SysUserRole::getUserId).collect(Collectors.toList());
+    }
+
+    @Override
+    public Set<Long> findUserRoleLimitScope(Long userId) {
+
+        // 获取用户的所有角色id
+        List<Long> userRoleIdList = this.getUserRoleIdList(userId);
+
+        // 获取角色的限制范围列表（菜单和菜单功能id集合）
+        return this.sysRoleLimitServiceApi.getRoleBindLimitList(userRoleIdList);
+    }
+
+    @Override
+    public Set<Long> findCurrentUserRoleLimitScope() {
+
+        Long userId = LoginContext.me().getLoginUser().getUserId();
+
+        return this.findUserRoleLimitScope(userId);
     }
 
     /**

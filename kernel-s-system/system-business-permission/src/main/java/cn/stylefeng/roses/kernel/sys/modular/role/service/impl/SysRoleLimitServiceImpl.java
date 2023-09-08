@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleBindLimitAction;
@@ -65,9 +66,18 @@ public class SysRoleLimitServiceImpl extends ServiceImpl<SysRoleLimitMapper, Sys
      */
     @Override
     public Set<Long> getRoleBindLimitList(Long roleId) {
+        return this.getRoleBindLimitList(ListUtil.toList(roleId));
+    }
+
+    @Override
+    public Set<Long> getRoleBindLimitList(List<Long> roleIdList) {
+        if (ObjectUtil.isEmpty(roleIdList)) {
+            return new HashSet<>();
+        }
+
         LambdaQueryWrapper<SysRoleLimit> sysRoleLimitLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysRoleLimitLambdaQueryWrapper.select(SysRoleLimit::getBusinessId);
-        sysRoleLimitLambdaQueryWrapper.eq(SysRoleLimit::getRoleId, roleId);
+        sysRoleLimitLambdaQueryWrapper.in(SysRoleLimit::getRoleId, roleIdList);
         List<SysRoleLimit> sysRoleMenuList = this.list(sysRoleLimitLambdaQueryWrapper);
         if (ObjectUtil.isEmpty(sysRoleMenuList)) {
             return new HashSet<>();

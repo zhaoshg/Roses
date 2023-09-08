@@ -79,6 +79,15 @@ public interface SysMenuService extends IService<SysMenu>, SysMenuServiceApi {
     List<SysMenu> getTotalMenus();
 
     /**
+     * 获取所有的菜单信息，用在角色绑定权限界面
+     *
+     * @param limitMenuIds 指定筛选的菜单的范围
+     * @author fengshuonan
+     * @since 2023/6/15 9:24
+     */
+    List<SysMenu> getTotalMenus(List<Long> limitMenuIds);
+
+    /**
      * 调整菜单上下级结构和菜单的顺序
      *
      * @author fengshuonan
