@@ -1,6 +1,8 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
+import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleAssignOperateAction;
 import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleBindLimitAction;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleLimit;
@@ -10,10 +12,12 @@ import cn.stylefeng.roses.kernel.sys.modular.role.enums.RoleLimitTypeEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleLimitService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
+import cn.stylefeng.roses.kernel.sys.modular.role.util.AssertAssignUtil;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,6 +34,9 @@ public class RoleBindOptionImpl implements RoleAssignOperateAction, RoleBindLimi
 
     @Resource
     private SysRoleLimitService sysRoleLimitService;
+
+    @Resource
+    private SysUserRoleServiceApi sysUserRoleServiceApi;
 
     @Override
     public PermissionNodeTypeEnum getNodeType() {
@@ -53,6 +60,14 @@ public class RoleBindOptionImpl implements RoleAssignOperateAction, RoleBindLimi
             sysRoleMenuOptions.setMenuOptionId(menuOptionId);
             this.sysRoleMenuOptionsService.save(sysRoleMenuOptions);
         } else {
+
+            // 当前正在进行的角色，不能禁用掉自己的权限
+            Long userId = LoginContext.me().getLoginUser().getUserId();
+            List<Long> userRoleIdList = sysUserRoleServiceApi.getUserRoleIdList(userId);
+            if (userRoleIdList.contains(roleId) && menuOptionId.equals(AssertAssignUtil.DISABLED_MENU_OPTIONS)) {
+                return;
+            }
+
             LambdaUpdateWrapper<SysRoleMenuOptions> wrapper = new LambdaUpdateWrapper<>();
             wrapper.eq(SysRoleMenuOptions::getRoleId, roleId);
             wrapper.eq(SysRoleMenuOptions::getMenuOptionId, menuOptionId);

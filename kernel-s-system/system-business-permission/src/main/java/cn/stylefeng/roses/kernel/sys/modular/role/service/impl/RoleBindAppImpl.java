@@ -17,6 +17,7 @@ import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissio
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleLimitService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
+import cn.stylefeng.roses.kernel.sys.modular.role.util.AssertAssignUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
@@ -84,6 +85,7 @@ public class RoleBindAppImpl implements RoleAssignOperateAction, RoleBindLimitAc
             LambdaQueryWrapper<SysRoleMenuOptions> sysRoleMenuOptionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
             sysRoleMenuOptionsLambdaQueryWrapper.eq(SysRoleMenuOptions::getRoleId, roleId);
             sysRoleMenuOptionsLambdaQueryWrapper.in(SysRoleMenuOptions::getMenuOptionId, totalMenuOptionIds);
+            AssertAssignUtil.assertAssign(roleId, sysRoleMenuOptionsLambdaQueryWrapper);
             sysRoleMenuOptionsService.remove(sysRoleMenuOptionsLambdaQueryWrapper);
         }
 

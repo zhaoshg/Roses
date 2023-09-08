@@ -16,6 +16,7 @@ import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissio
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleLimitService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
+import cn.stylefeng.roses.kernel.sys.modular.role.util.AssertAssignUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
@@ -97,6 +98,7 @@ public class RoleBindMenuImpl implements RoleAssignOperateAction, RoleBindLimitA
         LambdaQueryWrapper<SysRoleMenuOptions> roleMenuOptionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
         roleMenuOptionsLambdaQueryWrapper.eq(SysRoleMenuOptions::getRoleId, roleId);
         roleMenuOptionsLambdaQueryWrapper.in(SysRoleMenuOptions::getMenuOptionId, menuOptions);
+        AssertAssignUtil.assertAssign(roleId, roleMenuOptionsLambdaQueryWrapper);
         sysRoleMenuOptionsService.remove(roleMenuOptionsLambdaQueryWrapper);
 
         // 2.3. 如果是选中状态，则从新进行这些角色和功能的绑定
