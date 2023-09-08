@@ -90,10 +90,15 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
 
     @Override
     public void updateRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest) {
+
+        // 1. 获取角色的限制范围，如果限制范围为空，则为查询所有的范围
+        Set<Long> userRoleLimitScope = userRoleServiceApi.findCurrentUserRoleLimitScope();
+
+        // 2. 绑定角色的权限
         Map<String, RoleAssignOperateAction> operateActionMap = SpringUtil.getBeansOfType(RoleAssignOperateAction.class);
         for (RoleAssignOperateAction roleAssignOperateAction : operateActionMap.values()) {
             if (roleAssignOperateAction.getNodeType().getCode().equals(roleBindPermissionRequest.getPermissionNodeType())) {
-                roleAssignOperateAction.doOperateAction(roleBindPermissionRequest);
+                roleAssignOperateAction.doOperateAction(roleBindPermissionRequest, userRoleLimitScope);
 
                 // 更新角色绑定权限的缓存
                 BusinessEventPublisher.publishEvent(RoleConstants.ROLE_BIND_MENU_EVENT, roleBindPermissionRequest.getRoleId());

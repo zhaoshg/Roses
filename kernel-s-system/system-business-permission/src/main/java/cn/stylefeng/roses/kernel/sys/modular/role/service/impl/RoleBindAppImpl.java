@@ -58,19 +58,19 @@ public class RoleBindAppImpl implements RoleAssignOperateAction, RoleBindLimitAc
     }
 
     @Override
-    public void doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest) {
+    public void doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest, Set<Long> roleLimitMenuIdsAndOptionIds) {
 
         Long roleId = roleBindPermissionRequest.getRoleId();
         Long appId = roleBindPermissionRequest.getNodeId();
 
         // 找到所选应用的对应的所有菜单
-        Set<Long> appMenuIds = this.getAppMenuIds(appId);
+        Set<Long> appMenuIds = this.getAppMenuIds(appId, roleLimitMenuIdsAndOptionIds);
         if (ObjectUtil.isEmpty(appMenuIds)) {
             return;
         }
 
         // 找到所选应用的对应的所有菜单功能
-        List<SysMenuOptions> totalMenuOptions = this.getAppMenuOptions(appId);
+        List<SysMenuOptions> totalMenuOptions = this.getAppMenuOptions(appId, roleLimitMenuIdsAndOptionIds);
         Set<Long> totalMenuOptionIds = totalMenuOptions.stream().map(SysMenuOptions::getMenuOptionId).collect(Collectors.toSet());
 
         // 先删除角色绑定的这些菜单
@@ -183,8 +183,22 @@ public class RoleBindAppImpl implements RoleAssignOperateAction, RoleBindLimitAc
      * @since 2023/9/8 15:03
      */
     private Set<Long> getAppMenuIds(Long appId) {
+        return this.getAppMenuIds(appId, null);
+    }
+
+    /**
+     * 获取应用下的所有菜单id
+     *
+     * @author fengshuonan
+     * @since 2023/9/8 15:03
+     */
+    private Set<Long> getAppMenuIds(Long appId, Set<Long> roleLimitMenuIdsAndOptionIds) {
         LambdaQueryWrapper<SysMenu> menuLambdaQueryWrapper = new LambdaQueryWrapper<>();
         menuLambdaQueryWrapper.eq(SysMenu::getAppId, appId);
+        // 如果有范围限制，则查询范围内的菜单
+        if (ObjectUtil.isNotEmpty(roleLimitMenuIdsAndOptionIds)) {
+            menuLambdaQueryWrapper.in(SysMenu::getMenuId, roleLimitMenuIdsAndOptionIds);
+        }
         menuLambdaQueryWrapper.select(SysMenu::getMenuId);
         List<SysMenu> totalMenus = sysMenuService.list(menuLambdaQueryWrapper);
         if (ObjectUtil.isEmpty(totalMenus)) {
@@ -200,8 +214,22 @@ public class RoleBindAppImpl implements RoleAssignOperateAction, RoleBindLimitAc
      * @since 2023/9/8 15:13
      */
     private List<SysMenuOptions> getAppMenuOptions(Long appId) {
+        return this.getAppMenuOptions(appId, null);
+    }
+
+    /**
+     * 获取应用下的所有菜单功能
+     *
+     * @author fengshuonan
+     * @since 2023/9/8 15:13
+     */
+    private List<SysMenuOptions> getAppMenuOptions(Long appId, Set<Long> roleLimitMenuIdsAndOptionIds) {
         LambdaQueryWrapper<SysMenuOptions> menuOptionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
         menuOptionsLambdaQueryWrapper.eq(SysMenuOptions::getAppId, appId);
+        // 如果有范围限制，则查询范围内的菜单
+        if (ObjectUtil.isNotEmpty(roleLimitMenuIdsAndOptionIds)) {
+            menuOptionsLambdaQueryWrapper.in(SysMenuOptions::getMenuOptionId, roleLimitMenuIdsAndOptionIds);
+        }
         menuOptionsLambdaQueryWrapper.select(SysMenuOptions::getMenuOptionId, SysMenuOptions::getMenuId);
         return sysMenuOptionsService.list(menuOptionsLambdaQueryWrapper);
     }
