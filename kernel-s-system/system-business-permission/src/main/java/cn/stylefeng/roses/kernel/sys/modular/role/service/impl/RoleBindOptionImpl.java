@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleAssignOperateAction;
 import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleBindLimitAction;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleLimit;
@@ -13,6 +14,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Set;
 
 /**
  * 角色绑定功能的限制
@@ -35,10 +37,15 @@ public class RoleBindOptionImpl implements RoleAssignOperateAction, RoleBindLimi
     }
 
     @Override
-    public void doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest) {
+    public void doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest, Set<Long> roleLimitMenuIdsAndOptionIds) {
 
         Long roleId = roleBindPermissionRequest.getRoleId();
         Long menuOptionId = roleBindPermissionRequest.getNodeId();
+
+        // 非法操作
+        if (ObjectUtil.isNotEmpty(roleLimitMenuIdsAndOptionIds) && !roleLimitMenuIdsAndOptionIds.contains(menuOptionId)) {
+            return;
+        }
 
         if (roleBindPermissionRequest.getChecked()) {
             SysRoleMenuOptions sysRoleMenuOptions = new SysRoleMenuOptions();
