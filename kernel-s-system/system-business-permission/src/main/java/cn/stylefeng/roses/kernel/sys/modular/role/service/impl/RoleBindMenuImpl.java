@@ -61,6 +61,11 @@ public class RoleBindMenuImpl implements RoleAssignOperateAction, RoleBindLimitA
         Long roleId = roleBindPermissionRequest.getRoleId();
         Long menuId = roleBindPermissionRequest.getNodeId();
 
+        // 非法操作
+        if (ObjectUtil.isNotEmpty(roleLimitMenuIdsAndOptionIds) && !roleLimitMenuIdsAndOptionIds.contains(menuId)) {
+            return;
+        }
+
         // 1. 先取消绑定角色和菜单
         LambdaQueryWrapper<SysRoleMenu> sysRoleMenuLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysRoleMenuLambdaQueryWrapper.eq(SysRoleMenu::getMenuId, menuId);
