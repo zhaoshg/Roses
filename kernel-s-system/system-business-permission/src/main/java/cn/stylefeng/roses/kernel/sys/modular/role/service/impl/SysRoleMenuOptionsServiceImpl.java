@@ -8,14 +8,10 @@ import cn.stylefeng.roses.kernel.sys.api.callback.RemoveMenuCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
-import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleAssignOperateAction;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleMenuOptions;
-import cn.stylefeng.roses.kernel.sys.modular.role.enums.PermissionNodeTypeEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleMenuOptionsMapper;
-import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +30,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOptionsMapper, SysRoleMenuOptions> implements
-        SysRoleMenuOptionsService, RemoveRoleCallbackApi, RoleAssignOperateAction, RemoveMenuCallbackApi {
+        SysRoleMenuOptionsService, RemoveRoleCallbackApi, RemoveMenuCallbackApi {
 
     @Resource(name = "roleMenuOptionsCache")
     private CacheOperatorApi<List<Long>> roleMenuOptionsCache;
@@ -127,30 +123,6 @@ public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOption
         LambdaQueryWrapper<SysRoleMenuOptions> wrapper = new LambdaQueryWrapper<>();
         wrapper.in(SysRoleMenuOptions::getRoleId, beRemovedRoleIdList);
         this.remove(wrapper);
-    }
-
-    @Override
-    public PermissionNodeTypeEnum getNodeType() {
-        return PermissionNodeTypeEnum.OPTIONS;
-    }
-
-    @Override
-    public void doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest) {
-
-        Long roleId = roleBindPermissionRequest.getRoleId();
-        Long menuOptionId = roleBindPermissionRequest.getNodeId();
-
-        if (roleBindPermissionRequest.getChecked()) {
-            SysRoleMenuOptions sysRoleMenuOptions = new SysRoleMenuOptions();
-            sysRoleMenuOptions.setRoleId(roleId);
-            sysRoleMenuOptions.setMenuOptionId(menuOptionId);
-            this.save(sysRoleMenuOptions);
-        } else {
-            LambdaUpdateWrapper<SysRoleMenuOptions> wrapper = new LambdaUpdateWrapper<>();
-            wrapper.eq(SysRoleMenuOptions::getRoleId, roleId);
-            wrapper.eq(SysRoleMenuOptions::getMenuOptionId, menuOptionId);
-            this.remove(wrapper);
-        }
     }
 
     @Override
