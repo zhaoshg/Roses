@@ -134,8 +134,13 @@ public interface PermissionCodeConstants {
     String AUTH_RESOURCE = "AUTH_RESOURCE";
 
     /**
-     * 在线用户界面的取消奶奶控制标识
+     * 在线用户界面的权限标识
      */
     String ONLINE_USER = "ONLINE_USER";
+
+    /**
+     * 修改权限的权限范围权限标识
+     */
+    String CHANGE_ROLE_BIND_LIMIT = "CHANGE_ROLE_BIND_LIMIT";
 
 }
