@@ -117,8 +117,17 @@ public class SysMenuOptionsServiceImpl extends ServiceImpl<SysMenuOptionsMapper,
 
     @Override
     public List<SysMenuOptions> getTotalMenuOptionsList() {
+        return this.getTotalMenuOptionsList(null);
+    }
+
+    @Override
+    public List<SysMenuOptions> getTotalMenuOptionsList(Set<Long> roleLimitMenuIdsAndOptionIds) {
         LambdaQueryWrapper<SysMenuOptions> sysMenuOptionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        sysMenuOptionsLambdaQueryWrapper.select(SysMenuOptions::getMenuOptionId, SysMenuOptions::getMenuId, SysMenuOptions::getAppId, SysMenuOptions::getOptionName);
+        sysMenuOptionsLambdaQueryWrapper.select(SysMenuOptions::getMenuOptionId, SysMenuOptions::getMenuId, SysMenuOptions::getAppId,
+                SysMenuOptions::getOptionName);
+        if (ObjectUtil.isNotEmpty(roleLimitMenuIdsAndOptionIds)) {
+            sysMenuOptionsLambdaQueryWrapper.in(SysMenuOptions::getMenuOptionId, roleLimitMenuIdsAndOptionIds);
+        }
         return this.list(sysMenuOptionsLambdaQueryWrapper);
     }
 

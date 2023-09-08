@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.request.SysMenuOptionsReq
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 菜单下的功能操作 服务类
@@ -80,6 +81,17 @@ public interface SysMenuOptionsService extends IService<SysMenuOptions> {
      * @since 2023/6/18 20:37
      */
     List<SysMenuOptions> getTotalMenuOptionsList();
+
+    /**
+     * 获取所有的菜单功能id
+     * <p>
+     * 一般用在项目启动管理员角色绑定所有的菜单功能
+     *
+     * @param roleLimitMenuIdsAndOptionIds 角色限制的菜单id和功能id集合
+     * @author fengshuonan
+     * @since 2023/6/18 20:37
+     */
+    List<SysMenuOptions> getTotalMenuOptionsList(Set<Long> roleLimitMenuIdsAndOptionIds);
 
     /**
      * 获取功能编码集合，通过功能id集合

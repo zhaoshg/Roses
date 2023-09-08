@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 角色绑定权限，点击绑定所有时候的业务处理
@@ -52,7 +53,7 @@ public class RoleBindTotalImpl implements RoleAssignOperateAction, RoleBindLimit
     }
 
     @Override
-    public void doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest) {
+    public void doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest, Set<Long> roleLimitMenuIdsAndOptionIds) {
 
         Long roleId = roleBindPermissionRequest.getRoleId();
 
@@ -69,7 +70,7 @@ public class RoleBindTotalImpl implements RoleAssignOperateAction, RoleBindLimit
         if (roleBindPermissionRequest.getChecked()) {
 
             // 获取所有的菜单
-            List<SysMenu> totalMenus = this.sysMenuService.getTotalMenus();
+            List<SysMenu> totalMenus = this.sysMenuService.getTotalMenus(roleLimitMenuIdsAndOptionIds);
 
             // 绑定角色的所有菜单
             List<SysRoleMenu> sysRoleMenuList = new ArrayList<>();
@@ -83,7 +84,7 @@ public class RoleBindTotalImpl implements RoleAssignOperateAction, RoleBindLimit
             this.sysRoleMenuService.saveBatch(sysRoleMenuList);
 
             // 获取所有的功能
-            List<SysMenuOptions> sysMenuOptionsList = sysMenuOptionsService.getTotalMenuOptionsList();
+            List<SysMenuOptions> sysMenuOptionsList = sysMenuOptionsService.getTotalMenuOptionsList(roleLimitMenuIdsAndOptionIds);
 
             // 绑定角色的所有功能
             List<SysRoleMenuOptions> sysRoleMenuOptionsList = new ArrayList<>();
