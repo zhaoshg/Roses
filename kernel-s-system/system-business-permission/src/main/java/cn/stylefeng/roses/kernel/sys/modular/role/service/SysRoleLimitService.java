@@ -1,11 +1,9 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleLimit;
-import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleLimitRequest;
+import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
+import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionResponse;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
 
 /**
  * 角色权限限制 服务类
@@ -15,60 +13,20 @@ import java.util.List;
  */
 public interface SysRoleLimitService extends IService<SysRoleLimit> {
 
-	/**
-     * 新增
+    /**
+     * 获取角色绑定的权限限制列表
      *
-     * @param sysRoleLimitRequest 请求参数
      * @author fengshuonan
-     * @date 2023/09/08 12:55
+     * @since 2023/9/8 13:50
      */
-    void add(SysRoleLimitRequest sysRoleLimitRequest);
+    RoleBindPermissionResponse getRoleLimit(RoleBindPermissionRequest roleBindPermissionRequest);
 
-	/**
-     * 删除
+    /**
+     * 更新角色下绑定的权限限制
      *
-     * @param sysRoleLimitRequest 请求参数
      * @author fengshuonan
-     * @date 2023/09/08 12:55
+     * @since 2023/9/8 14:06
      */
-    void del(SysRoleLimitRequest sysRoleLimitRequest);
-
-	/**
-     * 编辑
-     *
-     * @param sysRoleLimitRequest 请求参数
-     * @author fengshuonan
-     * @date 2023/09/08 12:55
-     */
-    void edit(SysRoleLimitRequest sysRoleLimitRequest);
-
-	/**
-     * 查询详情
-     *
-     * @param sysRoleLimitRequest 请求参数
-     * @author fengshuonan
-     * @date 2023/09/08 12:55
-     */
-    SysRoleLimit detail(SysRoleLimitRequest sysRoleLimitRequest);
-
-	/**
-     * 获取列表
-     *
-     * @param sysRoleLimitRequest        请求参数
-     * @return List<SysRoleLimit>   返回结果
-     * @author fengshuonan
-     * @date 2023/09/08 12:55
-     */
-    List<SysRoleLimit> findList(SysRoleLimitRequest sysRoleLimitRequest);
-
-	/**
-     * 获取列表（带分页）
-     *
-     * @param sysRoleLimitRequest              请求参数
-     * @return PageResult<SysRoleLimit>   返回结果
-     * @author fengshuonan
-     * @date 2023/09/08 12:55
-     */
-    PageResult<SysRoleLimit> findPage(SysRoleLimitRequest sysRoleLimitRequest);
+    void updateRoleBindLimit(RoleBindPermissionRequest roleBindPermissionRequest);
 
 }

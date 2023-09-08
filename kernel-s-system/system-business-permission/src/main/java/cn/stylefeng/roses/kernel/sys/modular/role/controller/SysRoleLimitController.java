@@ -41,9 +41,8 @@ public class SysRoleLimitController {
             requirePermissionCode = PermissionCodeConstants.CHANGE_ROLE_BIND_LIMIT)
     public ResponseData<RoleBindPermissionResponse> getRoleBindLimit(
             @Validated(BaseRequest.detail.class) RoleBindPermissionRequest roleBindPermissionRequest) {
-
-
-        return new SuccessResponseData<>();
+        RoleBindPermissionResponse roleLimit = sysRoleLimitService.getRoleLimit(roleBindPermissionRequest);
+        return new SuccessResponseData<>(roleLimit);
     }
 
     /**
@@ -56,8 +55,7 @@ public class SysRoleLimitController {
             requirePermissionCode = PermissionCodeConstants.CHANGE_ROLE_BIND_LIMIT)
     public ResponseData<?> bindRoleLimit(@RequestBody @Validated(RoleBindPermissionRequest.roleBindPermission.class)
                                          RoleBindPermissionRequest roleBindPermissionRequest) {
-
-
+        sysRoleLimitService.updateRoleBindLimit(roleBindPermissionRequest);
         return new SuccessResponseData<>();
     }
 
