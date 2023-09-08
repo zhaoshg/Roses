@@ -85,7 +85,7 @@ public interface SysMenuService extends IService<SysMenu>, SysMenuServiceApi {
      * @author fengshuonan
      * @since 2023/6/15 9:24
      */
-    List<SysMenu> getTotalMenus(List<Long> limitMenuIds);
+    List<SysMenu> getTotalMenus(Set<Long> limitMenuIds);
 
     /**
      * 调整菜单上下级结构和菜单的顺序

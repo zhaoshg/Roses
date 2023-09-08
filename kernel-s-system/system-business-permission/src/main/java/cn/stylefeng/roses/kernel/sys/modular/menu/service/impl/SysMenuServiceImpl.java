@@ -158,7 +158,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public List<SysMenu> getTotalMenus(List<Long> limitMenuIds) {
+    public List<SysMenu> getTotalMenus(Set<Long> limitMenuIds) {
         if (ObjectUtil.isEmpty(limitMenuIds)) {
             return new ArrayList<>();
         }

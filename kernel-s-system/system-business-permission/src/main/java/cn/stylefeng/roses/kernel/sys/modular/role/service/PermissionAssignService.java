@@ -27,11 +27,23 @@ public interface PermissionAssignService extends UserDataScopeApi {
 
     /**
      * 构建一个权限树，包含了空的选择状态
+     * <p>
+     * 包含所有的菜单和菜单功能的结构
      *
      * @author fengshuonan
      * @since 2023/6/13 16:17
      */
     RoleBindPermissionResponse createSelectTreeStructure();
+
+    /**
+     * 构建一个权限树，包含了空的选择状态
+     * <p>
+     * 包含指定范围内的菜单和菜单功能的结构
+     *
+     * @author fengshuonan
+     * @since 2023/6/13 16:17
+     */
+    RoleBindPermissionResponse createSelectTreeStructure(Set<Long> limitMenuIdsAndOptionIds);
 
     /**
      * 获取角色绑定的菜单和菜单功能，直接返回菜单和菜单功能组成的id集合

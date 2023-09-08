@@ -69,16 +69,22 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
     @Resource
     private SysRoleDataScopeService sysRoleDataScopeService;
 
+    @Resource
+    private SysUserRoleServiceApi userRoleServiceApi;
+
     @Override
     public RoleBindPermissionResponse getRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest) {
 
-        // 1. 整理出一个总的响应的结构树，选择状态为空
-        RoleBindPermissionResponse selectTreeStructure = this.createSelectTreeStructure();
+        // 1. 获取角色的限制范围，如果限制范围为空，则为查询所有的范围
+        Set<Long> userRoleLimitScope = userRoleServiceApi.findCurrentUserRoleLimitScope();
 
-        // 2. 获取角色绑定的应用，菜单，功能列表
+        // 2. 整理出一个总的响应的结构树，选择状态为空
+        RoleBindPermissionResponse selectTreeStructure = this.createSelectTreeStructure(userRoleLimitScope);
+
+        // 3. 获取角色绑定的应用，菜单，功能列表
         Set<Long> roleBindMenusAndOptions = this.getRoleBindMenusAndOptions(roleBindPermissionRequest.getRoleId());
 
-        // 3. 组合结构树和角色绑定的信息，填充选择状态，封装返回结果
+        // 4. 组合结构树和角色绑定的信息，填充选择状态，封装返回结果
         return PermissionAssignFactory.fillCheckedFlag(selectTreeStructure, roleBindMenusAndOptions);
     }
 
@@ -100,9 +106,19 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
 
     @Override
     public RoleBindPermissionResponse createSelectTreeStructure() {
+        return this.createSelectTreeStructure(null);
+    }
 
-        // 获取所有的菜单
-        List<SysMenu> totalMenus = this.sysMenuService.getTotalMenus();
+    @Override
+    public RoleBindPermissionResponse createSelectTreeStructure(Set<Long> limitMenuIdsAndOptionIds) {
+
+        // 获取指定所有的菜单，如果不限制范围，则直接查询所有的菜单
+        List<SysMenu> totalMenus = null;
+        if (ObjectUtil.isEmpty(limitMenuIdsAndOptionIds)) {
+            totalMenus = this.sysMenuService.getTotalMenus();
+        } else {
+            totalMenus = this.sysMenuService.getTotalMenus(limitMenuIdsAndOptionIds);
+        }
 
         // 组装所有的叶子节点菜单【初始化菜单】
         List<RoleBindPermissionItem> totalResultMenus = PermissionAssignFactory.createPermissionMenus(totalMenus);
@@ -123,6 +139,10 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
         optionsLambdaQueryWrapper.select(SysMenuOptions::getMenuId, SysMenuOptions::getMenuOptionId, SysMenuOptions::getOptionName);
         Set<String> menuIds = totalResultMenus.stream().map(RoleBindPermissionItem::getNodeId).collect(Collectors.toSet());
         optionsLambdaQueryWrapper.in(SysMenuOptions::getMenuId, menuIds);
+        // 如果限制了范围，则只查询限制范围内的功能
+        if (ObjectUtil.isNotEmpty(limitMenuIdsAndOptionIds)) {
+            optionsLambdaQueryWrapper.in(SysMenuOptions::getMenuOptionId, limitMenuIdsAndOptionIds);
+        }
         List<SysMenuOptions> sysMenuOptionsList = sysMenuOptionsService.list(optionsLambdaQueryWrapper);
 
         // 组装所有的应用节点信息【初始化菜单功能】
