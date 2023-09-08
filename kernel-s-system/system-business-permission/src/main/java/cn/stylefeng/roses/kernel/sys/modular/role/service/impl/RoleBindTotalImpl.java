@@ -76,10 +76,7 @@ public class RoleBindTotalImpl implements RoleAssignOperateAction {
             this.sysRoleMenuService.saveBatch(sysRoleMenuList);
 
             // 获取所有的功能
-            LambdaQueryWrapper<SysMenuOptions> optionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
-            optionsLambdaQueryWrapper.select(SysMenuOptions::getAppId, SysMenuOptions::getMenuId, SysMenuOptions::getMenuOptionId,
-                    SysMenuOptions::getOptionName);
-            List<SysMenuOptions> sysMenuOptionsList = sysMenuOptionsService.list(optionsLambdaQueryWrapper);
+            List<SysMenuOptions> sysMenuOptionsList = sysMenuOptionsService.getTotalMenuOptionsList();
 
             // 绑定角色的所有功能
             List<SysRoleMenuOptions> sysRoleMenuOptionsList = new ArrayList<>();
