@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -55,7 +56,7 @@ public class RoleBindMenuImpl implements RoleAssignOperateAction, RoleBindLimitA
     }
 
     @Override
-    public void doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest) {
+    public void doOperateAction(RoleBindPermissionRequest roleBindPermissionRequest, Set<Long> roleLimitMenuIdsAndOptionIds) {
 
         Long roleId = roleBindPermissionRequest.getRoleId();
         Long menuId = roleBindPermissionRequest.getNodeId();
@@ -79,7 +80,7 @@ public class RoleBindMenuImpl implements RoleAssignOperateAction, RoleBindLimitA
         }
 
         // 2.1. 查询菜单下的所有菜单功能
-        List<Long> menuOptions = this.getMenuOptions(menuId);
+        List<Long> menuOptions = this.getMenuOptions(menuId, roleLimitMenuIdsAndOptionIds);
 
         // 菜单下没有菜单功能，则直接返回
         if (ObjectUtil.isEmpty(menuOptions)) {
@@ -172,8 +173,21 @@ public class RoleBindMenuImpl implements RoleAssignOperateAction, RoleBindLimitA
      * @since 2023/9/8 16:02
      */
     private List<Long> getMenuOptions(Long menuId) {
+        return this.getMenuOptions(menuId, null);
+    }
+
+    /**
+     * 获取菜单下的所有菜单功能
+     *
+     * @author fengshuonan
+     * @since 2023/9/8 16:02
+     */
+    private List<Long> getMenuOptions(Long menuId, Set<Long> roleLimitMenuIdsAndOptionIds) {
         LambdaQueryWrapper<SysMenuOptions> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysMenuOptions::getMenuId, menuId);
+        if (ObjectUtil.isNotEmpty(roleLimitMenuIdsAndOptionIds)) {
+            queryWrapper.in(SysMenuOptions::getMenuOptionId, roleLimitMenuIdsAndOptionIds);
+        }
         queryWrapper.select(SysMenuOptions::getMenuOptionId);
         List<SysMenuOptions> list = sysMenuOptionsService.list(queryWrapper);
         if (ObjectUtil.isEmpty(list)) {
