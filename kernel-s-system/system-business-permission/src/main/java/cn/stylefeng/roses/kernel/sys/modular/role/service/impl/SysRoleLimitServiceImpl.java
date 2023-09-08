@@ -63,7 +63,8 @@ public class SysRoleLimitServiceImpl extends ServiceImpl<SysRoleLimitMapper, Sys
      * @author fengshuonan
      * @since 2023/9/8 13:55
      */
-    private Set<Long> getRoleBindLimitList(Long roleId) {
+    @Override
+    public Set<Long> getRoleBindLimitList(Long roleId) {
         LambdaQueryWrapper<SysRoleLimit> sysRoleLimitLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysRoleLimitLambdaQueryWrapper.select(SysRoleLimit::getBusinessId);
         sysRoleLimitLambdaQueryWrapper.eq(SysRoleLimit::getRoleId, roleId);
