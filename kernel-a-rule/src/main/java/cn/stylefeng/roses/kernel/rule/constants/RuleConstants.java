@@ -55,7 +55,7 @@ public interface RuleConstants {
     /**
      * 请求成功的返回码
      */
-    String SUCCESS_CODE = "00000";
+    String SUCCESS_CODE = "0";
 
     /**
      * 请求成功的返回信息
