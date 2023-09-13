@@ -159,12 +159,14 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public List<SysMenu> getTotalMenus(Set<Long> limitMenuIds) {
-        if (ObjectUtil.isEmpty(limitMenuIds)) {
-            return new ArrayList<>();
-        }
         LambdaQueryWrapper<SysMenu> menuLambdaQueryWrapper = new LambdaQueryWrapper<>();
         menuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuName, SysMenu::getMenuParentId, SysMenu::getAppId);
-        menuLambdaQueryWrapper.in(SysMenu::getMenuId, limitMenuIds);
+
+        // 如果限制菜单不为空，则根据限制菜单id进行筛选，否则查询所有菜单
+        if (ObjectUtil.isNotEmpty(limitMenuIds)) {
+            menuLambdaQueryWrapper.in(SysMenu::getMenuId, limitMenuIds);
+        }
+
         menuLambdaQueryWrapper.orderByAsc(SysMenu::getMenuSort);
         return this.list(menuLambdaQueryWrapper);
     }
