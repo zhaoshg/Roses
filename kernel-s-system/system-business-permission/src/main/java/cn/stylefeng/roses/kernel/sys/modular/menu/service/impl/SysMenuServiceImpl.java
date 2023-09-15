@@ -25,6 +25,7 @@ import cn.stylefeng.roses.kernel.sys.modular.menu.mapper.SysMenuMapper;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.request.SysMenuRequest;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.response.AppGroupDetail;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
+import cn.stylefeng.roses.kernel.sys.modular.menu.util.MenuOrderFixUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -151,16 +152,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public List<SysMenu> getTotalMenus() {
-        LambdaQueryWrapper<SysMenu> menuLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        menuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuName, SysMenu::getMenuParentId, SysMenu::getAppId);
-        menuLambdaQueryWrapper.orderByAsc(SysMenu::getMenuSort);
-        return this.list(menuLambdaQueryWrapper);
+        return this.getTotalMenus(null);
     }
 
     @Override
     public List<SysMenu> getTotalMenus(Set<Long> limitMenuIds) {
         LambdaQueryWrapper<SysMenu> menuLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        menuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuName, SysMenu::getMenuParentId, SysMenu::getAppId);
+        menuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuName, SysMenu::getMenuParentId, SysMenu::getAppId, SysMenu::getMenuSort);
 
         // 如果限制菜单不为空，则根据限制菜单id进行筛选，否则查询所有菜单
         if (ObjectUtil.isNotEmpty(limitMenuIds)) {
@@ -168,7 +166,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         }
 
         menuLambdaQueryWrapper.orderByAsc(SysMenu::getMenuSort);
-        return this.list(menuLambdaQueryWrapper);
+        List<SysMenu> list = this.list(menuLambdaQueryWrapper);
+
+        // 对菜单进行再次排序，因为有的菜单是101，有的菜单是10101，需要将位数小的补0，再次排序
+        MenuOrderFixUtil.fixOrder(list);
+
+        return list;
     }
 
     @Override
