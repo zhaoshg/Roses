@@ -296,6 +296,9 @@ public class UserIndexInfoService {
 
         userIndexInfo.setPermissionCodeList(permissionCodeList);
 
+        // 将用户菜单进行排序处理
+        userMenuList.sort(Comparator.comparing(SysMenu::getMenuSort));
+
         return userMenuList;
     }
 
