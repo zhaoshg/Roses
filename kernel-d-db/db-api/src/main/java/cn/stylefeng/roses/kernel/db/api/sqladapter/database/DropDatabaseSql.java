@@ -56,4 +56,19 @@ public class DropDatabaseSql extends AbstractSql {
         return "DROP DATASPACE ?;";
     }
 
+    @Override
+    protected String dm() {
+        return oracle();
+    }
+
+    @Override
+    protected String kingbase() {
+        return pgSql();
+    }
+
+    @Override
+    protected String vastbase() {
+        return pgSql();
+    }
+
 }

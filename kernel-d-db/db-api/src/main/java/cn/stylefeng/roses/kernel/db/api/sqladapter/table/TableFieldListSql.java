@@ -72,4 +72,19 @@ public class TableFieldListSql extends AbstractSql {
         return "select column_name as columnName, comments as columnComment from user_col_comments where Table_Name= ?";
     }
 
+    @Override
+    protected String dm() {
+        return oracle();
+    }
+
+    @Override
+    protected String kingbase() {
+        return pgSql();
+    }
+
+    @Override
+    protected String vastbase() {
+        return pgSql();
+    }
+
 }

@@ -55,4 +55,19 @@ public class DatabaseListSql extends AbstractSql {
     protected String oracle() {
         return "select db_name,jdbc_driver,jdbc_url,username,password from sys_database_info";
     }
+
+    @Override
+    protected String dm() {
+        return oracle();
+    }
+
+    @Override
+    protected String kingbase() {
+        return pgSql();
+    }
+
+    @Override
+    protected String vastbase() {
+        return pgSql();
+    }
 }

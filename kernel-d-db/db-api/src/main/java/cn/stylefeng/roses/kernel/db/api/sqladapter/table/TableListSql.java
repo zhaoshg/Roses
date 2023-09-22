@@ -75,4 +75,19 @@ public class TableListSql extends AbstractSql {
                 "where tablespace_name is not null and  user= ?";
     }
 
+    @Override
+    protected String dm() {
+        return oracle();
+    }
+
+    @Override
+    protected String kingbase() {
+        return pgSql();
+    }
+
+    @Override
+    protected String vastbase() {
+        return pgSql();
+    }
+
 }

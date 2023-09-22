@@ -55,4 +55,19 @@ public class DeleteDatabaseInfoSql extends AbstractSql {
     protected String oracle() {
         return "DELETE from sys_database_info where db_name = ?";
     }
+
+    @Override
+    protected String dm() {
+        return oracle();
+    }
+
+    @Override
+    protected String kingbase() {
+        return pgSql();
+    }
+
+    @Override
+    protected String vastbase() {
+        return pgSql();
+    }
 }

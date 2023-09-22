@@ -55,4 +55,20 @@ public class GetDatabasesSql extends AbstractSql {
     protected String oracle() {
         return "";
     }
+
+    @Override
+    protected String dm() {
+        return oracle();
+    }
+
+    @Override
+    protected String kingbase() {
+        return pgSql();
+    }
+
+    @Override
+    protected String vastbase() {
+        return pgSql();
+    }
+
 }

@@ -31,4 +31,20 @@ public class AddDatabaseInfoSql extends AbstractSql {
     protected String oracle() {
         return "INSERT INTO sys_database_info(db_id, db_name, jdbc_driver, jdbc_url, username, password,  remarks, create_time)  VALUES (?, ?, ?, ?, ?, ?, ?, to_timestamp(?, 'SYYYY-MM-DD HH24:MI:SS:FF9'))";
     }
+
+    @Override
+    protected String dm() {
+        return oracle();
+    }
+
+    @Override
+    protected String kingbase() {
+        return pgSql();
+    }
+
+    @Override
+    protected String vastbase() {
+        return pgSql();
+    }
+
 }

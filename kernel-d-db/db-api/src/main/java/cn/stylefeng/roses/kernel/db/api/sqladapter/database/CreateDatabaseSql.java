@@ -57,4 +57,20 @@ public class CreateDatabaseSql extends AbstractSql {
     protected String oracle() {
         return "create tablespace ? datafile '/opt/oracle/guns.dbf' size 500m autoextend on next 5m maxsize unlimited;";
     }
+
+    @Override
+    protected String dm() {
+        return oracle();
+    }
+
+    @Override
+    protected String kingbase() {
+        return pgSql();
+    }
+
+    @Override
+    protected String vastbase() {
+        return pgSql();
+    }
+
 }
