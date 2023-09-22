@@ -44,17 +44,26 @@ public abstract class AbstractSql {
      * @since 2020/10/31 23:44
      */
     public String getSql(String jdbcUrl) {
+        if (jdbcUrl.contains(DbTypeEnum.MYSQL.getUrlWords())) {
+            return mysql();
+        }
+        if (jdbcUrl.contains(DbTypeEnum.PG_SQL.getUrlWords())) {
+            return pgSql();
+        }
         if (jdbcUrl.contains(DbTypeEnum.ORACLE.getUrlWords())) {
             return oracle();
         }
         if (jdbcUrl.contains(DbTypeEnum.DM.getUrlWords())) {
-            return oracle();
+            return dm();
         }
         if (jdbcUrl.contains(DbTypeEnum.MS_SQL.getUrlWords())) {
             return sqlServer();
         }
-        if (jdbcUrl.contains(DbTypeEnum.PG_SQL.getUrlWords())) {
-            return pgSql();
+        if (jdbcUrl.contains(DbTypeEnum.VAST_DATA.getUrlWords())) {
+            return vastbase();
+        }
+        if (jdbcUrl.contains(DbTypeEnum.KING_BASE.getUrlWords())) {
+            return kingbase();
         }
         return mysql();
     }
@@ -94,5 +103,32 @@ public abstract class AbstractSql {
      * @since 2020/10/31 23:45
      */
     protected abstract String oracle();
+
+    /**
+     * 达梦的sql
+     *
+     * @return 具体的sql
+     * @author fengshuonan
+     * @since 2023/9/22 14:12
+     */
+    protected abstract String dm();
+
+    /**
+     * 人大金仓的sql
+     *
+     * @return 具体的sql
+     * @author fengshuonan
+     * @since 2023/9/22 14:12
+     */
+    protected abstract String kingbase();
+
+    /**
+     * 海量数据库的sql
+     *
+     * @return 具体的sql
+     * @author fengshuonan
+     * @since 2023/9/22 14:12
+     */
+    protected abstract String vastbase();
 
 }

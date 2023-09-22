@@ -29,14 +29,24 @@ public enum DbTypeEnum {
     ORACLE("jdbc:oracle", "oracle", "select 1 from dual"),
 
     /**
+     * mssql
+     */
+    MS_SQL("jdbc:jtds:sqlserver", "mssql", "select 1"),
+
+    /**
      * 达梦（使用oracle的mapping.xml）
      */
     DM("jdbc:dm", "oracle", "select 1 from dual"),
 
     /**
-     * mssql
+     * 海量数据库
      */
-    MS_SQL("jdbc:jtds:sqlserver", "mssql", "select 1");
+    VAST_DATA("jdbc:vastbase", "pgsql", "select version()"),
+
+    /**
+     * 人大金仓
+     */
+    KING_BASE("jdbc:kingbase8", "pgsql", "select version()");
 
     /**
      * spring.datasource.url中包含的关键字
