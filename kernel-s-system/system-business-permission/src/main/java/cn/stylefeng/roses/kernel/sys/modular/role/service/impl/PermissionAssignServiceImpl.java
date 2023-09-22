@@ -142,7 +142,7 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
         // 获取所有的菜单上的功能
         LambdaQueryWrapper<SysMenuOptions> optionsLambdaQueryWrapper = new LambdaQueryWrapper<>();
         optionsLambdaQueryWrapper.select(SysMenuOptions::getMenuId, SysMenuOptions::getMenuOptionId, SysMenuOptions::getOptionName);
-        Set<String> menuIds = totalResultMenus.stream().map(RoleBindPermissionItem::getNodeId).collect(Collectors.toSet());
+        Set<Long> menuIds = totalResultMenus.stream().map(i -> Long.valueOf(i.getNodeId())).collect(Collectors.toSet());
         optionsLambdaQueryWrapper.in(SysMenuOptions::getMenuId, menuIds);
         // 如果限制了范围，则只查询限制范围内的功能
         if (ObjectUtil.isNotEmpty(limitMenuIdsAndOptionIds)) {
