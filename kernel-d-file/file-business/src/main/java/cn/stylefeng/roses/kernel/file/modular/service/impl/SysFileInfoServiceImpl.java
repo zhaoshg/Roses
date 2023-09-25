@@ -28,6 +28,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
@@ -111,7 +112,12 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
             // 如果是存储在数据库，从数据库中获取，其他的方式走FileOperatorApi
             if (FileLocationEnum.DB.getCode().equals(sysFileInfo.getFileLocation())) {
                 SysFileStorage storage = sysFileStorageService.getById(fileId);
-                fileBytes = storage.getFileBytes();
+                // 如果在数据库中找不到这条记录，则从本地资源路径中找，因为有的文件字节较大不宜往数据库中存储
+                if (storage == null) {
+                    fileBytes = ResourceUtil.readBytes("pics/" + sysFileInfo.getFileId() + "." + sysFileInfo.getFileSuffix());
+                } else {
+                    fileBytes = storage.getFileBytes();
+                }
             } else {
                 fileBytes = fileOperatorApi.getFileBytes(sysFileInfo.getFileBucket(), sysFileInfo.getFileObjectName());
             }
