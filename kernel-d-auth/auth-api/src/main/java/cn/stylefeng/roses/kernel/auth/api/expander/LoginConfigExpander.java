@@ -12,19 +12,6 @@ import cn.stylefeng.roses.kernel.config.api.context.ConfigContext;
 public class LoginConfigExpander {
 
     /**
-     * 登录账号密码登录最大的错误次数
-     * <p>
-     * 超过此次数则冻结账号
-     *
-     * @author fengshuonan
-     * @since 2023/10/3 20:25
-     */
-    public static Integer getMaxErrorLoginCount() {
-        return ConfigContext.me()
-                .getSysConfigValueWithDefault("SYS_LOGIN_MAX_ERROR_LOGIN_COUNT", Integer.class, LoginCacheConstants.MAX_ERROR_LOGIN_COUNT);
-    }
-
-    /**
      * 获取单账号单端登录的开关
      * <p>
      * 单账号单端登录为限制一个账号多个浏览器登录
@@ -50,13 +37,66 @@ public class LoginConfigExpander {
     }
 
     /**
-     * 口令最小长度
+     * 密码策略：密码最大重试次数
+     * <p>
+     * 超过此次数则冻结账号
+     *
+     * @author fengshuonan
+     * @since 2023/10/3 20:25
+     */
+    public static Integer getMaxErrorLoginCount() {
+        return ConfigContext.me()
+                .getSysConfigValueWithDefault("SYS_LOGIN_MAX_ERROR_LOGIN_COUNT", Integer.class, LoginCacheConstants.MAX_ERROR_LOGIN_COUNT);
+    }
+
+    /**
+     * 密码策略：口令最小长度
      *
      * @author fengshuonan
      * @since 2023/10/3 20:39
      */
     public static Integer getMinPasswordLength() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_LOGIN_MIN_PASSWORD_LENGTH", Integer.class, 6);
+    }
+
+    /**
+     * 密码策略：最少特殊符号数量
+     *
+     * @author fengshuonan
+     * @since 2023/10/3 20:44
+     */
+    public static Integer getPasswordMinSpecialSymbolCount() {
+        return ConfigContext.me().getSysConfigValueWithDefault("SYS_LOGIN_PASSWORD_MIN_SPECIAL_SYMBOL_COUNT", Integer.class, 0);
+    }
+
+    /**
+     * 密码策略：最少大写字母数量
+     *
+     * @author fengshuonan
+     * @since 2023/10/3 21:14
+     */
+    public static Integer getPasswordMinUpperCaseCount() {
+        return ConfigContext.me().getSysConfigValueWithDefault("SYS_LOGIN_PASSWORD_MIN_UPPER_CASE_COUNT", Integer.class, 0);
+    }
+
+    /**
+     * 密码策略：最少小写字母数量
+     *
+     * @author fengshuonan
+     * @since 2023/10/3 21:16
+     */
+    public static Integer getPasswordMinLowerCaseCount() {
+        return ConfigContext.me().getSysConfigValueWithDefault("SYS_LOGIN_PASSWORD_MIN_LOWER_CASE_COUNT", Integer.class, 0);
+    }
+
+    /**
+     * 密码策略：最少数字符号的数量
+     *
+     * @author fengshuonan
+     * @since 2023/10/3 21:18
+     */
+    public static Integer getPasswordMinNumberCount() {
+        return ConfigContext.me().getSysConfigValueWithDefault("SYS_LOGIN_PASSWORD_MIN_NUMBER_COUNT", Integer.class, 0);
     }
 
 }
