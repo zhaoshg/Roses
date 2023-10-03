@@ -102,19 +102,6 @@ public class AuthConfigExpander {
     }
 
     /**
-     * 获取单账号单端登录的开关
-     * <p>
-     * 单账号单端登录为限制一个账号多个浏览器登录
-     *
-     * @return true-开启单端限制，false-关闭单端限制
-     * @author fengshuonan
-     * @since 2020/10/21 14:31
-     */
-    public static boolean getSingleAccountLoginFlag() {
-        return ConfigContext.me().getSysConfigValueWithDefault("SYS_SINGLE_ACCOUNT_LOGIN_FLAG", Boolean.class, false);
-    }
-
-    /**
      * 默认解析jwt的秘钥（用于解析sso传过来的token）
      *
      * @author fengshuonan
@@ -203,18 +190,6 @@ public class AuthConfigExpander {
      */
     public static String getSsoUrl() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_SSO_HOST", String.class, SYS_AUTH_SSO_HOST);
-    }
-
-    /**
-     * 登录密码是否进行RSA加密校验，默认关闭
-     * <p>
-     * 需要前端配合加密后再打开开关
-     *
-     * @author fengshuonan
-     * @since 2022/10/16 23:28
-     */
-    public static Boolean getPasswordRsaValidateFlag() {
-        return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_PASSWORD_RSA_VALIDATE", Boolean.class, false);
     }
 
 }

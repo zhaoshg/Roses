@@ -12,7 +12,7 @@ import cn.stylefeng.roses.kernel.auth.api.context.AuthJwtContext;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.exception.AuthException;
 import cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum;
-import cn.stylefeng.roses.kernel.auth.api.expander.AuthConfigExpander;
+import cn.stylefeng.roses.kernel.auth.api.expander.LoginConfigExpander;
 import cn.stylefeng.roses.kernel.auth.api.password.PasswordStoredEncryptApi;
 import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginRequest;
 import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginResponse;
@@ -211,7 +211,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
             sessionManagerApi.createSession(jwtToken, loginUser);
 
             // 如果开启了单账号单端在线，则踢掉已经上线的该用户
-            if (AuthConfigExpander.getSingleAccountLoginFlag()) {
+            if (LoginConfigExpander.getSingleAccountLoginFlag()) {
                 sessionManagerApi.removeSessionExcludeToken(jwtToken);
             }
         }

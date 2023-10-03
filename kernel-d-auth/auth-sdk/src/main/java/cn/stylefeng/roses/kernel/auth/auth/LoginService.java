@@ -163,7 +163,7 @@ public class LoginService {
             sessionManagerApi.createSession(userLoginToken, loginUser);
 
             // 11. 如果开启了单账号单端在线，则踢掉已经上线的该用户
-            if (AuthConfigExpander.getSingleAccountLoginFlag()) {
+            if (LoginConfigExpander.getSingleAccountLoginFlag()) {
                 sessionManagerApi.removeSessionExcludeToken(userLoginToken);
             }
         }
@@ -191,7 +191,7 @@ public class LoginService {
      * @since 2023/6/20 23:15
      */
     private void decryptRequestPassword(LoginRequest loginRequest) {
-        if (loginRequest.getPassword() != null && AuthConfigExpander.getPasswordRsaValidateFlag()) {
+        if (loginRequest.getPassword() != null && LoginConfigExpander.getPasswordRsaValidateFlag()) {
             String decryptPassword = passwordTransferEncryptApi.decrypt(loginRequest.getPassword());
             loginRequest.setPassword(decryptPassword);
         }
