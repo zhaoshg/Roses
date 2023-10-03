@@ -9,6 +9,7 @@ import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.password.PasswordStoredEncryptApi;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.auth.api.pojo.password.SaltedEncryptResult;
+import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
@@ -68,6 +69,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Resource
     private TenantCodeGetApi tenantCodeGetApi;
+
+    @Resource(name = "loginErrorCountCacheApi")
+    private CacheOperatorApi<Integer> loginErrorCountCacheApi;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -218,6 +222,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         updateWrapper.eq(SysUser::getUserId, sysUserRequest.getUserId());
         this.update(updateWrapper);
 
+        // 如果是启用用户，则清除掉用户密码错误次数的缓存
+        if (statusFlag.equals(UserStatusEnum.ENABLE.getCode())) {
+            // 获取用户id对应的账号
+            Long userId = sysUserRequest.getUserId();
+            LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
+            sysUserLambdaQueryWrapper.select(SysUser::getAccount);
+            SysUser sysUser = this.getOne(sysUserLambdaQueryWrapper);
+            if (sysUser != null) {
+                loginErrorCountCacheApi.remove(sysUser.getAccount());
+            }
+        }
     }
 
     @Override
