@@ -99,4 +99,24 @@ public class LoginConfigExpander {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_LOGIN_PASSWORD_MIN_NUMBER_COUNT", Integer.class, 0);
     }
 
+    /**
+     * 密码策略：最少多久更新一次密码，单位天
+     *
+     * @author fengshuonan
+     * @since 2023/10/3 21:27
+     */
+    public static Integer getPasswordMinUpdateDays() {
+        return ConfigContext.me().getSysConfigValueWithDefault("SYS_LOGIN_PASSWORD_MIN_UPDATE_DAYS", Integer.class, 180);
+    }
+
+    /**
+     * 密码策略：修改密码时，不能和历史密码重复的次数
+     *
+     * @author fengshuonan
+     * @since 2023/10/3 21:50
+     */
+    public static Integer getPasswordMinCantRepeatTimes() {
+        return ConfigContext.me().getSysConfigValueWithDefault("SYS_LOGIN_PASSWORD_MIN_CANT_REPEAT_TIMES", Integer.class, 0);
+    }
+
 }
