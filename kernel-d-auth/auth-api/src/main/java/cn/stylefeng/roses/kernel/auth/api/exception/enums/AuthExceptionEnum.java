@@ -121,7 +121,7 @@ public enum AuthExceptionEnum implements AbstractExceptionEnum {
     /**
      * 密码重试次数过多，帐号被锁定
      */
-    LOGIN_LOCKED(RuleConstants.BUSINESS_ERROR_TYPE_CODE + AuthConstants.AUTH_EXCEPTION_STEP_CODE + "18", "密码重试次数过多，帐号被锁定");
+    LOGIN_LOCKED(RuleConstants.BUSINESS_ERROR_TYPE_CODE + AuthConstants.AUTH_EXCEPTION_STEP_CODE + "18", "账号或密码错误!");
 
     /**
      * 错误编码

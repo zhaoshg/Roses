@@ -136,4 +136,12 @@ public interface SysUserServiceApi {
      */
     UserInfoDetailDTO getUserDetail(Long userId);
 
+    /**
+     * 锁定用户状态
+     *
+     * @author fengshuonan
+     * @since 2023/10/3 22:11
+     */
+    void lockUserStatus(String tenantCode, String account);
+
 }

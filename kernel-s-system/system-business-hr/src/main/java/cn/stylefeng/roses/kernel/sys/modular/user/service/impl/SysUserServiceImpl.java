@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import cn.stylefeng.roses.kernel.auth.api.TenantCodeGetApi;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.password.PasswordStoredEncryptApi;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
@@ -64,6 +65,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Resource
     private FileInfoApi fileInfoApi;
+
+    @Resource
+    private TenantCodeGetApi tenantCodeGetApi;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -541,6 +545,23 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
 
         return result;
+    }
+
+    @Override
+    public void lockUserStatus(String tenantCode, String account) {
+
+        // 获取租户id
+        Long tenantId = tenantCodeGetApi.getTenantIdByCode(tenantCode);
+
+        try {
+            TenantIdHolder.set(tenantId);
+            LambdaUpdateWrapper<SysUser> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+            lambdaUpdateWrapper.eq(SysUser::getAccount, account);
+            lambdaUpdateWrapper.set(SysUser::getStatusFlag, UserStatusEnum.DISABLE.getKey());
+            this.update(lambdaUpdateWrapper);
+        } finally {
+            TenantIdHolder.remove();
+        }
     }
 
     /**

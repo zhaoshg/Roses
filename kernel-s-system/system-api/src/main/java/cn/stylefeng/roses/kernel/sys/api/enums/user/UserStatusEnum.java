@@ -47,14 +47,9 @@ public enum UserStatusEnum implements ReadableEnum<UserStatusEnum> {
     ENABLE(1, "启用"),
 
     /**
-     * 禁用
-     */
-    DISABLE(2, "禁用"),
-
-    /**
      * 冻结
      */
-    FREEZE(3, "冻结");
+    DISABLE(2, "冻结");
 
     private final Integer code;
 
@@ -105,7 +100,7 @@ public enum UserStatusEnum implements ReadableEnum<UserStatusEnum> {
         if (code == null) {
             throw new ServiceException(UserExceptionEnum.REQUEST_USER_STATUS_EMPTY);
         }
-        if (ENABLE.getCode().equals(code) || DISABLE.getCode().equals(code) || FREEZE.getCode().equals(code)) {
+        if (ENABLE.getCode().equals(code) || DISABLE.getCode().equals(code)) {
             return;
         }
         throw new SysException(UserExceptionEnum.REQUEST_USER_STATUS_ERROR, code);

@@ -239,6 +239,8 @@ public class LoginService {
     private Integer validatePasswordRetryTimes(LoginRequest loginRequest) {
         Integer loginErrorCount = loginErrorCountCacheApi.get(loginRequest.getAccount());
         if (loginErrorCount != null && loginErrorCount >= LoginConfigExpander.getMaxErrorLoginCount()) {
+            // 修改用户状态为锁定
+            sysUserServiceApi.lockUserStatus(loginRequest.getTenantCode(), loginRequest.getAccount());
             throw new AuthException(AuthExceptionEnum.LOGIN_LOCKED);
         }
         return loginErrorCount;
