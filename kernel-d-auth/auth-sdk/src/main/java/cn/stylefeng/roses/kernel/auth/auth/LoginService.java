@@ -10,12 +10,12 @@ import cn.stylefeng.roses.kernel.auth.api.SsoServerApi;
 import cn.stylefeng.roses.kernel.auth.api.TempSecretApi;
 import cn.stylefeng.roses.kernel.auth.api.TenantCodeGetApi;
 import cn.stylefeng.roses.kernel.auth.api.constants.AuthConstants;
-import cn.stylefeng.roses.kernel.auth.api.constants.LoginCacheConstants;
 import cn.stylefeng.roses.kernel.auth.api.context.AuthJwtContext;
 import cn.stylefeng.roses.kernel.auth.api.enums.SsoClientTypeEnum;
 import cn.stylefeng.roses.kernel.auth.api.exception.AuthException;
 import cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum;
 import cn.stylefeng.roses.kernel.auth.api.expander.AuthConfigExpander;
+import cn.stylefeng.roses.kernel.auth.api.expander.LoginConfigExpander;
 import cn.stylefeng.roses.kernel.auth.api.password.PasswordStoredEncryptApi;
 import cn.stylefeng.roses.kernel.auth.api.password.PasswordTransferEncryptApi;
 import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginRequest;
@@ -238,7 +238,7 @@ public class LoginService {
      */
     private Integer validatePasswordRetryTimes(LoginRequest loginRequest) {
         Integer loginErrorCount = loginErrorCountCacheApi.get(loginRequest.getAccount());
-        if (loginErrorCount != null && loginErrorCount >= LoginCacheConstants.MAX_ERROR_LOGIN_COUNT) {
+        if (loginErrorCount != null && loginErrorCount >= LoginConfigExpander.getMaxErrorLoginCount()) {
             throw new AuthException(AuthExceptionEnum.LOGIN_LOCKED);
         }
         return loginErrorCount;

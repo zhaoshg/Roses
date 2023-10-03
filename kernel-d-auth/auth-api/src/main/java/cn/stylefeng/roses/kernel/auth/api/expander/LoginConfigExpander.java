@@ -1,22 +1,26 @@
 package cn.stylefeng.roses.kernel.auth.api.expander;
 
+import cn.stylefeng.roses.kernel.auth.api.constants.LoginCacheConstants;
 import cn.stylefeng.roses.kernel.config.api.context.ConfigContext;
 
 /**
- * 登录相关配置快速获取
+ * 登录相关的配置
  *
- * @author xixiaowei
- * @since 2022/1/24 15:47
+ * @author fengshuonan
+ * @since 2023/10/3 20:24
  */
 public class LoginConfigExpander {
 
     /**
-     * 获取帐号错误次数校验开关
+     * 登录账号密码登录最大的错误次数
+     * <p>
+     * 超过此次数则冻结账号
      *
-     * @author xixiaowei
-     * @since 2022/1/24 15:48
+     * @author fengshuonan
+     * @since 2023/10/3 20:25
      */
-    public static boolean getAccountErrorDetectionFlag() {
-        return ConfigContext.me().getSysConfigValueWithDefault("ACCOUNT_ERROR_DETECTION", Boolean.class, false);
+    public static Integer getMaxErrorLoginCount() {
+        return ConfigContext.me().getSysConfigValueWithDefault("SYS_LOGIN_MAX_ERROR_LOGIN_COUNT", Integer.class, LoginCacheConstants.MAX_ERROR_LOGIN_COUNT);
     }
+
 }
