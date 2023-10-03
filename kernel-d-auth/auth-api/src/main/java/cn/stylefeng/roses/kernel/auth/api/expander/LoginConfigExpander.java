@@ -20,7 +20,8 @@ public class LoginConfigExpander {
      * @since 2023/10/3 20:25
      */
     public static Integer getMaxErrorLoginCount() {
-        return ConfigContext.me().getSysConfigValueWithDefault("SYS_LOGIN_MAX_ERROR_LOGIN_COUNT", Integer.class, LoginCacheConstants.MAX_ERROR_LOGIN_COUNT);
+        return ConfigContext.me()
+                .getSysConfigValueWithDefault("SYS_LOGIN_MAX_ERROR_LOGIN_COUNT", Integer.class, LoginCacheConstants.MAX_ERROR_LOGIN_COUNT);
     }
 
     /**
@@ -46,6 +47,16 @@ public class LoginConfigExpander {
      */
     public static Boolean getPasswordRsaValidateFlag() {
         return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_PASSWORD_RSA_VALIDATE", Boolean.class, false);
+    }
+
+    /**
+     * 口令最小长度
+     *
+     * @author fengshuonan
+     * @since 2023/10/3 20:39
+     */
+    public static Integer getMinPasswordLength() {
+        return ConfigContext.me().getSysConfigValueWithDefault("SYS_LOGIN_MIN_PASSWORD_LENGTH", Integer.class, 6);
     }
 
 }
