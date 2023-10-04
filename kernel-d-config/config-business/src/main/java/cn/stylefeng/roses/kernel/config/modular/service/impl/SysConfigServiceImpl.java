@@ -336,4 +336,17 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         }
     }
 
+    @Override
+    public void updateConfigByCode(String code, String value) {
+
+        // 更新系统配置的值
+        LambdaUpdateWrapper<SysConfig> sysConfigLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        sysConfigLambdaUpdateWrapper.eq(SysConfig::getConfigCode, code);
+        sysConfigLambdaUpdateWrapper.set(SysConfig::getConfigValue, value);
+        this.update(sysConfigLambdaUpdateWrapper);
+
+        // 更新缓存中的值
+        ConfigContext.me().putConfig(code, value);
+    }
+
 }

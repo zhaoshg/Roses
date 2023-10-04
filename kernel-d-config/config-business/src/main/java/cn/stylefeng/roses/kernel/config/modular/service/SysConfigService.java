@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.config.modular.service;
 
+import cn.stylefeng.roses.kernel.config.api.ConfigServiceApi;
 import cn.stylefeng.roses.kernel.config.api.InitConfigApi;
 import cn.stylefeng.roses.kernel.config.api.pojo.ConfigInitRequest;
 import cn.stylefeng.roses.kernel.config.modular.entity.SysConfig;
@@ -38,7 +39,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author fengshuonan
  * @since 2020/4/14 11:14
  */
-public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
+public interface SysConfigService extends IService<SysConfig>, InitConfigApi, ConfigServiceApi {
 
     /**
      * 添加系统参数配置
@@ -65,7 +66,7 @@ public interface SysConfigService extends IService<SysConfig>, InitConfigApi {
      * @date 2023/07/03 21:29
      */
     void batchDelete(SysConfigParam sysConfigParam);
-    
+
     /**
      * 删除系统参数配置
      *
