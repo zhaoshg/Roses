@@ -26,4 +26,14 @@ public interface SecurityConfigService {
      */
     void updateSecurityConfig(SecurityConfig securityConfig);
 
+    /**
+     * 校验密码是否符合当前配置的安全规则，如果不符合规则，直接抛出异常
+     *
+     * @param updatePasswordFlag 是否是修改密码的标识
+     * @param password           新密码
+     * @author fengshuonan
+     * @since 2023/10/4 22:40
+     */
+    void validatePasswordSecurityRule(boolean updatePasswordFlag, String password);
+
 }
