@@ -20,6 +20,7 @@ import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
 import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.SecurityConfigService;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.context.DataScopeContext;
@@ -72,6 +73,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Resource(name = "loginErrorCountCacheApi")
     private CacheOperatorApi<Integer> loginErrorCountCacheApi;
+
+    @Resource
+    private SecurityConfigService securityConfigService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -305,6 +309,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 sysUser.getPassword())) {
             throw new ServiceException(SysUserExceptionEnum.USER_PWD_ERROR);
         }
+
+        // 校验新密码规则，根据密码策略
+        securityConfigService.validatePasswordSecurityRule(true, sysUserRequest.getNewPassword());
 
         // 设置新的加密后密码和盐
         SaltedEncryptResult saltedEncryptResult = passwordStoredEncryptApi.encryptWithSalt(sysUserRequest.getNewPassword());
