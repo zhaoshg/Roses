@@ -1,4 +1,4 @@
-package cn.stylefeng.roses.kernel.sys.modular.security.pojo;
+package cn.stylefeng.roses.kernel.sys.api.pojo.security;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import lombok.Data;

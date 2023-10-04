@@ -1,6 +1,6 @@
-package cn.stylefeng.roses.kernel.sys.modular.security.service;
+package cn.stylefeng.roses.kernel.sys.api;
 
-import cn.stylefeng.roses.kernel.sys.modular.security.pojo.SecurityConfig;
+import cn.stylefeng.roses.kernel.sys.api.pojo.security.SecurityConfig;
 
 /**
  * 系统安全配置的业务

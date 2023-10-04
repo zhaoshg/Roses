@@ -2,10 +2,10 @@ package cn.stylefeng.roses.kernel.sys.modular.security.service.impl;
 
 import cn.stylefeng.roses.kernel.auth.api.expander.LoginConfigExpander;
 import cn.stylefeng.roses.kernel.config.api.ConfigServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.SecurityConfigService;
 import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.SecurityStrategyExceptionEnum;
-import cn.stylefeng.roses.kernel.sys.modular.security.pojo.SecurityConfig;
-import cn.stylefeng.roses.kernel.sys.modular.security.service.SecurityConfigService;
+import cn.stylefeng.roses.kernel.sys.api.pojo.security.SecurityConfig;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
