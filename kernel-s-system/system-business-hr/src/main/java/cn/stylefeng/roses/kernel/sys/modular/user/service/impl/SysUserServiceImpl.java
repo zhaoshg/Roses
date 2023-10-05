@@ -97,6 +97,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         this.save(sysUser);
 
+        // 记录一个密码修改记录
+        securityConfigService.recordPasswordEditLog(sysUser.getUserId(), saltedEncryptResult.getEncryptPassword(),
+                saltedEncryptResult.getPasswordSalt());
+
         // 更新用户的任职信息
         sysUserOrgService.updateUserOrg(sysUser.getUserId(), sysUserRequest.getUserOrgList());
 
@@ -326,6 +330,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setPasswordSalt(saltedEncryptResult.getPasswordSalt());
 
         this.updateById(sysUser);
+
+        // 记录一个密码修改记录
+        securityConfigService.recordPasswordEditLog(sysUser.getUserId(), saltedEncryptResult.getEncryptPassword(),
+                saltedEncryptResult.getPasswordSalt());
     }
 
     @Override
