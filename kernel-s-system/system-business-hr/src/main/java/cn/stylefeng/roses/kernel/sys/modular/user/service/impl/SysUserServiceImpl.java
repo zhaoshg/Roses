@@ -310,11 +310,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new ServiceException(SysUserExceptionEnum.USER_PWD_ERROR);
         }
 
+        // 将密码进行空字符串处理
+        String password = sysUserRequest.getNewPassword().trim();
+
         // 校验新密码规则，根据密码策略
-        securityConfigService.validatePasswordSecurityRule(true, sysUserRequest.getNewPassword());
+        securityConfigService.validatePasswordSecurityRule(true, password);
 
         // 设置新的加密后密码和盐
-        SaltedEncryptResult saltedEncryptResult = passwordStoredEncryptApi.encryptWithSalt(sysUserRequest.getNewPassword());
+        SaltedEncryptResult saltedEncryptResult = passwordStoredEncryptApi.encryptWithSalt(password);
         sysUser.setPassword(saltedEncryptResult.getEncryptPassword());
         sysUser.setPasswordSalt(saltedEncryptResult.getPasswordSalt());
 
