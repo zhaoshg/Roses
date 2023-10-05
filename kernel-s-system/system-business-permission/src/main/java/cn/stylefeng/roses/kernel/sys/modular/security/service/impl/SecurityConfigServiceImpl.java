@@ -1,6 +1,8 @@
 package cn.stylefeng.roses.kernel.sys.modular.security.service.impl;
 
+import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.expander.LoginConfigExpander;
+import cn.stylefeng.roses.kernel.auth.api.password.PasswordStoredEncryptApi;
 import cn.stylefeng.roses.kernel.config.api.ConfigServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SecurityConfigService;
 import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 系统配置的业务
@@ -27,6 +30,9 @@ public class SecurityConfigServiceImpl implements SecurityConfigService {
 
     @Resource
     private SysUserPasswordRecordService sysUserPasswordRecordService;
+
+    @Resource
+    private PasswordStoredEncryptApi passwordStoredEncryptApi;
 
     @Override
     public SecurityConfig getSecurityConfig() {
@@ -133,9 +139,22 @@ public class SecurityConfigServiceImpl implements SecurityConfigService {
             throw new SysException(SecurityStrategyExceptionEnum.NUMBER_SYMBOL, securityConfig.getPasswordMinNumberCount());
         }
 
-        // 6. 如果是修改密码，则校验密码是否和最近几次的密码相同 todo
+        // 6. 如果是修改密码，则校验密码是否和最近几次的密码相同
+        Integer passwordMinCantRepeatTimes = securityConfig.getPasswordMinCantRepeatTimes();
 
-
+        // 如果为0则不用校验
+        if (passwordMinCantRepeatTimes == null || passwordMinCantRepeatTimes.equals(0)) {
+            return;
+        }
+        List<SysUserPasswordRecord> recentRecords = sysUserPasswordRecordService.getRecentRecords(
+                LoginContext.me().getLoginUser().getUserId(), passwordMinCantRepeatTimes);
+        for (SysUserPasswordRecord recentRecord : recentRecords) {
+            Boolean resultTrue = passwordStoredEncryptApi.checkPasswordWithSalt(password, recentRecord.getHistoryPasswordSalt(),
+                    recentRecord.getHistoryPassword());
+            if (resultTrue) {
+                throw new SysException(SecurityStrategyExceptionEnum.PASSWORD_REPEAT, passwordMinCantRepeatTimes);
+            }
+        }
     }
 
     @Override
