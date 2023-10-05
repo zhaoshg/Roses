@@ -83,8 +83,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUser = new SysUser();
         BeanUtil.copyProperties(sysUserRequest, sysUser);
 
+        // 校验密码是否符合规则
+        String password = sysUserRequest.getPassword().trim();
+        securityConfigService.validatePasswordSecurityRule(false, password);
+
         // 将密码加密存储到库中
-        SaltedEncryptResult saltedEncryptResult = passwordStoredEncryptApi.encryptWithSalt(sysUser.getPassword());
+        SaltedEncryptResult saltedEncryptResult = passwordStoredEncryptApi.encryptWithSalt(password);
         sysUser.setPassword(saltedEncryptResult.getEncryptPassword());
         sysUser.setPasswordSalt(saltedEncryptResult.getPasswordSalt());
 
