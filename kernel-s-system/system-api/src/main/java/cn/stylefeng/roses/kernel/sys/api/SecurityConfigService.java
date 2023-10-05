@@ -36,4 +36,12 @@ public interface SecurityConfigService {
      */
     void validatePasswordSecurityRule(boolean updatePasswordFlag, String password);
 
+    /**
+     * 记录用户密码修改的日志
+     *
+     * @author fengshuonan
+     * @since 2023/10/5 17:16
+     */
+    void recordPasswordEditLog(Long userId, String md5, String salt);
+
 }

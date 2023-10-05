@@ -6,9 +6,12 @@ import cn.stylefeng.roses.kernel.sys.api.SecurityConfigService;
 import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.SecurityStrategyExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.security.SecurityConfig;
+import cn.stylefeng.roses.kernel.sys.modular.security.entity.SysUserPasswordRecord;
+import cn.stylefeng.roses.kernel.sys.modular.security.service.SysUserPasswordRecordService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * 系统配置的业务
@@ -21,6 +24,9 @@ public class SecurityConfigServiceImpl implements SecurityConfigService {
 
     @Resource
     private ConfigServiceApi configServiceApi;
+
+    @Resource
+    private SysUserPasswordRecordService sysUserPasswordRecordService;
 
     @Override
     public SecurityConfig getSecurityConfig() {
@@ -130,6 +136,16 @@ public class SecurityConfigServiceImpl implements SecurityConfigService {
         // 6. 如果是修改密码，则校验密码是否和最近几次的密码相同 todo
 
 
+    }
+
+    @Override
+    public void recordPasswordEditLog(Long userId, String md5, String salt) {
+        SysUserPasswordRecord sysUserPasswordRecord = new SysUserPasswordRecord();
+        sysUserPasswordRecord.setUserId(userId);
+        sysUserPasswordRecord.setHistoryPassword(md5);
+        sysUserPasswordRecord.setHistoryPasswordSalt(salt);
+        sysUserPasswordRecord.setUpdatePasswordTime(new Date());
+        this.sysUserPasswordRecordService.save(sysUserPasswordRecord);
     }
 
 }
