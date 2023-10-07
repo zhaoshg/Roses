@@ -10,3 +10,5 @@ CREATE TABLE `sys_user_password_record`  (
   `update_user` bigint(0) NULL DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`record_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户历史密码记录' ROW_FORMAT = Dynamic;
+
+INSERT INTO `sys_menu`(`menu_id`, `menu_parent_id`, `menu_pids`, `menu_name`, `menu_code`, `app_id`, `menu_sort`, `status_flag`, `remark`, `menu_type`, `antdv_router`, `antdv_component`, `antdv_icon`, `antdv_link_url`, `antdv_active_url`, `antdv_visible`, `expand_field`, `version_flag`, `del_flag`, `create_time`, `create_user`, `update_time`, `update_user`) VALUES (1710533513796653058, 1673524613037191169, '[-1],[1673524613037191169],', '安全策略', 'anquancelve', 1671406745336016898, 10310.00, 1, NULL, 10, '/backend/security', '/system/backend/security/index', 'icon-update-password', NULL, NULL, 'Y', NULL, 1, 'N', '2023-10-07 13:52:25', 1339550467939639299, '2023-10-07 13:54:50', 1339550467939639299);
