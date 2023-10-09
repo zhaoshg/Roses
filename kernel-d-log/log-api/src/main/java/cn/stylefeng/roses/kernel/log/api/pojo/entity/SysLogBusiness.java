@@ -1,4 +1,4 @@
-package cn.stylefeng.roses.kernel.log.business.entity;
+package cn.stylefeng.roses.kernel.log.api.pojo.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;

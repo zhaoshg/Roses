@@ -1,7 +1,7 @@
-package cn.stylefeng.roses.kernel.log.business.context;
+package cn.stylefeng.roses.kernel.log.api.context;
 
 import cn.hutool.core.util.ObjectUtil;
-import cn.stylefeng.roses.kernel.log.business.entity.SysLogBusiness;
+import cn.stylefeng.roses.kernel.log.api.pojo.entity.SysLogBusiness;
 
 import java.util.LinkedList;
 import java.util.List;

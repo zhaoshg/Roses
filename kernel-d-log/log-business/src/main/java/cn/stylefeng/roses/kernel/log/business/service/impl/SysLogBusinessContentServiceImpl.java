@@ -5,7 +5,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.dsctn.api.context.DataSourceContext;
-import cn.stylefeng.roses.kernel.log.business.entity.SysLogBusinessContent;
+import cn.stylefeng.roses.kernel.log.api.pojo.entity.SysLogBusinessContent;
 import cn.stylefeng.roses.kernel.log.business.mapper.SysLogBusinessContentMapper;
 import cn.stylefeng.roses.kernel.log.business.pojo.request.SysLogBusinessContentRequest;
 import cn.stylefeng.roses.kernel.log.business.service.SysLogBusinessContentService;

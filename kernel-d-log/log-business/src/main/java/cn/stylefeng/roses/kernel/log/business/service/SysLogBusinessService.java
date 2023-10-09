@@ -1,7 +1,7 @@
 package cn.stylefeng.roses.kernel.log.business.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.log.business.entity.SysLogBusiness;
+import cn.stylefeng.roses.kernel.log.api.pojo.entity.SysLogBusiness;
 import cn.stylefeng.roses.kernel.log.business.pojo.request.SysLogBusinessRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
 

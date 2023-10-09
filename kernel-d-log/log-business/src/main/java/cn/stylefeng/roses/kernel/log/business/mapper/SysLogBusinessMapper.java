@@ -1,6 +1,6 @@
 package cn.stylefeng.roses.kernel.log.business.mapper;
 
-import cn.stylefeng.roses.kernel.log.business.entity.SysLogBusiness;
+import cn.stylefeng.roses.kernel.log.api.pojo.entity.SysLogBusiness;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
