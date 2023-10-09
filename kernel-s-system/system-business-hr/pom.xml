@@ -63,6 +63,13 @@
             <version>${roses.version}</version>
         </dependency>
 
+        <!--日志相关api-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>log-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!--数据库sdk-->
         <!--数据库dao框架-->
         <dependency>

@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.annotation.BizLog;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
@@ -43,6 +44,7 @@ public class SysUserController {
      */
     @PostResource(name = "添加用户", path = "/sysUser/add", requiredPermission = true,
             requirePermissionCode = PermissionCodeConstants.ADD_USER)
+    @BizLog(logTypeCode = PermissionCodeConstants.ADD_USER)
     public ResponseData<SysUser> add(@RequestBody @Validated(SysUserRequest.add.class) SysUserRequest sysUserRequest) {
         sysUserService.add(sysUserRequest);
         return new SuccessResponseData<>();
@@ -56,6 +58,7 @@ public class SysUserController {
      */
     @PostResource(name = "删除用户", path = "/sysUser/delete", requiredPermission = true,
             requirePermissionCode = PermissionCodeConstants.DELETE_USER)
+    @BizLog(logTypeCode = PermissionCodeConstants.DELETE_USER)
     public ResponseData<?> delete(@RequestBody @Validated(SysUserRequest.delete.class) SysUserRequest sysUserRequest) {
         sysUserService.del(sysUserRequest);
         return new SuccessResponseData<>();
@@ -69,6 +72,7 @@ public class SysUserController {
      */
     @PostResource(name = "批量删除用户", path = "/sysUser/batchDelete", requiredPermission = true,
             requirePermissionCode = PermissionCodeConstants.DELETE_USER)
+    @BizLog(logTypeCode = PermissionCodeConstants.DELETE_USER)
     public ResponseData<?> batchDelete(@RequestBody @Validated(BaseRequest.batchDelete.class) SysUserRequest sysUserRequest) {
         sysUserService.batchDel(sysUserRequest);
         return new SuccessResponseData<>();
@@ -82,6 +86,7 @@ public class SysUserController {
      */
     @PostResource(name = "编辑用户", path = "/sysUser/edit", requiredPermission = true,
             requirePermissionCode = PermissionCodeConstants.EDIT_USER)
+    @BizLog(logTypeCode = PermissionCodeConstants.EDIT_USER)
     public ResponseData<?> edit(@RequestBody @Validated(SysUserRequest.edit.class) SysUserRequest sysUserRequest) {
         sysUserService.edit(sysUserRequest);
         return new SuccessResponseData<>();
@@ -117,6 +122,7 @@ public class SysUserController {
      */
     @PostResource(name = "修改用户状态", path = "/sysUser/updateStatus", requiredPermission = true,
             requirePermissionCode = PermissionCodeConstants.UPDATE_USER_STATUS)
+    @BizLog(logTypeCode = PermissionCodeConstants.UPDATE_USER_STATUS)
     public ResponseData<?> updateStatus(@RequestBody @Validated(SysUserRequest.updateStatus.class) SysUserRequest sysUserRequest) {
         sysUserService.updateStatus(sysUserRequest);
         return new SuccessResponseData<>();
@@ -130,6 +136,7 @@ public class SysUserController {
      */
     @PostResource(name = "绑定用户角色", path = "/sysUser/bindRoles", requiredPermission = true,
             requirePermissionCode = PermissionCodeConstants.ASSIGN_USER_ROLE)
+    @BizLog(logTypeCode = PermissionCodeConstants.ASSIGN_USER_ROLE)
     public ResponseData<?> bindRoles(@RequestBody @Validated(SysUserRoleRequest.bindRoles.class) SysUserRoleRequest sysUserRoleRequest) {
         sysUserRoleService.bindRoles(sysUserRoleRequest);
         return new SuccessResponseData<>();
@@ -143,6 +150,7 @@ public class SysUserController {
      */
     @PostResource(name = "重置用户密码", path = "/sysUser/resetPassword", requiredPermission = true,
             requirePermissionCode = PermissionCodeConstants.RESET_PASSWORD)
+    @BizLog(logTypeCode = PermissionCodeConstants.RESET_PASSWORD)
     public ResponseData<?> resetPassword(@RequestBody @Validated(SysUserRequest.resetPassword.class) SysUserRequest sysUserRequest) {
         sysUserService.resetPassword(sysUserRequest);
         return new SuccessResponseData<>();

@@ -4,6 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
+import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysRoleLimitServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SysRoleServiceApi;
@@ -79,6 +80,10 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         // 发布修改用户绑定角色的事件
         BusinessEventPublisher.publishEvent(UPDATE_USER_ROLE_EVENT, sysUserRoleRequest.getUserId());
 
+        // 记录日志
+        BusinessLogUtil.setLogTitle("为用户绑定角色");
+        BusinessLogUtil.addContent("用户id：\n", sysUserRoleRequest.getUserId());
+        BusinessLogUtil.addContent("用户角色信息如下：\n", roleIdList);
     }
 
     @Override

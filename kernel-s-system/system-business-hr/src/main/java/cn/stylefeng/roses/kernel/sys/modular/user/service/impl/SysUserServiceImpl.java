@@ -18,6 +18,7 @@ import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantIdHolder;
 import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantSwitchHolder;
 import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
 import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
+import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SecurityConfigService;
@@ -106,6 +107,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 添加用户一个默认角色
         sysUserRoleService.bindUserDefaultRole(sysUser.getUserId());
+
+        // 记录日志
+        BusinessLogUtil.setLogTitle("新增用户");
+        BusinessLogUtil.addContent("新增用户账号信息：", sysUser.getAccount());
+        BusinessLogUtil.addContent("用户详细信息如下：\n", sysUser);
     }
 
     @Override
@@ -120,6 +126,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 删除用户的业务操作
         this.baseRemoveUser(CollectionUtil.set(false, sysUser.getUserId()));
+
+        // 记录日志
+        BusinessLogUtil.setLogTitle("删除用户");
+        BusinessLogUtil.addContent("新增用户账号信息：", sysUser.getAccount());
+        BusinessLogUtil.addContent("用户详细信息：\n", sysUser);
     }
 
     @Override
@@ -138,11 +149,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 删除用户的业务操作
         this.baseRemoveUser(userIdList);
+
+        // 记录日志
+        BusinessLogUtil.setLogTitle("批量删除用户");
+        BusinessLogUtil.addContent("用户id集合为：\n", userIdList);
     }
 
     @Override
     public void edit(SysUserRequest sysUserRequest) {
+
+        BusinessLogUtil.setLogTitle("更新用户信息");
+
         SysUser sysUser = this.querySysUser(sysUserRequest);
+        BusinessLogUtil.addContent("原始用户信息如下：\n", sysUser);
 
         // 不能修改admin账号的超级管理员标识和账号
         if (SysConstants.ADMIN_USER_ACCOUNT.equals(sysUser.getAccount())) {
@@ -165,6 +184,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 更新用户的任职信息
         sysUserOrgService.updateUserOrg(sysUser.getUserId(), sysUserRequest.getUserOrgList());
+
+        // 记录日志
+        BusinessLogUtil.addContent("更新后用户信息如下：\n", sysUser);
     }
 
     @Override
@@ -246,6 +268,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 loginErrorCountCacheApi.remove(sysUser.getAccount());
             }
         }
+
+        // 记录日志
+        BusinessLogUtil.setLogTitle("更新用户状态");
+        BusinessLogUtil.addContent("用户id：", sysUserRequest.getUserId());
+        BusinessLogUtil.addContent("修改状态为：", sysUserRequest.getStatusFlag());
     }
 
     @Override
@@ -262,6 +289,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setPasswordSalt(saltedEncryptResult.getPasswordSalt());
 
         this.updateById(sysUser);
+
+        // 记录日志
+        BusinessLogUtil.setLogTitle("重置用户密码");
+        BusinessLogUtil.addContent("用户信息如下：\n", sysUser);
     }
 
     @Override
