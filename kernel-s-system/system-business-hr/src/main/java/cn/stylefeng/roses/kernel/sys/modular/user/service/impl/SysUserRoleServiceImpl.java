@@ -81,7 +81,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         BusinessEventPublisher.publishEvent(UPDATE_USER_ROLE_EVENT, sysUserRoleRequest.getUserId());
 
         // 记录日志
-        BusinessLogUtil.setLogTitle("为用户绑定角色");
+        BusinessLogUtil.setLogTitle("为用户绑定角色，用户账号：", sysUserService.getUserRealName(sysUserRoleRequest.getUserId()));
         BusinessLogUtil.addContent("用户id：\n", sysUserRoleRequest.getUserId());
         BusinessLogUtil.addContent("用户角色信息如下：\n", roleIdList);
     }

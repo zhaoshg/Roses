@@ -109,7 +109,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUserRoleService.bindUserDefaultRole(sysUser.getUserId());
 
         // 记录日志
-        BusinessLogUtil.setLogTitle("新增用户");
+        BusinessLogUtil.setLogTitle("新增用户，用户账号：" + sysUser.getAccount());
         BusinessLogUtil.addContent("新增用户账号信息：", sysUser.getAccount());
         BusinessLogUtil.addContent("用户详细信息如下：\n", sysUser);
     }
@@ -128,7 +128,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.baseRemoveUser(CollectionUtil.set(false, sysUser.getUserId()));
 
         // 记录日志
-        BusinessLogUtil.setLogTitle("删除用户");
+        BusinessLogUtil.setLogTitle("删除用户，用户账号：" + sysUser.getAccount());
         BusinessLogUtil.addContent("新增用户账号信息：", sysUser.getAccount());
         BusinessLogUtil.addContent("用户详细信息：\n", sysUser);
     }
@@ -158,7 +158,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public void edit(SysUserRequest sysUserRequest) {
 
-        BusinessLogUtil.setLogTitle("更新用户信息");
+        BusinessLogUtil.setLogTitle("更新用户信息，用户账号：" + sysUserRequest.getAccount());
 
         SysUser sysUser = this.querySysUser(sysUserRequest);
         BusinessLogUtil.addContent("原始用户信息如下：\n", sysUser);
@@ -270,7 +270,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
 
         // 记录日志
-        BusinessLogUtil.setLogTitle("更新用户状态");
+        BusinessLogUtil.setLogTitle("更新用户状态，用户账号：" + this.getUserRealName(sysUserRequest.getUserId()));
         BusinessLogUtil.addContent("用户id：", sysUserRequest.getUserId());
         BusinessLogUtil.addContent("修改状态为：", sysUserRequest.getStatusFlag());
     }
@@ -291,7 +291,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.updateById(sysUser);
 
         // 记录日志
-        BusinessLogUtil.setLogTitle("重置用户密码");
+        BusinessLogUtil.setLogTitle("重置用户密码，用户账号：" + sysUser.getRealName());
         BusinessLogUtil.addContent("用户信息如下：\n", sysUser);
     }
 
