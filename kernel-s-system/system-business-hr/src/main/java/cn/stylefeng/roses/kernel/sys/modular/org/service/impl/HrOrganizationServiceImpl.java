@@ -14,6 +14,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
+import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
@@ -84,6 +85,10 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 发布一个新增组织机构的事件
         BusinessEventPublisher.publishEvent(OrgConstants.ADD_ORG_EVENT, hrOrganization);
+
+        // 记录日志
+        BusinessLogUtil.setLogTitle("添加机构，机构名称：" + hrOrganizationRequest.getOrgName());
+        BusinessLogUtil.addContent("新增的机构详情如下：\n", hrOrganization);
     }
 
     @Override
@@ -100,6 +105,10 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 发布删除机构的事件
         BusinessEventPublisher.publishEvent(OrgConstants.DELETE_ORG_EVENT, null);
+
+        // 记录日志
+        BusinessLogUtil.setLogTitle("删除机构，机构ID：" + hrOrganizationRequest.getOrgId());
+        BusinessLogUtil.addContent("删除机构，机构ID：", hrOrganizationRequest.getOrgId());
     }
 
     @Override
@@ -120,11 +129,19 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 发布删除机构的事件
         BusinessEventPublisher.publishEvent(OrgConstants.DELETE_ORG_EVENT, null);
+
+        // 记录日志
+        BusinessLogUtil.setLogTitle("批量删除机构");
+        BusinessLogUtil.addContent("批量删除机构，id集合为：", orgIdList);
     }
 
     @Override
     public void edit(HrOrganizationRequest hrOrganizationRequest) {
         HrOrganization hrOrganization = this.queryHrOrganization(hrOrganizationRequest);
+
+        BusinessLogUtil.setLogTitle("更新机构信息，机构名称为：", hrOrganization.getOrgName());
+        BusinessLogUtil.addContent("更新前的机构信息为：\n", hrOrganization);
+
         BeanUtil.copyProperties(hrOrganizationRequest, hrOrganization);
 
         // 填充父级parentIds
@@ -134,6 +151,9 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 发布编辑机构事件
         BusinessEventPublisher.publishEvent(OrgConstants.EDIT_ORG_EVENT, null);
+
+        // 记录日志
+        BusinessLogUtil.addContent("更新后的机构信息为：\n", hrOrganization);
 
     }
 

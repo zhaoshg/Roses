@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.annotation.BizLog;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
@@ -38,6 +39,7 @@ public class HrOrganizationController {
      */
     @PostResource(name = "添加组织机构", path = "/hrOrganization/add", requiredPermission = true,
             requirePermissionCode = PermissionCodeConstants.ADD_ORG)
+    @BizLog(logTypeCode = PermissionCodeConstants.ADD_ORG)
     public ResponseData<HrOrganization> add(
             @RequestBody @Validated(HrOrganizationRequest.add.class) HrOrganizationRequest hrOrganizationRequest) {
         hrOrganizationService.add(hrOrganizationRequest);
@@ -52,6 +54,7 @@ public class HrOrganizationController {
      */
     @PostResource(name = "删除组织机构", path = "/hrOrganization/delete", requiredPermission = true,
             requirePermissionCode = PermissionCodeConstants.DELETE_ORG)
+    @BizLog(logTypeCode = PermissionCodeConstants.DELETE_ORG)
     public ResponseData<?> delete(@RequestBody @Validated(HrOrganizationRequest.delete.class) HrOrganizationRequest hrOrganizationRequest) {
         hrOrganizationService.del(hrOrganizationRequest);
         return new SuccessResponseData<>();
@@ -65,6 +68,7 @@ public class HrOrganizationController {
      */
     @PostResource(name = "批量删除组织机构", path = "/hrOrganization/batchDelete", requiredPermission = true,
             requirePermissionCode = PermissionCodeConstants.DELETE_ORG)
+    @BizLog(logTypeCode = PermissionCodeConstants.DELETE_ORG)
     public ResponseData<?> batchDelete(@RequestBody @Validated(BaseRequest.batchDelete.class) HrOrganizationRequest hrOrganizationRequest) {
         hrOrganizationService.batchDelete(hrOrganizationRequest);
         return new SuccessResponseData<>();
@@ -78,6 +82,7 @@ public class HrOrganizationController {
      */
     @PostResource(name = "编辑组织机构", path = "/hrOrganization/edit", requiredPermission = true,
             requirePermissionCode = PermissionCodeConstants.EDIT_ORG)
+    @BizLog(logTypeCode = PermissionCodeConstants.EDIT_ORG)
     public ResponseData<?> edit(@RequestBody @Validated(HrOrganizationRequest.edit.class) HrOrganizationRequest hrOrganizationRequest) {
         hrOrganizationService.edit(hrOrganizationRequest);
         return new SuccessResponseData<>();
