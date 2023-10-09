@@ -65,6 +65,13 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             throw new ServiceException(SysRoleExceptionEnum.SYSTEM_ROLE_CANT_DELETE);
         }
 
+        // 非管理员，只能删除自己的角色
+        if (!LoginContext.me().getSuperAdminFlag()) {
+            if (!sysRole.getCreateUser().equals(LoginContext.me().getLoginUser().getUserId())) {
+                throw new ServiceException(SysRoleExceptionEnum.DEL_PERMISSION_ERROR);
+            }
+        }
+
         // 删除角色
         this.baseDelete(CollectionUtil.set(false, sysRole.getRoleId()));
     }
@@ -80,6 +87,17 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         long haveSystemFlagCount = this.count(queryWrapper);
         if (haveSystemFlagCount > 0) {
             throw new ServiceException(SysRoleExceptionEnum.SYSTEM_ROLE_CANT_DELETE);
+        }
+
+        // 如果当前用户是非管理员，则只能删除自己创建的角色
+        if (!LoginContext.me().getSuperAdminFlag()) {
+            LambdaQueryWrapper<SysRole> tempWrapper = new LambdaQueryWrapper<>();
+            tempWrapper.in(SysRole::getRoleId, sysRoleRequest.getRoleIdList());
+            tempWrapper.ne(BaseEntity::getCreateUser, LoginContext.me().getLoginUser().getUserId());
+            long notMeCreateCount = this.count(tempWrapper);
+            if (notMeCreateCount > 0) {
+                throw new ServiceException(SysRoleExceptionEnum.DEL_PERMISSION_ERROR);
+            }
         }
 
         // 执行删除角色
@@ -188,22 +206,6 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         return this.list(wrapper);
     }
 
-    /**
-     * 过滤角色的权限展示
-     * <p>
-     * 非管理员只能看到自己的角色和自己创建的角色
-     *
-     * @author fengshuonan
-     * @since 2023/10/9 10:44
-     */
-    private void filterRolePermission(LambdaQueryWrapper<SysRole> wrapper) {
-        if (!LoginContext.me().getSuperAdminFlag()) {
-            Long userId = LoginContext.me().getLoginUser().getUserId();
-            wrapper.eq(SysRole::getCreateUser, userId);
-            wrapper.in(SysRole::getRoleId, sysUserRoleServiceApi.getUserRoleIdList(userId));
-        }
-    }
-
     @Override
     public Long getDefaultRoleId() {
 
@@ -294,4 +296,20 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         // 删除角色
         this.removeBatchByIds(roleIdList);
     }
+
+    /**
+     * 过滤角色的权限展示
+     * <p>
+     * 非管理员只能看到自己的角色和自己创建的角色
+     *
+     * @author fengshuonan
+     * @since 2023/10/9 10:44
+     */
+    private void filterRolePermission(LambdaQueryWrapper<SysRole> wrapper) {
+        if (!LoginContext.me().getSuperAdminFlag()) {
+            Long userId = LoginContext.me().getLoginUser().getUserId();
+            wrapper.eq(SysRole::getCreateUser, userId).or().in(SysRole::getRoleId, sysUserRoleServiceApi.getUserRoleIdList(userId));
+        }
+    }
+
 }
