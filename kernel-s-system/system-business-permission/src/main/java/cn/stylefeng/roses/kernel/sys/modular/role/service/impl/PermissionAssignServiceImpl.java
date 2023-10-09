@@ -6,6 +6,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
+import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
 import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.enums.permission.DataScopeTypeEnum;
 import cn.stylefeng.roses.kernel.sys.modular.app.entity.SysApp;
@@ -91,6 +92,8 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
     @Override
     public void updateRoleBindPermission(RoleBindPermissionRequest roleBindPermissionRequest) {
 
+        BusinessLogUtil.setLogTitle("更新角色绑定的权限");
+
         // 1. 获取角色的限制范围，如果限制范围为空，则为查询所有的范围
         Set<Long> userRoleLimitScope = userRoleServiceApi.findCurrentUserRoleLimitScope();
 
@@ -107,6 +110,9 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
                 return;
             }
         }
+
+        BusinessLogUtil.addContent("角色绑定权限的相关参数如下：\n", roleBindPermissionRequest);
+
     }
 
     @Override

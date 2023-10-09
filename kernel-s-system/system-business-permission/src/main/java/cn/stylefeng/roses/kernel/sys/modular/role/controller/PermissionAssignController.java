@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.controller;
 
+import cn.stylefeng.roses.kernel.rule.annotation.BizLog;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
@@ -82,6 +83,7 @@ public class PermissionAssignController {
      */
     @PostResource(name = "更新角色绑定权限", path = "/permission/updateRoleBindPermission", requiredPermission = true,
             requirePermissionCode = PermissionCodeConstants.CHANGE_ROLE_PERMISSION)
+    @BizLog(logTypeCode = PermissionCodeConstants.CHANGE_ROLE_PERMISSION)
     public ResponseData<?> updateRoleBindPermission(@RequestBody @Validated(RoleBindPermissionRequest.roleBindPermission.class)
                                                     RoleBindPermissionRequest roleBindPermissionRequest) {
         permissionAssignService.updateRoleBindPermission(roleBindPermissionRequest);
@@ -110,6 +112,7 @@ public class PermissionAssignController {
      */
     @PostResource(name = "角色绑定数据权限的配置", path = "/permission/updateRoleBindDataScope", requiredPermission = true,
             requirePermissionCode = PermissionCodeConstants.CHANGE_ROLE_DATA_SCOPE)
+    @BizLog(logTypeCode = PermissionCodeConstants.CHANGE_ROLE_DATA_SCOPE)
     public ResponseData<?> updateRoleBindDataScope(
             @RequestBody @Validated(RoleBindDataScopeRequest.roleBindDataScope.class) RoleBindDataScopeRequest roleBindDataScopeRequest) {
         sysRoleDataScopeService.updateRoleBindDataScope(roleBindDataScopeRequest);

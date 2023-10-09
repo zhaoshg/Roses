@@ -7,6 +7,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.enums.permission.DataScopeTypeEnum;
@@ -106,6 +107,9 @@ public class SysRoleDataScopeServiceImpl extends ServiceImpl<SysRoleDataScopeMap
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateRoleBindDataScope(RoleBindDataScopeRequest roleBindDataScopeRequest) {
+
+        BusinessLogUtil.setLogTitle("修改角色数据范围");
+        BusinessLogUtil.addContent("角色绑定数据范围的参数如下：\n", roleBindDataScopeRequest);
 
         // 无论角色是否绑定的是指定部门，清空掉角色绑定的数据范围
         LambdaQueryWrapper<SysRoleDataScope> removeWrapper = new LambdaQueryWrapper<>();
