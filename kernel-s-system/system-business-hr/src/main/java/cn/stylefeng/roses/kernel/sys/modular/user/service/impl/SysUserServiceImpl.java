@@ -158,9 +158,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public void edit(SysUserRequest sysUserRequest) {
 
-        BusinessLogUtil.setLogTitle("更新用户信息，用户账号：" + sysUserRequest.getAccount());
-
         SysUser sysUser = this.querySysUser(sysUserRequest);
+
+        BusinessLogUtil.setLogTitle("更新用户信息，用户账号：" + sysUser.getAccount());
         BusinessLogUtil.addContent("原始用户信息如下：\n", sysUser);
 
         // 不能修改admin账号的超级管理员标识和账号
