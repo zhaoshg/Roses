@@ -20,11 +20,18 @@ public class BusinessLogUtil {
      * @author fengshuonan
      * @since 2023/7/21 17:30
      */
-    public static void setLogTitle(String logTitle) {
-        if (StrUtil.isEmpty(logTitle)) {
+    public static void setLogTitle(String logTitle, String... params) {
+        if (StrUtil.isEmpty(logTitle) && ObjectUtil.isEmpty(params)) {
             return;
         }
-        BusinessLogHolder.setLogTitle(logTitle);
+        StringBuilder stringBuilder = new StringBuilder();
+        if (ObjectUtil.isNotEmpty(logTitle)) {
+            stringBuilder.append(logTitle);
+        }
+        if (ObjectUtil.isNotEmpty(params)) {
+            stringBuilder.append(StrUtil.concat(true, params));
+        }
+        BusinessLogHolder.setLogTitle(stringBuilder.toString());
     }
 
     /**
