@@ -9,6 +9,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
@@ -53,6 +54,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         sysRole.setDataScopeType(DataScopeTypeEnum.ALL.getCode());
 
         this.save(sysRole);
+
+        // 添加日志
+        BusinessLogUtil.setLogTitle("添加角色，角色名称：", sysRoleRequest.getRoleName());
+        BusinessLogUtil.addContent("角色信息详情如下：\n", sysRole);
     }
 
     @Override
@@ -74,6 +79,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
         // 删除角色
         this.baseDelete(CollectionUtil.set(false, sysRole.getRoleId()));
+
+        // 添加日志
+        BusinessLogUtil.setLogTitle("删除角色，角色名称：", sysRole.getRoleName());
+        BusinessLogUtil.addContent("角色信息详情如下：\n", sysRole);
     }
 
     @Override
@@ -102,11 +111,19 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
         // 执行删除角色
         this.baseDelete(sysRoleRequest.getRoleIdList());
+
+        // 添加日志
+        BusinessLogUtil.setLogTitle("批量删除角色");
+        BusinessLogUtil.addContent("角色id集合如下：\n", sysRoleRequest.getRoleIdList());
     }
 
     @Override
     public void edit(SysRoleRequest sysRoleRequest) {
         SysRole sysRole = this.querySysRole(sysRoleRequest);
+
+        // 添加日志
+        BusinessLogUtil.setLogTitle("修改角色信息");
+        BusinessLogUtil.addContent("原角色信息如下：\n", sysRole);
 
         // 不允许修改角色编码
         if (!sysRole.getRoleCode().equals(sysRoleRequest.getRoleCode())) {
@@ -115,6 +132,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
         BeanUtil.copyProperties(sysRoleRequest, sysRole);
         this.updateById(sysRole);
+
+        BusinessLogUtil.addContent("修改后角色信息如下：\n", sysRole);
     }
 
     @Override

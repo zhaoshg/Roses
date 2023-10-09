@@ -17,6 +17,13 @@
 
     <dependencies>
 
+        <!--日志相关api-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>log-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!-- 数据源容器 -->
         <!-- 用来获取当前的数据源的类型 -->
         <dependency>
