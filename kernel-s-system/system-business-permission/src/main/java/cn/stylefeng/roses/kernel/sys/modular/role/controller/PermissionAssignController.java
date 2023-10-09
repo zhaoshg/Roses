@@ -88,12 +88,12 @@ public class PermissionAssignController {
     }
 
     /**
-     * 获取角色的权限范围详情
+     * 获取角色的数据权限详情
      *
      * @author fengshuonan
      * @since 2023/7/16 23:15
      */
-    @GetResource(name = "获取角色的权限范围详情", path = "/permission/getRoleBindDataScope")
+    @GetResource(name = "获取角色的数据权限详情", path = "/permission/getRoleBindDataScope")
     public ResponseData<RoleBindDataScopeResponse> getRoleBindDataScope(
             @Validated(BaseRequest.detail.class) RoleBindDataScopeRequest roleBindDataScopeRequest) {
         RoleBindDataScopeResponse roleBindDataScopeResponse = sysRoleDataScopeService.getRoleBindDataScope(roleBindDataScopeRequest);
@@ -101,12 +101,12 @@ public class PermissionAssignController {
     }
 
     /**
-     * 设置角色可绑定的权限范围
+     * 角色绑定数据权限的配置
      *
      * @author fengshuonan
      * @since 2023/7/16 23:40
      */
-    @PostResource(name = "设置角色可绑定的权限范围", path = "/permission/updateRoleBindDataScope", requiredPermission = true,
+    @PostResource(name = "角色绑定数据权限的配置", path = "/permission/updateRoleBindDataScope", requiredPermission = true,
             requirePermissionCode = PermissionCodeConstants.CHANGE_ROLE_DATA_SCOPE)
     public ResponseData<?> updateRoleBindDataScope(
             @RequestBody @Validated(RoleBindDataScopeRequest.roleBindDataScope.class) RoleBindDataScopeRequest roleBindDataScopeRequest) {
