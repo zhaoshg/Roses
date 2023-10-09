@@ -8,6 +8,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemovePositionCallbackApi;
@@ -44,6 +45,10 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
         hrPosition.setStatusFlag(StatusEnum.ENABLE.getCode());
 
         this.save(hrPosition);
+
+        // 记录日志
+        BusinessLogUtil.setLogTitle("新增职务，职务名称：" + hrPositionRequest.getPositionName());
+        BusinessLogUtil.addContent("职务详细信息如下：\n", hrPosition);
     }
 
     @Override
@@ -54,6 +59,10 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
 
         HrPosition hrPosition = this.queryHrPosition(hrPositionRequest);
         this.removeById(hrPosition.getPositionId());
+
+        // 记录日志
+        BusinessLogUtil.setLogTitle("删除职务，职务名称：" + hrPosition.getPositionName());
+        BusinessLogUtil.addContent("职务详细信息如下：\n", hrPosition);
     }
 
 
@@ -68,13 +77,23 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
 
         // 批量删除职位
         this.removeBatchByIds(positionIdList);
+
+        // 记录日志
+        BusinessLogUtil.setLogTitle("批量删除职务");
+        BusinessLogUtil.addContent("被删除职务信息列表：\n", positionIdList);
     }
 
     @Override
     public void edit(HrPositionRequest hrPositionRequest) {
         HrPosition hrPosition = this.queryHrPosition(hrPositionRequest);
+
+        BusinessLogUtil.setLogTitle("编辑职务信息，职务名称：", hrPosition.getPositionName());
+        BusinessLogUtil.addContent("原始职务信息如下：\n", hrPosition);
+
         BeanUtil.copyProperties(hrPositionRequest, hrPosition);
         this.updateById(hrPosition);
+
+        BusinessLogUtil.addContent("新职务信息如下：\n", hrPosition);
     }
 
     @Override
