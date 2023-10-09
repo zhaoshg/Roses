@@ -64,7 +64,8 @@ public class PermissionAssignController {
      * @author fengshuonan
      * @since 2023/6/12 21:23
      */
-    @GetResource(name = "获取角色绑定的权限列表", path = "/permission/getRoleBindPermission")
+    @GetResource(name = "获取角色绑定的权限列表", path = "/permission/getRoleBindPermission",
+            requiredPermission = true, requirePermissionCode = PermissionCodeConstants.CHANGE_ROLE_PERMISSION)
     public ResponseData<RoleBindPermissionResponse> getRoleBindPermission(
             @Validated(BaseRequest.detail.class) RoleBindPermissionRequest roleBindPermissionRequest) {
         RoleBindPermissionResponse roleBindPermission = permissionAssignService.getRoleBindPermission(roleBindPermissionRequest);
@@ -93,7 +94,8 @@ public class PermissionAssignController {
      * @author fengshuonan
      * @since 2023/7/16 23:15
      */
-    @GetResource(name = "获取角色的数据权限详情", path = "/permission/getRoleBindDataScope")
+    @GetResource(name = "获取角色的数据权限详情", path = "/permission/getRoleBindDataScope", requiredPermission = true,
+            requirePermissionCode = PermissionCodeConstants.CHANGE_ROLE_DATA_SCOPE)
     public ResponseData<RoleBindDataScopeResponse> getRoleBindDataScope(
             @Validated(BaseRequest.detail.class) RoleBindDataScopeRequest roleBindDataScopeRequest) {
         RoleBindDataScopeResponse roleBindDataScopeResponse = sysRoleDataScopeService.getRoleBindDataScope(roleBindDataScopeRequest);
