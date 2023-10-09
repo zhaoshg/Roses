@@ -4,12 +4,14 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.enums.permission.DataScopeTypeEnum;
@@ -25,6 +27,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,6 +40,9 @@ import java.util.Set;
  */
 @Service
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
+
+    @Resource
+    private SysUserRoleServiceApi sysUserRoleServiceApi;
 
     @Override
     public void add(SysRoleRequest sysRoleRequest) {
@@ -104,6 +110,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
         // 只查询需要的字段
         wrapper.select(SysRole::getRoleName, SysRole::getRoleCode, SysRole::getRoleSort, SysRole::getRoleId, BaseEntity::getCreateTime);
+
+        // 非管理员用户只能查看自己创建的角色
+        this.filterRolePermission(wrapper);
 
         Page<SysRole> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
@@ -173,7 +182,26 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         // 只查询id和名称
         wrapper.select(SysRole::getRoleId, SysRole::getRoleName);
 
+        // 填写角色的权限信息
+        this.filterRolePermission(wrapper);
+
         return this.list(wrapper);
+    }
+
+    /**
+     * 过滤角色的权限展示
+     * <p>
+     * 非管理员只能看到自己的角色和自己创建的角色
+     *
+     * @author fengshuonan
+     * @since 2023/10/9 10:44
+     */
+    private void filterRolePermission(LambdaQueryWrapper<SysRole> wrapper) {
+        if (!LoginContext.me().getSuperAdminFlag()) {
+            Long userId = LoginContext.me().getLoginUser().getUserId();
+            wrapper.eq(SysRole::getCreateUser, userId);
+            wrapper.in(SysRole::getRoleId, sysUserRoleServiceApi.getUserRoleIdList(userId));
+        }
     }
 
     @Override
