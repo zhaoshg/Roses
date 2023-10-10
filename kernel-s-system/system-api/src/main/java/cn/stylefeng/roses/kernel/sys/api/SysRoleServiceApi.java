@@ -24,6 +24,8 @@
  */
 package cn.stylefeng.roses.kernel.sys.api;
 
+import java.util.List;
+
 /**
  * 角色信息相关的Api
  *
@@ -49,5 +51,13 @@ public interface SysRoleServiceApi {
      * @since 2023/7/15 21:54
      */
     String getRoleNameByRoleId(Long roleId);
+
+    /**
+     * 获取角色对应的菜单功能编码集合
+     *
+     * @author fengshuonan
+     * @since 2023/10/10 14:33
+     */
+    List<String> getRoleMenuOptionsByRoleId(String roleCode);
 
 }

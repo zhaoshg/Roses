@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
@@ -16,10 +17,12 @@ import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.enums.permission.DataScopeTypeEnum;
+import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.exception.SysRoleExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleMapper;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleRequest;
+import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -29,6 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,6 +48,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Resource
     private SysUserRoleServiceApi sysUserRoleServiceApi;
+
+    @Resource
+    private SysRoleMenuOptionsService sysRoleMenuOptionsService;
+
+    @Resource
+    private SysMenuOptionsService sysMenuOptionsService;
 
     @Override
     public void add(SysRoleRequest sysRoleRequest) {
@@ -256,6 +266,33 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
 
         return "";
+    }
+
+    @Override
+    public List<String> getRoleMenuOptionsByRoleId(String roleCode) {
+
+        if (ObjectUtil.isEmpty(roleCode)) {
+            return new ArrayList<>();
+        }
+
+        // 获取角色编码对应的角色id
+        LambdaQueryWrapper<SysRole> sysRoleLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleLambdaQueryWrapper.eq(SysRole::getRoleCode, roleCode);
+        sysRoleLambdaQueryWrapper.select(SysRole::getRoleId);
+        SysRole sysRole = this.getOne(sysRoleLambdaQueryWrapper, false);
+        if (sysRole == null) {
+            return new ArrayList<>();
+        }
+        Long roleId = sysRole.getRoleId();
+
+        // 获取角色的角色功能id集合
+        List<Long> roleBindMenuOptionsIdList = sysRoleMenuOptionsService.getRoleBindMenuOptionsIdList(ListUtil.list(false, roleId));
+        if (ObjectUtil.isEmpty(roleBindMenuOptionsIdList)) {
+            return new ArrayList<>();
+        }
+
+        // 获取角色功能id的集合对应的功能编码集合
+        return sysMenuOptionsService.getOptionsCodeList(roleBindMenuOptionsIdList);
     }
 
     /**
