@@ -107,12 +107,10 @@ public class PermissionAssignServiceImpl implements PermissionAssignService {
                 BusinessEventPublisher.publishEvent(RoleConstants.ROLE_BIND_MENU_EVENT, roleBindPermissionRequest.getRoleId());
                 BusinessEventPublisher.publishEvent(RoleConstants.ROLE_BIND_MENU_OPTIONS_EVENT, roleBindPermissionRequest.getRoleId());
 
+                BusinessLogUtil.addContent("角色绑定权限的相关参数如下：\n", roleBindPermissionRequest);
                 return;
             }
         }
-
-        BusinessLogUtil.addContent("角色绑定权限的相关参数如下：\n", roleBindPermissionRequest);
-
     }
 
     @Override
