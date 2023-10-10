@@ -2,9 +2,11 @@ package cn.stylefeng.roses.kernel.log.business.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.log.api.BizLogServiceApi;
 import cn.stylefeng.roses.kernel.log.api.pojo.business.SysLogBusinessRequest;
 import cn.stylefeng.roses.kernel.log.api.pojo.entity.SysLogBusiness;
 import cn.stylefeng.roses.kernel.log.api.pojo.entity.SysLogBusinessContent;
@@ -29,7 +31,7 @@ import java.util.List;
  * @date 2023/07/21 19:02
  */
 @Service
-public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper, SysLogBusiness> implements SysLogBusinessService {
+public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper, SysLogBusiness> implements SysLogBusinessService, BizLogServiceApi {
 
     @Resource
     private SysLogBusinessContentService sysLogBusinessContentService;
@@ -93,6 +95,44 @@ public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper,
         return this.list(wrapper);
     }
 
+    @Override
+    public PageResult<SysLogBusiness> getOperateLogByLogType(List<String> logTypeCodeList, SysLogBusinessRequest sysLogBusinessRequest) {
+        LambdaQueryWrapper<SysLogBusiness> queryWrapper = new LambdaQueryWrapper<>();
+
+        // 指定范围为空，则直接返回空结果
+        if (ObjectUtil.isEmpty(logTypeCodeList)) {
+            Page<SysLogBusiness> page = PageFactory.defaultPage();
+            return PageResultFactory.createPageResult(page);
+        }
+
+        // 如果request参数有code，则需要判断这个code是否在指定参数范围内，如果在范围内则查询，如果不在范围内，则直接返回空
+        String logTypeCode = sysLogBusinessRequest.getLogTypeCode();
+        if (StrUtil.isNotBlank(logTypeCode)) {
+            if (logTypeCodeList.contains(logTypeCode)) {
+                queryWrapper.eq(SysLogBusiness::getLogTypeCode, logTypeCode);
+            } else {
+                Page<SysLogBusiness> page = PageFactory.defaultPage();
+                return PageResultFactory.createPageResult(page);
+            }
+        } else {
+            queryWrapper.in(SysLogBusiness::getLogTypeCode, logTypeCodeList);
+        }
+
+        // 根据文本检索内容查询
+        String searchText = sysLogBusinessRequest.getSearchText();
+        if (ObjectUtil.isNotEmpty(searchText)) {
+            queryWrapper.nested(wrap -> {
+                wrap.like(SysLogBusiness::getLogTitle, searchText).or().like(SysLogBusiness::getRequestUrl, searchText);
+            });
+        }
+
+        // 根据创建时间倒序排列
+        queryWrapper.orderByDesc(SysLogBusiness::getCreateTime);
+
+        Page<SysLogBusiness> sysRolePage = this.page(PageFactory.defaultPage(), queryWrapper);
+        return PageResultFactory.createPageResult(sysRolePage);
+    }
+
     /**
      * 获取信息
      *
@@ -133,5 +173,4 @@ public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper,
 
         return queryWrapper;
     }
-
 }

@@ -24,6 +24,12 @@
  */
 package cn.stylefeng.roses.kernel.log.api;
 
+import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.log.api.pojo.business.SysLogBusinessRequest;
+import cn.stylefeng.roses.kernel.log.api.pojo.entity.SysLogBusiness;
+
+import java.util.List;
+
 /**
  * 业务日志service
  *
@@ -32,6 +38,16 @@ package cn.stylefeng.roses.kernel.log.api;
  */
 public interface BizLogServiceApi {
 
-
+    /**
+     * 根据业务支持操作类型的编码获取所有操作日志
+     * <p>
+     * 参数支持：操作类型编码多个，操作类型编码单个，操作日志的标题和url
+     *
+     * @param logTypeCodeList       操作类型编码的集合
+     * @param sysLogBusinessRequest 原来的操作日志的请求的参数
+     * @author fengshuonan
+     * @since 2023/10/10 14:23
+     */
+    PageResult<SysLogBusiness> getOperateLogByLogType(List<String> logTypeCodeList, SysLogBusinessRequest sysLogBusinessRequest);
 
 }
