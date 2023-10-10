@@ -1,4 +1,4 @@
-package cn.stylefeng.roses.kernel.log.business.pojo.request;
+package cn.stylefeng.roses.kernel.log.api.pojo.business;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;

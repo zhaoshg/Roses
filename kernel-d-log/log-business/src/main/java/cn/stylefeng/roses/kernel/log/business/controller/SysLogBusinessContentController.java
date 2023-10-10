@@ -1,8 +1,8 @@
 package cn.stylefeng.roses.kernel.log.business.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.log.api.pojo.business.SysLogBusinessContentRequest;
 import cn.stylefeng.roses.kernel.log.api.pojo.entity.SysLogBusinessContent;
-import cn.stylefeng.roses.kernel.log.business.pojo.request.SysLogBusinessContentRequest;
 import cn.stylefeng.roses.kernel.log.business.service.SysLogBusinessContentService;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
