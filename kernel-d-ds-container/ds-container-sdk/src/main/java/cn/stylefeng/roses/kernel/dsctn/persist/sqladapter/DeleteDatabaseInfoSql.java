@@ -70,4 +70,10 @@ public class DeleteDatabaseInfoSql extends AbstractSql {
     protected String vastbase() {
         return pgSql();
     }
+
+    @Override
+    protected String openGauss() {
+        return pgSql();
+    }
+
 }

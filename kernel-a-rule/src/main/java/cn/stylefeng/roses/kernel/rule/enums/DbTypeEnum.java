@@ -36,17 +36,22 @@ public enum DbTypeEnum {
     /**
      * 达梦（使用oracle的mapping.xml）
      */
-    DM("jdbc:dm", "oracle", "select 1 from dual"),
+    DM("jdbc:dm", "dm", "select 1 from dual"),
 
     /**
      * 海量数据库
      */
-    VAST_DATA("jdbc:vastbase", "pgsql", "select version()"),
+    VAST_DATA("jdbc:vastbase", "vastbase", "select version()"),
 
     /**
      * 人大金仓
      */
-    KING_BASE("jdbc:kingbase8", "pgsql", "select version()");
+    KING_BASE("jdbc:kingbase8", "kingbase8", "select version()"),
+
+    /**
+     * 华为OpenGauss
+     */
+    OPEN_GAUSS("jdbc:opengauss", "opengauss", "select version()");
 
     /**
      * spring.datasource.url中包含的关键字

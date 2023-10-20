@@ -65,6 +65,9 @@ public abstract class AbstractSql {
         if (jdbcUrl.contains(DbTypeEnum.KING_BASE.getUrlWords())) {
             return kingbase();
         }
+        if (jdbcUrl.contains(DbTypeEnum.OPEN_GAUSS.getUrlWords())) {
+            return openGauss();
+        }
         return mysql();
     }
 
@@ -130,5 +133,14 @@ public abstract class AbstractSql {
      * @since 2023/9/22 14:12
      */
     protected abstract String vastbase();
+
+    /**
+     * 华为的OpenGauss sql
+     *
+     * @return 具体的sql
+     * @author fengshuonan
+     * @since 2023/10/20 13:46
+     */
+    protected abstract String openGauss();
 
 }

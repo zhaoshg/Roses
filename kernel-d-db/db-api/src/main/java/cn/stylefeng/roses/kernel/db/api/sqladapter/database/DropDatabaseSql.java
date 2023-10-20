@@ -71,4 +71,9 @@ public class DropDatabaseSql extends AbstractSql {
         return pgSql();
     }
 
+    @Override
+    protected String openGauss() {
+        return pgSql();
+    }
+
 }

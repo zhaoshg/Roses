@@ -71,4 +71,9 @@ public class GetDatabasesSql extends AbstractSql {
         return pgSql();
     }
 
+    @Override
+    protected String openGauss() {
+        return pgSql();
+    }
+
 }

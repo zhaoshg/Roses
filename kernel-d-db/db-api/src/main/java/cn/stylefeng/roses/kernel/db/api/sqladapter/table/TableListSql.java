@@ -90,4 +90,9 @@ public class TableListSql extends AbstractSql {
         return pgSql();
     }
 
+    @Override
+    protected String openGauss() {
+        return pgSql();
+    }
+
 }
