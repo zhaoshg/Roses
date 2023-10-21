@@ -33,11 +33,14 @@ package cn.stylefeng.roses.kernel.auth.api;
 public interface TempSecretApi {
 
     /**
-     * 获取用户临时秘钥
+     * 校验用户密码是否在临时秘钥存在
      *
+     * @param userId   用户id
+     * @param password 用户输入的密码
+     * @return true-密码正确，false-密码错误
      * @author fengshuonan
-     * @since 2022/3/26 14:07
+     * @since 2023/10/21 21:24
      */
-    String getUserTempSecretKey(Long userId);
+    boolean validateUserTempSecretKey(Long userId, String password);
 
 }

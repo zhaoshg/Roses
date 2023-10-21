@@ -332,13 +332,10 @@ public class LoginService {
         try {
             tempSecretApi = SpringUtil.getBean(TempSecretApi.class);
             if (tempSecretApi != null) {
-                String userTempSecretKey = tempSecretApi.getUserTempSecretKey(userValidateInfo.getUserId());
-                // 如果用户有临时秘钥，则校验秘钥是否正确
-                if (StrUtil.isNotBlank(userTempSecretKey)) {
-                    boolean checkTempKeyResult = loginRequest.getPassword().equals(userTempSecretKey);
-                    if (checkTempKeyResult) {
-                        return;
-                    }
+                // 如果用户有临时秘钥并且校验成功，则直接返回
+                boolean validateResult = tempSecretApi.validateUserTempSecretKey(userValidateInfo.getUserId(), loginRequest.getPassword());
+                if (validateResult) {
+                    return;
                 }
             }
         } catch (Exception ignored) {
