@@ -85,6 +85,12 @@ public class DbOperatorImpl implements DbOperatorApi {
         String sql = StrUtil.format(sqlTemplate, fieldName, tempFieldName, tableName);
 
         Map<String, Object> oneResult = SqlRunner.db().selectOne(sql);
+
+        // 查询不到，直接返回最大值-100
+        if (oneResult == null) {
+            return -100L;
+        }
+
         Object maxSort = oneResult.get(tempFieldName);
 
         return Convert.toLong(maxSort);
