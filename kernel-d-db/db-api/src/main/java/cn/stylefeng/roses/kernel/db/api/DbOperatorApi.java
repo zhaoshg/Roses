@@ -74,4 +74,12 @@ public interface DbOperatorApi {
      */
     Set<Long> findSubListByParentId(String tableName, String parentIdsFieldName, String keyFieldName, Long keyFieldValue);
 
+    /**
+     * 获取数据库，指定表，指定字段在库里的最大值
+     *
+     * @author fengshuonan
+     * @since 2023/10/29 16:07
+     */
+    Long getMaxSortByTableName(String tableName, String fieldName);
+
 }

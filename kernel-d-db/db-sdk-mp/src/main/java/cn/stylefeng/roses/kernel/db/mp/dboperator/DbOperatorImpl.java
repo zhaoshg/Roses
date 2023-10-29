@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -73,6 +74,20 @@ public class DbOperatorImpl implements DbOperatorApi {
 
         // 转为Set<Long>
         return subIds.stream().map(i -> Long.valueOf(i.toString())).collect(Collectors.toSet());
+    }
+
+    @Override
+    public Long getMaxSortByTableName(String tableName, String fieldName) {
+
+        String tempFieldName = "maxSort";
+
+        String sqlTemplate = "select max({}) as {} from {}";
+        String sql = StrUtil.format(sqlTemplate, fieldName, tempFieldName, tableName);
+
+        Map<String, Object> oneResult = SqlRunner.db().selectOne(sql);
+        Object maxSort = oneResult.get(tempFieldName);
+
+        return Convert.toLong(maxSort);
     }
 
 }
