@@ -3,8 +3,10 @@ package cn.stylefeng.roses.kernel.rule.util;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.rule.util.sort.GetSortKey;
 
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 排序工具类
@@ -29,6 +31,31 @@ public class SortUtils {
         }
 
         List<T> newSortList = new LinkedList<>();
+        for (Object key : keys) {
+            for (T listItem : originList) {
+                Object sortKey = listItem.getSortKey();
+                if (ObjectUtil.equal(key, sortKey)) {
+                    newSortList.add(listItem);
+                }
+            }
+        }
+
+        return newSortList;
+    }
+
+    /**
+     * 对Set数组进行排序
+     *
+     * @author fengshuonan
+     * @since 2023/11/1 18:41
+     */
+    public static <T extends GetSortKey> Set<T> sortListByObjectKey(Set<T> originList, Set<?> keys) {
+
+        if (ObjectUtil.isEmpty(originList) || ObjectUtil.isEmpty(keys)) {
+            return originList;
+        }
+
+        Set<T> newSortList = new LinkedHashSet<>();
         for (Object key : keys) {
             for (T listItem : originList) {
                 Object sortKey = listItem.getSortKey();
