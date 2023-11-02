@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.sys.api.OrganizationServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
 import cn.stylefeng.roses.kernel.sys.api.remote.OrgInfoRemoteApi;
@@ -143,5 +144,13 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
      * @since 2023/7/14 1:09
      */
     Boolean getOrgHaveSubFlag(Long orgId);
+
+    /**
+     * 批量获取组织机构名称
+     *
+     * @author fengshuonan
+     * @since 2023/11/2 10:19
+     */
+    List<SimpleDict> getOrgListName(HrOrganizationRequest hrOrganizationRequest);
 
 }

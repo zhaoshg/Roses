@@ -1,6 +1,8 @@
 package cn.stylefeng.roses.kernel.sys.modular.org.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -11,10 +13,12 @@ import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.CommonOrgTreeReque
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.request.HrOrganizationRequest;
 import cn.stylefeng.roses.kernel.sys.modular.org.pojo.response.CommonOrgTreeResponse;
 import cn.stylefeng.roses.kernel.sys.modular.org.service.HrOrganizationService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 通用组织机构接口
@@ -53,6 +57,18 @@ public class CommonOrgController {
     @GetResource(name = "分页获取组织机构信息（用在通用选择机构组件中）", path = "/common/org/pageList")
     public ResponseData<PageResult<HrOrganization>> commonOrgPage(HrOrganizationRequest hrOrganizationRequest) {
         return new SuccessResponseData<>(hrOrganizationService.commonOrgPage(hrOrganizationRequest));
+    }
+
+    /**
+     * 获取机构名称集合，通过机构id的列表
+     *
+     * @author fengshuonan
+     * @since 2023/11/2 10:16
+     */
+    @PostResource(name = "获取机构名称集合，通过机构id的列表", path = "/common/org/getOrgListName")
+    public ResponseData<List<SimpleDict>> getOrgListName(
+            @RequestBody @Validated(BaseRequest.batchDelete.class) HrOrganizationRequest hrOrganizationRequest) {
+        return new SuccessResponseData<>(hrOrganizationService.getOrgListName(hrOrganizationRequest));
     }
 
 }

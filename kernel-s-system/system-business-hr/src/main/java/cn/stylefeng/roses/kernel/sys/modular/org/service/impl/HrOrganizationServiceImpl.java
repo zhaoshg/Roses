@@ -17,6 +17,7 @@ import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
 import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
@@ -471,6 +472,31 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
             sysOrgSubFlagCache.put(orgId.toString(), false, SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
             return false;
         }
+    }
+
+    @Override
+    public List<SimpleDict> getOrgListName(HrOrganizationRequest hrOrganizationRequest) {
+
+        List<SimpleDict> dictList = new ArrayList<>();
+
+        if (ObjectUtil.isEmpty(hrOrganizationRequest) || ObjectUtil.isEmpty(hrOrganizationRequest.getOrgIdList())) {
+            return dictList;
+        }
+
+        LambdaQueryWrapper<HrOrganization> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(HrOrganization::getOrgId, hrOrganizationRequest.getOrgIdList());
+        wrapper.select(HrOrganization::getOrgName, HrOrganization::getOrgId, HrOrganization::getOrgCode);
+        List<HrOrganization> list = this.list(wrapper);
+
+        if (ObjectUtil.isEmpty(list)) {
+            return dictList;
+        }
+
+        for (HrOrganization hrOrganization : list) {
+            dictList.add(new SimpleDict(hrOrganization.getOrgId(), hrOrganization.getOrgName(), hrOrganization.getOrgCode()));
+        }
+
+        return dictList;
     }
 
     @Override
