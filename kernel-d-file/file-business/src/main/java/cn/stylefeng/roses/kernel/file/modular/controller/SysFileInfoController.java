@@ -296,9 +296,9 @@ public class SysFileInfoController {
      * @author fengshuonan
      * @since 2023/11/2 9:45
      */
-    @GetResource(name = "通过文件id集合，批量获取文件信息详情", path = "/sysFileInfo/getAntdVInfoBatch")
+    @PostResource(name = "通过文件id集合，批量获取文件信息详情", path = "/sysFileInfo/getAntdVInfoBatch")
     public ResponseData<List<AntdvFileInfo>> getAntdVInfoBatch(
-            @Validated(SysFileInfoRequest.batchGetFileAntdvInfo.class) SysFileInfoRequest sysFileInfoRequest) {
+            @RequestBody @Validated(SysFileInfoRequest.batchGetFileAntdvInfo.class) SysFileInfoRequest sysFileInfoRequest) {
         return new SuccessResponseData<>(fileInfoApi.buildAntdvFileInfoBatch(sysFileInfoRequest.getFileIdList()));
     }
 
