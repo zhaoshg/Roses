@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
@@ -129,5 +130,13 @@ public interface SysUserService extends IService<SysUser>, SysUserServiceApi {
      * @since 2023/6/26 22:25
      */
     void editPassword(SysUserRequest sysUserRequest);
+
+    /**
+     * 批量获取用户名称
+     *
+     * @author fengshuonan
+     * @since 2023/11/2 10:25
+     */
+    List<SimpleDict> batchGetName(SysUserRequest sysUserRequest);
 
 }

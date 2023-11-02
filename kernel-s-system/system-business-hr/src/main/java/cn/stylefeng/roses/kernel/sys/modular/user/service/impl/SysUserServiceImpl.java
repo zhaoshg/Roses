@@ -21,6 +21,7 @@ import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
 import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.sys.api.SecurityConfigService;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
@@ -368,6 +369,32 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
+    public List<SimpleDict> batchGetName(SysUserRequest sysUserRequest) {
+
+        List<SimpleDict> dictList = new ArrayList<>();
+
+        if (ObjectUtil.isEmpty(sysUserRequest) || ObjectUtil.isEmpty(sysUserRequest.getUserIdList())) {
+            return dictList;
+        }
+
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(SysUser::getUserId, sysUserRequest.getUserIdList());
+        wrapper.select(SysUser::getRealName, SysUser::getUserId);
+        List<SysUser> list = this.list(wrapper);
+
+        if (ObjectUtil.isEmpty(list)) {
+            return dictList;
+        }
+
+        for (SysUser sysUser : list) {
+            dictList.add(new SimpleDict(sysUser.getUserId(), sysUser.getRealName(), null));
+        }
+
+        return dictList;
+
+    }
+
+    @Override
     public void editAvatar(SysUserRequest sysUserRequest) {
         // 新头像文件id
         Long fileId = sysUserRequest.getAvatar();
@@ -468,8 +495,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new ServiceException(SysUserExceptionEnum.ACCOUNT_NOT_EXIST);
         }
 
-        return new UserValidateDTO(sysUser.getUserId(), sysUser.getPassword(), sysUser.getPasswordSalt(),
-                sysUser.getStatusFlag(), sysUser.getTenantId(), sysUser.getAccount());
+        return new UserValidateDTO(sysUser.getUserId(), sysUser.getPassword(), sysUser.getPasswordSalt(), sysUser.getStatusFlag(),
+                sysUser.getTenantId(), sysUser.getAccount());
     }
 
     @Override
