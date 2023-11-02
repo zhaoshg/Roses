@@ -29,6 +29,7 @@ import cn.stylefeng.roses.kernel.file.api.pojo.request.SysFileInfoRequest;
 import cn.stylefeng.roses.kernel.file.api.pojo.response.SysFileInfoResponse;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * 获取文件信息的api
@@ -86,6 +87,14 @@ public interface FileInfoApi {
      * @since 2022/3/28 14:32
      */
     AntdvFileInfo buildAntdvFileInfo(Long fileId);
+
+    /**
+     * 通过文件id集合，批量获取文件信息详情
+     *
+     * @author fengshuonan
+     * @since 2023/11/2 9:48
+     */
+    List<AntdvFileInfo> buildAntdvFileInfoBatch(List<Long> fileIdList);
 
     /**
      * 真实删除文件

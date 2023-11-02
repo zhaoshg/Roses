@@ -30,7 +30,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 文件信息表
@@ -123,6 +125,13 @@ public class SysFileInfoRequest extends BaseRequest {
     private String filePath;
 
     /**
+     * 文件ID集合，用在批量获取文件信息详情
+     */
+    @NotEmpty(message = "文件id集合不能为空", groups = batchGetFileAntdvInfo.class)
+    @ChineseDescription("文件id集合")
+    private List<Long> fileIdList;
+
+    /**
      * 版本回退
      */
     public @interface versionBack {
@@ -132,6 +141,12 @@ public class SysFileInfoRequest extends BaseRequest {
      * 通过object名称预览文件
      */
     public @interface previewByObjectName {
+    }
+
+    /**
+     * 批量获取文件信息详情
+     */
+    public @interface batchGetFileAntdvInfo {
     }
 
 }

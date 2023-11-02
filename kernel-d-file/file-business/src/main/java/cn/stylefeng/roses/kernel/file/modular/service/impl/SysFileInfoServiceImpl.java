@@ -73,6 +73,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -278,8 +279,8 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
         List<SysFileInfo> records = page.getRecords();
 
         // 排除defaultAvatar.png这个图片,这个是默认头像
-        List<SysFileInfo> newList = records.stream()
-                .filter(i -> !i.getFileOriginName().equals(FileConstants.DEFAULT_AVATAR_FILE_OBJ_NAME)).collect(Collectors.toList());
+        List<SysFileInfo> newList = records.stream().filter(i -> !i.getFileOriginName().equals(FileConstants.DEFAULT_AVATAR_FILE_OBJ_NAME))
+                .collect(Collectors.toList());
 
         // 拼接图片url地址
         for (SysFileInfo sysFileInfo : newList) {
@@ -530,6 +531,38 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
         String fileAuthUrl = this.getFileAuthUrl(fileId);
         antdvFileInfo.setThumbUrl(fileAuthUrl);
         return antdvFileInfo;
+    }
+
+    @Override
+    public List<AntdvFileInfo> buildAntdvFileInfoBatch(List<Long> fileIdList) {
+        if (ObjectUtil.isEmpty(fileIdList)) {
+            return new ArrayList<>();
+        }
+
+        List<AntdvFileInfo> antdvFileInfos = new ArrayList<>();
+        for (Long fileId : fileIdList) {
+            AntdvFileInfo antdvFileInfo = new AntdvFileInfo();
+
+            // 设置唯一id
+            antdvFileInfo.setUid(IdWorker.getIdStr());
+
+            // 设置文件名称
+            LambdaQueryWrapper<SysFileInfo> sysFileInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            sysFileInfoLambdaQueryWrapper.eq(SysFileInfo::getFileId, fileId);
+            sysFileInfoLambdaQueryWrapper.select(SysFileInfo::getFileOriginName);
+            SysFileInfo sysFileInfo = this.getOne(sysFileInfoLambdaQueryWrapper);
+            if (sysFileInfo == null) {
+                continue;
+            }
+            antdvFileInfo.setName(sysFileInfo.getFileOriginName());
+
+            // 设置文件的访问url
+            String fileAuthUrl = this.getFileAuthUrl(fileId);
+            antdvFileInfo.setThumbUrl(fileAuthUrl);
+            antdvFileInfos.add(antdvFileInfo);
+        }
+
+        return antdvFileInfos;
     }
 
     @Override
