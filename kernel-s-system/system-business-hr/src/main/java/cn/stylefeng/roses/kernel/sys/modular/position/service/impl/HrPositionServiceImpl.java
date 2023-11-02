@@ -11,6 +11,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemovePositionCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.position.entity.HrPosition;
 import cn.stylefeng.roses.kernel.sys.modular.position.enums.HrPositionExceptionEnum;
@@ -23,6 +24,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -111,6 +113,31 @@ public class HrPositionServiceImpl extends ServiceImpl<HrPositionMapper, HrPosit
 
         Page<HrPosition> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
+    }
+
+    @Override
+    public List<SimpleDict> batchGetName(HrPositionRequest hrPositionRequest) {
+
+        List<SimpleDict> dictList = new ArrayList<>();
+
+        if (ObjectUtil.isEmpty(hrPositionRequest) || ObjectUtil.isEmpty(hrPositionRequest.getPositionIdList())) {
+            return dictList;
+        }
+
+        LambdaQueryWrapper<HrPosition> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(HrPosition::getPositionId, hrPositionRequest.getPositionIdList());
+        wrapper.select(HrPosition::getPositionName, HrPosition::getPositionId);
+        List<HrPosition> list = this.list(wrapper);
+
+        if (ObjectUtil.isEmpty(list)) {
+            return dictList;
+        }
+
+        for (HrPosition hrPosition : list) {
+            dictList.add(new SimpleDict(hrPosition.getPositionId(), hrPosition.getPositionName(), null));
+        }
+
+        return dictList;
     }
 
     @Override
