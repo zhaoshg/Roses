@@ -6,12 +6,10 @@ import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
-import cn.stylefeng.roses.kernel.auth.api.SsoServerApi;
 import cn.stylefeng.roses.kernel.auth.api.TempSecretApi;
 import cn.stylefeng.roses.kernel.auth.api.TenantCodeGetApi;
 import cn.stylefeng.roses.kernel.auth.api.constants.AuthConstants;
 import cn.stylefeng.roses.kernel.auth.api.context.AuthJwtContext;
-import cn.stylefeng.roses.kernel.auth.api.enums.SsoClientTypeEnum;
 import cn.stylefeng.roses.kernel.auth.api.exception.AuthException;
 import cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum;
 import cn.stylefeng.roses.kernel.auth.api.expander.AuthConfigExpander;
@@ -22,8 +20,6 @@ import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginRequest;
 import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginResponse;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.auth.api.pojo.payload.DefaultJwtPayload;
-import cn.stylefeng.roses.kernel.auth.api.pojo.sso.SsoLoginCodeRequest;
-import cn.stylefeng.roses.kernel.auth.api.pojo.sso.SsoProperties;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.demo.expander.DemoConfigExpander;
 import cn.stylefeng.roses.kernel.log.api.LoginLogServiceApi;
@@ -70,9 +66,6 @@ public class LoginService {
     private DragCaptchaApi dragCaptchaApi;
 
     @Resource
-    private SsoProperties ssoProperties;
-
-    @Resource
     private LoginLogServiceApi loginLogServiceApi;
 
     @Resource(name = "loginErrorCountCacheApi")
@@ -112,24 +105,7 @@ public class LoginService {
         // 3. 解密密码的密文，需要sys_config相关配置打开
         decryptRequestPassword(loginRequest);
 
-        // 4. 如果开启了单点登录，并且CaToken没有值，走单点登录，获取loginCode
-        if (ssoProperties.getOpenFlag() && StrUtil.isEmpty(caToken)) {
-            if (SsoClientTypeEnum.client.name().equals(ssoProperties.getSsoClientType())) {
-                // 调用单点的接口获取loginCode，远程接口校验用户级密码正确性。
-                String remoteLoginCode = getRemoteLoginCode(loginRequest);
-                return new LoginResponse(remoteLoginCode);
-            } else {
-                // 如果当前系统是单点服务端
-                SsoServerApi ssoServerApi = SpringUtil.getBean(SsoServerApi.class);
-                SsoLoginCodeRequest ssoLoginCodeRequest = new SsoLoginCodeRequest();
-                ssoLoginCodeRequest.setAccount(loginRequest.getAccount());
-                ssoLoginCodeRequest.setPassword(loginRequest.getPassword());
-                String remoteLoginCode = ssoServerApi.createSsoLoginCode(ssoLoginCodeRequest);
-                return new LoginResponse(remoteLoginCode);
-            }
-        }
-
-        // 4.1 通过租户编码获取租户id，如果租户参数没传，则默认填充根租户的id
+        // 4. 通过租户编码获取租户id，如果租户参数没传，则默认填充根租户的id
         String tenantCode = loginRequest.getTenantCode();
         Long tenantId = tenantCodeGetApi.getTenantIdByCode(tenantCode);
 
