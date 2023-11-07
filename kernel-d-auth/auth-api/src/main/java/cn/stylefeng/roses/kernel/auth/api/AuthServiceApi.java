@@ -27,9 +27,9 @@ package cn.stylefeng.roses.kernel.auth.api;
 import cn.stylefeng.roses.kernel.auth.api.exception.AuthException;
 import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginRequest;
 import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginResponse;
-import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginWithTokenRequest;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.auth.api.pojo.payload.DefaultJwtPayload;
+import cn.stylefeng.roses.kernel.auth.api.pojo.sso.LoginBySsoTokenRequest;
 
 /**
  * 认证服务的接口，包括基本的登录退出操作和校验token等操作
@@ -75,7 +75,7 @@ public interface AuthServiceApi {
      * @author fengshuonan
      * @since 2021/5/25 22:44
      */
-    LoginResponse LoginWithToken(LoginWithTokenRequest loginWithTokenRequest);
+    LoginResponse LoginByCaToken(LoginBySsoTokenRequest loginWithTokenRequest);
 
     /**
      * 当前登录人退出登录

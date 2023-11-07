@@ -1,4 +1,4 @@
-package cn.stylefeng.roses.kernel.auth.api.pojo.auth;
+package cn.stylefeng.roses.kernel.auth.api.pojo.sso;
 
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import lombok.Data;
@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class LoginWithTokenRequest extends BaseRequest {
+public class LoginBySsoTokenRequest extends BaseRequest {
 
     /**
      * 从单点服务获取到的token

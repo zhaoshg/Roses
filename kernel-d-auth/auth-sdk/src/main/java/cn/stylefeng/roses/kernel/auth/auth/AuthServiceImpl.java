@@ -25,6 +25,9 @@
 package cn.stylefeng.roses.kernel.auth.auth;
 
 import cn.hutool.core.codec.Base64;
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -39,25 +42,24 @@ import cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum;
 import cn.stylefeng.roses.kernel.auth.api.expander.AuthConfigExpander;
 import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginRequest;
 import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginResponse;
-import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginWithTokenRequest;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.auth.api.pojo.payload.DefaultJwtPayload;
+import cn.stylefeng.roses.kernel.auth.api.pojo.sso.DecryptCaLoginUser;
+import cn.stylefeng.roses.kernel.auth.api.pojo.sso.DecryptCaTokenInfo;
+import cn.stylefeng.roses.kernel.auth.api.pojo.sso.LoginBySsoTokenRequest;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.demo.expander.DemoConfigExpander;
-import cn.stylefeng.roses.kernel.jwt.JwtTokenOperator;
 import cn.stylefeng.roses.kernel.jwt.api.JwtApi;
 import cn.stylefeng.roses.kernel.jwt.api.exception.JwtException;
 import cn.stylefeng.roses.kernel.jwt.api.exception.enums.JwtExceptionEnum;
-import cn.stylefeng.roses.kernel.jwt.api.pojo.config.JwtConfig;
 import cn.stylefeng.roses.kernel.log.api.LoginLogServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserValidateDTO;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import io.jsonwebtoken.Claims;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 import static cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum.AUTH_EXPIRED_ERROR;
 import static cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum.TOKEN_PARSE_ERROR;
@@ -112,52 +114,42 @@ public class AuthServiceImpl implements AuthServiceApi {
     }
 
     @Override
-    public LoginResponse LoginWithToken(LoginWithTokenRequest loginWithTokenRequest) {
+    public LoginResponse LoginByCaToken(LoginBySsoTokenRequest loginWithTokenRequest) {
 
-        // 解析jwt token中的账号
-        JwtConfig jwtConfig = new JwtConfig();
-        jwtConfig.setJwtSecret(AuthConfigExpander.getSsoJwtSecret());
-        jwtConfig.setExpiredSeconds(0L);
+        // sso token是一个加密的字符串，需要用AES秘钥对称解密
+        String encryptUserInfo = loginWithTokenRequest.getToken();
 
-        // jwt工具类初始化
-        JwtTokenOperator jwtTokenOperator = new JwtTokenOperator(jwtConfig);
+        // aes解密出用户信息
+        AES aesUtil = SecureUtil.aes(Base64.decode(AuthConfigExpander.getSsoDataDecryptSecret()));
+        String userInfoJson = aesUtil.decryptStr(encryptUserInfo, CharsetUtil.CHARSET_UTF_8);
 
-        // 解析token中的用户信息
-        Claims payload = null;
-        try {
-            payload = jwtTokenOperator.getJwtPayloadClaims(loginWithTokenRequest.getToken());
-        } catch (Exception exception) {
-            throw new AuthException(AuthExceptionEnum.SSO_TOKEN_PARSE_ERROR, exception.getMessage());
+        // 转化为实体类
+        DecryptCaTokenInfo decryptCaTokenInfo = JSON.parseObject(userInfoJson, DecryptCaTokenInfo.class);
+
+        // 如果时间大于2分钟则认定token过期
+        String tokenGenerateTimeStr = decryptCaTokenInfo.getGenerationDateTime();
+        DateTime tokenGenerateTime = DateUtil.parse(tokenGenerateTimeStr);
+        DateTime tokenExpTime = tokenGenerateTime.offset(DateField.MINUTE, 2);
+        if (tokenExpTime.isBefore(new Date())) {
+            throw new AuthException(AuthExceptionEnum.SSO_TOKEN_PARSE_ERROR, "sso token过期");
         }
 
-        // 获取到用户信息
-        Object userInfoEncryptString = payload.get("userInfo");
-        if (ObjectUtil.isEmpty(userInfoEncryptString)) {
+        // 获取token中的用户信息
+        DecryptCaLoginUser caLoginUser = decryptCaTokenInfo.getCaLoginUser();
+        if (caLoginUser == null) {
             throw new AuthException(AuthExceptionEnum.SSO_TOKEN_GET_USER_ERROR);
         }
 
         // 解密出用户账号和caToken（caToken用于校验用户是否在单点中心）
-        String account = null;
-        String caToken = null;
-        try {
-            AES aesUtil = SecureUtil.aes(Base64.decode(AuthConfigExpander.getSsoDataDecryptSecret()));
-            String loginUserJson = aesUtil.decryptStr(userInfoEncryptString.toString(), CharsetUtil.CHARSET_UTF_8);
-            JSONObject userInfoJsonObject = JSON.parseObject(loginUserJson);
-            account = userInfoJsonObject.getString("account");
-            caToken = userInfoJsonObject.getString("caToken");
-        } catch (Exception exception) {
-            throw new AuthException(AuthExceptionEnum.SSO_TOKEN_DECRYPT_USER_ERROR, exception.getMessage());
+        if (ObjectUtil.isEmpty(caLoginUser.getAccount()) || ObjectUtil.isEmpty(caLoginUser.getCaToken())) {
+            throw new AuthException(AuthExceptionEnum.SSO_TOKEN_GET_USER_ERROR);
         }
 
-        // 账号为空，抛出异常
-        if (account == null) {
-            throw new AuthException(AuthExceptionEnum.SSO_TOKEN_DECRYPT_USER_ERROR);
-        }
+        // 通过账号和caToken登录
+        LoginResponse loginResponse = loginWithUserNameAndCaToken(caLoginUser.getAccount(), caLoginUser.getCaToken());
 
-        LoginResponse loginResponse = loginWithUserNameAndCaToken(account, caToken);
-
-        // 存储单点token和生成的本地token的映射关系
-        caClientTokenCacheApi.put(loginWithTokenRequest.getToken(), loginResponse.getToken());
+        // 存储单点token和生成的本地token的映射关系，用在远程退出的时，将本地缓存清空
+        caClientTokenCacheApi.put(caLoginUser.getCaToken(), loginResponse.getToken());
 
         return loginResponse;
     }
