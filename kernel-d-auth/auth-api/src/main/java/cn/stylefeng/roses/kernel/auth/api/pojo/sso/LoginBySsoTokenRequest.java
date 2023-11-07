@@ -19,7 +19,7 @@ public class LoginBySsoTokenRequest extends BaseRequest {
     /**
      * 从单点服务获取到的token
      */
-    @NotBlank(message = "token不能为空")
+    @NotBlank(message = "CA Token不能为空")
     private String token;
 
 }
