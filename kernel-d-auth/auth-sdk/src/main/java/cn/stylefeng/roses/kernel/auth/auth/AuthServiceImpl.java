@@ -47,6 +47,7 @@ import cn.stylefeng.roses.kernel.auth.api.pojo.payload.DefaultJwtPayload;
 import cn.stylefeng.roses.kernel.auth.api.pojo.sso.DecryptCaLoginUser;
 import cn.stylefeng.roses.kernel.auth.api.pojo.sso.DecryptCaTokenInfo;
 import cn.stylefeng.roses.kernel.auth.api.pojo.sso.LoginBySsoTokenRequest;
+import cn.stylefeng.roses.kernel.auth.api.pojo.sso.LogoutBySsoTokenRequest;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.demo.expander.DemoConfigExpander;
 import cn.stylefeng.roses.kernel.jwt.api.JwtApi;
@@ -121,7 +122,12 @@ public class AuthServiceImpl implements AuthServiceApi {
 
         // aes解密出用户信息
         AES aesUtil = SecureUtil.aes(Base64.decode(AuthConfigExpander.getSsoDataDecryptSecret()));
-        String userInfoJson = aesUtil.decryptStr(encryptUserInfo, CharsetUtil.CHARSET_UTF_8);
+        String userInfoJson = null;
+        try {
+            userInfoJson = aesUtil.decryptStr(encryptUserInfo, CharsetUtil.CHARSET_UTF_8);
+        } catch (Exception e) {
+            throw new AuthException(AuthExceptionEnum.SSO_TOKEN_PARSE_ERROR, "sso token无法解析");
+        }
 
         // 转化为实体类
         DecryptCaTokenInfo decryptCaTokenInfo = JSON.parseObject(userInfoJson, DecryptCaTokenInfo.class);
@@ -244,6 +250,21 @@ public class AuthServiceImpl implements AuthServiceApi {
         sessionManagerApi.updateSession(token, loginUser);
 
         return loginUser;
+    }
+
+    @Override
+    public void logoutByCaToken(LogoutBySsoTokenRequest logoutBySsoTokenRequest) {
+
+        // 通过CaToken查询到本地是否有对应的会话
+        String localGunsToken = caClientTokenCacheApi.get(logoutBySsoTokenRequest.getCaToken());
+
+        // 如果缓存不存在则直接返回
+        if (ObjectUtil.isEmpty(localGunsToken)) {
+            return;
+        }
+
+        // 如果缓存存在，则直接移除token
+        this.sessionManagerApi.removeSession(localGunsToken);
     }
 
 }

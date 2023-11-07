@@ -30,6 +30,7 @@ import cn.stylefeng.roses.kernel.auth.api.pojo.auth.LoginResponse;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.auth.api.pojo.payload.DefaultJwtPayload;
 import cn.stylefeng.roses.kernel.auth.api.pojo.sso.LoginBySsoTokenRequest;
+import cn.stylefeng.roses.kernel.auth.api.pojo.sso.LogoutBySsoTokenRequest;
 
 /**
  * 认证服务的接口，包括基本的登录退出操作和校验token等操作
@@ -135,5 +136,15 @@ public interface AuthServiceApi {
      * @since 2022/10/17 0:04
      */
     LoginUser createNewLoginInfo(String token, DefaultJwtPayload defaultJwtPayload);
+
+    /**
+     * 通过单点的CaToken将本系统的用户退出
+     * <p>
+     * 一般用在单点认证中心退出时，认证中心调用本系统退出接口
+     *
+     * @author fengshuonan
+     * @since 2023/11/7 15:57
+     */
+    void logoutByCaToken(LogoutBySsoTokenRequest logoutBySsoTokenRequest);
 
 }

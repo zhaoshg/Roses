@@ -44,6 +44,7 @@ public class DefaultStrategyImpl implements ConfigInitStrategyApi {
         configInitItems.add(new ConfigInitItem("系统默认密码", "SYS_DEFAULT_PASSWORD", "123456", "用在重置密码的默认密码"));
         configInitItems.add(new ConfigInitItem("系统发布版本", "SYS_RELEASE_VERSION", DateUtil.format(new Date(), "yyyyMMdd"), "系统发布的版本号"));
         configInitItems.add(new ConfigInitItem("数据库加密AES秘钥", "SYS_ENCRYPT_SECRET_KEY", RandomUtil.randomString(32), "对称加密秘钥，用在数据库数据加密"));
+        configInitItems.add(new ConfigInitItem("SSO服务端加密Token信息秘钥", "SYS_AUTH_SSO_DECRYPT_DATA_SECRET", RandomUtil.randomString(32), "SSO服务端加密Token信息秘钥，用在单点登录认证时候加密生成Token"));
         return configInitItems;
     }
 
