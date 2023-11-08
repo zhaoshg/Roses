@@ -78,11 +78,6 @@ public interface AuthConstants {
     String KAPTCHA_SESSION_KEY = "KAPTCHA_SESSION_KEY";
 
     /**
-     * 默认解析jwt的秘钥（用于解析sso传过来的token）
-     */
-    String SYS_AUTH_SSO_JWT_SECRET = "aabbccdd";
-
-    /**
      * 默认解密sso单点中jwt中payload的秘钥
      */
     String SYS_AUTH_SSO_DECRYPT_DATA_SECRET = "EDPpR/BQfEFJiXKgxN8Uno4OnNMGcIJW1F777yySCPA=";

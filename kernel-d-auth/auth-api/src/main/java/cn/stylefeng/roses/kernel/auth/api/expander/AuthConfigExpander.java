@@ -102,16 +102,6 @@ public class AuthConfigExpander {
     }
 
     /**
-     * 默认解析jwt的秘钥（用于解析sso传过来的token）
-     *
-     * @author fengshuonan
-     * @since 2021/5/25 22:39
-     */
-    public static String getSsoJwtSecret() {
-        return ConfigContext.me().getSysConfigValueWithDefault("SYS_AUTH_SSO_JWT_SECRET", String.class, SYS_AUTH_SSO_JWT_SECRET);
-    }
-
-    /**
      * 默认解析sso加密的数据的秘钥
      *
      * @author fengshuonan
