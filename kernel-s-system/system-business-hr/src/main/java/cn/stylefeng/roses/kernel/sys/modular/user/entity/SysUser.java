@@ -159,6 +159,13 @@ public class SysUser extends BaseExpandFieldEntity {
     private BigDecimal userSort;
 
     /**
+     * 用户工号
+     */
+    @TableField("employee_number")
+    @ChineseDescription("用户工号")
+    private String employeeNumber;
+
+    /**
      * 对接外部主数据的用户id
      */
     @TableField("master_user_id")

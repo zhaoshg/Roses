@@ -225,7 +225,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 只查询需要的字段
         wrapper.select(SysUser::getUserId, SysUser::getRealName, SysUser::getAccount, SysUser::getSex, SysUser::getStatusFlag,
-                BaseEntity::getCreateTime);
+                BaseEntity::getCreateTime, SysUser::getEmployeeNumber);
 
         // 分页查询
         Page<SysUser> sysUserPage = this.page(PageFactory.defaultPage(), wrapper);
@@ -691,6 +691,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 wrap.or().like(SysUser::getAccount, searchText);
                 wrap.or().like(SysUser::getPhone, searchText);
                 wrap.or().like(SysUser::getTel, searchText);
+                wrap.or().like(SysUser::getEmployeeNumber, searchText);
             });
         }
 

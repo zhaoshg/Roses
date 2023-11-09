@@ -4,7 +4,6 @@ import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
 import cn.stylefeng.roses.kernel.validator.api.validators.unique.TableUniqueValue;
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -128,9 +127,14 @@ public class SysUserRequest extends BaseRequest {
     /**
      * 用户的排序
      */
-    @TableField("user_sort")
     @ChineseDescription("用户的排序")
     private BigDecimal userSort = new BigDecimal(1000);
+
+    /**
+     * 用户工号
+     */
+    @ChineseDescription("用户工号")
+    private String employeeNumber;
 
     /**
      * 对接外部主数据的用户id
