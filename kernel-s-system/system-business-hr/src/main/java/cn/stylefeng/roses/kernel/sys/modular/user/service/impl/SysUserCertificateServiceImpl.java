@@ -35,6 +35,9 @@ public class SysUserCertificateServiceImpl extends ServiceImpl<SysUserCertificat
             return;
         }
 
+        // 先设置证书的用户id
+        sysUserCertificateList.forEach(sysUserCertificate -> sysUserCertificate.setUserId(userId));
+
         // 先清空当前绑定的证书信息
         LambdaQueryWrapper<SysUserCertificate> deleteWrapper = new LambdaQueryWrapper<>();
         deleteWrapper.eq(SysUserCertificate::getUserId, userId);
