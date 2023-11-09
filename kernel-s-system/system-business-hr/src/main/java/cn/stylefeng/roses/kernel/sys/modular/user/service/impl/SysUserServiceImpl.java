@@ -193,6 +193,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 更新用户的任职信息
         sysUserOrgService.updateUserOrg(sysUser.getUserId(), sysUserRequest.getUserOrgList());
 
+        // 更新用户证书信息
+        this.sysUserCertificateService.updateUserCertificate(sysUser.getUserId(), sysUserRequest.getUserCertificateList());
+
         // 记录日志
         BusinessLogUtil.addContent("更新后用户信息如下：\n", sysUser);
     }
