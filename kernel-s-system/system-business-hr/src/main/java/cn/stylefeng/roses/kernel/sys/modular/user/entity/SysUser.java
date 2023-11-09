@@ -9,6 +9,7 @@ import cn.stylefeng.roses.kernel.rule.enums.SexEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
+import cn.stylefeng.roses.kernel.sys.modular.user.pojo.response.SysUserCertificateResponse;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -209,5 +210,14 @@ public class SysUser extends BaseExpandFieldEntity {
     @TableField(exist = false)
     @ChineseDescription("获取用户角色id列表")
     private List<Long> roleIdList;
+
+    /**
+     * 用户证书列表
+     * <p>
+     * 用在获取用户详情信息的响应
+     */
+    @TableField(exist = false)
+    @ChineseDescription("用户证书列表")
+    private List<SysUserCertificateResponse> userCertificateList;
 
 }

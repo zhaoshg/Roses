@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service;
 
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserCertificate;
+import cn.stylefeng.roses.kernel.sys.modular.user.pojo.response.SysUserCertificateResponse;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -22,5 +23,15 @@ public interface SysUserCertificateService extends IService<SysUserCertificate> 
      * @since 2023/11/09 22:44
      */
     void updateUserCertificate(Long userId, List<SysUserCertificate> sysUserCertificateList);
+
+    /**
+     * 获取指定用户的证书信息
+     * <p>
+     * 用在用户详情界面
+     *
+     * @author fengshuonan
+     * @since 2023/11/10 0:01
+     */
+    List<SysUserCertificateResponse> getUserCertificateList(Long userId);
 
 }

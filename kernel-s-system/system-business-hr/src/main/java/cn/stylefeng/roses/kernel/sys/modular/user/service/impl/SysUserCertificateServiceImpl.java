@@ -1,17 +1,20 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.dsctn.api.context.DataSourceContext;
 import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserCertificate;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserCertificateMapper;
+import cn.stylefeng.roses.kernel.sys.modular.user.pojo.response.SysUserCertificateResponse;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserCertificateService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -43,6 +46,22 @@ public class SysUserCertificateServiceImpl extends ServiceImpl<SysUserCertificat
         } else {
             this.saveBatch(sysUserCertificateList);
         }
+    }
+
+    @Override
+    public List<SysUserCertificateResponse> getUserCertificateList(Long userId) {
+
+        LambdaQueryWrapper<SysUserCertificate> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserCertificate::getUserId, userId);
+
+        queryWrapper.select(SysUserCertificate::getCertificateType, SysUserCertificate::getCertificateNo, SysUserCertificate::getDateIssued,
+                SysUserCertificate::getDateExpires, SysUserCertificate::getIssuingAuthority);
+        List<SysUserCertificate> sysUserCertificateList = this.list(queryWrapper);
+        if (ObjectUtil.isEmpty(sysUserCertificateList)) {
+            return new ArrayList<>();
+        }
+
+        return BeanUtil.copyToList(sysUserCertificateList, SysUserCertificateResponse.class);
     }
 
     @Override

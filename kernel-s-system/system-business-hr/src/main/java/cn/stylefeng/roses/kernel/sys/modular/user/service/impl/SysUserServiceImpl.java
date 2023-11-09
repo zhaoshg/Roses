@@ -35,6 +35,7 @@ import cn.stylefeng.roses.kernel.sys.modular.user.factory.SysUserCreateFactory;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserMapper;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.response.PersonalInfo;
+import cn.stylefeng.roses.kernel.sys.modular.user.pojo.response.SysUserCertificateResponse;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserCertificateService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
@@ -219,6 +220,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 获取用户的角色信息
         List<Long> userRoleIdList = sysUserRoleService.getUserRoleIdList(sysUser.getUserId());
         sysUser.setRoleIdList(userRoleIdList);
+
+        // 获取用户证书信息
+        List<SysUserCertificateResponse> userCertificateList = sysUserCertificateService.getUserCertificateList(sysUser.getUserId());
+        sysUser.setUserCertificateList(userCertificateList);
 
         return sysUser;
     }
