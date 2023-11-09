@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.user.pojo.request;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
+import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserCertificate;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
 import cn.stylefeng.roses.kernel.validator.api.validators.unique.TableUniqueValue;
 import lombok.Data;
@@ -158,6 +159,12 @@ public class SysUserRequest extends BaseRequest {
     @ChineseDescription("用户和组织机构关系集合")
     @NotEmpty(message = "用户和组织机构关系集合不能为空", groups = {add.class, edit.class})
     private List<SysUserOrg> userOrgList;
+
+    /**
+     * 用户证书信息集合
+     */
+    @ChineseDescription("用户证书信息集合")
+    private List<SysUserCertificate> userCertificateList;
 
     /**
      * 用户id集合，用在批量删除用户的参数

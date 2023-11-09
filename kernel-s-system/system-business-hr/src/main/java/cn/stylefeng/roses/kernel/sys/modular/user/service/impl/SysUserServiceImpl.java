@@ -35,6 +35,7 @@ import cn.stylefeng.roses.kernel.sys.modular.user.factory.SysUserCreateFactory;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserMapper;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.response.PersonalInfo;
+import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserCertificateService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
@@ -79,6 +80,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Resource
     private SecurityConfigService securityConfigService;
 
+    @Resource
+    private SysUserCertificateService sysUserCertificateService;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void add(SysUserRequest sysUserRequest) {
@@ -108,6 +112,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 添加用户一个默认角色
         sysUserRoleService.bindUserDefaultRole(sysUser.getUserId());
+
+        // 增加用户证书的信息
+        sysUserCertificateService.updateUserCertificate(sysUser.getUserId(), sysUserRequest.getUserCertificateList());
 
         // 记录日志
         BusinessLogUtil.setLogTitle("新增用户，用户账号：" + sysUser.getAccount());
