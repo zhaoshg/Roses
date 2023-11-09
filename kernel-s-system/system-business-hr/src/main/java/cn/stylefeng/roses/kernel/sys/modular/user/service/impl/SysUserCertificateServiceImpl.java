@@ -3,6 +3,7 @@ package cn.stylefeng.roses.kernel.sys.modular.user.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.dsctn.api.context.DataSourceContext;
 import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
+import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserCertificate;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserCertificateMapper;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserCertificateService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 用户证书业务实现层
@@ -21,7 +23,7 @@ import java.util.List;
  */
 @Service
 public class SysUserCertificateServiceImpl extends ServiceImpl<SysUserCertificateMapper, SysUserCertificate> implements
-        SysUserCertificateService {
+        SysUserCertificateService, RemoveUserCallbackApi {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -41,6 +43,18 @@ public class SysUserCertificateServiceImpl extends ServiceImpl<SysUserCertificat
         } else {
             this.saveBatch(sysUserCertificateList);
         }
+    }
+
+    @Override
+    public void validateHaveUserBind(Set<Long> beRemovedUserIdList) {
+        // ignore
+    }
+
+    @Override
+    public void removeUserAction(Set<Long> beRemovedUserIdList) {
+        LambdaQueryWrapper<SysUserCertificate> deleteWrapper = new LambdaQueryWrapper<>();
+        deleteWrapper.in(SysUserCertificate::getUserId, beRemovedUserIdList);
+        this.remove(deleteWrapper);
     }
 
 }
