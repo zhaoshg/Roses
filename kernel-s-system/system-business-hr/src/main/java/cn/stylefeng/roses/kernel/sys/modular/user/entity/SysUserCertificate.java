@@ -2,10 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.user.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -72,10 +69,11 @@ public class SysUserCertificate extends BaseEntity {
     private Date dateExpires;
 
     /**
-     * 是否删除：Y-删除，N-未删除
+     * 删除标记：Y-已删除，N-未删除
      */
-    @TableField("del_flag")
-    @ChineseDescription("是否删除：Y-删除，N-未删除")
+    @TableField(value = "del_flag", fill = FieldFill.INSERT)
+    @ChineseDescription("删除标记：Y-已删除，N-未删除")
+    @TableLogic
     private String delFlag;
 
 }
