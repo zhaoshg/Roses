@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.pojo.response;
 
 import cn.stylefeng.roses.kernel.dict.api.format.DictFormatProcess;
+import cn.stylefeng.roses.kernel.file.api.format.FileInfoFormatProcess;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
 import lombok.Data;
@@ -46,5 +47,12 @@ public class SysUserCertificateResponse {
      */
     @ChineseDescription("证书到期日期，如果为空，则为长期")
     private Date dateExpires;
+
+    /**
+     * 附件id
+     */
+    @ChineseDescription("附件id")
+    @SimpleFieldFormat(processClass = FileInfoFormatProcess.class)
+    private Long attachmentId;
 
 }

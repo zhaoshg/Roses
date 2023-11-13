@@ -58,7 +58,7 @@ public class SysUserCertificateServiceImpl extends ServiceImpl<SysUserCertificat
         queryWrapper.eq(SysUserCertificate::getUserId, userId);
 
         queryWrapper.select(SysUserCertificate::getCertificateType, SysUserCertificate::getCertificateNo, SysUserCertificate::getDateIssued,
-                SysUserCertificate::getDateExpires, SysUserCertificate::getIssuingAuthority);
+                SysUserCertificate::getDateExpires, SysUserCertificate::getIssuingAuthority, SysUserCertificate::getAttachmentId);
         List<SysUserCertificate> sysUserCertificateList = this.list(queryWrapper);
         if (ObjectUtil.isEmpty(sysUserCertificateList)) {
             return new ArrayList<>();
