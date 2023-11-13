@@ -69,6 +69,13 @@ public class SysUserCertificate extends BaseEntity {
     private Date dateExpires;
 
     /**
+     * 附件id
+     */
+    @TableField("attachment_id")
+    @ChineseDescription("附件id")
+    private Long attachmentId;
+
+    /**
      * 删除标记：Y-已删除，N-未删除
      */
     @TableField(value = "del_flag", fill = FieldFill.INSERT)

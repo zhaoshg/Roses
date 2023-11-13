@@ -5,9 +5,7 @@ import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * 用户证书封装类
@@ -56,27 +54,18 @@ public class SysUserCertificateRequest extends BaseRequest {
      * 证书发证日期
      */
     @ChineseDescription("证书发证日期")
-	private String dateIssued;
+    private String dateIssued;
 
     /**
      * 证书到期日期，如果为空，则为长期
      */
     @ChineseDescription("证书到期日期，如果为空，则为长期")
-	private String dateExpires;
+    private String dateExpires;
 
     /**
-     * 是否删除：Y-删除，N-未删除
+     * 附件id
      */
-    @NotBlank(message = "是否删除：Y-删除，N-未删除不能为空", groups = {add.class, edit.class})
-    @ChineseDescription("是否删除：Y-删除，N-未删除")
-    private String delFlag;
-
-
-    /**
-     * 批量删除用的id集合
-     */
-    @NotNull(message = "批量删除id集合不能为空", groups = batchDelete.class)
-    @ChineseDescription("批量删除用的id集合")
-    private List<Long> batchDeleteIdList;
+    @ChineseDescription("附件id")
+    private Long attachmentId;
 
 }
