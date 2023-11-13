@@ -8,6 +8,7 @@ CREATE TABLE `sys_user_certificate`  (
   `issuing_authority` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发证机构名称',
   `date_issued` date NULL DEFAULT NULL COMMENT '证书发证日期',
   `date_expires` date NULL DEFAULT NULL COMMENT '证书到期日期，如果为空，则为长期',
+  `attachment_id` bigint NULL DEFAULT NULL COMMENT '文件id',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` bigint NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
