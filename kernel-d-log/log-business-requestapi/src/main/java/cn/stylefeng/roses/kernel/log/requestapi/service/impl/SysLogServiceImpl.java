@@ -122,8 +122,12 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     private LambdaQueryWrapper<SysLog> createWrapper(LogManagerRequest logManagerRequest) {
         LambdaQueryWrapper<SysLog> queryWrapper = new LambdaQueryWrapper<>();
 
-        // 根据时间倒序排序
-        queryWrapper.orderByDesc(SysLog::getCreateTime);
+        // 根据请求参数的顺序排列
+        if (ObjectUtil.isNotEmpty(logManagerRequest.getOrderBy()) && ObjectUtil.isNotEmpty(logManagerRequest.getSortBy())) {
+            queryWrapper.last(logManagerRequest.getOrderByLastSql());
+        } else {
+            queryWrapper.orderByDesc(SysLog::getCreateTime);
+        }
 
         if (ObjectUtil.isEmpty(logManagerRequest)) {
             return queryWrapper;

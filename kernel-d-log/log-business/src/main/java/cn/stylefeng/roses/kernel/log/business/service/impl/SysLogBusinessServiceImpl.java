@@ -31,7 +31,8 @@ import java.util.List;
  * @date 2023/07/21 19:02
  */
 @Service
-public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper, SysLogBusiness> implements SysLogBusinessService, BizLogServiceApi {
+public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper, SysLogBusiness> implements SysLogBusinessService,
+        BizLogServiceApi {
 
     @Resource
     private SysLogBusinessContentService sysLogBusinessContentService;
@@ -118,16 +119,8 @@ public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper,
             queryWrapper.in(SysLogBusiness::getLogTypeCode, logTypeCodeList);
         }
 
-        // 根据文本检索内容查询
-        String searchText = sysLogBusinessRequest.getSearchText();
-        if (ObjectUtil.isNotEmpty(searchText)) {
-            queryWrapper.nested(wrap -> {
-                wrap.like(SysLogBusiness::getLogTitle, searchText).or().like(SysLogBusiness::getRequestUrl, searchText);
-            });
-        }
-
-        // 根据创建时间倒序排列
-        queryWrapper.orderByDesc(SysLogBusiness::getCreateTime);
+        // 填充搜索名称和排序
+        this.buildCommonWrapper(sysLogBusinessRequest, queryWrapper);
 
         Page<SysLogBusiness> sysRolePage = this.page(PageFactory.defaultPage(), queryWrapper);
         return PageResultFactory.createPageResult(sysRolePage);
@@ -160,6 +153,19 @@ public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper,
         String logTypeCode = sysLogBusinessRequest.getLogTypeCode();
         queryWrapper.eq(ObjectUtil.isNotEmpty(logTypeCode), SysLogBusiness::getLogTypeCode, logTypeCode);
 
+        // 填充搜索名称和排序
+        this.buildCommonWrapper(sysLogBusinessRequest, queryWrapper);
+
+        return queryWrapper;
+    }
+
+    /**
+     * 填充搜索名称和排序的条件
+     *
+     * @author fengshuonan
+     * @since 2023/11/13 18:41
+     */
+    private void buildCommonWrapper(SysLogBusinessRequest sysLogBusinessRequest, LambdaQueryWrapper<SysLogBusiness> queryWrapper) {
         // 根据文本检索内容查询
         String searchText = sysLogBusinessRequest.getSearchText();
         if (ObjectUtil.isNotEmpty(searchText)) {
@@ -168,9 +174,12 @@ public class SysLogBusinessServiceImpl extends ServiceImpl<SysLogBusinessMapper,
             });
         }
 
-        // 根据创建时间倒序排列
-        queryWrapper.orderByDesc(SysLogBusiness::getCreateTime);
-
-        return queryWrapper;
+        // 根据请求参数的顺序排列
+        if (ObjectUtil.isNotEmpty(sysLogBusinessRequest.getOrderBy()) && ObjectUtil.isNotEmpty(sysLogBusinessRequest.getSortBy())) {
+            queryWrapper.last(sysLogBusinessRequest.getOrderByLastSql());
+        } else {
+            queryWrapper.orderByDesc(SysLogBusiness::getCreateTime);
+        }
     }
+
 }

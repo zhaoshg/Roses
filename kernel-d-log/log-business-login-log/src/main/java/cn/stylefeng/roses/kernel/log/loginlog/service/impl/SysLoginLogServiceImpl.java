@@ -196,8 +196,12 @@ public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLo
         queryWrapper.ge(StrUtil.isNotBlank(sysLoginLogRequest.getBeginTime()), SysLoginLog::getCreateTime, beginDate);
         queryWrapper.le(StrUtil.isNotBlank(sysLoginLogRequest.getEndTime()), SysLoginLog::getCreateTime, endDate);
 
-        // 根据创建时间降序排列
-        queryWrapper.orderByDesc(SysLoginLog::getCreateTime);
+        // 根据请求参数的顺序排列
+        if (ObjectUtil.isNotEmpty(sysLoginLogRequest.getOrderBy()) && ObjectUtil.isNotEmpty(sysLoginLogRequest.getSortBy())) {
+            queryWrapper.last(sysLoginLogRequest.getOrderByLastSql());
+        } else {
+            queryWrapper.orderByDesc(SysLoginLog::getCreateTime);
+        }
 
         return queryWrapper;
     }
