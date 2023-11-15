@@ -25,7 +25,9 @@
 package cn.stylefeng.roses.kernel.dict.modular.controller;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.dict.api.DictApi;
 import cn.stylefeng.roses.kernel.dict.api.constants.DictConstants;
+import cn.stylefeng.roses.kernel.dict.api.pojo.DictTreeDto;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDictType;
 import cn.stylefeng.roses.kernel.dict.modular.pojo.request.DictTypeRequest;
 import cn.stylefeng.roses.kernel.dict.modular.service.DictTypeService;
@@ -56,6 +58,9 @@ public class DictTypeController {
 
     @Resource
     private DictTypeService dictTypeService;
+
+    @Resource
+    private DictApi dictApi;
 
     /**
      * 添加字典类型
@@ -167,6 +172,17 @@ public class DictTypeController {
         dictTypeRequest.setDictTypeCode(DictConstants.LANGUAGES_DICT_TYPE_CODE);
         SysDictType detail = this.dictTypeService.detail(dictTypeRequest);
         return new SuccessResponseData<>(detail);
+    }
+
+    /**
+     * 获取所有的字典类型树
+     *
+     * @author fengshuonan
+     * @since 2023/11/15 19:08
+     */
+    @GetResource(name = "获取所有的字典类型树", path = "/dictType/dictTreeBuild", requiredPermission = false)
+    public ResponseData<List<DictTreeDto>> dictTreeBuild() {
+        return new SuccessResponseData<>(dictApi.buildDictTreeStructure());
     }
 
 }

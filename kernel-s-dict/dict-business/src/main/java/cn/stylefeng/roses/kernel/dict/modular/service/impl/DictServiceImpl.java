@@ -25,6 +25,7 @@
 package cn.stylefeng.roses.kernel.dict.modular.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
@@ -34,6 +35,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.dict.api.constants.DictConstants;
 import cn.stylefeng.roses.kernel.dict.api.exception.DictException;
 import cn.stylefeng.roses.kernel.dict.api.exception.enums.DictExceptionEnum;
+import cn.stylefeng.roses.kernel.dict.api.pojo.DictTreeDto;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDict;
 import cn.stylefeng.roses.kernel.dict.modular.entity.SysDictType;
 import cn.stylefeng.roses.kernel.dict.modular.mapper.DictMapper;
@@ -55,7 +57,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -222,6 +226,58 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, SysDict> implements
     @Override
     public void deleteByDictId(Long dictId) {
         this.removeById(dictId);
+    }
+
+    @Override
+    public List<DictTreeDto> buildDictTreeStructure() {
+
+        // 获取所有字典类型
+        LambdaQueryWrapper<SysDictType> dictTypeLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        dictTypeLambdaQueryWrapper.select(SysDictType::getDictTypeCode, SysDictType::getDictTypeName);
+        dictTypeLambdaQueryWrapper.orderByAsc(SysDictType::getDictTypeSort);
+        List<SysDictType> dictTypeList = this.dictTypeService.list(dictTypeLambdaQueryWrapper);
+
+        // 获取所有字典信息
+        LambdaQueryWrapper<SysDict> sysDictLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysDictLambdaQueryWrapper.select(SysDict::getDictCode, SysDict::getDictName, SysDict::getDictTypeCode);
+        sysDictLambdaQueryWrapper.orderByAsc(SysDict::getDictSort);
+        List<SysDict> dictList = this.list(sysDictLambdaQueryWrapper);
+
+        // 构建字典类型基本信息
+        Map<String, DictTreeDto> typeCodeMap = new HashMap<>();
+        for (SysDictType sysDictType : dictTypeList) {
+            DictTreeDto dictTreeDto = new DictTreeDto();
+            dictTreeDto.setDictLabel(sysDictType.getDictTypeName());
+            dictTreeDto.setDictValue(sysDictType.getDictTypeCode());
+            typeCodeMap.put(sysDictType.getDictTypeCode(), dictTreeDto);
+        }
+
+        // 遍历所有字典，把字典信息装配到字典类型信息里
+        for (SysDict sysDict : dictList) {
+            String dictTypeCode = sysDict.getDictTypeCode();
+            if (StrUtil.isBlank(dictTypeCode)) {
+                continue;
+            }
+            DictTreeDto dictTreeDto = typeCodeMap.get(dictTypeCode);
+            if (dictTreeDto == null) {
+                continue;
+            }
+
+            List<DictTreeDto> children = dictTreeDto.getChildren();
+            if (ObjectUtil.isEmpty(children)) {
+                children = new ArrayList<>();
+            }
+
+            DictTreeDto dictValue = new DictTreeDto();
+            dictValue.setDictLabel(sysDict.getDictName());
+            dictValue.setDictValue(sysDict.getDictCode());
+
+            children.add(dictValue);
+            dictTreeDto.setChildren(children);
+        }
+
+        // map转化为树形结构
+        return ListUtil.list(true, typeCodeMap.values());
     }
 
     /**

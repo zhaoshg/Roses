@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.dict.api;
 
+import cn.stylefeng.roses.kernel.dict.api.pojo.DictTreeDto;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 
 import java.util.List;
@@ -65,5 +66,16 @@ public interface DictApi {
      * @since 2021/1/30 10:03
      */
     void deleteByDictId(Long dictId);
+
+    /**
+     * 构建一个完整的字典树
+     * <p>
+     * 包含字典的类型和字典底下的详情信息
+     *
+     * @author fengshuonan
+     * @since 2023/11/15 18:55
+     */
+    List<DictTreeDto> buildDictTreeStructure();
+
 
 }
