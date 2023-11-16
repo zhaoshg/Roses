@@ -24,6 +24,9 @@
  */
 package cn.stylefeng.roses.kernel.auth.auth;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.LoginUserApi;
 import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginUserHolder;
@@ -32,9 +35,11 @@ import cn.stylefeng.roses.kernel.auth.api.exception.enums.AuthExceptionEnum;
 import cn.stylefeng.roses.kernel.auth.api.loginuser.CommonLoginUserUtil;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.system.api.UserServiceApi;
+import cn.stylefeng.roses.kernel.system.api.pojo.user.TempLoginUserInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.function.Consumer;
 
 /**
  * 当前登陆用户的接口实现
@@ -130,6 +135,44 @@ public class LoginUserImpl implements LoginUserApi {
         } else {
             return loginUser.getButtonCodes().contains(buttonCode);
         }
+    }
+
+    @Override
+    public LoginUser switchTo(Long userId) {
+
+        if (ObjectUtil.isEmpty(userId)) {
+            return null;
+        }
+
+        // 获取用户的基本信息
+        TempLoginUserInfo tempLoginUserInfo = userServiceApi.createTempUserInfo(userId);
+        if (tempLoginUserInfo == null) {
+            return null;
+        }
+
+        // 创建临时登录用户
+        LoginUser loginUser = new LoginUser();
+        BeanUtil.copyProperties(tempLoginUserInfo, loginUser, CopyOptions.create().ignoreError());
+
+        // 设置用户的临时token
+        loginUser.setToken("tempToken");
+
+        // 放入线程变量中
+        LoginUserHolder.set(loginUser);
+
+        return loginUser;
+    }
+
+    @Override
+    public void endSwitch() {
+        LoginUserHolder.remove();
+    }
+
+    @Override
+    public void switchTo(Long userId, Consumer<Long> consumer) {
+        this.switchTo(userId);
+        consumer.accept(userId);
+        this.endSwitch();
     }
 
 }

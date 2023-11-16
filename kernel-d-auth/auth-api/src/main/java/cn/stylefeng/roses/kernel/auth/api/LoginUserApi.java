@@ -27,6 +27,8 @@ package cn.stylefeng.roses.kernel.auth.api;
 import cn.stylefeng.roses.kernel.auth.api.exception.AuthException;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 
+import java.util.function.Consumer;
+
 /**
  * 当前登陆用户相关的一系列方法
  *
@@ -96,5 +98,36 @@ public interface LoginUserApi {
      * @since 2021/1/9 11:32
      */
     boolean haveButton(String buttonCode);
+
+    /**
+     * 切换当前登录用户为指定用户id
+     * <p>
+     * 仅应用在当前线程环境中，使用后请及时调用endSwitch()方法
+     *
+     * @param userId 切换到指定用户身份
+     * @author fengshuonan
+     * @since 2023/11/16 21:03
+     */
+    LoginUser switchTo(Long userId);
+
+    /**
+     * 结束临时身份切换
+     * <p>
+     * 仅应用在当前线程环境中
+     *
+     * @author fengshuonan
+     * @since 2023/11/16 21:03
+     */
+    void endSwitch();
+
+    /**
+     * 切换身份并执行一次函数回调
+     *
+     * @param userId   指定账号id
+     * @param consumer 要执行的方法
+     * @author fengshuonan
+     * @since 2023/11/16 21:12
+     */
+    void switchTo(Long userId, Consumer<Long> consumer);
 
 }

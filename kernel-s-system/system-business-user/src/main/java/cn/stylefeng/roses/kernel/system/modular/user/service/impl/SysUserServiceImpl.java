@@ -307,7 +307,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 更新枚举，更新只能更新未删除状态的
         LambdaUpdateWrapper<SysUser> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.eq(SysUser::getUserId, id).and(i -> i.ne(SysUser::getDelFlag, YesOrNotEnum.Y.getCode())).set(SysUser::getStatusFlag, statusFlag);
+        updateWrapper.eq(SysUser::getUserId, id).and(i -> i.ne(SysUser::getDelFlag, YesOrNotEnum.Y.getCode()))
+                .set(SysUser::getStatusFlag, statusFlag);
 
         boolean update = this.update(updateWrapper);
         if (!update) {
@@ -461,7 +462,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             sysUserRequest.setUserScopeIds(null);
         }
         // 如果是按部门数据划分
-        else if (dataScopeTypeEnums.contains(DataScopeTypeEnum.DEPT) || dataScopeTypeEnums.contains(DataScopeTypeEnum.DEPT_WITH_CHILD) || dataScopeTypeEnums.contains(DataScopeTypeEnum.DEFINE)) {
+        else if (dataScopeTypeEnums.contains(DataScopeTypeEnum.DEPT) || dataScopeTypeEnums.contains(
+                DataScopeTypeEnum.DEPT_WITH_CHILD) || dataScopeTypeEnums.contains(DataScopeTypeEnum.DEFINE)) {
             sysUserRequest.setScopeOrgIds(dataScopeOrganizationIds);
             sysUserRequest.setUserScopeIds(null);
         }
@@ -820,7 +822,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         Set<String> roleButtonCodes = roleServiceApi.getRoleButtonCodes(roleIds);
 
         // 7. 组装响应结果
-        return UserLoginInfoFactory.userLoginInfoDTO(sysUser, roleResponseList, dataScopeResponse, userOrgInfo, resourceUrlsListByCodes, roleButtonCodes, userMenuType);
+        return UserLoginInfoFactory.userLoginInfoDTO(sysUser, roleResponseList, dataScopeResponse, userOrgInfo, resourceUrlsListByCodes,
+                roleButtonCodes, userMenuType);
     }
 
     @Override
@@ -1030,6 +1033,31 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.sysUserOrgService.add(userOrgRequest);
 
         return BeanUtil.copyProperties(oAuth2User, SysUserDTO.class);
+    }
+
+    @Override
+    public TempLoginUserInfo createTempUserInfo(Long userId) {
+
+        if (ObjectUtil.isEmpty(userId)) {
+            return null;
+        }
+
+        // 查询用户id对应的用户信息
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysUser::getUserId, userId);
+        wrapper.select(SysUser::getUserId, SysUser::getAccount, SysUser::getLastLoginIp, SysUser::getLastLoginTime);
+        SysUser sysUser = this.getOne(wrapper);
+        if (sysUser == null) {
+            return null;
+        }
+
+        TempLoginUserInfo tempLoginUserInfo = new TempLoginUserInfo();
+        tempLoginUserInfo.setUserId(sysUser.getUserId());
+        tempLoginUserInfo.setAccount(sysUser.getAccount());
+        tempLoginUserInfo.setLoginTime(sysUser.getLastLoginTime());
+        tempLoginUserInfo.setLoginIp(sysUser.getLastLoginIp());
+
+        return tempLoginUserInfo;
     }
 
     /**

@@ -25,10 +25,7 @@
 package cn.stylefeng.roses.kernel.system.api;
 
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
-import cn.stylefeng.roses.kernel.system.api.pojo.user.OAuth2AuthUserDTO;
-import cn.stylefeng.roses.kernel.system.api.pojo.user.OnlineUserDTO;
-import cn.stylefeng.roses.kernel.system.api.pojo.user.SysUserDTO;
-import cn.stylefeng.roses.kernel.system.api.pojo.user.UserLoginInfoDTO;
+import cn.stylefeng.roses.kernel.system.api.pojo.user.*;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.request.OnlineUserRequest;
 import cn.stylefeng.roses.kernel.system.api.pojo.user.request.SysUserRequest;
 
@@ -177,5 +174,13 @@ public interface UserServiceApi {
      * @since 2022/7/1 19:03
      */
     SysUserDTO createAndSaveOAuth2User(OAuth2AuthUserDTO oAuth2AuthUserDTO);
+
+    /**
+     * 创建指定的用户临时身份信息
+     *
+     * @author fengshuonan
+     * @since 2023/11/16 21:39
+     */
+    TempLoginUserInfo createTempUserInfo(Long userId);
 
 }
