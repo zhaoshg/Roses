@@ -122,4 +122,9 @@ public interface AuthConstants {
      */
     String CA_CLIENT_TOKEN_CACHE_PREFIX = "CA_CLIENT:TOKEN:";
 
+    /**
+     * 临时Token，用在身份切换过程使用
+     */
+    String TEMP_TOKEN = "tempToken";
+
 }

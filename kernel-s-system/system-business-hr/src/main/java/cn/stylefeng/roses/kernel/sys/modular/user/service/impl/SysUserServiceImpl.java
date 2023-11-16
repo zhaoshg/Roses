@@ -675,6 +675,39 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
     }
 
+    @Override
+    public TempLoginUserInfo createTempUserInfo(Long userId) {
+
+        if (ObjectUtil.isEmpty(userId)) {
+            return null;
+        }
+
+        // 查询用户id对应的用户信息
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysUser::getUserId, userId);
+        wrapper.select(SysUser::getUserId, SysUser::getAccount, SysUser::getTenantId, SysUser::getLastLoginIp, SysUser::getLastLoginTime);
+        SysUser sysUser = null;
+        try {
+            TenantSwitchHolder.set(false);
+            sysUser = this.getOne(wrapper);
+        } finally {
+            TenantSwitchHolder.remove();
+        }
+
+        if (sysUser == null) {
+            return null;
+        }
+
+        TempLoginUserInfo tempLoginUserInfo = new TempLoginUserInfo();
+        tempLoginUserInfo.setUserId(sysUser.getUserId());
+        tempLoginUserInfo.setAccount(sysUser.getAccount());
+        tempLoginUserInfo.setTenantId(sysUser.getTenantId());
+        tempLoginUserInfo.setLoginTime(sysUser.getLastLoginTime());
+        tempLoginUserInfo.setLoginIp(sysUser.getLastLoginIp());
+
+        return tempLoginUserInfo;
+    }
+
     /**
      * 获取信息
      *

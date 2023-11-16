@@ -24,8 +24,12 @@
  */
 package cn.stylefeng.roses.kernel.auth.auth;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.LoginUserApi;
 import cn.stylefeng.roses.kernel.auth.api.SessionManagerApi;
+import cn.stylefeng.roses.kernel.auth.api.constants.AuthConstants;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginUserHolder;
 import cn.stylefeng.roses.kernel.auth.api.exception.AuthException;
@@ -35,9 +39,11 @@ import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.sys.api.OrganizationServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.TempLoginUserInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.function.Consumer;
 
 /**
  * 当前登陆用户的接口实现
@@ -142,6 +148,44 @@ public class LoginUserImpl implements LoginUserApi {
         }
 
         return orgCompanyInfo.getCompanyId();
+    }
+
+    @Override
+    public LoginUser switchTo(Long userId) {
+
+        if (ObjectUtil.isEmpty(userId)) {
+            return null;
+        }
+
+        // 获取用户的基本信息
+        TempLoginUserInfo tempLoginUserInfo = sysUserServiceApi.createTempUserInfo(userId);
+        if (tempLoginUserInfo == null) {
+            return null;
+        }
+
+        // 创建临时登录用户
+        LoginUser loginUser = new LoginUser();
+        BeanUtil.copyProperties(tempLoginUserInfo, loginUser, CopyOptions.create().ignoreError());
+
+        // 设置用户的临时token
+        loginUser.setToken(AuthConstants.TEMP_TOKEN);
+
+        // 放入线程变量中
+        LoginUserHolder.set(loginUser);
+
+        return loginUser;
+    }
+
+    @Override
+    public void endSwitch() {
+        LoginUserHolder.remove();
+    }
+
+    @Override
+    public void switchTo(Long userId, Consumer<Long> consumer) {
+        this.switchTo(userId);
+        consumer.accept(userId);
+        this.endSwitch();
     }
 
 }

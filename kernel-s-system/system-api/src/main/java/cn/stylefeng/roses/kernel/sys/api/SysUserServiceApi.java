@@ -24,10 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.sys.api;
 
-import cn.stylefeng.roses.kernel.sys.api.pojo.user.OnlineUserItem;
-import cn.stylefeng.roses.kernel.sys.api.pojo.user.SimpleUserDTO;
-import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserInfoDetailDTO;
-import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserValidateDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.*;
 
 import java.util.List;
 
@@ -143,5 +140,13 @@ public interface SysUserServiceApi {
      * @since 2023/10/3 22:11
      */
     void lockUserStatus(String tenantCode, String account);
+
+    /**
+     * 创建指定的用户临时身份信息
+     *
+     * @author fengshuonan
+     * @since 2023/11/16 21:39
+     */
+    TempLoginUserInfo createTempUserInfo(Long userId);
 
 }
