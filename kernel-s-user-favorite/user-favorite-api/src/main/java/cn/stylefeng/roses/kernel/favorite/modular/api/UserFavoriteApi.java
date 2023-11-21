@@ -24,6 +24,8 @@
  */
 package cn.stylefeng.roses.kernel.favorite.modular.api;
 
+import java.util.List;
+
 /**
  * 用户收藏Api
  *
@@ -32,5 +34,23 @@ package cn.stylefeng.roses.kernel.favorite.modular.api;
  */
 public interface UserFavoriteApi {
 
+    /**
+     * 获取用户针对某个业务的收藏信息
+     *
+     * @param userId  用户id
+     * @param favType 收藏的业务类型
+     * @author fengshuonan
+     * @since 2023/11/21 22:18
+     */
+    List<Long> getFavoriteBusinessId(Long userId, String favType);
+
+    /**
+     * 获取当前登录用户针对某个业务的收藏信息
+     *
+     * @param favType 收藏的业务类型
+     * @author fengshuonan
+     * @since 2023/11/21 22:18
+     */
+    List<Long> getCurrentUserFavoriteBusinessId(String favType);
 
 }

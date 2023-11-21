@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.favorite.modular.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.favorite.modular.api.UserFavoriteApi;
 import cn.stylefeng.roses.kernel.favorite.modular.entity.SysUserFavorite;
 import cn.stylefeng.roses.kernel.favorite.modular.pojo.request.SysUserFavoriteRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author fengshuonan
  * @since 2023/11/21 22:09
  */
-public interface SysUserFavoriteService extends IService<SysUserFavorite> {
+public interface SysUserFavoriteService extends IService<SysUserFavorite>, UserFavoriteApi {
 
     /**
      * 新增用户收藏信息
@@ -63,7 +64,7 @@ public interface SysUserFavoriteService extends IService<SysUserFavorite> {
     /**
      * 获取用户收藏信息列表
      *
-     * @param sysUserFavoriteRequest         请求参数
+     * @param sysUserFavoriteRequest 请求参数
      * @return List<SysUserFavorite>  返回结果
      * @author fengshuonan
      * @since 2023/11/21 22:09
@@ -73,7 +74,7 @@ public interface SysUserFavoriteService extends IService<SysUserFavorite> {
     /**
      * 获取用户收藏信息分页列表
      *
-     * @param sysUserFavoriteRequest                请求参数
+     * @param sysUserFavoriteRequest 请求参数
      * @return PageResult<SysUserFavorite>   返回结果
      * @author fengshuonan
      * @since 2023/11/21 22:09

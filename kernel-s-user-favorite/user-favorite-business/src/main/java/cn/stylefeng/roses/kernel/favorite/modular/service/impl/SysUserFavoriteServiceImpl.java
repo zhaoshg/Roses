@@ -2,6 +2,8 @@ package cn.stylefeng.roses.kernel.favorite.modular.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
+import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
@@ -17,7 +19,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 用户收藏信息业务实现层
@@ -28,7 +32,7 @@ import java.util.List;
 @Service
 public class SysUserFavoriteServiceImpl extends ServiceImpl<SysUserFavoriteMapper, SysUserFavorite> implements SysUserFavoriteService {
 
-	@Override
+    @Override
     public void add(SysUserFavoriteRequest sysUserFavoriteRequest) {
         SysUserFavorite sysUserFavorite = new SysUserFavorite();
         BeanUtil.copyProperties(sysUserFavoriteRequest, sysUserFavorite);
@@ -86,6 +90,42 @@ public class SysUserFavoriteServiceImpl extends ServiceImpl<SysUserFavoriteMappe
         return sysUserFavorite;
     }
 
+    @Override
+    public List<Long> getFavoriteBusinessId(Long userId, String favType) {
+
+        if (ObjectUtil.isEmpty(userId) || ObjectUtil.isEmpty(favType)) {
+            return new ArrayList<>();
+        }
+
+        LambdaQueryWrapper<SysUserFavorite> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserFavorite::getUserId, userId);
+        queryWrapper.eq(SysUserFavorite::getFavType, favType);
+
+        // 只查询业务id
+        queryWrapper.select(SysUserFavorite::getBusinessId);
+
+        List<SysUserFavorite> sysUserFavoriteList = this.list(queryWrapper);
+        if (ObjectUtil.isEmpty(sysUserFavoriteList)) {
+            return new ArrayList<>();
+        }
+
+        return sysUserFavoriteList.stream().map(SysUserFavorite::getBusinessId).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Long> getCurrentUserFavoriteBusinessId(String favType) {
+        if (ObjectUtil.isEmpty(favType)) {
+            return new ArrayList<>();
+        }
+
+        LoginUser loginUserNullable = LoginContext.me().getLoginUserNullable();
+        if (loginUserNullable == null) {
+            return new ArrayList<>();
+        }
+
+        return this.getFavoriteBusinessId(loginUserNullable.getUserId(), favType);
+    }
+
     /**
      * 创建查询wrapper
      *
@@ -109,5 +149,4 @@ public class SysUserFavoriteServiceImpl extends ServiceImpl<SysUserFavoriteMappe
 
         return queryWrapper;
     }
-
 }
