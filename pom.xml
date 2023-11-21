@@ -109,6 +109,9 @@
         <!--系统管理基础业务-->
         <module>kernel-s-system</module>
 
+        <!--用户收藏模块-->
+        <module>kernel-s-user-favorite</module>
+
     </modules>
 
     <properties>
