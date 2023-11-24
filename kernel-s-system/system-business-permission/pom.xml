@@ -17,6 +17,13 @@
 
     <dependencies>
 
+        <!--获取拖拽验证码图片-->
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>security-api</artifactId>
+            <version>${roses.version}</version>
+        </dependency>
+
         <!--日志相关api-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
