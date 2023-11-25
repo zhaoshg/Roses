@@ -31,6 +31,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.security.api.DragCaptchaApi;
+import cn.stylefeng.roses.kernel.security.api.constants.CaptchaConstants;
 import cn.stylefeng.roses.kernel.security.api.exception.SecurityException;
 import cn.stylefeng.roses.kernel.security.api.exception.enums.SecurityExceptionEnum;
 import cn.stylefeng.roses.kernel.security.api.pojo.DragCaptchaImageDTO;
@@ -63,11 +64,10 @@ public class DragCaptchaService implements DragCaptchaApi {
             // 缓存x轴坐标
             String verKey = IdUtil.simpleUUID();
             Integer verValue = dragCaptchaImageDTO.getLocationX();
-            cacheOperatorApi.put(verKey, verValue.toString());
+            cacheOperatorApi.put(verKey, verValue.toString(), CaptchaConstants.DRAG_CAPTCHA_IMG_EXP_SECONDS);
 
             // 清空x轴坐标
             dragCaptchaImageDTO.setKey(verKey);
-//            dragCaptchaImageDTO.setLocationX(null);
 
             return dragCaptchaImageDTO;
         } catch (IOException e) {

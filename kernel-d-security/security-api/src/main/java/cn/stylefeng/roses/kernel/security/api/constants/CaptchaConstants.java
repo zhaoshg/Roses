@@ -37,4 +37,9 @@ public interface CaptchaConstants {
      */
     String CAPTCHA_CACHE_KEY_PREFIX = "CAPTCHA_KEY";
 
+    /**
+     * 拖拽验证码缓存过期时间
+     */
+    Long DRAG_CAPTCHA_IMG_EXP_SECONDS = 120L;
+
 }

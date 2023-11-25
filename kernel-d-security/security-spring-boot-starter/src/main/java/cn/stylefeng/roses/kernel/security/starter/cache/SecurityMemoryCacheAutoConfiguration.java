@@ -5,6 +5,7 @@ import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.TimedCache;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.cache.api.constants.CacheConstants;
+import cn.stylefeng.roses.kernel.security.api.constants.CaptchaConstants;
 import cn.stylefeng.roses.kernel.security.captcha.cache.CaptchaMemoryCache;
 import cn.stylefeng.roses.kernel.security.count.cache.CountValidateMemoryCache;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
@@ -30,7 +31,7 @@ public class SecurityMemoryCacheAutoConfiguration {
     @Bean("captchaCache")
     public CacheOperatorApi<String> captchaMemoryCache() {
         // 验证码过期时间 120秒
-        TimedCache<String, String> timedCache = CacheUtil.newTimedCache(1000 * 120);
+        TimedCache<String, String> timedCache = CacheUtil.newTimedCache(1000 * CaptchaConstants.DRAG_CAPTCHA_IMG_EXP_SECONDS);
         return new CaptchaMemoryCache(timedCache);
     }
 
