@@ -156,7 +156,7 @@ public class QingYunFileOperator implements FileOperatorApi {
             return IoUtil.readBytes(objectContent);
         } catch (QSException e) {
             log.error("青云文件操作异常：", e);
-            return new byte[];
+            return new byte[]{};
         } finally {
             IoUtil.close(objectContent);
         }
