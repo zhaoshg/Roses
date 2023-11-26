@@ -58,7 +58,12 @@ public enum FileLocationEnum {
     /**
      * 数据库中
      */
-    DB(5);
+    DB(5),
+
+    /**
+     * 青云OSS
+     */
+    QING_YUN(6);
 
     private final Integer code;
 

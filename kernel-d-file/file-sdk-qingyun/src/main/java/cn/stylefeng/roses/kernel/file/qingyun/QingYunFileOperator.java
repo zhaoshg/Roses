@@ -24,12 +24,23 @@
  */
 package cn.stylefeng.roses.kernel.file.qingyun;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.io.IoUtil;
 import cn.stylefeng.roses.kernel.file.api.FileOperatorApi;
 import cn.stylefeng.roses.kernel.file.api.enums.BucketAuthEnum;
 import cn.stylefeng.roses.kernel.file.api.enums.FileLocationEnum;
+import cn.stylefeng.roses.kernel.file.api.expander.FileConfigExpander;
 import cn.stylefeng.roses.kernel.file.api.pojo.props.QingYunOssProperties;
+import com.qingstor.sdk.config.EnvContext;
+import com.qingstor.sdk.exception.QSException;
+import com.qingstor.sdk.service.Bucket;
+import com.qingstor.sdk.service.QingStor;
+import com.qingstor.sdk.service.Types;
+import lombok.extern.slf4j.Slf4j;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * 青云的OSS操作
@@ -37,7 +48,10 @@ import java.io.InputStream;
  * @author fengshuonan
  * @since 2023/11/26 22:01
  */
+@Slf4j
 public class QingYunFileOperator implements FileOperatorApi {
+
+    private QingStor qingStor = null;
 
     private final QingYunOssProperties qingYunOssProperties;
 
@@ -48,20 +62,33 @@ public class QingYunFileOperator implements FileOperatorApi {
 
     @Override
     public void initClient() {
+        EnvContext env = new EnvContext(this.qingYunOssProperties.getQyAccessKeyId(), this.qingYunOssProperties.getQySecretAccessKey());
+        env.setEndpoint(qingYunOssProperties.getEndPoint());
+        qingStor = new QingStor(env);
     }
 
     @Override
     public void destroyClient() {
-
     }
 
     @Override
     public Object getClient() {
-        return null;
+        return qingStor;
     }
 
     @Override
     public boolean doesBucketExist(String bucketName) {
+        try {
+            QingStor.ListBucketsOutput listBucketsOutput = qingStor.listBuckets(null);
+            List<Types.BucketModel> buckets = listBucketsOutput.getBuckets();
+            for (Types.BucketModel bucket : buckets) {
+                if (bucket.getName().equals(bucketName)) {
+                    return true;
+                }
+            }
+        } catch (QSException e) {
+            log.error("青云文件操作异常：", e);
+        }
         return false;
     }
 
@@ -72,22 +99,67 @@ public class QingYunFileOperator implements FileOperatorApi {
 
     @Override
     public boolean isExistingFile(String bucketName, String key) {
-        return false;
+        Bucket bucket = qingStor.getBucket(bucketName, this.qingYunOssProperties.getZone());
+        Bucket.GetObjectOutput object = null;
+        try {
+            object = bucket.getObject(key, null);
+        } catch (QSException e) {
+            log.error("青云文件操作异常：", e);
+            return false;
+        }
+        return object != null;
     }
 
     @Override
     public void storageFile(String bucketName, String key, byte[] bytes) {
+        Bucket bucket = qingStor.getBucket(bucketName, this.qingYunOssProperties.getZone());
 
+        Bucket.PutObjectInput input = new Bucket.PutObjectInput();
+
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+        input.setBodyInputStream(byteArrayInputStream);
+        input.setContentLength(Convert.toLong(bytes.length));
+
+        try {
+            bucket.putObject(key, input);
+        } catch (QSException e) {
+            log.error("青云文件操作异常：", e);
+        } finally {
+            IoUtil.close(byteArrayInputStream);
+        }
     }
 
     @Override
     public void storageFile(String bucketName, String key, InputStream inputStream) {
+        Bucket bucket = qingStor.getBucket(bucketName, this.qingYunOssProperties.getZone());
 
+        Bucket.PutObjectInput input = new Bucket.PutObjectInput();
+        input.setBodyInputStream(inputStream);
+        try {
+            bucket.putObject(key, input);
+        } catch (QSException e) {
+            log.error("青云文件操作异常：", e);
+        } finally {
+            IoUtil.close(inputStream);
+        }
     }
 
     @Override
     public byte[] getFileBytes(String bucketName, String key) {
-        return new byte[0];
+        Bucket bucket = qingStor.getBucket(bucketName, this.qingYunOssProperties.getZone());
+
+        Bucket.GetObjectOutput object = null;
+        InputStream objectContent = null;
+        try {
+            object = bucket.getObject(key, null);
+            objectContent = object.getBodyInputStream();
+            return IoUtil.readBytes(objectContent);
+        } catch (QSException e) {
+            log.error("青云文件操作异常：", e);
+            return new byte[];
+        } finally {
+            IoUtil.close(objectContent);
+        }
     }
 
     @Override
@@ -97,27 +169,37 @@ public class QingYunFileOperator implements FileOperatorApi {
 
     @Override
     public void copyFile(String originBucketName, String originFileKey, String newBucketName, String newFileKey) {
-
     }
 
     @Override
     public String getFileAuthUrl(String bucketName, String key, Long timeoutMillis) {
-        return null;
+        Bucket bucket = qingStor.getBucket(bucketName, this.qingYunOssProperties.getZone());
+        try {
+            return bucket.GetObjectSignatureUrl(key, timeoutMillis / 1000);
+        } catch (QSException e) {
+            log.error("青云文件操作异常：", e);
+            return null;
+        }
     }
 
     @Override
     public String getFileUnAuthUrl(String bucketName, String key) {
-        return null;
+        return this.getFileAuthUrl(bucketName, key, FileConfigExpander.getDefaultFileTimeoutSeconds() * 1000);
     }
 
     @Override
     public void deleteFile(String bucketName, String key) {
-
+        Bucket bucket = qingStor.getBucket(bucketName, this.qingYunOssProperties.getZone());
+        try {
+            bucket.deleteObject(key);
+        } catch (QSException e) {
+            log.error("青云文件操作异常：", e);
+        }
     }
 
     @Override
     public FileLocationEnum getFileLocationEnum() {
-        return null;
+        return FileLocationEnum.QING_YUN;
     }
 
 }

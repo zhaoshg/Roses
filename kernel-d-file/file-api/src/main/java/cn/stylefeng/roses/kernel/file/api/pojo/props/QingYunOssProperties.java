@@ -47,4 +47,14 @@ public class QingYunOssProperties {
      */
     private String qySecretAccessKey;
 
+    /**
+     * 目标服务地址
+     */
+    private String endPoint = "https://qingstor.com";
+
+    /**
+     * 区域
+     */
+    private String zone = "pek3a";
+
 }
