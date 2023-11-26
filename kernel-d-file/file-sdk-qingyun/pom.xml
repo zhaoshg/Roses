@@ -6,34 +6,30 @@
 
     <parent>
         <groupId>cn.stylefeng.roses</groupId>
-        <artifactId>roses-kernel</artifactId>
+        <artifactId>kernel-d-file</artifactId>
         <version>8.0.4</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>kernel-d-file</artifactId>
+    <artifactId>file-sdk-qingyun</artifactId>
 
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>file-api</module>
-        <module>file-business</module>
-        <module>file-sdk-aliyun</module>
-        <module>file-sdk-tencent</module>
-        <module>file-sdk-local</module>
-        <module>file-sdk-minio</module>
-        <module>file-sdk-qingyun</module>
-        <module>file-spring-boot-starter</module>
-    </modules>
+    <packaging>jar</packaging>
 
     <dependencies>
 
-        <!-- 开发规则 -->
+        <!--file模块的api-->
         <dependency>
             <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>kernel-a-rule</artifactId>
+            <artifactId>file-api</artifactId>
             <version>${roses.version}</version>
         </dependency>
+
+        <!--青云的OSS-->
+        <dependency>
+            <groupId>com.yunify</groupId>
+            <artifactId>qingstor.sdk.java</artifactId>
+        </dependency>
+
 
     </dependencies>
 
