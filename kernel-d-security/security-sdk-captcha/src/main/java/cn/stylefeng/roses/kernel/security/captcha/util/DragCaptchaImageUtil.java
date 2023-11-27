@@ -27,12 +27,12 @@ public class DragCaptchaImageUtil {
     /**
      * 源文件宽度
      */
-    private static final int ORI_WIDTH = 300;
+    private static final int ORI_WIDTH = 375;
 
     /**
      * 源文件高度
      */
-    private static final int ORI_HEIGHT = 150;
+    private static final int ORI_HEIGHT = 200;
 
     /**
      * 模板图宽度

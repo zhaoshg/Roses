@@ -35,7 +35,6 @@ public class CaptchaController {
     public ResponseData<DragCaptchaImageDTO> getDragCaptcha() {
         DragCaptchaImageDTO captcha = dragCaptchaApi.createCaptcha();
         captcha.setLocationX(null);
-        captcha.setLocationY(null);
         return new SuccessResponseData<>(captcha);
     }
 
