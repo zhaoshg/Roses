@@ -93,8 +93,8 @@ public class DragCaptchaService implements DragCaptchaApi {
 
         // 获取缓存中存储的范围
         Integer locationX = Convert.toInt(locationXString);
-        int beginScope = locationX - 5;
-        int endScope = locationX + 5;
+        int beginScope = locationX - 6;
+        int endScope = locationX + 6;
 
         // 每次验证不管成功和失败都剔除掉key
         cacheOperatorApi.remove(verKey);
