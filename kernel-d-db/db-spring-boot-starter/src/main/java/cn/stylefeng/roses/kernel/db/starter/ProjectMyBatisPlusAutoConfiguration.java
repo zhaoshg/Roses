@@ -115,6 +115,7 @@ public class ProjectMyBatisPlusAutoConfiguration {
      * @since 2020/11/30 22:41
      */
     @Bean
+    @ConditionalOnMissingBean(MetaObjectHandler.class)
     public MetaObjectHandler metaObjectHandler() {
         return new CustomMetaObjectHandler();
     }
