@@ -67,9 +67,6 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
             // 设置乐观锁字段，从0开始
             setValue(metaObject, VERSION_FLAG, 0L);
 
-            // 设置组织id
-            setValue(metaObject, ORG_ID, this.getUserOrgId());
-
         } catch (ReflectionException e) {
             log.warn("CustomMetaObjectHandler处理过程中无相关字段，不做处理");
         }
