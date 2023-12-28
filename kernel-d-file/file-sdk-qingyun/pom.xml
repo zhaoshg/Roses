@@ -28,8 +28,8 @@
         <dependency>
             <groupId>com.yunify</groupId>
             <artifactId>qingstor.sdk.java</artifactId>
+            <version>${qingyun.oss.version}</version>
         </dependency>
-
 
     </dependencies>
 
