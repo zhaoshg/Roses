@@ -708,6 +708,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return tempLoginUserInfo;
     }
 
+    @Override
+    public List<SimpleDict> batchGetNameByUserIdList(Set<Long> userIdList) {
+        SysUserRequest sysUserRequest = new SysUserRequest();
+        sysUserRequest.setUserIdList(userIdList);
+        return this.batchGetName(sysUserRequest);
+    }
+
     /**
      * 获取信息
      *

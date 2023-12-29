@@ -24,9 +24,11 @@
  */
 package cn.stylefeng.roses.kernel.sys.api;
 
+import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 基础核心业务Api
@@ -148,5 +150,13 @@ public interface SysUserServiceApi {
      * @since 2023/11/16 21:39
      */
     TempLoginUserInfo createTempUserInfo(Long userId);
+
+    /**
+     * 批量获取用户名称
+     *
+     * @author fengshuonan
+     * @since 2023/12/29 9:33
+     */
+    List<SimpleDict> batchGetNameByUserIdList(Set<Long> userIdList);
 
 }
