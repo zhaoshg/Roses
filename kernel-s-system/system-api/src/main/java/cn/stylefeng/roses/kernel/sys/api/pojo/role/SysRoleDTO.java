@@ -22,54 +22,36 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.api;
+package cn.stylefeng.roses.kernel.sys.api.pojo.role;
 
-import cn.stylefeng.roses.kernel.sys.api.pojo.role.SysRoleDTO;
-
-import java.util.List;
+import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import lombok.Data;
 
 /**
- * 角色信息相关的Api
+ * 角色的传输bean
  *
  * @author fengshuonan
- * @since 2023/6/25 0:35
+ * @since 2024/1/5 19:32
  */
-public interface SysRoleServiceApi {
+@Data
+public class SysRoleDTO {
 
     /**
-     * 获取系统默认角色id，查询方式为找到角色编码为employee的角色id
-     * <p>
-     * 一般在添加用户时用到
-     *
-     * @author fengshuonan
-     * @since 2023/6/25 0:35
+     * 主键
      */
-    Long getDefaultRoleId();
+    @ChineseDescription("主键")
+    private Long roleId;
 
     /**
-     * 通过角色id获取角色名称
-     *
-     * @author fengshuonan
-     * @since 2023/7/15 21:54
+     * 名称
      */
-    String getRoleNameByRoleId(Long roleId);
+    @ChineseDescription("名称")
+    private String roleName;
 
     /**
-     * 获取角色对应的菜单功能编码集合
-     *
-     * @author fengshuonan
-     * @since 2023/10/10 14:33
+     * 编码
      */
-    List<String> getRoleMenuOptionsByRoleId(String roleCode);
-
-    /**
-     * 获取角色，通过传递角色id列表
-     *
-     * @param roleIds 角色id列表
-     * @return 角色信息列表
-     * @author fengshuonan
-     * @since 2024/1/5 19:33
-     */
-    List<SysRoleDTO> getRolesByIds(List<Long> roleIds);
+    @ChineseDescription("编码")
+    private String roleCode;
 
 }

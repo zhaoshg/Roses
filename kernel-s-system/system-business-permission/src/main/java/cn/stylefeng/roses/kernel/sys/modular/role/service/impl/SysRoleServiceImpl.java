@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -17,6 +18,7 @@ import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.enums.permission.DataScopeTypeEnum;
+import cn.stylefeng.roses.kernel.sys.api.pojo.role.SysRoleDTO;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.exception.SysRoleExceptionEnum;
@@ -293,6 +295,25 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
         // 获取角色功能id的集合对应的功能编码集合
         return sysMenuOptionsService.getOptionsCodeList(roleBindMenuOptionsIdList);
+    }
+
+    @Override
+    public List<SysRoleDTO> getRolesByIds(List<Long> roleIds) {
+
+        if (ObjectUtil.isEmpty(roleIds)) {
+            return new ArrayList<>();
+        }
+
+        LambdaQueryWrapper<SysRole> sysRoleLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleLambdaQueryWrapper.in(SysRole::getRoleId, roleIds);
+        sysRoleLambdaQueryWrapper.select(SysRole::getRoleName, SysRole::getRoleId, SysRole::getRoleCode);
+        List<SysRole> sysRoleList = this.list(sysRoleLambdaQueryWrapper);
+
+        if (ObjectUtil.isEmpty(sysRoleList)) {
+            return new ArrayList<>();
+        }
+
+        return BeanUtil.copyToList(sysRoleList, SysRoleDTO.class, CopyOptions.create().ignoreError());
     }
 
     /**
