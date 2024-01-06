@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.api;
 
 import cn.stylefeng.roses.kernel.sys.api.enums.org.DetectModeEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.org.HrOrganizationDTO;
 
 /**
  * 组织机构信息的api
@@ -53,5 +54,13 @@ public interface OrganizationServiceApi {
      * @since 2023/7/2 8:38
      */
     CompanyDeptDTO getOrgCompanyInfo(Long orgId);
+
+    /**
+     * 通过组织机构id获取组织机构信息
+     *
+     * @author fengshuonan
+     * @since 2024/1/6 11:21
+     */
+    HrOrganizationDTO getOrgInfo(Long orgId);
 
 }

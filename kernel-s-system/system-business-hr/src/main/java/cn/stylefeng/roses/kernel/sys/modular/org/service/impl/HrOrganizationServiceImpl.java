@@ -25,6 +25,7 @@ import cn.stylefeng.roses.kernel.sys.api.enums.org.DetectModeEnum;
 import cn.stylefeng.roses.kernel.sys.api.enums.org.OrgTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.exception.enums.OrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.org.HrOrganizationDTO;
 import cn.stylefeng.roses.kernel.sys.modular.org.constants.OrgConstants;
 import cn.stylefeng.roses.kernel.sys.modular.org.entity.HrOrganization;
 import cn.stylefeng.roses.kernel.sys.modular.org.factory.OrganizationFactory;
@@ -353,6 +354,25 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
 
         // 查询机构对应的公司部门信息
         return this.getOrgCompanyInfo(hrOrganization);
+    }
+
+    @Override
+    public HrOrganizationDTO getOrgInfo(Long orgId) {
+
+        // 查询组织机构对应的信息
+        LambdaQueryWrapper<HrOrganization> hrOrganizationLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        hrOrganizationLambdaQueryWrapper.eq(HrOrganization::getOrgId, orgId);
+        hrOrganizationLambdaQueryWrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgParentId, HrOrganization::getOrgPids,
+                HrOrganization::getOrgName, HrOrganization::getOrgShortName, HrOrganization::getOrgSort, HrOrganization::getOrgCode);
+        HrOrganization hrOrganization = this.getOne(hrOrganizationLambdaQueryWrapper, false);
+
+        if (ObjectUtil.isEmpty(hrOrganization)) {
+            return new HrOrganizationDTO();
+        }
+
+        HrOrganizationDTO hrOrganizationDTO = new HrOrganizationDTO();
+        BeanUtil.copyProperties(hrOrganization, hrOrganizationDTO);
+        return hrOrganizationDTO;
     }
 
     @Override
