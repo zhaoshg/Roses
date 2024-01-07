@@ -24,6 +24,7 @@
  */
 package cn.stylefeng.roses.kernel.dict.modular.controller;
 
+import cn.stylefeng.roses.kernel.dict.api.pojo.DictTreeDto;
 import cn.stylefeng.roses.kernel.dict.modular.service.DictService;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
@@ -32,6 +33,7 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 字典通用接口
@@ -55,6 +57,17 @@ public class CommonDictController {
     @GetResource(name = "通用获取中文拼音", path = "/common/getPinyin")
     public ResponseData<String> getPinyin(String name) {
         return new SuccessResponseData<>(this.dictService.getPinyin(name));
+    }
+
+    /**
+     * 获取所有的字典类型树
+     *
+     * @author fengshuonan
+     * @since 2023/11/15 19:08
+     */
+    @GetResource(name = "获取所有的字典类型树", path = "/dictType/dictTreeBuild")
+    public ResponseData<List<DictTreeDto>> dictTreeBuild() {
+        return new SuccessResponseData<>(dictService.buildDictTreeStructure());
     }
 
 }

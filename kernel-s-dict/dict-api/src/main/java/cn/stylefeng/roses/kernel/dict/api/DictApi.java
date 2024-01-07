@@ -25,6 +25,7 @@
 package cn.stylefeng.roses.kernel.dict.api;
 
 import cn.stylefeng.roses.kernel.dict.api.pojo.DictDetail;
+import cn.stylefeng.roses.kernel.dict.api.pojo.DictTreeDto;
 import cn.stylefeng.roses.kernel.dict.api.pojo.SimpleDictUpdateParam;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 
@@ -100,5 +101,15 @@ public interface DictApi {
      * @since 2023/6/28 17:26
      */
     void simpleEditDict(SimpleDictUpdateParam simpleDictUpdateParam);
+
+    /**
+     * 构建一个完整的字典树
+     * <p>
+     * 包含字典的类型和字典底下的详情信息
+     *
+     * @author fengshuonan
+     * @since 2023/11/15 18:55
+     */
+    List<DictTreeDto> buildDictTreeStructure();
 
 }
