@@ -376,6 +376,20 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     @Override
+    public List<HrOrganizationDTO> getOrgNameList(Collection<Long> orgIdList) {
+        LambdaQueryWrapper<HrOrganization> hrOrganizationLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        hrOrganizationLambdaQueryWrapper.in(HrOrganization::getOrgId, orgIdList);
+        hrOrganizationLambdaQueryWrapper.select(HrOrganization::getOrgId, HrOrganization::getOrgName);
+        List<HrOrganization> list = this.list(hrOrganizationLambdaQueryWrapper);
+
+        if (ObjectUtil.isNotEmpty(list)) {
+            return BeanUtil.copyToList(list, HrOrganizationDTO.class);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
     public HomeCompanyInfo orgStatInfo() {
 
         // todo 加缓存

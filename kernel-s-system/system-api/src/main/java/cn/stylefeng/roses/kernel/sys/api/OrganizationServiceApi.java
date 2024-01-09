@@ -4,6 +4,9 @@ import cn.stylefeng.roses.kernel.sys.api.enums.org.DetectModeEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.CompanyDeptDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.org.HrOrganizationDTO;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * 组织机构信息的api
  *
@@ -62,5 +65,13 @@ public interface OrganizationServiceApi {
      * @since 2024/1/6 11:21
      */
     HrOrganizationDTO getOrgInfo(Long orgId);
+
+    /**
+     * 获取所有的组织机构名称
+     *
+     * @author fengshuonan
+     * @since 2024-01-09 18:26
+     */
+    List<HrOrganizationDTO> getOrgNameList(Collection<Long> orgIdList);
 
 }
