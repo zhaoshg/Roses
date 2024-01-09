@@ -7,6 +7,7 @@ import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveOrgCallbackApi;
@@ -164,9 +165,10 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
             return null;
         }
 
-        // 获取用户所有的部门信息
+        // 获取用户所有的部门信息（只查询用户启用的部门）
         LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysUserOrg::getUserId, userId);
+        queryWrapper.eq(SysUserOrg::getStatusFlag, StatusEnum.ENABLE.getCode());
         queryWrapper.orderByDesc(SysUserOrg::getMainFlag);
         List<SysUserOrg> sysUserOrgList = this.list(queryWrapper);
 
