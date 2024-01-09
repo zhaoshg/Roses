@@ -46,6 +46,9 @@ public class UserOrgFactory {
         result.setPositionId(positionId);
         result.setPositionName(positionName);
 
+        // 设置用户关联部门的状态
+        result.setStatusFlag(sysUserOrg.getStatusFlag());
+
         return result;
     }
 

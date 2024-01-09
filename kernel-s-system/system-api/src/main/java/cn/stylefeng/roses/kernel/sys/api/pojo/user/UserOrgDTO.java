@@ -84,4 +84,10 @@ public class UserOrgDTO {
     @ChineseDescription("是否是主部门：Y-是主部门，N-不是主部门")
     private String mainFlag;
 
+    /**
+     * 是否启用：1-启用，2-禁用
+     */
+    @ChineseDescription("是否启用：1-启用，2-禁用")
+    private Integer statusFlag;
+
 }
