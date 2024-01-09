@@ -31,7 +31,12 @@ public enum SysUserOrgExceptionEnum implements AbstractExceptionEnum {
     /**
      * 用户主部门数量错误，用户存在多个主部门信息，请纠正数据错误
      */
-    MAIN_FLAG_COUNT_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10004", "用户主部门数量错误，用户存在多个主部门信息，请纠正数据错误，用户id为：{}");
+    MAIN_FLAG_COUNT_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10004", "用户主部门数量错误，用户存在多个主部门信息，请纠正数据错误，用户id为：{}"),
+
+    /**
+     * 用户所属主部门不能被禁用
+     */
+    MAIN_FLAG_DISABLE_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10005", "用户所属主部门不能被禁用，请修改状态");
 
     /**
      * 错误编码

@@ -318,6 +318,11 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
                 throw new ServiceException(SysUserOrgExceptionEnum.EMPTY_PARAM);
             }
 
+            // 主部门不能禁用
+            if (YesOrNotEnum.Y.getCode().equals(sysUserOrg.getMainFlag()) && !StatusEnum.ENABLE.getCode().equals(sysUserOrg.getStatusFlag())) {
+                throw new ServiceException(SysUserOrgExceptionEnum.MAIN_FLAG_DISABLE_ERROR);
+            }
+
             // 统计主部门的数量
             if (YesOrNotEnum.Y.getCode().equals(sysUserOrg.getMainFlag())) {
                 mainFlagCount++;
