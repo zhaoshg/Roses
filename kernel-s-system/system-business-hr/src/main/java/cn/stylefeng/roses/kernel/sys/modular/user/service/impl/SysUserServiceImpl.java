@@ -715,6 +715,37 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return this.batchGetName(sysUserRequest);
     }
 
+    @Override
+    public Set<Long> getUserComprehensiveIdentitySummary() {
+
+        LoginUser loginUser = LoginContext.me().getLoginUserNullable();
+        if (loginUser == null) {
+            return new HashSet<>();
+        }
+
+        // 获取当前登录用户id
+        Long userId = loginUser.getUserId();
+
+        // 获取当前用户登录的机构id
+        Long currentOrgId = loginUser.getCurrentOrgId();
+
+        // 获取当前用户的角色信息列表
+        List<Long> userRoleIdList = sysUserRoleService.getUserRoleIdList(userId);
+
+        HashSet<Long> comprehensiveIdentity = new HashSet<>();
+        if (ObjectUtil.isNotEmpty(userId)) {
+            comprehensiveIdentity.add(userId);
+        }
+        if (ObjectUtil.isNotEmpty(currentOrgId)) {
+            comprehensiveIdentity.add(currentOrgId);
+        }
+        if (ObjectUtil.isNotEmpty(userRoleIdList)) {
+            comprehensiveIdentity.addAll(userRoleIdList);
+        }
+
+        return comprehensiveIdentity;
+    }
+
     /**
      * 获取信息
      *

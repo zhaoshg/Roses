@@ -159,4 +159,16 @@ public interface SysUserServiceApi {
      */
     List<SimpleDict> batchGetNameByUserIdList(Set<Long> userIdList);
 
+    /**
+     * 获取当前用户综合性的身份列表
+     * <p>
+     * 1. 获取当前用户id，加入到结果
+     * 2. 获取用户当前登录的机构id，加入到结果
+     * 3. 获取用户拥有的角色id，加入到结果
+     *
+     * @author fengshuonan
+     * @since 2024-01-09 18:54
+     */
+    Set<Long> getUserComprehensiveIdentitySummary();
+
 }
