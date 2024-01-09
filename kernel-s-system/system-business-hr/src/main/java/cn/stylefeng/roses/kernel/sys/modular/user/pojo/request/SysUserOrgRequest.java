@@ -64,4 +64,10 @@ public class SysUserOrgRequest extends BaseRequest {
     @ChineseDescription("是否是主部门：Y-是，N-不是")
     private String mainFlag;
 
+    /**
+     * 是否启用：1-启用，2-禁用
+     */
+    @ChineseDescription("是否启用：1-启用，2-禁用")
+    private Integer statusFlag;
+
 }

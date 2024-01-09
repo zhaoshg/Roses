@@ -73,6 +73,13 @@ public class SysUserOrg extends BaseEntity {
     private String mainFlag;
 
     /**
+     * 是否启用：1-启用，2-禁用
+     */
+    @TableField("status_flag")
+    @ChineseDescription("是否启用：1-启用，2-禁用")
+    private Integer statusFlag;
+
+    /**
      * 拓展字段
      */
     @TableField(value = "expand_field", typeHandler = JacksonTypeHandler.class)
