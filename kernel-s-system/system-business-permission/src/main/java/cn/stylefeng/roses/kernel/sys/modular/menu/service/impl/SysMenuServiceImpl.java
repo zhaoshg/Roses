@@ -123,7 +123,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
         sysMenuLambdaQueryWrapper.select(SysMenu::getAppId, SysMenu::getMenuName, SysMenu::getMenuCode, SysMenu::getMenuSort,
                 SysMenu::getMenuType, SysMenu::getAntdvComponent, SysMenu::getAntdvRouter, SysMenu::getAntdvVisible,
-                SysMenu::getAntdvActiveUrl, SysMenu::getAntdvLinkUrl, SysMenu::getAntdvIcon, SysMenu::getMenuParentId);
+                SysMenu::getAntdvActiveUrl, SysMenu::getAntdvLinkUrl, SysMenu::getAntdvIcon, SysMenu::getMenuParentId,
+                SysMenu::getAppDesignBusinessId);
 
         SysMenu sysMenu = this.getOne(sysMenuLambdaQueryWrapper, false);
 
