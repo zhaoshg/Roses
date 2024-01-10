@@ -84,6 +84,12 @@ public class IndexUserMenuInfo implements AbstractTreeNode<IndexUserMenuInfo> {
     private String meta;
 
     /**
+     * 应用设计的业务id
+     */
+    @ChineseDescription("应用设计的业务id")
+    private Long appDesignBusinessId;
+
+    /**
      * 子级菜单
      */
     @ChineseDescription("子级菜单")

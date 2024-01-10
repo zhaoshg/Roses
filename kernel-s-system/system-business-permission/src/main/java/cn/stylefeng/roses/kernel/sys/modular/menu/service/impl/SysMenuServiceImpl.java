@@ -158,7 +158,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public List<SysMenu> getTotalMenus(Set<Long> limitMenuIds) {
         LambdaQueryWrapper<SysMenu> menuLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        menuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuName, SysMenu::getMenuParentId, SysMenu::getAppId, SysMenu::getMenuSort);
+        menuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuName, SysMenu::getMenuParentId, SysMenu::getAppId,
+                SysMenu::getMenuSort);
 
         // 如果限制菜单不为空，则根据限制菜单id进行筛选，否则查询所有菜单
         if (ObjectUtil.isNotEmpty(limitMenuIds)) {
@@ -219,7 +220,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         // 查询指定的菜单内容
         sysMenuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getMenuParentId, SysMenu::getMenuPids, SysMenu::getAppId,
                 SysMenu::getMenuCode, SysMenu::getMenuName, SysMenu::getMenuType, SysMenu::getAntdvIcon, SysMenu::getAntdvVisible,
-                SysMenu::getAntdvActiveUrl, SysMenu::getAntdvRouter, SysMenu::getAntdvComponent, SysMenu::getMenuSort);
+                SysMenu::getAntdvActiveUrl, SysMenu::getAntdvRouter, SysMenu::getAntdvComponent, SysMenu::getMenuSort,
+                SysMenu::getAppDesignBusinessId);
 
         sysMenuLambdaQueryWrapper.orderByAsc(SysMenu::getMenuSort);
 
