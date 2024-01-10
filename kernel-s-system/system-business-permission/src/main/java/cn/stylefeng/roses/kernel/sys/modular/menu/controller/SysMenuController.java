@@ -1,20 +1,25 @@
 package cn.stylefeng.roses.kernel.sys.modular.menu.controller;
 
+import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
+import cn.stylefeng.roses.kernel.sys.api.ProjectBusinessGetApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.PermissionCodeConstants;
+import cn.stylefeng.roses.kernel.sys.api.pojo.menu.ProjectBusinessDTO;
 import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.request.SysMenuRequest;
 import cn.stylefeng.roses.kernel.sys.modular.menu.pojo.response.AppGroupDetail;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +30,7 @@ import java.util.List;
  */
 @RestController
 @ApiResource(name = "菜单管理界面的接口", requiredPermission = true, requirePermissionCode = PermissionCodeConstants.AUTH_MENU)
+@Slf4j
 public class SysMenuController {
 
     @Resource
@@ -99,6 +105,26 @@ public class SysMenuController {
     public ResponseData<?> updateMenuTree(@RequestBody @Validated(SysMenuRequest.updateMenuTree.class) SysMenuRequest sysMenuRequest) {
         sysMenuService.updateMenuTree(sysMenuRequest);
         return new SuccessResponseData<>();
+    }
+
+    /**
+     * 获取所有项目的应用设计业务列表
+     *
+     * @author fengshuonan
+     * @since 2024-01-10 17:16
+     */
+    @GetResource(name = "获取所有项目的应用设计业务列表", path = "/sysMenu/getProjectBusinessList")
+    public ResponseData<List<ProjectBusinessDTO>> getProjectBusinessList() {
+
+        ProjectBusinessGetApi bean = null;
+        try {
+            bean = SpringUtil.getBean(ProjectBusinessGetApi.class);
+        } catch (Exception e) {
+            log.warn("无法获取到ProjectBusinessGetApi Bean！");
+            return new SuccessResponseData<>(new ArrayList<>());
+        }
+
+        return new SuccessResponseData<>(bean.getProjectBusinessList());
     }
 
 }
