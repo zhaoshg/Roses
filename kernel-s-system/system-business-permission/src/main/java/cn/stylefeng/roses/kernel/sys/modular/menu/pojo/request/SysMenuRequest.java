@@ -83,9 +83,9 @@ public class SysMenuRequest extends BaseRequest {
     private String remark;
 
     /**
-     * 菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接
+     * 菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接，50-应用设计
      */
-    @ChineseDescription("菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接")
+    @ChineseDescription("菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接，50-应用设计")
     @NotNull(message = "菜单类型不能为空", groups = {add.class, edit.class})
     private Integer menuType;
 
@@ -124,6 +124,12 @@ public class SysMenuRequest extends BaseRequest {
      */
     @ChineseDescription("是否可见(分离版用)：Y-是，N-否")
     private String antdvVisible;
+
+    /**
+     * 应用设计的业务id
+     */
+    @ChineseDescription("应用设计的业务id")
+    private Long appDesignBusinessId;
 
     /**
      * 指定应用的所有菜单集合（树结构）

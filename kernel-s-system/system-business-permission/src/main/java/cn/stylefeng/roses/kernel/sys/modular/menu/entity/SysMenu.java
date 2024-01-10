@@ -89,10 +89,10 @@ public class SysMenu extends BaseExpandFieldEntity implements BasePidBuildModel 
     private String remark;
 
     /**
-     * 菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接
+     * 菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接，50-应用设计
      */
     @TableField("menu_type")
-    @ChineseDescription("菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接")
+    @ChineseDescription("菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接，50-应用设计")
     private Integer menuType;
 
     /**
@@ -136,6 +136,13 @@ public class SysMenu extends BaseExpandFieldEntity implements BasePidBuildModel 
     @TableField("antdv_visible")
     @ChineseDescription("是否可见(分离版用)：Y-是，N-否")
     private String antdvVisible;
+
+    /**
+     * 应用设计的业务id
+     */
+    @TableField("app_design_business_id")
+    @ChineseDescription("应用设计的业务id")
+    private Long appDesignBusinessId;
 
     /**
      * 当前菜单的子菜单
