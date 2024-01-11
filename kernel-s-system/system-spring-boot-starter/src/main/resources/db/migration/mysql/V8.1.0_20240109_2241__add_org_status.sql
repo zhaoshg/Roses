@@ -15,11 +15,11 @@ ADD COLUMN `tenant_id` bigint NULL COMMENT '租户号' AFTER `del_flag`;
 
 -- 更新个人信息表
 ALTER TABLE `sys_message`
-MODIFY COLUMN `receive_user_id` bigint(0) NOT NULL COMMENT '接收用户id' AFTER `message_id`,
+MODIFY COLUMN `receive_user_id` bigint NOT NULL COMMENT '接收用户id' AFTER `message_id`,
 MODIFY COLUMN `message_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '消息标题' AFTER `send_user_id`,
 MODIFY COLUMN `message_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '消息内容' AFTER `message_title`,
 MODIFY COLUMN `message_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NORMAL' COMMENT '消息类型：NORMAL-普通类型，URL-带链接跳转' AFTER `message_content`,
 MODIFY COLUMN `priority_level` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'low' COMMENT '优先级：high-高优先级，middle-中，low-低' AFTER `message_url`,
-MODIFY COLUMN `business_id` bigint(0) NULL DEFAULT NULL COMMENT '关联业务id' AFTER `message_send_time`,
-ADD COLUMN `version_flag` bigint(0) NULL DEFAULT NULL COMMENT '乐观锁' AFTER `read_flag`,
-ADD COLUMN `tenant_id` bigint(0) NULL DEFAULT NULL COMMENT '租户号' AFTER `update_time`;
+MODIFY COLUMN `business_id` varchar(255) NULL DEFAULT NULL COMMENT '关联业务id' AFTER `message_send_time`,
+ADD COLUMN `version_flag` bigint NULL DEFAULT NULL COMMENT '乐观锁' AFTER `read_flag`,
+ADD COLUMN `tenant_id` bigint NULL DEFAULT NULL COMMENT '租户号' AFTER `update_time`;

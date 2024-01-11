@@ -41,8 +41,6 @@ import cn.stylefeng.roses.kernel.message.api.pojo.response.MessageResponse;
 import cn.stylefeng.roses.kernel.message.db.entity.SysMessage;
 import cn.stylefeng.roses.kernel.message.db.service.SysMessageService;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
-import cn.stylefeng.roses.kernel.socket.api.SocketOperatorApi;
-import cn.stylefeng.roses.kernel.socket.api.enums.ServerMessageTypeEnum;
 import cn.stylefeng.roses.kernel.socket.api.exception.SocketException;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -63,9 +61,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class MessageDbServiceImpl implements MessageApi {
-
-    @Resource
-    private SocketOperatorApi socketOperatorApi;
 
     @Resource
     private SysUserServiceApi sysUserServiceApi;
@@ -126,7 +121,7 @@ public class MessageDbServiceImpl implements MessageApi {
         // 给用户发送通知
         for (SysMessage item : sendMsgList) {
             try {
-                socketOperatorApi.sendMsgOfUserSession(ServerMessageTypeEnum.SYS_NOTICE_MSG_TYPE.getCode(), item.getReceiveUserId().toString(), item);
+//                socketOperatorApi.sendMsgOfUserSession(ServerMessageTypeEnum.SYS_NOTICE_MSG_TYPE.getCode(), item.getReceiveUserId().toString(), item);
             } catch (SocketException socketException) {
                 // 该用户不在线
 
