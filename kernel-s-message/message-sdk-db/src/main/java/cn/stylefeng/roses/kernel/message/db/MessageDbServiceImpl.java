@@ -41,7 +41,6 @@ import cn.stylefeng.roses.kernel.message.api.pojo.response.MessageResponse;
 import cn.stylefeng.roses.kernel.message.db.entity.SysMessage;
 import cn.stylefeng.roses.kernel.message.db.service.SysMessageService;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
-import cn.stylefeng.roses.kernel.socket.api.exception.SocketException;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -120,12 +119,6 @@ public class MessageDbServiceImpl implements MessageApi {
 
         // 给用户发送通知
         for (SysMessage item : sendMsgList) {
-            try {
-//                socketOperatorApi.sendMsgOfUserSession(ServerMessageTypeEnum.SYS_NOTICE_MSG_TYPE.getCode(), item.getReceiveUserId().toString(), item);
-            } catch (SocketException socketException) {
-                // 该用户不在线
-
-            }
         }
     }
 
@@ -147,7 +140,9 @@ public class MessageDbServiceImpl implements MessageApi {
         LoginUser loginUser = LoginContext.me().getLoginUser();
         Long userId = loginUser.getUserId();
         LambdaUpdateWrapper<SysMessage> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.set(SysMessage::getReadFlag, MessageReadFlagEnum.READ.getCode()).eq(SysMessage::getReadFlag, MessageReadFlagEnum.UNREAD.getCode()).eq(SysMessage::getReceiveUserId, userId).set(SysMessage::getDelFlag, YesOrNotEnum.N.getCode());
+        updateWrapper.set(SysMessage::getReadFlag, MessageReadFlagEnum.READ.getCode())
+                .eq(SysMessage::getReadFlag, MessageReadFlagEnum.UNREAD.getCode()).eq(SysMessage::getReceiveUserId, userId)
+                .set(SysMessage::getDelFlag, YesOrNotEnum.N.getCode());
         sysMessageService.update(updateWrapper);
 
     }
