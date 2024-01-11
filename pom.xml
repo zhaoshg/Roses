@@ -73,9 +73,6 @@
         <!--sms模块-->
         <module>kernel-d-sms</module>
 
-        <!-- Socket模块 -->
-        <module>kernel-d-socket</module>
-
         <!--定时任务模块-->
         <module>kernel-d-timer</module>
 
