@@ -8,9 +8,10 @@ CHANGE COLUMN `notice_scope` `notice_user_scope` json NULL COMMENT '通知范围
 MODIFY COLUMN `notice_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '通知标题' AFTER `notice_id`,
 MODIFY COLUMN `notice_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '通知内容' AFTER `notice_summary`,
 MODIFY COLUMN `priority_level` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '优先级，来自字典：high-高优先级，middle-中，low-低' AFTER `notice_content`,
-ADD COLUMN `version_flag` bigint NULL DEFAULT NULL COMMENT '乐观锁' AFTER `notice_user_scope`,
+ADD COLUMN `publish_status` tinyint NULL COMMENT '是否发布：1-已发布，2-未发布' AFTER `notice_user_scope`,
+ADD COLUMN `version_flag` bigint NULL DEFAULT NULL COMMENT '乐观锁' AFTER `publish_status`,
 ADD COLUMN `expand_field` json NULL COMMENT '拓展字段' AFTER `version_flag`,
-MODIFY COLUMN `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '是否删除：Y-被删除，N-未删除' AFTER `update_time`,
+MODIFY COLUMN `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '是否删除：Y-被删除，N-未删除' AFTER `expand_field`,
 ADD COLUMN `tenant_id` bigint NULL COMMENT '租户号' AFTER `del_flag`;
 
 -- 更新个人信息表
