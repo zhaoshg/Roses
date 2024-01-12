@@ -1,99 +1,83 @@
-/*
- * Copyright [2020-2030] [https://www.stylefeng.cn]
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * Guns采用APACHE LICENSE 2.0开源协议，您在使用过程中，需要注意以下几点：
- *
- * 1.请不要删除和修改根目录下的LICENSE文件。
- * 2.请不要删除和修改Guns源码头部的版权声明。
- * 3.请保留源码和相关描述文件的项目出处，作者声明等。
- * 4.分发源码时候，请注明软件出处 https://gitee.com/stylefeng/guns
- * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
- * 6.若您的项目无法满足以上几点，可申请商业授权
- */
 package cn.stylefeng.roses.kernel.sys.modular.notice.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.sys.modular.notice.entity.SysNotice;
-import cn.stylefeng.roses.kernel.sys.modular.notice.pojo.SysNoticeRequest;
+import cn.stylefeng.roses.kernel.sys.modular.notice.pojo.request.SysNoticeRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 
 /**
- * 通知服务类
+ * 通知管理服务类
  *
- * @author liuhanqing
- * @since 2021/1/8 19:56
+ * @author fengshuonan
+ * @since 2024/01/12 16:06
  */
 public interface SysNoticeService extends IService<SysNotice> {
 
     /**
-     * 添加系统应用
+     * 新增通知管理
      *
-     * @param sysNoticeRequest 添加参数
-     * @author liuhanqing
-     * @since 2021/1/9 14:57
+     * @param sysNoticeRequest 请求参数
+     * @author fengshuonan
+     * @since 2024/01/12 16:06
      */
     void add(SysNoticeRequest sysNoticeRequest);
 
     /**
-     * 删除系统应用
+     * 删除通知管理
      *
-     * @param sysNoticeRequest 删除参数
-     * @author liuhanqing
-     * @since 2021/1/9 14:57
+     * @param sysNoticeRequest 请求参数
+     * @author fengshuonan
+     * @since 2024/01/12 16:06
      */
     void del(SysNoticeRequest sysNoticeRequest);
 
     /**
-     * 编辑系统应用
+     * 批量删除通知管理
      *
-     * @param sysNoticeRequest 编辑参数
-     * @author liuhanqing
-     * @since 2021/1/9 14:58
+     * @param sysNoticeRequest 请求参数
+     * @author fengshuonan
+     * @since 2024/01/12 16:06
+     */
+    void batchDelete(SysNoticeRequest sysNoticeRequest);
+
+    /**
+     * 编辑通知管理
+     *
+     * @param sysNoticeRequest 请求参数
+     * @author fengshuonan
+     * @since 2024/01/12 16:06
      */
     void edit(SysNoticeRequest sysNoticeRequest);
 
     /**
-     * 查看系统应用
+     * 查询详情通知管理
      *
-     * @param sysNoticeRequest 查看参数
-     * @return 系统应用
-     * @author liuhanqing
-     * @since 2021/1/9 14:56
+     * @param sysNoticeRequest 请求参数
+     * @author fengshuonan
+     * @since 2024/01/12 16:06
      */
     SysNotice detail(SysNoticeRequest sysNoticeRequest);
 
     /**
-     * 查询系统应用
+     * 获取通知管理列表
      *
-     * @param sysNoticeRequest 查询参数
-     * @return 查询分页结果
-     * @author liuhanqing
-     * @since 2021/1/9 14:56
-     */
-    PageResult<SysNotice> findPage(SysNoticeRequest sysNoticeRequest);
-
-    /**
-     * 系统应用列表
-     *
-     * @param sysNoticeRequest 查询参数
-     * @return 系统应用列表
-     * @author liuhanqing
-     * @since 2021/1/9 14:56
+     * @param sysNoticeRequest         请求参数
+     * @return List<SysNotice>  返回结果
+     * @author fengshuonan
+     * @since 2024/01/12 16:06
      */
     List<SysNotice> findList(SysNoticeRequest sysNoticeRequest);
+
+    /**
+     * 获取通知管理分页列表
+     *
+     * @param sysNoticeRequest                请求参数
+     * @return PageResult<SysNotice>   返回结果
+     * @author fengshuonan
+     * @since 2024/01/12 16:06
+     */
+    PageResult<SysNotice> findPage(SysNoticeRequest sysNoticeRequest);
 
 }
