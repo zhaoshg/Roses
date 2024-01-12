@@ -35,18 +35,10 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
     @Transactional(rollbackFor = Exception.class)
     public void add(SysNoticeRequest sysNoticeRequest) {
 
-        // 1. 判断通知人员范围不能为空
-        NoticeUserScope noticeUserScope = sysNoticeRequest.getNoticeUserScope();
-        if (noticeUserScope == null) {
-            throw new ServiceException(SysNoticeExceptionEnum.SYS_NOTICE_SCOPE_EMPTY);
-        }
+        // 1. 校验通知的人员范围是否为空
+        this.validateUserScope(sysNoticeRequest);
 
-        // 2. 通知的人员和部门不能同时为空
-        if (ObjectUtil.isEmpty(noticeUserScope.getPointOrgList()) && ObjectUtil.isEmpty(noticeUserScope.getPointUserList())) {
-            throw new ServiceException(SysNoticeExceptionEnum.SYS_NOTICE_SCOPE_EMPTY);
-        }
-
-        // 3. 存储基础信息
+        // 2. 存储基础信息
         SysNotice sysNotice = new SysNotice();
         BeanUtil.copyProperties(sysNoticeRequest, sysNotice);
 
@@ -70,7 +62,20 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
 
     @Override
     public void edit(SysNoticeRequest sysNoticeRequest) {
+
+        // 1. 校验通知的人员范围是否为空
+        this.validateUserScope(sysNoticeRequest);
+
+        // 2. 如果当前的通知是已经发布了，则不允许修改
         SysNotice sysNotice = this.querySysNotice(sysNoticeRequest);
+        if (sysNotice == null) {
+            throw new ServiceException(SysNoticeExceptionEnum.SYS_NOTICE_NOT_EXISTED);
+        }
+        if (NoticePublishStatusEnum.ALREADY.getCode().equals(sysNotice.getPublishStatus())) {
+            throw new ServiceException(SysNoticeExceptionEnum.SYS_NOTICE_CANT_EDIT);
+        }
+
+        // 3. 修改通知信息
         BeanUtil.copyProperties(sysNoticeRequest, sysNotice);
         this.updateById(sysNotice);
     }
@@ -140,6 +145,25 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
             queryWrapper.nested(i -> i.eq(SysNotice::getPriorityLevel, priorityLevel));
         }
         return queryWrapper;
+    }
+
+    /**
+     * 校验通知的人员范围是否为空
+     *
+     * @author fengshuonan
+     * @since 2024-01-12 17:03
+     */
+    private void validateUserScope(SysNoticeRequest sysNoticeRequest) {
+        // 1. 判断通知人员范围不能为空
+        NoticeUserScope noticeUserScope = sysNoticeRequest.getNoticeUserScope();
+        if (noticeUserScope == null) {
+            throw new ServiceException(SysNoticeExceptionEnum.SYS_NOTICE_SCOPE_EMPTY);
+        }
+
+        // 2. 通知的人员和部门不能同时为空
+        if (ObjectUtil.isEmpty(noticeUserScope.getPointOrgList()) && ObjectUtil.isEmpty(noticeUserScope.getPointUserList())) {
+            throw new ServiceException(SysNoticeExceptionEnum.SYS_NOTICE_SCOPE_EMPTY);
+        }
     }
 
 }
