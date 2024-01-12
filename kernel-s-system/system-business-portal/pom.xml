@@ -90,13 +90,6 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!--消息模块-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>message-spring-boot-starter</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
         <!--数据库sdk-->
         <!--数据库dao框架-->
         <dependency>

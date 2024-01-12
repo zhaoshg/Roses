@@ -97,9 +97,6 @@
         <!--分组业务-->
         <module>kernel-s-group</module>
 
-        <!--系统消息模块-->
-        <module>kernel-s-message</module>
-
         <!--业务点击统计-->
         <module>kernel-s-stat</module>
 

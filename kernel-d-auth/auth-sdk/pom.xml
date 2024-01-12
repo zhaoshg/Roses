@@ -71,14 +71,6 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!--系统消息业务模块的api-->
-        <!--获取当前登录用户的ws-url-->
-        <dependency>
-            <groupId>cn.stylefeng.roses</groupId>
-            <artifactId>message-api</artifactId>
-            <version>${roses.version}</version>
-        </dependency>
-
         <!--jwt模块的api-->
         <!--token用的jwt token-->
         <dependency>
