@@ -5,7 +5,6 @@ import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -22,14 +21,13 @@ public class SysMessageRequest extends BaseRequest {
     /**
      * 主键
      */
-    @NotNull(message = "主键不能为空", groups = {edit.class, delete.class})
+    @NotNull(message = "主键不能为空", groups = {delete.class})
     @ChineseDescription("主键")
     private Long messageId;
 
     /**
      * 接收用户id
      */
-    @NotNull(message = "接收用户id不能为空", groups = {add.class, edit.class})
     @ChineseDescription("接收用户id")
     private Long receiveUserId;
 
@@ -42,7 +40,6 @@ public class SysMessageRequest extends BaseRequest {
     /**
      * 消息标题
      */
-    @NotBlank(message = "消息标题不能为空", groups = {add.class, edit.class})
     @ChineseDescription("消息标题")
     private String messageTitle;
 
@@ -55,7 +52,6 @@ public class SysMessageRequest extends BaseRequest {
     /**
      * 消息类型：NORMAL-普通类型，URL-带链接跳转
      */
-    @NotBlank(message = "消息类型：NORMAL-普通类型，URL-带链接跳转不能为空", groups = {add.class, edit.class})
     @ChineseDescription("消息类型：NORMAL-普通类型，URL-带链接跳转")
     private String messageType;
 
@@ -68,7 +64,6 @@ public class SysMessageRequest extends BaseRequest {
     /**
      * 优先级：high-高优先级，middle-中，low-低
      */
-    @NotBlank(message = "优先级：high-高优先级，middle-中，low-低不能为空", groups = {add.class, edit.class})
     @ChineseDescription("优先级：high-高优先级，middle-中，low-低")
     private String priorityLevel;
 

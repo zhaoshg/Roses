@@ -17,27 +17,49 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 /**
- * 系统消息控制器
+ * 个人消息控制器
  *
  * @author fengshuonan
  * @since 2024/01/12 17:31
  */
 @RestController
-@ApiResource(name = "系统消息")
+@ApiResource(name = "个人消息")
 public class SysMessageController {
 
     @Resource
     private SysMessageService sysMessageService;
 
     /**
-     * 删除系统消息
+     * 获取个人消息列表（带分页）
      *
      * @author fengshuonan
      * @since 2024/01/12 17:31
      */
-    @PostResource(name = "删除系统消息", path = "/sysMessage/delete")
-    public ResponseData<?> delete(@RequestBody @Validated(BaseRequest.detail.class) SysMessageRequest sysMessageRequest) {
+    @GetResource(name = "获取个人消息列表（带分页）", path = "/sysMessage/page")
+    public ResponseData<PageResult<SysMessage>> page(SysMessageRequest sysMessageRequest) {
+        return new SuccessResponseData<>(sysMessageService.findPage(sysMessageRequest));
+    }
+
+    /**
+     * 删除个人消息
+     *
+     * @author fengshuonan
+     * @since 2024/01/12 17:31
+     */
+    @PostResource(name = "删除个人消息", path = "/sysMessage/delete")
+    public ResponseData<?> delete(@RequestBody @Validated(BaseRequest.delete.class) SysMessageRequest sysMessageRequest) {
         sysMessageService.del(sysMessageRequest);
+        return new SuccessResponseData<>();
+    }
+
+    /**
+     * 批量删除，清空我的消息
+     *
+     * @author fengshuonan
+     * @since 2024-01-12 18:21
+     */
+    @PostResource(name = "批量删除，清空我的消息", path = "/sysMessage/cleanMyMessage")
+    public ResponseData<?> cleanMyMessage() {
         return new SuccessResponseData<>();
     }
 
@@ -53,25 +75,14 @@ public class SysMessageController {
     }
 
     /**
-     * 查看系统消息详情
+     * 查看个人消息详情
      *
      * @author fengshuonan
      * @since 2024/01/12 17:31
      */
-    @GetResource(name = "查看系统消息详情", path = "/sysMessage/detail")
+    @GetResource(name = "查看个人消息详情", path = "/sysMessage/detail")
     public ResponseData<SysMessage> detail(@Validated(SysMessageRequest.detail.class) SysMessageRequest sysMessageRequest) {
         return new SuccessResponseData<>(sysMessageService.detail(sysMessageRequest));
-    }
-
-    /**
-     * 获取个人系统消息列表（带分页）
-     *
-     * @author fengshuonan
-     * @since 2024/01/12 17:31
-     */
-    @GetResource(name = "获取个人系统消息列表（带分页）", path = "/sysMessage/page")
-    public ResponseData<PageResult<SysMessage>> page(SysMessageRequest sysMessageRequest) {
-        return new SuccessResponseData<>(sysMessageService.findPage(sysMessageRequest));
     }
 
 }
