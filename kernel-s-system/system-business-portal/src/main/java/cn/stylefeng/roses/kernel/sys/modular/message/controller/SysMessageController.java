@@ -53,12 +53,12 @@ public class SysMessageController {
     }
 
     /**
-     * 批量删除，清空我的消息
+     * 清空我的消息
      *
      * @author fengshuonan
      * @since 2024-01-12 18:21
      */
-    @PostResource(name = "批量删除，清空我的消息", path = "/sysMessage/cleanMyMessage")
+    @PostResource(name = "清空我的消息", path = "/sysMessage/cleanMyMessage")
     public ResponseData<?> cleanMyMessage() {
         return new SuccessResponseData<>();
     }
@@ -71,6 +71,17 @@ public class SysMessageController {
      */
     @PostResource(name = "设为已读消息", path = "/sysMessage/setRead")
     public ResponseData<?> setRead(@RequestBody @Validated(BaseRequest.detail.class) SysMessageRequest sysMessageRequest) {
+        return new SuccessResponseData<>();
+    }
+
+    /**
+     * 全部已读
+     *
+     * @author fengshuonan
+     * @since 2024-01-12 18:12
+     */
+    @PostResource(name = "全部已读", path = "/sysMessage/setTotalRead")
+    public ResponseData<?> setTotalRead() {
         return new SuccessResponseData<>();
     }
 
