@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.enums.notice.NoticePublishStatusEnum;
@@ -20,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 通知管理业务实现层
@@ -83,6 +83,11 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
     @Override
     public PageResult<SysNotice> findPage(SysNoticeRequest sysNoticeRequest) {
         LambdaQueryWrapper<SysNotice> wrapper = createWrapper(sysNoticeRequest);
+
+        // 只查询需要的字段
+        wrapper.select(SysNotice::getNoticeTitle, SysNotice::getPublishStatus, SysNotice::getPriorityLevel, SysNotice::getNoticeBeginTime, SysNotice::getNoticeEndTime,
+                BaseEntity::getCreateUser, BaseEntity::getCreateTime);
+
         Page<SysNotice> pageList = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(pageList);
     }
@@ -116,34 +121,24 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
     private LambdaQueryWrapper<SysNotice> createWrapper(SysNoticeRequest sysNoticeRequest) {
         LambdaQueryWrapper<SysNotice> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long noticeId = sysNoticeRequest.getNoticeId();
-        String noticeTitle = sysNoticeRequest.getNoticeTitle();
-        String noticeSummary = sysNoticeRequest.getNoticeSummary();
-        String noticeContent = sysNoticeRequest.getNoticeContent();
-        String priorityLevel = sysNoticeRequest.getPriorityLevel();
-        String noticeBeginTime = sysNoticeRequest.getNoticeBeginTime();
-        String noticeEndTime = sysNoticeRequest.getNoticeEndTime();
-        Map<String, Object> noticeUserScope = sysNoticeRequest.getNoticeUserScope();
+        // 根据查询条件搜索
+        String searchText = sysNoticeRequest.getSearchText();
+        if (ObjectUtil.isNotEmpty(searchText)) {
+            queryWrapper.like(SysNotice::getNoticeTitle, searchText);
+            queryWrapper.or().like(SysNotice::getNoticeContent, searchText);
+        }
+
+        // 根据是否发布搜索
         Integer publishStatus = sysNoticeRequest.getPublishStatus();
-        Long versionFlag = sysNoticeRequest.getVersionFlag();
-        Map<String, Object> expandField = sysNoticeRequest.getExpandField();
-        String delFlag = sysNoticeRequest.getDelFlag();
-        Long tenantId = sysNoticeRequest.getTenantId();
+        if (ObjectUtil.isNotEmpty(publishStatus)) {
+            queryWrapper.nested(i -> i.eq(SysNotice::getPublishStatus, publishStatus));
+        }
 
-        queryWrapper.eq(ObjectUtil.isNotNull(noticeId), SysNotice::getNoticeId, noticeId);
-        queryWrapper.like(ObjectUtil.isNotEmpty(noticeTitle), SysNotice::getNoticeTitle, noticeTitle);
-        queryWrapper.like(ObjectUtil.isNotEmpty(noticeSummary), SysNotice::getNoticeSummary, noticeSummary);
-        queryWrapper.like(ObjectUtil.isNotEmpty(noticeContent), SysNotice::getNoticeContent, noticeContent);
-        queryWrapper.like(ObjectUtil.isNotEmpty(priorityLevel), SysNotice::getPriorityLevel, priorityLevel);
-        queryWrapper.eq(ObjectUtil.isNotNull(noticeBeginTime), SysNotice::getNoticeBeginTime, noticeBeginTime);
-        queryWrapper.eq(ObjectUtil.isNotNull(noticeEndTime), SysNotice::getNoticeEndTime, noticeEndTime);
-        queryWrapper.eq(ObjectUtil.isNotNull(noticeUserScope), SysNotice::getNoticeUserScope, noticeUserScope);
-        queryWrapper.eq(ObjectUtil.isNotNull(publishStatus), SysNotice::getPublishStatus, publishStatus);
-        queryWrapper.eq(ObjectUtil.isNotNull(versionFlag), SysNotice::getVersionFlag, versionFlag);
-        queryWrapper.eq(ObjectUtil.isNotNull(expandField), SysNotice::getExpandField, expandField);
-        queryWrapper.like(ObjectUtil.isNotEmpty(delFlag), SysNotice::getDelFlag, delFlag);
-        queryWrapper.eq(ObjectUtil.isNotNull(tenantId), SysNotice::getTenantId, tenantId);
-
+        // 根据优先级搜索
+        String priorityLevel = sysNoticeRequest.getPriorityLevel();
+        if (ObjectUtil.isNotEmpty(priorityLevel)) {
+            queryWrapper.nested(i -> i.eq(SysNotice::getPriorityLevel, priorityLevel));
+        }
         return queryWrapper;
     }
 
