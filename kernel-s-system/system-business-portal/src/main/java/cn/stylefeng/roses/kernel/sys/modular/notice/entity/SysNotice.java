@@ -2,6 +2,8 @@ package cn.stylefeng.roses.kernel.sys.modular.notice.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseBusinessEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
+import cn.stylefeng.roses.kernel.sys.api.format.UserNameFormatProcess;
 import cn.stylefeng.roses.kernel.sys.modular.notice.pojo.NoticeUserScope;
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
@@ -98,5 +100,12 @@ public class SysNotice extends BaseBusinessEntity {
     @TableField(value = "tenant_id", fill = FieldFill.INSERT)
     @ChineseDescription("租户号")
     private Long tenantId;
+
+    /**
+     * 创建人
+     */
+    @TableField(value = "create_user", fill = FieldFill.INSERT)
+    @SimpleFieldFormat(processClass = UserNameFormatProcess.class)
+    private Long createUser;
 
 }
