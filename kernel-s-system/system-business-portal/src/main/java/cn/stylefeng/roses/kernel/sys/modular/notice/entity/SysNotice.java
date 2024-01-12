@@ -1,11 +1,10 @@
 package cn.stylefeng.roses.kernel.sys.modular.notice.entity;
 
-import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
+import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseBusinessEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import cn.stylefeng.roses.kernel.sys.modular.notice.pojo.NoticeUserScope;
+import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,10 +17,10 @@ import java.util.Map;
  * @author fengshuonan
  * @since 2024/01/12 16:06
  */
-@TableName("sys_notice")
+@TableName(value = "sys_notice", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SysNotice extends BaseEntity {
+public class SysNotice extends BaseBusinessEntity {
 
     /**
      * 主键
@@ -75,9 +74,9 @@ public class SysNotice extends BaseEntity {
     /**
      * 通知范围，存用户id集合
      */
-    @TableField("notice_user_scope")
+    @TableField(value = "notice_user_scope", typeHandler = JacksonTypeHandler.class)
     @ChineseDescription("通知范围，存用户id集合")
-    private Map<String, Object> noticeUserScope;
+    private NoticeUserScope noticeUserScope;
 
     /**
      * 是否发布：1-已发布，2-未发布
@@ -87,30 +86,16 @@ public class SysNotice extends BaseEntity {
     private Integer publishStatus;
 
     /**
-     * 乐观锁
-     */
-    @TableField("version_flag")
-    @ChineseDescription("乐观锁")
-    private Long versionFlag;
-
-    /**
      * 拓展字段
      */
-    @TableField("expand_field")
+    @TableField(value = "expand_field", typeHandler = JacksonTypeHandler.class)
     @ChineseDescription("拓展字段")
     private Map<String, Object> expandField;
 
     /**
-     * 是否删除：Y-被删除，N-未删除
-     */
-    @TableField("del_flag")
-    @ChineseDescription("是否删除：Y-被删除，N-未删除")
-    private String delFlag;
-
-    /**
      * 租户号
      */
-    @TableField("tenant_id")
+    @TableField(value = "tenant_id", fill = FieldFill.INSERT)
     @ChineseDescription("租户号")
     private Long tenantId;
 

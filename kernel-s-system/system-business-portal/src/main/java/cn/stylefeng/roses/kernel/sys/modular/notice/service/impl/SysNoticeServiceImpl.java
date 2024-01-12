@@ -6,9 +6,11 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.enums.notice.NoticePublishStatusEnum;
 import cn.stylefeng.roses.kernel.sys.modular.notice.entity.SysNotice;
 import cn.stylefeng.roses.kernel.sys.modular.notice.enums.SysNoticeExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.notice.mapper.SysNoticeMapper;
+import cn.stylefeng.roses.kernel.sys.modular.notice.pojo.NoticeUserScope;
 import cn.stylefeng.roses.kernel.sys.modular.notice.pojo.request.SysNoticeRequest;
 import cn.stylefeng.roses.kernel.sys.modular.notice.service.SysNoticeService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -29,10 +31,28 @@ import java.util.Map;
 @Service
 public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice> implements SysNoticeService {
 
-	@Override
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void add(SysNoticeRequest sysNoticeRequest) {
+
+        // 1. 判断通知人员范围不能为空
+        NoticeUserScope noticeUserScope = sysNoticeRequest.getNoticeUserScope();
+        if (noticeUserScope == null) {
+            throw new ServiceException(SysNoticeExceptionEnum.SYS_NOTICE_SCOPE_EMPTY);
+        }
+
+        // 2. 通知的人员和部门不能同时为空
+        if (ObjectUtil.isEmpty(noticeUserScope.getPointOrgList()) && ObjectUtil.isEmpty(noticeUserScope.getPointUserList())) {
+            throw new ServiceException(SysNoticeExceptionEnum.SYS_NOTICE_SCOPE_EMPTY);
+        }
+
+        // 3. 存储基础信息
         SysNotice sysNotice = new SysNotice();
         BeanUtil.copyProperties(sysNoticeRequest, sysNotice);
+
+        // 新增的时候，默认设置状态为未发布
+        sysNotice.setPublishStatus(NoticePublishStatusEnum.NOT_PUBLISH.getCode());
+
         this.save(sysNotice);
     }
 

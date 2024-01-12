@@ -16,7 +16,12 @@ public enum SysNoticeExceptionEnum implements AbstractExceptionEnum {
     /**
      * 查询结果不存在
      */
-    SYS_NOTICE_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE +  "10001", "查询结果不存在");
+    SYS_NOTICE_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10001", "查询结果不存在"),
+
+    /**
+     * 通知范围不能为空
+     */
+    SYS_NOTICE_SCOPE_EMPTY(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10002", "通知范围不能为空");
 
     /**
      * 错误编码
