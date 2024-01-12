@@ -76,7 +76,7 @@ public class SysMessageRequest extends BaseRequest {
      * 消息发送时间
      */
     @ChineseDescription("消息发送时间")
-	private String messageSendTime;
+    private String messageSendTime;
 
     /**
      * 关联业务id
@@ -95,26 +95,6 @@ public class SysMessageRequest extends BaseRequest {
      */
     @ChineseDescription("阅读状态：0-未读，1-已读")
     private Integer readFlag;
-
-    /**
-     * 乐观锁
-     */
-    @ChineseDescription("乐观锁")
-    private Long versionFlag;
-
-    /**
-     * 是否删除：Y-被删除，N-未删除
-     */
-    @NotBlank(message = "是否删除：Y-被删除，N-未删除不能为空", groups = {add.class, edit.class})
-    @ChineseDescription("是否删除：Y-被删除，N-未删除")
-    private String delFlag;
-
-    /**
-     * 租户号
-     */
-    @ChineseDescription("租户号")
-    private Long tenantId;
-
 
     /**
      * 批量删除用的id集合
