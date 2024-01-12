@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * 通知管理控制器
@@ -90,17 +89,6 @@ public class SysNoticeController {
     }
 
     /**
-     * 获取通知管理列表
-     *
-     * @author fengshuonan
-     * @since 2024/01/12 16:06
-     */
-    @GetResource(name = "获取通知管理列表", path = "/sysNotice/list")
-    public ResponseData<List<SysNotice>> list(SysNoticeRequest sysNoticeRequest) {
-        return new SuccessResponseData<>(sysNoticeService.findList(sysNoticeRequest));
-    }
-
-    /**
      * 获取通知管理列表（带分页）
      *
      * @author fengshuonan
@@ -109,6 +97,30 @@ public class SysNoticeController {
     @GetResource(name = "获取通知管理列表（带分页）", path = "/sysNotice/page")
     public ResponseData<PageResult<SysNotice>> page(SysNoticeRequest sysNoticeRequest) {
         return new SuccessResponseData<>(sysNoticeService.findPage(sysNoticeRequest));
+    }
+
+    /**
+     * 发送通知
+     *
+     * @author fengshuonan
+     * @since 2024/01/12 16:06
+     */
+    @PostResource(name = "发送通知", path = "/sysNotice/publishNotice")
+    public ResponseData<?> publishNotice(@RequestBody @Validated(BaseRequest.detail.class) SysNoticeRequest sysNoticeRequest) {
+        this.sysNoticeService.publishNotice(sysNoticeRequest);
+        return new SuccessResponseData<>();
+    }
+
+    /**
+     * 撤回通知
+     *
+     * @author fengshuonan
+     * @since 2024/01/12 16:06
+     */
+    @PostResource(name = "撤回通知", path = "/sysNotice/retractNotice")
+    public ResponseData<?> retractNotice(@RequestBody @Validated(BaseRequest.detail.class) SysNoticeRequest sysNoticeRequest) {
+        this.sysNoticeService.retractNotice(sysNoticeRequest);
+        return new SuccessResponseData<>();
     }
 
 }

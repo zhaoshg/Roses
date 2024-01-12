@@ -98,6 +98,30 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void publishNotice(SysNoticeRequest sysNoticeRequest) {
+
+        // 1. 修改当前通知的状态改为已发布
+        SysNotice sysNotice = this.querySysNotice(sysNoticeRequest);
+        sysNotice.setPublishStatus(NoticePublishStatusEnum.ALREADY.getCode());
+        this.updateById(sysNotice);
+
+        // 2. 发送通知给接收人
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void retractNotice(SysNoticeRequest sysNoticeRequest) {
+
+        // 1. 修改当前通知的状态改为未发布
+        SysNotice sysNotice = this.querySysNotice(sysNoticeRequest);
+        sysNotice.setPublishStatus(NoticePublishStatusEnum.NOT_PUBLISH.getCode());
+        this.updateById(sysNotice);
+
+        // 2. 调用撤回接口，将已发送的消息全都撤回
+    }
+
+    @Override
     public List<SysNotice> findList(SysNoticeRequest sysNoticeRequest) {
         LambdaQueryWrapper<SysNotice> wrapper = this.createWrapper(sysNoticeRequest);
         return this.list(wrapper);

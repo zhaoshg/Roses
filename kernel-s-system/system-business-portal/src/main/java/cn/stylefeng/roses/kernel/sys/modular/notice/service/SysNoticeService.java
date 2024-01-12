@@ -63,7 +63,7 @@ public interface SysNoticeService extends IService<SysNotice> {
     /**
      * 获取通知管理列表
      *
-     * @param sysNoticeRequest         请求参数
+     * @param sysNoticeRequest 请求参数
      * @return List<SysNotice>  返回结果
      * @author fengshuonan
      * @since 2024/01/12 16:06
@@ -73,11 +73,27 @@ public interface SysNoticeService extends IService<SysNotice> {
     /**
      * 获取通知管理分页列表
      *
-     * @param sysNoticeRequest                请求参数
+     * @param sysNoticeRequest 请求参数
      * @return PageResult<SysNotice>   返回结果
      * @author fengshuonan
      * @since 2024/01/12 16:06
      */
     PageResult<SysNotice> findPage(SysNoticeRequest sysNoticeRequest);
+
+    /**
+     * 发送通知给接收人
+     *
+     * @author fengshuonan
+     * @since 2024-01-12 17:15
+     */
+    void publishNotice(SysNoticeRequest sysNoticeRequest);
+
+    /**
+     * 撤回通知
+     *
+     * @author fengshuonan
+     * @since 2024-01-12 17:16
+     */
+    void retractNotice(SysNoticeRequest sysNoticeRequest);
 
 }
