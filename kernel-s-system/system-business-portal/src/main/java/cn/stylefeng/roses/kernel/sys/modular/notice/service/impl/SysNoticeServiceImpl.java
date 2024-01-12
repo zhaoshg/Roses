@@ -90,7 +90,8 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
         LambdaQueryWrapper<SysNotice> wrapper = createWrapper(sysNoticeRequest);
 
         // 只查询需要的字段
-        wrapper.select(SysNotice::getNoticeTitle, SysNotice::getPublishStatus, SysNotice::getPriorityLevel, SysNotice::getNoticeBeginTime, SysNotice::getNoticeEndTime,
+        wrapper.select(SysNotice::getNoticeId, SysNotice::getNoticeTitle, SysNotice::getPublishStatus, SysNotice::getPriorityLevel, SysNotice::getNoticeBeginTime,
+                SysNotice::getNoticeEndTime,
                 BaseEntity::getCreateUser, BaseEntity::getCreateTime);
 
         Page<SysNotice> pageList = this.page(PageFactory.defaultPage(), wrapper);
