@@ -41,7 +41,8 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
         LambdaQueryWrapper<SysMessage> wrapper = createWrapper(sysMessageRequest);
 
         // 查询关键字段
-        wrapper.select(SysMessage::getMessageId, SysMessage::getMessageTitle, SysMessage::getPriorityLevel, SysMessage::getMessageSendTime);
+        wrapper.select(SysMessage::getMessageId, SysMessage::getMessageTitle, SysMessage::getPriorityLevel, SysMessage::getReadFlag,
+                SysMessage::getMessageSendTime);
 
         Page<SysMessage> pageList = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(pageList);
