@@ -7,9 +7,13 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
+import cn.stylefeng.roses.kernel.sys.api.MessagePublishApi;
+import cn.stylefeng.roses.kernel.sys.api.SysUserOrgServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.enums.notice.NoticePublishStatusEnum;
 import cn.stylefeng.roses.kernel.sys.modular.notice.entity.SysNotice;
 import cn.stylefeng.roses.kernel.sys.modular.notice.enums.SysNoticeExceptionEnum;
+import cn.stylefeng.roses.kernel.sys.modular.notice.factory.NoticeFactory;
 import cn.stylefeng.roses.kernel.sys.modular.notice.mapper.SysNoticeMapper;
 import cn.stylefeng.roses.kernel.sys.modular.notice.pojo.NoticeUserScope;
 import cn.stylefeng.roses.kernel.sys.modular.notice.pojo.request.SysNoticeRequest;
@@ -20,7 +24,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 通知管理业务实现层
@@ -30,6 +38,12 @@ import java.util.List;
  */
 @Service
 public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice> implements SysNoticeService {
+
+    @Resource
+    private MessagePublishApi messagePublishApi;
+
+    @Resource
+    private SysUserOrgServiceApi sysUserOrgServiceApi;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -90,7 +104,8 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
         LambdaQueryWrapper<SysNotice> wrapper = createWrapper(sysNoticeRequest);
 
         // 只查询需要的字段
-        wrapper.select(SysNotice::getNoticeId, SysNotice::getNoticeTitle, SysNotice::getPublishStatus, SysNotice::getPriorityLevel, SysNotice::getNoticeBeginTime,
+        wrapper.select(SysNotice::getNoticeId, SysNotice::getNoticeTitle, SysNotice::getPublishStatus, SysNotice::getPriorityLevel,
+                SysNotice::getNoticeBeginTime,
                 SysNotice::getNoticeEndTime,
                 BaseEntity::getCreateUser, BaseEntity::getCreateTime);
 
@@ -107,7 +122,12 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
         sysNotice.setPublishStatus(NoticePublishStatusEnum.ALREADY.getCode());
         this.updateById(sysNotice);
 
-        // 2. 发送通知给接收人
+        // 2. 获取发送对象，全部转化为用户id
+        NoticeUserScope noticeUserScope = sysNoticeRequest.getNoticeUserScope();
+        Set<Long> noticeUserList = this.getNoticeUserList(noticeUserScope);
+
+        // 3. 发送通知给接收人
+        messagePublishApi.batchSendMessage(NoticeFactory.createMessageSendDTO(noticeUserList, sysNotice));
     }
 
     @Override
@@ -120,6 +140,8 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
         this.updateById(sysNotice);
 
         // 2. 调用撤回接口，将已发送的消息全都撤回
+
+
     }
 
     @Override
@@ -189,6 +211,36 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
         if (ObjectUtil.isEmpty(noticeUserScope.getPointOrgList()) && ObjectUtil.isEmpty(noticeUserScope.getPointUserList())) {
             throw new ServiceException(SysNoticeExceptionEnum.SYS_NOTICE_SCOPE_EMPTY);
         }
+    }
+
+    /**
+     * 通知的范围，转化为具体的用户id
+     *
+     * @author fengshuonan
+     * @since 2024/1/14 22:46
+     */
+    private Set<Long> getNoticeUserList(NoticeUserScope noticeUserScope) {
+
+        // 初始化用户集合
+        Set<Long> userIdCollection = new LinkedHashSet<>();
+
+        // 添加通知中的用户集合
+        List<SimpleDict> pointUserList = noticeUserScope.getPointUserList();
+        if (ObjectUtil.isNotEmpty(pointUserList)) {
+            userIdCollection.addAll(pointUserList.stream().map(SimpleDict::getId).collect(Collectors.toList()));
+        }
+
+        // 组织机构id转化为用户id
+        List<SimpleDict> pointOrgList = noticeUserScope.getPointOrgList();
+        if (ObjectUtil.isNotEmpty(pointOrgList)) {
+            Set<Long> orgUserIdList = sysUserOrgServiceApi.getOrgUserIdList(
+                    pointOrgList.stream().map(SimpleDict::getId).collect(Collectors.toSet()));
+            if (ObjectUtil.isNotEmpty(orgUserIdList)) {
+                userIdCollection.addAll(orgUserIdList);
+            }
+        }
+
+        return userIdCollection;
     }
 
 }
