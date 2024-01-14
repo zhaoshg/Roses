@@ -49,4 +49,20 @@ public interface SysMessageService extends IService<SysMessage> {
      */
     void deleteAllMyMessage();
 
+    /**
+     * 设置信息为已读
+     *
+     * @author fengshuonan
+     * @since 2024/1/14 21:36
+     */
+    void setReadFlag(SysMessageRequest sysMessageRequest);
+
+    /**
+     * 将自己的消息全部设置为已读
+     *
+     * @author fengshuonan
+     * @since 2024/1/14 21:38
+     */
+    void setReadTotalReadFlag();
+
 }

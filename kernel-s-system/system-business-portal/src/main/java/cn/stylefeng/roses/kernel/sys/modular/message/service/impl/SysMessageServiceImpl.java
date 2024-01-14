@@ -7,6 +7,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.enums.message.ReadFlagEnum;
 import cn.stylefeng.roses.kernel.sys.modular.message.entity.SysMessage;
 import cn.stylefeng.roses.kernel.sys.modular.message.enums.SysMessageExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.message.mapper.SysMessageMapper;
@@ -59,6 +60,25 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
         LambdaUpdateWrapper<SysMessage> wrapper = new LambdaUpdateWrapper<>();
         wrapper.eq(SysMessage::getReceiveUserId, LoginContext.me().getLoginUser().getUserId());
         this.remove(wrapper);
+    }
+
+    @Override
+    public void setReadFlag(SysMessageRequest sysMessageRequest) {
+        // 只能设置自己的消息
+        LambdaUpdateWrapper<SysMessage> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(SysMessage::getReceiveUserId, LoginContext.me().getLoginUser().getUserId());
+        wrapper.eq(SysMessage::getMessageId, sysMessageRequest.getMessageId());
+        wrapper.set(SysMessage::getReadFlag, ReadFlagEnum.HAVE_READ.getCode());
+        this.update(wrapper);
+    }
+
+    @Override
+    public void setReadTotalReadFlag() {
+        // 只能设置自己的消息
+        LambdaUpdateWrapper<SysMessage> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(SysMessage::getReceiveUserId, LoginContext.me().getLoginUser().getUserId());
+        wrapper.set(SysMessage::getReadFlag, ReadFlagEnum.HAVE_READ.getCode());
+        this.update(wrapper);
     }
 
     /**

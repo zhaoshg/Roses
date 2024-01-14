@@ -72,6 +72,7 @@ public class SysMessageController {
      */
     @PostResource(name = "设为已读消息", path = "/sysMessage/setRead")
     public ResponseData<?> setRead(@RequestBody @Validated(BaseRequest.detail.class) SysMessageRequest sysMessageRequest) {
+        sysMessageService.setReadFlag(sysMessageRequest);
         return new SuccessResponseData<>();
     }
 
@@ -83,6 +84,7 @@ public class SysMessageController {
      */
     @PostResource(name = "全部已读", path = "/sysMessage/setTotalRead")
     public ResponseData<?> setTotalRead() {
+        this.sysMessageService.setReadTotalReadFlag();
         return new SuccessResponseData<>();
     }
 
