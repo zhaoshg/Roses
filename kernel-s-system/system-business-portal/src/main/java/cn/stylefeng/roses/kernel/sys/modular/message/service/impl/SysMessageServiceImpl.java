@@ -8,8 +8,11 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.enums.message.ReadFlagEnum;
+import cn.stylefeng.roses.kernel.sys.api.pojo.message.MessageRetractDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.message.MessageSendDTO;
 import cn.stylefeng.roses.kernel.sys.modular.message.entity.SysMessage;
 import cn.stylefeng.roses.kernel.sys.modular.message.enums.SysMessageExceptionEnum;
+import cn.stylefeng.roses.kernel.sys.modular.message.factory.MessageFactory;
 import cn.stylefeng.roses.kernel.sys.modular.message.mapper.SysMessageMapper;
 import cn.stylefeng.roses.kernel.sys.modular.message.pojo.request.SysMessageRequest;
 import cn.stylefeng.roses.kernel.sys.modular.message.service.SysMessageService;
@@ -18,6 +21,8 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 系统消息业务实现层
@@ -90,6 +95,23 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
         wrapper.eq(SysMessage::getReceiveUserId, LoginContext.me().getLoginUser().getUserId());
         wrapper.set(SysMessage::getReadFlag, ReadFlagEnum.HAVE_READ.getCode());
         this.update(wrapper);
+    }
+
+    @Override
+    public void batchSendMessage(MessageSendDTO messageSendDTO) {
+        // 获取发送到指定哪些用户上，批量创建消息
+        List<SysMessage> batchMessage = MessageFactory.createBatchMessage(messageSendDTO);
+        if (ObjectUtil.isNotEmpty(batchMessage)) {
+            this.getBaseMapper().insertBatchSomeColumn(batchMessage);
+        }
+    }
+
+    @Override
+    public void batchRetractMessage(MessageRetractDTO messageRetractDTO) {
+        LambdaUpdateWrapper<SysMessage> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(SysMessage::getBusinessType, messageRetractDTO.getBusinessType());
+        wrapper.eq(SysMessage::getBusinessId, messageRetractDTO.getBusinessId());
+        this.remove(wrapper);
     }
 
     /**

@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.message.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.sys.api.MessagePublishApi;
 import cn.stylefeng.roses.kernel.sys.modular.message.entity.SysMessage;
 import cn.stylefeng.roses.kernel.sys.modular.message.pojo.request.SysMessageRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -11,7 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author fengshuonan
  * @since 2024/01/12 17:31
  */
-public interface SysMessageService extends IService<SysMessage> {
+public interface SysMessageService extends IService<SysMessage>, MessagePublishApi {
 
     /**
      * 删除系统消息
