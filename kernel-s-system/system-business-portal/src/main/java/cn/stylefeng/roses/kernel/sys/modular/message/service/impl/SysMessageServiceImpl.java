@@ -39,6 +39,16 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
 
     @Override
     public SysMessage detail(SysMessageRequest sysMessageRequest) {
+
+        LambdaQueryWrapper<SysMessage> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysMessage::getReceiveUserId, LoginContext.me().getLoginUser().getUserId());
+        wrapper.eq(SysMessage::getMessageId, sysMessageRequest.getMessageId());
+
+        // 查询关键信息
+        wrapper.select(SysMessage::getMessageId, SysMessage::getMessageTitle, SysMessage::getMessageContent, SysMessage::getPriorityLevel,
+                SysMessage::getMessageSendTime, SysMessage::getMessageType, SysMessage::getMessageUrl, SysMessage::getBusinessType,
+                SysMessage::getBusinessId);
+
         return this.querySysMessage(sysMessageRequest);
     }
 
@@ -48,7 +58,8 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
 
         // 查询关键字段
         wrapper.select(SysMessage::getMessageId, SysMessage::getMessageTitle, SysMessage::getPriorityLevel, SysMessage::getReadFlag,
-                SysMessage::getMessageSendTime);
+                SysMessage::getMessageSendTime, SysMessage::getMessageType, SysMessage::getMessageUrl, SysMessage::getBusinessType,
+                SysMessage::getBusinessId);
 
         Page<SysMessage> pageList = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(pageList);
