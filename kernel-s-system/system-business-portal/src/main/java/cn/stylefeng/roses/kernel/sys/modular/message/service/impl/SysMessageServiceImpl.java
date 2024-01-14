@@ -111,6 +111,12 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
         LambdaUpdateWrapper<SysMessage> wrapper = new LambdaUpdateWrapper<>();
         wrapper.eq(SysMessage::getBusinessType, messageRetractDTO.getBusinessType());
         wrapper.eq(SysMessage::getBusinessId, messageRetractDTO.getBusinessId());
+
+        // 根据选中的人进行撤回
+        if (ObjectUtil.isNotEmpty(messageRetractDTO.getUserIdList())) {
+            wrapper.in(SysMessage::getReceiveUserId, messageRetractDTO.getUserIdList());
+        }
+
         this.remove(wrapper);
     }
 

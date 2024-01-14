@@ -10,7 +10,9 @@ import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.sys.api.MessagePublishApi;
 import cn.stylefeng.roses.kernel.sys.api.SysUserOrgServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.enums.message.MessageBusinessTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.enums.notice.NoticePublishStatusEnum;
+import cn.stylefeng.roses.kernel.sys.api.pojo.message.MessageRetractDTO;
 import cn.stylefeng.roses.kernel.sys.modular.notice.entity.SysNotice;
 import cn.stylefeng.roses.kernel.sys.modular.notice.enums.SysNoticeExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.notice.factory.NoticeFactory;
@@ -140,8 +142,10 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
         this.updateById(sysNotice);
 
         // 2. 调用撤回接口，将已发送的消息全都撤回
-
-
+        MessageRetractDTO messageRetractDTO = new MessageRetractDTO();
+        messageRetractDTO.setBusinessType(MessageBusinessTypeEnum.SYS_NOTICE.getCode());
+        messageRetractDTO.setBusinessId(String.valueOf(sysNotice.getNoticeId()));
+        messagePublishApi.batchRetractMessage(messageRetractDTO);
     }
 
     @Override
