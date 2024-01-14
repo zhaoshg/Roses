@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.message.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
@@ -12,6 +13,7 @@ import cn.stylefeng.roses.kernel.sys.modular.message.mapper.SysMessageMapper;
 import cn.stylefeng.roses.kernel.sys.modular.message.pojo.request.SysMessageRequest;
 import cn.stylefeng.roses.kernel.sys.modular.message.service.SysMessageService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -27,8 +29,11 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
 
     @Override
     public void del(SysMessageRequest sysMessageRequest) {
-        SysMessage sysMessage = this.querySysMessage(sysMessageRequest);
-        this.removeById(sysMessage.getMessageId());
+        // 只能清空自己的消息
+        LambdaUpdateWrapper<SysMessage> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(SysMessage::getReceiveUserId, LoginContext.me().getLoginUser().getUserId());
+        wrapper.eq(SysMessage::getMessageId, sysMessageRequest.getMessageId());
+        this.remove(wrapper);
     }
 
     @Override
@@ -46,6 +51,14 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
 
         Page<SysMessage> pageList = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(pageList);
+    }
+
+    @Override
+    public void deleteAllMyMessage() {
+        // 只能清空自己的消息
+        LambdaUpdateWrapper<SysMessage> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(SysMessage::getReceiveUserId, LoginContext.me().getLoginUser().getUserId());
+        this.remove(wrapper);
     }
 
     /**

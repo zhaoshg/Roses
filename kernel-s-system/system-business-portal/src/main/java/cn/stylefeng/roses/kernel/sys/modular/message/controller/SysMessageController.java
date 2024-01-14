@@ -60,6 +60,7 @@ public class SysMessageController {
      */
     @PostResource(name = "清空我的消息", path = "/sysMessage/cleanMyMessage")
     public ResponseData<?> cleanMyMessage() {
+        sysMessageService.deleteAllMyMessage();
         return new SuccessResponseData<>();
     }
 

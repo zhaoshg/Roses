@@ -41,4 +41,12 @@ public interface SysMessageService extends IService<SysMessage> {
      */
     PageResult<SysMessage> findPage(SysMessageRequest sysMessageRequest);
 
+    /**
+     * 清空我的消息
+     *
+     * @author fengshuonan
+     * @since 2024/1/14 21:23
+     */
+    void deleteAllMyMessage();
+
 }
