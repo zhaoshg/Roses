@@ -34,7 +34,7 @@ public class NoticeFactory {
         messageSendDTO.setPriorityLevel(noticeInfo.getPriorityLevel());
 
         // 业务类型：系统通知
-        messageSendDTO.setBusinessType(MessageBusinessTypeEnum.SYS_NOTICE.getMessage());
+        messageSendDTO.setBusinessType(MessageBusinessTypeEnum.SYS_NOTICE.getCode());
         messageSendDTO.setBusinessId(String.valueOf(noticeInfo.getNoticeId()));
 
         return messageSendDTO;
