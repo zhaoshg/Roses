@@ -2,11 +2,13 @@ package cn.stylefeng.roses.kernel.sys.modular.message.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.sys.api.MessageWebsocketApi;
 import cn.stylefeng.roses.kernel.sys.api.enums.message.ReadFlagEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.message.MessageRetractDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.message.MessageSendDTO;
@@ -50,9 +52,8 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
         wrapper.eq(SysMessage::getMessageId, sysMessageRequest.getMessageId());
 
         // 查询关键信息
-        wrapper.select(SysMessage::getMessageId, SysMessage::getMessageTitle, SysMessage::getMessageContent, SysMessage::getPriorityLevel,
-                SysMessage::getMessageSendTime, SysMessage::getMessageType, SysMessage::getMessageUrl, SysMessage::getBusinessType,
-                SysMessage::getBusinessId);
+        wrapper.select(SysMessage::getMessageId, SysMessage::getMessageTitle, SysMessage::getMessageContent, SysMessage::getPriorityLevel, SysMessage::getMessageSendTime,
+                SysMessage::getMessageType, SysMessage::getMessageUrl, SysMessage::getBusinessType, SysMessage::getBusinessId);
 
         return this.querySysMessage(sysMessageRequest);
     }
@@ -62,9 +63,8 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
         LambdaQueryWrapper<SysMessage> wrapper = createWrapper(sysMessageRequest);
 
         // 查询关键字段
-        wrapper.select(SysMessage::getMessageId, SysMessage::getMessageTitle, SysMessage::getPriorityLevel, SysMessage::getReadFlag,
-                SysMessage::getMessageSendTime, SysMessage::getMessageType, SysMessage::getMessageUrl, SysMessage::getBusinessType,
-                SysMessage::getBusinessId);
+        wrapper.select(SysMessage::getMessageId, SysMessage::getMessageTitle, SysMessage::getPriorityLevel, SysMessage::getReadFlag, SysMessage::getMessageSendTime,
+                SysMessage::getMessageType, SysMessage::getMessageUrl, SysMessage::getBusinessType, SysMessage::getBusinessId);
 
         Page<SysMessage> pageList = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(pageList);
@@ -104,6 +104,13 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
         if (ObjectUtil.isNotEmpty(batchMessage)) {
             this.getBaseMapper().insertBatchSomeColumn(batchMessage);
         }
+
+        try {
+            MessageWebsocketApi messageWebsocketApi = SpringUtil.getBean(MessageWebsocketApi.class);
+            messageWebsocketApi.wsSendMessage(messageSendDTO);
+        } catch (Exception e) {
+        }
+
     }
 
     @Override
