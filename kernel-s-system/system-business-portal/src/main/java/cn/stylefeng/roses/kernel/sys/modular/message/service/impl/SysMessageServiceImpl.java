@@ -52,7 +52,8 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
         wrapper.eq(SysMessage::getMessageId, sysMessageRequest.getMessageId());
 
         // 查询关键信息
-        wrapper.select(SysMessage::getMessageId, SysMessage::getMessageTitle, SysMessage::getMessageContent, SysMessage::getPriorityLevel, SysMessage::getMessageSendTime,
+        wrapper.select(SysMessage::getMessageId, SysMessage::getMessageTitle, SysMessage::getMessageContent, SysMessage::getPriorityLevel,
+                SysMessage::getMessageSendTime,
                 SysMessage::getMessageType, SysMessage::getMessageUrl, SysMessage::getBusinessType, SysMessage::getBusinessId);
 
         return this.querySysMessage(sysMessageRequest);
@@ -63,7 +64,8 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
         LambdaQueryWrapper<SysMessage> wrapper = createWrapper(sysMessageRequest);
 
         // 查询关键字段
-        wrapper.select(SysMessage::getMessageId, SysMessage::getMessageTitle, SysMessage::getPriorityLevel, SysMessage::getReadFlag, SysMessage::getMessageSendTime,
+        wrapper.select(SysMessage::getMessageId, SysMessage::getMessageTitle, SysMessage::getPriorityLevel, SysMessage::getReadFlag,
+                SysMessage::getMessageSendTime,
                 SysMessage::getMessageType, SysMessage::getMessageUrl, SysMessage::getBusinessType, SysMessage::getBusinessId);
 
         Page<SysMessage> pageList = this.page(PageFactory.defaultPage(), wrapper);
@@ -167,6 +169,9 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
         if (ObjectUtil.isNotEmpty(readFlag)) {
             queryWrapper.eq(SysMessage::getReadFlag, readFlag);
         }
+
+        // 只查询自己的
+        queryWrapper.eq(SysMessage::getReceiveUserId, LoginContext.me().getLoginUser().getUserId());
 
         return queryWrapper;
     }
