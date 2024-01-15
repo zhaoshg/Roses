@@ -125,7 +125,7 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
         this.updateById(sysNotice);
 
         // 2. 获取发送对象，全部转化为用户id
-        NoticeUserScope noticeUserScope = sysNoticeRequest.getNoticeUserScope();
+        NoticeUserScope noticeUserScope = sysNotice.getNoticeUserScope();
         Set<Long> noticeUserList = this.getNoticeUserList(noticeUserScope);
 
         // 3. 发送通知给接收人
