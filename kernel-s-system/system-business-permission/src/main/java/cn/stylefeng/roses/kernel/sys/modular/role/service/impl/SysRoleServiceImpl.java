@@ -12,12 +12,12 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
-import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.enums.permission.DataScopeTypeEnum;
+import cn.stylefeng.roses.kernel.sys.api.enums.role.RoleTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.role.SysRoleDTO;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
@@ -78,7 +78,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         SysRole sysRole = this.querySysRole(sysRoleRequest);
 
         // 系统角色不能被删除
-        if (YesOrNotEnum.Y.getCode().equals(sysRole.getRoleSystemFlag())) {
+        if (RoleTypeEnum.SYSTEM_ROLE.getCode().equals(sysRole.getRoleType())) {
             throw new ServiceException(SysRoleExceptionEnum.SYSTEM_ROLE_CANT_DELETE);
         }
 
@@ -104,7 +104,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         // 校验被删除的角色中是否有管理员角色
         LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(SysRole::getRoleId, sysRoleRequest.getRoleIdList());
-        queryWrapper.eq(SysRole::getRoleSystemFlag, YesOrNotEnum.Y.getCode());
+        queryWrapper.eq(SysRole::getRoleType, RoleTypeEnum.SYSTEM_ROLE.getCode());
         long haveSystemFlagCount = this.count(queryWrapper);
         if (haveSystemFlagCount > 0) {
             throw new ServiceException(SysRoleExceptionEnum.SYSTEM_ROLE_CANT_DELETE);

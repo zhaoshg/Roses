@@ -69,11 +69,18 @@ public class SysRole extends BaseExpandFieldEntity {
     private String remark;
 
     /**
-     * 是否是系统角色：Y-是，N-否。系统角色不能删除
+     * 角色类型：10-系统角色，20-公司角色
      */
-    @TableField("role_system_flag")
-    @ChineseDescription("是否是系统角色：Y-是，N-否。系统角色不能删除")
-    private String roleSystemFlag;
+    @TableField("role_type")
+    @ChineseDescription("角色类型：10-系统角色，20-公司角色")
+    private Integer roleType;
+
+    /**
+     * 角色所属公司id，当角色类型为20时传此值
+     */
+    @TableField("role_company_id")
+    @ChineseDescription("角色所属公司id，当角色类型为20时传此值")
+    private Long roleCompanyId;
 
     /**
      * 租户id
