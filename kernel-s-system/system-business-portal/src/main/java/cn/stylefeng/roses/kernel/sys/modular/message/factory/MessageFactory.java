@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.sys.api.pojo.message.MessageSendDTO;
 import cn.stylefeng.roses.kernel.sys.modular.message.entity.SysMessage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -48,6 +49,7 @@ public class MessageFactory {
             sysMessage.setBusinessId(messageSendDTO.getBusinessId());
             sysMessage.setBusinessType(messageSendDTO.getBusinessType());
             sysMessage.setReadFlag(ReadFlagEnum.NO_READ.getCode());
+            sysMessage.setMessageSendTime(new Date());
             sysMessages.add(sysMessage);
         }
 
