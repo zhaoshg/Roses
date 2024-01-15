@@ -173,6 +173,10 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
         // 只查询自己的
         queryWrapper.eq(SysMessage::getReceiveUserId, LoginContext.me().getLoginUser().getUserId());
 
+        // 未读的放在最上边
+        queryWrapper.orderByAsc(SysMessage::getReadFlag);
+        queryWrapper.orderByDesc(SysMessage::getMessageSendTime);
+
         return queryWrapper;
     }
 
