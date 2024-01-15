@@ -33,7 +33,7 @@ public class DefaultStrategyImpl implements ConfigInitStrategyApi {
     public List<ConfigInitItem> getInitConfigs() {
         ArrayList<ConfigInitItem> configInitItems = new ArrayList<>();
         configInitItems.add(new ConfigInitItem("服务部署的访问地址", "SYS_SERVER_DEPLOY_HOST", "http://localhost:8080", "一般用在拼接文件的访问地址，注意，一定要配置连到后台的地址"));
-        configInitItems.add(new ConfigInitItem("websocket的ws-url", "WEB_SOCKET_WS_URL", "ws://localhost:8080/webSocket/{token}", "websocket模块的连接url，用在消息通知模块，注意，一定要配置连到后台的地址"));
+        configInitItems.add(new ConfigInitItem("websocket的ws-url", "WEB_SOCKET_WS_URL", "ws://localhost:8080/ws/message/{token}", "websocket模块的连接url，用在消息通知模块，注意，一定要配置连到后台的地址"));
         configInitItems.add(new ConfigInitItem("auth认证用的jwt秘钥", "SYS_AUTH_JWT_SECRET", RandomUtil.randomString(30), "用于校验登录token，已随机生成一个30位密钥，请放心使用"));
         configInitItems.add(new ConfigInitItem("Druid控制台账号", "SYS_DRUID_ACCOUNT", "admin", "Druid控制台账号"));
         configInitItems.add(new ConfigInitItem("Druid控制台账号密码", "SYS_DRUID_PASSWORD", RandomUtil.randomString(20), "Druid控制台账号密码，已随机生成一个20位密钥，请放心使用"));
