@@ -234,7 +234,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         LambdaQueryWrapper<SysRole> wrapper = this.createWrapper(sysRoleRequest);
 
         // 只查询id和名称
-        wrapper.select(SysRole::getRoleId, SysRole::getRoleName);
+        wrapper.select(SysRole::getRoleId, SysRole::getRoleName, SysRole::getRoleType);
 
         // 填写角色的权限信息
         this.filterRolePermission(wrapper, sysRoleRequest);
@@ -404,18 +404,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             return;
         }
 
-        // 非超级管理员，检验角色类型是否为公司类型角色
-        if (!RoleTypeEnum.COMPANY_ROLE.getCode().equals(sysRoleRequest.getRoleType())) {
-            throw new ServiceException(SysRoleExceptionEnum.ROLE_TYPE_QUERY_ERROR);
-        }
-
-        // 非超级管理员，只能查询自己公司的角色
-        if (sysRoleRequest.getRoleCompanyId() == null || !sysRoleRequest.getRoleCompanyId().equals(LoginContext.me().getCurrentUserCompanyId())) {
-            throw new ServiceException(SysRoleExceptionEnum.ROLE_COMPANY_QUERY_ERROR);
-        }
-
-        wrapper.eq(SysRole::getRoleType, sysRoleRequest.getRoleType());
-        wrapper.eq(SysRole::getRoleCompanyId, sysRoleRequest.getRoleCompanyId());
+        // 非超级管理员，直接拼好，角色类型和角色的公司id，只能查本公司的
+        wrapper.eq(SysRole::getRoleType, RoleTypeEnum.COMPANY_ROLE.getCode());
+        wrapper.eq(SysRole::getRoleCompanyId, LoginContext.me().getCurrentUserCompanyId());
     }
 
     /**

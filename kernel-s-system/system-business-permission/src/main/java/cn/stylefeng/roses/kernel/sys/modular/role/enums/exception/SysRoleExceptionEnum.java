@@ -41,17 +41,7 @@ public enum SysRoleExceptionEnum implements AbstractExceptionEnum {
     /**
      * 非管理员，不能添加其他公司角色
      */
-    ROLE_COMPANY_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10006", "非管理员，不能添加其他公司角色"),
-
-    /**
-     * 非管理员，不能查询系统角色
-     */
-    ROLE_TYPE_QUERY_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10007", "非管理员，不能查询系统角色"),
-
-    /**
-     * 非管理员，不能查询其他公司角色
-     */
-    ROLE_COMPANY_QUERY_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10008", "非管理员，不能查询其他公司角色");
+    ROLE_COMPANY_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10006", "非管理员，不能添加其他公司角色");
 
     /**
      * 错误编码
