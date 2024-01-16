@@ -83,6 +83,7 @@ public class MessageFactory {
             dto.setPriorityLevel(sysMessage.getPriorityLevel());
             dto.setBusinessId(sysMessage.getBusinessId());
             dto.setBusinessType(sysMessage.getBusinessType());
+            dto.setMessageSendTime(sysMessage.getMessageSendTime());
             messageSendToSocketDTOS.add(dto);
         }
 
