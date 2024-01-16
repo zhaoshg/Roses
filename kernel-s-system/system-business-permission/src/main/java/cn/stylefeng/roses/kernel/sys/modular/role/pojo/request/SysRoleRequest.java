@@ -69,11 +69,17 @@ public class SysRoleRequest extends BaseRequest {
     private String remark;
 
     /**
-     * 是否是系统角色：Y-是，N-否。系统角色不能删除
+     * 角色类型：10-系统角色，20-公司角色
      */
-    @NotBlank(message = "是否是系统角色：Y-是，N-否。系统角色不能删除不能为空", groups = {add.class, edit.class})
-    @ChineseDescription("是否是系统角色：Y-是，N-否。系统角色不能删除")
-    private String roleSystemFlag;
+    @NotNull(message = "角色类型不能为空", groups = {add.class, edit.class})
+    @ChineseDescription("角色类型：10-系统角色，20-公司角色")
+    private Integer roleType;
+
+    /**
+     * 角色所属公司id，当角色类型为20时传此值
+     */
+    @ChineseDescription("角色所属公司id，当角色类型为20时传此值")
+    private Long roleCompanyId;
 
     /**
      * 角色id集合，用在批量删除
