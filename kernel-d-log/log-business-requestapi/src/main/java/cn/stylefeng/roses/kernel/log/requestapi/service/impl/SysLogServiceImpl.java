@@ -87,7 +87,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         LambdaQueryWrapper<SysLog> wrapper = createWrapper(logManagerRequest);
 
         // 只查询需要字段
-        wrapper.select(SysLog::getLogId, SysLog::getRequestUrl, SysLog::getLogContent, SysLog::getUserId, SysLog::getAppName,
+        wrapper.select(SysLog::getLogId, SysLog::getRequestUrl, SysLog::getLogContent, SysLog::getUserId, SysLog::getUserCurrentOrgId, SysLog::getAppName,
                 BaseEntity::getCreateTime);
 
         // 转化实体

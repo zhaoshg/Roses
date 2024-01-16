@@ -100,6 +100,14 @@ public class LogRecordDTO {
     private Long userId;
 
     /**
+     * 用户请求时候的登录机构id
+     * <p>
+     * 如果是http请求，并且用户已经登录，可以带这项
+     */
+    @ChineseDescription("用户请求时候的登录机构id")
+    private Long userCurrentOrgId;
+
+    /**
      * 客户端的ip
      * <p>
      * 如果是http请求，可以带这项

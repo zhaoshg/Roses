@@ -175,7 +175,7 @@ public class RequestApiLogRecordAop implements Ordered {
         // 填充用户登录信息
         LoginUser loginUserNullable = LoginContext.me().getLoginUserNullable();
         if (loginUserNullable != null) {
-            AuthedLogAppender.appendAuthedHttpLog(logRecordDTO, loginUserNullable.getToken(), loginUserNullable.getUserId());
+            AuthedLogAppender.appendAuthedHttpLog(logRecordDTO, loginUserNullable.getToken(), loginUserNullable.getUserId(), loginUserNullable.getCurrentOrgId());
         }
 
         // 填充http接口请求信息

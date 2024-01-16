@@ -42,7 +42,7 @@ public class AuthedLogAppender {
      * @author fengshuonan
      * @since 2020/10/27 18:22
      */
-    public static void appendAuthedHttpLog(LogRecordDTO logRecordDTO, String token, Long userId) {
+    public static void appendAuthedHttpLog(LogRecordDTO logRecordDTO, String token, Long userId, Long orgId) {
 
         // 填充当前登录的用户信息
         try {
@@ -51,6 +51,10 @@ public class AuthedLogAppender {
 
             // 填充登录用户的userId
             logRecordDTO.setUserId(userId);
+
+            // 填充用户登录的机构id
+            logRecordDTO.setUserCurrentOrgId(orgId);
+
         } catch (Exception ignored) {
             // 获取不到用户登录信息，就不填充
         }

@@ -98,6 +98,12 @@ public class SysLog extends BaseEntity {
     private Long userId;
 
     /**
+     * 用户请求时候的登录机构id
+     */
+    @TableField(value = "user_current_org_id")
+    private Long userCurrentOrgId;
+
+    /**
      * 请求http方法
      */
     @TableField(value = "http_method")
