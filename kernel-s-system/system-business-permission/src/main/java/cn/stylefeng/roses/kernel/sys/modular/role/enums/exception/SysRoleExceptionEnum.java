@@ -29,9 +29,9 @@ public enum SysRoleExceptionEnum implements AbstractExceptionEnum {
     SYSTEM_ROLE_CANT_DELETE(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10003", "系统角色不能被删除"),
 
     /**
-     * 非管理员用户，不能删除其他角色
+     * 非管理员，只能删除自己公司的角色
      */
-    DEL_PERMISSION_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10004", "非管理员用户，不能删除其他角色");
+    DEL_PERMISSION_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10004", "非管理员，只能删除自己公司的角色");
 
     /**
      * 错误编码

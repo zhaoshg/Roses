@@ -82,9 +82,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             throw new ServiceException(SysRoleExceptionEnum.SYSTEM_ROLE_CANT_DELETE);
         }
 
-        // 非管理员，只能删除自己的角色
+        // 非管理员，只能删除自己公司的角色
         if (!LoginContext.me().getSuperAdminFlag()) {
-            if (!sysRole.getCreateUser().equals(LoginContext.me().getLoginUser().getUserId())) {
+            Long currentUserCompanyId = LoginContext.me().getCurrentUserCompanyId();
+            if (currentUserCompanyId == null || !currentUserCompanyId.equals(sysRole.getRoleCompanyId())) {
                 throw new ServiceException(SysRoleExceptionEnum.DEL_PERMISSION_ERROR);
             }
         }
@@ -110,11 +111,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             throw new ServiceException(SysRoleExceptionEnum.SYSTEM_ROLE_CANT_DELETE);
         }
 
-        // 如果当前用户是非管理员，则只能删除自己创建的角色
+        // 如果当前用户是非管理员，则只能删除自己公司的角色
         if (!LoginContext.me().getSuperAdminFlag()) {
             LambdaQueryWrapper<SysRole> tempWrapper = new LambdaQueryWrapper<>();
             tempWrapper.in(SysRole::getRoleId, sysRoleRequest.getRoleIdList());
-            tempWrapper.ne(BaseEntity::getCreateUser, LoginContext.me().getLoginUser().getUserId());
+            tempWrapper.ne(SysRole::getRoleCompanyId, LoginContext.me().getCurrentUserCompanyId());
             long notMeCreateCount = this.count(tempWrapper);
             if (notMeCreateCount > 0) {
                 throw new ServiceException(SysRoleExceptionEnum.DEL_PERMISSION_ERROR);
@@ -158,8 +159,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         LambdaQueryWrapper<SysRole> wrapper = createWrapper(sysRoleRequest);
 
         // 只查询需要的字段
-        wrapper.select(SysRole::getRoleName, SysRole::getRoleCode, SysRole::getRoleSort, SysRole::getRoleId, BaseEntity::getCreateTime, SysRole::getRoleType,
-                SysRole::getRoleCompanyId);
+        wrapper.select(SysRole::getRoleName, SysRole::getRoleCode, SysRole::getRoleSort, SysRole::getRoleId, BaseEntity::getCreateTime, SysRole::getRoleType, SysRole::getRoleCompanyId);
 
         // 非管理员用户只能查看自己创建的角色
         this.filterRolePermission(wrapper);
