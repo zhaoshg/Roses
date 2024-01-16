@@ -26,6 +26,12 @@ public class IndexUserOrgInfo {
     private Long orgId;
 
     /**
+     * 组织机构所属公司id
+     */
+    @ChineseDescription("组织机构所属公司id")
+    private Long companyId;
+
+    /**
      * 职务id，组织机构下对应的职务id
      */
     @ChineseDescription("职务id，组织机构下对应的职务id")

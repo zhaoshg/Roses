@@ -211,6 +211,8 @@ public class UserIndexInfoService {
                 indexUserOrgInfo.setOrgId(userOrgItem.getCompanyId());
             }
 
+            // 设置公司id
+            indexUserOrgInfo.setCompanyId(userOrgItem.getCompanyId());
             indexUserOrgInfo.setCompanyName(userOrgItem.getCompanyName());
             indexUserOrgInfo.setDeptName(userOrgItem.getDeptName());
 
