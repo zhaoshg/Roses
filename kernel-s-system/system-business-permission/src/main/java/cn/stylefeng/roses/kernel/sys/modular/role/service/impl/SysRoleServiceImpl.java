@@ -13,7 +13,6 @@ import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
-import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.enums.permission.DataScopeTypeEnum;
@@ -49,9 +48,6 @@ import java.util.Set;
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
 
     @Resource
-    private SysUserRoleServiceApi sysUserRoleServiceApi;
-
-    @Resource
     private SysRoleMenuOptionsService sysRoleMenuOptionsService;
 
     @Resource
@@ -59,6 +55,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     public void add(SysRoleRequest sysRoleRequest) {
+
+        // 权限检查，针对非管理员
+        this.rolePermissionValidate(sysRoleRequest);
+
         SysRole sysRole = new SysRole();
         BeanUtil.copyProperties(sysRoleRequest, sysRole);
 
@@ -132,6 +132,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     public void edit(SysRoleRequest sysRoleRequest) {
+
+        // 权限检查，针对非管理员
+        this.rolePermissionValidate(sysRoleRequest);
+
         SysRole sysRole = this.querySysRole(sysRoleRequest);
 
         // 添加日志
@@ -162,7 +166,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         wrapper.select(SysRole::getRoleName, SysRole::getRoleCode, SysRole::getRoleSort, SysRole::getRoleId, BaseEntity::getCreateTime, SysRole::getRoleType, SysRole::getRoleCompanyId);
 
         // 非管理员用户只能查看自己创建的角色
-        this.filterRolePermission(wrapper);
+        this.filterRolePermission(wrapper, sysRoleRequest);
 
         Page<SysRole> sysRolePage = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(sysRolePage);
@@ -233,7 +237,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         wrapper.select(SysRole::getRoleId, SysRole::getRoleName);
 
         // 填写角色的权限信息
-        this.filterRolePermission(wrapper);
+        this.filterRolePermission(wrapper, sysRoleRequest);
 
         return this.list(wrapper);
     }
@@ -383,11 +387,60 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
      * @author fengshuonan
      * @since 2023/10/9 10:44
      */
-    private void filterRolePermission(LambdaQueryWrapper<SysRole> wrapper) {
-        if (!LoginContext.me().getSuperAdminFlag()) {
-            Long userId = LoginContext.me().getLoginUser().getUserId();
-            wrapper.eq(SysRole::getCreateUser, userId).or().in(SysRole::getRoleId, sysUserRoleServiceApi.getUserRoleIdList(userId));
+    private void filterRolePermission(LambdaQueryWrapper<SysRole> wrapper, SysRoleRequest sysRoleRequest) {
+
+        // 超级管理员，直接略过
+        boolean superAdminFlag = LoginContext.me().getSuperAdminFlag();
+        if (superAdminFlag) {
+            // 根据角色类型填充参数
+            if (ObjectUtil.isNotEmpty(sysRoleRequest.getRoleType())) {
+                wrapper.eq(SysRole::getRoleType, sysRoleRequest.getRoleType());
+            }
+
+            // 根据角色的所属公司id填充参数
+            if (ObjectUtil.isNotEmpty(sysRoleRequest.getRoleCompanyId())) {
+                wrapper.eq(SysRole::getRoleCompanyId, sysRoleRequest.getRoleCompanyId());
+            }
+            return;
         }
+
+        // 非超级管理员，检验角色类型是否为公司类型角色
+        if (!RoleTypeEnum.COMPANY_ROLE.getCode().equals(sysRoleRequest.getRoleType())) {
+            throw new ServiceException(SysRoleExceptionEnum.ROLE_TYPE_QUERY_ERROR);
+        }
+
+        // 非超级管理员，只能查询自己公司的角色
+        if (sysRoleRequest.getRoleCompanyId() == null || !sysRoleRequest.getRoleCompanyId().equals(LoginContext.me().getCurrentUserCompanyId())) {
+            throw new ServiceException(SysRoleExceptionEnum.ROLE_COMPANY_QUERY_ERROR);
+        }
+
+        wrapper.eq(SysRole::getRoleType, sysRoleRequest.getRoleType());
+        wrapper.eq(SysRole::getRoleCompanyId, sysRoleRequest.getRoleCompanyId());
+    }
+
+    /**
+     * 角色的类型校验，非系统管理员，只能添加公司级别的角色，并且只能添加当前登录本公司的角色
+     *
+     * @author fengshuonan
+     * @since 2024-01-16 17:19
+     */
+    private void rolePermissionValidate(SysRoleRequest sysRoleRequest) {
+
+        boolean superAdminFlag = LoginContext.me().getSuperAdminFlag();
+        if (superAdminFlag) {
+            return;
+        }
+
+        // 非管理员，只能添加公司级别的角色
+        if (!RoleTypeEnum.COMPANY_ROLE.getCode().equals(sysRoleRequest.getRoleType())) {
+            throw new ServiceException(SysRoleExceptionEnum.ROLE_TYPE_ERROR);
+        }
+
+        // 非管理员，只能添加本公司的角色
+        if (!LoginContext.me().getCurrentUserCompanyId().equals(sysRoleRequest.getRoleCompanyId())) {
+            throw new ServiceException(SysRoleExceptionEnum.ROLE_COMPANY_ERROR);
+        }
+
     }
 
 }
