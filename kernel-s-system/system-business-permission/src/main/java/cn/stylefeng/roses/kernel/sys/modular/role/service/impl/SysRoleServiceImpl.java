@@ -218,10 +218,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         // 按数据范围降序排列，50-全部数据最大
         sysRoleLambdaQueryWrapper.orderByDesc(SysRole::getDataScopeType);
 
-        SysRole sysRole = this.getOne(sysRoleLambdaQueryWrapper, false);
-        if (sysRole != null) {
-            if (sysRole.getDataScopeType() != null) {
-                return DataScopeTypeEnum.codeToEnum(sysRole.getDataScopeType());
+        List<SysRole> sysRoleList = this.list(sysRoleLambdaQueryWrapper);
+        if (ObjectUtil.isNotEmpty(sysRoleList)) {
+            Integer dataScopeType = sysRoleList.get(0).getDataScopeType();
+            if (dataScopeType != null) {
+                return DataScopeTypeEnum.codeToEnum(dataScopeType);
             }
         }
 
