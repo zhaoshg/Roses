@@ -28,7 +28,7 @@ public class NoticeFactory {
         messageSendDTO.setSendUserId(noticeInfo.getCreateUser());
         messageSendDTO.setMessageTitle(noticeInfo.getNoticeTitle());
         messageSendDTO.setMessageContent(noticeInfo.getNoticeContent());
-        messageSendDTO.setMessageType(MessageTypeEnum.NORMAL.getMessage());
+        messageSendDTO.setMessageType(MessageTypeEnum.NORMAL.getCode());
 
         // 优先级
         messageSendDTO.setPriorityLevel(noticeInfo.getPriorityLevel());
