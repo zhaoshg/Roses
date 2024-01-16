@@ -11,6 +11,8 @@ import cn.stylefeng.roses.kernel.sys.api.SysRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
+import cn.stylefeng.roses.kernel.sys.api.enums.role.RoleTypeEnum;
+import cn.stylefeng.roses.kernel.sys.api.pojo.role.SysRoleDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserRoleMapper;
@@ -24,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -63,8 +66,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         }
 
         // 清空已有的用户角色绑定
-        LambdaQueryWrapper<SysUserRole> wrapper = this.createWrapper(sysUserRoleRequest);
-        this.remove(wrapper);
+        this.removeRoleAlreadyBind(sysUserRoleRequest);
 
         // 重新绑定用户角色信息
         Set<Long> roleIdList = sysUserRoleRequest.getRoleIdList();
@@ -157,9 +159,8 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
     @Override
     public List<Long> findUserIdsByRoleId(Long roleId) {
-        SysUserRoleRequest userRoleRequest = new SysUserRoleRequest();
-        userRoleRequest.setRoleId(roleId);
-        LambdaQueryWrapper<SysUserRole> queryWrapper = this.createWrapper(userRoleRequest);
+        LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserRole::getRoleId, roleId);
         queryWrapper.select(SysUserRole::getUserId);
         List<SysUserRole> list = this.list(queryWrapper);
         return list.stream().map(SysUserRole::getUserId).collect(Collectors.toList());
@@ -184,21 +185,56 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     }
 
     /**
-     * 创建查询wrapper
+     * 清空用户角色的绑定
      *
      * @author fengshuonan
-     * @date 2023/06/10 21:26
+     * @since 2024/1/17 0:24
      */
-    private LambdaQueryWrapper<SysUserRole> createWrapper(SysUserRoleRequest sysUserRoleRequest) {
+    private void removeRoleAlreadyBind(SysUserRoleRequest sysUserRoleRequest) {
+
+        // 1. 获取系统中的所有角色，包括系统角色和当前公司角色
+        List<SysRoleDTO> roleResults = sysRoleServiceApi.getSystemRoleAndCurrentCompanyRole(
+                LoginContext.me().getCurrentUserCompanyId());
+        if (ObjectUtil.isEmpty(roleResults)) {
+            return;
+        }
+
+        // 2. 所有系统角色id集合
+        Set<Long> systemRoleIdList = roleResults.stream().filter(i -> i.getRoleType().equals(RoleTypeEnum.SYSTEM_ROLE.getCode()))
+                .map(SysRoleDTO::getRoleId)
+                .collect(Collectors.toSet());
+
+        // 3. 所有当前公司角色id集合
+        Set<Long> currentCompanyRoleIdList = roleResults.stream()
+                .filter(i -> i.getRoleType().equals(RoleTypeEnum.COMPANY_ROLE.getCode()))
+                .map(SysRoleDTO::getRoleId)
+                .collect(Collectors.toSet());
+
         LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();
 
-        Long userId = sysUserRoleRequest.getUserId();
-        queryWrapper.eq(ObjectUtil.isNotNull(userId), SysUserRole::getUserId, userId);
+        // 2. 当前如果是超级管理员在操作，清空用户的系统角色和当前公司角色（因为超级管理员的绑定角色列表，可以看到系统角色和当前公司角色）
+        boolean superAdminFlag = LoginContext.me().getSuperAdminFlag();
+        if (superAdminFlag) {
 
-        Long roleId = sysUserRoleRequest.getRoleId();
-        queryWrapper.eq(ObjectUtil.isNotNull(roleId), SysUserRole::getRoleId, roleId);
+            Set<Long> paramsRoleIdList = new HashSet<>(systemRoleIdList);
+            if (ObjectUtil.isNotEmpty(currentCompanyRoleIdList)) {
+                paramsRoleIdList.addAll(currentCompanyRoleIdList);
+            }
 
-        return queryWrapper;
+            queryWrapper.eq(SysUserRole::getUserId, sysUserRoleRequest.getUserId());
+            queryWrapper.in(SysUserRole::getRoleId, paramsRoleIdList);
+            this.remove(queryWrapper);
+        }
+
+        // 3. 如果当前不是超级管理员，则只能清空当前公司的角色id集合
+        else {
+            if (ObjectUtil.isEmpty(currentCompanyRoleIdList)) {
+                return;
+            }
+            queryWrapper.eq(SysUserRole::getUserId, sysUserRoleRequest.getUserId());
+            queryWrapper.in(SysUserRole::getRoleId, currentCompanyRoleIdList);
+            this.remove(queryWrapper);
+        }
     }
 
 }

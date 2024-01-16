@@ -54,4 +54,10 @@ public class SysRoleDTO {
     @ChineseDescription("编码")
     private String roleCode;
 
+    /**
+     * 角色类型：10-系统角色，20-公司角色
+     */
+    @ChineseDescription("角色类型：10-系统角色，20-公司角色")
+    private Integer roleType;
+
 }

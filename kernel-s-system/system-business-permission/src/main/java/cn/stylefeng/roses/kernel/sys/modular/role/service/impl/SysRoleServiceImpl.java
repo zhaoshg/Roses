@@ -163,7 +163,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         LambdaQueryWrapper<SysRole> wrapper = createWrapper(sysRoleRequest);
 
         // 只查询需要的字段
-        wrapper.select(SysRole::getRoleName, SysRole::getRoleCode, SysRole::getRoleSort, SysRole::getRoleId, BaseEntity::getCreateTime, SysRole::getRoleType, SysRole::getRoleCompanyId);
+        wrapper.select(SysRole::getRoleName, SysRole::getRoleCode, SysRole::getRoleSort, SysRole::getRoleId, BaseEntity::getCreateTime,
+                SysRole::getRoleType, SysRole::getRoleCompanyId);
 
         // 非管理员用户只能查看自己创建的角色
         this.filterRolePermission(wrapper, sysRoleRequest);
@@ -326,6 +327,21 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         LambdaQueryWrapper<SysRole> sysRoleLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysRoleLambdaQueryWrapper.in(SysRole::getRoleId, roleIds);
         sysRoleLambdaQueryWrapper.select(SysRole::getRoleName, SysRole::getRoleId, SysRole::getRoleCode);
+        List<SysRole> sysRoleList = this.list(sysRoleLambdaQueryWrapper);
+
+        if (ObjectUtil.isEmpty(sysRoleList)) {
+            return new ArrayList<>();
+        }
+
+        return BeanUtil.copyToList(sysRoleList, SysRoleDTO.class, CopyOptions.create().ignoreError());
+    }
+
+    @Override
+    public List<SysRoleDTO> getSystemRoleAndCurrentCompanyRole(Long companyId) {
+        LambdaQueryWrapper<SysRole> sysRoleLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleLambdaQueryWrapper.eq(SysRole::getRoleType, RoleTypeEnum.SYSTEM_ROLE.getCode());
+        sysRoleLambdaQueryWrapper.or(i -> i.eq(SysRole::getRoleCompanyId, companyId));
+        sysRoleLambdaQueryWrapper.select(SysRole::getRoleName, SysRole::getRoleId, SysRole::getRoleCode, SysRole::getRoleType);
         List<SysRole> sysRoleList = this.list(sysRoleLambdaQueryWrapper);
 
         if (ObjectUtil.isEmpty(sysRoleList)) {
