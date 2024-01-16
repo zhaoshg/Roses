@@ -2,6 +2,8 @@ package cn.stylefeng.roses.kernel.sys.modular.role.entity;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseExpandFieldEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
+import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
+import cn.stylefeng.roses.kernel.sys.api.format.OrgNameFormatProcess;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -80,6 +82,7 @@ public class SysRole extends BaseExpandFieldEntity {
      */
     @TableField("role_company_id")
     @ChineseDescription("角色所属公司id，当角色类型为20时传此值")
+    @SimpleFieldFormat(processClass = OrgNameFormatProcess.class)
     private Long roleCompanyId;
 
     /**
