@@ -63,7 +63,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         BeanUtil.copyProperties(sysRoleRequest, sysRole);
 
         // 设置角色默认的数据范围，默认查看全部
-        sysRole.setDataScopeType(DataScopeTypeEnum.ALL.getCode());
+        sysRole.setDataScopeType(DataScopeTypeEnum.DEPT_WITH_CHILD.getCode());
 
         this.save(sysRole);
 
