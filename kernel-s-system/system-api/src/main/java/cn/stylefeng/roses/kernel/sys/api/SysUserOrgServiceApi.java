@@ -26,10 +26,12 @@ public interface SysUserOrgServiceApi {
     /**
      * 获取用户绑定的组织机构列表，主要任职部门和次要任职部门都返回
      *
+     * @param userId      用户id
+     * @param getTotalOrg 是否获取用户所属的所有组织机构，true-获取所有，false-只获取启用的部门
      * @author fengshuonan
      * @since 2023/6/11 21:08
      */
-    List<UserOrgDTO> getUserOrgList(Long userId);
+    List<UserOrgDTO> getUserOrgList(Long userId, boolean getTotalOrg);
 
     /**
      * 获取某个机构下的所有用户id集合

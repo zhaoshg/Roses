@@ -214,7 +214,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUser = this.getOne(sysUserLambdaQueryWrapper, false);
 
         // 获取用户的组织机构信息
-        List<UserOrgDTO> userOrgList = sysUserOrgService.getUserOrgList(sysUser.getUserId());
+        List<UserOrgDTO> userOrgList = sysUserOrgService.getUserOrgList(sysUser.getUserId(), true);
         sysUser.setUserOrgDTOList(userOrgList);
 
         // 获取用户的角色信息

@@ -128,8 +128,7 @@ public class UserIndexInfoService {
             loginUser.setCurrentOrgId(updateUserOrgAppRequest.getNewOrgId());
 
             // 设置用户在当前机构下的职位id
-            Long positionId = sysUserOrgServiceApi.getUserOrgPositionId(loginUser.getUserId(),
-                    updateUserOrgAppRequest.getNewOrgId());
+            Long positionId = sysUserOrgServiceApi.getUserOrgPositionId(loginUser.getUserId(), updateUserOrgAppRequest.getNewOrgId());
             loginUser.setCurrentPositionId(positionId);
         }
 
@@ -176,7 +175,7 @@ public class UserIndexInfoService {
         Long currentOrgId = loginUser.getCurrentOrgId();
 
         // 获取用户的所有组织机构集合
-        List<UserOrgDTO> userOrgList = sysUserOrgServiceApi.getUserOrgList(loginUser.getUserId());
+        List<UserOrgDTO> userOrgList = sysUserOrgServiceApi.getUserOrgList(loginUser.getUserId(), false);
 
         // 查询到机构为空，直接返回
         if (ObjectUtil.isEmpty(userOrgList)) {

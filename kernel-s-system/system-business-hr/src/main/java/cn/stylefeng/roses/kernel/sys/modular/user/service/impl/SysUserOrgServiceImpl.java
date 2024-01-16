@@ -159,7 +159,7 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
     }
 
     @Override
-    public List<UserOrgDTO> getUserOrgList(Long userId) {
+    public List<UserOrgDTO> getUserOrgList(Long userId, boolean getTotalOrg) {
 
         if (userId == null) {
             return null;
@@ -168,7 +168,9 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         // 获取用户所有的部门信息（只查询用户启用的部门）
         LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysUserOrg::getUserId, userId);
-        queryWrapper.eq(SysUserOrg::getStatusFlag, StatusEnum.ENABLE.getCode());
+        if (!getTotalOrg) {
+            queryWrapper.eq(SysUserOrg::getStatusFlag, StatusEnum.ENABLE.getCode());
+        }
         queryWrapper.orderByDesc(SysUserOrg::getMainFlag);
         List<SysUserOrg> sysUserOrgList = this.list(queryWrapper);
 
