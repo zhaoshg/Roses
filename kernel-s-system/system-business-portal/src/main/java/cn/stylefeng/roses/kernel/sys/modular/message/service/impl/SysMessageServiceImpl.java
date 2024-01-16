@@ -109,7 +109,7 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
 
         try {
             MessageWebsocketApi messageWebsocketApi = SpringUtil.getBean(MessageWebsocketApi.class);
-            messageWebsocketApi.wsSendMessage(messageSendDTO);
+            messageWebsocketApi.wsSendMessage(MessageFactory.createSocketMessage(batchMessage));
         } catch (Exception e) {
         }
 

@@ -3,6 +3,7 @@ package cn.stylefeng.roses.kernel.sys.modular.message.factory;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.sys.api.enums.message.ReadFlagEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.message.MessageSendDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.message.MessageSendToSocketDTO;
 import cn.stylefeng.roses.kernel.sys.modular.message.entity.SysMessage;
 
 import java.util.ArrayList;
@@ -54,6 +55,38 @@ public class MessageFactory {
         }
 
         return sysMessages;
+    }
+
+    /**
+     * 创建消息发送到socket时候的数据传输bean
+     *
+     * @author fengshuonan
+     * @since 2024-01-16 11:17
+     */
+    public static List<MessageSendToSocketDTO> createSocketMessage(List<SysMessage> sysMessageList) {
+
+        List<MessageSendToSocketDTO> messageSendToSocketDTOS = new ArrayList<>();
+
+        if (ObjectUtil.isEmpty(sysMessageList)) {
+            return messageSendToSocketDTOS;
+        }
+
+        for (SysMessage sysMessage : sysMessageList) {
+            MessageSendToSocketDTO dto = new MessageSendToSocketDTO();
+            dto.setReceiveUserId(sysMessage.getReceiveUserId());
+            dto.setMessageId(sysMessage.getMessageId());
+            dto.setSendUserId(sysMessage.getSendUserId());
+            dto.setMessageTitle(sysMessage.getMessageTitle());
+            dto.setMessageContent(sysMessage.getMessageContent());
+            dto.setMessageType(sysMessage.getMessageType());
+            dto.setMessageUrl(sysMessage.getMessageUrl());
+            dto.setPriorityLevel(sysMessage.getPriorityLevel());
+            dto.setBusinessId(sysMessage.getBusinessId());
+            dto.setBusinessType(sysMessage.getBusinessType());
+            messageSendToSocketDTOS.add(dto);
+        }
+
+        return messageSendToSocketDTOS;
     }
 
 }
