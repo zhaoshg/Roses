@@ -62,14 +62,16 @@ public interface SysRoleService extends IService<SysRole>, SysRoleServiceApi {
     SysRole detail(SysRoleRequest sysRoleRequest);
 
     /**
-     * 获取列表
+     * 获取所有角色列表
+     * <p>
+     * 用在权限分配界面，左侧的角色列表
      *
      * @param sysRoleRequest 请求参数
      * @return List<SysRole>   返回结果
      * @author fengshuonan
      * @date 2023/06/10 21:29
      */
-    List<SysRole> findList(SysRoleRequest sysRoleRequest);
+    List<SysRole> permissionGetRoleList(SysRoleRequest sysRoleRequest);
 
     /**
      * 获取列表（带分页）
@@ -108,5 +110,13 @@ public interface SysRoleService extends IService<SysRole>, SysRoleServiceApi {
      * @since 2023/7/18 23:19
      */
     DataScopeTypeEnum getRoleDataScope(List<Long> roleIds);
+
+    /**
+     * 用户分配角色界面，获取角色列表
+     *
+     * @author fengshuonan
+     * @since 2024-01-16 19:07
+     */
+    List<SysRole> userAssignRoleList(SysRoleRequest sysRoleRequest);
 
 }

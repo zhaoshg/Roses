@@ -230,13 +230,26 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
-    public List<SysRole> findList(SysRoleRequest sysRoleRequest) {
+    public List<SysRole> userAssignRoleList(SysRoleRequest sysRoleRequest) {
         LambdaQueryWrapper<SysRole> wrapper = this.createWrapper(sysRoleRequest);
 
         // 只查询id和名称
         wrapper.select(SysRole::getRoleId, SysRole::getRoleName, SysRole::getRoleType);
 
-        // 填写角色的权限信息
+        // 过滤角色的权限信息
+        this.filterUserAssignRoleList(wrapper);
+
+        return this.list(wrapper);
+    }
+
+    @Override
+    public List<SysRole> permissionGetRoleList(SysRoleRequest sysRoleRequest) {
+        LambdaQueryWrapper<SysRole> wrapper = this.createWrapper(sysRoleRequest);
+
+        // 只查询id和名称
+        wrapper.select(SysRole::getRoleId, SysRole::getRoleName);
+
+        // 过滤角色的权限信息
         this.filterRolePermission(wrapper, sysRoleRequest);
 
         return this.list(wrapper);
@@ -347,8 +360,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         // 根据名称模糊搜索
         String searchText = sysRoleRequest.getSearchText();
         if (ObjectUtil.isNotEmpty(searchText)) {
-            queryWrapper.like(SysRole::getRoleName, searchText);
-            queryWrapper.or().like(SysRole::getRoleCode, searchText);
+            queryWrapper.nested(i -> i.like(SysRole::getRoleName, searchText).or().like(SysRole::getRoleCode, searchText));
         }
 
         // 排序字段
@@ -383,6 +395,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
      * 过滤角色的权限展示
      * <p>
      * 非管理员只能看到自己的角色和自己创建的角色
+     * <p>
+     * 用在权限界面，获取左侧角色列表
      *
      * @author fengshuonan
      * @since 2023/10/9 10:44
@@ -401,6 +415,29 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             if (ObjectUtil.isNotEmpty(sysRoleRequest.getRoleCompanyId())) {
                 wrapper.eq(SysRole::getRoleCompanyId, sysRoleRequest.getRoleCompanyId());
             }
+            return;
+        }
+
+        // 非超级管理员，直接拼好，角色类型和角色的公司id，只能查本公司的
+        wrapper.eq(SysRole::getRoleType, RoleTypeEnum.COMPANY_ROLE.getCode());
+        wrapper.eq(SysRole::getRoleCompanyId, LoginContext.me().getCurrentUserCompanyId());
+    }
+
+    /**
+     * 用在用户分配角色界面，获取角色列表
+     *
+     * @author fengshuonan
+     * @since 2024-01-16 19:08
+     */
+    private void filterUserAssignRoleList(LambdaQueryWrapper<SysRole> wrapper) {
+        // 超级管理员，获取系统类型的角色 + 当前登录公司的角色
+        boolean superAdminFlag = LoginContext.me().getSuperAdminFlag();
+        if (superAdminFlag) {
+            // 根据角色类型填充参数
+            wrapper.nested(i ->
+                    i.eq(SysRole::getRoleType, RoleTypeEnum.SYSTEM_ROLE.getCode())
+                            .or()
+                            .eq(SysRole::getRoleCompanyId, LoginContext.me().getCurrentUserCompanyId()));
             return;
         }
 

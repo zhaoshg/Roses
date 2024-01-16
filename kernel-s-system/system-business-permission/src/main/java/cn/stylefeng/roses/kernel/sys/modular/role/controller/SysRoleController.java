@@ -117,9 +117,9 @@ public class SysRoleController {
      * @author fengshuonan
      * @date 2023/06/10 21:29
      */
-    @GetResource(name = "分页查询-角色列表", path = "/sysRole/list")
+    @GetResource(name = "获取所有角色列表，一般用在用户分配角色，响应所有的角色列表", path = "/sysRole/list")
     public ResponseData<List<SysRole>> list(SysRoleRequest sysRoleRequest) {
-        return new SuccessResponseData<>(sysRoleService.findList(sysRoleRequest));
+        return new SuccessResponseData<>(sysRoleService.userAssignRoleList(sysRoleRequest));
     }
 
 }

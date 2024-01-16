@@ -53,7 +53,7 @@ public class PermissionAssignController {
      */
     @GetResource(name = "获取所有角色列表", path = "/permission/getRoleList")
     public ResponseData<List<SysRole>> getRoleList(SysRoleRequest sysRoleRequest) {
-        return new SuccessResponseData<>(sysRoleService.findList(sysRoleRequest));
+        return new SuccessResponseData<>(sysRoleService.permissionGetRoleList(sysRoleRequest));
     }
 
     /**
