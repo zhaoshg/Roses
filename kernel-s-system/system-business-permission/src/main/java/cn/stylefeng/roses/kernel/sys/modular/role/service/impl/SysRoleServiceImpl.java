@@ -158,7 +158,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         LambdaQueryWrapper<SysRole> wrapper = createWrapper(sysRoleRequest);
 
         // 只查询需要的字段
-        wrapper.select(SysRole::getRoleName, SysRole::getRoleCode, SysRole::getRoleSort, SysRole::getRoleId, BaseEntity::getCreateTime);
+        wrapper.select(SysRole::getRoleName, SysRole::getRoleCode, SysRole::getRoleSort, SysRole::getRoleId, BaseEntity::getCreateTime, SysRole::getRoleType,
+                SysRole::getRoleCompanyId);
 
         // 非管理员用户只能查看自己创建的角色
         this.filterRolePermission(wrapper);
