@@ -26,6 +26,7 @@ package cn.stylefeng.roses.kernel.log.api.pojo.record;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
+import cn.stylefeng.roses.kernel.sys.api.format.CompanyNameFormatProcess;
 import cn.stylefeng.roses.kernel.sys.api.format.UserNameFormatProcess;
 import lombok.Data;
 
@@ -105,6 +106,7 @@ public class LogRecordDTO {
      * 如果是http请求，并且用户已经登录，可以带这项
      */
     @ChineseDescription("用户请求时候的登录机构id")
+    @SimpleFieldFormat(processClass = CompanyNameFormatProcess.class)
     private Long userCurrentOrgId;
 
     /**
