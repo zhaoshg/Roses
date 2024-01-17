@@ -49,10 +49,10 @@ public class SysUserRole extends BaseEntity {
     private Integer roleType;
 
     /**
-     * 角色所属公司id
+     * 用户所属机构id
      */
-    @TableField(value = "role_company_id")
-    @ChineseDescription("角色所属公司id")
-    private Long roleCompanyId;
+    @TableField(value = "role_org_id")
+    @ChineseDescription("用户所属机构id")
+    private Long roleOrgId;
 
 }

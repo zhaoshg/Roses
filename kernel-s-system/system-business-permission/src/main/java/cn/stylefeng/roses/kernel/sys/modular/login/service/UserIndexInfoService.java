@@ -261,11 +261,14 @@ public class UserIndexInfoService {
         List<Long> roleIdList = null;
 
         // 获取用户当前公司下的角色集合
-        List<Long> userCurrentCompanyList = userIndexInfo.getUserOrgInfoList().stream().filter(IndexUserOrgInfo::getCurrentSelectFlag).map(IndexUserOrgInfo::getCompanyId).collect(Collectors.toList());
-        if (ObjectUtil.isEmpty(userCurrentCompanyList)) {
+        List<Long> userCurrentOrgList = userIndexInfo.getUserOrgInfoList().stream()
+                .filter(IndexUserOrgInfo::getCurrentSelectFlag)
+                .map(IndexUserOrgInfo::getOrgId)
+                .collect(Collectors.toList());
+        if (ObjectUtil.isEmpty(userCurrentOrgList)) {
             roleIdList = sysUserRoleServiceApi.getUserRoleIdListCurrentCompany(userId, null);
         } else {
-            roleIdList = sysUserRoleServiceApi.getUserRoleIdListCurrentCompany(userId, userCurrentCompanyList.get(0));
+            roleIdList = sysUserRoleServiceApi.getUserRoleIdListCurrentCompany(userId, userCurrentOrgList.get(0));
         }
 
         if (ObjectUtil.isEmpty(roleIdList)) {

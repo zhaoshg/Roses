@@ -61,9 +61,9 @@ public class SysRoleDTO {
     private Integer roleType;
 
     /**
-     * 角色所属公司id，当角色类型为20时传此值
+     * 角色所属机构id，当角色类型为20时传此值
      */
-    @ChineseDescription("角色所属公司id，当角色类型为20时传此值")
-    private Long roleCompanyId;
+    @ChineseDescription("角色所属机构id，当角色类型为20时传此值")
+    private Long roleOrgId;
 
 }

@@ -148,12 +148,12 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     }
 
     @Override
-    public List<Long> getUserRoleIdListCurrentCompany(Long userId, Long companyId) {
+    public List<Long> getUserRoleIdListCurrentCompany(Long userId, Long orgId) {
 
         // 先从缓存查找用户的角色
         List<SysUserRole> cachedRoleList = userRoleCache.get(userId.toString());
         if (ObjectUtil.isNotEmpty(cachedRoleList)) {
-            return this.getUserCompanyPermissionRole(cachedRoleList, companyId);
+            return this.getUserCompanyPermissionRole(cachedRoleList, orgId);
         }
 
         List<SysUserRole> sysUserRoleList = this.dbGetUserTotalRoleList(userId);
@@ -163,7 +163,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
             userRoleCache.put(userId.toString(), sysUserRoleList, SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
         }
 
-        return this.getUserCompanyPermissionRole(sysUserRoleList, companyId);
+        return this.getUserCompanyPermissionRole(sysUserRoleList, orgId);
     }
 
     @Override
@@ -249,34 +249,36 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     private List<SysUserRole> dbGetUserTotalRoleList(Long userId) {
         LambdaQueryWrapper<SysUserRole> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(SysUserRole::getUserId, userId);
-        wrapper.select(SysUserRole::getRoleId, SysUserRole::getRoleCompanyId, SysUserRole::getRoleType);
+        wrapper.select(SysUserRole::getRoleId, SysUserRole::getRoleOrgId, SysUserRole::getRoleType);
         return this.list(wrapper);
     }
 
     /**
-     * 获取当前用户登录公司的角色id集合
+     * 获取当前用户登录机构的角色id集合
      * <p>
-     * 从参数中找到当前用户登录公司的 + 用户基本的角色集合
+     * 从参数中找到当前用户登录身份机构的 + 用户基本的角色集合
      *
      * @author fengshuonan
      * @since 2024-01-17 16:16
      */
-    private List<Long> getUserCompanyPermissionRole(List<SysUserRole> paramRoles, Long userCurrentCompanyId) {
+    private List<Long> getUserCompanyPermissionRole(List<SysUserRole> paramRoles, Long userCurrentOrgId) {
 
         // 1. 先获取最基本的用户角色，不分公司的，每个人都有的角色
-        Set<Long> baseRoleIdList = paramRoles.stream().filter(i -> RoleTypeEnum.SYSTEM_ROLE.getCode().equals(i.getRoleType()) && i.getRoleCompanyId() == null).map(SysUserRole::getRoleId)
+        Set<Long> baseRoleIdList = paramRoles.stream()
+                .filter(i -> RoleTypeEnum.SYSTEM_ROLE.getCode().equals(i.getRoleType()) && i.getRoleOrgId() == null)
+                .map(SysUserRole::getRoleId)
                 .collect(Collectors.toSet());
 
         // 没传当前公司id，则只返回最基本的角色
-        if (ObjectUtil.isEmpty(userCurrentCompanyId)) {
+        if (ObjectUtil.isEmpty(userCurrentOrgId)) {
             return new ArrayList<>(baseRoleIdList);
         }
 
         // 2. 获取用户当前登录公司下的角色id集合
         Set<Long> currentCompanyRoleIdList = paramRoles.stream()
                 .filter(i -> RoleTypeEnum.COMPANY_ROLE.getCode().equals(i.getRoleType())
-                        && i.getRoleCompanyId() != null
-                        && i.getRoleCompanyId().equals(userCurrentCompanyId))
+                        && i.getRoleOrgId() != null
+                        && i.getRoleOrgId().equals(userCurrentOrgId))
                 .map(SysUserRole::getRoleId)
                 .collect(Collectors.toSet());
 
@@ -311,7 +313,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
             for (SysRoleDTO sysRoleDTO : sysRoleDTOList) {
                 if (sysRoleDTO.getRoleId().equals(newRoleId)) {
                     sysUserRole.setRoleType(sysRoleDTO.getRoleType());
-                    sysUserRole.setRoleCompanyId(sysRoleDTO.getRoleCompanyId());
+                    sysUserRole.setRoleOrgId(sysRoleDTO.getRoleOrgId());
                     break;
                 }
             }

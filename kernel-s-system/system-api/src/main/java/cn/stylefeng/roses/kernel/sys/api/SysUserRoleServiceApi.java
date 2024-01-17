@@ -20,12 +20,12 @@ public interface SysUserRoleServiceApi {
     List<Long> getUserRoleIdList(Long userId);
 
     /**
-     * 获取用户的当前所在公司的所有角色id列表
+     * 获取用户的当前所在机构的所有角色id列表
      *
      * @author fengshuonan
      * @since 2024-01-17 16:24
      */
-    List<Long> getUserRoleIdListCurrentCompany(Long userId, Long companyId);
+    List<Long> getUserRoleIdListCurrentCompany(Long userId, Long orgId);
 
     /**
      * 根据角色id找到角色对应的用户id集合
