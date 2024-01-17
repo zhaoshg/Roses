@@ -93,7 +93,7 @@ public class UserIndexInfoService {
         // 3. 获取用户的权限编码集合
         List<SysMenu> userMenuList = this.fillUserPermissionCodeList(loginUser, userIndexInfo);
 
-        // 4. 获取用户的当前登录App
+        // 4. 获取用户的App信息和菜单信息列表
         this.fillUserAppList(loginUser, userIndexInfo, userMenuList);
 
         // 5. 构建websocket url

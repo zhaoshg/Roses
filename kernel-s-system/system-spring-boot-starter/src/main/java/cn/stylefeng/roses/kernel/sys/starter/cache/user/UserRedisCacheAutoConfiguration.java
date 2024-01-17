@@ -27,6 +27,7 @@ package cn.stylefeng.roses.kernel.sys.starter.cache.user;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.cache.redis.util.CreateRedisTemplateUtil;
 import cn.stylefeng.roses.kernel.sys.modular.user.cache.userrole.UserRoleRedisCache;
+import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,8 +53,8 @@ public class UserRedisCacheAutoConfiguration {
      * @since 2023/7/14 22:15
      */
     @Bean
-    public CacheOperatorApi<List<Long>> userRoleCache(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<String, List<Long>> redisTemplate = CreateRedisTemplateUtil.createObject(redisConnectionFactory);
+    public CacheOperatorApi<List<SysUserRole>> userRoleCache(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, List<SysUserRole>> redisTemplate = CreateRedisTemplateUtil.createObject(redisConnectionFactory);
         return new UserRoleRedisCache(redisTemplate);
     }
 

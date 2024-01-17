@@ -12,12 +12,20 @@ import java.util.Set;
 public interface SysUserRoleServiceApi {
 
     /**
-     * 获取用户的角色id列表
+     * 获取用户的所有角色id列表
      *
      * @author fengshuonan
      * @since 2023/6/12 11:29
      */
     List<Long> getUserRoleIdList(Long userId);
+
+    /**
+     * 获取用户的当前所在公司的所有角色id列表
+     *
+     * @author fengshuonan
+     * @since 2024-01-17 16:24
+     */
+    List<Long> getUserRoleIdListCurrentCompany(Long userId, Long companyId);
 
     /**
      * 根据角色id找到角色对应的用户id集合

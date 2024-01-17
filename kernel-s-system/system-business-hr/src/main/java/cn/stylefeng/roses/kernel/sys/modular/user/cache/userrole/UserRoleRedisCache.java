@@ -2,6 +2,7 @@ package cn.stylefeng.roses.kernel.sys.modular.user.cache.userrole;
 
 import cn.stylefeng.roses.kernel.cache.redis.AbstractRedisCacheOperator;
 import cn.stylefeng.roses.kernel.sys.modular.user.constants.UserConstants;
+import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;
@@ -12,9 +13,9 @@ import java.util.List;
  * @author fengshuonan
  * @since 2023/7/14 21:58
  */
-public class UserRoleRedisCache extends AbstractRedisCacheOperator<List<Long>> {
+public class UserRoleRedisCache extends AbstractRedisCacheOperator<List<SysUserRole>> {
 
-    public UserRoleRedisCache(RedisTemplate<String, List<Long>> redisTemplate) {
+    public UserRoleRedisCache(RedisTemplate<String, List<SysUserRole>> redisTemplate) {
         super(redisTemplate);
     }
 

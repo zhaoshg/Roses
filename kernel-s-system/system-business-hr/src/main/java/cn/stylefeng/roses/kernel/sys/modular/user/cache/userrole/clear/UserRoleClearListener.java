@@ -3,6 +3,7 @@ package cn.stylefeng.roses.kernel.sys.modular.user.cache.userrole.clear;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.event.api.annotation.BusinessListener;
+import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,7 +21,7 @@ import static cn.stylefeng.roses.kernel.sys.modular.user.constants.UserConstants
 public class UserRoleClearListener {
 
     @Resource(name = "userRoleCache")
-    private CacheOperatorApi<List<Long>> userRoleCache;
+    private CacheOperatorApi<List<SysUserRole>> userRoleCache;
 
     /**
      * 监听更新用户角色
