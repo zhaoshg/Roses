@@ -25,10 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static cn.stylefeng.roses.kernel.sys.modular.user.constants.UserConstants.UPDATE_USER_ROLE_EVENT;
@@ -148,6 +145,28 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     }
 
     @Override
+    public Set<Long> getUserSystemRoleIdList(Long userId) {
+        if (userId == null) {
+            return new LinkedHashSet<>();
+        }
+
+        // 先从缓存查找用户的角色
+        List<SysUserRole> cachedRoleList = userRoleCache.get(userId.toString());
+        if (ObjectUtil.isNotEmpty(cachedRoleList)) {
+            return cachedRoleList.stream().filter(i -> RoleTypeEnum.SYSTEM_ROLE.getCode().equals(i.getRoleType())).map(SysUserRole::getRoleId).collect(Collectors.toSet());
+        }
+
+        List<SysUserRole> sysUserRoleList = this.dbGetUserTotalRoleList(userId);
+
+        // 查询结果缓存起来
+        if (ObjectUtil.isNotEmpty(sysUserRoleList)) {
+            userRoleCache.put(userId.toString(), sysUserRoleList, SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
+        }
+
+        return sysUserRoleList.stream().filter(i -> RoleTypeEnum.SYSTEM_ROLE.getCode().equals(i.getRoleType())).map(SysUserRole::getRoleId).collect(Collectors.toSet());
+    }
+
+    @Override
     public List<Long> getUserRoleIdListCurrentCompany(Long userId, Long orgId) {
 
         // 先从缓存查找用户的角色
@@ -208,10 +227,12 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         }
 
         // 2. 所有系统角色id集合
-        Set<Long> systemRoleIdList = roleResults.stream().filter(i -> i.getRoleType().equals(RoleTypeEnum.SYSTEM_ROLE.getCode())).map(SysRoleDTO::getRoleId).collect(Collectors.toSet());
+        Set<Long> systemRoleIdList = roleResults.stream().filter(i -> i.getRoleType().equals(RoleTypeEnum.SYSTEM_ROLE.getCode())).map(SysRoleDTO::getRoleId)
+                .collect(Collectors.toSet());
 
         // 3. 所有当前公司角色id集合
-        Set<Long> currentCompanyRoleIdList = roleResults.stream().filter(i -> i.getRoleType().equals(RoleTypeEnum.COMPANY_ROLE.getCode())).map(SysRoleDTO::getRoleId).collect(Collectors.toSet());
+        Set<Long> currentCompanyRoleIdList = roleResults.stream().filter(i -> i.getRoleType().equals(RoleTypeEnum.COMPANY_ROLE.getCode())).map(SysRoleDTO::getRoleId)
+                .collect(Collectors.toSet());
 
         LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();
 

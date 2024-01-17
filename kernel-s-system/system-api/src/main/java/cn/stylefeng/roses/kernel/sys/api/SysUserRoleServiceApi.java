@@ -20,6 +20,14 @@ public interface SysUserRoleServiceApi {
     List<Long> getUserRoleIdList(Long userId);
 
     /**
+     * 获取用户系统级别的角色，用在用户管理界面，分配角色时使用
+     *
+     * @author fengshuonan
+     * @since 2024/1/17 22:35
+     */
+    Set<Long> getUserSystemRoleIdList(Long userId);
+
+    /**
      * 获取用户的当前所在机构的所有角色id列表
      *
      * @author fengshuonan

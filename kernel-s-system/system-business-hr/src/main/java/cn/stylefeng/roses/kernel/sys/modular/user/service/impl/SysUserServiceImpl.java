@@ -218,8 +218,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setUserOrgDTOList(userOrgList);
 
         // 获取用户的角色信息
-        List<Long> userRoleIdList = sysUserRoleService.getUserRoleIdList(sysUser.getUserId());
-        sysUser.setRoleIdList(userRoleIdList);
+        Set<Long> userRoleIdList = sysUserRoleService.getUserSystemRoleIdList(sysUser.getUserId());
+        sysUser.setRoleIdList(new ArrayList<>(userRoleIdList));
 
         // 获取用户证书信息
         List<SysUserCertificateResponse> userCertificateList = sysUserCertificateService.getUserCertificateList(sysUser.getUserId());
