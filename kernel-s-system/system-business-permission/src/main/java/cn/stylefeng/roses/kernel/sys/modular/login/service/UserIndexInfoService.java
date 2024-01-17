@@ -258,8 +258,15 @@ public class UserIndexInfoService {
 
         Long userId = loginUser.getUserId();
 
-        // 获取用户的角色集合
-        List<Long> roleIdList = sysUserRoleServiceApi.getUserRoleIdList(userId);
+        List<Long> roleIdList = null;
+
+        // 获取用户当前公司下的角色集合
+        List<Long> userCurrentCompanyList = userIndexInfo.getUserOrgInfoList().stream().filter(IndexUserOrgInfo::getCurrentSelectFlag).map(IndexUserOrgInfo::getCompanyId).collect(Collectors.toList());
+        if (ObjectUtil.isEmpty(userCurrentCompanyList)) {
+            roleIdList = sysUserRoleServiceApi.getUserRoleIdListCurrentCompany(userId, null);
+        } else {
+            roleIdList = sysUserRoleServiceApi.getUserRoleIdListCurrentCompany(userId, userCurrentCompanyList.get(0));
+        }
 
         if (ObjectUtil.isEmpty(roleIdList)) {
             userIndexInfo.setPermissionCodeList(new HashSet<>());

@@ -153,10 +153,6 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     @Override
     public List<Long> getUserRoleIdListCurrentCompany(Long userId, Long companyId) {
 
-        if (ObjectUtil.isEmpty(companyId)) {
-            return this.getUserRoleIdList(userId);
-        }
-
         // 先从缓存查找用户的角色
         List<SysUserRole> cachedRoleList = userRoleCache.get(userId.toString());
         if (ObjectUtil.isNotEmpty(cachedRoleList)) {
@@ -273,6 +269,11 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         // 1. 先获取最基本的用户角色，不分公司的，每个人都有的角色
         Set<Long> baseRoleIdList = paramRoles.stream().filter(i -> RoleTypeEnum.SYSTEM_ROLE.getCode().equals(i.getRoleType()) && i.getRoleCompanyId() == null).map(SysUserRole::getRoleId)
                 .collect(Collectors.toSet());
+
+        // 没传当前公司id，则只返回最基本的角色
+        if (ObjectUtil.isEmpty(userCurrentCompanyId)) {
+            return new ArrayList<>(baseRoleIdList);
+        }
 
         // 2. 获取用户当前登录公司下的角色id集合
         Set<Long> currentCompanyRoleIdList = paramRoles.stream()
