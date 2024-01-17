@@ -67,15 +67,12 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         // 清空已有的用户角色绑定
         this.removeRoleAlreadyBind(sysUserRoleRequest);
 
-        // 重新绑定用户角色信息
+        // 获取角色的详情
         Set<Long> roleIdList = sysUserRoleRequest.getRoleIdList();
-        ArrayList<SysUserRole> newUserRoles = new ArrayList<>();
-        for (Long newRoleId : roleIdList) {
-            SysUserRole sysUserRole = new SysUserRole();
-            sysUserRole.setUserId(sysUserRoleRequest.getUserId());
-            sysUserRole.setRoleId(newRoleId);
-            newUserRoles.add(sysUserRole);
-        }
+        List<SysRoleDTO> sysRoleDTOList = sysRoleServiceApi.getRolesByIds(new ArrayList<>(roleIdList));
+
+        // 重新绑定用户角色信息
+        List<SysUserRole> newUserRoles = this.createUserRoleBinds(sysUserRoleRequest, roleIdList, sysRoleDTOList);
         this.saveBatch(newUserRoles);
 
         // 发布修改用户绑定角色的事件
@@ -292,6 +289,36 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
             resultRoleIdList.addAll(currentCompanyRoleIdList);
         }
         return resultRoleIdList;
+    }
+
+    /**
+     * 创建用户角色的绑定
+     *
+     * @param sysUserRoleRequest 接口请求参数
+     * @param roleIdList         用户绑定的角色列表
+     * @param sysRoleDTOList     用来获取角色的公司id和角色类型，补充信息用
+     * @author fengshuonan
+     * @since 2024-01-17 17:27
+     */
+    private List<SysUserRole> createUserRoleBinds(SysUserRoleRequest sysUserRoleRequest, Set<Long> roleIdList, List<SysRoleDTO> sysRoleDTOList) {
+        List<SysUserRole> newUserRoles = new ArrayList<>();
+        for (Long newRoleId : roleIdList) {
+            SysUserRole sysUserRole = new SysUserRole();
+            sysUserRole.setUserId(sysUserRoleRequest.getUserId());
+            sysUserRole.setRoleId(newRoleId);
+
+            // 填充角色的类型和所属公司
+            for (SysRoleDTO sysRoleDTO : sysRoleDTOList) {
+                if (sysRoleDTO.getRoleId().equals(newRoleId)) {
+                    sysUserRole.setRoleType(sysRoleDTO.getRoleType());
+                    sysUserRole.setRoleCompanyId(sysRoleDTO.getRoleCompanyId());
+                    break;
+                }
+            }
+
+            newUserRoles.add(sysUserRole);
+        }
+        return newUserRoles;
     }
 
 }

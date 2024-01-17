@@ -332,7 +332,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
         LambdaQueryWrapper<SysRole> sysRoleLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysRoleLambdaQueryWrapper.in(SysRole::getRoleId, roleIds);
-        sysRoleLambdaQueryWrapper.select(SysRole::getRoleName, SysRole::getRoleId, SysRole::getRoleCode);
+        sysRoleLambdaQueryWrapper.select(SysRole::getRoleName, SysRole::getRoleId, SysRole::getRoleCode, SysRole::getRoleType, SysRole::getRoleCompanyId);
         List<SysRole> sysRoleList = this.list(sysRoleLambdaQueryWrapper);
 
         if (ObjectUtil.isEmpty(sysRoleList)) {
