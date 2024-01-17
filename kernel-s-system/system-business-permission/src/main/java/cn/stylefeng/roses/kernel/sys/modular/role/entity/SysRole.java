@@ -71,10 +71,10 @@ public class SysRole extends BaseExpandFieldEntity {
     private String remark;
 
     /**
-     * 角色类型：10-系统角色，20-公司角色
+     * 角色类型：10-系统角色，15-业务角色，20-公司角色
      */
     @TableField("role_type")
-    @ChineseDescription("角色类型：10-系统角色，20-公司角色")
+    @ChineseDescription("角色类型：10-系统角色，15-业务角色，20-公司角色")
     private Integer roleType;
 
     /**

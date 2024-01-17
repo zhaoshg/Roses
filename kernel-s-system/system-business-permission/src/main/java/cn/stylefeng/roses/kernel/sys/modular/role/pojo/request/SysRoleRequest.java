@@ -69,10 +69,10 @@ public class SysRoleRequest extends BaseRequest {
     private String remark;
 
     /**
-     * 角色类型：10-系统角色，20-公司角色
+     * 角色类型：10-系统角色，15-业务角色，20-公司角色
      */
     @NotNull(message = "角色类型不能为空", groups = {add.class, edit.class})
-    @ChineseDescription("角色类型：10-系统角色，20-公司角色")
+    @ChineseDescription("角色类型：10-系统角色，15-业务角色，20-公司角色")
     private Integer roleType;
 
     /**

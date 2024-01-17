@@ -20,6 +20,11 @@ public enum RoleTypeEnum implements ReadableEnum<RoleTypeEnum> {
     SYSTEM_ROLE(10, "系统角色"),
 
     /**
+     * 业务角色
+     */
+    BUSINESS_ROLE(15, "业务角色"),
+
+    /**
      * 公司角色
      */
     COMPANY_ROLE(20, "公司角色");
