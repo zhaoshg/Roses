@@ -72,12 +72,4 @@ public interface SysRoleServiceApi {
      */
     List<SysRoleDTO> getRolesByIds(List<Long> roleIds);
 
-    /**
-     * 获取所有系统角色和当前登录公司的角色集合
-     *
-     * @author fengshuonan
-     * @since 2024/1/17 0:40
-     */
-    List<SysRoleDTO> getSystemRoleAndCurrentCompanyRole(Long companyId);
-
 }

@@ -12,7 +12,6 @@ import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.enums.role.RoleTypeEnum;
-import cn.stylefeng.roses.kernel.sys.api.pojo.role.SysRoleDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserRoleMapper;
@@ -25,7 +24,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static cn.stylefeng.roses.kernel.sys.modular.user.constants.UserConstants.UPDATE_USER_ROLE_EVENT;
@@ -61,15 +63,20 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
             throw new ServiceException(SysUserExceptionEnum.CANT_CHANGE_ADMIN_ROLE);
         }
 
-        // 清空已有的用户角色绑定
+        // 非超级管理员不能改变系统级角色
+        boolean superAdminFlag = LoginContext.me().getSuperAdminFlag();
+        if (!superAdminFlag) {
+            throw new ServiceException(SysUserExceptionEnum.CANT_CHANGE_BASE_SYSTEM_ROLE);
+        }
+
+        // 清空用户绑定的所有系统角色，因为这个界面只分配系统角色
         this.removeRoleAlreadyBind(sysUserRoleRequest);
 
-        // 获取角色的详情
+        // 获取本次绑定的角色id集合
         Set<Long> roleIdList = sysUserRoleRequest.getRoleIdList();
-        List<SysRoleDTO> sysRoleDTOList = sysRoleServiceApi.getRolesByIds(new ArrayList<>(roleIdList));
 
         // 重新绑定用户角色信息
-        List<SysUserRole> newUserRoles = this.createUserRoleBinds(sysUserRoleRequest, roleIdList, sysRoleDTOList);
+        List<SysUserRole> newUserRoles = this.createUserSystemRoleBinds(sysUserRoleRequest, roleIdList);
         this.saveBatch(newUserRoles);
 
         // 发布修改用户绑定角色的事件
@@ -213,52 +220,16 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     }
 
     /**
-     * 清空用户角色的绑定
+     * 清空用户绑定的所有系统角色，这个界面只管分配系统角色
      *
      * @author fengshuonan
-     * @since 2024/1/17 0:24
+     * @since 2024/1/17 22:47
      */
     private void removeRoleAlreadyBind(SysUserRoleRequest sysUserRoleRequest) {
-
-        // 1. 获取系统中的所有角色，包括系统角色和当前公司角色
-        List<SysRoleDTO> roleResults = sysRoleServiceApi.getSystemRoleAndCurrentCompanyRole(LoginContext.me().getCurrentUserCompanyId());
-        if (ObjectUtil.isEmpty(roleResults)) {
-            return;
-        }
-
-        // 2. 所有系统角色id集合
-        Set<Long> systemRoleIdList = roleResults.stream().filter(i -> i.getRoleType().equals(RoleTypeEnum.SYSTEM_ROLE.getCode())).map(SysRoleDTO::getRoleId)
-                .collect(Collectors.toSet());
-
-        // 3. 所有当前公司角色id集合
-        Set<Long> currentCompanyRoleIdList = roleResults.stream().filter(i -> i.getRoleType().equals(RoleTypeEnum.COMPANY_ROLE.getCode())).map(SysRoleDTO::getRoleId)
-                .collect(Collectors.toSet());
-
         LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();
-
-        // 2. 当前如果是超级管理员在操作，清空用户的系统角色和当前公司角色（因为超级管理员的绑定角色列表，可以看到系统角色和当前公司角色）
-        boolean superAdminFlag = LoginContext.me().getSuperAdminFlag();
-        if (superAdminFlag) {
-
-            Set<Long> paramsRoleIdList = new HashSet<>(systemRoleIdList);
-            if (ObjectUtil.isNotEmpty(currentCompanyRoleIdList)) {
-                paramsRoleIdList.addAll(currentCompanyRoleIdList);
-            }
-
-            queryWrapper.eq(SysUserRole::getUserId, sysUserRoleRequest.getUserId());
-            queryWrapper.in(SysUserRole::getRoleId, paramsRoleIdList);
-            this.remove(queryWrapper);
-        }
-
-        // 3. 如果当前不是超级管理员，则只能清空当前公司的角色id集合
-        else {
-            if (ObjectUtil.isEmpty(currentCompanyRoleIdList)) {
-                return;
-            }
-            queryWrapper.eq(SysUserRole::getUserId, sysUserRoleRequest.getUserId());
-            queryWrapper.in(SysUserRole::getRoleId, currentCompanyRoleIdList);
-            this.remove(queryWrapper);
-        }
+        queryWrapper.eq(SysUserRole::getUserId, sysUserRoleRequest.getUserId());
+        queryWrapper.eq(SysUserRole::getRoleType, RoleTypeEnum.SYSTEM_ROLE.getCode());
+        this.remove(queryWrapper);
     }
 
     /**
@@ -319,26 +290,16 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
      *
      * @param sysUserRoleRequest 接口请求参数
      * @param roleIdList         用户绑定的角色列表
-     * @param sysRoleDTOList     用来获取角色的公司id和角色类型，补充信息用
      * @author fengshuonan
      * @since 2024-01-17 17:27
      */
-    private List<SysUserRole> createUserRoleBinds(SysUserRoleRequest sysUserRoleRequest, Set<Long> roleIdList, List<SysRoleDTO> sysRoleDTOList) {
+    private List<SysUserRole> createUserSystemRoleBinds(SysUserRoleRequest sysUserRoleRequest, Set<Long> roleIdList) {
         List<SysUserRole> newUserRoles = new ArrayList<>();
         for (Long newRoleId : roleIdList) {
             SysUserRole sysUserRole = new SysUserRole();
             sysUserRole.setUserId(sysUserRoleRequest.getUserId());
             sysUserRole.setRoleId(newRoleId);
-
-            // 填充角色的类型和所属公司
-            for (SysRoleDTO sysRoleDTO : sysRoleDTOList) {
-                if (sysRoleDTO.getRoleId().equals(newRoleId)) {
-                    sysUserRole.setRoleType(sysRoleDTO.getRoleType());
-                    sysUserRole.setRoleOrgId(sysRoleDTO.getRoleOrgId());
-                    break;
-                }
-            }
-
+            sysUserRole.setRoleType(RoleTypeEnum.SYSTEM_ROLE.getCode());
             newUserRoles.add(sysUserRole);
         }
         return newUserRoles;
