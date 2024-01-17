@@ -347,6 +347,21 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         return BeanUtil.copyToList(sysRoleList, SysRoleDTO.class, CopyOptions.create().ignoreError());
     }
 
+    @Override
+    public List<SysRoleDTO> getBusinessRoleAndCompanyRole(List<Long> companyIdList) {
+        LambdaQueryWrapper<SysRole> sysRoleLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleLambdaQueryWrapper.eq(SysRole::getRoleType, RoleTypeEnum.BUSINESS_ROLE.getCode());
+        sysRoleLambdaQueryWrapper.or().nested(i -> i.eq(SysRole::getRoleType, RoleTypeEnum.COMPANY_ROLE.getCode()).and(j -> j.in(SysRole::getRoleCompanyId, companyIdList)));
+        sysRoleLambdaQueryWrapper.select(SysRole::getRoleId, SysRole::getRoleName, SysRole::getRoleType, SysRole::getRoleCompanyId);
+        sysRoleLambdaQueryWrapper.orderByAsc(SysRole::getRoleType);
+        List<SysRole> sysRoleList = this.list(sysRoleLambdaQueryWrapper);
+        if (ObjectUtil.isEmpty(sysRoleList)) {
+            return new ArrayList<>();
+        } else {
+            return BeanUtil.copyToList(sysRoleList, SysRoleDTO.class, CopyOptions.create().ignoreError());
+        }
+    }
+
     /**
      * 获取信息
      *

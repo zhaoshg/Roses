@@ -22,37 +22,31 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.api.pojo.role;
+package cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole;
 
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import lombok.Data;
 
 /**
- * 角色的传输bean
+ * 用户关联角色的信息
  *
  * @author fengshuonan
- * @since 2024/1/5 19:32
+ * @since 2024/1/17 23:44
  */
 @Data
-public class SysRoleDTO {
+public class UserRoleDTO {
 
     /**
-     * 主键
+     * 用户id
      */
-    @ChineseDescription("主键")
+    @ChineseDescription("用户id")
+    private Long userId;
+
+    /**
+     * 角色id
+     */
+    @ChineseDescription("角色id")
     private Long roleId;
-
-    /**
-     * 名称
-     */
-    @ChineseDescription("名称")
-    private String roleName;
-
-    /**
-     * 编码
-     */
-    @ChineseDescription("编码")
-    private String roleCode;
 
     /**
      * 角色类型：10-系统角色，15-业务角色，20-公司角色
@@ -61,9 +55,9 @@ public class SysRoleDTO {
     private Integer roleType;
 
     /**
-     * 角色所属机构id，当角色类型为20时传此值
+     * 用户所属机构id
      */
-    @ChineseDescription("角色所属机构id，当角色类型为20时传此值")
-    private Long roleCompanyId;
+    @ChineseDescription("用户所属机构id")
+    private Long roleOrgId;
 
 }

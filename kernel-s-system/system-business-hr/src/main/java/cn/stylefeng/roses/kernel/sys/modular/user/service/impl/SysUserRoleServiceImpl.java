@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
@@ -12,6 +13,7 @@ import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.enums.role.RoleTypeEnum;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.UserRoleDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserRoleMapper;
@@ -171,6 +173,27 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         }
 
         return sysUserRoleList.stream().filter(i -> RoleTypeEnum.SYSTEM_ROLE.getCode().equals(i.getRoleType())).map(SysUserRole::getRoleId).collect(Collectors.toSet());
+    }
+
+    @Override
+    public List<UserRoleDTO> getUserLinkedOrgRoleList(Long userId) {
+
+        // 先从缓存查找用户的角色
+        List<SysUserRole> cachedRoleList = userRoleCache.get(userId.toString());
+        if (ObjectUtil.isNotEmpty(cachedRoleList)) {
+            List<SysUserRole> result = cachedRoleList.stream().filter(i -> ObjectUtil.isNotEmpty(i.getRoleOrgId())).collect(Collectors.toList());
+            return BeanUtil.copyToList(result, UserRoleDTO.class);
+        }
+
+        List<SysUserRole> sysUserRoleList = this.dbGetUserTotalRoleList(userId);
+
+        // 查询结果缓存起来
+        if (ObjectUtil.isNotEmpty(sysUserRoleList)) {
+            userRoleCache.put(userId.toString(), sysUserRoleList, SysConstants.DEFAULT_SYS_CACHE_TIMEOUT_SECONDS);
+        }
+
+        List<SysUserRole> finalResult = sysUserRoleList.stream().filter(i -> ObjectUtil.isNotEmpty(i.getRoleOrgId())).collect(Collectors.toList());
+        return BeanUtil.copyToList(finalResult, UserRoleDTO.class);
     }
 
     @Override

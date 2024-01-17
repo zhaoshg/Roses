@@ -1,5 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.api;
 
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.UserRoleDTO;
+
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +28,14 @@ public interface SysUserRoleServiceApi {
      * @since 2024/1/17 22:35
      */
     Set<Long> getUserSystemRoleIdList(Long userId);
+
+    /**
+     * 获取用户所有关联了机构id的角色列表，用在新的用户授权界面
+     *
+     * @author fengshuonan
+     * @since 2024/1/17 23:45
+     */
+    List<UserRoleDTO> getUserLinkedOrgRoleList(Long userId);
 
     /**
      * 获取用户的当前所在机构的所有角色id列表
