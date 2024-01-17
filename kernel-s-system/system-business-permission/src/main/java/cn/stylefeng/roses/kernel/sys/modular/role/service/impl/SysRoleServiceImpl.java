@@ -381,6 +381,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
 
         // 排序字段
+        queryWrapper.orderByAsc(SysRole::getRoleType);
         queryWrapper.orderByAsc(SysRole::getRoleSort);
 
         return queryWrapper;
