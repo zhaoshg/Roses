@@ -148,6 +148,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
 
         BeanUtil.copyProperties(sysRoleRequest, sysRole);
+
+        // 如果是编辑角色，改为了基础类型，则需要将公司id清空
+        if (RoleTypeEnum.SYSTEM_ROLE.getCode().equals(sysRoleRequest.getRoleType())) {
+            sysRole.setRoleCompanyId(null);
+        }
+
         this.updateById(sysRole);
 
         BusinessLogUtil.addContent("修改后角色信息如下：\n", sysRole);

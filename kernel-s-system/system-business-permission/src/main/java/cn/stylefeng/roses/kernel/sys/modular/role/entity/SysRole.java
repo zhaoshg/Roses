@@ -80,7 +80,7 @@ public class SysRole extends BaseExpandFieldEntity {
     /**
      * 角色所属公司id，当角色类型为20时传此值
      */
-    @TableField("role_company_id")
+    @TableField(value = "role_company_id", updateStrategy = FieldStrategy.IGNORED, insertStrategy = FieldStrategy.IGNORED)
     @ChineseDescription("角色所属公司id，当角色类型为20时传此值")
     @SimpleFieldFormat(processClass = OrgNameFormatProcess.class)
     private Long roleCompanyId;
