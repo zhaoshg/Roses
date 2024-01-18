@@ -386,7 +386,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
         // 2. 获取用户当前登录公司下的角色id集合
         Set<Long> currentCompanyRoleIdList = paramRoles.stream()
-                .filter(i -> RoleTypeEnum.COMPANY_ROLE.getCode().equals(i.getRoleType()) && i.getRoleOrgId() != null && i.getRoleOrgId().equals(userCurrentOrgId)).map(SysUserRole::getRoleId)
+                .filter(i -> i.getRoleOrgId() != null && i.getRoleOrgId().equals(userCurrentOrgId)).map(SysUserRole::getRoleId)
                 .collect(Collectors.toSet());
 
         // 3. 合并两个集合并返回
