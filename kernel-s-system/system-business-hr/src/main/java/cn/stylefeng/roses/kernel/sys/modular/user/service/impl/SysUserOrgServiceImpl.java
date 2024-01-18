@@ -44,14 +44,25 @@ import static cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExcepti
  */
 @Service
 @Slf4j
-public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUserOrg> implements SysUserOrgService, RemoveOrgCallbackApi,
-        RemoveUserCallbackApi {
+public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUserOrg> implements SysUserOrgService, RemoveOrgCallbackApi, RemoveUserCallbackApi {
 
     @Resource
     private DbOperatorApi dbOperatorApi;
 
     @Override
     public void add(SysUserOrgRequest sysUserOrgRequest) {
+
+        // 先判断如果添加的是主部门，查看指定用户是否已经有主部门绑定
+        if (YesOrNotEnum.Y.getCode().equals(sysUserOrgRequest.getMainFlag())) {
+            LambdaQueryWrapper<SysUserOrg> sysUserOrgLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            sysUserOrgLambdaQueryWrapper.eq(SysUserOrg::getUserId, sysUserOrgRequest.getUserId());
+            sysUserOrgLambdaQueryWrapper.eq(SysUserOrg::getMainFlag, YesOrNotEnum.Y.getCode());
+            long count = this.count(sysUserOrgLambdaQueryWrapper);
+            if (count > 0) {
+                throw new ServiceException(SysUserOrgExceptionEnum.MAIN_FLAG_ERROR);
+            }
+        }
+
         SysUserOrg sysUserOrg = new SysUserOrg();
         BeanUtil.copyProperties(sysUserOrgRequest, sysUserOrg);
         this.save(sysUserOrg);
@@ -332,8 +343,7 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         for (SysUserOrg sysUserOrg : userOrgList) {
 
             // 校验参数是否缺失
-            if (ObjectUtil.isEmpty(sysUserOrg.getOrgId()) || ObjectUtil.isEmpty(sysUserOrg.getPositionId()) || ObjectUtil.isEmpty(
-                    sysUserOrg.getMainFlag())) {
+            if (ObjectUtil.isEmpty(sysUserOrg.getOrgId()) || ObjectUtil.isEmpty(sysUserOrg.getPositionId()) || ObjectUtil.isEmpty(sysUserOrg.getMainFlag())) {
                 throw new ServiceException(SysUserOrgExceptionEnum.EMPTY_PARAM);
             }
 

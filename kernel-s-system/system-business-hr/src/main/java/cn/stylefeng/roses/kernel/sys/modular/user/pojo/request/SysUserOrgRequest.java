@@ -21,14 +21,14 @@ public class SysUserOrgRequest extends BaseRequest {
     /**
      * 企业员工主键id
      */
-    @NotNull(message = "企业员工主键id不能为空", groups = {edit.class, delete.class})
+    @NotNull(message = "企业员工主键id不能为空", groups = {delete.class})
     @ChineseDescription("企业员工主键id")
     private Long userOrgId;
 
     /**
      * 用户id
      */
-    @NotNull(message = "用户id不能为空", groups = {add.class, edit.class})
+    @NotNull(message = "用户id不能为空", groups = {add.class})
     @ChineseDescription("用户id")
     private Long userId;
 
@@ -41,7 +41,7 @@ public class SysUserOrgRequest extends BaseRequest {
     /**
      * 所属机构id
      */
-    @NotNull(message = "所属机构id不能为空", groups = {add.class, edit.class})
+    @NotNull(message = "所属机构id不能为空", groups = {add.class})
     @ChineseDescription("所属机构id")
     private Long orgId;
 
@@ -60,7 +60,7 @@ public class SysUserOrgRequest extends BaseRequest {
     /**
      * 是否是主部门：Y-是，N-不是
      */
-    @NotBlank(message = "是否是主部门：Y-是，N-不是不能为空", groups = {add.class, edit.class})
+    @NotBlank(message = "是否是主部门：Y-是，N-不是不能为空", groups = {add.class})
     @ChineseDescription("是否是主部门：Y-是，N-不是")
     private String mainFlag;
 
@@ -68,6 +68,7 @@ public class SysUserOrgRequest extends BaseRequest {
      * 是否启用：1-启用，2-禁用
      */
     @ChineseDescription("是否启用：1-启用，2-禁用")
+    @NotNull(message = "是否启用不能为空", groups = {add.class})
     private Integer statusFlag;
 
 }
