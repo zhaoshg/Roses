@@ -98,4 +98,12 @@ public interface SysUserOrgService extends IService<SysUserOrg>, SysUserOrgServi
      */
     void removeUserOrgLink(Long userId, Long orgId);
 
+    /**
+     * 删除全部的机构绑定
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 15:48
+     */
+    void deleteAllOrgBind(SysUserOrgRequest sysUserOrgRequest);
+    
 }

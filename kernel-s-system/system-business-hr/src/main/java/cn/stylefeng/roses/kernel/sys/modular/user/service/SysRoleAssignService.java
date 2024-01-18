@@ -4,6 +4,7 @@ import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindRespon
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.DeleteRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.RoleControlRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.StatusControlRequest;
+import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserOrgRequest;
 
 import java.util.List;
 
@@ -46,5 +47,13 @@ public interface SysRoleAssignService {
      * @since 2024-01-18 13:39
      */
     void removeUserOrgBind(DeleteRequest deleteRequest);
+
+    /**
+     * 删除所有的组织机构的绑定，同时清空机构下的角色绑定
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 15:50
+     */
+    void clearAllOrgAndRoleBind(SysUserOrgRequest sysUserOrgRequest);
 
 }

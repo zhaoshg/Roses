@@ -251,6 +251,14 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     }
 
     @Override
+    public void deleteUserAllOrgBind(Long userId) {
+        LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserRole::getUserId, userId);
+        queryWrapper.isNotNull(SysUserRole::getRoleOrgId);
+        this.remove(queryWrapper);
+    }
+
+    @Override
     public SysUserRole getPointUserRole(Long userId, Long roleId, Long orgId) {
         LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysUserRole::getUserId, userId);

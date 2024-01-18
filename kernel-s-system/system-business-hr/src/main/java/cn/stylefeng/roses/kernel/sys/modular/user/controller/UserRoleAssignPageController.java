@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.controller;
 
+import cn.stylefeng.roses.kernel.rule.pojo.request.BaseRequest;
 import cn.stylefeng.roses.kernel.rule.pojo.response.ResponseData;
 import cn.stylefeng.roses.kernel.rule.pojo.response.SuccessResponseData;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
@@ -9,7 +10,9 @@ import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindRespon
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.DeleteRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.RoleControlRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.StatusControlRequest;
+import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserOrgRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysRoleAssignService;
+import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +33,9 @@ public class UserRoleAssignPageController {
 
     @Resource
     private SysRoleAssignService sysRoleAssignService;
+
+    @Resource
+    private SysUserOrgService sysUserOrgService;
 
     /**
      * 获取用户的角色授权信息列表
@@ -76,6 +82,30 @@ public class UserRoleAssignPageController {
     @PostResource(name = "删除用户机构的绑定", path = "/sysRoleAssign/removeUserOrgBind")
     public ResponseData<?> removeUserOrgBind(@RequestBody @Validated DeleteRequest deleteRequest) {
         sysRoleAssignService.removeUserOrgBind(deleteRequest);
+        return new SuccessResponseData<>();
+    }
+
+    /**
+     * 添加用户机构的绑定
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 14:50
+     */
+    @PostResource(name = "添加用户机构的绑定", path = "/sysRoleAssign/addUserOrgBind")
+    public ResponseData<?> addUserOrgBind(@RequestBody @Validated(BaseRequest.add.class) SysUserOrgRequest sysUserOrgRequest) {
+        sysUserOrgService.add(sysUserOrgRequest);
+        return new SuccessResponseData<>();
+    }
+
+    /**
+     * 删除全部机构绑定
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 15:47
+     */
+    @PostResource(name = "删除全部机构绑定", path = "/sysRoleAssign/deleteAllOrgBind")
+    public ResponseData<?> deleteAllOrgBind(@RequestBody @Validated(BaseRequest.delete.class) SysUserOrgRequest sysUserOrgRequest) {
+        sysRoleAssignService.clearAllOrgAndRoleBind(sysUserOrgRequest);
         return new SuccessResponseData<>();
     }
 

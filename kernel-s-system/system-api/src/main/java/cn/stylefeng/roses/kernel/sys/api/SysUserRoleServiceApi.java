@@ -77,5 +77,13 @@ public interface SysUserRoleServiceApi {
      * @since 2024-01-18 14:06
      */
     void removeUserOrgRoleLink(Long userId, Long orgId);
-    
+
+    /**
+     * 删除用户所有关联机构的角色
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 16:07
+     */
+    void deleteUserAllOrgBind(Long userId);
+
 }

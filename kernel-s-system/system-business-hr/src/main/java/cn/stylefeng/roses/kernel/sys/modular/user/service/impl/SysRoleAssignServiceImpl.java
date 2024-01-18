@@ -15,6 +15,7 @@ import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.factory.RoleAssignFactory;
+import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserOrgRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysRoleAssignService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
@@ -129,6 +130,17 @@ public class SysRoleAssignServiceImpl implements SysRoleAssignService {
 
         // 3. 清空缓存
         userRoleCache.remove(String.valueOf(deleteRequest.getUserId()));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void clearAllOrgAndRoleBind(SysUserOrgRequest sysUserOrgRequest) {
+
+        // 1. 先清空用户的机构绑定
+        sysUserOrgService.deleteAllOrgBind(sysUserOrgRequest);
+
+        // 2. 再清空用户的所有的带机构的角色绑定
+        sysUserRoleService.deleteUserAllOrgBind(sysUserOrgRequest.getUserId());
     }
 
 }

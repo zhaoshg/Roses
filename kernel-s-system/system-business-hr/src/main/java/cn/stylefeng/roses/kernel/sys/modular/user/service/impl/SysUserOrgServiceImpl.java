@@ -126,6 +126,12 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
     }
 
     @Override
+    public void deleteAllOrgBind(SysUserOrgRequest sysUserOrgRequest) {
+        LambdaQueryWrapper<SysUserOrg> wrapper = this.createWrapper(sysUserOrgRequest);
+        this.remove(wrapper);
+    }
+
+    @Override
     public List<SysUserOrg> findList(SysUserOrgRequest sysUserOrgRequest) {
         LambdaQueryWrapper<SysUserOrg> wrapper = this.createWrapper(sysUserOrgRequest);
         return this.list(wrapper);
