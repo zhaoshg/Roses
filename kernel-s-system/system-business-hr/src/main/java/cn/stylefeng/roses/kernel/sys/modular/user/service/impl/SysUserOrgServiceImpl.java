@@ -98,6 +98,14 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
     }
 
     @Override
+    public SysUserOrg getUserOrgInfo(Long userId, Long orgId) {
+        LambdaQueryWrapper<SysUserOrg> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysUserOrg::getUserId, userId);
+        wrapper.eq(SysUserOrg::getOrgId, orgId);
+        return this.getOne(wrapper, false);
+    }
+
+    @Override
     public List<SysUserOrg> findList(SysUserOrgRequest sysUserOrgRequest) {
         LambdaQueryWrapper<SysUserOrg> wrapper = this.createWrapper(sysUserOrgRequest);
         return this.list(wrapper);

@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service;
 
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindResponse;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.StatusControlRequest;
 
 import java.util.List;
 
@@ -19,5 +20,13 @@ public interface SysRoleAssignService {
      * @since 2024/1/17 23:09
      */
     List<NewUserRoleBindResponse> getUserAssignList(Long userId);
+
+    /**
+     * 修改用户绑定机构状态`
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 9:34
+     */
+    void changeUserBindStatus(StatusControlRequest statusControlRequest);
 
 }

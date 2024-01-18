@@ -1,10 +1,15 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service.impl;
 
+import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
+import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysRoleServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.pojo.role.SysRoleDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindResponse;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.UserRoleDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.StatusControlRequest;
+import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
+import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.factory.RoleAssignFactory;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysRoleAssignService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
@@ -43,8 +48,7 @@ public class SysRoleAssignServiceImpl implements SysRoleAssignService {
         List<NewUserRoleBindResponse> baseResponse = RoleAssignFactory.createBaseResponse(userOrgList);
 
         // 3. 获取系统中，所有的业务角色（type=15），以及所有的公司角色（type=20）
-        List<SysRoleDTO> businessRoleAndCompanyRole = sysRoleServiceApi.getBusinessRoleAndCompanyRole(
-                userOrgList.stream().map(UserOrgDTO::getCompanyId).collect(Collectors.toList()));
+        List<SysRoleDTO> businessRoleAndCompanyRole = sysRoleServiceApi.getBusinessRoleAndCompanyRole(userOrgList.stream().map(UserOrgDTO::getCompanyId).collect(Collectors.toList()));
 
         // 4. 组装每个机构下的角色信息下拉列表
         RoleAssignFactory.fillRoleSelectList(baseResponse, businessRoleAndCompanyRole);
@@ -54,6 +58,25 @@ public class SysRoleAssignServiceImpl implements SysRoleAssignService {
 
         // 6. 填充绑定关系，返回结果
         return RoleAssignFactory.fillRoleBind(baseResponse, userLinkedOrgRoleList);
+    }
+
+    @Override
+    public void changeUserBindStatus(StatusControlRequest statusControlRequest) {
+
+        // 1. 获取用户所属机构的信息
+        SysUserOrg userOrgInfo = sysUserOrgService.getUserOrgInfo(statusControlRequest.getUserId(), statusControlRequest.getOrgId());
+        if (userOrgInfo == null) {
+            throw new ServiceException(SysUserOrgExceptionEnum.SYS_USER_ORG_NOT_EXISTED);
+        }
+
+        // 2. 修改用户所属机构的状态
+        if (statusControlRequest.getCheckedFlag()) {
+            userOrgInfo.setStatusFlag(StatusEnum.ENABLE.getCode());
+        } else {
+            userOrgInfo.setStatusFlag(StatusEnum.DISABLE.getCode());
+        }
+
+        this.sysUserOrgService.updateById(userOrgInfo);
     }
 
 }

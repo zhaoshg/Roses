@@ -82,4 +82,12 @@ public interface SysUserOrgService extends IService<SysUserOrg>, SysUserOrgServi
      */
     void updateUserOrg(Long userId, List<SysUserOrg> userOrgList);
 
+    /**
+     * 获取用户绑定的机构信息
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 10:36
+     */
+    SysUserOrg getUserOrgInfo(Long userId, Long orgId);
+
 }

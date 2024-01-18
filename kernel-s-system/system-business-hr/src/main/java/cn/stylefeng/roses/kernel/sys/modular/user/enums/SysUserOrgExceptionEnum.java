@@ -16,7 +16,7 @@ public enum SysUserOrgExceptionEnum implements AbstractExceptionEnum {
     /**
      * 查询结果不存在
      */
-    SYS_USER_ORG_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10001", "查询结果不存在"),
+    SYS_USER_ORG_NOT_EXISTED(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10001", "用户机构信息查询结果不存在"),
 
     /**
      * 绑定用户组织机构失败，参数存在缺失，请检查orgId，positionId，mainFlag
