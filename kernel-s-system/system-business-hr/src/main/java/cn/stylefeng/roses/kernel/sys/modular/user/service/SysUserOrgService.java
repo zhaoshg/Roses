@@ -105,5 +105,13 @@ public interface SysUserOrgService extends IService<SysUserOrg>, SysUserOrgServi
      * @since 2024-01-18 15:48
      */
     void deleteAllOrgBind(SysUserOrgRequest sysUserOrgRequest);
-    
+
+    /**
+     * 禁用全部组织机构的状态
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 16:57
+     */
+    void disableAllOrgStatus(Long userId);
+
 }

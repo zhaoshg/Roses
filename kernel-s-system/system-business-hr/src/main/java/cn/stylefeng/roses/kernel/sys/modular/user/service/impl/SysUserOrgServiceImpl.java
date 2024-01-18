@@ -132,6 +132,14 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
     }
 
     @Override
+    public void disableAllOrgStatus(Long userId) {
+        LambdaUpdateWrapper<SysUserOrg> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(SysUserOrg::getUserId, userId);
+        updateWrapper.set(SysUserOrg::getStatusFlag, StatusEnum.DISABLE.getCode());
+        this.update(updateWrapper);
+    }
+
+    @Override
     public List<SysUserOrg> findList(SysUserOrgRequest sysUserOrgRequest) {
         LambdaQueryWrapper<SysUserOrg> wrapper = this.createWrapper(sysUserOrgRequest);
         return this.list(wrapper);

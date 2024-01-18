@@ -56,4 +56,12 @@ public interface SysRoleAssignService {
      */
     void clearAllOrgAndRoleBind(SysUserOrgRequest sysUserOrgRequest);
 
+    /**
+     * 禁用全部组织机构的状态
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 16:55
+     */
+    void disableAllOrgStatus(SysUserOrgRequest sysUserOrgRequest);
+
 }

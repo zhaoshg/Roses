@@ -143,4 +143,9 @@ public class SysRoleAssignServiceImpl implements SysRoleAssignService {
         sysUserRoleService.deleteUserAllOrgBind(sysUserOrgRequest.getUserId());
     }
 
+    @Override
+    public void disableAllOrgStatus(SysUserOrgRequest sysUserOrgRequest) {
+        sysUserOrgService.disableAllOrgStatus(sysUserOrgRequest.getUserId());
+    }
+
 }

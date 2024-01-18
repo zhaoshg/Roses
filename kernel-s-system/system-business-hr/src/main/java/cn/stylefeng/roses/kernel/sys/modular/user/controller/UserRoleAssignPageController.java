@@ -109,4 +109,16 @@ public class UserRoleAssignPageController {
         return new SuccessResponseData<>();
     }
 
+    /**
+     * 禁用全部组织机构
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 15:47
+     */
+    @PostResource(name = "禁用全部组织机构", path = "/sysRoleAssign/disableAllOrg")
+    public ResponseData<?> disableAllOrg(@RequestBody @Validated(BaseRequest.delete.class) SysUserOrgRequest sysUserOrgRequest) {
+        sysRoleAssignService.disableAllOrgStatus(sysUserOrgRequest);
+        return new SuccessResponseData<>();
+    }
+
 }
