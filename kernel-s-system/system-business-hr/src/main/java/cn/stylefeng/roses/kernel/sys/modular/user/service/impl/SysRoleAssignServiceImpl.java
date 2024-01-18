@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service.impl;
 
+import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysRoleServiceApi;
@@ -41,6 +42,9 @@ public class SysRoleAssignServiceImpl implements SysRoleAssignService {
 
     @Resource
     private SysUserRoleService sysUserRoleService;
+
+    @Resource(name = "userRoleCache")
+    private CacheOperatorApi<List<SysUserRole>> userRoleCache;
 
     @Override
     public List<NewUserRoleBindResponse> getUserAssignList(Long userId) {
@@ -108,6 +112,9 @@ public class SysRoleAssignServiceImpl implements SysRoleAssignService {
         else if (pointUserRole != null) {
             sysUserRoleService.removeById(pointUserRole.getUserRoleId());
         }
+
+        // 清空用户绑定的缓存
+        userRoleCache.remove(String.valueOf(roleControlRequest.getUserId()));
     }
 
     @Override
@@ -119,6 +126,9 @@ public class SysRoleAssignServiceImpl implements SysRoleAssignService {
 
         // 2. 删除用户在机构下的所有角色信息
         this.sysUserRoleService.removeUserOrgRoleLink(deleteRequest.getUserId(), deleteRequest.getOrgId());
+
+        // 3. 清空缓存
+        userRoleCache.remove(String.valueOf(deleteRequest.getUserId()));
     }
 
 }
