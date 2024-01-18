@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service;
 
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindResponse;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.DeleteRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.RoleControlRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.StatusControlRequest;
 
@@ -37,5 +38,13 @@ public interface SysRoleAssignService {
      * @since 2024-01-18 10:50
      */
     void changeRoleSelect(RoleControlRequest roleControlRequest);
+
+    /**
+     * 删除机构的绑定
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 13:39
+     */
+    void removeUserOrgBind(DeleteRequest deleteRequest);
 
 }

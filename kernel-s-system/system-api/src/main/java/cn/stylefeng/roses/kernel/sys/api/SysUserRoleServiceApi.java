@@ -70,4 +70,12 @@ public interface SysUserRoleServiceApi {
      */
     Set<Long> findCurrentUserRoleLimitScope();
 
+    /**
+     * 清楚用户在本组织机构下的角色绑定
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 14:06
+     */
+    void removeUserOrgRoleLink(Long userId, Long orgId);
+    
 }

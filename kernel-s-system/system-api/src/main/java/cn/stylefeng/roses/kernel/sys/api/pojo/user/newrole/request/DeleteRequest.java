@@ -14,6 +14,12 @@ import javax.validation.constraints.NotNull;
 public class DeleteRequest {
 
     /**
+     * 用户id
+     */
+    @NotNull(message = "所操作的机构id不能为空，请检查orgId参数")
+    private Long userId;
+
+    /**
      * 所操作的机构id
      */
     @NotNull(message = "所操作的机构id不能为空，请检查orgId参数")

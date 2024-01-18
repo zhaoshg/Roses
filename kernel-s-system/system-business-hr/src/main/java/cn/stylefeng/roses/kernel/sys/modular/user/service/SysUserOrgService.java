@@ -90,4 +90,12 @@ public interface SysUserOrgService extends IService<SysUserOrg>, SysUserOrgServi
      */
     SysUserOrg getUserOrgInfo(Long userId, Long orgId);
 
+    /**
+     * 删除用户机构的关联
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 13:42
+     */
+    void removeUserOrgLink(Long userId, Long orgId);
+
 }

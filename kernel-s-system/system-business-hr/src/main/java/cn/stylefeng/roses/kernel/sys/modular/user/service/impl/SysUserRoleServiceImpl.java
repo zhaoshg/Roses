@@ -243,6 +243,14 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     }
 
     @Override
+    public void removeUserOrgRoleLink(Long userId, Long orgId) {
+        LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserRole::getUserId, userId);
+        queryWrapper.eq(SysUserRole::getRoleOrgId, orgId);
+        this.remove(queryWrapper);
+    }
+
+    @Override
     public SysUserRole getPointUserRole(Long userId, Long roleId, Long orgId) {
         LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysUserRole::getUserId, userId);
@@ -310,9 +318,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     private List<Long> getUserCompanyPermissionRole(List<SysUserRole> paramRoles, Long userCurrentOrgId) {
 
         // 1. 先获取最基本的用户角色，不分公司的，每个人都有的角色
-        Set<Long> baseRoleIdList = paramRoles.stream()
-                .filter(i -> RoleTypeEnum.SYSTEM_ROLE.getCode().equals(i.getRoleType()) && i.getRoleOrgId() == null)
-                .map(SysUserRole::getRoleId)
+        Set<Long> baseRoleIdList = paramRoles.stream().filter(i -> RoleTypeEnum.SYSTEM_ROLE.getCode().equals(i.getRoleType()) && i.getRoleOrgId() == null).map(SysUserRole::getRoleId)
                 .collect(Collectors.toSet());
 
         // 没传当前公司id，则只返回最基本的角色
@@ -322,10 +328,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
         // 2. 获取用户当前登录公司下的角色id集合
         Set<Long> currentCompanyRoleIdList = paramRoles.stream()
-                .filter(i -> RoleTypeEnum.COMPANY_ROLE.getCode().equals(i.getRoleType())
-                        && i.getRoleOrgId() != null
-                        && i.getRoleOrgId().equals(userCurrentOrgId))
-                .map(SysUserRole::getRoleId)
+                .filter(i -> RoleTypeEnum.COMPANY_ROLE.getCode().equals(i.getRoleType()) && i.getRoleOrgId() != null && i.getRoleOrgId().equals(userCurrentOrgId)).map(SysUserRole::getRoleId)
                 .collect(Collectors.toSet());
 
         // 3. 合并两个集合并返回

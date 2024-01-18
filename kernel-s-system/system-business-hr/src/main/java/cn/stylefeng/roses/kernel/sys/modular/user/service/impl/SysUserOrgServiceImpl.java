@@ -21,6 +21,7 @@ import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserOrgMapper;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserOrgRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -103,6 +104,14 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         wrapper.eq(SysUserOrg::getUserId, userId);
         wrapper.eq(SysUserOrg::getOrgId, orgId);
         return this.getOne(wrapper, false);
+    }
+
+    @Override
+    public void removeUserOrgLink(Long userId, Long orgId) {
+        LambdaUpdateWrapper<SysUserOrg> sysUserOrgLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        sysUserOrgLambdaUpdateWrapper.eq(SysUserOrg::getUserId, userId);
+        sysUserOrgLambdaUpdateWrapper.eq(SysUserOrg::getOrgId, orgId);
+        this.remove(sysUserOrgLambdaUpdateWrapper);
     }
 
     @Override

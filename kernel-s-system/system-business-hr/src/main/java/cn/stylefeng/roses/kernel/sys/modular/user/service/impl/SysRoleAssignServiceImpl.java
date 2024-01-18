@@ -7,6 +7,7 @@ import cn.stylefeng.roses.kernel.sys.api.pojo.role.SysRoleDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindResponse;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.UserRoleDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.DeleteRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.RoleControlRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.StatusControlRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
@@ -17,6 +18,7 @@ import cn.stylefeng.roses.kernel.sys.modular.user.service.SysRoleAssignService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -106,6 +108,17 @@ public class SysRoleAssignServiceImpl implements SysRoleAssignService {
         else if (pointUserRole != null) {
             sysUserRoleService.removeById(pointUserRole.getUserRoleId());
         }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void removeUserOrgBind(DeleteRequest deleteRequest) {
+
+        // 1. 删除用户机构关联信息
+        this.sysUserOrgService.removeUserOrgLink(deleteRequest.getUserId(), deleteRequest.getOrgId());
+
+        // 2. 删除用户在机构下的所有角色信息
+        this.sysUserRoleService.removeUserOrgRoleLink(deleteRequest.getUserId(), deleteRequest.getOrgId());
     }
 
 }

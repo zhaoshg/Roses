@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindResponse;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.DeleteRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.RoleControlRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.StatusControlRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysRoleAssignService;
@@ -66,5 +67,16 @@ public class UserRoleAssignPageController {
         return new SuccessResponseData<>();
     }
 
+    /**
+     * 删除用户机构的绑定
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 13:38
+     */
+    @PostResource(name = "删除用户机构的绑定", path = "/sysRoleAssign/removeUserOrgBind")
+    public ResponseData<?> removeUserOrgBind(@RequestBody @Validated DeleteRequest deleteRequest) {
+        sysRoleAssignService.removeUserOrgBind(deleteRequest);
+        return new SuccessResponseData<>();
+    }
 
 }
