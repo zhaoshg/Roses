@@ -86,10 +86,14 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
 
         try {
             // 设置updateUser（BaseEntity)
-            setFieldValByName(DbFieldConstants.UPDATE_USER, this.getUserUniqueId(), metaObject);
+            if (metaObject.hasSetter(DbFieldConstants.UPDATE_USER)) {
+                metaObject.setValue(DbFieldConstants.UPDATE_USER, this.getUserUniqueId());
+            }
 
             // 设置updateTime（BaseEntity)
-            setFieldValByName(DbFieldConstants.UPDATE_TIME, new Date(), metaObject);
+            if (metaObject.hasSetter(DbFieldConstants.UPDATE_TIME)) {
+                metaObject.setValue(DbFieldConstants.UPDATE_TIME, new Date());
+            }
         } catch (ReflectionException e) {
             log.warn("CustomMetaObjectHandler处理过程中无相关字段，不做处理");
         }
