@@ -1,9 +1,12 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service;
 
 import cn.stylefeng.roses.kernel.sys.api.SysUserRoleServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindItem;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRoleRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * 用户角色关联 服务类
@@ -44,5 +47,16 @@ public interface SysUserRoleService extends IService<SysUserRole>, SysUserRoleSe
      * @since 2024-01-18 11:00
      */
     void addBusinessAndCompanyBindRole(SysUserRole sysUserRole);
+
+    /**
+     * 更新用户其他公司的基础业务角色
+     *
+     * @param userId                 用户id
+     * @param excludeOrgId           排除的公司id
+     * @param currentOrgBindRoleList 当前公司绑定的角色列表
+     * @author fengshuonan
+     * @since 2024-01-18 17:41
+     */
+    void updateOtherOrgBusinessRole(Long userId, Long excludeOrgId, List<NewUserRoleBindItem> currentOrgBindRoleList);
 
 }

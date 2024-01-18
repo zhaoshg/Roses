@@ -34,6 +34,16 @@ public interface SysUserOrgServiceApi {
     List<UserOrgDTO> getUserOrgList(Long userId, boolean getTotalOrg);
 
     /**
+     * 获取用户所有的所属组织机构的id信息
+     *
+     * @param userId      用户id
+     * @param getTotalOrg 是否获取用户所属的所有组织机构，true-获取所有，false-只获取启用的部门
+     * @author fengshuonan
+     * @since 2024-01-18 17:48
+     */
+    List<Long> getUserOrgIdList(Long userId, boolean getTotalOrg);
+
+    /**
      * 获取某个机构下的所有用户id集合
      *
      * @param orgId             组织机构id
@@ -78,5 +88,16 @@ public interface SysUserOrgServiceApi {
      * @since 2023/7/19 0:18
      */
     Set<Long> getOrgUserIdList(Set<Long> orgIdList);
+
+    /**
+     * 更新其他公司的启用禁用状态，排除掉某个公司
+     *
+     * @param userId       用户id
+     * @param excludeOrgId 排除的公司id，传空则是更新所有
+     * @param statusFlag   状态标识，1-启用，2-禁用
+     * @author fengshuonan
+     * @since 2024-01-18 17:20
+     */
+    void updateOtherOrgStatus(Long userId, Long excludeOrgId, Integer statusFlag);
 
 }

@@ -227,6 +227,22 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
     }
 
     @Override
+    public List<Long> getUserOrgIdList(Long userId, boolean getTotalOrg) {
+        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserOrg::getUserId, userId);
+        if (!getTotalOrg) {
+            queryWrapper.eq(SysUserOrg::getStatusFlag, StatusEnum.ENABLE.getCode());
+        }
+        queryWrapper.select(SysUserOrg::getOrgId);
+        List<SysUserOrg> sysUserOrgList = this.list(queryWrapper);
+        if (ObjectUtil.isEmpty(sysUserOrgList)) {
+            return new ArrayList<>();
+        } else {
+            return sysUserOrgList.stream().map(SysUserOrg::getOrgId).collect(Collectors.toList());
+        }
+    }
+
+    @Override
     public List<Long> getOrgUserIdList(Long orgId, Boolean containSubOrgFlag) {
 
         // 如果不包含查询子公司，则直接查询参数指定公司下的人员
@@ -303,6 +319,17 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         queryWrapper.select(SysUserOrg::getUserId);
         List<SysUserOrg> list = this.list(queryWrapper);
         return list.stream().map(SysUserOrg::getUserId).collect(Collectors.toSet());
+    }
+
+    @Override
+    public void updateOtherOrgStatus(Long userId, Long excludeOrgId, Integer statusFlag) {
+        LambdaUpdateWrapper<SysUserOrg> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(SysUserOrg::getUserId, userId);
+        if (ObjectUtil.isNotEmpty(excludeOrgId)) {
+            updateWrapper.ne(SysUserOrg::getOrgId, excludeOrgId);
+        }
+        updateWrapper.set(SysUserOrg::getStatusFlag, statusFlag);
+        this.update(updateWrapper);
     }
 
     /**

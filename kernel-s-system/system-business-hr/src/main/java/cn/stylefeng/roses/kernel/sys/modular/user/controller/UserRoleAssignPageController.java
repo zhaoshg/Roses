@@ -10,6 +10,7 @@ import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindRespon
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.DeleteRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.RoleControlRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.StatusControlRequest;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.SyncBindRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserOrgRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysRoleAssignService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
@@ -118,6 +119,18 @@ public class UserRoleAssignPageController {
     @PostResource(name = "禁用全部组织机构", path = "/sysRoleAssign/disableAllOrg")
     public ResponseData<?> disableAllOrg(@RequestBody @Validated(BaseRequest.delete.class) SysUserOrgRequest sysUserOrgRequest) {
         sysRoleAssignService.disableAllOrgStatus(sysUserOrgRequest);
+        return new SuccessResponseData<>();
+    }
+
+    /**
+     * 同步到其他公司绑定信息
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 15:47
+     */
+    @PostResource(name = "同步到其他公司绑定信息", path = "/sysRoleAssign/syncOtherOrgStatusAndBusinessRole")
+    public ResponseData<?> syncOtherOrgStatusAndBusinessRole(@RequestBody @Validated SyncBindRequest syncBindRequest) {
+        sysRoleAssignService.syncOtherOrgStatusAndBusinessRole(syncBindRequest);
         return new SuccessResponseData<>();
     }
 

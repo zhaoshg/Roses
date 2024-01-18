@@ -13,11 +13,13 @@ import cn.stylefeng.roses.kernel.sys.api.callback.RemoveRoleCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.enums.role.RoleTypeEnum;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindItem;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.UserRoleDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserRoleMapper;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRoleRequest;
+import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserOrgService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserRoleService;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -54,6 +56,9 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
     @Resource
     private SysRoleLimitServiceApi sysRoleLimitServiceApi;
+
+    @Resource
+    private SysUserOrgService sysUserOrgService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -287,6 +292,51 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         }
 
         this.save(sysUserRole);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateOtherOrgBusinessRole(Long userId, Long excludeOrgId, List<NewUserRoleBindItem> currentOrgBindRoleList) {
+
+        // 1. 清空用户在其他公司的业务角色
+        LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserRole::getUserId, userId);
+        queryWrapper.eq(SysUserRole::getRoleType, RoleTypeEnum.BUSINESS_ROLE.getCode());
+        queryWrapper.ne(SysUserRole::getRoleOrgId, excludeOrgId);
+        this.remove(queryWrapper);
+
+        // 清空角色缓存
+        userRoleCache.remove(userId.toString());
+
+        // 2. 获取用户有几个机构
+        List<Long> userOrgIdList = sysUserOrgService.getUserOrgIdList(userId, true);
+        if (ObjectUtil.isEmpty(userOrgIdList)) {
+            return;
+        }
+        List<Long> excludeAfterOrgIds = userOrgIdList.stream().filter(orgId -> !orgId.equals(excludeOrgId)).collect(Collectors.toList());
+        if (ObjectUtil.isEmpty(excludeAfterOrgIds)) {
+            return;
+        }
+
+        // 3. 给这些机构，绑定上当前公司的业务角色
+        if (ObjectUtil.isEmpty(currentOrgBindRoleList)) {
+            return;
+        }
+        ArrayList<SysUserRole> sysUserRoles = new ArrayList<>();
+        for (Long userOrgId : excludeAfterOrgIds) {
+            for (NewUserRoleBindItem newUserRoleBindItem : currentOrgBindRoleList) {
+                SysUserRole sysUserRole = new SysUserRole();
+                sysUserRole.setUserId(userId);
+                sysUserRole.setRoleId(newUserRoleBindItem.getRoleId());
+                sysUserRole.setRoleType(RoleTypeEnum.BUSINESS_ROLE.getCode());
+                sysUserRole.setRoleOrgId(userOrgId);
+                sysUserRoles.add(sysUserRole);
+            }
+        }
+        this.saveBatch(sysUserRoles);
+
+        // 清空角色缓存
+        userRoleCache.remove(userId.toString());
     }
 
     /**

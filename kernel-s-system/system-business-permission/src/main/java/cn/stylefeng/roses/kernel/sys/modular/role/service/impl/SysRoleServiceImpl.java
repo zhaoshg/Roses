@@ -349,6 +349,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     public List<SysRoleDTO> getBusinessRoleAndCompanyRole(List<Long> companyIdList) {
+        if (ObjectUtil.isEmpty(companyIdList)) {
+            return new ArrayList<>();
+        }
         LambdaQueryWrapper<SysRole> sysRoleLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysRoleLambdaQueryWrapper.eq(SysRole::getRoleType, RoleTypeEnum.BUSINESS_ROLE.getCode());
         sysRoleLambdaQueryWrapper.or().nested(i -> i.eq(SysRole::getRoleType, RoleTypeEnum.COMPANY_ROLE.getCode()).and(j -> j.in(SysRole::getRoleCompanyId, companyIdList)));

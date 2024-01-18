@@ -1,16 +1,20 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysRoleServiceApi;
+import cn.stylefeng.roses.kernel.sys.api.enums.role.RoleTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.role.SysRoleDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindItem;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindResponse;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.UserRoleDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.DeleteRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.RoleControlRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.StatusControlRequest;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.SyncBindRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExceptionEnum;
@@ -23,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,6 +57,11 @@ public class SysRoleAssignServiceImpl implements SysRoleAssignService {
 
         // 1. 获取用户的所有绑定的组织机构信息
         List<UserOrgDTO> userOrgList = sysUserOrgService.getUserOrgList(userId, true);
+
+        // 用户没绑定机构，直接返回
+        if (ObjectUtil.isEmpty(userOrgList)) {
+            return new ArrayList<>();
+        }
 
         // 2. 组装NewUserRoleBindResponse
         List<NewUserRoleBindResponse> baseResponse = RoleAssignFactory.createBaseResponse(userOrgList);
@@ -146,6 +156,23 @@ public class SysRoleAssignServiceImpl implements SysRoleAssignService {
     @Override
     public void disableAllOrgStatus(SysUserOrgRequest sysUserOrgRequest) {
         sysUserOrgService.disableAllOrgStatus(sysUserOrgRequest.getUserId());
+    }
+
+    @Override
+    public void syncOtherOrgStatusAndBusinessRole(SyncBindRequest syncBindRequest) {
+
+        // 1. 获取当前指定公司的同步状态
+        Boolean statusFlag = syncBindRequest.getStatusFlag();
+
+        // 2. 更新用户所属其他组织机构的状态
+        sysUserOrgService.updateOtherOrgStatus(syncBindRequest.getUserId(), syncBindRequest.getOrgId(), statusFlag ? StatusEnum.ENABLE.getCode() : StatusEnum.DISABLE.getCode());
+
+        // 3. 筛选出当前公司的业务角色
+        List<NewUserRoleBindItem> currentOrgBindRoleList = syncBindRequest.getRoleBindItemList().stream().filter(i -> i.getRoleType().equals(RoleTypeEnum.BUSINESS_ROLE.getCode()))
+                .filter(NewUserRoleBindItem::getCheckedFlag).collect(Collectors.toList());
+
+        // 4. 更新用户所属其他组织机构的业务角色
+        sysUserRoleService.updateOtherOrgBusinessRole(syncBindRequest.getUserId(), syncBindRequest.getOrgId(), currentOrgBindRoleList);
     }
 
 }
