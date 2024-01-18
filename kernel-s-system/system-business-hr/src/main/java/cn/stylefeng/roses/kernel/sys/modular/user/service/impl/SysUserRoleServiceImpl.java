@@ -242,6 +242,37 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         return this.findUserRoleLimitScope(userId);
     }
 
+    @Override
+    public SysUserRole getPointUserRole(Long userId, Long roleId, Long orgId) {
+        LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserRole::getUserId, userId);
+        queryWrapper.eq(SysUserRole::getRoleId, roleId);
+        queryWrapper.eq(SysUserRole::getRoleOrgId, orgId);
+        queryWrapper.select(SysUserRole::getUserRoleId, SysUserRole::getUserId, SysUserRole::getRoleId, SysUserRole::getRoleType, SysUserRole::getRoleOrgId);
+        return this.getOne(queryWrapper, false);
+    }
+
+    @Override
+    public void addBusinessAndCompanyBindRole(SysUserRole sysUserRole) {
+        if (sysUserRole == null) {
+            return;
+        }
+
+        // 这个接口只能操作业务的和公司的绑定
+        Integer roleType = sysUserRole.getRoleType();
+        if (!RoleTypeEnum.BUSINESS_ROLE.getCode().equals(roleType) || !RoleTypeEnum.COMPANY_ROLE.getCode().equals(roleType)) {
+            throw new ServiceException(SysUserExceptionEnum.ROLE_TYPE_PERMISSION_ERROR);
+        }
+
+        // 这个接口必须传递组织机构，给这个人的组织机构下绑定角色
+        Long roleOrgId = sysUserRole.getRoleOrgId();
+        if (ObjectUtil.isEmpty(roleOrgId)) {
+            throw new ServiceException(SysUserExceptionEnum.ORG_ID_EMPTY_ERROR);
+        }
+
+        this.save(sysUserRole);
+    }
+
     /**
      * 清空用户绑定的所有系统角色，这个界面只管分配系统角色
      *

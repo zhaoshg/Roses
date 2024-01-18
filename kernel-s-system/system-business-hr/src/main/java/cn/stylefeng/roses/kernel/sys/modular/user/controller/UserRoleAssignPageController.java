@@ -6,6 +6,7 @@ import cn.stylefeng.roses.kernel.scanner.api.annotation.ApiResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.GetResource;
 import cn.stylefeng.roses.kernel.scanner.api.annotation.PostResource;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindResponse;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.RoleControlRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.StatusControlRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysRoleAssignService;
 import org.springframework.validation.annotation.Validated;
@@ -52,5 +53,18 @@ public class UserRoleAssignPageController {
         sysRoleAssignService.changeUserBindStatus(statusControlRequest);
         return new SuccessResponseData<>();
     }
+
+    /**
+     * 绑定或取消绑定角色
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 9:31
+     */
+    @PostResource(name = "绑定或取消绑定角色", path = "/sysRoleAssign/changeRoleSelect")
+    public ResponseData<?> changeRoleSelect(@RequestBody @Validated RoleControlRequest roleControlRequest) {
+        sysRoleAssignService.changeRoleSelect(roleControlRequest);
+        return new SuccessResponseData<>();
+    }
+
 
 }

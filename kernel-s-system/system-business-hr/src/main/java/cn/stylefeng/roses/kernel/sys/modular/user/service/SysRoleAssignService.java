@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service;
 
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindResponse;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.RoleControlRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.StatusControlRequest;
 
 import java.util.List;
@@ -28,5 +29,13 @@ public interface SysRoleAssignService {
      * @since 2024-01-18 9:34
      */
     void changeUserBindStatus(StatusControlRequest statusControlRequest);
+
+    /**
+     * 设置角色的选中状态的填充
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 10:50
+     */
+    void changeRoleSelect(RoleControlRequest roleControlRequest);
 
 }

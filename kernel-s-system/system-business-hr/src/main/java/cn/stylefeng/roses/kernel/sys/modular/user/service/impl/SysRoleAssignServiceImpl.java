@@ -7,8 +7,10 @@ import cn.stylefeng.roses.kernel.sys.api.pojo.role.SysRoleDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.NewUserRoleBindResponse;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.UserRoleDTO;
+import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.RoleControlRequest;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.newrole.request.StatusControlRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserOrg;
+import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUserRole;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserOrgExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.factory.RoleAssignFactory;
 import cn.stylefeng.roses.kernel.sys.modular.user.service.SysRoleAssignService;
@@ -77,6 +79,33 @@ public class SysRoleAssignServiceImpl implements SysRoleAssignService {
         }
 
         this.sysUserOrgService.updateById(userOrgInfo);
+    }
+
+    @Override
+    public void changeRoleSelect(RoleControlRequest roleControlRequest) {
+
+        // 1. 获取用户是否已经绑定了这个机构下的这个角色
+        SysUserRole pointUserRole = sysUserRoleService.getPointUserRole(roleControlRequest.getUserId(), roleControlRequest.getRoleId(), roleControlRequest.getOrgId());
+
+        // 针对已经绑定的不需要再次绑定
+        if (pointUserRole != null && roleControlRequest.getCheckedFlag()) {
+            return;
+        }
+
+        // 未绑定过，但是需要绑定，则新增一条记录
+        else if (pointUserRole == null && roleControlRequest.getCheckedFlag()) {
+            SysUserRole sysUserRole = new SysUserRole();
+            sysUserRole.setUserId(roleControlRequest.getUserId());
+            sysUserRole.setRoleId(roleControlRequest.getRoleId());
+            sysUserRole.setRoleType(roleControlRequest.getRoleType());
+            sysUserRole.setRoleOrgId(roleControlRequest.getOrgId());
+            sysUserRoleService.save(sysUserRole);
+        }
+
+        // 不需要绑定，则删除这条记录
+        else if (pointUserRole != null) {
+            sysUserRoleService.removeById(pointUserRole.getUserRoleId());
+        }
     }
 
 }

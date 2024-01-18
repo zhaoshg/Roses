@@ -29,4 +29,20 @@ public interface SysUserRoleService extends IService<SysUserRole>, SysUserRoleSe
      */
     void bindUserDefaultRole(Long userId);
 
+    /**
+     * 获取用户是否绑定的对应的角色
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 10:54
+     */
+    SysUserRole getPointUserRole(Long userId, Long roleId, Long orgId);
+
+    /**
+     * 新增一个角色绑定
+     *
+     * @author fengshuonan
+     * @since 2024-01-18 11:00
+     */
+    void addBusinessAndCompanyBindRole(SysUserRole sysUserRole);
+
 }

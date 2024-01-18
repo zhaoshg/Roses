@@ -63,7 +63,17 @@ public enum SysUserExceptionEnum implements AbstractExceptionEnum {
     /**
      * 非超级管理员不能修改基础系统角色绑定
      */
-    CANT_CHANGE_BASE_SYSTEM_ROLE(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10010", "非超级管理员不能修改基础系统角色绑定");
+    CANT_CHANGE_BASE_SYSTEM_ROLE(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10010", "非超级管理员不能修改基础系统角色绑定"),
+
+    /**
+     * 无法绑定角色，请检查类型是否正常
+     */
+    ROLE_TYPE_PERMISSION_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10011", "无法绑定角色，请检查类型是否正常"),
+
+    /**
+     * 组织机构id为空，请检查参数
+     */
+    ORG_ID_EMPTY_ERROR(RuleConstants.USER_OPERATION_ERROR_TYPE_CODE + "10012", "组织机构id为空，请检查参数");
 
     /**
      * 错误编码
