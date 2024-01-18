@@ -106,7 +106,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
      * @author fengshuonan
      * @since 2021/10/29 10:01
      */
-    private Long getUserUniqueId() {
+    protected Long getUserUniqueId() {
 
         try {
             return LoginContext.me().getLoginUser().getUserId();
@@ -123,7 +123,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
      * @author fengshuonan
      * @since 2021/10/29 10:01
      */
-    private void setValue(MetaObject metaObject, String fieldName, Object value) {
+    protected void setValue(MetaObject metaObject, String fieldName, Object value) {
         Object originalAttr = getFieldValByName(fieldName, metaObject);
         if (ObjectUtil.isEmpty(originalAttr)) {
             setFieldValByName(fieldName, value, metaObject);
@@ -136,7 +136,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
      * @author yxx
      * @since 2022/09/01 10:14
      */
-    private Long getUserOrgId() {
+    protected Long getUserOrgId() {
 
         try {
             return LoginContext.me().getLoginUser().getCurrentOrgId();
@@ -153,7 +153,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
      * @author fengshuonan
      * @since 2023/9/5 16:19
      */
-    private Long getTenantId() {
+    protected Long getTenantId() {
         try {
 
             // 1. 优先从线程变量中获取，这个优先级最高
@@ -176,7 +176,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
      * @author fengshuonan
      * @since 2022/9/7 17:23
      */
-    private void setDelFlagDefaultValue(MetaObject metaObject) {
+    protected void setDelFlagDefaultValue(MetaObject metaObject) {
         Object originalAttr = getFieldValByName(DbFieldConstants.DEL_FLAG, metaObject);
         if (ObjectUtil.isNotEmpty(originalAttr)) {
             return;
@@ -201,7 +201,7 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
      * @author fengshuonan
      * @since 2022/9/7 17:23
      */
-    private void setStatusDefaultValue(MetaObject metaObject) {
+    protected void setStatusDefaultValue(MetaObject metaObject) {
         Object originalAttr = getFieldValByName(DbFieldConstants.STATUS_FLAG, metaObject);
         if (ObjectUtil.isNotEmpty(originalAttr)) {
             return;
