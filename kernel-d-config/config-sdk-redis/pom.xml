@@ -24,20 +24,17 @@
             <version>${roses.version}</version>
         </dependency>
 
-        <!-- redis,使用jedis客户端排除lettuce -->
+        <!--redis缓存配置-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.lettuce</groupId>
-                    <artifactId>lettuce-core</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>${roses.version}</version>
         </dependency>
         <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>cache-sdk-redis</artifactId>
+            <version>${roses.version}</version>
+            <optional>true</optional>
         </dependency>
 
     </dependencies>
