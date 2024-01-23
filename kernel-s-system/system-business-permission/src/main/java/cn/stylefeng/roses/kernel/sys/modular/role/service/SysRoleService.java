@@ -8,6 +8,7 @@ import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 系统角色 服务类
@@ -118,5 +119,13 @@ public interface SysRoleService extends IService<SysRole>, SysRoleServiceApi {
      * @since 2024-01-16 19:07
      */
     List<SysRole> userAssignRoleList(SysRoleRequest sysRoleRequest);
+
+    /**
+     * 将指定角色id，进行权限刷新，从新绑定对应的菜单和功能，并将角色权限范围也绑定指定的功能id
+     *
+     * @author fengshuonan
+     * @since 2024-01-23 13:59
+     */
+    void refreshRoleAuth(Set<Long> roleIdList, Set<Long> menuIdList, Set<Long> menuOptionIdList);
 
 }

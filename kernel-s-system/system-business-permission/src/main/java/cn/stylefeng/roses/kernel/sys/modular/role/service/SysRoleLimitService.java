@@ -6,6 +6,8 @@ import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissio
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.response.RoleBindPermissionResponse;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Set;
+
 /**
  * 角色权限限制 服务类
  *
@@ -29,5 +31,13 @@ public interface SysRoleLimitService extends IService<SysRoleLimit>, SysRoleLimi
      * @since 2023/9/8 14:06
      */
     void updateRoleBindLimit(RoleBindPermissionRequest roleBindPermissionRequest);
+
+    /**
+     * 更新角色的权限范围
+     *
+     * @author fengshuonan
+     * @since 2024-01-23 14:22
+     */
+    void updateRoleLimit(Long roleId, Set<Long> menuIdList, Set<Long> menuOptionIdList);
 
 }

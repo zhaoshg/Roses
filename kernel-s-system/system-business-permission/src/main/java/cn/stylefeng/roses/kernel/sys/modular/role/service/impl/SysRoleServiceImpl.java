@@ -18,12 +18,17 @@ import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
 import cn.stylefeng.roses.kernel.sys.api.enums.permission.DataScopeTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.enums.role.RoleTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.role.SysRoleDTO;
+import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenu;
+import cn.stylefeng.roses.kernel.sys.modular.menu.entity.SysMenuOptions;
 import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuOptionsService;
+import cn.stylefeng.roses.kernel.sys.modular.menu.service.SysMenuService;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
 import cn.stylefeng.roses.kernel.sys.modular.role.enums.exception.SysRoleExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleMapper;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleRequest;
+import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleLimitService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuOptionsService;
+import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleMenuService;
 import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -52,6 +57,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Resource
     private SysMenuOptionsService sysMenuOptionsService;
+
+    @Resource
+    private SysRoleMenuService sysRoleMenuService;
+
+    @Resource
+    private SysMenuService sysMenuService;
+
+    @Resource
+    private SysRoleLimitService sysRoleLimitService;
 
     @Override
     public void add(SysRoleRequest sysRoleRequest) {
@@ -169,8 +183,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         LambdaQueryWrapper<SysRole> wrapper = createWrapper(sysRoleRequest);
 
         // 只查询需要的字段
-        wrapper.select(SysRole::getRoleName, SysRole::getRoleCode, SysRole::getRoleSort, SysRole::getRoleId, BaseEntity::getCreateTime,
-                SysRole::getRoleType, SysRole::getRoleCompanyId);
+        wrapper.select(SysRole::getRoleName, SysRole::getRoleCode, SysRole::getRoleSort, SysRole::getRoleId, BaseEntity::getCreateTime, SysRole::getRoleType, SysRole::getRoleCompanyId);
 
         // 非管理员用户只能查看自己创建的角色
         this.filterRolePermission(wrapper, sysRoleRequest);
@@ -253,6 +266,27 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         wrapper.select(SysRole::getRoleId, SysRole::getRoleName, SysRole::getRoleType);
 
         return this.list(wrapper);
+    }
+
+    @Override
+    public void refreshRoleAuth(Set<Long> roleIdList, Set<Long> menuIdList, Set<Long> menuOptionIdList) {
+
+        // 获取菜单的appId和menuId
+        List<SysMenu> totalMenus = sysMenuService.getTotalMenus(menuIdList);
+
+        // 获取菜单功能的填充信息
+        List<SysMenuOptions> totalMenuOptionsList = sysMenuOptionsService.getTotalMenuOptionsList(menuOptionIdList);
+
+        for (Long roleId : roleIdList) {
+            // 绑定角色的菜单
+            sysRoleMenuService.bindRoleMenus(roleId, totalMenus);
+
+            // 绑定角色菜单功能
+            sysRoleMenuOptionsService.bindRoleMenuOptions(roleId, totalMenuOptionsList);
+
+            // 更新角色的权限范围
+            this.sysRoleLimitService.updateRoleLimit(roleId, menuIdList, menuOptionIdList);
+        }
     }
 
     @Override

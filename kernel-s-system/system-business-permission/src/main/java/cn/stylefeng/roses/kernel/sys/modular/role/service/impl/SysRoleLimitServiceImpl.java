@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.stylefeng.roses.kernel.sys.modular.role.action.RoleBindLimitAction;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRoleLimit;
+import cn.stylefeng.roses.kernel.sys.modular.role.enums.RoleLimitTypeEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.factory.PermissionAssignFactory;
 import cn.stylefeng.roses.kernel.sys.modular.role.mapper.SysRoleLimitMapper;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.RoleBindPermissionRequest;
@@ -14,12 +15,10 @@ import cn.stylefeng.roses.kernel.sys.modular.role.service.SysRoleLimitService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -55,6 +54,43 @@ public class SysRoleLimitServiceImpl extends ServiceImpl<SysRoleLimitMapper, Sys
                 roleBindLimitAction.doRoleBindLimitAction(roleBindPermissionRequest);
                 return;
             }
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateRoleLimit(Long roleId, Set<Long> menuIdList, Set<Long> menuOptionIdList) {
+
+        // 删除角色所绑定的权限范围
+        LambdaQueryWrapper<SysRoleLimit> sysRoleLimitLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleLimitLambdaQueryWrapper.eq(SysRoleLimit::getRoleId, roleId);
+        this.remove(sysRoleLimitLambdaQueryWrapper);
+
+        // 初始化菜单id列表数据
+        List<SysRoleLimit> sysRoleLimits = new ArrayList<>();
+        if (ObjectUtil.isNotEmpty(menuIdList)) {
+            for (Long menuId : menuIdList) {
+                SysRoleLimit sysRoleLimit = new SysRoleLimit();
+                sysRoleLimit.setRoleId(roleId);
+                sysRoleLimit.setLimitType(RoleLimitTypeEnum.MENU.getCode());
+                sysRoleLimit.setBusinessId(menuId);
+                sysRoleLimits.add(sysRoleLimit);
+            }
+        }
+
+        // 初始化菜单功能id列表的数据
+        if (ObjectUtil.isNotEmpty(menuOptionIdList)) {
+            for (Long menuOptionId : menuOptionIdList) {
+                SysRoleLimit sysRoleLimit = new SysRoleLimit();
+                sysRoleLimit.setRoleId(roleId);
+                sysRoleLimit.setLimitType(RoleLimitTypeEnum.MENU_OPTIONS.getCode());
+                sysRoleLimit.setBusinessId(menuOptionId);
+                sysRoleLimits.add(sysRoleLimit);
+            }
+        }
+
+        if (ObjectUtil.isNotEmpty(sysRoleLimits)) {
+            this.saveBatch(sysRoleLimits);
         }
     }
 
