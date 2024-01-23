@@ -71,6 +71,9 @@ public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOption
         } else {
             this.saveBatch(sysRoleMenuOptionList);
         }
+
+        // 清空角色和菜单功能的绑定
+        roleMenuOptionsCache.remove(String.valueOf(roleId));
     }
 
     @Override
@@ -123,6 +126,9 @@ public class SysRoleMenuOptionsServiceImpl extends ServiceImpl<SysRoleMenuOption
         LambdaQueryWrapper<SysRoleMenuOptions> wrapper = new LambdaQueryWrapper<>();
         wrapper.in(SysRoleMenuOptions::getRoleId, beRemovedRoleIdList);
         this.remove(wrapper);
+
+        // 清空角色和菜单功能的绑定
+        roleMenuOptionsCache.remove(beRemovedRoleIdList.stream().map(Object::toString).collect(Collectors.toList()));
     }
 
     @Override

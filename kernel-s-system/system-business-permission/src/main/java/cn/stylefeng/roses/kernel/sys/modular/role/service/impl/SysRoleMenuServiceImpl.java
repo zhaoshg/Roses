@@ -61,6 +61,9 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         } else {
             this.saveBatch(sysRoleMenus);
         }
+
+        // 清空角色和菜单的缓存
+        roleMenuCache.remove(String.valueOf(roleId));
     }
 
     @Override
