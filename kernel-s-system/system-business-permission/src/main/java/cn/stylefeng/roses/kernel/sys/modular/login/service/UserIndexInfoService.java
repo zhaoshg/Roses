@@ -369,6 +369,7 @@ public class UserIndexInfoService {
                     indexUserMenuInfo.setPath(userMenuItem.getAntdvRouter());
                     indexUserMenuInfo.setComponent(userMenuItem.getAntdvComponent());
                     indexUserMenuInfo.setSortNumber(userMenuItem.getMenuSort());
+                    indexUserMenuInfo.setAppDesignBusinessId(userMenuItem.getAppDesignBusinessId());
                     appMenuList.add(indexUserMenuInfo);
                 }
             }

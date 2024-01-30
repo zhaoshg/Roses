@@ -30,7 +30,7 @@ public class MenuItemDetail implements AbstractTreeNode<MenuItemDetail> {
     private String menuName;
 
     /**
-     * 菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接
+     * 菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接，50-应用设计
      */
     private Integer menuType;
 

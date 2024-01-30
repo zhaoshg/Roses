@@ -30,9 +30,9 @@ public class IndexUserMenuInfo implements AbstractTreeNode<IndexUserMenuInfo> {
     private Long menuParentId;
 
     /**
-     * 菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接
+     * 菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接，50-应用设计
      */
-    @ChineseDescription("菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接")
+    @ChineseDescription("菜单类型：10-后台菜单，20-纯前台路由界面，30-内部链接，40-外部链接，50-应用设计")
     private Integer menuType;
 
     /**
@@ -82,6 +82,12 @@ public class IndexUserMenuInfo implements AbstractTreeNode<IndexUserMenuInfo> {
      */
     @ChineseDescription("路由元信息")
     private String meta;
+
+    /**
+     * 应用设计的业务id
+     */
+    @ChineseDescription("应用设计的业务id")
+    private Long appDesignBusinessId;
 
     /**
      * 子级菜单

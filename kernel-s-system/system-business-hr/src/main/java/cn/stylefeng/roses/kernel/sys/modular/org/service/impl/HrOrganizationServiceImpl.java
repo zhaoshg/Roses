@@ -16,6 +16,7 @@ import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
 import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
+import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.rule.tree.factory.DefaultTreeBuildFactory;
@@ -202,6 +203,8 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     @Override
     public PageResult<HrOrganization> commonOrgPage(HrOrganizationRequest hrOrganizationRequest) {
 
+        // 只查询未禁用的组织机构
+        hrOrganizationRequest.setStatusFlag(StatusEnum.ENABLE.getCode());
         LambdaQueryWrapper<HrOrganization> wrapper = createWrapper(hrOrganizationRequest);
 
         // 只查询需要的字段
@@ -679,6 +682,9 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         if (ObjectUtil.isNotEmpty(companySearchFlag) && companySearchFlag) {
             queryWrapper.eq(HrOrganization::getOrgType, OrgTypeEnum.COMPANY.getCode());
         }
+
+        // 只查询启用状态的机构
+        queryWrapper.eq(HrOrganization::getStatusFlag, StatusEnum.ENABLE.getCode());
 
         return queryWrapper;
     }
