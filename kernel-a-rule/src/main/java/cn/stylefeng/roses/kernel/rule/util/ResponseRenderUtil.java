@@ -35,6 +35,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 
 /**
@@ -69,8 +71,7 @@ public class ResponseRenderUtil {
      * @author fengshuonan
      * @since 2020/12/15 21:40
      */
-    public static void renderErrorResponse(HttpServletResponse response,
-                                           String code, String message, String exceptionClazz) {
+    public static void renderErrorResponse(HttpServletResponse response, String code, String message, String exceptionClazz) {
         response.setCharacterEncoding(CharsetUtil.UTF_8);
         response.setContentType(ContentType.JSON.toString());
         ErrorResponseData errorResponseData = new ErrorResponseData(code, message);
@@ -103,6 +104,23 @@ public class ResponseRenderUtil {
      */
     public static void setRenderImageHeader(HttpServletResponse response) {
         response.setContentType("image/png");
+    }
+
+    /**
+     * 设置excel渲染的头
+     *
+     * @author fengshuonan
+     * @since 2024-02-04 13:58
+     */
+    public static void setRenderExcelHeader(HttpServletResponse response, String fileName) {
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setCharacterEncoding("utf-8");
+        try {
+            fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+        } catch (UnsupportedEncodingException e) {
+            log.error("excel文件名编码错误！", e);
+        }
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
     }
 
 }
