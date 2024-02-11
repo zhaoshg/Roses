@@ -16,9 +16,11 @@ import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantIdHolder;
 import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantSwitchHolder;
+import cn.stylefeng.roses.kernel.dsctn.api.context.DataSourceContext;
 import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
 import cn.stylefeng.roses.kernel.file.api.constants.FileConstants;
 import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
+import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
@@ -407,6 +409,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         return dictList;
 
+    }
+
+    @Override
+    public void quickBatchSaveUser(List<SysUser> batchUser) {
+        if (DbTypeEnum.MYSQL.equals(DataSourceContext.me().getCurrentDbType())) {
+            this.getBaseMapper().insertBatchSomeColumn(batchUser);
+        } else {
+            this.saveBatch(batchUser);
+        }
     }
 
     @Override

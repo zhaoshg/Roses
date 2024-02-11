@@ -1,6 +1,7 @@
 package cn.stylefeng.roses.kernel.sys.modular.user.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.log.api.pojo.entity.SysLogBusinessContent;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
 import cn.stylefeng.roses.kernel.sys.api.SysUserServiceApi;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
@@ -138,5 +139,13 @@ public interface SysUserService extends IService<SysUser>, SysUserServiceApi {
      * @since 2023/11/2 10:25
      */
     List<SimpleDict> batchGetName(SysUserRequest sysUserRequest);
+
+    /**
+     * 批量保存用户信息
+     *
+     * @author fengshuonan
+     * @since 2024/2/12 22:41
+     */
+    void quickBatchSaveUser(List<SysUser> batchUser);
 
 }
