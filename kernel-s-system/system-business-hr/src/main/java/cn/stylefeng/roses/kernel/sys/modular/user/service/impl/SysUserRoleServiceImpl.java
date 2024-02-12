@@ -4,8 +4,10 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.cache.api.CacheOperatorApi;
+import cn.stylefeng.roses.kernel.dsctn.api.context.DataSourceContext;
 import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
 import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
+import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.sys.api.SysRoleLimitServiceApi;
 import cn.stylefeng.roses.kernel.sys.api.SysRoleServiceApi;
@@ -337,6 +339,16 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
         // 清空角色缓存
         userRoleCache.remove(userId.toString());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void quickBatchSaveUserRole(List<SysUserRole> batchUserRole) {
+        if (DbTypeEnum.MYSQL.equals(DataSourceContext.me().getCurrentDbType())) {
+            this.getBaseMapper().insertBatchSomeColumn(batchUserRole);
+        } else {
+            this.saveBatch(batchUserRole);
+        }
     }
 
     /**

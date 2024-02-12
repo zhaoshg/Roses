@@ -412,6 +412,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void quickBatchSaveUser(List<SysUser> batchUser) {
         if (DbTypeEnum.MYSQL.equals(DataSourceContext.me().getCurrentDbType())) {
             this.getBaseMapper().insertBatchSomeColumn(batchUser);

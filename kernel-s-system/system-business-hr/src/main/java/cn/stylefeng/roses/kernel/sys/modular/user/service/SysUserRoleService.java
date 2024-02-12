@@ -59,4 +59,12 @@ public interface SysUserRoleService extends IService<SysUserRole>, SysUserRoleSe
      */
     void updateOtherOrgBusinessRole(Long userId, Long excludeOrgId, List<NewUserRoleBindItem> currentOrgBindRoleList);
 
+    /**
+     * 批量保存用户角色
+     *
+     * @author fengshuonan
+     * @since 2024/2/12 23:13
+     */
+    void quickBatchSaveUserRole(List<SysUserRole> batchUserRole);
+
 }
