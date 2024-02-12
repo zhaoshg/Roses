@@ -114,4 +114,12 @@ public interface SysUserOrgService extends IService<SysUserOrg>, SysUserOrgServi
      */
     void disableAllOrgStatus(Long userId);
 
+    /**
+     * 批量保存用户机构
+     *
+     * @author fengshuonan
+     * @since 2024/2/12 23:31
+     */
+    void quickBatchSaveUserOrg(List<SysUserOrg> batchUserOrg);
+
 }

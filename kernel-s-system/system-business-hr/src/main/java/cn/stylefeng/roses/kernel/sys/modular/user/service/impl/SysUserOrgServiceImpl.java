@@ -7,6 +7,8 @@ import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
 import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.dsctn.api.context.DataSourceContext;
+import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
@@ -137,6 +139,16 @@ public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUser
         updateWrapper.eq(SysUserOrg::getUserId, userId);
         updateWrapper.set(SysUserOrg::getStatusFlag, StatusEnum.DISABLE.getCode());
         this.update(updateWrapper);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void quickBatchSaveUserOrg(List<SysUserOrg> batchUserOrg) {
+        if (DbTypeEnum.MYSQL.equals(DataSourceContext.me().getCurrentDbType())) {
+            this.getBaseMapper().insertBatchSomeColumn(batchUserOrg);
+        } else {
+            this.saveBatch(batchUserOrg);
+        }
     }
 
     @Override
