@@ -38,17 +38,50 @@ public enum OrgTypeEnum {
     /**
      * 公司
      */
-    COMPANY(1),
+    COMPANY(1, "公司"),
 
     /**
      * 部门
      */
-    DEPT(2);
+    DEPT(2, "部门");
 
     private final Integer code;
 
-    OrgTypeEnum(Integer code) {
+    private final String message;
+
+    OrgTypeEnum(Integer code, String message) {
         this.code = code;
+        this.message = message;
+    }
+
+    /**
+     * code转化为enum
+     *
+     * @author fengshuonan
+     * @since 2024-02-18 16:11
+     */
+    public static OrgTypeEnum toEnum(Integer code) {
+        for (OrgTypeEnum orgTypeEnum : OrgTypeEnum.values()) {
+            if (orgTypeEnum.getCode().equals(code)) {
+                return orgTypeEnum;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获取code对应的message
+     *
+     * @author fengshuonan
+     * @since 2024-02-18 16:11
+     */
+    public static String getCodeMessage(Integer code) {
+        OrgTypeEnum orgTypeEnum = toEnum(code);
+        if (orgTypeEnum != null) {
+            return orgTypeEnum.getMessage();
+        } else {
+            return "";
+        }
     }
 
 }
