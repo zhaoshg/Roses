@@ -13,9 +13,11 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.dsctn.api.context.DataSourceContext;
 import cn.stylefeng.roses.kernel.event.sdk.publish.BusinessEventPublisher;
 import cn.stylefeng.roses.kernel.log.api.util.BusinessLogUtil;
 import cn.stylefeng.roses.kernel.rule.constants.TreeConstants;
+import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
 import cn.stylefeng.roses.kernel.rule.enums.StatusEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
@@ -534,6 +536,15 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
         }
 
         return dictList;
+    }
+
+    @Override
+    public void quickBatchSaveOrg(List<HrOrganization> batchOrgList) {
+        if (DbTypeEnum.MYSQL.equals(DataSourceContext.me().getCurrentDbType())) {
+            this.getBaseMapper().insertBatchSomeColumn(batchOrgList);
+        } else {
+            this.saveBatch(batchOrgList);
+        }
     }
 
     @Override

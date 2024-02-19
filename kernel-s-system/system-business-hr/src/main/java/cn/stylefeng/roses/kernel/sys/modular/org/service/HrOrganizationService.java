@@ -153,4 +153,12 @@ public interface HrOrganizationService extends IService<HrOrganization>, Organiz
      */
     List<SimpleDict> getOrgListName(HrOrganizationRequest hrOrganizationRequest);
 
+    /**
+     * 批量保存组织机构
+     *
+     * @author fengshuonan
+     * @since 2024-02-19 8:42
+     */
+    void quickBatchSaveOrg(List<HrOrganization> batchOrgList);
+
 }
