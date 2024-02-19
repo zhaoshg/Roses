@@ -3,8 +3,8 @@ package cn.stylefeng.roses.kernel.log.api.util;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.roses.kernel.log.api.context.BusinessLogHolder;
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONWriter;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 /**
  * 业务日志
@@ -50,7 +50,7 @@ public class BusinessLogUtil {
                 if (param instanceof String) {
                     stringBuffer.append(param);
                 } else {
-                    stringBuffer.append(JSON.toJSONString(param, JSONWriter.Feature.PrettyFormat));
+                    stringBuffer.append(JSON.toJSONString(param, SerializerFeature.PrettyFormat));
                 }
             }
             BusinessLogHolder.addContent(stringBuffer.toString());
