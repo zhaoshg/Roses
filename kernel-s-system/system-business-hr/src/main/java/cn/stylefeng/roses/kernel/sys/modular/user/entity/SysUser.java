@@ -7,6 +7,7 @@ import cn.stylefeng.roses.kernel.rule.annotation.EnumFieldFormat;
 import cn.stylefeng.roses.kernel.rule.annotation.SimpleFieldFormat;
 import cn.stylefeng.roses.kernel.rule.enums.SexEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
+import cn.stylefeng.roses.kernel.rule.util.sort.GetSortKey;
 import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.UserOrgDTO;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.response.SysUserCertificateResponse;
@@ -27,7 +28,7 @@ import java.util.List;
 @TableName(value = "sys_user", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SysUser extends BaseExpandFieldEntity {
+public class SysUser extends BaseExpandFieldEntity implements GetSortKey {
 
     /**
      * 主键
@@ -219,5 +220,10 @@ public class SysUser extends BaseExpandFieldEntity {
     @TableField(exist = false)
     @ChineseDescription("用户证书列表")
     private List<SysUserCertificateResponse> userCertificateList;
+
+    @Override
+    public Object getSortKey() {
+        return userId;
+    }
 
 }

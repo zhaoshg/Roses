@@ -24,6 +24,7 @@ import cn.stylefeng.roses.kernel.rule.enums.DbTypeEnum;
 import cn.stylefeng.roses.kernel.rule.enums.YesOrNotEnum;
 import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
 import cn.stylefeng.roses.kernel.rule.pojo.dict.SimpleDict;
+import cn.stylefeng.roses.kernel.rule.util.SortUtils;
 import cn.stylefeng.roses.kernel.sys.api.SecurityConfigService;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
@@ -403,7 +404,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             return dictList;
         }
 
-        for (SysUser sysUser : list) {
+        // 排序
+        List<SysUser> sortUsers = SortUtils.sortListByObjectKey(list, new LinkedList<>(sysUserRequest.getUserIdList()));
+
+        for (SysUser sysUser : sortUsers) {
             dictList.add(new SimpleDict(sysUser.getUserId(), sysUser.getRealName(), null));
         }
 
