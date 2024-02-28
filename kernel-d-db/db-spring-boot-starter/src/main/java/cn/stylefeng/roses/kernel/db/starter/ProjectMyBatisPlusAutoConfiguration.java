@@ -25,6 +25,7 @@
 package cn.stylefeng.roses.kernel.db.starter;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.tenant.TenantTableProperties;
+import cn.stylefeng.roses.kernel.db.mp.datascope.ProjectDataScopeHandler;
 import cn.stylefeng.roses.kernel.db.mp.dbid.CustomDatabaseIdProvider;
 import cn.stylefeng.roses.kernel.db.mp.fieldfill.CustomMetaObjectHandler;
 import cn.stylefeng.roses.kernel.db.mp.injector.CustomInsertBatchSqlInjector;
@@ -32,6 +33,7 @@ import cn.stylefeng.roses.kernel.db.mp.tenant.ProjectTenantInterceptor;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.DataPermissionInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
@@ -79,6 +81,9 @@ public class ProjectMyBatisPlusAutoConfiguration {
 
         // 使用分页插插件
         interceptor.addInnerInterceptor(paginationInterceptor());
+
+        // 使用数据权限插件
+        interceptor.addInnerInterceptor(dataPermissionInterceptor());
 
         // 使用乐观锁插件
         interceptor.addInnerInterceptor(optimisticLockerInnerInterceptor());
@@ -151,6 +156,17 @@ public class ProjectMyBatisPlusAutoConfiguration {
     @Bean
     public TenantLineInnerInterceptor tenantLineInnerInterceptor(TenantTableProperties tenantTableProperties) {
         return new TenantLineInnerInterceptor(new ProjectTenantInterceptor(tenantTableProperties));
+    }
+
+    /**
+     * 数据范围处理插件
+     *
+     * @author fengshuonan
+     * @since 2024/2/28 21:17
+     */
+    @Bean
+    public DataPermissionInterceptor dataPermissionInterceptor() {
+        return new DataPermissionInterceptor(new ProjectDataScopeHandler());
     }
 
 }
