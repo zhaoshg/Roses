@@ -50,10 +50,10 @@ public class RoleBindDataScopeRequest extends BaseRequest {
     private Long roleId;
 
     /**
-     * 数据范围类型：10-仅本人数据，20-本部门数据，30-本部门及以下数据，40-指定部门数据，50-全部数据
+     * 数据范围类型：10-仅本人数据，20-本部门数据，30-本部门及以下数据，31-本公司及以下数据，40-指定部门数据，50-全部数据
      */
     @NotNull(message = "数据范围类型不能为空", groups = {roleBindDataScope.class})
-    @ChineseDescription("数据范围类型：10-仅本人数据，20-本部门数据，30-本部门及以下数据，40-指定部门数据，50-全部数据")
+    @ChineseDescription("数据范围类型：10-仅本人数据，20-本部门数据，30-本部门及以下数据，31-本公司及以下数据，40-指定部门数据，50-全部数据")
     private Integer dataScopeType;
 
     /**

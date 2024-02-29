@@ -53,6 +53,11 @@ public enum DataScopeTypeEnum {
     DEPT_WITH_CHILD(30, "本部门及以下数据"),
 
     /**
+     * 本公司及以下数据
+     */
+    COMPANY_WITH_CHILD(31, "本公司及以下数据"),
+
+    /**
      * 指定部门数据
      */
     DEFINE(40, "指定部门数据"),
