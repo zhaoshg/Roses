@@ -1,5 +1,6 @@
 package cn.stylefeng.roses.kernel.db.mp.datascope.config;
 
+import cn.stylefeng.roses.kernel.db.mp.datascope.ProjectDataScopeHandler;
 import cn.stylefeng.roses.kernel.rule.enums.permission.DataScopeTypeEnum;
 import lombok.Data;
 
@@ -42,11 +43,11 @@ public class DataScopeConfig {
     /**
      * 限制组织机构范围的字段名称
      */
-    private String orgIdFieldName = "org_id";
+    private String orgIdFieldName = ProjectDataScopeHandler.DEFAULT_ORG_ID_FIELD_NAME;
 
     /**
      * 用来限制只查询自己数据的字段名称
      */
-    private String userIdFieldName = "user_id";
+    private String userIdFieldName = ProjectDataScopeHandler.DEFAULT_USER_ID_FIELD_NAME;
 
 }
