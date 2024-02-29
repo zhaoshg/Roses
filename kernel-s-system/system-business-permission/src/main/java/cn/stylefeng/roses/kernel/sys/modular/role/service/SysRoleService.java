@@ -1,8 +1,8 @@
 package cn.stylefeng.roses.kernel.sys.modular.role.service;
 
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.rule.enums.permission.DataScopeTypeEnum;
 import cn.stylefeng.roses.kernel.sys.api.SysRoleServiceApi;
-import cn.stylefeng.roses.kernel.sys.api.enums.permission.DataScopeTypeEnum;
 import cn.stylefeng.roses.kernel.sys.modular.role.entity.SysRole;
 import cn.stylefeng.roses.kernel.sys.modular.role.pojo.request.SysRoleRequest;
 import com.baomidou.mybatisplus.extension.service.IService;

@@ -22,10 +22,10 @@
  * 5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://gitee.com/stylefeng/guns
  * 6.若您的项目无法满足以上几点，可申请商业授权
  */
-package cn.stylefeng.roses.kernel.sys.api.enums.permission;
+package cn.stylefeng.roses.kernel.rule.enums.permission;
 
-import cn.stylefeng.roses.kernel.sys.api.exception.SysException;
-import cn.stylefeng.roses.kernel.sys.api.exception.enums.RoleExceptionEnum;
+import cn.stylefeng.roses.kernel.rule.exception.base.ServiceException;
+import cn.stylefeng.roses.kernel.rule.exception.enums.DataScopeExceptionEnum;
 import lombok.Getter;
 
 /**
@@ -90,7 +90,7 @@ public enum DataScopeTypeEnum {
                 }
             }
         }
-        throw new SysException(RoleExceptionEnum.DATA_SCOPE_ERROR, code);
+        throw new ServiceException(DataScopeExceptionEnum.DATA_SCOPE_ERROR);
     }
 
 }

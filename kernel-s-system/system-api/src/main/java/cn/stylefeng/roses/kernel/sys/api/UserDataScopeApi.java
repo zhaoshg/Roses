@@ -1,6 +1,6 @@
 package cn.stylefeng.roses.kernel.sys.api;
 
-import cn.stylefeng.roses.kernel.sys.api.enums.permission.DataScopeTypeEnum;
+import cn.stylefeng.roses.kernel.rule.enums.permission.DataScopeTypeEnum;
 
 import java.util.Set;
 
