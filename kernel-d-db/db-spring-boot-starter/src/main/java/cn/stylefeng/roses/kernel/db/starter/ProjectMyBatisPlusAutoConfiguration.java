@@ -79,11 +79,11 @@ public class ProjectMyBatisPlusAutoConfiguration {
         // 使用多租户插件
         interceptor.addInnerInterceptor(tenantLineInnerInterceptor(tenantTableProperties));
 
-        // 使用分页插插件
-        interceptor.addInnerInterceptor(paginationInterceptor());
-
         // 使用数据权限插件
         interceptor.addInnerInterceptor(dataPermissionInterceptor());
+
+        // 使用分页插插件
+        interceptor.addInnerInterceptor(paginationInterceptor());
 
         // 使用乐观锁插件
         interceptor.addInnerInterceptor(optimisticLockerInnerInterceptor());
