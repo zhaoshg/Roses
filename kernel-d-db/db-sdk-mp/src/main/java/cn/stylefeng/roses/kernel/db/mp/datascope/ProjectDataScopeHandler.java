@@ -8,12 +8,19 @@ import cn.stylefeng.roses.kernel.rule.enums.permission.DataScopeTypeEnum;
 import com.baomidou.mybatisplus.extension.plugins.handler.MultiDataPermissionHandler;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
+import net.sf.jsqlparser.expression.StringValue;
+import net.sf.jsqlparser.expression.operators.conditional.OrExpression;
+import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
 import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
 import net.sf.jsqlparser.expression.operators.relational.InExpression;
+import net.sf.jsqlparser.expression.operators.relational.LikeExpression;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.schema.Table;
+import net.sf.jsqlparser.statement.select.AllColumns;
+import net.sf.jsqlparser.statement.select.PlainSelect;
+import net.sf.jsqlparser.statement.select.SubSelect;
 
-import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * 项目数据权限的处理器
@@ -63,37 +70,28 @@ public class ProjectDataScopeHandler implements MultiDataPermissionHandler {
 
             // 如果是本部门数据，则限制查询只能查询本部门数据
             case DEPT:
-                // todo
-                break;
+                return getEqualsTo(dataScopeConfig.getOrgIdFieldName(), dataScopeConfig.getUserDeptId());
 
+            // 如果是本部门及以下部门
             case DEPT_WITH_CHILD:
-                // 本部门及以下数据
-                break;
+                return deptWithChildScope(dataScopeConfig, dataScopeConfig.getUserDeptId());
+
+            // 本公司及以下数据
             case COMPANY_WITH_CHILD:
-                // 本公司及以下数据
-                break;
+                return deptWithChildScope(dataScopeConfig, dataScopeConfig.getUserCompanyId());
+
+            // 指定部门数据
             case DEFINE:
-                // 指定部门数据
-                break;
+                return getInExpression(dataScopeConfig);
 
+            // 仅本人数据
             case SELF:
-                // 仅本人数据
+                return getEqualsTo(dataScopeConfig.getUserIdFieldName(), dataScopeConfig.getUserId());
+
+            // 其他情况
+            default:
+                return null;
         }
-
-
-        // 创建 org_id 列
-        Column column = new Column("org_id");
-
-        // 创建 IN 表达式的值列表
-        ExpressionList expressionList = new ExpressionList();
-        expressionList.setExpressions(Arrays.asList(new LongValue(1), new LongValue(2), new LongValue(3)));
-
-        // 创建 IN 表达式
-        InExpression inExpression = new InExpression();
-        inExpression.setLeftExpression(column);
-        inExpression.setRightItemsList(expressionList);
-
-        return inExpression;
     }
 
     /**
@@ -170,4 +168,83 @@ public class ProjectDataScopeHandler implements MultiDataPermissionHandler {
         return dataScopeConfig;
     }
 
+    /**
+     * 获取equals语法的表达式
+     *
+     * @author fengshuonan
+     * @since 2024-02-29 20:36
+     */
+    private static EqualsTo getEqualsTo(String fieldName, Long value) {
+        Column orgIdColumn = new Column(fieldName);
+        LongValue longValue = new LongValue(value);
+
+        // 创建代表等式的 EqualsTo 对象
+        EqualsTo equalsTo = new EqualsTo();
+        equalsTo.setLeftExpression(orgIdColumn);
+        equalsTo.setRightExpression(longValue);
+        return equalsTo;
+    }
+
+    /**
+     * 获取in的表达式配置
+     *
+     * @author fengshuonan
+     * @since 2024-02-29 20:35
+     */
+    private static InExpression getInExpression(DataScopeConfig dataScopeConfig) {
+        // 创建 org_id 列
+        Column orgIdColumn = new Column(dataScopeConfig.getOrgIdFieldName());
+
+        // 创建 IN 表达式的值列表
+        ExpressionList expressionList = new ExpressionList();
+        expressionList.setExpressions(dataScopeConfig.getSpecificOrgIds().stream().map(LongValue::new).collect(Collectors.toList()));
+
+        // 创建 IN 表达式
+        InExpression inExpression = new InExpression();
+        inExpression.setLeftExpression(orgIdColumn);
+        inExpression.setRightItemsList(expressionList);
+        return inExpression;
+    }
+
+    /**
+     * 获取本部门及以下
+     *
+     * @author fengshuonan
+     * @since 2024-02-29 20:14
+     */
+    private static Expression deptWithChildScope(DataScopeConfig dataScopeConfig, Long deptOrCompanyId) {
+
+        // 创建 org_id 列
+        Column orgIdColumn = new Column(dataScopeConfig.getOrgIdFieldName());
+
+        // 创建子查询
+        SubSelect subSelect = new SubSelect();
+        PlainSelect selectBody = new PlainSelect();
+        selectBody.setSelectItems(java.util.Collections.singletonList(new AllColumns()));
+        selectBody.setFromItem(new Table("sys_hr_organization"));
+
+        // 创建 LIKE 表达式
+        LikeExpression likeExpression = new LikeExpression();
+        likeExpression.setLeftExpression(new Column("org_pids"));
+        likeExpression.setRightExpression(new StringValue("%[" + deptOrCompanyId + "]%"));
+
+        // 设置子查询的 WHERE 条件
+        selectBody.setWhere(likeExpression);
+        subSelect.setSelectBody(selectBody);
+
+        // 创建 IN 表达式
+        InExpression inExpression = new InExpression(orgIdColumn, subSelect);
+
+        // 创建等于表达式
+        EqualsTo equalsTo = new EqualsTo();
+        equalsTo.setLeftExpression(orgIdColumn);
+        equalsTo.setRightExpression(new LongValue(deptOrCompanyId));
+
+        // 创建 OR 表达式
+        OrExpression orExpression = new OrExpression(inExpression, equalsTo);
+
+        System.out.println(orExpression.toString());
+
+        return orExpression;
+    }
 }
