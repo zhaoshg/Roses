@@ -75,8 +75,19 @@ public class DataScopeAop implements Ordered {
         DataScope datasource = currentMethod.getAnnotation(DataScope.class);
 
         // 获取当前用户拥有的数据范围
-        UserRoleDataScopeApi userRoleDataScopeApi = SpringUtil.getBean(UserRoleDataScopeApi.class);
+        UserRoleDataScopeApi userRoleDataScopeApi = null;
+        try {
+            userRoleDataScopeApi = SpringUtil.getBean(UserRoleDataScopeApi.class);
+        } catch (Exception e) {
+            log.error("无法找到用户权限获取的类！", e);
+            return point.proceed();
+        }
         DataScopeConfig userRoleDataScopeConfig = userRoleDataScopeApi.getUserRoleDataScopeConfig();
+
+        // 获取不到用户的数据范围配置，也直接返回
+        if (userRoleDataScopeConfig == null) {
+            return point.proceed();
+        }
 
         // 如果有单独配置特定的字段，以注解单独配置的字段为主
         String userIdFieldName = datasource.userIdFieldName();
