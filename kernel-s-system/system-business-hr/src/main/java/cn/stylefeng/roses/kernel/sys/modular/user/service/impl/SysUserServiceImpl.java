@@ -14,6 +14,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
+import cn.stylefeng.roses.kernel.db.mp.datascope.UserRoleDataScopeApi;
 import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantIdHolder;
 import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantSwitchHolder;
 import cn.stylefeng.roses.kernel.dsctn.api.context.DataSourceContext;
@@ -28,7 +29,6 @@ import cn.stylefeng.roses.kernel.rule.util.SortUtils;
 import cn.stylefeng.roses.kernel.sys.api.SecurityConfigService;
 import cn.stylefeng.roses.kernel.sys.api.callback.RemoveUserCallbackApi;
 import cn.stylefeng.roses.kernel.sys.api.constants.SysConstants;
-import cn.stylefeng.roses.kernel.sys.api.context.DataScopeContext;
 import cn.stylefeng.roses.kernel.sys.api.enums.user.UserStatusEnum;
 import cn.stylefeng.roses.kernel.sys.api.expander.SysConfigExpander;
 import cn.stylefeng.roses.kernel.sys.api.pojo.user.*;
@@ -87,6 +87,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Resource
     private SysUserCertificateService sysUserCertificateService;
 
+    @Resource
+    private UserRoleDataScopeApi userRoleDataScopeApi;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void add(SysUserRequest sysUserRequest) {
@@ -108,8 +111,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.save(sysUser);
 
         // 记录一个密码修改记录
-        securityConfigService.recordPasswordEditLog(sysUser.getUserId(), saltedEncryptResult.getEncryptPassword(),
-                saltedEncryptResult.getPasswordSalt());
+        securityConfigService.recordPasswordEditLog(sysUser.getUserId(), saltedEncryptResult.getEncryptPassword(), saltedEncryptResult.getPasswordSalt());
 
         // 更新用户的任职信息
         sysUserOrgService.updateUserOrg(sysUser.getUserId(), sysUserRequest.getUserOrgList());
@@ -210,9 +212,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 查询用户个人信息
         LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysUserLambdaQueryWrapper.eq(SysUser::getUserId, sysUserRequest.getUserId());
-        sysUserLambdaQueryWrapper.select(SysUser::getUserId, SysUser::getAvatar, SysUser::getAccount, SysUser::getUserSort,
-                SysUser::getSuperAdminFlag, SysUser::getRealName, SysUser::getSex, SysUser::getBirthday, SysUser::getEmail,
-                SysUser::getPhone, SysUser::getLastLoginIp, SysUser::getLoginCount, SysUser::getLastLoginTime, SysUser::getStatusFlag,
+        sysUserLambdaQueryWrapper.select(SysUser::getUserId, SysUser::getAvatar, SysUser::getAccount, SysUser::getUserSort, SysUser::getSuperAdminFlag, SysUser::getRealName, SysUser::getSex,
+                SysUser::getBirthday, SysUser::getEmail, SysUser::getPhone, SysUser::getLastLoginIp, SysUser::getLoginCount, SysUser::getLastLoginTime, SysUser::getStatusFlag,
                 BaseEntity::getCreateTime, BaseEntity::getUpdateTime, SysUser::getEmployeeNumber);
         SysUser sysUser = this.getOne(sysUserLambdaQueryWrapper, false);
 
@@ -242,8 +243,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         LambdaQueryWrapper<SysUser> wrapper = createWrapper(sysUserRequest);
 
         // 只查询需要的字段
-        wrapper.select(SysUser::getUserId, SysUser::getRealName, SysUser::getAccount, SysUser::getSex, SysUser::getStatusFlag,
-                BaseEntity::getCreateTime, SysUser::getEmployeeNumber);
+        wrapper.select(SysUser::getUserId, SysUser::getRealName, SysUser::getAccount, SysUser::getSex, SysUser::getStatusFlag, BaseEntity::getCreateTime, SysUser::getEmployeeNumber);
 
         // 分页查询
         Page<SysUser> sysUserPage = this.page(PageFactory.defaultPage(), wrapper);
@@ -323,8 +323,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 查询用户的详细信息
         LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
-        sysUserLambdaQueryWrapper.select(SysUser::getRealName, SysUser::getAccount, SysUser::getAvatar, SysUser::getEmail,
-                SysUser::getPhone, SysUser::getSex, SysUser::getBirthday);
+        sysUserLambdaQueryWrapper.select(SysUser::getRealName, SysUser::getAccount, SysUser::getAvatar, SysUser::getEmail, SysUser::getPhone, SysUser::getSex, SysUser::getBirthday);
         SysUser sysUser = this.getOne(sysUserLambdaQueryWrapper, false);
 
         if (sysUser == null) {
@@ -363,8 +362,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUser = this.querySysUser(sysUserRequest);
 
         // 原密码错误
-        if (!passwordStoredEncryptApi.checkPasswordWithSalt(sysUserRequest.getPassword(), sysUser.getPasswordSalt(),
-                sysUser.getPassword())) {
+        if (!passwordStoredEncryptApi.checkPasswordWithSalt(sysUserRequest.getPassword(), sysUser.getPasswordSalt(), sysUser.getPassword())) {
             throw new ServiceException(SysUserExceptionEnum.USER_PWD_ERROR);
         }
 
@@ -382,8 +380,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.updateById(sysUser);
 
         // 记录一个密码修改记录
-        securityConfigService.recordPasswordEditLog(sysUser.getUserId(), saltedEncryptResult.getEncryptPassword(),
-                saltedEncryptResult.getPasswordSalt());
+        securityConfigService.recordPasswordEditLog(sysUser.getUserId(), saltedEncryptResult.getEncryptPassword(), saltedEncryptResult.getPasswordSalt());
     }
 
     @Override
@@ -502,16 +499,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new ServiceException(SysUserExceptionEnum.ACCOUNT_NOT_EXIST);
         }
 
-        return new UserValidateDTO(sysUserServiceOne.getUserId(), sysUserServiceOne.getPassword(), sysUserServiceOne.getPasswordSalt(),
-                sysUserServiceOne.getStatusFlag(), tenantId, account);
+        return new UserValidateDTO(sysUserServiceOne.getUserId(), sysUserServiceOne.getPassword(), sysUserServiceOne.getPasswordSalt(), sysUserServiceOne.getStatusFlag(), tenantId, account);
     }
 
     @Override
     public UserValidateDTO getUserLoginValidateDTO(Long userId) {
         LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
-        sysUserLambdaQueryWrapper.select(SysUser::getPassword, SysUser::getAccount, SysUser::getPasswordSalt, SysUser::getStatusFlag,
-                SysUser::getUserId, SysUser::getTenantId);
+        sysUserLambdaQueryWrapper.select(SysUser::getPassword, SysUser::getAccount, SysUser::getPasswordSalt, SysUser::getStatusFlag, SysUser::getUserId, SysUser::getTenantId);
 
         // 单独填充租户id
         SysUser sysUser;
@@ -526,8 +521,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new ServiceException(SysUserExceptionEnum.ACCOUNT_NOT_EXIST);
         }
 
-        return new UserValidateDTO(sysUser.getUserId(), sysUser.getPassword(), sysUser.getPasswordSalt(), sysUser.getStatusFlag(),
-                sysUser.getTenantId(), sysUser.getAccount());
+        return new UserValidateDTO(sysUser.getUserId(), sysUser.getPassword(), sysUser.getPasswordSalt(), sysUser.getStatusFlag(), sysUser.getTenantId(), sysUser.getAccount());
     }
 
     @Override
@@ -661,9 +655,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysUserLambdaQueryWrapper.eq(SysUser::getUserId, userId);
-        sysUserLambdaQueryWrapper.select(SysUser::getUserId, SysUser::getRealName, SysUser::getNickName, SysUser::getAccount,
-                SysUser::getBirthday, SysUser::getSex, SysUser::getPhone, SysUser::getTel, SysUser::getEmail, SysUser::getSuperAdminFlag,
-                SysUser::getStatusFlag, SysUser::getUserSort, SysUser::getMasterUserId);
+        sysUserLambdaQueryWrapper.select(SysUser::getUserId, SysUser::getRealName, SysUser::getNickName, SysUser::getAccount, SysUser::getBirthday, SysUser::getSex, SysUser::getPhone, SysUser::getTel,
+                SysUser::getEmail, SysUser::getSuperAdminFlag, SysUser::getStatusFlag, SysUser::getUserSort, SysUser::getMasterUserId);
         SysUser userInfo = this.getOne(sysUserLambdaQueryWrapper);
 
         if (userInfo != null) {
@@ -814,7 +807,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
 
         // 数据权限范围控制
-        Set<Long> dataScope = DataScopeContext.me().currentUserOrgScopeList();
+        Set<Long> dataScope = userRoleDataScopeApi.currentUserOrgScopeList();
         if (ObjectUtil.isNotEmpty(dataScope)) {
             Set<Long> userIdList = this.sysUserOrgService.getOrgUserIdList(dataScope);
             queryWrapper.in(SysUser::getUserId, userIdList);
