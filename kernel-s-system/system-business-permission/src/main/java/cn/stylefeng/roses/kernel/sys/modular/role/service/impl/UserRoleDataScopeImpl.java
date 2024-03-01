@@ -54,7 +54,7 @@ public class UserRoleDataScopeImpl implements UserRoleDataScopeApi {
 
         // 如果这个角色列表大于1，也就是不单纯是普通角色，则将普通角色去掉，以配置的角色为主
         Long defaultRoleId = sysRoleService.getDefaultRoleId();
-        if (CollectionUtil.contains(userRoleIdList, defaultRoleId)) {
+        if (userRoleIdList.size() > 1 && CollectionUtil.contains(userRoleIdList, defaultRoleId)) {
             userRoleIdList.remove(defaultRoleId);
         }
 

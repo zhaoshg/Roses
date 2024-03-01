@@ -229,7 +229,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     @Override
-    @DataScope
+    @DataScope(userIdFieldName = "create_user")
     public CommonOrgTreeResponse commonOrgTree(CommonOrgTreeRequest commonOrgTreeRequest) {
 
         // 如果查询带组织机构名称的搜索，则清空其他条件
