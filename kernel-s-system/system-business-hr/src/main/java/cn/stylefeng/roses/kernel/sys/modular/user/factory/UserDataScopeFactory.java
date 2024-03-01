@@ -78,11 +78,11 @@ public class UserDataScopeFactory {
             case COMPANY_WITH_CHILD:
 
                 // 获取本部门及以下部门有哪些部门
-                Set<Long> subCompanyOrgIdList = dbOperatorApi.findSubListByParentId("sys_hr_organization", "org_pids", "org_id", userRoleDataScopeConfig.getUserDeptId());
+                Set<Long> subCompanyOrgIdList = dbOperatorApi.findSubListByParentId("sys_hr_organization", "org_pids", "org_id", userRoleDataScopeConfig.getUserCompanyId());
                 if (ObjectUtil.isEmpty(subCompanyOrgIdList)) {
                     subCompanyOrgIdList = new HashSet<>();
                 }
-                subCompanyOrgIdList.add(userRoleDataScopeConfig.getUserDeptId());
+                subCompanyOrgIdList.add(userRoleDataScopeConfig.getUserCompanyId());
 
                 // 获取部门下的用户
                 Set<Long> subCompanyUserIdList = sysUserOrgService.getOrgUserIdList(subCompanyOrgIdList);
