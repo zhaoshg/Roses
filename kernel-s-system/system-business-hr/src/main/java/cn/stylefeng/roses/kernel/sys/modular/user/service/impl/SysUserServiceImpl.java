@@ -14,7 +14,6 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageFactory;
 import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
-import cn.stylefeng.roses.kernel.db.mp.datascope.UserRoleDataScopeApi;
 import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantIdHolder;
 import cn.stylefeng.roses.kernel.db.mp.tenant.holder.TenantSwitchHolder;
 import cn.stylefeng.roses.kernel.dsctn.api.context.DataSourceContext;
@@ -35,6 +34,7 @@ import cn.stylefeng.roses.kernel.sys.api.pojo.user.*;
 import cn.stylefeng.roses.kernel.sys.modular.user.entity.SysUser;
 import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.factory.SysUserCreateFactory;
+import cn.stylefeng.roses.kernel.sys.modular.user.factory.UserDataScopeFactory;
 import cn.stylefeng.roses.kernel.sys.modular.user.mapper.SysUserMapper;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.response.PersonalInfo;
@@ -86,9 +86,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Resource
     private SysUserCertificateService sysUserCertificateService;
-
-    @Resource
-    private UserRoleDataScopeApi userRoleDataScopeApi;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -807,11 +804,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
 
         // 数据权限范围控制
-        Set<Long> dataScope = userRoleDataScopeApi.currentUserOrgScopeList();
-        if (ObjectUtil.isNotEmpty(dataScope)) {
-            Set<Long> userIdList = this.sysUserOrgService.getOrgUserIdList(dataScope);
-            queryWrapper.in(SysUser::getUserId, userIdList);
-        }
+        UserDataScopeFactory.getUserDataScopeCondition(queryWrapper);
 
         // 按用户排序字段排序
         queryWrapper.orderByAsc(SysUser::getUserSort);

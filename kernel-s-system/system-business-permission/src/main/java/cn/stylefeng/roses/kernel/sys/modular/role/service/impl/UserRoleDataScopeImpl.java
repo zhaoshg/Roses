@@ -2,7 +2,6 @@ package cn.stylefeng.roses.kernel.sys.modular.role.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.collection.ListUtil;
-import cn.hutool.core.util.ObjectUtil;
 import cn.stylefeng.roses.kernel.auth.api.context.LoginContext;
 import cn.stylefeng.roses.kernel.auth.api.pojo.login.LoginUser;
 import cn.stylefeng.roses.kernel.db.api.DbOperatorApi;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -97,70 +95,6 @@ public class UserRoleDataScopeImpl implements UserRoleDataScopeApi {
         }
 
         return dataScopeConfig;
-    }
-
-    @Override
-    public Set<Long> currentUserOrgScopeList() {
-
-        // 获取当前用户id
-        Long userId = LoginContext.me().getLoginUser().getUserId();
-
-        // 获取当前用户的数据范围类型
-        DataScopeConfig userRoleDataScopeConfig = this.getUserRoleDataScopeConfig();
-        DataScopeTypeEnum dataScopeTypeEnum = userRoleDataScopeConfig.getDataScopeType();
-
-        // 如果是只有本人数据
-        if (DataScopeTypeEnum.SELF.equals(dataScopeTypeEnum)) {
-            return CollectionUtil.set(false, userId);
-        }
-
-        // 如果是本部门数据
-        else if (DataScopeTypeEnum.DEPT.equals(dataScopeTypeEnum)) {
-            return CollectionUtil.set(false, userRoleDataScopeConfig.getUserDeptId());
-        }
-
-        // 如果是本部门及以下部门
-        else if (DataScopeTypeEnum.DEPT_WITH_CHILD.equals(dataScopeTypeEnum)) {
-
-            // 获取指定组织机构下的所有机构id
-            Set<Long> subOrgIdList = dbOperatorApi.findSubListByParentId("sys_hr_organization", "org_pids", "org_id", userRoleDataScopeConfig.getUserDeptId());
-            if (ObjectUtil.isEmpty(subOrgIdList)) {
-                subOrgIdList = new HashSet<>();
-            }
-            subOrgIdList.add(userRoleDataScopeConfig.getUserDeptId());
-            return subOrgIdList;
-        }
-
-        // 如果是本公司及以下部门
-        else if (DataScopeTypeEnum.COMPANY_WITH_CHILD.equals(dataScopeTypeEnum)) {
-
-            // 获取指定组织机构下的所有机构id
-            Set<Long> subOrgIdList = dbOperatorApi.findSubListByParentId("sys_hr_organization", "org_pids", "org_id", userRoleDataScopeConfig.getUserCompanyId());
-            if (ObjectUtil.isEmpty(subOrgIdList)) {
-                subOrgIdList = new HashSet<>();
-            }
-            subOrgIdList.add(userRoleDataScopeConfig.getUserCompanyId());
-            return subOrgIdList;
-        }
-
-        // 如果是指定部门数据
-        else if (DataScopeTypeEnum.DEFINE.equals(dataScopeTypeEnum)) {
-
-            // 获取用户的角色列表
-            List<Long> userHaveRoleIds = sysUserRoleServiceApi.getUserRoleIdList(userId);
-
-            // 获取角色指定的所有部门范围
-            return sysRoleDataScopeService.getRoleBindOrgIdList(userHaveRoleIds);
-        }
-
-        // 如果是全部数据
-        else if (DataScopeTypeEnum.ALL.equals(dataScopeTypeEnum)) {
-
-            return null;
-        }
-
-        // 默认返回只有本人数据
-        return CollectionUtil.set(false, userId);
     }
 
 }
