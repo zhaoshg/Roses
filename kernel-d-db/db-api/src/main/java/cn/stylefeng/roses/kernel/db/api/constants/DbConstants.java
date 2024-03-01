@@ -92,4 +92,9 @@ public interface DbConstants {
      */
     String DRUID_WEB_STAT_FILTER_PROFILE_ENABLE = "true";
 
+    /**
+     * 数据范围控制的AOP顺序
+     */
+    int DATA_SCOPE_AOP_ORDER = 100;
+
 }
