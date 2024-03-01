@@ -205,6 +205,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     @Override
+    @DataScope(userIdFieldName = "create_user")
     public PageResult<HrOrganization> commonOrgPage(HrOrganizationRequest hrOrganizationRequest) {
 
         // 只查询未禁用的组织机构
