@@ -290,6 +290,18 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
+    public List<SysRole> getRoleDataScopeType(List<Long> roleIdList) {
+        if (ObjectUtil.isEmpty(roleIdList)) {
+            return new ArrayList<>();
+        }
+
+        LambdaQueryWrapper<SysRole> sysRoleLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysRoleLambdaQueryWrapper.in(SysRole::getRoleId, roleIdList);
+        sysRoleLambdaQueryWrapper.select(SysRole::getRoleId, SysRole::getDataScopeType);
+        return this.list(sysRoleLambdaQueryWrapper);
+    }
+
+    @Override
     public List<SysRole> permissionGetRoleList(SysRoleRequest sysRoleRequest) {
         LambdaQueryWrapper<SysRole> wrapper = this.createWrapper(sysRoleRequest);
 

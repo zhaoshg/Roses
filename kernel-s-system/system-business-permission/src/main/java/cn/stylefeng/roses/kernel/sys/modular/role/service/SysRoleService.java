@@ -128,4 +128,12 @@ public interface SysRoleService extends IService<SysRole>, SysRoleServiceApi {
      */
     void refreshRoleAuth(Set<Long> roleIdList, Set<Long> menuIdList, Set<Long> menuOptionIdList);
 
+    /**
+     * 获取角色对应数据范围的类型
+     *
+     * @author fengshuonan
+     * @since 2024-03-01 14:18
+     */
+    List<SysRole> getRoleDataScopeType(List<Long> roleIdList);
+
 }
