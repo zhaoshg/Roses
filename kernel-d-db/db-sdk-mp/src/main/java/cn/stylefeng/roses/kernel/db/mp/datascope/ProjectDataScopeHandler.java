@@ -16,8 +16,8 @@ import net.sf.jsqlparser.expression.operators.relational.InExpression;
 import net.sf.jsqlparser.expression.operators.relational.LikeExpression;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.schema.Table;
-import net.sf.jsqlparser.statement.select.AllColumns;
 import net.sf.jsqlparser.statement.select.PlainSelect;
+import net.sf.jsqlparser.statement.select.SelectExpressionItem;
 import net.sf.jsqlparser.statement.select.SubSelect;
 
 import java.util.stream.Collectors;
@@ -208,6 +208,8 @@ public class ProjectDataScopeHandler implements MultiDataPermissionHandler {
 
     /**
      * 获取本部门及以下
+     * <p>
+     * 拼接条件最终效果如下：org_id in (select org_id from sys_hr_organization where org_pids like "%[id]%" or org_id = id)
      *
      * @author fengshuonan
      * @since 2024-02-29 20:14
@@ -217,10 +219,10 @@ public class ProjectDataScopeHandler implements MultiDataPermissionHandler {
         // 创建 org_id 列
         Column orgIdColumn = new Column(dataScopeConfig.getOrgIdFieldName());
 
-        // 创建子查询
+        // 创建子查询 select 部分
         SubSelect subSelect = new SubSelect();
         PlainSelect selectBody = new PlainSelect();
-        selectBody.setSelectItems(java.util.Collections.singletonList(new AllColumns()));
+        selectBody.setSelectItems(ListUtil.of(new SelectExpressionItem(orgIdColumn)));
         selectBody.setFromItem(new Table("sys_hr_organization"));
 
         // 创建 LIKE 表达式
@@ -228,23 +230,19 @@ public class ProjectDataScopeHandler implements MultiDataPermissionHandler {
         likeExpression.setLeftExpression(new Column("org_pids"));
         likeExpression.setRightExpression(new StringValue("%[" + deptOrCompanyId + "]%"));
 
-        // 设置子查询的 WHERE 条件
-        selectBody.setWhere(likeExpression);
-        subSelect.setSelectBody(selectBody);
-
-        // 创建 IN 表达式
-        InExpression inExpression = new InExpression(orgIdColumn, subSelect);
-
-        // 创建等于表达式
+        // 设置等于表达式
         EqualsTo equalsTo = new EqualsTo();
         equalsTo.setLeftExpression(orgIdColumn);
         equalsTo.setRightExpression(new LongValue(deptOrCompanyId));
 
         // 创建 OR 表达式
-        OrExpression orExpression = new OrExpression(inExpression, equalsTo);
+        OrExpression orExpression = new OrExpression(likeExpression, equalsTo);
 
-        System.out.println(orExpression.toString());
+        // 设置子查询的 WHERE 条件
+        selectBody.setWhere(orExpression);
+        subSelect.setSelectBody(selectBody);
 
-        return orExpression;
+        // 创建 IN 表达式
+        return new InExpression(orgIdColumn, subSelect);
     }
 }
