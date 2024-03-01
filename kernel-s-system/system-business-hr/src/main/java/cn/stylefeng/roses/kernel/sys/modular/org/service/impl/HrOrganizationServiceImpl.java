@@ -192,6 +192,7 @@ public class HrOrganizationServiceImpl extends ServiceImpl<HrOrganizationMapper,
     }
 
     @Override
+    @DataScope(userIdFieldName = "create_user")
     public PageResult<HrOrganization> findPage(HrOrganizationRequest hrOrganizationRequest) {
         LambdaQueryWrapper<HrOrganization> wrapper = createWrapper(hrOrganizationRequest);
 
