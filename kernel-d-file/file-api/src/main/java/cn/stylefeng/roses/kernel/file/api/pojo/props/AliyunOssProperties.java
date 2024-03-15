@@ -52,4 +52,9 @@ public class AliyunOssProperties {
      */
     private String accessKeySecret;
 
+    /**
+     * 获取资源前缀是否为https
+     */
+    private Boolean isHttps = false;
+
 }

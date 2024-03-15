@@ -10,6 +10,7 @@ import cn.stylefeng.roses.kernel.db.api.factory.PageResultFactory;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseEntity;
 import cn.stylefeng.roses.kernel.db.api.pojo.page.PageResult;
 import cn.stylefeng.roses.kernel.file.api.FileInfoApi;
+import cn.stylefeng.roses.kernel.file.api.expander.FileConfigExpander;
 import cn.stylefeng.roses.kernel.file.api.pojo.AntdvFileInfo;
 import cn.stylefeng.roses.kernel.file.api.pojo.request.SysFileInfoRequest;
 import cn.stylefeng.roses.kernel.rule.callback.ConfigUpdateCallback;
@@ -247,7 +248,7 @@ public class SysThemeServiceImpl extends ServiceImpl<SysThemeMapper, SysTheme> i
         this.parseFileUrls(result);
 
         // 缓存系统中激活的主题
-        themeCacheApi.put(ThemeConstants.THEME_GUNS_PLATFORM, result);
+        themeCacheApi.put(ThemeConstants.THEME_GUNS_PLATFORM, result, FileConfigExpander.getDefaultFileTimeoutSeconds());
 
         return result;
     }
