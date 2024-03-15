@@ -55,6 +55,6 @@ public class AliyunOssProperties {
     /**
      * 获取资源前缀是否为https
      */
-    private Boolean isHttps = false;
+    private Boolean httpsFlag = false;
 
 }

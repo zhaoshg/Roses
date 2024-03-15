@@ -71,9 +71,12 @@ public class AliyunFileOperator implements FileOperatorApi {
         String endpoint = aliyunOssProperties.getEndPoint();
         String accessKeyId = aliyunOssProperties.getAccessKeyId();
         String accessKeySecret = aliyunOssProperties.getAccessKeySecret();
-        Boolean isHttps = aliyunOssProperties.getIsHttps();
+
+        // 根据https开关，配置协议类型
+        Boolean httpsFlag = aliyunOssProperties.getHttpsFlag();
         ClientBuilderConfiguration clientBuilderConfiguration = new ClientBuilderConfiguration();
-        clientBuilderConfiguration.setProtocol(isHttps ? Protocol.HTTPS : Protocol.HTTP);
+        clientBuilderConfiguration.setProtocol(httpsFlag ? Protocol.HTTPS : Protocol.HTTP);
+
         // 创建OSSClient实例。
         ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret, clientBuilderConfiguration);
     }
