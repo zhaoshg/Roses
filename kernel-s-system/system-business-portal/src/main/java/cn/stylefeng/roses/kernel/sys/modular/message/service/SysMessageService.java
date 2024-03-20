@@ -6,6 +6,8 @@ import cn.stylefeng.roses.kernel.sys.modular.message.entity.SysMessage;
 import cn.stylefeng.roses.kernel.sys.modular.message.pojo.request.SysMessageRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * 系统消息服务类
  *
@@ -41,6 +43,14 @@ public interface SysMessageService extends IService<SysMessage>, MessagePublishA
      * @since 2024/01/12 17:31
      */
     PageResult<SysMessage> findPage(SysMessageRequest sysMessageRequest);
+
+    /**
+     * 获取消息列表
+     *
+     * @author fengshuonan
+     * @since 2024/3/21 0:37
+     */
+    List<SysMessage> findList(SysMessageRequest sysMessageRequest);
 
     /**
      * 清空我的消息
