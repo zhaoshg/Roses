@@ -81,6 +81,16 @@ public interface FileInfoApi {
     String getFileUnAuthUrl(Long fileId);
 
     /**
+     * 获取文件的下载地址（不带鉴权的），生成外网地址
+     *
+     * @param fileIdList 文件id集合
+     * @return 外部系统可以直接访问的url
+     * @author fengshuonan
+     * @since 2024/3/26 22:38
+     */
+    List<String> batchGetFileUnAuthUrl(List<Long> fileIdList);
+
+    /**
      * 获取AntdV组件格式对应的文件信息封装
      *
      * @author fengshuonan

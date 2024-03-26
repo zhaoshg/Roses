@@ -515,6 +515,33 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
     }
 
     @Override
+    public List<String> batchGetFileUnAuthUrl(List<Long> fileIdList) {
+        if (ObjectUtil.isEmpty(fileIdList)) {
+            return new ArrayList<>();
+        }
+        LambdaQueryWrapper<SysFileInfo> sysFileInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysFileInfoLambdaQueryWrapper.in(SysFileInfo::getFileId, fileIdList);
+        sysFileInfoLambdaQueryWrapper.select(SysFileInfo::getFileId, SysFileInfo::getFileLocation, SysFileInfo::getFileBucket, SysFileInfo::getFileObjectName);
+        List<SysFileInfo> list = this.list(sysFileInfoLambdaQueryWrapper);
+        if (ObjectUtil.isEmpty(list)) {
+            return new ArrayList<>();
+        }
+
+        ArrayList<String> urlList = new ArrayList<>();
+        for (SysFileInfo sysFileInfo : list) {
+            String url;
+            if (sysFileInfo.getFileLocation().equals(FileLocationEnum.DB.getCode())) {
+                url = this.sysFileStorageService.getFileUnAuthUrl(String.valueOf(sysFileInfo.getFileId()));
+            } else {
+                // 返回第三方存储文件url
+                url = fileOperatorApi.getFileUnAuthUrl(sysFileInfo.getFileBucket(), sysFileInfo.getFileObjectName());
+            }
+            urlList.add(url);
+        }
+        return urlList;
+    }
+
+    @Override
     public AntdvFileInfo buildAntdvFileInfo(Long fileId) {
         AntdvFileInfo antdvFileInfo = new AntdvFileInfo();
         // 设置唯一id
