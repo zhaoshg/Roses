@@ -88,7 +88,8 @@ public class UserIndexInfoService {
         this.fillUserBaseInfo(loginUser.getUserId(), userIndexInfo);
 
         // 2. 获取用户所有的部门和任职信息，并默认激活（选中）主部门的任职信息
-        this.fillUserOrgInfo(loginUser, userIndexInfo);
+        List<IndexUserOrgInfo> indexUserOrgInfos = this.fillUserOrgInfo(loginUser);
+        userIndexInfo.setUserOrgInfoList(indexUserOrgInfos);
 
         // 3. 获取用户的权限编码集合
         List<SysMenu> userMenuList = this.fillUserPermissionCodeList(loginUser, userIndexInfo);
@@ -145,19 +146,6 @@ public class UserIndexInfoService {
     }
 
     /**
-     * 填充用户的基本姓名和头像信息
-     *
-     * @author fengshuonan
-     * @since 2023/6/18 23:01
-     */
-    private void fillUserBaseInfo(Long userId, UserIndexInfo userIndexInfo) {
-        SimpleUserDTO simpleUserDTO = sysUserServiceApi.getUserInfoByUserId(userId);
-        userIndexInfo.setUserId(simpleUserDTO.getUserId());
-        userIndexInfo.setRealName(simpleUserDTO.getRealName());
-        userIndexInfo.setAvatarUrl(simpleUserDTO.getAvatarUrl());
-    }
-
-    /**
      * 获取用户的任职信息，包含了机构的详细描述
      * <p>
      * 如果指定用户没有当前激活的组织机构id，则直接指定默认的组织机构
@@ -167,7 +155,7 @@ public class UserIndexInfoService {
      * @author fengshuonan
      * @since 2023/6/18 23:33
      */
-    private void fillUserOrgInfo(LoginUser loginUser, UserIndexInfo userIndexInfo) {
+    public List<IndexUserOrgInfo> fillUserOrgInfo(LoginUser loginUser) {
 
         List<IndexUserOrgInfo> resultUserOrg = new ArrayList<>();
 
@@ -179,8 +167,7 @@ public class UserIndexInfoService {
 
         // 查询到机构为空，直接返回
         if (ObjectUtil.isEmpty(userOrgList)) {
-            userIndexInfo.setUserOrgInfoList(resultUserOrg);
-            return;
+            return resultUserOrg;
         }
 
         // 判断用户是否被改过机构，判断currentOrgId是否失效
@@ -245,7 +232,20 @@ public class UserIndexInfoService {
         }
 
         // 填充用户组织机构信息
-        userIndexInfo.setUserOrgInfoList(resultUserOrg);
+        return resultUserOrg;
+    }
+
+    /**
+     * 填充用户的基本姓名和头像信息
+     *
+     * @author fengshuonan
+     * @since 2023/6/18 23:01
+     */
+    private void fillUserBaseInfo(Long userId, UserIndexInfo userIndexInfo) {
+        SimpleUserDTO simpleUserDTO = sysUserServiceApi.getUserInfoByUserId(userId);
+        userIndexInfo.setUserId(simpleUserDTO.getUserId());
+        userIndexInfo.setRealName(simpleUserDTO.getRealName());
+        userIndexInfo.setAvatarUrl(simpleUserDTO.getAvatarUrl());
     }
 
     /**

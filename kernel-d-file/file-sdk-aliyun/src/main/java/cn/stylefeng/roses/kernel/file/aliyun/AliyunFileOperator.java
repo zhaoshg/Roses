@@ -32,10 +32,8 @@ import cn.stylefeng.roses.kernel.file.api.exception.FileException;
 import cn.stylefeng.roses.kernel.file.api.exception.enums.FileExceptionEnum;
 import cn.stylefeng.roses.kernel.file.api.expander.FileConfigExpander;
 import cn.stylefeng.roses.kernel.file.api.pojo.props.AliyunOssProperties;
-import com.aliyun.oss.ClientException;
-import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClientBuilder;
-import com.aliyun.oss.OSSException;
+import com.aliyun.oss.*;
+import com.aliyun.oss.common.comm.Protocol;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.PutObjectRequest;
@@ -74,8 +72,13 @@ public class AliyunFileOperator implements FileOperatorApi {
         String accessKeyId = aliyunOssProperties.getAccessKeyId();
         String accessKeySecret = aliyunOssProperties.getAccessKeySecret();
 
+        // 根据https开关，配置协议类型
+        Boolean httpsFlag = aliyunOssProperties.getHttpsFlag();
+        ClientBuilderConfiguration clientBuilderConfiguration = new ClientBuilderConfiguration();
+        clientBuilderConfiguration.setProtocol(httpsFlag ? Protocol.HTTPS : Protocol.HTTP);
+
         // 创建OSSClient实例。
-        ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+        ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret, clientBuilderConfiguration);
     }
 
     @Override

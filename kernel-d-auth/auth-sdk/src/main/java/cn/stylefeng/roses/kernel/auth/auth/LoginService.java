@@ -100,7 +100,9 @@ public class LoginService {
         Integer loginErrorCount = validatePasswordRetryTimes(loginRequest);
 
         // 2. 如果开启了验证码校验，则验证当前请求的验证码是否正确
-        validateCaptcha(loginRequest);
+        if (validatePassword) {
+            validateCaptcha(loginRequest);
+        }
 
         // 3. 解密密码的密文，需要sys_config相关配置打开
         decryptRequestPassword(loginRequest);

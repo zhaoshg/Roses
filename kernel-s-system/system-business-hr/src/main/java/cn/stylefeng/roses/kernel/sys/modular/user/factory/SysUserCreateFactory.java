@@ -39,6 +39,11 @@ public class SysUserCreateFactory {
         if (ObjectUtil.isNotEmpty(sysUserRequest.getPhone())) {
             sysUser.setPhone(sysUserRequest.getPhone());
         }
+
+        // 头像id
+        if (ObjectUtil.isNotEmpty(sysUserRequest.getAvatar())) {
+            sysUser.setAvatar(sysUserRequest.getAvatar());
+        }
     }
 
 }

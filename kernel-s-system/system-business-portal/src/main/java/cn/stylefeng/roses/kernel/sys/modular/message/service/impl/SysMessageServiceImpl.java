@@ -73,6 +73,18 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
     }
 
     @Override
+    public List<SysMessage> findList(SysMessageRequest sysMessageRequest) {
+        LambdaQueryWrapper<SysMessage> wrapper = createWrapper(sysMessageRequest);
+
+        // 查询关键字段
+        wrapper.select(SysMessage::getMessageId, SysMessage::getMessageTitle, SysMessage::getPriorityLevel, SysMessage::getReadFlag,
+                SysMessage::getMessageSendTime,
+                SysMessage::getMessageType, SysMessage::getMessageUrl, SysMessage::getBusinessType, SysMessage::getBusinessId);
+
+        return this.list(wrapper);
+    }
+
+    @Override
     public void deleteAllMyMessage() {
         // 只能清空自己的消息
         LambdaUpdateWrapper<SysMessage> wrapper = new LambdaUpdateWrapper<>();

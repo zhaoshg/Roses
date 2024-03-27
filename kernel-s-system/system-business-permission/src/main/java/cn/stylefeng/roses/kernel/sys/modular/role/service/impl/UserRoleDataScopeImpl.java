@@ -50,7 +50,7 @@ public class UserRoleDataScopeImpl implements UserRoleDataScopeApi {
         }
 
         // 获取用户的角色id集合
-        List<Long> userRoleIdList = sysUserRoleServiceApi.getUserRoleIdList(loginUser.getUserId());
+        List<Long> userRoleIdList = sysUserRoleServiceApi.getUserRoleIdListCurrentCompany(loginUser.getUserId(), loginUser.getCurrentOrgId());
 
         // 如果这个角色列表大于1，也就是不单纯是普通角色，则将普通角色去掉，以配置的角色为主
         Long defaultRoleId = sysRoleService.getDefaultRoleId();
