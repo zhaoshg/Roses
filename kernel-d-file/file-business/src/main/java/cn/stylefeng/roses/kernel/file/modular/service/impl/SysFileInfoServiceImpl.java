@@ -571,7 +571,7 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
             AntdvFileInfo antdvFileInfo = new AntdvFileInfo();
 
             // 设置唯一id
-            antdvFileInfo.setUid(IdWorker.getIdStr());
+            antdvFileInfo.setUid(String.valueOf(fileId));
 
             // 设置文件名称
             LambdaQueryWrapper<SysFileInfo> sysFileInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
