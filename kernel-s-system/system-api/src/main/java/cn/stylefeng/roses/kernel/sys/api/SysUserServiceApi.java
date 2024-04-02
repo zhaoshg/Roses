@@ -171,4 +171,12 @@ public interface SysUserServiceApi {
      */
     Set<Long> getUserComprehensiveIdentitySummary();
 
+    /**
+     * 批量获取用户的基础名称和头像信息
+     *
+     * @author fengshuonan
+     * @since 2024/4/2 22:48
+     */
+    List<SimpleUserDTO> batchGetUserSimpleInfoList(Set<Long> userIdList);
+
 }

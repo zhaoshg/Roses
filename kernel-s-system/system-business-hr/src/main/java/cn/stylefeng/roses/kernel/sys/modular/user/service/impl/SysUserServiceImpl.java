@@ -752,6 +752,48 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return comprehensiveIdentity;
     }
 
+    @Override
+    public List<SimpleUserDTO> batchGetUserSimpleInfoList(Set<Long> userIdList) {
+
+        if (ObjectUtil.isEmpty(userIdList)) {
+            return new ArrayList<>();
+        }
+
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(SysUser::getUserId, userIdList);
+        wrapper.select(SysUser::getRealName, SysUser::getAccount, SysUser::getAvatar, SysUser::getUserId);
+        List<SysUser> list = this.list(wrapper);
+
+        if (ObjectUtil.isEmpty(list)) {
+            return new ArrayList<>();
+        }
+
+        // 排序
+        List<SysUser> sortUsers = SortUtils.sortListByObjectKey(list, new LinkedList<>(userIdList));
+
+        // 初始化返回结果
+        List<SimpleUserDTO> simpleUserDTOS = new ArrayList<>();
+        for (SysUser sysUser : sortUsers) {
+            SimpleUserDTO simpleUserDTO = new SimpleUserDTO();
+            simpleUserDTO.setAccount(sysUser.getAccount());
+            simpleUserDTO.setRealName(sysUser.getRealName());
+            simpleUserDTO.setUserId(sysUser.getUserId());
+
+            // 获取头像的访问地址
+            Long avatar = sysUser.getAvatar();
+            String fileAuthUrl = null;
+            try {
+                fileAuthUrl = fileInfoApi.getFileAuthUrl(avatar);
+            } catch (Exception e) {
+                continue;
+            }
+            simpleUserDTO.setAvatarUrl(fileAuthUrl);
+            simpleUserDTOS.add(simpleUserDTO);
+        }
+
+        return simpleUserDTOS;
+    }
+
     /**
      * 获取信息
      *
