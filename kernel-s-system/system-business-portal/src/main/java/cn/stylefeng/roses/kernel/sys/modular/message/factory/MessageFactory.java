@@ -51,6 +51,7 @@ public class MessageFactory {
             sysMessage.setBusinessType(messageSendDTO.getBusinessType());
             sysMessage.setReadFlag(ReadFlagEnum.NO_READ.getCode());
             sysMessage.setMessageSendTime(new Date());
+            sysMessage.setBusinessDetail(messageSendDTO.getBusinessDetail());
             sysMessages.add(sysMessage);
         }
 
@@ -84,6 +85,7 @@ public class MessageFactory {
             dto.setBusinessId(sysMessage.getBusinessId());
             dto.setBusinessType(sysMessage.getBusinessType());
             dto.setMessageSendTime(sysMessage.getMessageSendTime());
+            dto.setBusinessDetail(sysMessage.getBusinessDetail());
             messageSendToSocketDTOS.add(dto);
         }
 

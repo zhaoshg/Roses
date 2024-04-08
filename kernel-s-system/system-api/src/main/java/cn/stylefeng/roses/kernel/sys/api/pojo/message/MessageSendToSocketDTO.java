@@ -4,6 +4,7 @@ import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * 发送到ws时候用的传输bean
@@ -72,6 +73,12 @@ public class MessageSendToSocketDTO {
      */
     @ChineseDescription("业务类型(根据业务id和业务类型可以确定业务数据)")
     private String businessType;
+
+    /**
+     * 业务的详细信息自定义字段
+     */
+    @ChineseDescription("业务的详细信息自定义字段")
+    private Map<String, Object> businessDetail;
 
     /**
      * 消息发送时间

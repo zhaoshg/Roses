@@ -3,6 +3,7 @@ package cn.stylefeng.roses.kernel.sys.api.pojo.message;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import lombok.Data;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -67,5 +68,11 @@ public class MessageSendDTO {
      */
     @ChineseDescription("业务类型(根据业务id和业务类型可以确定业务数据)")
     private String businessType;
+
+    /**
+     * 业务的详细信息自定义字段
+     */
+    @ChineseDescription("业务的详细信息自定义字段")
+    private Map<String, Object> businessDetail;
 
 }
