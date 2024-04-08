@@ -3,10 +3,12 @@ package cn.stylefeng.roses.kernel.sys.modular.message.entity;
 import cn.stylefeng.roses.kernel.db.api.pojo.entity.BaseBusinessEntity;
 import cn.stylefeng.roses.kernel.rule.annotation.ChineseDescription;
 import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * 系统消息实例类
@@ -14,7 +16,7 @@ import java.util.Date;
  * @author fengshuonan
  * @since 2024/01/12 17:31
  */
-@TableName("sys_message")
+@TableName(value = "sys_message", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SysMessage extends BaseBusinessEntity {
@@ -95,6 +97,13 @@ public class SysMessage extends BaseBusinessEntity {
     @TableField("business_type")
     @ChineseDescription("业务类型(根据业务id和业务类型可以确定业务数据)")
     private String businessType;
+
+    /**
+     * 业务的详细信息自定义字段
+     */
+    @TableField(value = "business_detail", typeHandler = JacksonTypeHandler.class)
+    @ChineseDescription("业务的详细信息自定义字段")
+    private Map<String, Object> businessDetail;
 
     /**
      * 阅读状态：0-未读，1-已读
