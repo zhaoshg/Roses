@@ -66,7 +66,7 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
         // 查询关键字段
         wrapper.select(SysMessage::getMessageId, SysMessage::getMessageTitle, SysMessage::getPriorityLevel, SysMessage::getReadFlag,
                 SysMessage::getMessageSendTime,
-                SysMessage::getMessageType, SysMessage::getMessageUrl, SysMessage::getBusinessType, SysMessage::getBusinessId);
+                SysMessage::getMessageType, SysMessage::getMessageUrl, SysMessage::getBusinessType, SysMessage::getBusinessId, SysMessage::getBusinessDetail, SysMessage::getMessageContent);
 
         Page<SysMessage> pageList = this.page(PageFactory.defaultPage(), wrapper);
         return PageResultFactory.createPageResult(pageList);
