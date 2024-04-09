@@ -81,7 +81,7 @@ public class DbOperatorImpl implements DbOperatorApi {
 
         String tempFieldName = "maxSort";
 
-        String sqlTemplate = "select max({}) as {} from {}";
+        String sqlTemplate = "select max({}) as \"{}\" from {}";
         String sql = StrUtil.format(sqlTemplate, fieldName, tempFieldName, tableName);
 
         Map<String, Object> oneResult = SqlRunner.db().selectOne(sql);
