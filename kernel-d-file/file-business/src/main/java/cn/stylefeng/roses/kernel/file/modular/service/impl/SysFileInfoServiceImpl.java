@@ -576,12 +576,13 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
             // 设置文件名称
             LambdaQueryWrapper<SysFileInfo> sysFileInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
             sysFileInfoLambdaQueryWrapper.eq(SysFileInfo::getFileId, fileId);
-            sysFileInfoLambdaQueryWrapper.select(SysFileInfo::getFileOriginName);
+            sysFileInfoLambdaQueryWrapper.select(SysFileInfo::getFileOriginName, SysFileInfo::getFileSizeInfo);
             SysFileInfo sysFileInfo = this.getOne(sysFileInfoLambdaQueryWrapper);
             if (sysFileInfo == null) {
                 continue;
             }
             antdvFileInfo.setName(sysFileInfo.getFileOriginName());
+            antdvFileInfo.setSizeInfo(sysFileInfo.getFileSizeInfo());
 
             // 设置文件的访问url
             String fileAuthUrl = this.getFileAuthUrl(fileId);

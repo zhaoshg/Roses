@@ -46,4 +46,11 @@ public class AntdvFileInfo {
      */
     private String thumbUrl;
 
+    /**
+     * 文件大小：xx kb, xx mb
+     * <p>
+     * 【2024年4月10日新增】
+     */
+    private String sizeInfo;
+
 }
