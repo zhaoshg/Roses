@@ -53,4 +53,11 @@ public class AntdvFileInfo {
      */
     private String sizeInfo;
 
+    /**
+     * 文件后缀
+     * <p>
+     * 【2024年4月10日新增】
+     */
+    private String fileSuffix;
+
 }
