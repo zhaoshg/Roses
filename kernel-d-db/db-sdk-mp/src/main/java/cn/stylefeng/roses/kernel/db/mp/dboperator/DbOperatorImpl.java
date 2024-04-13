@@ -88,7 +88,7 @@ public class DbOperatorImpl implements DbOperatorApi {
 
         // 查询不到，直接返回最大值-100
         if (oneResult == null) {
-            return -100L;
+            return 100L;
         }
 
         Object maxSort = oneResult.get(tempFieldName);
